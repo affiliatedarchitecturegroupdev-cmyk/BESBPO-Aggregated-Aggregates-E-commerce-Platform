@@ -4,7 +4,9 @@ import { AppModule } from "./app.module";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors({ origin: [process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"] });
+  // Comma-separated storefront origins allowed to call the API from the browser.
+  const corsOrigins = (process.env.CORS_ORIGINS ?? process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").split(",");
+  app.enableCors({ origin: corsOrigins.map((origin) => origin.trim()) });
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   app.setGlobalPrefix("api/v1");
   const port = process.env.PORT ?? 4000;

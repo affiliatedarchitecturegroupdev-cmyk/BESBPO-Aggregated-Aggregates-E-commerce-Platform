@@ -1,0 +1,81 @@
+# Render Blueprint — Aggregated Aggregates platform.
+#
+# Three services, matching the Roofsteel/Bricksplaza hosting pattern:
+#   aggregates-store-web      Next.js storefront          (public)
+#   aggregates-store-api      NestJS API + DB migrations  (public)
+#   aggregates-store-pricing  FastAPI pricing service     (private — reachable only by the API)
+#
+# The database is Supabase Postgres (confirmed architecture), not a
+# Render-managed instance: Render asks for DATABASE_URL and DIRECT_URL when
+# the Blueprint is created. Redis (Upstash) is not wired into any service yet,
+# so it is not requested here.
+#
+# Custom domains (aggregates.store / app.aggregates.store) are deliberately
+# not declared yet, so a test deploy runs on *.onrender.com without DNS.
+# See docs/deployment/render.md for the full walkthrough.
+
+services:
+  - type: web
+    name: aggregates-store-web
+    runtime: node
+    region: frankfurt
+    plan: starter
+    buildCommand: npx --yes pnpm@9.9.0 install --frozen-lockfile && npx --yes pnpm@9.9.0 run build:web
+    startCommand: cd apps/web && node_modules/.bin/next start -p $PORT
+    healthCheckPath: /
+    buildFilter:
+      paths:
+        - apps/web/**
+        - content/**
+        - package.json
+        - pnpm-lock.yaml
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+
+  - type: web
+    name: aggregates-store-api
+    runtime: node
+    region: frankfurt
+    plan: starter
+    buildCommand: npx --yes pnpm@9.9.0 install --frozen-lockfile && npx --yes pnpm@9.9.0 run build:api
+    # Applies Prisma migrations, then syncs the catalogue, price bands, tiers
+    # and delivery bands from the pricing framework workbook (idempotent).
+    preDeployCommand: npx --yes pnpm@9.9.0 run db:deploy
+    startCommand: node apps/api/dist/main.js
+    healthCheckPath: /api/v1/health
+    buildFilter:
+      paths:
+        - apps/api/**
+        - packages/database/**
+        - services/pricing/data/**
+        - package.json
+        - pnpm-lock.yaml
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: DATABASE_URL
+        sync: false
+      - key: DIRECT_URL
+        sync: false
+      - key: PRICING_SERVICE_URL
+        fromService:
+          type: pserv
+          name: aggregates-store-pricing
+          property: hostport
+      - key: AUTH_SECRET
+        generateValue: true
+      - key: SEED_PLACEHOLDER_SUPPLIERS
+        value: "false"
+
+  - type: pserv
+    name: aggregates-store-pricing
+    runtime: python
+    region: frankfurt
+    plan: starter
+    rootDir: services/pricing
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.7"
