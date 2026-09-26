@@ -1,7 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
-// @ts-expect-error — passport-microsoft ships no first-party types; add a
-// local .d.ts in Phase 2 if strict typing is required here.
 import { Strategy } from "passport-microsoft";
 import { OAuthProvider } from "@aggregates/database";
 import { AuthService } from "../auth.service";
