@@ -1,0 +1,401 @@
+// Aggregated Aggregates — E-Commerce Platform
+// Core data model, matching the confirmed model set in the Technical &
+// Product Specification. Naming follows the Prisma convention already used
+// on the Roofsteel and Bricksplaza platforms.
+//
+// IMPORTANT: the confirmed platform decision is a broker/network supplier
+// model — ~50 approved partner suppliers, NO owned yards or inventory.
+// There is deliberately no StockLevel / StockMovement model here — see
+// AGENTIC_RULES.md before adding one.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Auth & accounts
+// ---------------------------------------------------------------------------
+
+enum UserRole {
+  CUSTOMER
+  COMPANY_ADMIN
+  STAFF
+  ADMIN
+}
+
+enum OAuthProvider {
+  GOOGLE
+  MICROSOFT
+}
+
+model User {
+  id            String         @id @default(cuid())
+  email         String         @unique
+  name          String?
+  passwordHash  String? // null for OAuth-only users (Email/Google/Microsoft SSO)
+  role          UserRole       @default(CUSTOMER)
+  companyId     String?
+  company       Company?       @relation(fields: [companyId], references: [id])
+  oauthAccounts OAuthAccount[]
+  quotes        Quote[]
+  orders        Order[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model OAuthAccount {
+  id                String        @id @default(cuid())
+  provider          OAuthProvider
+  providerAccountId String
+  userId            String
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime      @default(now())
+
+  @@unique([provider, providerAccountId])
+}
+
+// ---------------------------------------------------------------------------
+// Trade accounts & tiering
+// ---------------------------------------------------------------------------
+
+enum CustomerTierName {
+  RETAIL
+  CONTRACTOR_TRADE
+  VOLUME_CIVIL_BULK
+}
+
+model CustomerTier {
+  id                String           @id @default(cuid())
+  name              CustomerTierName @unique
+  discountPercent   Decimal          @db.Decimal(5, 2)
+  minimumOrderM3    Float? // Volume/Civil Bulk tier threshold (>=10m3 routes to RFQ)
+  requiresPoInvoice Boolean          @default(false)
+  companies         Company[]
+}
+
+model Company {
+  id                   String            @id @default(cuid())
+  name                 String
+  registrationNumber   String?
+  vatNumber            String?
+  tierId               String
+  tier                 CustomerTier      @relation(fields: [tierId], references: [id])
+  standingAgreementRef String? // e.g. "KZN Civil — active"
+  deliveryAddresses    DeliveryAddress[]
+  users                User[]
+  quotes               Quote[]
+  orders               Order[]
+  invoices             Invoice[]
+  statements           Statement[]
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+}
+
+model DeliveryAddress {
+  id           String   @id @default(cuid())
+  companyId    String
+  company      Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  label        String
+  addressLine1 String
+  addressLine2 String?
+  city         String
+  province     String
+  postalCode   String
+  latitude     Float?
+  longitude    Float?
+  isDefault    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+}
+
+// ---------------------------------------------------------------------------
+// Catalogue & pricing
+// ---------------------------------------------------------------------------
+
+model Category {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  name        String
+  description String?
+  sortOrder   Int       @default(0)
+  products    Product[]
+}
+
+model Product {
+  id                  String               @id @default(cuid())
+  sku                 String               @unique
+  slug                String               @unique
+  name                String
+  categoryId          String
+  category            Category             @relation(fields: [categoryId], references: [id])
+  gradingStandard     String? // e.g. "SANS 1200-G14", "SANS 1083", "COLTO/TRH14"
+  description         String?
+  images              ProductImage[]
+  priceBand           PriceBand?
+  complianceDocuments ComplianceDocument[]
+  quoteLineItems      QuoteLineItem[]
+  orderLineItems      OrderLineItem[]
+  isActive            Boolean              @default(true)
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  altText   String?
+  sortOrder Int     @default(0)
+}
+
+/// Category-level bulk density, base cost, markup %, and bag premium
+/// multiplier — mirrors the Category Markup Bands sheet in the pricing xlsx.
+model PriceBand {
+  id                   String   @id @default(cuid())
+  productId            String   @unique
+  product              Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  bulkDensityKgPerM3   Float // converts tons <-> m3 for this product
+  baseCostPerTon       Decimal  @db.Decimal(10, 2)
+  markupPercent        Decimal  @db.Decimal(5, 2)
+  listPricePerTon      Decimal  @db.Decimal(10, 2)
+  listPricePerM3       Decimal  @db.Decimal(10, 2)
+  bagPremiumMultiplier Float? // null = not sold bagged
+  bagWeightKg          Float?
+  listPricePerBag      Decimal? @db.Decimal(10, 2)
+  updatedAt            DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Delivery & the partner-supplier network
+// ---------------------------------------------------------------------------
+
+enum DeliveryBandLabel {
+  INCLUDED_0_30
+  BAND_30_60
+  BAND_60_100
+  QUOTE_100_PLUS
+}
+
+enum LoadSize {
+  M3_6
+  M3_10
+  M3_14_PLUS
+}
+
+model DeliveryBand {
+  id          String            @id @default(cuid())
+  label       DeliveryBandLabel
+  loadSize    LoadSize?
+  minKm       Float
+  maxKm       Float? // null = open-ended -> routes to RFQ
+  flatFee     Decimal?          @db.Decimal(10, 2) // null = quoted individually (isQuoteOnly = true)
+  isQuoteOnly Boolean           @default(false)
+  shipments   Shipment[]
+}
+
+/// The ~50-strong approved partner-supplier network a delivery band is
+/// measured from. There is deliberately no owned-yard entity in this model —
+/// the confirmed platform decision is a broker/network model.
+model SupplierLocation {
+  id            String    @id @default(cuid())
+  name          String
+  province      String
+  city          String
+  latitude      Float
+  longitude     Float
+  contactName   String?
+  contactPhone  String?
+  approvedSince DateTime?
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+}
+
+// ---------------------------------------------------------------------------
+// RFQ / bulk quote flow
+// ---------------------------------------------------------------------------
+
+enum QuoteStatus {
+  DRAFT
+  SUBMITTED
+  QUOTED
+  ACCEPTED
+  DECLINED
+  EXPIRED
+}
+
+enum QuoteReasonCode {
+  VOLUME_CIVIL_BULK
+  DELIVERY_OVER_100KM
+  BOTH
+}
+
+enum UnitOfSale {
+  BULK_TON
+  BULK_M3
+  BAGGED
+}
+
+/// Captures quote-only orders before they become a priced Order — the RFQ
+/// path for Volume/Civil Bulk tier orders (>=10m3) and any delivery beyond
+/// 100km, which the pricing framework already treats as quote-only rather
+/// than checkout-priced.
+model Quote {
+  id                 String          @id @default(cuid())
+  reference          String          @unique @default(cuid())
+  userId             String?
+  user               User?           @relation(fields: [userId], references: [id])
+  companyId          String?
+  company            Company?        @relation(fields: [companyId], references: [id])
+  status             QuoteStatus     @default(DRAFT)
+  reasonCode         QuoteReasonCode
+  deliveryDistanceKm Float?
+  lineItems          QuoteLineItem[]
+  notes              String?
+  quotedTotal        Decimal?        @db.Decimal(12, 2)
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+}
+
+model QuoteLineItem {
+  id                 String     @id @default(cuid())
+  quoteId            String
+  quote              Quote      @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  productId          String
+  product            Product    @relation(fields: [productId], references: [id])
+  unitOfSale         UnitOfSale
+  quantity           Float
+  estimatedUnitPrice Decimal?   @db.Decimal(10, 2)
+}
+
+// ---------------------------------------------------------------------------
+// Orders, shipment & compliance
+// ---------------------------------------------------------------------------
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  IN_TRANSIT
+  DELIVERED
+  CANCELLED
+}
+
+enum Carrier {
+  BESFLEET
+  EXTERNAL_PARTNER
+}
+
+model Order {
+  id           String          @id @default(cuid())
+  orderNumber  String          @unique
+  userId       String?
+  user         User?           @relation(fields: [userId], references: [id])
+  companyId    String?
+  company      Company?        @relation(fields: [companyId], references: [id])
+  status       OrderStatus     @default(PENDING)
+  lineItems    OrderLineItem[]
+  shipment     Shipment?
+  invoice      Invoice?
+  subtotal     Decimal         @db.Decimal(12, 2)
+  deliveryFee  Decimal         @db.Decimal(10, 2)
+  total        Decimal         @db.Decimal(12, 2)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+}
+
+/// Confirmed orders — unit-of-sale (bulk/bag) and quantity recorded per line.
+model OrderLineItem {
+  id         String     @id @default(cuid())
+  orderId    String
+  order      Order      @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId  String
+  product    Product    @relation(fields: [productId], references: [id])
+  unitOfSale UnitOfSale
+  quantity   Float
+  unitPrice  Decimal    @db.Decimal(10, 2)
+  lineTotal  Decimal    @db.Decimal(12, 2)
+}
+
+/// Delivery tracking — carrier (Besfleet or one of the 15+ external tipper
+/// partners), distance band, and delivery fee applied.
+model Shipment {
+  id                  String        @id @default(cuid())
+  orderId             String        @unique
+  order               Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  carrier             Carrier
+  externalPartnerName String? // populated when carrier = EXTERNAL_PARTNER
+  distanceBandId      String?
+  distanceBand        DeliveryBand? @relation(fields: [distanceBandId], references: [id])
+  distanceKm          Float?
+  deliveryFeeApplied  Decimal       @db.Decimal(10, 2)
+  dispatchedAt        DateTime?
+  deliveredAt         DateTime?
+  trackingRef         String?
+}
+
+enum ComplianceDocType {
+  SANS_REFERENCE
+  CERTIFICATE_OF_ANALYSIS
+  OTHER
+}
+
+/// SANS / COA (Certificate of Analysis) attachments per product or batch —
+/// SANS 1200-G (G1-G10 grading), SANS 1083 (concrete aggregate), COLTO/TRH14
+/// (road-building material).
+model ComplianceDocument {
+  id             String            @id @default(cuid())
+  productId      String
+  product        Product           @relation(fields: [productId], references: [id], onDelete: Cascade)
+  standard       String
+  documentType   ComplianceDocType
+  batchReference String?
+  fileUrl        String
+  issuedAt       DateTime?
+  expiresAt      DateTime?
+}
+
+// ---------------------------------------------------------------------------
+// Billing — Besbpo Group company VAT from day one (confirmed decision)
+// ---------------------------------------------------------------------------
+
+enum InvoiceStatus {
+  UNPAID
+  PAID
+  OVERDUE
+  VOID
+}
+
+model Invoice {
+  id              String        @id @default(cuid())
+  orderId         String        @unique
+  order           Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  companyId       String?
+  company         Company?      @relation(fields: [companyId], references: [id])
+  statementId     String?
+  statement       Statement?    @relation(fields: [statementId], references: [id])
+  invoiceNumber   String        @unique
+  vatNumberBilled String // Besbpo Group VAT number — this division bills under group VAT, not its own registration
+  amountDue       Decimal       @db.Decimal(12, 2)
+  status          InvoiceStatus @default(UNPAID)
+  dueDate         DateTime?
+  paidAt          DateTime?
+  createdAt       DateTime      @default(now())
+}
+
+/// Periodic PO-based billing rollup for Volume/Civil Bulk tier standing
+/// agreements — one statement groups several invoices for the same company.
+model Statement {
+  id          String    @id @default(cuid())
+  companyId   String
+  company     Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  periodStart DateTime
+  periodEnd   DateTime
+  totalDue    Decimal   @db.Decimal(12, 2)
+  invoices    Invoice[]
+  issuedAt    DateTime  @default(now())
+}

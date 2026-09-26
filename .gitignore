@@ -1,0 +1,15 @@
+node_modules/
+.pnpm-store/
+.next/
+dist/
+build/
+*.tsbuildinfo
+.env
+.env.local
+.turbo/
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+prisma/*.db
+coverage/

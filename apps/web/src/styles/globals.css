@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-basalt: #1c1b1a;
+  --color-limestone: #f2efe9;
+  --color-slate: #6b6560;
+  --color-seam-blue: #2c4a5e;
+  --color-ochre-gold: #c08a34;
+}
+
+body {
+  background-color: var(--color-limestone);
+  color: var(--color-basalt);
+}

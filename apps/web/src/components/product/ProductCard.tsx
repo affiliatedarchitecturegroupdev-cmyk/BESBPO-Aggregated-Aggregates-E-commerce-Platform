@@ -1,0 +1,27 @@
+import Link from "next/link";
+import type { SampleProduct } from "@/data/products.sample";
+import { formatZAR } from "@/lib/pricing";
+
+export function ProductCard({ product }: { product: SampleProduct }) {
+  return (
+    <Link
+      href={`/products/${product.slug}`}
+      className="group flex flex-col rounded-sm border border-basalt/10 bg-white p-4 transition hover:border-seam-blue hover:shadow-sm"
+    >
+      <div className="flex h-28 items-center justify-center rounded-sm bg-limestone font-mono text-[10px] text-slate">IMG</div>
+      <p className="mt-3 font-body text-sm font-semibold text-basalt group-hover:text-seam-blue">{product.name}</p>
+      {product.gradingStandard && <p className="font-mono text-[10px] text-slate">{product.gradingStandard}</p>}
+      <p className="mt-2 font-body text-sm text-slate">
+        {formatZAR(product.listPricePerTon)} /ton &nbsp;•&nbsp; {formatZAR(product.listPricePerM3)} /m³
+      </p>
+      <div className="mt-3 flex items-center justify-between">
+        <span className="rounded-sm bg-limestone px-2 py-1 font-mono text-[10px] text-slate">
+          {product.bagPremiumMultiplier ? "Bulk / Bag ▾" : "Bulk only"}
+        </span>
+        <span className="rounded-sm bg-seam-blue px-3 py-1.5 font-body text-xs font-semibold text-limestone group-hover:bg-basalt">
+          Add to Quote
+        </span>
+      </div>
+    </Link>
+  );
+}

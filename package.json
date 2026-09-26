@@ -1,0 +1,27 @@
+{
+  "name": "aggregates-store-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Aggregated Aggregates e-commerce platform — Besbpo Group division. Foundation scaffold (Phase 1 of HITLAD roadmap).",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "pnpm --filter web dev",
+    "dev:api": "pnpm --filter api start:dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "db:generate": "pnpm --filter @aggregates/database db:generate",
+    "db:migrate": "pnpm --filter @aggregates/database db:migrate",
+    "db:seed": "pnpm --filter @aggregates/database db:seed"
+  },
+  "devDependencies": {
+    "turbo": "^2.1.0",
+    "typescript": "^5.5.4"
+  },
+  "packageManager": "pnpm@9.9.0",
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

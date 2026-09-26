@@ -1,0 +1,34 @@
+version: "3.9"
+
+# Local development only. Production uses managed Supabase (Postgres) and
+# Upstash (Redis) per the confirmed architecture — this compose file exists
+# purely so the platform can be developed offline before those are wired up.
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: aggregates
+      POSTGRES_PASSWORD: aggregates_dev
+      POSTGRES_DB: aggregates_store
+    ports:
+      - "5432:5432"
+    volumes:
+      - aggregates_pg_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  pricing:
+    build:
+      context: ./services/pricing
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./services/pricing:/app
+
+volumes:
+  aggregates_pg_data:

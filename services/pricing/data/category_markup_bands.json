@@ -1,0 +1,29 @@
+{
+  "_comment": "Illustrative seed data mirroring packages/database/prisma/seed.ts. Reconcile against the real pricing engine xlsx before production use — see AGENTIC_RULES.md rule 1.",
+  "products": [
+    { "sku": "AA-SBC-G5-001", "name": "G5 Natural Gravel", "bulk_density_kg_per_m3": 1600, "list_price_per_ton": 319.00, "bag_premium_multiplier": 1.40, "bag_weight_kg": 40 },
+    { "sku": "AA-CRS-19MM-DOL", "name": "19mm Crushed Stone (Dolomite)", "bulk_density_kg_per_m3": 1450, "list_price_per_ton": 400.00, "bag_premium_multiplier": 1.4725, "bag_weight_kg": 20 },
+    { "sku": "AA-SND-RIVER-001", "name": "River Sand (Washed)", "bulk_density_kg_per_m3": 1500, "list_price_per_ton": 270.00, "bag_premium_multiplier": 1.35, "bag_weight_kg": 40 },
+    { "sku": "AA-CRUN-0-19MM", "name": "Crusher Run 0-19mm", "bulk_density_kg_per_m3": 1550, "list_price_per_ton": 270.00, "bag_premium_multiplier": 1.30, "bag_weight_kg": 40 },
+    { "sku": "AA-BAL-RAIL-001", "name": "Rail Ballast", "bulk_density_kg_per_m3": 1350, "list_price_per_ton": 364.00, "bag_premium_multiplier": null, "bag_weight_kg": null },
+    { "sku": "AA-DRN-FRENCH-001", "name": "French Drain Stone", "bulk_density_kg_per_m3": 1400, "list_price_per_ton": 444.00, "bag_premium_multiplier": 1.50, "bag_weight_kg": 20 },
+    { "sku": "AA-DEC-PEBBLE-001", "name": "River Pebble", "bulk_density_kg_per_m3": 1500, "list_price_per_ton": 560.00, "bag_premium_multiplier": 1.60, "bag_weight_kg": 20 },
+    { "sku": "AA-AGL-LIME-001", "name": "Agricultural Lime", "bulk_density_kg_per_m3": 1250, "list_price_per_ton": 284.00, "bag_premium_multiplier": 1.35, "bag_weight_kg": 25 },
+    { "sku": "AA-REC-RCA-001", "name": "Recycled Crushed Concrete (RCA)", "bulk_density_kg_per_m3": 1400, "list_price_per_ton": 210.00, "bag_premium_multiplier": 1.30, "bag_weight_kg": 40 }
+  ],
+  "customer_tiers": [
+    { "name": "RETAIL", "discount_percent": 0, "minimum_order_m3": null, "requires_po_invoice": false },
+    { "name": "CONTRACTOR_TRADE", "discount_percent": 8, "minimum_order_m3": null, "requires_po_invoice": false },
+    { "name": "VOLUME_CIVIL_BULK", "discount_percent": 15, "minimum_order_m3": 10, "requires_po_invoice": true }
+  ],
+  "delivery_bands": [
+    { "label": "INCLUDED_0_30", "load_size": null, "min_km": 0, "max_km": 30, "flat_fee": 0, "is_quote_only": false },
+    { "label": "BAND_30_60", "load_size": "M3_6", "min_km": 30, "max_km": 60, "flat_fee": 450, "is_quote_only": false },
+    { "label": "BAND_30_60", "load_size": "M3_10", "min_km": 30, "max_km": 60, "flat_fee": 650, "is_quote_only": false },
+    { "label": "BAND_30_60", "load_size": "M3_14_PLUS", "min_km": 30, "max_km": 60, "flat_fee": 850, "is_quote_only": false },
+    { "label": "BAND_60_100", "load_size": "M3_6", "min_km": 60, "max_km": 100, "flat_fee": 750, "is_quote_only": false },
+    { "label": "BAND_60_100", "load_size": "M3_10", "min_km": 60, "max_km": 100, "flat_fee": 1050, "is_quote_only": false },
+    { "label": "BAND_60_100", "load_size": "M3_14_PLUS", "min_km": 60, "max_km": 100, "flat_fee": 1400, "is_quote_only": false },
+    { "label": "QUOTE_100_PLUS", "load_size": null, "min_km": 100, "max_km": null, "flat_fee": null, "is_quote_only": true }
+  ]
+}
