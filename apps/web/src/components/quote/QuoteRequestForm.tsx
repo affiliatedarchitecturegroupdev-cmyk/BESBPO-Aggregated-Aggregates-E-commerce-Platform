@@ -1,11 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { submitQuoteRequest } from "@/app/account/actions";
 import { PRODUCTS, type Unit } from "@/data/catalogue";
 import { CATEGORIES } from "@/data/categories";
 import { formatZAR, UNIT_LABELS } from "@/lib/pricing";
-import { SALES_EMAIL } from "@/lib/site";
 
 type LineItem = { sku: string; unit: Unit; quantity: number };
 type Project = { projectName: string; company: string; contactName: string; email: string; phone: string };
@@ -37,8 +38,9 @@ function initialLine(params: URLSearchParams): LineItem {
  * Volume/Civil Bulk account orders of 10m³ or more, deliveries beyond 100km
  * — and, until checkout exists, any order a customer wants priced.
  *
- * Submission opens the customer's email client with the full request
- * addressed to sales; Phase 3 replaces this with POST /api/v1/quotes.
+ * Submission goes to POST /api/v1/quotes, which prices every line at the
+ * requester's tier, records why the order needs a human quote, and returns
+ * a reference. Signed-in requesters see it in their dashboard.
  */
 export function QuoteRequestForm() {
   const params = useSearchParams();
@@ -51,7 +53,9 @@ export function QuoteRequestForm() {
     distanceKm: params.get("km") ?? "",
     notes: "",
   });
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted, setSubmitted] = useState<{ reference: string } | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [pending, startTransition] = useTransition();
 
   const updateLine = (index: number, patch: Partial<LineItem>) =>
     setLines((items) =>
@@ -75,40 +79,47 @@ export function QuoteRequestForm() {
   );
 
   const submit = () => {
-    const body = [
-      `Project: ${project.projectName || "—"}`,
-      `Company: ${project.company || "—"}`,
-      `Contact: ${project.contactName} <${project.email}> ${project.phone}`,
-      "",
-      "Materials:",
-      ...lines.map((l) => {
-        const p = productFor(l.sku);
-        return `- ${l.quantity} ${UNIT_LABELS[l.unit]} ${p.name} (${p.sku})`;
-      }),
-      "",
-      `Delivery: ${delivery.address}, ${delivery.province}`,
-      `Approx. distance from supplier: ${delivery.distanceKm ? `${delivery.distanceKm}km` : "unknown"}`,
-      `Notes: ${delivery.notes || "—"}`,
-      "",
-      `Indicative retail list value (excl. delivery): ${formatZAR(estimatedListValue)}`,
-    ].join("\n");
-    const subject = `Quote request — ${project.projectName || project.company || project.contactName}`;
-    window.location.href = `mailto:${SALES_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setSubmitted(true);
+    setError(null);
+    const distance = Number(delivery.distanceKm);
+    startTransition(async () => {
+      const result = await submitQuoteRequest({
+        contactName: project.contactName,
+        contactEmail: project.email,
+        contactPhone: project.phone || undefined,
+        companyName: project.company || undefined,
+        projectName: project.projectName || undefined,
+        deliveryAddress: delivery.address,
+        deliveryProvince: delivery.province,
+        deliveryDistanceKm: delivery.distanceKm !== "" && Number.isFinite(distance) ? distance : undefined,
+        notes: delivery.notes || undefined,
+        lines: lines.map((l) => ({ sku: l.sku, unit: l.unit, quantity: l.quantity })),
+      });
+      if (result.ok) {
+        setSubmitted({ reference: result.reference });
+        window.scrollTo({ top: 0 });
+      } else {
+        setError(result.error);
+      }
+    });
   };
 
   if (submitted) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-24 text-center">
-        <h1 className="font-display text-2xl font-bold text-basalt">Almost done — send the email</h1>
+        <p className="font-mono text-xs uppercase tracking-widest text-seam-blue">Quote request received</p>
+        <h1 className="mt-3 font-display text-3xl font-bold text-basalt">{submitted.reference}</h1>
         <p className="mt-3 font-body text-sm text-slate">
-          Your email app should have opened with the quote request addressed to{" "}
-          <a href={`mailto:${SALES_EMAIL}`} className="text-seam-blue underline">{SALES_EMAIL}</a>. Send it and our team
-          responds within 1 business day with delivered pricing.
+          Keep this reference. Our team responds within 1 business day with delivered pricing to {project.email}.
+          Signed-in customers can also follow and accept the quote from their dashboard.
         </p>
-        <button onClick={() => setSubmitted(false)} className="mt-6 font-body text-sm text-seam-blue hover:underline">
-          ← Back to the request
-        </button>
+        <div className="mt-8 flex justify-center gap-3">
+          <Link href="/account/dashboard" className="rounded-sm bg-seam-blue px-5 py-2.5 font-body text-sm font-semibold text-limestone">
+            Go to my dashboard
+          </Link>
+          <Link href="/products" className="rounded-sm border border-basalt px-5 py-2.5 font-body text-sm text-basalt">
+            Keep browsing
+          </Link>
+        </div>
       </div>
     );
   }
@@ -313,6 +324,11 @@ export function QuoteRequestForm() {
         )}
       </div>
 
+      {error && (
+        <p role="alert" className="mt-4 rounded-sm border border-red-700/30 bg-red-50 p-3 font-body text-sm text-red-800">
+          {error}
+        </p>
+      )}
       <div className="mt-6 flex justify-between">
         <button
           type="button"
@@ -332,8 +348,13 @@ export function QuoteRequestForm() {
             Continue →
           </button>
         ) : (
-          <button type="button" onClick={submit} className="rounded-sm bg-ochre-gold px-5 py-2 font-body text-sm font-semibold text-basalt">
-            Submit Quote Request
+          <button
+            type="button"
+            onClick={submit}
+            disabled={pending}
+            className="rounded-sm bg-ochre-gold px-5 py-2 font-body text-sm font-semibold text-basalt disabled:opacity-50"
+          >
+            {pending ? "Submitting…" : "Submit Quote Request"}
           </button>
         )}
       </div>

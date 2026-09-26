@@ -27,6 +27,14 @@ from typing import Literal, Optional
 
 LoadSize = Literal["M3_6", "M3_10", "M3_14_PLUS"]
 
+# Machine-readable counterparts of the human reasons, so callers (the RFQ
+# flow) can classify a quote without parsing text.
+VOLUME_THRESHOLD = "VOLUME_THRESHOLD"
+OVER_MAX_DISTANCE = "OVER_MAX_DISTANCE"
+SMALL_LOAD_OUT_OF_RANGE = "SMALL_LOAD_OUT_OF_RANGE"
+BAGGED_OUT_OF_RANGE = "BAGGED_OUT_OF_RANGE"
+NO_MATCHING_BAND = "NO_MATCHING_BAND"
+
 
 @dataclass(frozen=True)
 class DeliveryBand:
@@ -57,12 +65,14 @@ class DeliveryQuoteResult:
     load_size: Optional[LoadSize]
     fee: Optional[Decimal]
     components: list[dict] = field(default_factory=list)
+    reason_codes: list[str] = field(default_factory=list)
 
     def as_dict(self) -> dict:
         return {
             "is_quote_only": self.is_quote_only,
             "reason": "; ".join(self.reasons) if self.reasons else None,
             "reasons": self.reasons,
+            "reason_codes": self.reason_codes,
             "distance_km": float(self.distance_km),
             "load_size": self.load_size,
             "fee": None if self.fee is None else float(self.fee),
@@ -111,17 +121,18 @@ def calculate_delivery_fee(
         total_m3 = bulk_m3
 
     reasons: list[str] = []
+    reason_codes: list[str] = []
     components: list[dict] = []
+
+    def quote_only(code: str, reason: str) -> None:
+        reason_codes.append(code)
+        reasons.append(reason)
     load_size: Optional[LoadSize] = None
 
     if quote_only_min_m3 is not None and total_m3 >= quote_only_min_m3:
-        reasons.append(
-            f"Volume/Civil Bulk tier order of {quote_only_min_m3}m³ or more — routed to RFQ."
-        )
+        quote_only(VOLUME_THRESHOLD, f"Volume/Civil Bulk tier order of {quote_only_min_m3}m³ or more — routed to RFQ.")
     if distance_km > rules.quote_over_km:
-        reasons.append(
-            f"Delivery beyond {rules.quote_over_km}km — routed to RFQ for individual quoting."
-        )
+        quote_only(OVER_MAX_DISTANCE, f"Delivery beyond {rules.quote_over_km}km — routed to RFQ for individual quoting.")
 
     if bulk_m3 > 0:
         meets_minimum = bulk_m3 >= rules.min_bulk_m3 or bulk_tons >= rules.min_bulk_tons
@@ -130,15 +141,16 @@ def calculate_delivery_fee(
             if distance_km <= rules.quote_over_km:
                 fee = _bulk_band_fee(rules, distance_km, load_size)
                 if fee is None:
-                    reasons.append("No matching delivery band found — routed to RFQ.")
+                    quote_only(NO_MATCHING_BAND, "No matching delivery band found — routed to RFQ.")
                 else:
                     components.append({"kind": "BULK_TIPPER", "load_size": load_size, "fee": fee})
         elif distance_km <= rules.small_load_max_km:
             components.append({"kind": "SMALL_LOAD", "load_size": None, "fee": rules.small_load_fee})
         else:
-            reasons.append(
+            quote_only(
+                SMALL_LOAD_OUT_OF_RANGE,
                 f"Bulk orders below the {rules.min_bulk_m3}m³ / {rules.min_bulk_tons}-ton minimum are only "
-                f"delivered within {rules.small_load_max_km}km — routed to RFQ."
+                f"delivered within {rules.small_load_max_km}km — routed to RFQ.",
             )
 
     if bagged_kg > 0:
@@ -146,14 +158,13 @@ def calculate_delivery_fee(
             fee = Decimal(0) if bagged_kg >= rules.bagged_free_from_kg else rules.bagged_fee
             components.append({"kind": "BAGGED", "load_size": None, "fee": fee})
         else:
-            reasons.append(
-                f"Bagged/palletised delivery is only priced within {rules.bagged_max_km}km — routed to RFQ."
-            )
+            quote_only(BAGGED_OUT_OF_RANGE, f"Bagged/palletised delivery is only priced within {rules.bagged_max_km}km — routed to RFQ.")
 
     if reasons:
         return DeliveryQuoteResult(
             is_quote_only=True,
             reasons=reasons,
+            reason_codes=reason_codes,
             distance_km=distance_km,
             load_size=load_size,
             fee=None,

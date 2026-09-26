@@ -80,6 +80,8 @@ pnpm --filter api dev              # backend    → http://localhost:4000
 cd services/pricing && pip install -r requirements-dev.txt && uvicorn main:app --reload --port 8000
 
 cd services/pricing && pytest     # includes the to-the-cent workbook reconciliation
+pnpm --filter api test            # API unit tests
+pnpm --filter api test:e2e        # API end-to-end: needs DATABASE_URL (migrated + seeded) and PRICING_SERVICE_URL
 ```
 
 ## Deploying

@@ -38,6 +38,7 @@ class OrderResult:
             "customer_tier": self.customer_tier,
             "is_quote_only": self.is_quote_only,
             "reasons": self.delivery.reasons,
+            "reason_codes": self.delivery.reason_codes,
             "lines": [line.as_dict() for line in self.lines],
             "subtotal": float(self.subtotal),
             "delivery": self.delivery.as_dict(),

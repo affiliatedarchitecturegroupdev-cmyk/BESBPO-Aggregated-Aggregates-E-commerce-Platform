@@ -12,7 +12,7 @@ export function PromoStrip() {
           </p>
         </div>
         <Link
-          href="/trade-accounts"
+          href="/account/apply"
           className="whitespace-nowrap rounded-sm bg-basalt px-5 py-2.5 font-body text-sm font-semibold text-limestone hover:bg-seam-blue"
         >
           Open a Trade Account

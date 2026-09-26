@@ -33,8 +33,10 @@ create a Render database.
 3. Render asks for the two values marked `sync: false`. Paste in
    `DATABASE_URL` and `DIRECT_URL` from step 1. Every other value is set by
    the Blueprint:
-   - `AUTH_SECRET` is generated.
-   - `PRICING_SERVICE_URL` points at the private pricing service.
+   - `AUTH_SECRET` is generated. It signs session tokens.
+   - `PRICING_SERVICE_URL` points the API at the private pricing service.
+   - `API_URL` points the storefront at the API over Render's private network.
+     The browser never calls the API directly.
    - `SEED_PLACEHOLDER_SUPPLIERS=false` keeps the made-up development
      suppliers out of the real database.
 4. Click **Apply**. The first deploy takes a few minutes.
@@ -67,6 +69,18 @@ On each API deploy, the pre-deploy step runs `pnpm run db:deploy`:
     -d '{"deliveryDistanceKm":45,"lineItems":[{"productId":"<id of AA-SBC-05>","unitOfSale":"BULK_M3","quantity":12}]}'
   ```
   The response should show subtotal 4332.96, delivery fee 950 and total 5282.96.
+
+## 4. Create the first staff account
+
+Staff approve trade accounts and price quote requests in the staff console,
+`/account/staff`. Roles can't be granted through the website.
+
+1. Register normally on the storefront.
+2. In Render, open **aggregates-store-api → Shell** and run:
+   ```bash
+   npx --yes pnpm@9.9.0 run db:set-role you@besbpo.co.za STAFF   # or ADMIN
+   ```
+3. Sign out and back in. The dashboard now links to the **Staff console**.
 
 ## Later: custom domains and optional settings
 

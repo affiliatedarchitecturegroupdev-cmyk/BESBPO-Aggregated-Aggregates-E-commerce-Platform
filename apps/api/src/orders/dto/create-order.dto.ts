@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { ArrayMinSize, IsEnum, IsNumber, IsOptional, IsString, ValidateNested } from "class-validator";
+import { ArrayMinSize, IsEnum, IsNumber, IsPositive, IsString, Min, ValidateNested } from "class-validator";
 import { UnitOfSale } from "@aggregates/database";
 
 export class OrderLineItemDto {
@@ -10,19 +10,14 @@ export class OrderLineItemDto {
   unitOfSale!: UnitOfSale;
 
   @IsNumber()
+  @IsPositive()
   quantity!: number;
 }
 
+/** The buyer and their company come from the session, never the request body. */
 export class CreateOrderDto {
-  @IsOptional()
-  @IsString()
-  userId?: string;
-
-  @IsOptional()
-  @IsString()
-  companyId?: string;
-
   @IsNumber()
+  @Min(0)
   deliveryDistanceKm!: number;
 
   @ValidateNested({ each: true })

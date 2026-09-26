@@ -1,9 +1,12 @@
-import { IsEmail, MinLength } from "class-validator";
+import { Transform } from "class-transformer";
+import { IsEmail, MaxLength, MinLength } from "class-validator";
 
 export class LoginDto {
+  @Transform(({ value }) => (typeof value === "string" ? value.trim().toLowerCase() : value))
   @IsEmail()
   email!: string;
 
   @MinLength(1)
+  @MaxLength(200)
   password!: string;
 }

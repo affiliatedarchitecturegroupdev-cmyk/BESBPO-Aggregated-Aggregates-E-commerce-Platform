@@ -1,0 +1,99 @@
+import type { TierName } from "./session";
+
+/** Shapes returned by the API for the account pages. Decimal columns arrive as strings. */
+export type QuoteStatus = "DRAFT" | "SUBMITTED" | "QUOTED" | "ACCEPTED" | "DECLINED" | "EXPIRED";
+
+export type QuoteRecord = {
+  id: string;
+  reference: string;
+  status: QuoteStatus;
+  reasonCode: string;
+  reasons: string[];
+  contactName: string | null;
+  contactEmail: string | null;
+  contactPhone: string | null;
+  companyName: string | null;
+  projectName: string | null;
+  deliveryAddress: string | null;
+  deliveryProvince: string | null;
+  deliveryDistanceKm: number | null;
+  notes: string | null;
+  estimatedSubtotal: string | null;
+  quotedTotal: string | null;
+  staffNotes: string | null;
+  createdAt: string;
+  lineItems: {
+    id: string;
+    unitOfSale: "BULK_TON" | "BULK_M3" | "BAGGED";
+    quantity: number;
+    estimatedUnitPrice: string | null;
+    product: { name: string; sku: string };
+  }[];
+};
+
+export type CompanyDashboard = {
+  id: string;
+  name: string;
+  status: "PENDING" | "APPROVED" | "DECLINED";
+  registrationNumber: string | null;
+  vatNumber: string | null;
+  standingAgreementRef: string | null;
+  reviewNotes: string | null;
+  tier: { name: TierName; discountPercent: string };
+  requestedTier: { name: TierName } | null;
+  deliveryAddresses: {
+    id: string;
+    label: string;
+    addressLine1: string;
+    addressLine2: string | null;
+    city: string;
+    province: string;
+    postalCode: string;
+    isDefault: boolean;
+  }[];
+  orders: {
+    id: string;
+    orderNumber: string;
+    status: string;
+    total: string;
+    createdAt: string;
+    lineItems: { product: { name: string } }[];
+  }[];
+  invoices: { id: string; invoiceNumber: string; amountDue: string; status: string; dueDate: string | null }[];
+};
+
+export type Application = {
+  id: string;
+  name: string;
+  status: "PENDING" | "APPROVED" | "DECLINED";
+  registrationNumber: string | null;
+  vatNumber: string | null;
+  contactPhone: string | null;
+  applicationNotes: string | null;
+  reviewNotes: string | null;
+  createdAt: string;
+  tier: { name: TierName };
+  requestedTier: { name: TierName } | null;
+  users: { email: string; name: string | null }[];
+};
+
+export const UNIT_LABEL = { BULK_TON: "ton", BULK_M3: "m³", BAGGED: "bags" } as const;
+
+export const TIER_LABEL: Record<TierName, string> = {
+  RETAIL: "Retail",
+  CONTRACTOR_TRADE: "Contractor / Trade",
+  VOLUME_CIVIL_BULK: "Volume / Civil Bulk",
+};
+
+export const QUOTE_STATUS_LABEL: Record<QuoteStatus, string> = {
+  DRAFT: "Draft",
+  SUBMITTED: "Awaiting our quote",
+  QUOTED: "Quoted — your response needed",
+  ACCEPTED: "Accepted",
+  DECLINED: "Declined",
+  EXPIRED: "Expired",
+};
+
+export function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString("en-ZA", { day: "numeric", month: "short", year: "numeric", timeZone: "Africa/Johannesburg" });
+}

@@ -24,6 +24,13 @@ type OrderRequest = {
   customerTier: CustomerTierName;
 };
 
+export type QuoteOnlyReasonCode =
+  | "VOLUME_THRESHOLD"
+  | "OVER_MAX_DISTANCE"
+  | "SMALL_LOAD_OUT_OF_RANGE"
+  | "BAGGED_OUT_OF_RANGE"
+  | "NO_MATCHING_BAND";
+
 export type PricedLine = {
   sku: string;
   unit: PricingUnit;
@@ -47,6 +54,7 @@ export type PricedOrder = {
   customer_tier: CustomerTierName;
   is_quote_only: boolean;
   reasons: string[];
+  reason_codes: QuoteOnlyReasonCode[];
   lines: PricedLine[];
   subtotal: number;
   delivery: DeliveryQuote;

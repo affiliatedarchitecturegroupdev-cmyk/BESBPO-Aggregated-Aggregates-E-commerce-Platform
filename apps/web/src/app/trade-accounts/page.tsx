@@ -74,19 +74,23 @@ export default function TradeAccountsPage() {
         <div>
           <p className="font-display text-xl font-bold text-limestone">Open a trade account</p>
           <p className="mt-1 font-body text-sm text-limestone/70">
-            Online registration is coming soon — until then our sales team sets accounts up within one business day.
+            Create an account, tell us about your company, and we review applications within one business day. You trade at
+            list price until approved.
           </p>
         </div>
         <div className="flex gap-3">
-          <a
-            href={`mailto:${SALES_EMAIL}?subject=${encodeURIComponent("Trade account application")}`}
+          <Link
+            href="/account/apply"
             className="whitespace-nowrap rounded-sm bg-ochre-gold px-5 py-2.5 font-body text-sm font-semibold text-basalt"
           >
-            Apply by email
-          </a>
-          <Link href="/account/dashboard" className="whitespace-nowrap rounded-sm border border-limestone/40 px-5 py-2.5 font-body text-sm text-limestone">
-            Preview the dashboard
+            Apply online
           </Link>
+          <a
+            href={`mailto:${SALES_EMAIL}?subject=${encodeURIComponent("Trade account enquiry")}`}
+            className="whitespace-nowrap rounded-sm border border-limestone/40 px-5 py-2.5 font-body text-sm text-limestone"
+          >
+            Talk to sales
+          </a>
         </div>
       </div>
     </div>

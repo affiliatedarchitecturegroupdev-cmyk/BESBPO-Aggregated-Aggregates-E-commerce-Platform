@@ -66,4 +66,5 @@ def test_order_endpoint_flags_quote_only_orders():
         json={"lines": [{"sku": "AA-SBC-05", "quantity": 4, "unit": "m3"}], "distance_km": 150},
     ).json()
     assert body["is_quote_only"] is True
+    assert body["reason_codes"] == ["OVER_MAX_DISTANCE"]
     assert body["total"] is None

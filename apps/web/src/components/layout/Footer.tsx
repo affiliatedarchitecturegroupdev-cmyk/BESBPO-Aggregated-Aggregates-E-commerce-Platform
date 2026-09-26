@@ -39,7 +39,7 @@ export function Footer() {
           <li><Link href="/quote">Request a Quote</Link></li>
           <li><Link href="/delivery-areas">Delivery Areas & Charges</Link></li>
           <li><Link href="/trade-accounts">Trade Accounts</Link></li>
-          <li><Link href="/account/dashboard">Trade Account Dashboard</Link></li>
+          <li><Link href="/account/dashboard">My Account</Link></li>
         </FooterColumn>
         <FooterColumn title="Company">
           <li><Link href="/about">About</Link></li>
