@@ -1,104 +1,135 @@
 """
 Aggregated Aggregates — Pricing Microservice
 
-FastAPI service implementing the two calculators that make the storefront's
-pricing legible: the bulk/bag tonnage-volume calculator and the
-distance-banded delivery calculator. Both are cross-checked against the
-pricing engine xlsx to the cent before launch (see roadmap Phase 5 / QA).
+FastAPI service implementing the calculators that make the storefront's
+pricing legible: the bulk/bag tonnage-volume calculator, the
+distance-banded delivery calculator, and whole-order pricing for checkout.
+
+Every figure comes from data/pricing_framework.json, which is generated
+from the pricing framework workbook (scripts/import_pricing_framework.py)
+and reconciled against it to the cent by tests/test_reconcile_workbook.py.
 """
-import json
-from pathlib import Path
-from typing import Literal, Optional
+from decimal import Decimal
+from typing import Literal
 
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
+import pricing_framework
 from calculators.delivery_bands import calculate_delivery_fee
-from calculators.tonnage_volume import BaggedUnitUnavailable, ProductPricing, calculate
+from calculators.order import OrderLine, UnknownSku, price_order
+from calculators.tonnage_volume import UnitNotOffered, calculate
 
 app = FastAPI(
     title="Aggregated Aggregates Pricing Service",
-    description="Tonnage/volume + distance-banded delivery calculators.",
-    version="0.1.0",
+    description="Tonnage/volume, distance-banded delivery, and order pricing.",
+    version="0.2.0",
 )
 
-DATA_PATH = Path(__file__).parent / "data" / "category_markup_bands.json"
-with open(DATA_PATH) as f:
-    SEED_DATA = json.load(f)
+FRAMEWORK = pricing_framework.load()
 
-PRODUCTS_BY_SKU = {p["sku"]: p for p in SEED_DATA["products"]}
-TIERS_BY_NAME = {t["name"]: t for t in SEED_DATA["customer_tiers"]}
-DELIVERY_BANDS = SEED_DATA["delivery_bands"]
+TierName = Literal["RETAIL", "CONTRACTOR_TRADE", "VOLUME_CIVIL_BULK"]
+UnitName = Literal["ton", "m3", "bag"]
 
 
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    return {"status": "ok", "pricing_framework": FRAMEWORK.raw["source"]}
 
 
 @app.get("/products")
 def list_products():
-    return SEED_DATA["products"]
+    return FRAMEWORK.raw["products"]
+
+
+@app.get("/customer-tiers")
+def list_customer_tiers():
+    return FRAMEWORK.raw["customer_tiers"]
+
+
+@app.get("/delivery-rules")
+def delivery_rules():
+    return FRAMEWORK.raw["delivery"]
+
+
+def _product(sku: str):
+    product = FRAMEWORK.products.get(sku)
+    if product is None:
+        raise HTTPException(status_code=404, detail=f"Unknown SKU: {sku}")
+    return product
 
 
 class TonnageVolumeRequest(BaseModel):
     sku: str
-    quantity: float
-    unit: Literal["ton", "m3", "bag"]
-    customer_tier: Literal["RETAIL", "CONTRACTOR_TRADE", "VOLUME_CIVIL_BULK"] = "RETAIL"
+    quantity: Decimal = Field(gt=0)
+    unit: UnitName
+    customer_tier: TierName = "RETAIL"
 
 
 @app.post("/calculate/tonnage-volume")
 def calculate_tonnage_volume(req: TonnageVolumeRequest):
-    product_data = PRODUCTS_BY_SKU.get(req.sku)
-    if not product_data:
-        raise HTTPException(status_code=404, detail=f"Unknown SKU: {req.sku}")
-
-    tier = TIERS_BY_NAME[req.customer_tier]
-    product = ProductPricing(
-        sku=product_data["sku"],
-        name=product_data["name"],
-        bulk_density_kg_per_m3=product_data["bulk_density_kg_per_m3"],
-        list_price_per_ton=product_data["list_price_per_ton"],
-        bag_premium_multiplier=product_data["bag_premium_multiplier"],
-        bag_weight_kg=product_data["bag_weight_kg"],
-    )
-
+    product = _product(req.sku)
+    tier = FRAMEWORK.tiers[req.customer_tier]
     try:
-        result = calculate(
-            product=product,
-            quantity=req.quantity,
-            unit=req.unit,
-            discount_percent=float(tier["discount_percent"]),
-        )
-    except BaggedUnitUnavailable as exc:
+        result = calculate(product, req.quantity, req.unit, tier.discount)
+    except (UnitNotOffered, ValueError) as exc:
         raise HTTPException(status_code=422, detail=str(exc))
 
-    # Volume/Civil Bulk tier orders at/above the m3 threshold are quote-only —
-    # flag it here so the frontend can route to the RFQ flow instead of
-    # showing a checkout total.
-    min_order_m3 = tier.get("minimum_order_m3")
-    result["quote_only"] = bool(min_order_m3 and result["equivalent_m3"] >= min_order_m3)
-
-    return result
+    body = result.as_dict()
+    # Only the Volume/Civil Bulk tier has a quote-only m3 threshold; flag it
+    # so the storefront routes to the RFQ flow instead of showing a total.
+    body["quote_only"] = tier.quote_only_min_m3 is not None and result.equivalent_m3 >= tier.quote_only_min_m3
+    return body
 
 
 class DeliveryFeeRequest(BaseModel):
-    distance_km: float
-    quantity_m3: float
+    distance_km: Decimal = Field(ge=0)
+    bulk_m3: Decimal = Field(default=Decimal(0), ge=0)
+    bulk_tons: Decimal = Field(default=Decimal(0), ge=0)
+    bagged_kg: Decimal = Field(default=Decimal(0), ge=0)
+    customer_tier: TierName = "RETAIL"
 
 
 @app.post("/calculate/delivery-fee")
 def calculate_delivery(req: DeliveryFeeRequest):
-    result = calculate_delivery_fee(
-        distance_km=req.distance_km,
-        quantity_m3=req.quantity_m3,
-        bands=DELIVERY_BANDS,
-    )
-    return {
-        "is_quote_only": result.is_quote_only,
-        "reason": result.reason,
-        "distance_km": result.distance_km,
-        "load_size": result.load_size,
-        "fee": result.fee,
-    }
+    tier = FRAMEWORK.tiers[req.customer_tier]
+    try:
+        result = calculate_delivery_fee(
+            FRAMEWORK.delivery,
+            distance_km=req.distance_km,
+            bulk_m3=req.bulk_m3,
+            bulk_tons=req.bulk_tons,
+            bagged_kg=req.bagged_kg,
+            quote_only_min_m3=tier.quote_only_min_m3,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc))
+    return result.as_dict()
+
+
+class OrderLineRequest(BaseModel):
+    sku: str
+    quantity: Decimal = Field(gt=0)
+    unit: UnitName
+
+
+class OrderRequest(BaseModel):
+    lines: list[OrderLineRequest] = Field(min_length=1)
+    distance_km: Decimal = Field(ge=0)
+    customer_tier: TierName = "RETAIL"
+
+
+@app.post("/calculate/order")
+def calculate_order(req: OrderRequest):
+    try:
+        result = price_order(
+            FRAMEWORK,
+            [OrderLine(sku=line.sku, quantity=line.quantity, unit=line.unit) for line in req.lines],
+            distance_km=req.distance_km,
+            customer_tier=req.customer_tier,
+        )
+    except UnknownSku as exc:
+        raise HTTPException(status_code=404, detail=f"Unknown SKU: {exc.args[0]}")
+    except (UnitNotOffered, ValueError) as exc:
+        raise HTTPException(status_code=422, detail=str(exc))
+    return result.as_dict()

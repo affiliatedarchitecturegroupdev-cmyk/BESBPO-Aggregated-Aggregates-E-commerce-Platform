@@ -1,14 +1,20 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { OrderStatus } from "@aggregates/database";
+import { OrderStatus, UnitOfSale } from "@aggregates/database";
 import { PrismaService } from "../common/prisma.service";
-import { PricingService } from "../pricing/pricing.service";
+import { CustomerTierName, PricingService, PricingUnit } from "../pricing/pricing.service";
 import { CreateOrderDto } from "./dto/create-order.dto";
 
+const UNIT_BY_UNIT_OF_SALE: Record<UnitOfSale, PricingUnit> = {
+  BULK_TON: "ton",
+  BULK_M3: "m3",
+  BAGGED: "bag",
+};
+
 /**
- * Confirmed checkout orders. Enforces the same server-side rule the pricing
- * microservice enforces: Volume/Civil Bulk tier orders (>=10m3 total) and
- * any delivery beyond 100km are quote-only and must not reach this endpoint
- * as a priced order — see AGENTIC_RULES.md rule 3.
+ * Confirmed checkout orders. Anything the pricing service marks quote-only
+ * — Volume/Civil Bulk tier orders of 10m3 or more, delivery beyond 100km,
+ * small-load or bagged delivery beyond 30km — is refused here and must go
+ * through the RFQ flow instead (AGENTIC_RULES.md rule 3).
  */
 @Injectable()
 export class OrdersService {
@@ -18,58 +24,39 @@ export class OrdersService {
   ) {}
 
   async createOrder(dto: CreateOrderDto) {
-    const tierName = dto.companyId
-      ? (await this.prisma.company.findUnique({ where: { id: dto.companyId }, include: { tier: true } }))?.tier.name
+    const tierName: CustomerTierName = dto.companyId
+      ? ((await this.prisma.company.findUnique({ where: { id: dto.companyId }, include: { tier: true } }))?.tier
+          .name ?? "RETAIL")
       : "RETAIL";
 
-    let subtotal = 0;
-    let totalM3 = 0;
-    const pricedLineItems: {
-      productId: string;
-      unitOfSale: (typeof dto.lineItems)[number]["unitOfSale"];
-      quantity: number;
-      unitPrice: number;
-      lineTotal: number;
-    }[] = [];
-
+    const products = await this.prisma.product.findMany({
+      where: { id: { in: dto.lineItems.map((item) => item.productId) } },
+      select: { id: true, sku: true },
+    });
+    const skuById = new Map(products.map((p) => [p.id, p.sku]));
     for (const item of dto.lineItems) {
-      const priced = await this.pricingService.calculateTonnageVolume({
-        sku: (await this.prisma.product.findUniqueOrThrow({ where: { id: item.productId } })).sku,
-        quantity: item.quantity,
-        unit: item.unitOfSale === "BULK_TON" ? "ton" : item.unitOfSale === "BULK_M3" ? "m3" : "bag",
-        customerTier: (tierName as any) ?? "RETAIL",
-      });
-
-      if (priced.quote_only) {
-        throw new BadRequestException(
-          "This order includes a Volume/Civil Bulk tier quantity — route it to the RFQ flow (POST /quotes) instead of checkout.",
-        );
+      if (!skuById.has(item.productId)) {
+        throw new NotFoundException(`Product not found: ${item.productId}`);
       }
-
-      subtotal += priced.total;
-      totalM3 += priced.equivalent_m3;
-      pricedLineItems.push({
-        productId: item.productId,
-        unitOfSale: item.unitOfSale,
-        quantity: item.quantity,
-        unitPrice: priced.unit_price,
-        lineTotal: priced.total,
-      });
     }
 
-    const deliveryQuote = await this.pricingService.calculateDeliveryFee({
+    // One call prices every line and the delivery for the combined load, so
+    // the quote-only rules are decided once, by the pricing service.
+    const priced = await this.pricingService.calculateOrder({
+      lines: dto.lineItems.map((item) => ({
+        sku: skuById.get(item.productId)!,
+        quantity: item.quantity,
+        unit: UNIT_BY_UNIT_OF_SALE[item.unitOfSale],
+      })),
       distanceKm: dto.deliveryDistanceKm,
-      quantityM3: totalM3,
+      customerTier: tierName,
     });
 
-    if (deliveryQuote.is_quote_only) {
+    if (priced.is_quote_only || priced.total === null || priced.delivery.fee === null) {
       throw new BadRequestException(
-        `Delivery for this order is quote-only (${deliveryQuote.reason}) — route it to the RFQ flow instead of checkout.`,
+        `This order is quote-only (${priced.reasons.join("; ")}) — route it to the RFQ flow (POST /quotes) instead of checkout.`,
       );
     }
-
-    const deliveryFee = deliveryQuote.fee ?? 0;
-    const total = subtotal + deliveryFee;
 
     return this.prisma.order.create({
       data: {
@@ -77,10 +64,18 @@ export class OrdersService {
         userId: dto.userId,
         companyId: dto.companyId,
         status: OrderStatus.PENDING,
-        subtotal,
-        deliveryFee,
-        total,
-        lineItems: { create: pricedLineItems },
+        subtotal: priced.subtotal,
+        deliveryFee: priced.delivery.fee,
+        total: priced.total,
+        lineItems: {
+          create: dto.lineItems.map((item, index) => ({
+            productId: item.productId,
+            unitOfSale: item.unitOfSale,
+            quantity: item.quantity,
+            unitPrice: priced.lines[index].unit_price,
+            lineTotal: priced.lines[index].total,
+          })),
+        },
       },
       include: { lineItems: { include: { product: true } } },
     });

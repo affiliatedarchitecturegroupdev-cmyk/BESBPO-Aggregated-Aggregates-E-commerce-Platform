@@ -1,6 +1,6 @@
 import { ProductCard } from "@/components/product/ProductCard";
 import { CATEGORIES } from "@/data/categories";
-import { SAMPLE_PRODUCTS } from "@/data/products.sample";
+import { PRODUCTS } from "@/data/catalogue";
 
 export default function ProductListingPage({
   searchParams,
@@ -9,8 +9,8 @@ export default function ProductListingPage({
 }) {
   const activeCategory = searchParams.category;
   const products = activeCategory
-    ? SAMPLE_PRODUCTS.filter((p) => p.categorySlug === activeCategory)
-    : SAMPLE_PRODUCTS;
+    ? PRODUCTS.filter((p) => p.categorySlug === activeCategory)
+    : PRODUCTS;
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">

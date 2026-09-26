@@ -53,7 +53,7 @@ aggregates-store-platform/
 │   ├── web/            Next.js storefront — merchandising, product, RFQ, trade dashboard, legal pages
 │   └── api/             NestJS backend — auth, catalogue, trade-accounts, quotes, orders, suppliers, compliance docs
 ├── services/
-│   └── pricing/         FastAPI microservice — tonnage/volume + distance-banded delivery calculators
+│   └── pricing/         FastAPI microservice — tonnage/volume, delivery and order pricing
 ├── packages/
 │   └── database/        Shared Prisma schema + seed data (12 core models)
 ├── content/
@@ -77,8 +77,16 @@ pnpm --filter @aggregates/database db:seed
 
 pnpm --filter web dev              # storefront → http://localhost:3000
 pnpm --filter api dev              # backend    → http://localhost:4000
-cd services/pricing && pip install -r requirements.txt && uvicorn main:app --reload --port 8000
+cd services/pricing && pip install -r requirements-dev.txt && uvicorn main:app --reload --port 8000
+
+cd services/pricing && pytest     # includes the to-the-cent workbook reconciliation
 ```
+
+## Pricing
+
+Every price comes from the pricing framework workbook in `docs/pricing/`.
+See [`docs/pricing/README.md`](docs/pricing/README.md) for how it flows into
+the platform and how to change a price.
 
 ## Reference
 
