@@ -84,4 +84,4 @@ cd services/pricing && pip install -r requirements.txt && uvicorn main:app --rel
 
 The full architecture rationale, feature-adoption matrix, wireframes, and
 confirmed decisions live in the companion spec document:
-`aggregated-aggregates-ecommerce-spec.pdf` (delivered alongside this scaffold).
+[`docs/aggregated-aggregates-ecommerce-spec.pdf`](docs/aggregated-aggregates-ecommerce-spec.pdf).
