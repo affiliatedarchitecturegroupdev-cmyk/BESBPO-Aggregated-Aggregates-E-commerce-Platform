@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { CUSTOMER_TIERS, type CustomerTierName, type Product, type Unit } from "@/data/catalogue";
 import { estimateDelivery, estimateLine, formatZAR, UNIT_LABELS } from "@/lib/pricing";
@@ -38,6 +39,8 @@ export function BulkBagCalculator({ product }: { product: Product }) {
         : null,
     [distanceKm, tierName, unit, line, quantity],
   );
+
+  const quoteHref = `/quote?sku=${product.sku}&unit=${unit}&qty=${quantity}&km=${distanceKm}`;
 
   return (
     <div className="rounded-sm border border-seam-blue/30 bg-seam-blue/5 p-5">
@@ -125,20 +128,22 @@ export function BulkBagCalculator({ product }: { product: Product }) {
       {delivery?.isQuoteOnly ? (
         <div className="mt-4 rounded-sm border border-ochre-gold/50 bg-ochre-gold/10 p-3 font-body text-sm text-basalt">
           {delivery.reasons.join(" ")}{" "}
-          <a href="/quote" className="font-semibold text-seam-blue hover:underline">
+          <Link href={quoteHref} className="font-semibold text-seam-blue hover:underline">
             Request a quote →
-          </a>
+          </Link>
         </div>
       ) : delivery ? (
-        <div className="mt-4 flex items-center justify-between rounded-sm bg-basalt px-4 py-3">
-          <span className="font-body text-sm text-limestone/80">
-            Estimated total: {formatZAR(line.total + delivery.fee)}
-          </span>
-          <button className="rounded-sm bg-ochre-gold px-4 py-2 font-body text-xs font-semibold text-basalt">
-            Add to Quote
-          </button>
+        <div className="mt-4 rounded-sm bg-basalt px-4 py-3 font-body text-sm text-limestone">
+          Estimated total: <strong>{formatZAR(line.total + delivery.fee)}</strong>
         </div>
       ) : null}
+      {/* No cart yet: every order starts as a quote request carrying this load. */}
+      <Link
+        href={quoteHref}
+        className="mt-4 inline-block rounded-sm bg-seam-blue px-5 py-2.5 font-body text-sm font-semibold text-limestone hover:bg-basalt"
+      >
+        Add to Quote Request
+      </Link>
       <p className="mt-2 font-body text-[11px] text-slate">
         Estimate only — your order is re-priced at checkout. Delivery distance is measured from the nearest approved
         partner supplier.

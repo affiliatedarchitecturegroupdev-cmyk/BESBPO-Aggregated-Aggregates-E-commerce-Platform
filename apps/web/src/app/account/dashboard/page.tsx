@@ -1,7 +1,11 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = { title: "Trade Account Dashboard", robots: { index: false } };
+
 const SAMPLE_ORDERS = [
-  { orderNumber: "AA-10245", date: "18 Sep 2026", products: "G5 Gravel, 19mm Stone", yard: "Pinetown Partner Yard", status: "Delivered", total: "R14,200" },
-  { orderNumber: "AA-10238", date: "11 Sep 2026", products: "River Sand ×10m³", yard: "Pinetown Partner Yard", status: "In Transit", total: "R5,555" },
-  { orderNumber: "AA-10221", date: "29 Aug 2026", products: "Crusher Run 0–19mm", yard: "Germiston Partner Yard", status: "Delivered", total: "R8,960" },
+  { orderNumber: "AA-10245", date: "18 Sep 2026", products: "G5 Natural Gravel, 19mm Crushed Stone", region: "KwaZulu-Natal", status: "Delivered", total: "R14,200.00" },
+  { orderNumber: "AA-10238", date: "11 Sep 2026", products: "River Sand (Washed) ×10m³", region: "KwaZulu-Natal", status: "In Transit", total: "R5,555.20" },
+  { orderNumber: "AA-10221", date: "29 Aug 2026", products: "Crusher Run 0–19mm", region: "Gauteng", status: "Delivered", total: "R8,960.00" },
 ];
 
 /**
@@ -26,6 +30,9 @@ export default function TradeDashboardPage() {
         </aside>
 
         <div>
+          <p className="mb-4 rounded-sm border border-ochre-gold/40 bg-ochre-gold/10 p-3 font-body text-xs text-basalt">
+            <strong>Preview with sample data.</strong> Sign-in and live account data arrive with trade accounts in Phase 3.
+          </p>
           <h1 className="font-display text-xl font-bold text-basalt">Welcome back — Company: XYZ Civil Contractors (Pty) Ltd</h1>
 
           <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
@@ -51,7 +58,7 @@ export default function TradeDashboardPage() {
                   <th className="px-4 py-2">Order #</th>
                   <th>Date</th>
                   <th>Products</th>
-                  <th>Delivery Yard</th>
+                  <th>Delivered in</th>
                   <th>Status</th>
                   <th className="pr-4 text-right">Total</th>
                 </tr>
@@ -62,7 +69,7 @@ export default function TradeDashboardPage() {
                     <td className="px-4 py-3">{order.orderNumber}</td>
                     <td>{order.date}</td>
                     <td>{order.products}</td>
-                    <td>{order.yard}</td>
+                    <td>{order.region}</td>
                     <td>{order.status}</td>
                     <td className="pr-4 text-right">{order.total}</td>
                   </tr>
