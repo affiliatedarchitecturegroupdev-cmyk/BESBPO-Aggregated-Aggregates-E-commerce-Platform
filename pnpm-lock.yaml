@@ -146,6 +146,9 @@ importers:
         specifier: ^5.19.0
         version: 5.22.0(prisma@5.22.0)
     devDependencies:
+      '@types/node':
+        specifier: ^20.16.5
+        version: 20.19.43
       prisma:
         specifier: ^5.19.0
         version: 5.22.0

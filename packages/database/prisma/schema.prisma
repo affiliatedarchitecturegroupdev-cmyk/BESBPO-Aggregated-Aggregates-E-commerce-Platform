@@ -133,7 +133,8 @@ model Product {
   name                String
   categoryId          String
   category            Category             @relation(fields: [categoryId], references: [id])
-  gradingStandard     String? // e.g. "SANS 1200-G14", "SANS 1083", "COLTO/TRH14"
+  gradingStandard     String? // e.g. "SANS 1200-G", "SANS 1083", "COLTO/TRH14"
+  unitsOfSale         UnitOfSale[] // from the workbook's "Unit of Sale" column; the pricing service refuses any other unit
   description         String?
   images              ProductImage[]
   priceBand           PriceBand?
@@ -156,6 +157,8 @@ model ProductImage {
 
 /// Category-level bulk density, base cost, markup %, and bag premium
 /// multiplier — mirrors the Category Markup Bands sheet in the pricing xlsx.
+/// Seeded from services/pricing/data/pricing_framework.json (generated from
+/// the workbook); the pricing service, not these columns, prices orders.
 model PriceBand {
   id                   String   @id @default(cuid())
   productId            String   @unique
@@ -291,21 +294,21 @@ enum Carrier {
 }
 
 model Order {
-  id           String          @id @default(cuid())
-  orderNumber  String          @unique
-  userId       String?
-  user         User?           @relation(fields: [userId], references: [id])
-  companyId    String?
-  company      Company?        @relation(fields: [companyId], references: [id])
-  status       OrderStatus     @default(PENDING)
-  lineItems    OrderLineItem[]
-  shipment     Shipment?
-  invoice      Invoice?
-  subtotal     Decimal         @db.Decimal(12, 2)
-  deliveryFee  Decimal         @db.Decimal(10, 2)
-  total        Decimal         @db.Decimal(12, 2)
-  createdAt    DateTime        @default(now())
-  updatedAt    DateTime        @updatedAt
+  id          String          @id @default(cuid())
+  orderNumber String          @unique
+  userId      String?
+  user        User?           @relation(fields: [userId], references: [id])
+  companyId   String?
+  company     Company?        @relation(fields: [companyId], references: [id])
+  status      OrderStatus     @default(PENDING)
+  lineItems   OrderLineItem[]
+  shipment    Shipment?
+  invoice     Invoice?
+  subtotal    Decimal         @db.Decimal(12, 2)
+  deliveryFee Decimal         @db.Decimal(10, 2)
+  total       Decimal         @db.Decimal(12, 2)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
 }
 
 /// Confirmed orders — unit-of-sale (bulk/bag) and quantity recorded per line.

@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from "@nestjs/common";
-import { PricingService } from "./pricing.service";
+import { CustomerTierName, PricingService, PricingUnit } from "./pricing.service";
 
 @Controller("pricing")
 export class PricingController {
@@ -7,8 +7,7 @@ export class PricingController {
 
   @Post("tonnage-volume")
   calculateTonnageVolume(
-    @Body()
-    body: { sku: string; quantity: number; unit: "ton" | "m3" | "bag"; customerTier?: "RETAIL" | "CONTRACTOR_TRADE" | "VOLUME_CIVIL_BULK" },
+    @Body() body: { sku: string; quantity: number; unit: PricingUnit; customerTier?: CustomerTierName },
   ) {
     return this.pricingService.calculateTonnageVolume({
       sku: body.sku,
@@ -19,7 +18,10 @@ export class PricingController {
   }
 
   @Post("delivery-fee")
-  calculateDeliveryFee(@Body() body: { distanceKm: number; quantityM3: number }) {
-    return this.pricingService.calculateDeliveryFee(body);
+  calculateDeliveryFee(
+    @Body()
+    body: { distanceKm: number; bulkM3?: number; bulkTons?: number; baggedKg?: number; customerTier?: CustomerTierName },
+  ) {
+    return this.pricingService.calculateDeliveryFee({ ...body, customerTier: body.customerTier ?? "RETAIL" });
   }
 }
