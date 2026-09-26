@@ -59,9 +59,9 @@ aggregates-store-platform/
 ├── content/
 │   └── legal/           Source Markdown for all legal/compliance pages (POPIA, PAIA, Terms, etc.)
 ├── infra/
-│   ├── render.yaml       Render deployment blueprint
 │   ├── terraform/        AWS af-south-1 IaC skeleton
 │   └── docker/           Local Dockerfiles for api + pricing service
+├── render.yaml           Render Blueprint (web, api, private pricing service)
 └── AGENTIC_RULES.md      Human-in-the-loop rules for the Phase 2–5 build-out
 ```
 
@@ -81,6 +81,11 @@ cd services/pricing && pip install -r requirements-dev.txt && uvicorn main:app -
 
 cd services/pricing && pytest     # includes the to-the-cent workbook reconciliation
 ```
+
+## Deploying
+
+The app deploys to Render as a Blueprint from `render.yaml` at the repo root.
+See [`docs/deployment/render.md`](docs/deployment/render.md).
 
 ## Pricing
 

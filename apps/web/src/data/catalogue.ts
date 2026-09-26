@@ -86,3 +86,30 @@ export const PRICING_SOURCE = framework.source;
 export function findProduct(slug: string): Product | undefined {
   return PRODUCTS.find((p) => p.slug === slug);
 }
+
+export function productsInCategory(categorySlug: string): Product[] {
+  return PRODUCTS.filter((p) => p.categorySlug === categorySlug);
+}
+
+export type PricePoint = { unit: Unit; price: number; label: string };
+
+/** A product's retail prices in the order the workbook lists its units — the first is the headline price. */
+export function pricePoints(product: Product, tier: CustomerTierName = "RETAIL"): PricePoint[] {
+  return product.units.map((unit) => ({
+    unit,
+    price: product.prices[tier][unit] ?? 0,
+    label: unit === "bag" ? `${product.bagWeightKg}kg bag` : unit === "m3" ? "m³" : "ton",
+  }));
+}
+
+/** Lowest retail per-ton price in a category, for "from R…/ton" merchandising. Null when nothing is sold per ton. */
+export function fromPricePerTon(categorySlug: string): number | null {
+  const prices = productsInCategory(categorySlug)
+    .map((p) => p.prices.RETAIL.ton)
+    .filter((price): price is number => price !== undefined);
+  return prices.length > 0 ? Math.min(...prices) : null;
+}
+
+export const GRADING_STANDARDS = Array.from(
+  new Set(PRODUCTS.map((p) => p.gradingStandard).filter((s): s is string => s !== null)),
+);

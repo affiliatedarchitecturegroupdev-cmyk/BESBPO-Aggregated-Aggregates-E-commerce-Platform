@@ -1,0 +1,113 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { DELIVERY_RULES } from "@/data/catalogue";
+import { formatZAR } from "@/lib/pricing";
+
+export const metadata: Metadata = {
+  title: "Delivery Areas & Charges",
+  description: "Tipper-truck delivery across KZN and Gauteng from ~50 approved partner suppliers, with distance-banded charges.",
+};
+
+const LOADS = [
+  { size: "M3_6", label: "6m³ load", detail: "~9–10 ton tipper" },
+  { size: "M3_10", label: "10m³ load", detail: "~15–16 ton tipper" },
+  { size: "M3_14_PLUS", label: "14m³+ load", detail: "34-ton Interlink" },
+] as const;
+
+const REGIONS = [
+  { name: "KwaZulu-Natal", status: "Delivering now" },
+  { name: "Gauteng", status: "Delivering now" },
+  { name: "Five further provinces", status: "Expanding with the partner network" },
+];
+
+/**
+ * Module 6: Supplier & Delivery-Point Locator (public view). The supplier
+ * list itself waits on the real partner onboarding list (AGENTIC_RULES.md,
+ * open items), so this page shows coverage and charges, not named suppliers.
+ */
+export default function DeliveryAreasPage() {
+  const [included, ...banded] = DELIVERY_RULES.bands;
+  return (
+    <div className="mx-auto max-w-5xl px-4 py-12">
+      <p className="font-mono text-xs uppercase tracking-widest text-seam-blue">Delivery Areas</p>
+      <h1 className="mt-2 font-display text-3xl font-bold text-basalt">Delivered from the nearest partner supplier</h1>
+      <p className="mt-3 max-w-3xl font-body text-sm text-slate">
+        Aggregated Aggregates sources from an approved network of roughly 50 partner suppliers rather than its own yards.
+        Every delivery is measured from the partner supplier nearest your site and carried by Besfleet, the Group&apos;s
+        own fleet, or one of 15+ tipper-truck delivery partners.
+      </p>
+
+      <div className="mt-8 grid gap-4 sm:grid-cols-3">
+        {REGIONS.map((r) => (
+          <div key={r.name} className="rounded-sm border border-basalt/10 bg-white p-5">
+            <p className="font-body text-sm font-semibold text-basalt">{r.name}</p>
+            <p className={`mt-1 font-mono text-[11px] ${r.status === "Delivering now" ? "text-seam-blue" : "text-slate"}`}>{r.status}</p>
+          </div>
+        ))}
+      </div>
+
+      <h2 className="mt-12 font-display text-xl font-bold text-basalt">Bulk tipper delivery charges</h2>
+      <div className="mt-4 overflow-x-auto rounded-sm border border-basalt/10 bg-white">
+        <table className="w-full min-w-[560px] text-left font-body text-sm">
+          <thead>
+            <tr className="border-b border-basalt/10 text-xs text-slate">
+              <th className="px-4 py-3">Distance</th>
+              {LOADS.map((l) => (
+                <th key={l.size} className="px-4 py-3">
+                  {l.label}
+                  <span className="block font-normal">{l.detail}</span>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="border-b border-basalt/5">
+              <td className="px-4 py-3">{included.minKm}–{included.maxKm}km</td>
+              <td colSpan={3} className="px-4 py-3 font-semibold text-seam-blue">Included in list price</td>
+            </tr>
+            {banded.map((band) => (
+              <tr key={band.label} className="border-b border-basalt/5">
+                <td className="px-4 py-3">{band.minKm}–{band.maxKm}km</td>
+                {LOADS.map((l) => (
+                  <td key={l.size} className="px-4 py-3">{formatZAR(band.fees[l.size] ?? 0)}</td>
+                ))}
+              </tr>
+            ))}
+            <tr>
+              <td className="px-4 py-3">Over {DELIVERY_RULES.quoteOverKm}km</td>
+              <td colSpan={3} className="px-4 py-3">
+                Quoted individually — <Link href="/quote" className="text-seam-blue hover:underline">request a quote</Link>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div className="mt-8 grid gap-4 md:grid-cols-3">
+        <div className="rounded-sm border border-basalt/10 bg-white p-5">
+          <p className="font-body text-sm font-semibold text-basalt">Minimum tipper load</p>
+          <p className="mt-1 font-body text-sm text-slate">
+            {DELIVERY_RULES.minBulkM3}m³ or {DELIVERY_RULES.minBulkTons} tons, whichever suits the material.
+          </p>
+        </div>
+        <div className="rounded-sm border border-basalt/10 bg-white p-5">
+          <p className="font-body text-sm font-semibold text-basalt">Smaller bulk orders</p>
+          <p className="mt-1 font-body text-sm text-slate">
+            Bakkie/LDV small load for a flat {formatZAR(DELIVERY_RULES.smallLoadFee)}, within {DELIVERY_RULES.smallLoadMaxKm}km.
+          </p>
+        </div>
+        <div className="rounded-sm border border-basalt/10 bg-white p-5">
+          <p className="font-body text-sm font-semibold text-basalt">Bagged & palletised</p>
+          <p className="mt-1 font-body text-sm text-slate">
+            {formatZAR(DELIVERY_RULES.baggedFee)} under {DELIVERY_RULES.baggedFreeFromKg / 1000} ton, free from{" "}
+            {DELIVERY_RULES.baggedFreeFromKg / 1000} ton, within {DELIVERY_RULES.baggedMaxKm}km.
+          </p>
+        </div>
+      </div>
+      <p className="mt-6 font-body text-xs text-slate">
+        Volume/Civil Bulk account orders of 10m³ or more are quoted with delivered pricing. Full terms:{" "}
+        <Link href="/legal/shipping-delivery" className="text-seam-blue underline">Shipping & Delivery Policy</Link>.
+      </p>
+    </div>
+  );
+}

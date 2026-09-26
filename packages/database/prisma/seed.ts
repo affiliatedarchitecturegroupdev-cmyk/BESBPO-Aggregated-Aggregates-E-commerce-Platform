@@ -9,8 +9,10 @@
  * change the workbook and re-run that script — never edit figures here
  * (AGENTIC_RULES.md rule 1).
  *
- * Supplier locations below are still placeholders until the real partner
- * onboarding list is available (see AGENTIC_RULES.md, open items).
+ * Supplier locations below are placeholders until the real partner
+ * onboarding list is available (see AGENTIC_RULES.md, open items). They are
+ * seeded for local development only; set SEED_PLACEHOLDER_SUPPLIERS=false
+ * (as render.yaml does) to skip them.
  */
 import { readFileSync } from "fs";
 import { join } from "path";
@@ -166,6 +168,7 @@ async function seedDeliveryBands() {
 }
 
 async function seedSupplierLocations() {
+  if (process.env.SEED_PLACEHOLDER_SUPPLIERS === "false") return;
   if ((await prisma.supplierLocation.count()) > 0) return;
   for (const supplier of SUPPLIER_LOCATIONS) {
     await prisma.supplierLocation.create({ data: supplier });

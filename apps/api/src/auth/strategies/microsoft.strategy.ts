@@ -10,7 +10,7 @@ export class MicrosoftStrategy extends PassportStrategy(Strategy, "microsoft") {
     super({
       clientID: process.env.MICROSOFT_CLIENT_ID ?? "placeholder-client-id",
       clientSecret: process.env.MICROSOFT_CLIENT_SECRET ?? "placeholder-client-secret",
-      callbackURL: `${process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:4000"}/api/v1/auth/microsoft/callback`,
+      callbackURL: `${process.env.NEXT_PUBLIC_APP_URL ?? process.env.RENDER_EXTERNAL_URL ?? "http://localhost:4000"}/api/v1/auth/microsoft/callback`,
       scope: ["user.read"],
     });
   }

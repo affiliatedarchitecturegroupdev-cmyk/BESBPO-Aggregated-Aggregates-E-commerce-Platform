@@ -53,9 +53,26 @@ export type PricedOrder = {
   total: number | null;
 };
 
+/**
+ * On Render the pricing service is a private service and its address arrives
+ * as a bare internal "host:port" (render.yaml fromService.hostport).
+ */
+function normaliseBaseUrl(url: string): string {
+  const withScheme = /^https?:\/\//.test(url) ? url : `http://${url}`;
+  return withScheme.replace(/\/+$/, "");
+}
+
 @Injectable()
 export class PricingService {
-  private readonly baseUrl = process.env.PRICING_SERVICE_URL ?? "http://localhost:8000";
+  private readonly baseUrl = normaliseBaseUrl(process.env.PRICING_SERVICE_URL ?? "http://localhost:8000");
+
+  async health(): Promise<unknown> {
+    const response = await fetch(`${this.baseUrl}/health`, { signal: AbortSignal.timeout(3000) });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    return response.json();
+  }
 
   calculateTonnageVolume(req: TonnageVolumeRequest) {
     return this.post("/calculate/tonnage-volume", {
