@@ -13,7 +13,7 @@ unreviewed work.
 | Phase | Scope | Status |
 |---|---|---|
 | 1. Foundation | Schema, auth (Email/Google/Microsoft), category/product structure, base storefront scaffold | **Delivered — this repo** |
-| 2. Pricing & Calculators | Pricing microservice wired to real Category Markup Bands / Customer Tiers data; bulk/bag calculator; distance-banded delivery calculator | Not started |
+| 2. Pricing & Calculators | Pricing microservice wired to real Category Markup Bands / Customer Tiers data; bulk/bag calculator; distance-banded delivery calculator | **In review** |
 | 3. Trade & Quote Flows | Trade account/tier management, RFQ/bulk-quote flow, compliance document attachment | Not started |
 | 4. Storefront & CMS | Full storefront polish, CMS/admin, supplier & delivery-point locator | Not started |
 | 5. QA & Launch Prep | Human PR review throughout; pricing microservice reconciled against the pricing xlsx to the cent | Not started |
@@ -23,11 +23,11 @@ unreviewed work.
 1. **Don't invent pricing.** Every rand figure, bulk density, bag premium,
    and delivery band must trace back to the Aggregated Aggregates pricing
    engine xlsx (Category Markup Bands, Customer Tiers, Delivery & Additional
-   Charges sheets). The seed data in `packages/database/prisma/seed.ts` and
-   `services/pricing/data/` is illustrative, drawn from the platform spec's
-   sample SKUs — reconcile it against the real pricing engine before it
-   reaches a customer-facing screen, and flag any mismatch rather than
-   silently "fixing" the number.
+   Charges sheets), committed at `docs/pricing/`. Prices reach the platform
+   only through `services/pricing/scripts/import_pricing_framework.py`, and
+   `services/pricing/tests/test_reconcile_workbook.py` holds every SKU to the
+   workbook to the cent — see `docs/pricing/README.md`. Never hand-edit the
+   generated JSON; flag any mismatch rather than silently "fixing" the number.
 2. **No owned-yard logic.** The confirmed model is broker/network: ~50
    partner suppliers, no owned inventory. Do not add `StockLevel` /
    `StockMovement` models or any owned-inventory tracking — that was
