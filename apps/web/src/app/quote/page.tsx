@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { SAMPLE_PRODUCTS } from "@/data/products.sample";
+import { PRODUCTS, type Unit } from "@/data/catalogue";
+import { UNIT_LABELS } from "@/lib/pricing";
 
-type LineItem = { productSku: string; unit: "ton" | "m3" | "bag"; quantity: number };
+type LineItem = { productSku: string; unit: Unit; quantity: number };
 
 const STEPS = ["Project Details", "Materials & Quantities", "Delivery Location", "Review & Submit"];
 
@@ -15,12 +16,12 @@ const STEPS = ["Project Details", "Materials & Quantities", "Delivery Location",
 export default function QuotePage() {
   const [step, setStep] = useState(0);
   const [lineItems, setLineItems] = useState<LineItem[]>([
-    { productSku: SAMPLE_PRODUCTS[0].sku, unit: "m3", quantity: 10 },
+    { productSku: PRODUCTS[0].sku, unit: PRODUCTS[0].units[0], quantity: 10 },
   ]);
   const [submitted, setSubmitted] = useState(false);
 
   const addLineItem = () =>
-    setLineItems((items) => [...items, { productSku: SAMPLE_PRODUCTS[0].sku, unit: "m3", quantity: 1 }]);
+    setLineItems((items) => [...items, { productSku: PRODUCTS[0].sku, unit: PRODUCTS[0].units[0], quantity: 1 }]);
 
   const removeLineItem = (index: number) =>
     setLineItems((items) => items.filter((_, i) => i !== index));
@@ -84,12 +85,17 @@ export default function QuotePage() {
                         value={item.productSku}
                         onChange={(e) =>
                           setLineItems((items) =>
-                            items.map((it, i) => (i === index ? { ...it, productSku: e.target.value } : it)),
+                            items.map((it, i) => {
+                              if (i !== index) return it;
+                              // Keep the unit only if the newly chosen product is sold in it.
+                              const units = PRODUCTS.find((p) => p.sku === e.target.value)!.units;
+                              return { ...it, productSku: e.target.value, unit: units.includes(it.unit) ? it.unit : units[0] };
+                            }),
                           )
                         }
                         className="rounded-sm border border-basalt/20 px-2 py-1"
                       >
-                        {SAMPLE_PRODUCTS.map((p) => (
+                        {PRODUCTS.map((p) => (
                           <option key={p.sku} value={p.sku}>{p.name}</option>
                         ))}
                       </select>
@@ -104,9 +110,11 @@ export default function QuotePage() {
                         }
                         className="rounded-sm border border-basalt/20 px-2 py-1"
                       >
-                        <option value="ton">ton</option>
-                        <option value="m3">m³</option>
-                        <option value="bag">bag</option>
+                        {PRODUCTS.find((p) => p.sku === item.productSku)!.units.map((unit) => (
+                          <option key={unit} value={unit}>
+                            {UNIT_LABELS[unit]}
+                          </option>
+                        ))}
                       </select>
                     </td>
                     <td>
@@ -132,8 +140,8 @@ export default function QuotePage() {
               + Add Another Product
             </button>
             <p className="mt-4 rounded-sm bg-seam-blue/5 p-3 font-body text-xs text-slate">
-              Note: orders ≥10m³ (Volume/Civil Bulk tier) or delivery &gt;100km are quoted individually — our team
-              responds within 1 business day with delivered pricing.
+              Note: Volume/Civil Bulk account orders of 10m³ or more, and any delivery beyond 100km, are quoted
+              individually — our team responds within 1 business day with delivered pricing.
             </p>
           </div>
         )}
@@ -159,10 +167,10 @@ export default function QuotePage() {
             <h2 className="font-body text-sm font-semibold text-basalt">Step 4 — Review & Submit</h2>
             <ul className="mt-3 space-y-1 font-body text-sm text-basalt">
               {lineItems.map((item, index) => {
-                const product = SAMPLE_PRODUCTS.find((p) => p.sku === item.productSku);
+                const product = PRODUCTS.find((p) => p.sku === item.productSku);
                 return (
                   <li key={index}>
-                    {item.quantity} {item.unit} — {product?.name}
+                    {item.quantity} {UNIT_LABELS[item.unit]} — {product?.name}
                   </li>
                 );
               })}

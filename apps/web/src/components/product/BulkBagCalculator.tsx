@@ -1,63 +1,50 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { SampleProduct } from "@/data/products.sample";
-import {
-  applyTierDiscount,
-  formatZAR,
-  m3ToTons,
-  tonsToM3,
-  TIER_DISCOUNTS,
-  VOLUME_CIVIL_BULK_THRESHOLD_M3,
-  type CustomerTierName,
-} from "@/lib/pricing";
+import { CUSTOMER_TIERS, type CustomerTierName, type Product, type Unit } from "@/data/catalogue";
+import { estimateDelivery, estimateLine, formatZAR, UNIT_LABELS } from "@/lib/pricing";
 
-type Unit = "ton" | "m3" | "bag";
+function unitButtonLabel(unit: Unit, product: Product) {
+  if (unit === "ton") return "Bulk (ton)";
+  if (unit === "m3") return "Bulk (m³)";
+  return `Bagged (${product.bagWeightKg}kg)`;
+}
 
 /**
- * Module 1: Bulk / Bag Toggle + Tonnage-Volume Calculator. Converts live
- * between tons and m³ using the product's bulk density, and computes the
- * bagged price from the same base rate — the displayed price is never a
- * second, hand-maintained number.
+ * Module 1 + 2: Bulk / Bag Toggle + Tonnage-Volume Calculator, live-priced
+ * against the customer's tier and delivery distance. Converts between tons
+ * and m³ using the product's bulk density; unit prices come straight from
+ * the pricing framework, so the displayed price is never a second,
+ * hand-maintained number.
  */
-export function BulkBagCalculator({ product }: { product: SampleProduct }) {
-  const [unit, setUnit] = useState<Unit>("ton");
-  const [quantity, setQuantity] = useState(1);
-  const [tier, setTier] = useState<CustomerTierName>("RETAIL");
+export function BulkBagCalculator({ product }: { product: Product }) {
+  const [unit, setUnit] = useState<Unit>(product.units[0]);
+  const [quantity, setQuantity] = useState(unit === "bag" ? 10 : 6);
+  const [tierName, setTierName] = useState<CustomerTierName>("RETAIL");
+  const [distanceKm, setDistanceKm] = useState(25);
 
-  const result = useMemo(() => {
-    let tons = 0;
-    let m3 = 0;
-    let unitPrice = 0;
-
-    if (unit === "ton") {
-      tons = quantity;
-      m3 = tonsToM3(tons, product.bulkDensityKgPerM3);
-      unitPrice = product.listPricePerTon;
-    } else if (unit === "m3") {
-      m3 = quantity;
-      tons = m3ToTons(m3, product.bulkDensityKgPerM3);
-      unitPrice = product.listPricePerM3;
-    } else {
-      unitPrice = product.listPricePerBag ?? 0;
-      const totalKg = quantity * (product.bagWeightKg ?? 0);
-      tons = totalKg / 1000;
-      m3 = tonsToM3(tons, product.bulkDensityKgPerM3);
-    }
-
-    const subtotal = quantity * unitPrice;
-    const total = applyTierDiscount(subtotal, tier);
-    const isQuoteOnly = m3 >= VOLUME_CIVIL_BULK_THRESHOLD_M3;
-
-    return { tons, m3, unitPrice, subtotal, total, isQuoteOnly };
-  }, [unit, quantity, tier, product]);
+  const line = useMemo(() => estimateLine(product, quantity, unit, tierName), [product, quantity, unit, tierName]);
+  const delivery = useMemo(
+    () =>
+      quantity > 0
+        ? estimateDelivery({
+            distanceKm,
+            tierName,
+            bulkM3: unit === "bag" ? 0 : line.m3,
+            bulkTons: unit === "bag" ? 0 : line.tons,
+            baggedKg: line.baggedKg,
+            totalM3: line.m3,
+          })
+        : null,
+    [distanceKm, tierName, unit, line, quantity],
+  );
 
   return (
     <div className="rounded-sm border border-seam-blue/30 bg-seam-blue/5 p-5">
       <p className="font-mono text-[10px] uppercase tracking-wide text-seam-blue">Tonnage / Bag Calculator</p>
 
       <div className="mt-3 flex gap-2">
-        {(["ton", "m3", ...(product.bagPremiumMultiplier ? (["bag"] as Unit[]) : [])] as Unit[]).map((u) => (
+        {product.units.map((u) => (
           <button
             key={u}
             onClick={() => setUnit(u)}
@@ -65,32 +52,43 @@ export function BulkBagCalculator({ product }: { product: SampleProduct }) {
               unit === u ? "border-seam-blue bg-seam-blue text-limestone" : "border-basalt/20 text-basalt"
             }`}
           >
-            {u === "ton" ? "Bulk (ton)" : u === "m3" ? "Bulk (m³)" : `Bagged (${product.bagWeightKg}kg)`}
+            {unitButtonLabel(u, product)}
           </button>
         ))}
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-3">
         <label className="block">
-          <span className="font-mono text-[10px] uppercase text-slate">Quantity ({unit})</span>
+          <span className="font-mono text-[10px] uppercase text-slate">Quantity ({UNIT_LABELS[unit]})</span>
           <input
             type="number"
             min={0}
+            step={unit === "bag" ? 1 : "any"}
             value={quantity}
-            onChange={(e) => setQuantity(Number(e.target.value))}
+            onChange={(e) => setQuantity(Math.max(0, Number(e.target.value)))}
             className="mt-1 w-full rounded-sm border border-basalt/20 px-3 py-2 font-body text-sm"
           />
         </label>
         <label className="block">
-          <span className="font-mono text-[10px] uppercase text-slate">Customer Tier</span>
+          <span className="font-mono text-[10px] uppercase text-slate">Delivery distance (km)</span>
+          <input
+            type="number"
+            min={0}
+            value={distanceKm}
+            onChange={(e) => setDistanceKm(Math.max(0, Number(e.target.value)))}
+            className="mt-1 w-full rounded-sm border border-basalt/20 px-3 py-2 font-body text-sm"
+          />
+        </label>
+        <label className="col-span-2 block">
+          <span className="font-mono text-[10px] uppercase text-slate">Customer tier</span>
           <select
-            value={tier}
-            onChange={(e) => setTier(e.target.value as CustomerTierName)}
+            value={tierName}
+            onChange={(e) => setTierName(e.target.value as CustomerTierName)}
             className="mt-1 w-full rounded-sm border border-basalt/20 px-3 py-2 font-body text-sm"
           >
-            {Object.keys(TIER_DISCOUNTS).map((t) => (
-              <option key={t} value={t}>
-                {t.replace(/_/g, " ")} ({TIER_DISCOUNTS[t as CustomerTierName]}% off)
+            {CUSTOMER_TIERS.map((t) => (
+              <option key={t.name} value={t.name}>
+                {t.label} ({Math.round(t.discount * 100)}% off)
               </option>
             ))}
           </select>
@@ -101,28 +99,50 @@ export function BulkBagCalculator({ product }: { product: SampleProduct }) {
         <div className="flex justify-between">
           <dt className="text-slate">Equivalent</dt>
           <dd>
-            {result.tons.toFixed(2)} tons &nbsp;⇄&nbsp; {result.m3.toFixed(2)} m³
+            {line.tons.toFixed(2)} tons &nbsp;⇄&nbsp; {line.m3.toFixed(2)} m³
           </dd>
         </div>
         <div className="flex justify-between">
           <dt className="text-slate">Unit price</dt>
-          <dd>{formatZAR(result.unitPrice)}</dd>
+          <dd>
+            {formatZAR(line.unitPrice)} / {UNIT_LABELS[unit]}
+          </dd>
         </div>
+        {!line.isQuoteOnly && delivery && !delivery.isQuoteOnly && (
+          <>
+            <div className="flex justify-between">
+              <dt className="text-slate">Material</dt>
+              <dd>{formatZAR(line.total)}</dd>
+            </div>
+            <div className="flex justify-between">
+              <dt className="text-slate">Delivery</dt>
+              <dd>{delivery.fee === 0 ? "Included" : formatZAR(delivery.fee)}</dd>
+            </div>
+          </>
+        )}
       </dl>
 
-      {result.isQuoteOnly ? (
+      {delivery?.isQuoteOnly ? (
         <div className="mt-4 rounded-sm border border-ochre-gold/50 bg-ochre-gold/10 p-3 font-body text-sm text-basalt">
-          This is a Volume/Civil Bulk tier quantity (≥10m³) — pricing is quoted individually.{" "}
-          <a href="/quote" className="font-semibold text-seam-blue hover:underline">Request a quote →</a>
+          {delivery.reasons.join(" ")}{" "}
+          <a href="/quote" className="font-semibold text-seam-blue hover:underline">
+            Request a quote →
+          </a>
         </div>
-      ) : (
+      ) : delivery ? (
         <div className="mt-4 flex items-center justify-between rounded-sm bg-basalt px-4 py-3">
-          <span className="font-body text-sm text-limestone/80">Subtotal: {formatZAR(result.total)}</span>
+          <span className="font-body text-sm text-limestone/80">
+            Estimated total: {formatZAR(line.total + delivery.fee)}
+          </span>
           <button className="rounded-sm bg-ochre-gold px-4 py-2 font-body text-xs font-semibold text-basalt">
             Add to Quote
           </button>
         </div>
-      )}
+      ) : null}
+      <p className="mt-2 font-body text-[11px] text-slate">
+        Estimate only — your order is re-priced at checkout. Delivery distance is measured from the nearest approved
+        partner supplier.
+      </p>
     </div>
   );
 }

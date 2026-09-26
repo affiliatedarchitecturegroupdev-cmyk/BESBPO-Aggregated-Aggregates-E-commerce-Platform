@@ -1,15 +1,14 @@
 import { notFound } from "next/navigation";
 import { BulkBagCalculator } from "@/components/product/BulkBagCalculator";
-import { DeliveryEstimator } from "@/components/delivery/DeliveryEstimator";
 import { CATEGORIES } from "@/data/categories";
-import { SAMPLE_PRODUCTS } from "@/data/products.sample";
+import { findProduct, PRODUCTS } from "@/data/catalogue";
 
 export function generateStaticParams() {
-  return SAMPLE_PRODUCTS.map((p) => ({ slug: p.slug }));
+  return PRODUCTS.map((p) => ({ slug: p.slug }));
 }
 
 export default function ProductDetailPage({ params }: { params: { slug: string } }) {
-  const product = SAMPLE_PRODUCTS.find((p) => p.slug === params.slug);
+  const product = findProduct(params.slug);
   if (!product) notFound();
 
   const category = CATEGORIES.find((c) => c.slug === product.categorySlug);
@@ -32,11 +31,11 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
           <p className="mt-4 font-body text-sm text-slate">
             {category?.description}
           </p>
+          <p className="mt-2 font-mono text-[11px] text-slate">
+            {product.sku} · Sold {product.unitOfSaleLabel}
+          </p>
           <div className="mt-6">
             <BulkBagCalculator product={product} />
-          </div>
-          <div className="mt-6">
-            <DeliveryEstimator />
           </div>
         </div>
       </div>
