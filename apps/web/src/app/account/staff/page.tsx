@@ -3,14 +3,26 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ActionForm, inputClass, SubmitButton } from "@/components/account/Forms";
 import { api } from "@/lib/api";
-import { formatDate, QUOTE_STATUS_LABEL, TIER_LABEL, UNIT_LABEL, type Application, type QuoteRecord } from "@/lib/account-types";
+import {
+  DOCUMENT_TYPE_LABEL,
+  formatBytes,
+  formatDate,
+  QUOTE_STATUS_LABEL,
+  TIER_LABEL,
+  UNIT_LABEL,
+  type Application,
+  type DocumentSummary,
+  type QuoteRecord,
+} from "@/lib/account-types";
+import { PRODUCTS } from "@/data/catalogue";
+import { CATEGORIES } from "@/data/categories";
 import { formatZAR } from "@/lib/pricing";
 import { isStaff, requireSession, sessionToken } from "@/lib/session";
-import { priceQuote, reviewApplication } from "../actions";
+import { deleteComplianceDocument, priceQuote, reviewApplication, uploadComplianceDocument } from "../actions";
 
 export const metadata: Metadata = { title: "Staff Console", robots: { index: false } };
 
-const VIEWS = { applications: "Trade applications", quotes: "Quote requests" } as const;
+const VIEWS = { applications: "Trade applications", quotes: "Quote requests", documents: "Compliance documents" } as const;
 type View = keyof typeof VIEWS;
 
 /**
@@ -20,7 +32,7 @@ type View = keyof typeof VIEWS;
 export default async function StaffPage({ searchParams }: { searchParams: { view?: string; status?: string } }) {
   const user = await requireSession("/account/staff");
   if (!isStaff(user)) notFound();
-  const view: View = searchParams.view === "quotes" ? "quotes" : "applications";
+  const view: View = searchParams.view && searchParams.view in VIEWS ? (searchParams.view as View) : "applications";
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
@@ -37,7 +49,9 @@ export default async function StaffPage({ searchParams }: { searchParams: { view
           </Link>
         ))}
       </nav>
-      {view === "applications" ? <Applications status={searchParams.status} /> : <Quotes status={searchParams.status} />}
+      {view === "applications" && <Applications status={searchParams.status} />}
+      {view === "quotes" && <Quotes status={searchParams.status} />}
+      {view === "documents" && <Documents />}
     </div>
   );
 }
@@ -169,6 +183,109 @@ async function Quotes({ status = "SUBMITTED" }: { status?: string }) {
           ))}
         </ul>
       )}
+    </section>
+  );
+}
+
+async function Documents() {
+  const result = await api<(DocumentSummary & { order: { orderNumber: string } | null })[]>("/compliance-documents/recent", {
+    token: sessionToken(),
+  });
+  return (
+    <section className="mt-6 grid gap-8 lg:grid-cols-[380px_1fr]">
+      <div className="rounded-sm border border-basalt/10 bg-white p-5">
+        <h2 className="font-body text-sm font-semibold text-basalt">Upload a document</h2>
+        <p className="mt-1 font-body text-xs text-slate">
+          PDF, PNG or JPEG, up to 10MB. Without an order number it&apos;s public on the product page; with one it&apos;s
+          attached to that order and visible only to its buyer.
+        </p>
+        <ActionForm action={uploadComplianceDocument} className="mt-4 space-y-3">
+          <label className="block">
+            <span className="font-mono text-[10px] uppercase text-slate">Product *</span>
+            <select name="productSku" required className={inputClass}>
+              {CATEGORIES.map((category) => (
+                <optgroup key={category.slug} label={category.name}>
+                  {PRODUCTS.filter((p) => p.categorySlug === category.slug).map((p) => (
+                    <option key={p.sku} value={p.sku}>
+                      {p.name} ({p.sku})
+                    </option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
+          </label>
+          <label className="block">
+            <span className="font-mono text-[10px] uppercase text-slate">Document type *</span>
+            <select name="documentType" required className={inputClass}>
+              {Object.entries(DOCUMENT_TYPE_LABEL).map(([value, label]) => (
+                <option key={value} value={value}>{label}</option>
+              ))}
+            </select>
+          </label>
+          <label className="block">
+            <span className="font-mono text-[10px] uppercase text-slate">Title *</span>
+            <input name="title" required minLength={2} className={inputClass} placeholder="e.g. COA — batch 26-114" />
+          </label>
+          <label className="block">
+            <span className="font-mono text-[10px] uppercase text-slate">Standard (defaults to the product&apos;s)</span>
+            <input name="standard" className={inputClass} placeholder="SANS 1083" />
+          </label>
+          <div className="grid grid-cols-2 gap-3">
+            <label className="block">
+              <span className="font-mono text-[10px] uppercase text-slate">Batch reference</span>
+              <input name="batchReference" className={inputClass} />
+            </label>
+            <label className="block">
+              <span className="font-mono text-[10px] uppercase text-slate">Order number</span>
+              <input name="orderNumber" className={inputClass} placeholder="AA-…" />
+            </label>
+            <label className="block">
+              <span className="font-mono text-[10px] uppercase text-slate">Issued</span>
+              <input name="issuedAt" type="date" className={inputClass} />
+            </label>
+            <label className="block">
+              <span className="font-mono text-[10px] uppercase text-slate">Valid until</span>
+              <input name="expiresAt" type="date" className={inputClass} />
+            </label>
+          </div>
+          <label className="block">
+            <span className="font-mono text-[10px] uppercase text-slate">File *</span>
+            <input name="file" type="file" required accept="application/pdf,image/png,image/jpeg" className="mt-1 block w-full font-body text-sm" />
+          </label>
+          <SubmitButton>Upload</SubmitButton>
+        </ActionForm>
+      </div>
+      <div>
+        <h2 className="font-body text-sm font-semibold text-basalt">Recent documents</h2>
+        {!result.ok ? (
+          <p className="mt-3 font-body text-sm text-slate">{result.message}</p>
+        ) : result.data.length === 0 ? (
+          <p className="mt-3 font-body text-sm text-slate">No documents yet.</p>
+        ) : (
+          <ul className="mt-3 divide-y divide-basalt/5 rounded-sm border border-basalt/10 bg-white font-body text-sm">
+            {result.data.map((doc) => (
+              <li key={doc.id} className="flex flex-wrap items-center justify-between gap-3 px-4 py-3">
+                <span>
+                  <a href={`/api/documents/${doc.id}`} target="_blank" rel="noopener" className="font-semibold text-seam-blue hover:underline">
+                    {doc.title}
+                  </a>
+                  <span className="block text-xs text-slate">
+                    {doc.product.name} · {DOCUMENT_TYPE_LABEL[doc.documentType]} · {doc.standard}
+                    {doc.batchReference && ` · batch ${doc.batchReference}`} · {formatBytes(doc.sizeBytes)}
+                  </span>
+                  <span className="block font-mono text-[10px] text-slate">
+                    {doc.order ? `Order ${doc.order.orderNumber} (private)` : "Product page (public)"} · uploaded {formatDate(doc.createdAt)}
+                  </span>
+                </span>
+                <form action={deleteComplianceDocument}>
+                  <input type="hidden" name="id" value={doc.id} />
+                  <button className="text-xs text-slate hover:text-red-700">Delete</button>
+                </form>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </section>
   );
 }

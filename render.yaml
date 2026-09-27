@@ -74,6 +74,14 @@ services:
         generateValue: true
       - key: SEED_PLACEHOLDER_SUPPLIERS
         value: "false"
+      # Compliance documents live in a private Supabase Storage bucket; the API
+      # serves them, applying each document's visibility rules.
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: STORAGE_BUCKET
+        value: compliance-documents
 
   - type: pserv
     name: aggregates-store-pricing

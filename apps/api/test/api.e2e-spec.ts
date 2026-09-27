@@ -183,6 +183,94 @@ describe("Aggregated Aggregates API (e2e)", () => {
     });
   });
 
+  describe("compliance documents", () => {
+    const pdf = Buffer.from("%PDF-1.7\n1 0 obj << >> endobj\n%%EOF");
+
+    it("lets staff attach product and order documents, and shows each only to the right people", async () => {
+      const staff = await register("docstaff");
+      await prisma.user.update({ where: { email: `docstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      const buyer = await register("docbuyer");
+      const stranger = await register("docstranger");
+      const product = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-CRS-04" } });
+
+      // Customers can't upload; staff can't upload disguised files.
+      await http().post("/compliance-documents").set("Authorization", `Bearer ${buyer}`).attach("file", pdf, "x.pdf").expect(403);
+      await http()
+        .post("/compliance-documents")
+        .set("Authorization", `Bearer ${staff}`)
+        .field({ productSku: "AA-CRS-04", documentType: "SANS_REFERENCE", title: "Fake" })
+        .attach("file", Buffer.from("<html><script>alert(1)</script></html>"), "evil.pdf")
+        .expect(400);
+
+      // A product-level SANS reference: public, standard defaults from the product.
+      const productDoc = await http()
+        .post("/compliance-documents")
+        .set("Authorization", `Bearer ${staff}`)
+        .field({ productSku: "AA-CRS-04", documentType: "SANS_REFERENCE", title: "SANS 1083 grading envelope" })
+        .attach("file", pdf, "../sans 1083.pdf")
+        .expect(201);
+      expect(productDoc.body).toMatchObject({ standard: "SANS 1083", fileName: "sans-1083.pdf", orderId: null });
+      expect(productDoc.body.storageKey).toBeUndefined();
+      const listed = await http().get("/compliance-documents?sku=AA-CRS-04").expect(200);
+      expect(listed.body.map((d: { id: string }) => d.id)).toContain(productDoc.body.id);
+      const file = await http().get(`/compliance-documents/${productDoc.body.id}/file`).expect(200);
+      expect(file.headers["content-type"]).toBe("application/pdf");
+      expect(file.headers["x-content-type-options"]).toBe("nosniff");
+
+      // A batch COA on the buyer's order: only the buyer and staff can open it.
+      const order = await http()
+        .post("/orders")
+        .set("Authorization", `Bearer ${buyer}`)
+        .send({ deliveryDistanceKm: 10, lineItems: [{ productId: product.id, unitOfSale: "BULK_TON", quantity: 6 }] })
+        .expect(201);
+      const batchDoc = await http()
+        .post("/compliance-documents")
+        .set("Authorization", `Bearer ${staff}`)
+        .field({
+          productSku: "AA-CRS-04",
+          documentType: "CERTIFICATE_OF_ANALYSIS",
+          title: "COA batch 26-114",
+          batchReference: "26-114",
+          issuedAt: "2026-09-20",
+          orderNumber: order.body.orderNumber,
+        })
+        .attach("file", pdf, "coa.pdf")
+        .expect(201);
+      await http().get(`/compliance-documents/${batchDoc.body.id}/file`).expect(404);
+      await http().get(`/compliance-documents/${batchDoc.body.id}/file`).set("Authorization", `Bearer ${stranger}`).expect(404);
+      await http().get(`/compliance-documents/${batchDoc.body.id}/file`).set("Authorization", `Bearer ${buyer}`).expect(200);
+      await http().get(`/compliance-documents/${batchDoc.body.id}/file`).set("Authorization", `Bearer ${staff}`).expect(200);
+      const publicList = await http().get("/compliance-documents?sku=AA-CRS-04").expect(200);
+      expect(publicList.body.map((d: { id: string }) => d.id)).not.toContain(batchDoc.body.id);
+
+      // The order record carries both its batch COA and the product's public reference.
+      const record = await http().get(`/orders/${order.body.id}`).set("Authorization", `Bearer ${buyer}`).expect(200);
+      const ids = (docs: { id: string }[]) => docs.map((d) => d.id);
+      expect(ids(record.body.documents)).toEqual(expect.arrayContaining([productDoc.body.id, batchDoc.body.id]));
+
+      // A buyer without a company still sees their own orders, documents included.
+      const mine = await http().get("/orders/mine").set("Authorization", `Bearer ${buyer}`).expect(200);
+      expect(mine.body.map((o: { id: string }) => o.id)).toEqual([order.body.id]);
+      expect(ids(mine.body[0].documents)).toEqual(expect.arrayContaining([productDoc.body.id, batchDoc.body.id]));
+      const theirs = await http().get("/orders/mine").set("Authorization", `Bearer ${stranger}`).expect(200);
+      expect(theirs.body).toEqual([]);
+
+      // An order document must match a product on that order.
+      await http()
+        .post("/compliance-documents")
+        .set("Authorization", `Bearer ${staff}`)
+        .field({ productSku: "AA-SBC-05", documentType: "CERTIFICATE_OF_ANALYSIS", title: "Wrong", orderNumber: order.body.orderNumber })
+        .attach("file", pdf, "coa.pdf")
+        .expect(400);
+
+      for (const id of [productDoc.body.id, batchDoc.body.id]) {
+        await http().delete(`/compliance-documents/${id}`).set("Authorization", `Bearer ${staff}`).expect(204);
+        await http().get(`/compliance-documents/${id}/file`).set("Authorization", `Bearer ${staff}`).expect(404);
+      }
+      await prisma.order.delete({ where: { id: order.body.id } });
+    });
+  });
+
   describe("orders", () => {
     it("ignores a companyId in the body and prices at the caller's own tier", async () => {
       const token = await register("orderer");

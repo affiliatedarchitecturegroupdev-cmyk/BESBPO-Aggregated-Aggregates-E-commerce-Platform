@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { api } from "@/lib/api";
+import { api, apiUpload } from "@/lib/api";
 import { endSession, safeReturnPath, sessionToken, startSession } from "@/lib/session";
 
 export type FormState = { error?: string; success?: string } | null;
@@ -147,4 +147,29 @@ export async function submitQuoteRequest(
   if (!result.ok) return { ok: false, error: result.message };
   revalidatePath("/account/dashboard");
   return { ok: true, reference: result.data.reference, reasons: result.data.reasons };
+}
+
+// --- compliance documents (staff) --------------------------------------------
+
+const UPLOAD_FIELDS = ["productSku", "documentType", "title", "standard", "batchReference", "issuedAt", "expiresAt", "orderNumber"];
+
+export async function uploadComplianceDocument(_prev: FormState, form: FormData): Promise<FormState> {
+  const file = form.get("file");
+  if (!(file instanceof File) || file.size === 0) return { error: "Choose a PDF, PNG or JPEG file." };
+  if (file.size > 10 * 1024 * 1024) return { error: "Files must be 10MB or smaller." };
+  const upload = new FormData();
+  for (const name of UPLOAD_FIELDS) {
+    const value = text(form, name);
+    if (value) upload.set(name, value);
+  }
+  upload.set("file", file, file.name);
+  const result = await apiUpload<{ title: string }>("/compliance-documents", upload, sessionToken());
+  if (!result.ok) return { error: result.message };
+  revalidatePath("/account/staff");
+  return { success: `Uploaded “${result.data.title}”.` };
+}
+
+export async function deleteComplianceDocument(form: FormData) {
+  await api(`/compliance-documents/${encodeURIComponent(text(form, "id"))}`, { method: "DELETE", token: sessionToken() });
+  revalidatePath("/account/staff");
 }

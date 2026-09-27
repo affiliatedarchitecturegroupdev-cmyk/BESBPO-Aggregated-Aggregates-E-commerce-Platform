@@ -40,6 +40,29 @@ export async function api<T>(
   return { ok: false, status: response.status, message: errorMessage(json) };
 }
 
+/** Sends multipart form data (file uploads) to the API. */
+export async function apiUpload<T>(path: string, form: FormData, token: string | null): Promise<ApiResult<T>> {
+  let response: Response;
+  try {
+    response = await fetch(`${API_BASE}${path}`, {
+      method: "POST",
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      body: form,
+      cache: "no-store",
+    });
+  } catch {
+    return { ok: false, status: 503, message: "Our systems are unavailable right now — please try again shortly." };
+  }
+  const text = await response.text();
+  const json = text ? safeJson(text) : null;
+  return response.ok ? { ok: true, data: json as T } : { ok: false, status: response.status, message: errorMessage(json) };
+}
+
+/** Raw API response, for streaming files back to the browser. */
+export function apiRaw(path: string, token: string | null) {
+  return fetch(`${API_BASE}${path}`, { headers: token ? { Authorization: `Bearer ${token}` } : {}, cache: "no-store" });
+}
+
 function safeJson(text: string): unknown {
   try {
     return JSON.parse(text);

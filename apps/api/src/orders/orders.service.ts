@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { OrderStatus, UnitOfSale } from "@aggregates/database";
 import { STAFF_ROLES, type AuthUser } from "../common/auth/auth-user";
+import { ComplianceDocumentsService } from "../compliance-documents/compliance-documents.service";
 import { PrismaService } from "../common/prisma.service";
 import { CustomerTierName, PricingService, PricingUnit } from "../pricing/pricing.service";
 import { CreateOrderDto } from "./dto/create-order.dto";
@@ -22,6 +23,7 @@ export class OrdersService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly pricingService: PricingService,
+    private readonly documents: ComplianceDocumentsService,
   ) {}
 
   async createOrder(dto: CreateOrderDto, user: AuthUser) {
@@ -83,6 +85,17 @@ export class OrdersService {
     });
   }
 
+  /** The caller's own orders and their company's, newest first, with documents. */
+  async listMine(user: AuthUser) {
+    const orders = await this.prisma.order.findMany({
+      where: { OR: [{ userId: user.id }, ...(user.companyId ? [{ companyId: user.companyId }] : [])] },
+      orderBy: { createdAt: "desc" },
+      take: 50,
+      include: { lineItems: { include: { product: { select: { name: true, sku: true } } } }, shipment: true },
+    });
+    return this.documents.attachToOrders(orders);
+  }
+
   async getOrder(id: string, user: AuthUser) {
     const order = await this.prisma.order.findUnique({
       where: { id },
@@ -92,6 +105,7 @@ export class OrdersService {
     if (!order || !(isOwner || STAFF_ROLES.includes(user.role))) {
       throw new NotFoundException(`Order not found: ${id}`);
     }
-    return order;
+    const [withDocuments] = await this.documents.attachToOrders([order]);
+    return withDocuments;
   }
 }
