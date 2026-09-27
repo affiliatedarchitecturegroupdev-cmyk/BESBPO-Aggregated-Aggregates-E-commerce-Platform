@@ -34,7 +34,8 @@ export class OrdersService {
       : "RETAIL";
 
     const products = await this.prisma.product.findMany({
-      where: { id: { in: dto.lineItems.map((item) => item.productId) } },
+      // Products staff have hidden from the storefront can't be ordered either.
+      where: { id: { in: dto.lineItems.map((item) => item.productId) }, isActive: true },
       select: { id: true, sku: true },
     });
     const skuById = new Map(products.map((p) => [p.id, p.sku]));

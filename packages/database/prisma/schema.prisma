@@ -158,18 +158,36 @@ model Product {
   complianceDocuments ComplianceDocument[]
   quoteLineItems      QuoteLineItem[]
   orderLineItems      OrderLineItem[]
-  isActive            Boolean              @default(true)
+  isActive            Boolean              @default(true) // staff can hide a product from the storefront
+  featuredRank        Int? // set = shown in the homepage's featured row, lowest first
   createdAt           DateTime             @default(now())
   updatedAt           DateTime             @updatedAt
 }
 
+/// Product photography uploaded by staff, stored in object storage and
+/// served publicly through the API.
 model ProductImage {
-  id        String  @id @default(cuid())
-  productId String
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  url       String
-  altText   String?
-  sortOrder Int     @default(0)
+  id          String   @id @default(cuid())
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  storageKey  String   @unique
+  contentType String
+  sizeBytes   Int
+  altText     String?
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  @@index([productId])
+}
+
+/// Editable storefront copy (announcement bar, homepage hero, trade promo),
+/// one JSON document per key. The API validates each key's shape; the
+/// storefront falls back to built-in copy for any key not yet saved.
+model SiteContent {
+  key         String   @id
+  data        Json
+  updatedById String?
+  updatedAt   DateTime @updatedAt
 }
 
 /// Category-level bulk density, base cost, markup %, and bag premium

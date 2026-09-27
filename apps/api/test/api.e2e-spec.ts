@@ -271,6 +271,96 @@ describe("Aggregated Aggregates API (e2e)", () => {
     });
   });
 
+  describe("CMS: site content and merchandising", () => {
+    const png = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0, 0, 0, 13]);
+    let staff: string;
+    let customer: string;
+
+    beforeAll(async () => {
+      staff = await register("cmsstaff");
+      await prisma.user.update({ where: { email: `cmsstaff-${run}@example.com` }, data: { role: "ADMIN" } });
+      customer = await register("cmscustomer");
+    });
+
+    it("validates and saves content blocks for staff only", async () => {
+      const hero = {
+        eyebrow: "SANS / COLTO Graded",
+        headline: "Every Layer Starts Here.",
+        body: "Test copy",
+        primaryCta: { label: "Shop", href: "/products" },
+        secondaryCta: { label: "Quote", href: "https://aggregates.store/quote" },
+      };
+      await http().put("/content/hero").set("Authorization", `Bearer ${customer}`).send(hero).expect(403);
+      await http()
+        .put("/content/hero")
+        .set("Authorization", `Bearer ${staff}`)
+        .send({ ...hero, primaryCta: { label: "x", href: "javascript:alert(1)" } })
+        .expect(400);
+      await http()
+        .put("/content/hero")
+        .set("Authorization", `Bearer ${staff}`)
+        .send({ ...hero, primaryCta: { label: "x", href: "//evil.example" } })
+        .expect(400);
+      await http().put("/content/hero").set("Authorization", `Bearer ${staff}`).send({ ...hero, script: "<b>" }).expect(400);
+      await http().put("/content/nope").set("Authorization", `Bearer ${staff}`).send({}).expect(404);
+      await http().put("/content/hero").set("Authorization", `Bearer ${staff}`).send(hero).expect(200);
+      const all = await http().get("/content").expect(200);
+      expect(all.body.hero).toEqual(hero);
+      await prisma.siteContent.delete({ where: { key: "hero" } });
+    });
+
+    it("lets staff merchandise products without touching prices, and hides them everywhere", async () => {
+      const sku = "AA-DRN-02";
+      await http().patch(`/merchandising/products/${sku}`).set("Authorization", `Bearer ${customer}`).send({ isActive: false }).expect(403);
+      const updated = await http()
+        .patch(`/merchandising/products/${sku}`)
+        .set("Authorization", `Bearer ${staff}`)
+        .send({ description: "Single-sized filter stone.", featuredRank: 2, listPrice: 1 })
+        .expect(200);
+      expect(updated.body).toMatchObject({ description: "Single-sized filter stone.", featuredRank: 2 });
+
+      // Images: content-checked, public to view, staff to manage.
+      await http()
+        .post(`/merchandising/products/${sku}/images`)
+        .set("Authorization", `Bearer ${staff}`)
+        .attach("file", Buffer.from("%PDF-1.7"), "not-an-image.png")
+        .expect(400);
+      const image = await http()
+        .post(`/merchandising/products/${sku}/images`)
+        .set("Authorization", `Bearer ${staff}`)
+        .field({ altText: "Filter media stockpile" })
+        .attach("file", png, "stockpile.png")
+        .expect(201);
+      const served = await http().get(`/merchandising/images/${image.body.id}`).expect(200);
+      expect(served.headers["content-type"]).toBe("image/png");
+      const overlay = await http().get("/merchandising/products").expect(200);
+      expect(overlay.body).toHaveLength(48);
+      expect(overlay.body.find((p: { sku: string }) => p.sku === sku)).toMatchObject({
+        featuredRank: 2,
+        images: [{ id: image.body.id, altText: "Filter media stockpile" }],
+      });
+
+      // Hidden products drop out of the catalogue and can't be quoted or ordered.
+      await http().patch(`/merchandising/products/${sku}`).set("Authorization", `Bearer ${staff}`).send({ isActive: false }).expect(200);
+      const listed = await http().get("/products").expect(200);
+      expect(listed.body.map((p: { sku: string }) => p.sku)).not.toContain(sku);
+      await http()
+        .post("/quotes")
+        .send({ contactName: "X Y", contactEmail: "x@example.com", deliveryAddress: "Somewhere", lines: [{ sku, unit: "ton", quantity: 5 }] })
+        .expect(404);
+      const product = await prisma.product.findUniqueOrThrow({ where: { sku } });
+      await http()
+        .post("/orders")
+        .set("Authorization", `Bearer ${customer}`)
+        .send({ deliveryDistanceKm: 10, lineItems: [{ productId: product.id, unitOfSale: "BULK_TON", quantity: 5 }] })
+        .expect(404);
+
+      await http().delete(`/merchandising/images/${image.body.id}`).set("Authorization", `Bearer ${staff}`).expect(204);
+      await http().get(`/merchandising/images/${image.body.id}`).expect(404);
+      await prisma.product.update({ where: { sku }, data: { isActive: true, description: null, featuredRank: null } });
+    });
+  });
+
   describe("orders", () => {
     it("ignores a companyId in the body and prices at the caller's own tier", async () => {
       const token = await register("orderer");

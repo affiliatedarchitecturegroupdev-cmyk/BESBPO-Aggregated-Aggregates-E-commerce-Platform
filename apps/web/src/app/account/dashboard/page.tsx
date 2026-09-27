@@ -45,8 +45,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: { 
         </div>
         <div className="flex gap-3">
           {isStaff(user) && (
-            <Link href="/account/staff" className="rounded-sm bg-basalt px-4 py-2 font-body text-sm text-limestone hover:bg-seam-blue">
-              Staff console
+            <Link href="/admin" className="rounded-sm bg-basalt px-4 py-2 font-body text-sm text-limestone hover:bg-seam-blue">
+              Admin
             </Link>
           )}
           <form action={logout}>

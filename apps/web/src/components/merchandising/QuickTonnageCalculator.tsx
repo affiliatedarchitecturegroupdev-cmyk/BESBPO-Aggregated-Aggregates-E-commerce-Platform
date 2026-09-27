@@ -11,9 +11,10 @@ import { estimateDelivery, estimateLine, formatZAR, UNIT_LABELS } from "@/lib/pr
  * and delivery distance to a retail estimate in one row, handing off to the
  * product page's full calculator.
  */
-export function QuickTonnageCalculator() {
-  const [sku, setSku] = useState(PRODUCTS.find((p) => p.slug === "river-sand-washed")?.sku ?? PRODUCTS[0].sku);
-  const product = PRODUCTS.find((p) => p.sku === sku)!;
+export function QuickTonnageCalculator({ hiddenSkus = [] }: { hiddenSkus?: string[] }) {
+  const available = PRODUCTS.filter((p) => !hiddenSkus.includes(p.sku));
+  const [sku, setSku] = useState(available.find((p) => p.slug === "river-sand-washed")?.sku ?? available[0].sku);
+  const product = available.find((p) => p.sku === sku) ?? available[0];
   const [unit, setUnit] = useState<Unit>(product.units[0]);
   const [quantity, setQuantity] = useState(6);
   const [distanceKm, setDistanceKm] = useState(20);
@@ -47,7 +48,7 @@ export function QuickTonnageCalculator() {
             >
               {CATEGORIES.map((category) => (
                 <optgroup key={category.slug} label={category.name}>
-                  {PRODUCTS.filter((p) => p.categorySlug === category.slug).map((p) => (
+                  {available.filter((p) => p.categorySlug === category.slug).map((p) => (
                     <option key={p.sku} value={p.sku}>
                       {p.name}
                     </option>

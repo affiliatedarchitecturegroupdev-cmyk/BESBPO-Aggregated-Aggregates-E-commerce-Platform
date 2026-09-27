@@ -30,14 +30,17 @@ export class AuthGuard implements CanActivate {
       request.user = user;
     }
 
+    // @Roles always wins, even inside a @Public controller.
+    if (roles) {
+      if (!user) throw new UnauthorizedException("Sign in to continue.");
+      if (!roles.includes(user.role)) throw new ForbiddenException("You don't have access to this.");
+      return true;
+    }
     if (isPublic) {
       return true;
     }
     if (!user) {
       throw new UnauthorizedException("Sign in to continue.");
-    }
-    if (roles && !roles.includes(user.role)) {
-      throw new ForbiddenException("You don't have access to this.");
     }
     return true;
   }

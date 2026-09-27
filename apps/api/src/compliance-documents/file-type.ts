@@ -6,6 +6,15 @@ const SIGNATURES: { contentType: string; extension: string; magic: number[] }[] 
 ];
 
 export const MAX_DOCUMENT_BYTES = 10 * 1024 * 1024;
+export const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
+
+/** Product photography: PNG, JPEG or WebP, identified by content. */
+export function detectImageType(body: Buffer): { contentType: string; extension: string } | null {
+  const isWebp = body.subarray(0, 4).toString("latin1") === "RIFF" && body.subarray(8, 12).toString("latin1") === "WEBP";
+  if (isWebp) return { contentType: "image/webp", extension: "webp" };
+  const detected = detectDocumentType(body);
+  return detected && detected.contentType.startsWith("image/") ? detected : null;
+}
 
 export function detectDocumentType(body: Buffer): { contentType: string; extension: string } | null {
   const match = SIGNATURES.find(({ magic }) => magic.every((byte, i) => body[i] === byte));

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ProductCard } from "@/components/product/ProductCard";
-import { GRADING_STANDARDS, PRODUCTS, type Product } from "@/data/catalogue";
+import { GRADING_STANDARDS, type Product } from "@/data/catalogue";
+import { getCatalogue, type MerchandisedProduct } from "@/lib/cms";
 import { CATEGORIES } from "@/data/categories";
 
 export const metadata: Metadata = {
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
   description: "Sub-base, crushed stone, sand, crusher run, ballast, drainage, decorative, lime and recycled aggregates.",
 };
 
-type SearchParams = { category?: string; grading?: string; sale?: string; sort?: string };
+type SearchParams = { q?: string; category?: string; grading?: string; sale?: string; sort?: string };
 
 const SORTS: Record<string, { label: string; compare?: (a: Product, b: Product) => number }> = {
   relevance: { label: "Relevance" },
@@ -26,9 +27,21 @@ function perTon(product: Product): number {
   return ((retail.bag ?? 0) * 1000) / (product.bagWeightKg ?? 1);
 }
 
-function filterProducts({ category, grading, sale, sort }: SearchParams): Product[] {
-  const filtered = PRODUCTS.filter(
+/** Every word of the query must appear in the name, SKU, category, standard or description. */
+function matchesSearch(product: MerchandisedProduct, query: string): boolean {
+  const category = CATEGORIES.find((c) => c.slug === product.categorySlug)?.name ?? "";
+  const haystack = [product.name, product.sku, category, product.gradingStandard, product.description].join(" ").toLowerCase();
+  return query
+    .toLowerCase()
+    .split(/\s+/)
+    .filter(Boolean)
+    .every((word) => haystack.includes(word));
+}
+
+function filterProducts(catalogue: MerchandisedProduct[], { q, category, grading, sale, sort }: SearchParams): MerchandisedProduct[] {
+  const filtered = catalogue.filter(
     (p) =>
+      (!q || matchesSearch(p, q)) &&
       (!category || p.categorySlug === category) &&
       (!grading || p.gradingStandard === grading) &&
       (!sale || (sale === "bag" ? p.units.includes("bag") : p.units.some((u) => u !== "bag"))),
@@ -39,10 +52,11 @@ function filterProducts({ category, grading, sale, sort }: SearchParams): Produc
 
 const selectClass = "mt-1 w-full rounded-sm border border-basalt/20 bg-white px-2 py-1.5 font-body text-sm";
 
-export default function ProductListingPage({ searchParams }: { searchParams: SearchParams }) {
-  const products = filterProducts(searchParams);
+export default async function ProductListingPage({ searchParams }: { searchParams: SearchParams }) {
+  const products = filterProducts(await getCatalogue(), searchParams);
   const category = CATEGORIES.find((c) => c.slug === searchParams.category);
-  const hasFilters = Boolean(searchParams.category || searchParams.grading || searchParams.sale);
+  const query = searchParams.q?.trim();
+  const hasFilters = Boolean(query || searchParams.category || searchParams.grading || searchParams.sale);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
@@ -51,13 +65,19 @@ export default function ProductListingPage({ searchParams }: { searchParams: Sea
         <Link href="/products" className="hover:text-seam-blue">Products</Link>
         {category && <> / {category.name}</>}
       </nav>
-      <h1 className="mt-3 font-display text-3xl font-bold text-basalt">{category?.name ?? "All Products"}</h1>
+      <h1 className="mt-3 font-display text-3xl font-bold text-basalt">
+        {query ? `Results for “${query}”` : (category?.name ?? "All Products")}
+      </h1>
       {category && <p className="mt-1 font-body text-sm text-slate">{category.description}</p>}
 
       <div className="mt-8 grid gap-8 md:grid-cols-[230px_1fr]">
         <aside>
           <form method="get" action="/products" className="rounded-sm border border-basalt/10 bg-white p-4">
             <p className="font-body text-sm font-semibold text-basalt">Filters</p>
+            <label className="mt-4 block">
+              <span className="font-mono text-[10px] uppercase text-slate">Search</span>
+              <input name="q" type="search" defaultValue={query ?? ""} placeholder="e.g. river sand" className={selectClass} />
+            </label>
             <label className="mt-4 block">
               <span className="font-mono text-[10px] uppercase text-slate">Category</span>
               <select name="category" defaultValue={searchParams.category ?? ""} className={selectClass}>

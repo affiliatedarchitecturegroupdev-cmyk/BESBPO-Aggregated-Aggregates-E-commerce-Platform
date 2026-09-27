@@ -40,6 +40,24 @@ export async function api<T>(
   return { ok: false, status: response.status, message: errorMessage(json) };
 }
 
+/**
+ * Cached public read for storefront pages (CMS content, merchandising).
+ * Returns null when the API can't be reached — e.g. during the Render build,
+ * which has no private network — so pages fall back to built-in content and
+ * pick up the live data when they revalidate.
+ */
+export async function apiCached<T>(path: string, revalidateSeconds = 60): Promise<T | null> {
+  try {
+    const response = await fetch(`${API_BASE}${path}`, {
+      next: { revalidate: revalidateSeconds, tags: ["cms"] },
+      signal: AbortSignal.timeout(3000),
+    });
+    return response.ok ? ((await response.json()) as T) : null;
+  } catch {
+    return null;
+  }
+}
+
 /** Sends multipart form data (file uploads) to the API. */
 export async function apiUpload<T>(path: string, form: FormData, token: string | null): Promise<ApiResult<T>> {
   let response: Response;

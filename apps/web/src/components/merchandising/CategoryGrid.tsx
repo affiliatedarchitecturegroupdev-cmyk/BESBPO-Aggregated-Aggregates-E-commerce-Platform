@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { fromPricePerTon, productsInCategory } from "@/data/catalogue";
+import { getCatalogue } from "@/lib/cms";
 import { CATEGORIES } from "@/data/categories";
 import { MaterialSwatch } from "@/components/product/MaterialSwatch";
 import { formatZAR } from "@/lib/pricing";
 
-export function CategoryGrid() {
+export async function CategoryGrid() {
+  const catalogue = await getCatalogue();
   return (
     <section className="mx-auto max-w-6xl px-4 py-16">
       <div className="flex items-baseline justify-between">
@@ -18,8 +19,9 @@ export function CategoryGrid() {
       </p>
       <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3">
         {CATEGORIES.map((category) => {
-          const products = productsInCategory(category.slug);
-          const from = fromPricePerTon(category.slug);
+          const products = catalogue.filter((p) => p.categorySlug === category.slug);
+          const perTon = products.map((p) => p.prices.RETAIL.ton).filter((price): price is number => price !== undefined);
+          const from = perTon.length > 0 ? Math.min(...perTon) : null;
           return (
             <Link
               key={category.slug}
