@@ -32,6 +32,13 @@ services:
     envVars:
       - key: NODE_VERSION
         value: "22"
+      # Account pages and server actions call the API over the private network;
+      # the browser never talks to the API directly.
+      - key: API_URL
+        fromService:
+          type: web
+          name: aggregates-store-api
+          property: hostport
 
   - type: web
     name: aggregates-store-api

@@ -27,7 +27,7 @@ export function Header() {
             href="/account/dashboard"
             className="rounded-sm bg-seam-blue px-4 py-2 font-body text-sm text-limestone hover:bg-basalt"
           >
-            Sign In
+            Account
           </Link>
         </div>
         {/* Mobile menu: a native disclosure, so it works without client JS. */}
@@ -40,7 +40,7 @@ export function Header() {
             className="absolute right-0 mt-2 w-56 rounded-sm border border-basalt/10 bg-white p-2 font-body text-sm shadow-lg"
             aria-label="Mobile"
           >
-            {[...NAV_LINKS, { href: "/quote", label: "Get a Quote" }, { href: "/account/dashboard", label: "Sign In" }].map(
+            {[...NAV_LINKS, { href: "/quote", label: "Get a Quote" }, { href: "/account/dashboard", label: "Account" }].map(
               (link) => (
                 <Link key={link.href} href={link.href} className="block rounded-sm px-3 py-2 text-basalt hover:bg-limestone">
                   {link.label}

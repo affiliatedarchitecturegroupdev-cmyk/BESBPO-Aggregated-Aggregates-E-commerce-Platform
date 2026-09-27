@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { OrderStatus, UnitOfSale } from "@aggregates/database";
+import { STAFF_ROLES, type AuthUser } from "../common/auth/auth-user";
 import { PrismaService } from "../common/prisma.service";
 import { CustomerTierName, PricingService, PricingUnit } from "../pricing/pricing.service";
 import { CreateOrderDto } from "./dto/create-order.dto";
@@ -23,9 +24,10 @@ export class OrdersService {
     private readonly pricingService: PricingService,
   ) {}
 
-  async createOrder(dto: CreateOrderDto) {
-    const tierName: CustomerTierName = dto.companyId
-      ? ((await this.prisma.company.findUnique({ where: { id: dto.companyId }, include: { tier: true } }))?.tier
+  async createOrder(dto: CreateOrderDto, user: AuthUser) {
+    // A pending or declined company's tier is Retail, so this is only ever a tier staff approved.
+    const tierName: CustomerTierName = user.companyId
+      ? ((await this.prisma.company.findUnique({ where: { id: user.companyId }, include: { tier: true } }))?.tier
           .name ?? "RETAIL")
       : "RETAIL";
 
@@ -61,8 +63,8 @@ export class OrdersService {
     return this.prisma.order.create({
       data: {
         orderNumber: `AA-${Date.now()}`,
-        userId: dto.userId,
-        companyId: dto.companyId,
+        userId: user.id,
+        companyId: user.companyId,
         status: OrderStatus.PENDING,
         subtotal: priced.subtotal,
         deliveryFee: priced.delivery.fee,
@@ -81,12 +83,13 @@ export class OrdersService {
     });
   }
 
-  async getOrder(id: string) {
+  async getOrder(id: string, user: AuthUser) {
     const order = await this.prisma.order.findUnique({
       where: { id },
       include: { lineItems: { include: { product: true } }, shipment: true, invoice: true },
     });
-    if (!order) {
+    const isOwner = order && (order.userId === user.id || (order.companyId !== null && order.companyId === user.companyId));
+    if (!order || !(isOwner || STAFF_ROLES.includes(user.role))) {
       throw new NotFoundException(`Order not found: ${id}`);
     }
     return order;

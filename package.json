@@ -13,7 +13,8 @@
     "db:generate": "pnpm --filter @aggregates/database db:generate",
     "db:migrate": "pnpm --filter @aggregates/database db:migrate",
     "db:deploy": "pnpm --filter @aggregates/database db:deploy",
-    "db:seed": "pnpm --filter @aggregates/database db:seed"
+    "db:seed": "pnpm --filter @aggregates/database db:seed",
+    "db:set-role": "pnpm --filter @aggregates/database db:set-role"
   },
   "devDependencies": {
     "turbo": "^2.1.0",

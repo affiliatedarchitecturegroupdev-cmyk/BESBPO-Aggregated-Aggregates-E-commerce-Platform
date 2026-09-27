@@ -1,4 +1,5 @@
 import { Controller, Get, ServiceUnavailableException } from "@nestjs/common";
+import { Public } from "../common/auth/decorators";
 import { PrismaService } from "../common/prisma.service";
 import { PricingService } from "../pricing/pricing.service";
 
@@ -7,6 +8,7 @@ import { PricingService } from "../pricing/pricing.service";
  * database is unreachable; the pricing service's state is reported alongside
  * so a deploy can be diagnosed from one request.
  */
+@Public()
 @Controller("health")
 export class HealthController {
   constructor(

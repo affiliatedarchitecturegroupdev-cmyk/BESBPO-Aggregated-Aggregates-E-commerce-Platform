@@ -76,7 +76,17 @@ model CustomerTier {
   discountPercent   Decimal          @db.Decimal(5, 2)
   minimumOrderM3    Float? // Volume/Civil Bulk tier threshold (>=10m3 routes to RFQ)
   requiresPoInvoice Boolean          @default(false)
-  companies         Company[]
+  companies         Company[]        @relation("CompanyTier")
+  requestedBy       Company[]        @relation("RequestedTier")
+}
+
+/// Trade account applications start PENDING at Retail pricing; staff
+/// approve them onto the requested tier (8% / 15% off list is never
+/// self-service).
+enum CompanyStatus {
+  PENDING
+  APPROVED
+  DECLINED
 }
 
 model Company {
@@ -85,7 +95,14 @@ model Company {
   registrationNumber   String?
   vatNumber            String?
   tierId               String
-  tier                 CustomerTier      @relation(fields: [tierId], references: [id])
+  tier                 CustomerTier      @relation("CompanyTier", fields: [tierId], references: [id])
+  status               CompanyStatus     @default(PENDING)
+  requestedTierId      String?
+  requestedTier        CustomerTier?     @relation("RequestedTier", fields: [requestedTierId], references: [id])
+  contactPhone         String?
+  applicationNotes     String?
+  reviewNotes          String?
+  reviewedAt           DateTime?
   standingAgreementRef String? // e.g. "KZN Civil — active"
   deliveryAddresses    DeliveryAddress[]
   users                User[]
@@ -236,6 +253,8 @@ enum QuoteReasonCode {
   VOLUME_CIVIL_BULK
   DELIVERY_OVER_100KM
   BOTH
+  DELIVERY_NOT_PRICED // small-load or bagged delivery beyond 30km
+  CUSTOMER_REQUEST // priceable at checkout, but the customer asked for a quote
 }
 
 enum UnitOfSale {
@@ -257,10 +276,21 @@ model Quote {
   company            Company?        @relation(fields: [companyId], references: [id])
   status             QuoteStatus     @default(DRAFT)
   reasonCode         QuoteReasonCode
+  reasons            String[] // the pricing service's quote-only reasons, verbatim
+  contactName        String?
+  contactEmail       String?
+  contactPhone       String?
+  companyName        String?
+  projectName        String?
+  deliveryAddress    String?
+  deliveryProvince   String?
   deliveryDistanceKm Float?
   lineItems          QuoteLineItem[]
   notes              String?
+  estimatedSubtotal  Decimal?        @db.Decimal(12, 2) // materials at the requester's tier, excl. delivery
   quotedTotal        Decimal?        @db.Decimal(12, 2)
+  staffNotes         String?
+  quotedAt           DateTime?
   createdAt          DateTime        @default(now())
   updatedAt          DateTime        @updatedAt
 }

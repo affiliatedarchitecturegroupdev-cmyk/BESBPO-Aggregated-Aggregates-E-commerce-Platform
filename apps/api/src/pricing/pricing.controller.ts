@@ -1,6 +1,8 @@
 import { Body, Controller, Post } from "@nestjs/common";
+import { Public } from "../common/auth/decorators";
 import { CustomerTierName, PricingService, PricingUnit } from "./pricing.service";
 
+@Public()
 @Controller("pricing")
 export class PricingController {
   constructor(private readonly pricingService: PricingService) {}

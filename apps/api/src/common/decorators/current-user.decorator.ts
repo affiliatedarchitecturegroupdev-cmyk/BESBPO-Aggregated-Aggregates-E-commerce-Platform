@@ -1,11 +1,7 @@
 import { createParamDecorator, ExecutionContext } from "@nestjs/common";
+import type { AuthUser } from "../auth/auth-user";
 
-/**
- * Pulls the authenticated user off the request. Phase 1 stub: the auth
- * module attaches `req.user` once a session strategy is wired in Phase 2 —
- * until then this returns undefined outside of tests.
- */
-export const CurrentUser = createParamDecorator((_data: unknown, ctx: ExecutionContext) => {
-  const request = ctx.switchToHttp().getRequest();
-  return request.user;
+/** The signed-in user attached by AuthGuard — undefined on anonymous public requests. */
+export const CurrentUser = createParamDecorator((_data: unknown, ctx: ExecutionContext): AuthUser | undefined => {
+  return ctx.switchToHttp().getRequest().user;
 });

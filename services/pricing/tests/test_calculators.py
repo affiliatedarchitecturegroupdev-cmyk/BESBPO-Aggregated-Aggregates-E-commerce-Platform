@@ -103,6 +103,7 @@ def test_ten_m3_or_more_is_quote_only_for_volume_tier_only():
     volume = calculate_delivery_fee(RULES, distance_km=D("10"), bulk_m3=D("12"), quote_only_min_m3=VOLUME_MIN)
     assert volume.is_quote_only is True
     assert "Volume/Civil Bulk" in volume.reasons[0]
+    assert volume.reason_codes == ["VOLUME_THRESHOLD"]
 
     retail = calculate_delivery_fee(RULES, distance_km=D("45"), bulk_m3=D("12"))
     assert retail.is_quote_only is False
@@ -122,6 +123,7 @@ def test_below_minimum_is_small_load_within_30km_only():
     assert near.fee == D("350")
     far = calculate_delivery_fee(RULES, distance_km=D("40"), bulk_m3=D("2"), bulk_tons=D("3"))
     assert far.is_quote_only is True
+    assert far.reason_codes == ["SMALL_LOAD_OUT_OF_RANGE"]
 
 
 def test_bagged_fee_under_one_ton_free_from_one_ton():
