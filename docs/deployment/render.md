@@ -37,8 +37,6 @@ create a Render database.
    - `PRICING_SERVICE_URL` points the API at the private pricing service.
    - `API_URL` points the storefront at the API over Render's private network.
      The browser never calls the API directly.
-   - `SEED_PLACEHOLDER_SUPPLIERS=false` keeps the made-up development
-     suppliers out of the real database.
 4. Click **Apply**. The first deploy takes a few minutes.
 
 On each API deploy, the pre-deploy step runs `pnpm run db:deploy`:
@@ -106,10 +104,41 @@ Staff approve trade accounts and price quote requests in the staff console,
    - price quote requests;
    - upload compliance documents;
    - manage product descriptions, photos, visibility and featured products;
-   - edit the announcement bar, homepage hero and trade promo.
+   - edit the announcement bar, homepage hero and trade promo;
+   - manage the partner-supplier network (see step 6).
 
    Storefront changes go live within a minute. Prices can't be edited in the
    admin; they come from the pricing workbook.
+
+## 6. Import the supplier network
+
+The supplier database is not in the repository, because the repository is
+public and the file holds commercial names, addresses and contacts. Staff
+load it through the admin.
+
+1. Sign in as staff and open **Admin → Suppliers** (`/admin/suppliers`).
+2. Upload the supplier database CSV and keep **New suppliers outside
+   KwaZulu-Natal and Gauteng start inactive** ticked. The import matches rows
+   on `supplier_id`, so importing the same file again updates suppliers
+   rather than duplicating them. A file with any bad row is rejected whole,
+   with every problem listed by line number.
+3. Add a **map pin** (latitude and longitude) for each active supplier. The
+   CSV has no coordinates, and a supplier without a pin never counts toward
+   distance estimates. Either:
+   - edit suppliers one at a time; or
+   - click **Export the CSV**, fill the `latitude` and `longitude` columns in
+     a spreadsheet, and import the file again. Re-imports keep existing pins,
+     contacts and edits unless the file sets them.
+
+   Take each pin from the supplier's loading gate on a map. Don't estimate
+   it: a wrong pin moves customers into the wrong 30/60/100km delivery band.
+4. The admin overview counts active suppliers still without a pin. Until at
+   least one has a pin, `/delivery-areas` shows provinces and towns but hides
+   the **Use my location** finder.
+
+The public site shows only towns, provinces, material categories and
+straight-line distances, never supplier names or contacts. Keep exported
+CSVs off shared drives and out of the repository.
 
 ## Later: custom domains and optional settings
 

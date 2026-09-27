@@ -3,16 +3,18 @@ import { api } from "@/lib/api";
 import { adminCatalogue } from "@/lib/admin-data";
 import type { Application, DocumentSummary, QuoteRecord } from "@/lib/account-types";
 import { sessionToken } from "@/lib/session";
+import type { Supplier } from "@/lib/suppliers";
 
 export const metadata = { title: "Overview" };
 
 export default async function AdminOverview() {
   const token = sessionToken();
-  const [applications, quotes, documents, catalogue] = await Promise.all([
+  const [applications, quotes, documents, catalogue, suppliers] = await Promise.all([
     api<Application[]>("/trade-accounts/applications?status=PENDING", { token }),
     api<QuoteRecord[]>("/quotes?status=SUBMITTED", { token }),
     api<DocumentSummary[]>("/compliance-documents/recent", { token }),
     adminCatalogue(),
+    api<Supplier[]>("/suppliers?filter=active", { token }),
   ]);
   const count = <T,>(r: { ok: true; data: T[] } | { ok: false }) => (r.ok ? String(r.data.length) : "—");
   const cards = [
@@ -28,6 +30,12 @@ export default async function AdminOverview() {
       href: "/admin/products",
       label: "Products without photography",
       value: catalogue ? String(catalogue.filter((p) => p.images.length === 0).length) : "—",
+    },
+    { href: "/admin/suppliers?filter=active", label: "Active partner suppliers", value: count(suppliers) },
+    {
+      href: "/admin/suppliers?filter=missing-coordinates",
+      label: "Active suppliers without a map pin (not used for distances)",
+      value: suppliers.ok ? String(suppliers.data.filter((s) => s.latitude === null).length) : "—",
     },
   ];
   return (

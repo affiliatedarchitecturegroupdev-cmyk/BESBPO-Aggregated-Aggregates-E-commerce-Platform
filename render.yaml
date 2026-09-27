@@ -72,8 +72,6 @@ services:
           property: hostport
       - key: AUTH_SECRET
         generateValue: true
-      - key: SEED_PLACEHOLDER_SUPPLIERS
-        value: "false"
       # Compliance documents live in a private Supabase Storage bucket; the API
       # serves them, applying each document's visibility rules.
       - key: SUPABASE_URL

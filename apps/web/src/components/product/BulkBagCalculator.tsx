@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { CUSTOMER_TIERS, type CustomerTierName, type Product, type Unit } from "@/data/catalogue";
+import { useNearestDeliveryPoint } from "@/components/suppliers/useNearestDeliveryPoint";
 import { estimateDelivery, estimateLine, formatZAR, UNIT_LABELS } from "@/lib/pricing";
 
 function unitButtonLabel(unit: Unit, product: Product) {
@@ -23,6 +24,16 @@ export function BulkBagCalculator({ product }: { product: Product }) {
   const [quantity, setQuantity] = useState(unit === "bag" ? 10 : 6);
   const [tierName, setTierName] = useState<CustomerTierName>("RETAIL");
   const [distanceKm, setDistanceKm] = useState(25);
+  const { state: nearest, locate } = useNearestDeliveryPoint();
+  const [fromLocation, setFromLocation] = useState(false);
+
+  async function useMyLocation() {
+    const result = await locate(product.categorySlug);
+    if (result.status === "found") {
+      setDistanceKm(Math.ceil(result.distanceKm));
+      setFromLocation(true);
+    }
+  }
 
   const line = useMemo(() => estimateLine(product, quantity, unit, tierName), [product, quantity, unit, tierName]);
   const delivery = useMemo(
@@ -78,9 +89,20 @@ export function BulkBagCalculator({ product }: { product: Product }) {
             type="number"
             min={0}
             value={distanceKm}
-            onChange={(e) => setDistanceKm(Math.max(0, Number(e.target.value)))}
+            onChange={(e) => {
+              setDistanceKm(Math.max(0, Number(e.target.value)));
+              setFromLocation(false);
+            }}
             className="mt-1 w-full rounded-sm border border-basalt/20 px-3 py-2 font-body text-sm"
           />
+          <button
+            type="button"
+            onClick={useMyLocation}
+            disabled={nearest.status === "locating"}
+            className="mt-1 font-body text-xs font-semibold text-seam-blue hover:underline disabled:opacity-50"
+          >
+            {nearest.status === "locating" ? "Finding…" : "Use my location"}
+          </button>
         </label>
         <label className="col-span-2 block">
           <span className="font-mono text-[10px] uppercase text-slate">Customer tier</span>
@@ -96,6 +118,17 @@ export function BulkBagCalculator({ product }: { product: Product }) {
             ))}
           </select>
         </label>
+      </div>
+
+      <div aria-live="polite" className="font-body text-[11px] text-slate">
+        {fromLocation && nearest.status === "found" && (
+          <p className="mt-2">
+            Nearest supplier of this material: {nearest.town}, {nearest.province} — {nearest.distanceKm}km in a straight
+            line. Road distance is usually further; we confirm it at checkout.
+          </p>
+        )}
+        {nearest.status === "none" && <p className="mt-2">No mapped supplier stocks this material yet — enter the distance or request a quote.</p>}
+        {nearest.status === "error" && <p className="mt-2">{nearest.message}</p>}
       </div>
 
       <dl className="mt-4 space-y-1 font-body text-sm text-basalt">

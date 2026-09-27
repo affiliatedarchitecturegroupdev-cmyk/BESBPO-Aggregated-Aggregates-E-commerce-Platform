@@ -237,21 +237,40 @@ model DeliveryBand {
   shipments   Shipment[]
 }
 
-/// The ~50-strong approved partner-supplier network a delivery band is
-/// measured from. There is deliberately no owned-yard entity in this model —
-/// the confirmed platform decision is a broker/network model.
+/// The approved partner-supplier network a delivery distance is measured
+/// from. There is deliberately no owned-yard entity in this model — the
+/// confirmed platform decision is a broker/network model.
+///
+/// Imported by staff from the supplier database CSV (never committed to the
+/// public repo). Names and contacts are staff-only; the storefront shows
+/// delivery points by town and province. Distances need coordinates, which
+/// staff add per supplier — a supplier without them is never used for a
+/// distance.
+enum SupplierTier {
+  TIER_1
+  TIER_2
+}
+
 model SupplierLocation {
-  id            String    @id @default(cuid())
+  id            String       @id @default(cuid())
+  externalId    String?      @unique // supplier_id in the supplier database, e.g. "SUP-001"
   name          String
+  tier          SupplierTier @default(TIER_1)
   province      String
-  city          String
-  latitude      Float
-  longitude     Float
+  city          String // town shown publicly for the delivery point
+  address       String?
+  latitude      Float?
+  longitude     Float?
+  categorySlugs String[] // storefront category slugs this supplier can supply
+  productNotes  String? // e.g. "CAT-01 (G1–G5), CAT-02 (13.2mm, 19mm Andesite)"
   contactName   String?
   contactPhone  String?
   approvedSince DateTime?
-  isActive      Boolean   @default(true)
-  createdAt     DateTime  @default(now())
+  isActive      Boolean      @default(true)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @default(now()) @updatedAt
+
+  @@index([province])
 }
 
 // ---------------------------------------------------------------------------
