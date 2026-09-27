@@ -14,7 +14,7 @@ unreviewed work.
 |---|---|---|
 | 1. Foundation | Schema, auth (Email/Google/Microsoft), category/product structure, base storefront scaffold | **Delivered — this repo** |
 | 2. Pricing & Calculators | Pricing microservice wired to real Category Markup Bands / Customer Tiers data; bulk/bag calculator; distance-banded delivery calculator | **Delivered** (PR #1) |
-| 3. Trade & Quote Flows | Trade account/tier management, RFQ/bulk-quote flow, compliance document attachment | **In progress** — sign-in, trade accounts with staff approval, and the RFQ flow in review; compliance documents next |
+| 3. Trade & Quote Flows | Trade account/tier management, RFQ/bulk-quote flow, compliance document attachment | **In review** — sign-in, trade accounts with staff approval and the RFQ flow delivered (PR #3); compliance documents in review |
 | 4. Storefront & CMS | Full storefront polish, CMS/admin, supplier & delivery-point locator | **In progress** — storefront pages and merchandising in review; CMS/admin and the named-supplier locator not started |
 | 5. QA & Launch Prep | Human PR review throughout; pricing microservice reconciled against the pricing xlsx to the cent | Not started |
 

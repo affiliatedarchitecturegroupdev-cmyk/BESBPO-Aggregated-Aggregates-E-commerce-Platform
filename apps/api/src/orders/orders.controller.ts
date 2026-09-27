@@ -13,6 +13,11 @@ export class OrdersController {
     return this.ordersService.createOrder(dto, user);
   }
 
+  @Get("mine")
+  listMine(@CurrentUser() user: AuthUser) {
+    return this.ordersService.listMine(user);
+  }
+
   @Get(":id")
   getOne(@Param("id") id: string, @CurrentUser() user: AuthUser) {
     return this.ordersService.getOrder(id, user);

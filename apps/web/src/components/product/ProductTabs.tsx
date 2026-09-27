@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { DOCUMENT_TYPE_LABEL, formatBytes, type DocumentSummary } from "@/lib/account-types";
 import { CUSTOMER_TIERS, DELIVERY_RULES, pricePoints, type Product } from "@/data/catalogue";
 import { formatZAR } from "@/lib/pricing";
 
@@ -42,15 +43,7 @@ export function ProductTabs({ product, categoryName }: { product: Product; categ
             delivery with your quote, and it is attached to the order record.
           </p>
         )}
-        {tab === "Compliance Docs (SANS/COA)" && (
-          <p className="text-slate">
-            {product.gradingStandard
-              ? `Reference standard: ${product.gradingStandard}. `
-              : "This material has no single reference standard. "}
-            Where the supplier issues one, a batch-specific Certificate of Analysis (COA) is attached to this product and
-            your order record.
-          </p>
-        )}
+        {tab === "Compliance Docs (SANS/COA)" && <ComplianceDocuments product={product} />}
         {tab === "Delivery & Returns" && <DeliveryTable />}
       </div>
     </div>
@@ -127,6 +120,63 @@ function DeliveryTable() {
         See our <Link href="/legal/shipping-delivery" className="text-seam-blue underline">Shipping & Delivery</Link> and{" "}
         <Link href="/legal/returns-refunds" className="text-seam-blue underline">Returns & Refunds</Link> policies.
       </p>
+    </div>
+  );
+}
+
+/** Module 5: the product's public SANS references and COAs, loaded when the tab opens. */
+function ComplianceDocuments({ product }: { product: Product }) {
+  const [documents, setDocuments] = useState<DocumentSummary[] | null>(null);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`/api/products/${encodeURIComponent(product.sku)}/documents`)
+      .then((response) => (response.ok ? response.json() : Promise.reject()))
+      .then((data: DocumentSummary[]) => !cancelled && setDocuments(data))
+      .catch(() => !cancelled && setFailed(true));
+    return () => {
+      cancelled = true;
+    };
+  }, [product.sku]);
+
+  return (
+    <div className="space-y-4">
+      <p className="text-slate">
+        {product.gradingStandard ? `Reference standard: ${product.gradingStandard}. ` : "This material has no single reference standard. "}
+        Batch-specific Certificates of Analysis for your delivery are attached to your order record.
+      </p>
+      {failed ? (
+        <p className="text-slate">Documents couldn&apos;t be loaded right now — please try again shortly.</p>
+      ) : documents === null ? (
+        <p className="text-slate">Loading documents…</p>
+      ) : documents.length === 0 ? (
+        <p className="text-slate">No documents published for this product yet — ask for them with your quote.</p>
+      ) : (
+        <ul className="divide-y divide-basalt/5 rounded-sm border border-basalt/10">
+          {documents.map((doc) => (
+            <li key={doc.id} className="flex flex-wrap items-center justify-between gap-2 px-4 py-3">
+              <span>
+                <span className="font-semibold text-basalt">{doc.title}</span>
+                <span className="block text-xs text-slate">
+                  {DOCUMENT_TYPE_LABEL[doc.documentType]} · {doc.standard}
+                  {doc.batchReference && ` · batch ${doc.batchReference}`}
+                  {doc.issuedAt && ` · issued ${doc.issuedAt.slice(0, 10)}`}
+                  {doc.expiresAt && ` · valid to ${doc.expiresAt.slice(0, 10)}`}
+                </span>
+              </span>
+              <a
+                href={`/api/documents/${doc.id}`}
+                target="_blank"
+                rel="noopener"
+                className="rounded-sm border border-seam-blue/40 px-3 py-1.5 text-xs font-semibold text-seam-blue hover:bg-seam-blue/5"
+              >
+                {doc.contentType === "application/pdf" ? "PDF" : "Image"} · {formatBytes(doc.sizeBytes)}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

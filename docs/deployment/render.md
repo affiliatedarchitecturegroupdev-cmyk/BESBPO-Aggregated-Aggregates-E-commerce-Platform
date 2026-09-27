@@ -70,7 +70,27 @@ On each API deploy, the pre-deploy step runs `pnpm run db:deploy`:
   ```
   The response should show subtotal 4332.96, delivery fee 950 and total 5282.96.
 
-## 4. Create the first staff account
+## 4. Set up document storage
+
+Staff upload SANS references and Certificates of Analysis. The files are
+kept in Supabase Storage.
+
+1. In Supabase, go to **Storage → New bucket**, name it
+   `compliance-documents`, and leave **Public bucket** off. The API serves
+   every file and checks who may see it: product documents are public, and
+   order documents are visible only to that order's buyer and staff.
+2. In **Project Settings → API**, copy the **Project URL** and the
+   **service_role** key.
+3. In Render, open **aggregates-store-api → Environment** and set
+   `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`. The Blueprint lists both
+   without values. The service-role key bypasses Supabase's access rules, so
+   it belongs only on the API, never on the storefront.
+
+Until these are set, the site works normally, but uploads return "Document
+storage isn't configured yet". The API's startup log shows
+`Document storage: supabase` once it's connected.
+
+## 5. Create the first staff account
 
 Staff approve trade accounts and price quote requests in the staff console,
 `/account/staff`. Roles can't be granted through the website.

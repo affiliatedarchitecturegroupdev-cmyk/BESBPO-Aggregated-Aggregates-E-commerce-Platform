@@ -51,15 +51,17 @@ export type CompanyDashboard = {
     postalCode: string;
     isDefault: boolean;
   }[];
-  orders: {
-    id: string;
-    orderNumber: string;
-    status: string;
-    total: string;
-    createdAt: string;
-    lineItems: { product: { name: string } }[];
-  }[];
   invoices: { id: string; invoiceNumber: string; amountDue: string; status: string; dueDate: string | null }[];
+};
+
+export type OrderRecord = {
+  id: string;
+  orderNumber: string;
+  status: string;
+  total: string;
+  createdAt: string;
+  lineItems: { product: { name: string } }[];
+  documents: DocumentSummary[];
 };
 
 export type Application = {
@@ -96,4 +98,30 @@ export const QUOTE_STATUS_LABEL: Record<QuoteStatus, string> = {
 
 export function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-ZA", { day: "numeric", month: "short", year: "numeric", timeZone: "Africa/Johannesburg" });
+}
+
+export type DocumentSummary = {
+  id: string;
+  title: string;
+  standard: string;
+  documentType: "SANS_REFERENCE" | "CERTIFICATE_OF_ANALYSIS" | "OTHER";
+  batchReference: string | null;
+  fileName: string;
+  contentType: string;
+  sizeBytes: number;
+  issuedAt: string | null;
+  expiresAt: string | null;
+  createdAt: string;
+  orderId: string | null;
+  product: { sku: string; name: string };
+};
+
+export const DOCUMENT_TYPE_LABEL: Record<DocumentSummary["documentType"], string> = {
+  SANS_REFERENCE: "SANS reference",
+  CERTIFICATE_OF_ANALYSIS: "Certificate of Analysis",
+  OTHER: "Document",
+};
+
+export function formatBytes(bytes: number) {
+  return bytes < 1024 * 1024 ? `${Math.max(1, Math.round(bytes / 1024))} KB` : `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 }

@@ -8,6 +8,7 @@ import {
   TIER_LABEL,
   UNIT_LABEL,
   type CompanyDashboard,
+  type OrderRecord,
   type QuoteRecord,
 } from "@/lib/account-types";
 import { formatZAR } from "@/lib/pricing";
@@ -25,10 +26,12 @@ const card = "rounded-sm border border-basalt/10 bg-white";
 export default async function DashboardPage({ searchParams }: { searchParams: { applied?: string } }) {
   const user = await requireSession("/account/dashboard");
   const token = sessionToken();
-  const [company, quotes] = await Promise.all([
+  const [company, quotes, ordersResult] = await Promise.all([
     api<CompanyDashboard | null>("/trade-accounts/me", { token }),
     api<QuoteRecord[]>("/quotes/mine", { token }),
+    api<OrderRecord[]>("/orders/mine", { token }),
   ]);
+  const orders = ordersResult.ok ? ordersResult.data : [];
   const dashboard = company.ok ? company.data : null;
 
   return (
@@ -58,7 +61,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: { 
         </p>
       )}
 
-      <StatusCards user={user} dashboard={dashboard} quotes={quotes.ok ? quotes.data : []} />
+      <StatusCards user={user} dashboard={dashboard} quotes={quotes.ok ? quotes.data : []} orderCount={orders.length} />
 
       <section id="quotes" className={`mt-8 ${card}`}>
         <div className="flex items-center justify-between border-b border-basalt/10 px-4 py-3">
@@ -118,38 +121,55 @@ export default async function DashboardPage({ searchParams }: { searchParams: { 
         )}
       </section>
 
+      <section id="orders" className={`mt-8 overflow-x-auto ${card}`}>
+        <h2 className="border-b border-basalt/10 px-4 py-3 font-body text-sm font-semibold text-basalt">Recent orders</h2>
+        {orders.length === 0 ? (
+          <p className="p-4 font-body text-sm text-slate">No orders yet — accepted quotes become orders once confirmed by our team.</p>
+        ) : (
+          <table className="w-full min-w-[560px] font-body text-sm">
+            <thead>
+              <tr className="border-b border-basalt/10 text-left text-xs text-slate">
+                <th className="px-4 py-2">Order #</th>
+                <th>Date</th>
+                <th>Products</th>
+                <th>Status</th>
+                <th>Documents</th>
+                <th className="pr-4 text-right">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((order) => (
+                <tr key={order.id} className="border-b border-basalt/5 align-top">
+                  <td className="px-4 py-3 font-mono text-xs">{order.orderNumber}</td>
+                  <td className="py-3">{formatDate(order.createdAt)}</td>
+                  <td className="py-3">{order.lineItems.map((l) => l.product.name).join(", ")}</td>
+                  <td className="py-3">{order.status}</td>
+                  <td className="py-3">
+                    {order.documents.length === 0 ? (
+                      <span className="text-xs text-slate">—</span>
+                    ) : (
+                      <ul className="space-y-1">
+                        {order.documents.map((doc) => (
+                          <li key={doc.id}>
+                            <a href={`/api/documents/${doc.id}`} target="_blank" rel="noopener" className="text-xs text-seam-blue hover:underline">
+                              {doc.title}
+                            </a>
+                            {doc.batchReference && <span className="text-[10px] text-slate"> · batch {doc.batchReference}</span>}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </td>
+                  <td className="py-3 pr-4 text-right">{formatZAR(Number(order.total))}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </section>
+
       {dashboard && (
         <>
-          <section id="orders" className={`mt-8 overflow-x-auto ${card}`}>
-            <h2 className="border-b border-basalt/10 px-4 py-3 font-body text-sm font-semibold text-basalt">Recent orders</h2>
-            {dashboard.orders.length === 0 ? (
-              <p className="p-4 font-body text-sm text-slate">No orders yet — accepted quotes become orders once confirmed by our team.</p>
-            ) : (
-              <table className="w-full min-w-[560px] font-body text-sm">
-                <thead>
-                  <tr className="border-b border-basalt/10 text-left text-xs text-slate">
-                    <th className="px-4 py-2">Order #</th>
-                    <th>Date</th>
-                    <th>Products</th>
-                    <th>Status</th>
-                    <th className="pr-4 text-right">Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {dashboard.orders.map((order) => (
-                    <tr key={order.id} className="border-b border-basalt/5">
-                      <td className="px-4 py-3 font-mono text-xs">{order.orderNumber}</td>
-                      <td>{formatDate(order.createdAt)}</td>
-                      <td>{order.lineItems.map((l) => l.product.name).join(", ")}</td>
-                      <td>{order.status}</td>
-                      <td className="pr-4 text-right">{formatZAR(Number(order.total))}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </section>
-
           <section id="addresses" className={`mt-8 ${card}`}>
             <h2 className="border-b border-basalt/10 px-4 py-3 font-body text-sm font-semibold text-basalt">Delivery addresses</h2>
             <div className="grid gap-6 p-4 md:grid-cols-2">
@@ -204,7 +224,17 @@ export default async function DashboardPage({ searchParams }: { searchParams: { 
   );
 }
 
-function StatusCards({ user, dashboard, quotes }: { user: SessionUser; dashboard: CompanyDashboard | null; quotes: QuoteRecord[] }) {
+function StatusCards({
+  user,
+  dashboard,
+  quotes,
+  orderCount,
+}: {
+  user: SessionUser;
+  dashboard: CompanyDashboard | null;
+  quotes: QuoteRecord[];
+  orderCount: number;
+}) {
   const open = quotes.filter((q) => q.status === "SUBMITTED" || q.status === "QUOTED").length;
   const tierCard = !dashboard ? (
     <div>
@@ -235,7 +265,7 @@ function StatusCards({ user, dashboard, quotes }: { user: SessionUser; dashboard
   const stats = [
     { label: "Account tier", body: tierCard },
     { label: "Open quotes", body: <p className="font-body text-sm font-semibold text-basalt">{open}</p> },
-    { label: "Orders", body: <p className="font-body text-sm font-semibold text-basalt">{dashboard?.orders.length ?? 0}</p> },
+    { label: "Orders", body: <p className="font-body text-sm font-semibold text-basalt">{orderCount}</p> },
     {
       label: "Standing agreement",
       body: <p className="font-body text-sm font-semibold text-basalt">{dashboard?.standingAgreementRef ?? "None"}</p>,

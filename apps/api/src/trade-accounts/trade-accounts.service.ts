@@ -52,17 +52,12 @@ export class TradeAccountsService {
   /** The signed-in user's company dashboard, or null if they haven't applied. */
   async myDashboard(user: AuthUser) {
     if (!user.companyId) return null;
-    return this.prisma.company.findUnique({
+    const company = await this.prisma.company.findUnique({
       where: { id: user.companyId },
       include: {
         tier: true,
         requestedTier: true,
         deliveryAddresses: { orderBy: [{ isDefault: "desc" }, { createdAt: "asc" }] },
-        orders: {
-          orderBy: { createdAt: "desc" },
-          take: 10,
-          include: { lineItems: { include: { product: { select: { name: true, sku: true } } } }, shipment: true },
-        },
         quotes: {
           orderBy: { createdAt: "desc" },
           take: 10,
@@ -71,6 +66,7 @@ export class TradeAccountsService {
         invoices: { orderBy: { createdAt: "desc" }, take: 10 },
       },
     });
+    return company;
   }
 
   async addDeliveryAddress(user: AuthUser, dto: CreateDeliveryAddressDto) {
