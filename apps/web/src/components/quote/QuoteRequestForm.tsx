@@ -42,7 +42,8 @@ function initialLine(params: URLSearchParams): LineItem {
  * requester's tier, records why the order needs a human quote, and returns
  * a reference. Signed-in requesters see it in their dashboard.
  */
-export function QuoteRequestForm() {
+export function QuoteRequestForm({ hiddenSkus = [] }: { hiddenSkus?: string[] }) {
+  const available = PRODUCTS.filter((p) => !hiddenSkus.includes(p.sku));
   const params = useSearchParams();
   const [step, setStep] = useState(0);
   const [project, setProject] = useState<Project>({ projectName: "", company: "", contactName: "", email: "", phone: "" });
@@ -203,7 +204,7 @@ export function QuoteRequestForm() {
                           >
                             {CATEGORIES.map((category) => (
                               <optgroup key={category.slug} label={category.name}>
-                                {PRODUCTS.filter((p) => p.categorySlug === category.slug).map((p) => (
+                                {available.filter((p) => p.categorySlug === category.slug).map((p) => (
                                   <option key={p.sku} value={p.sku}>{p.name}</option>
                                 ))}
                               </optgroup>
@@ -250,7 +251,7 @@ export function QuoteRequestForm() {
             </div>
             <button
               type="button"
-              onClick={() => setLines((items) => [...items, { sku: PRODUCTS[0].sku, unit: PRODUCTS[0].units[0], quantity: 1 }])}
+              onClick={() => setLines((items) => [...items, { sku: available[0].sku, unit: available[0].units[0], quantity: 1 }])}
               className="mt-3 rounded-sm border border-basalt/20 px-3 py-1.5 font-body text-xs font-semibold text-seam-blue"
             >
               + Add Another Product

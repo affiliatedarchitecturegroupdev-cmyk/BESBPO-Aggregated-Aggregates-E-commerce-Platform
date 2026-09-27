@@ -6,18 +6,20 @@ import { PromoStrip } from "@/components/merchandising/PromoStrip";
 import { QuickTonnageCalculator } from "@/components/merchandising/QuickTonnageCalculator";
 import { SectorsServed } from "@/components/merchandising/SectorsServed";
 import { TrustBadges } from "@/components/merchandising/TrustBadges";
+import { getHiddenSkus, getSiteContent } from "@/lib/cms";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [content, hiddenSkus] = await Promise.all([getSiteContent(), getHiddenSkus()]);
   return (
     <>
-      <HeroBanner />
-      <QuickTonnageCalculator />
+      <HeroBanner content={content.hero} />
+      <QuickTonnageCalculator hiddenSkus={hiddenSkus} />
       <CategoryGrid />
       <TrustBadges />
       <FeaturedProducts />
       <HowItWorks />
       <SectorsServed />
-      <PromoStrip />
+      <PromoStrip content={content.promo} />
     </>
   );
 }

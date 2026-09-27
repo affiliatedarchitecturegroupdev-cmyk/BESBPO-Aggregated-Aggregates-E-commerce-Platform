@@ -1,12 +1,17 @@
 import Link from "next/link";
-import { PRODUCTS } from "@/data/catalogue";
 import { ProductCard } from "@/components/product/ProductCard";
+import { getCatalogue } from "@/lib/cms";
 
-// One staple from each of the most-bought families, across bulk and bagged.
-const FEATURED_SLUGS = ["river-sand-washed", "19mm-crushed-stone-dolomite", "crusher-run-0-19mm", "river-pebble"];
+// Shown until staff pick featured products in the admin.
+const DEFAULT_FEATURED = ["river-sand-washed", "19mm-crushed-stone-dolomite", "crusher-run-0-19mm", "river-pebble"];
 
-export function FeaturedProducts() {
-  const featured = FEATURED_SLUGS.map((slug) => PRODUCTS.find((p) => p.slug === slug)!);
+export async function FeaturedProducts() {
+  const catalogue = await getCatalogue();
+  const ranked = catalogue
+    .filter((p) => p.featuredRank !== null)
+    .sort((a, b) => (a.featuredRank ?? 0) - (b.featuredRank ?? 0));
+  const featured = (ranked.length > 0 ? ranked : catalogue.filter((p) => DEFAULT_FEATURED.includes(p.slug))).slice(0, 8);
+  if (featured.length === 0) return null;
   return (
     <section className="mx-auto max-w-6xl px-4 py-16">
       <div className="flex items-baseline justify-between">

@@ -1,4 +1,4 @@
-import { detectDocumentType, safeFileName } from "./file-type";
+import { detectDocumentType, detectImageType, safeFileName } from "./file-type";
 
 describe("detectDocumentType", () => {
   it("recognises PDF, PNG and JPEG by content", () => {
@@ -21,5 +21,13 @@ describe("safeFileName", () => {
     expect(safeFileName(".env", "pdf")).toBe("env.pdf");
     expect(safeFileName("COA Batch 12 (Pinetown).exe", "pdf")).toBe("COA-Batch-12-Pinetown.pdf");
     expect(safeFileName(undefined, "png")).toBe("document.png");
+  });
+});
+
+describe("detectImageType", () => {
+  it("accepts PNG, JPEG and WebP but not PDF", () => {
+    expect(detectImageType(Buffer.from("RIFF\x00\x00\x00\x00WEBPVP8 ", "latin1"))?.contentType).toBe("image/webp");
+    expect(detectImageType(Buffer.from([0xff, 0xd8, 0xff, 0xe0]))?.contentType).toBe("image/jpeg");
+    expect(detectImageType(Buffer.from("%PDF-1.7"))).toBeNull();
   });
 });

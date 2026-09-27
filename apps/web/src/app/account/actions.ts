@@ -100,7 +100,7 @@ export async function reviewApplication(_prev: FormState, form: FormData): Promi
     body: { decision: text(form, "decision"), tier: optional(form, "tier"), notes: optional(form, "notes") },
   });
   if (!result.ok) return { error: result.message };
-  revalidatePath("/account/staff");
+  revalidatePath("/admin", "layout");
   return { success: "Saved." };
 }
 
@@ -117,7 +117,7 @@ export async function priceQuote(_prev: FormState, form: FormData): Promise<Form
     },
   });
   if (!result.ok) return { error: result.message };
-  revalidatePath("/account/staff");
+  revalidatePath("/admin", "layout");
   return { success: "Saved." };
 }
 
@@ -165,11 +165,89 @@ export async function uploadComplianceDocument(_prev: FormState, form: FormData)
   upload.set("file", file, file.name);
   const result = await apiUpload<{ title: string }>("/compliance-documents", upload, sessionToken());
   if (!result.ok) return { error: result.message };
-  revalidatePath("/account/staff");
+  revalidatePath("/admin", "layout");
   return { success: `Uploaded “${result.data.title}”.` };
 }
 
 export async function deleteComplianceDocument(form: FormData) {
   await api(`/compliance-documents/${encodeURIComponent(text(form, "id"))}`, { method: "DELETE", token: sessionToken() });
-  revalidatePath("/account/staff");
+  revalidatePath("/admin", "layout");
+}
+
+// --- CMS: products and site content (staff) -----------------------------------
+
+/**
+ * CMS edits change public pages: mark every cached page stale, not just the
+ * admin. Most pages update on the next visit; statically cached ones can
+ * serve one stale copy first, and all of them refresh within 60 seconds.
+ * (The API refuses hidden products on quotes and orders regardless.)
+ */
+function revalidateStorefront() {
+  revalidatePath("/", "layout");
+}
+
+export async function updateProductMerchandising(_prev: FormState, form: FormData): Promise<FormState> {
+  const rank = text(form, "featuredRank");
+  const result = await api(`/merchandising/products/${encodeURIComponent(text(form, "sku"))}`, {
+    method: "PATCH",
+    token: sessionToken(),
+    body: {
+      description: text(form, "description"),
+      isActive: form.get("isActive") === "on",
+      featuredRank: rank ? Number(rank) : null,
+    },
+  });
+  if (!result.ok) return { error: result.message };
+  revalidateStorefront();
+  return { success: "Saved — live on the storefront within a minute." };
+}
+
+export async function uploadProductImage(_prev: FormState, form: FormData): Promise<FormState> {
+  const file = form.get("file");
+  if (!(file instanceof File) || file.size === 0) return { error: "Choose a PNG, JPEG or WebP image." };
+  if (file.size > 5 * 1024 * 1024) return { error: "Images must be 5MB or smaller." };
+  const upload = new FormData();
+  const altText = text(form, "altText");
+  if (altText) upload.set("altText", altText);
+  upload.set("file", file, file.name);
+  const result = await apiUpload(`/merchandising/products/${encodeURIComponent(text(form, "sku"))}/images`, upload, sessionToken());
+  if (!result.ok) return { error: result.message };
+  revalidateStorefront();
+  return { success: "Photo added." };
+}
+
+export async function deleteProductImage(form: FormData) {
+  await api(`/merchandising/images/${encodeURIComponent(text(form, "id"))}`, { method: "DELETE", token: sessionToken() });
+  revalidateStorefront();
+}
+
+const link = (form: FormData, prefix: string) => ({ label: text(form, `${prefix}Label`), href: text(form, `${prefix}Href`) });
+
+export async function saveSiteContent(_prev: FormState, form: FormData): Promise<FormState> {
+  const key = text(form, "key");
+  let body: unknown;
+  if (key === "announcement") {
+    const linkLabel = text(form, "linkLabel");
+    body = {
+      enabled: form.get("enabled") === "on",
+      message: text(form, "message"),
+      ...(linkLabel ? { link: link(form, "link") } : {}),
+    };
+  } else if (key === "hero") {
+    body = {
+      eyebrow: text(form, "eyebrow"),
+      headline: text(form, "headline"),
+      body: text(form, "body"),
+      primaryCta: link(form, "primary"),
+      secondaryCta: link(form, "secondary"),
+    };
+  } else if (key === "promo") {
+    body = { title: text(form, "title"), body: text(form, "body"), cta: link(form, "cta") };
+  } else {
+    return { error: "Unknown content block." };
+  }
+  const result = await api(`/content/${key}`, { method: "PUT", token: sessionToken(), body });
+  if (!result.ok) return { error: result.message };
+  revalidateStorefront();
+  return { success: "Published — live on the storefront within a minute." };
 }

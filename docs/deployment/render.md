@@ -100,7 +100,16 @@ Staff approve trade accounts and price quote requests in the staff console,
    ```bash
    npx --yes pnpm@9.9.0 run db:set-role you@besbpo.co.za STAFF   # or ADMIN
    ```
-3. Sign out and back in. The dashboard now links to the **Staff console**.
+3. Sign out and back in. The dashboard now links to **Admin** (`/admin`), where
+   staff can:
+   - review trade applications;
+   - price quote requests;
+   - upload compliance documents;
+   - manage product descriptions, photos, visibility and featured products;
+   - edit the announcement bar, homepage hero and trade promo.
+
+   Storefront changes go live within a minute. Prices can't be edited in the
+   admin; they come from the pricing workbook.
 
 ## Later: custom domains and optional settings
 

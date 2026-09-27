@@ -12,7 +12,14 @@ type Mode = "bulk" | "bag";
  * Listing card with the wireframe's bulk/bag toggle: switching shows the
  * bulk (ton / m³) or bagged price without leaving the grid.
  */
-export function ProductCard({ product, preferBag = false }: { product: Product; preferBag?: boolean }) {
+export function ProductCard({
+  product,
+  preferBag = false,
+}: {
+  product: Product & { images?: { src: string; alt: string }[] };
+  preferBag?: boolean;
+}) {
+  const photo = product.images?.[0];
   const points = pricePoints(product);
   const bulk = points.filter((p) => p.unit !== "bag");
   const bag = points.filter((p) => p.unit === "bag");
@@ -24,7 +31,12 @@ export function ProductCard({ product, preferBag = false }: { product: Product; 
   return (
     <div className="group flex flex-col rounded-sm border border-basalt/10 bg-white p-4 transition hover:border-seam-blue hover:shadow-sm">
       <Link href={href} tabIndex={-1} aria-hidden="true">
-        <MaterialSwatch sku={product.sku} categorySlug={product.categorySlug} />
+        {photo ? (
+          // eslint-disable-next-line @next/next/no-img-element -- served and cached by our own image route
+          <img src={photo.src} alt={photo.alt} loading="lazy" className="h-28 w-full rounded-sm object-cover" />
+        ) : (
+          <MaterialSwatch sku={product.sku} categorySlug={product.categorySlug} />
+        )}
       </Link>
       <Link href={href} className="mt-3 font-body text-sm font-semibold text-basalt hover:text-seam-blue">
         {product.name}

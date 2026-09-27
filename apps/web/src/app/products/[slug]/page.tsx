@@ -2,38 +2,67 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BulkBagCalculator } from "@/components/product/BulkBagCalculator";
-import { MaterialSwatch } from "@/components/product/MaterialSwatch";
 import { ProductCard } from "@/components/product/ProductCard";
+import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductTabs } from "@/components/product/ProductTabs";
-import { findProduct, pricePoints, PRODUCTS, productsInCategory } from "@/data/catalogue";
+import { pricePoints, PRODUCTS } from "@/data/catalogue";
 import { CATEGORIES } from "@/data/categories";
+import { getCatalogue, getProduct } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
+import { SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
   return PRODUCTS.map((p) => ({ slug: p.slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const product = findProduct(params.slug);
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const product = await getProduct(params.slug);
   if (!product) return {};
   const [headline] = pricePoints(product);
   return {
     title: product.name,
     description: `${product.name} from ${formatZAR(headline.price)}/${headline.label}, sold ${product.unitOfSaleLabel}. Delivered across KZN and Gauteng.`,
     alternates: { canonical: `/products/${product.slug}` },
+    openGraph: product.images[0] ? { images: [{ url: product.images[0].src, alt: product.images[0].alt }] } : undefined,
   };
 }
 
-export default function ProductDetailPage({ params }: { params: { slug: string } }) {
-  const product = findProduct(params.slug);
+export default async function ProductDetailPage({ params }: { params: { slug: string } }) {
+  // Products staff hide in the admin 404 here (and drop out of listings).
+  const product = await getProduct(params.slug);
   if (!product) notFound();
 
   const category = CATEGORIES.find((c) => c.slug === product.categorySlug)!;
   const [headline, ...others] = pricePoints(product);
-  const related = productsInCategory(product.categorySlug).filter((p) => p.sku !== product.sku).slice(0, 4);
+  const related = (await getCatalogue()).filter((p) => p.categorySlug === product.categorySlug && p.sku !== product.sku).slice(0, 4);
+
+  // schema.org Product data so search engines can show the price.
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    sku: product.sku,
+    category: category.name,
+    description: product.description ?? category.description,
+    brand: { "@type": "Brand", name: "Aggregated Aggregates" },
+    ...(product.images[0] ? { image: `${SITE_URL}${product.images[0].src}` } : {}),
+    offers: pricePoints(product).map((point) => ({
+      "@type": "Offer",
+      price: point.price.toFixed(2),
+      priceCurrency: "ZAR",
+      availability: "https://schema.org/InStock",
+      url: `${SITE_URL}/products/${product.slug}`,
+      priceSpecification: { "@type": "UnitPriceSpecification", price: point.price.toFixed(2), priceCurrency: "ZAR", unitText: point.label },
+    })),
+  };
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
+      <script
+        type="application/ld+json"
+        // JSON.stringify escapes quotes; "<" is escaped so the JSON can't close the script tag.
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
+      />
       <nav className="font-mono text-xs text-slate" aria-label="Breadcrumb">
         <Link href="/" className="hover:text-seam-blue">Home</Link> /{" "}
         <Link href="/products" className="hover:text-seam-blue">Products</Link> /{" "}
@@ -41,10 +70,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
         {product.name}
       </nav>
       <div className="mt-6 grid gap-10 md:grid-cols-2">
-        <div>
-          <MaterialSwatch sku={product.sku} categorySlug={product.categorySlug} className="h-80" grains={260} />
-          <p className="mt-2 font-mono text-[10px] text-slate">Illustrative texture — colour and grading vary by source.</p>
-        </div>
+        <ProductGallery sku={product.sku} categorySlug={product.categorySlug} images={product.images} />
         <div>
           <p className="font-mono text-xs text-slate">
             {category.name}
@@ -59,7 +85,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
               {others.map((p) => `${formatZAR(p.price)} / ${p.label}`).join(" • ")}
             </p>
           )}
-          <p className="mt-4 font-body text-sm text-slate">{category.description}</p>
+          <p className="mt-4 whitespace-pre-line font-body text-sm text-slate">{product.description ?? category.description}</p>
           <div className="mt-6">
             <BulkBagCalculator product={product} />
           </div>
