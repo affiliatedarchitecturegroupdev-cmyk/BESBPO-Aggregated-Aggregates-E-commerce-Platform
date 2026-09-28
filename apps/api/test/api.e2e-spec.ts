@@ -361,6 +361,102 @@ describe("Aggregated Aggregates API (e2e)", () => {
     });
   });
 
+  describe("supplier network and delivery points", () => {
+    // Fictional suppliers: the real supplier database never enters the repository.
+    const csv = [
+      "supplier_id,supplier_name,tier,province,address_location,core_categories,category_codes,category_labels",
+      `T${run}-1,Secret Quarry A,Tier 1,KwaZulu-Natal,"1 Road, Pietermaritzburg","CAT-01 (G1), CAT-02 (19mm)",CAT-01;CAT-02,x`,
+      `T${run}-2,Secret Sand B,Tier 2,KwaZulu-Natal,"2 Road, Durban North",CAT-03 (River Sand),CAT-03,x`,
+      `T${run}-3,Secret Quarry C,Tier 1,Western Cape,"3 Road, Worcester",CAT-02 (19mm),CAT-02,x`,
+    ].join("\n");
+    let staff: string;
+
+    beforeAll(async () => {
+      staff = await register("supstaff");
+      await prisma.user.update({ where: { email: `supstaff-${run}@example.com` }, data: { role: "STAFF" } });
+    });
+    afterAll(async () => {
+      await prisma.supplierLocation.deleteMany({ where: { externalId: { startsWith: `T${run}-` } } });
+    });
+
+    it("keeps the supplier list, import and export staff-only", async () => {
+      const customer = await register("supcustomer");
+      await http().get("/suppliers").expect(401);
+      await http().get("/suppliers").set("Authorization", `Bearer ${customer}`).expect(403);
+      await http().get("/suppliers/export.csv").set("Authorization", `Bearer ${customer}`).expect(403);
+      await http().post("/suppliers/import").set("Authorization", `Bearer ${customer}`).attach("file", Buffer.from(csv), "s.csv").expect(403);
+    });
+
+    it("imports the supplier database, activating only launch provinces, and rejects bad files whole", async () => {
+      const bad = await http()
+        .post("/suppliers/import")
+        .set("Authorization", `Bearer ${staff}`)
+        .attach("file", Buffer.from(`${csv}\nT${run}-4,Bad,Tier 9,Gauteng,"x, y",x,CAT-01,x`), "s.csv")
+        .expect(200);
+      expect(bad.body.errors).toHaveLength(1);
+      expect(bad.body.errors[0]).toMatchObject({ line: 5 });
+      expect(await prisma.supplierLocation.count({ where: { externalId: { startsWith: `T${run}-` } } })).toBe(0);
+
+      const ok = await http().post("/suppliers/import").set("Authorization", `Bearer ${staff}`).attach("file", Buffer.from(csv), "s.csv").expect(200);
+      expect(ok.body).toMatchObject({ created: 3, updated: 0, errors: [] });
+      const imported = await prisma.supplierLocation.findMany({ where: { externalId: { startsWith: `T${run}-` } }, orderBy: { externalId: "asc" } });
+      expect(imported.map((s) => [s.city, s.tier, s.isActive])).toEqual([
+        ["Pietermaritzburg", "TIER_1", true],
+        ["Durban North", "TIER_2", true],
+        ["Worcester", "TIER_1", false], // Western Cape isn't a launch province yet
+      ]);
+    });
+
+    it("keeps staff edits across a re-import and validates coordinates", async () => {
+      const quarry = await prisma.supplierLocation.findUniqueOrThrow({ where: { externalId: `T${run}-1` } });
+      const body = { name: quarry.name, tier: quarry.tier, province: quarry.province, city: quarry.city, categorySlugs: quarry.categorySlugs, isActive: true };
+      await http().put(`/suppliers/${quarry.id}`).set("Authorization", `Bearer ${staff}`).send({ ...body, latitude: 30.38, longitude: -29.6 }).expect(400);
+      await http().put(`/suppliers/${quarry.id}`).set("Authorization", `Bearer ${staff}`).send({ ...body, latitude: -29.6 }).expect(400);
+      await http()
+        .put(`/suppliers/${quarry.id}`)
+        .set("Authorization", `Bearer ${staff}`)
+        .send({ ...body, latitude: -29.6006, longitude: 30.3794, contactName: "Site Office" })
+        .expect(200);
+      // Leaving the supplier ID out of an edit must not unlink it from the supplier database.
+      expect((await prisma.supplierLocation.findUniqueOrThrow({ where: { id: quarry.id } })).externalId).toBe(`T${run}-1`);
+
+      const again = await http().post("/suppliers/import").set("Authorization", `Bearer ${staff}`).attach("file", Buffer.from(csv), "s.csv").expect(200);
+      expect(again.body).toMatchObject({ created: 0, updated: 3 });
+      expect(await prisma.supplierLocation.findUniqueOrThrow({ where: { externalId: `T${run}-1` } })).toMatchObject({
+        latitude: -29.6006,
+        longitude: 30.3794,
+        contactName: "Site Office",
+      });
+
+      // Export -> re-import round-trips coordinates.
+      const exported = await http().get("/suppliers/export.csv").set("Authorization", `Bearer ${staff}`).expect(200);
+      expect(exported.headers["content-type"]).toMatch(/text\/csv/);
+      expect(exported.text).toContain(`T${run}-1,Secret Quarry A,Tier 1,KwaZulu-Natal`);
+      expect(exported.text).toMatch(new RegExp(`T${run}-1,.*,-29.6006,30.3794,Site Office`));
+    });
+
+    it("gives the public delivery points and distances without supplier names", async () => {
+      const sand = await prisma.supplierLocation.findUniqueOrThrow({ where: { externalId: `T${run}-2` } });
+      await prisma.supplierLocation.update({ where: { id: sand.id }, data: { latitude: -29.73, longitude: 31.06 } });
+
+      const coverage = await http().get("/suppliers/coverage").expect(200);
+      expect(JSON.stringify(coverage.body)).not.toMatch(/Secret|Site Office/);
+      const kzn = coverage.body.provinces.find((p: { province: string }) => p.province === "KwaZulu-Natal");
+      expect(kzn.towns).toEqual(expect.arrayContaining(["Pietermaritzburg", "Durban North"]));
+      expect(coverage.body.provinces.map((p: { province: string }) => p.province)).not.toContain("Western Cape");
+
+      // From central Durban: nearest crushed stone is the Pietermaritzburg quarry; nearest sand is Durban North.
+      const stone = await http().get("/suppliers/nearest?lat=-29.8587&lng=31.0218&category=crushed-stone").expect(200);
+      expect(stone.body).toMatchObject({ found: true, town: "Pietermaritzburg", province: "KwaZulu-Natal" });
+      expect(stone.body.distanceKm).toBeGreaterThan(55);
+      expect(JSON.stringify(stone.body)).not.toMatch(/Secret/);
+      const sandNearest = await http().get("/suppliers/nearest?lat=-29.8587&lng=31.0218&category=sand-fine-aggregates").expect(200);
+      expect(sandNearest.body).toMatchObject({ found: true, town: "Durban North" });
+      expect(sandNearest.body.distanceKm).toBeLessThan(20);
+      await http().get("/suppliers/nearest?lat=abc&lng=31").expect(400);
+    });
+  });
+
   describe("orders", () => {
     it("ignores a companyId in the body and prices at the caller's own tier", async () => {
       const token = await register("orderer");

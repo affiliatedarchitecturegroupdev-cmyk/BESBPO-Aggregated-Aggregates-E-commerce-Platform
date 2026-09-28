@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { api, apiUpload } from "@/lib/api";
 import { endSession, safeReturnPath, sessionToken, startSession } from "@/lib/session";
+import type { ImportSummary } from "@/lib/suppliers";
 
 export type FormState = { error?: string; success?: string } | null;
 
@@ -250,4 +251,68 @@ export async function saveSiteContent(_prev: FormState, form: FormData): Promise
   if (!result.ok) return { error: result.message };
   revalidateStorefront();
   return { success: "Published — live on the storefront within a minute." };
+}
+
+// --- supplier network (staff) ------------------------------------------------
+
+/** The public delivery-areas page and calculator read supplier coverage. */
+function revalidateSupplierNetwork() {
+  revalidatePath("/admin", "layout");
+  revalidatePath("/delivery-areas");
+}
+
+export type SupplierImportState = { error?: string; summary?: ImportSummary } | null;
+
+export async function importSuppliers(_prev: SupplierImportState, form: FormData): Promise<SupplierImportState> {
+  const file = form.get("file");
+  if (!(file instanceof File) || file.size === 0) return { error: "Choose the supplier database CSV." };
+  if (file.size > 2 * 1024 * 1024) return { error: "The CSV must be 2MB or smaller." };
+  const upload = new FormData();
+  upload.set("activateLaunchProvincesOnly", form.get("activateLaunchProvincesOnly") === "on" ? "true" : "false");
+  upload.set("file", file, file.name);
+  const result = await apiUpload<ImportSummary>("/suppliers/import", upload, sessionToken());
+  if (!result.ok) return { error: result.message };
+  if (result.data.errors.length === 0) revalidateSupplierNetwork();
+  return { summary: result.data };
+}
+
+function supplierBody(form: FormData) {
+  const lat = text(form, "latitude");
+  const lng = text(form, "longitude");
+  return {
+    externalId: text(form, "externalId"),
+    name: text(form, "name"),
+    tier: text(form, "tier"),
+    province: text(form, "province"),
+    city: text(form, "city"),
+    address: text(form, "address"),
+    latitude: lat ? Number(lat) : null,
+    longitude: lng ? Number(lng) : null,
+    categorySlugs: form.getAll("categorySlugs").filter((v): v is string => typeof v === "string"),
+    productNotes: text(form, "productNotes"),
+    contactName: text(form, "contactName"),
+    contactPhone: text(form, "contactPhone"),
+    isActive: form.get("isActive") === "on",
+  };
+}
+
+export async function saveSupplier(_prev: FormState, form: FormData): Promise<FormState> {
+  const id = text(form, "id");
+  const body = supplierBody(form);
+  if (body.categorySlugs.length === 0) return { error: "Tick at least one material category." };
+  const result = await api<{ id: string }>(id ? `/suppliers/${encodeURIComponent(id)}` : "/suppliers", {
+    method: id ? "PUT" : "POST",
+    token: sessionToken(),
+    body,
+  });
+  if (!result.ok) return { error: result.message };
+  revalidateSupplierNetwork();
+  if (!id) redirect(`/admin/suppliers/${result.data.id}?created=1`);
+  return { success: "Saved — the delivery-areas page updates within a minute." };
+}
+
+export async function deleteSupplier(form: FormData) {
+  await api(`/suppliers/${encodeURIComponent(text(form, "id"))}`, { method: "DELETE", token: sessionToken() });
+  revalidateSupplierNetwork();
+  redirect("/admin/suppliers");
 }

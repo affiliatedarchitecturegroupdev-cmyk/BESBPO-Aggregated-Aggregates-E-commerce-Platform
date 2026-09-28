@@ -15,7 +15,7 @@ unreviewed work.
 | 1. Foundation | Schema, auth (Email/Google/Microsoft), category/product structure, base storefront scaffold | **Delivered — this repo** |
 | 2. Pricing & Calculators | Pricing microservice wired to real Category Markup Bands / Customer Tiers data; bulk/bag calculator; distance-banded delivery calculator | **Delivered** (PR #1) |
 | 3. Trade & Quote Flows | Trade account/tier management, RFQ/bulk-quote flow, compliance document attachment | **Delivered** (PRs #3, #4) |
-| 4. Storefront & CMS | Full storefront polish, CMS/admin, supplier & delivery-point locator | **In progress** — storefront pages (PR #2) and the admin/CMS in review; supplier & delivery-point locator next |
+| 4. Storefront & CMS | Full storefront polish, CMS/admin, supplier & delivery-point locator | **Complete in code** — storefront pages (PR #2), admin/CMS (PR #5), and the supplier & delivery-point locator; supplier map pins still to be added by staff |
 | 5. QA & Launch Prep | Human PR review throughout; pricing microservice reconciled against the pricing xlsx to the cent | Not started |
 
 ## Rules for the agent doing the build-out
@@ -57,10 +57,14 @@ unreviewed work.
 
 ## Open items carried into the build-out
 
-- Exact partner-supplier list (the ~50 approved suppliers) — commercial
-  detail, not a schema question; `SupplierLocation` records should be
-  seeded from Fortune's actual supplier onboarding list once available, not
-  invented.
+- Partner-supplier list: **received** (52 Tier 1 + 35 Tier 2). It is
+  imported through `/admin/suppliers` and never committed — it holds
+  commercial names and addresses and this repository is public. The file has
+  no coordinates, so each supplier needs a map pin from staff before it is
+  used for distance estimates. Pins must come from a map, never be guessed:
+  a wrong pin moves customers across the 30/60/100km delivery bands. Only
+  KwaZulu-Natal and Gauteng suppliers are active at launch. Public pages show
+  towns, provinces and categories, never names or contacts.
 - Besfleet vs. external-partner routing logic for the 15+ courier network —
   the data model supports either via `Shipment.carrier`, but the dispatch
   rule (which orders go to Besfleet vs. which external partner) isn't

@@ -38,7 +38,7 @@ coverage, deployment secrets) are intentionally left for Phases 2–5.
 
 ## Confirmed platform decisions
 
-- **Supplier network**: ~50 approved partner suppliers across South Africa — broker/network model, no owned yards or inventory
+- **Supplier network**: 87 approved partner suppliers (52 Tier 1, 35 Tier 2) — broker/network model, no owned yards or inventory. Imported by staff at `/admin/suppliers`; KZN and Gauteng active at launch
 - **Domain**: `aggregates.store` (corporate + storefront) / `app.aggregates.store` (platform app)
 - **VAT**: bills under Besbpo Group's company VAT registration from day one
 - **Hosting**: Render

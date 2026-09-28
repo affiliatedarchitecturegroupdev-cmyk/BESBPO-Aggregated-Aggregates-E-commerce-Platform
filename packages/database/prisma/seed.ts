@@ -9,10 +9,9 @@
  * change the workbook and re-run that script — never edit figures here
  * (AGENTIC_RULES.md rule 1).
  *
- * Supplier locations below are placeholders until the real partner
- * onboarding list is available (see AGENTIC_RULES.md, open items). They are
- * seeded for local development only; set SEED_PLACEHOLDER_SUPPLIERS=false
- * (as render.yaml does) to skip them.
+ * Partner suppliers are not seeded: staff import them from the supplier
+ * database CSV in the admin (/admin/suppliers), so the list never lives in
+ * the public repository.
  */
 import { readFileSync } from "fs";
 import { join } from "path";
@@ -65,14 +64,6 @@ const UNIT_OF_SALE: Record<Unit, UnitOfSale> = {
   bag: UnitOfSale.BAGGED,
 };
 
-const SUPPLIER_LOCATIONS = [
-  { name: "Pinetown Partner Yard", province: "KwaZulu-Natal", city: "Pinetown", latitude: -29.8167, longitude: 30.8672 },
-  { name: "Cato Ridge Aggregates Partner", province: "KwaZulu-Natal", city: "Cato Ridge", latitude: -29.7333, longitude: 30.5 },
-  { name: "Pietermaritzburg Quarry Partner", province: "KwaZulu-Natal", city: "Pietermaritzburg", latitude: -29.6006, longitude: 30.3794 },
-  { name: "Germiston Aggregates Partner", province: "Gauteng", city: "Germiston", latitude: -26.2309, longitude: 28.1624 },
-  { name: "Centurion Quarry Partner", province: "Gauteng", city: "Centurion", latitude: -25.8603, longitude: 28.1894 },
-  { name: "Vereeniging Aggregates Partner", province: "Gauteng", city: "Vereeniging", latitude: -26.6731, longitude: 27.9316 },
-];
 
 async function seedCatalogue() {
   const categories = new Map(FRAMEWORK.categories.map((c) => [c.slug, c]));
@@ -167,20 +158,12 @@ async function seedDeliveryBands() {
   });
 }
 
-async function seedSupplierLocations() {
-  if (process.env.SEED_PLACEHOLDER_SUPPLIERS === "false") return;
-  if ((await prisma.supplierLocation.count()) > 0) return;
-  for (const supplier of SUPPLIER_LOCATIONS) {
-    await prisma.supplierLocation.create({ data: supplier });
-  }
-}
 
 async function main() {
   console.log("Seeding Aggregated Aggregates platform data...");
   await seedCatalogue();
   await seedCustomerTiers();
   await seedDeliveryBands();
-  await seedSupplierLocations();
   console.log(`Seed complete: ${FRAMEWORK.products.length} products across ${FRAMEWORK.categories.length} categories.`);
 }
 
