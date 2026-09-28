@@ -9,12 +9,13 @@ export const metadata = { title: "Overview" };
 
 export default async function AdminOverview() {
   const token = sessionToken();
-  const [applications, quotes, documents, catalogue, suppliers] = await Promise.all([
+  const [applications, quotes, documents, catalogue, suppliers, chats] = await Promise.all([
     api<Application[]>("/trade-accounts/applications?status=PENDING", { token }),
     api<QuoteRecord[]>("/quotes?status=SUBMITTED", { token }),
     api<DocumentSummary[]>("/compliance-documents/recent", { token }),
     adminCatalogue(),
     api<Supplier[]>("/suppliers?filter=active", { token }),
+    api<unknown[]>("/channels/whatsapp/conversations", { token }),
   ]);
   const count = <T,>(r: { ok: true; data: T[] } | { ok: false }) => (r.ok ? String(r.data.length) : "—");
   const cards = [
@@ -37,6 +38,7 @@ export default async function AdminOverview() {
       label: "Active suppliers without a map pin (not used for distances)",
       value: suppliers.ok ? String(suppliers.data.filter((s) => s.latitude === null).length) : "—",
     },
+    { href: "/admin/whatsapp", label: "Open WhatsApp orders", value: count(chats) },
   ];
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

@@ -1,9 +1,16 @@
 import { Type } from "class-transformer";
 import {
+  ArrayMaxSize,
+  ArrayMinSize,
+  IsArray,
   IsBoolean,
+  IsInt,
   IsOptional,
   IsString,
+  Matches,
+  Max,
   MaxLength,
+  Min,
   MinLength,
   registerDecorator,
   ValidateNested,
@@ -52,11 +59,26 @@ export class PromoContent {
   @ValidateNested() @Type(() => Link) cta!: Link;
 }
 
+export class Slide {
+  /** A photo from the storefront's licensed media library (apps/web/src/data/media.ts). */
+  @IsString() @Matches(/^[a-z0-9-]{2,60}$/) imageId!: string;
+  @IsString() @MinLength(3) @MaxLength(90) caption!: string;
+  @IsOptional() @IsSafeHref() href?: string;
+  @IsBoolean() enabled!: boolean;
+}
+
+export class SlideshowContent {
+  @IsBoolean() enabled!: boolean;
+  @IsInt() @Min(4) @Max(15) intervalSeconds!: number;
+  @IsArray() @ArrayMinSize(1) @ArrayMaxSize(20) @ValidateNested({ each: true }) @Type(() => Slide) slides!: Slide[];
+}
+
 /** Every editable content key and the shape its JSON must have. */
 export const CONTENT_SCHEMAS = {
   announcement: AnnouncementContent,
   hero: HeroContent,
   promo: PromoContent,
+  slideshow: SlideshowContent,
 } as const;
 
 export type ContentKey = keyof typeof CONTENT_SCHEMAS;

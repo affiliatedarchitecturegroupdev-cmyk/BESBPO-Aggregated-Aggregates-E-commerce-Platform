@@ -134,7 +134,8 @@ export type QuoteRequest = {
   deliveryProvince?: string;
   deliveryDistanceKm?: number;
   notes?: string;
-  lines: { sku: string; unit: "ton" | "m3" | "bag"; quantity: number }[];
+  /** ton / m3 / bag for aggregates; a packaged unit (BAG_50KG, DRUM_210L…) for cement, grout and admixtures. */
+  lines: { sku: string; unit: string; quantity: number }[];
 };
 
 export async function submitQuoteRequest(
@@ -244,6 +245,20 @@ export async function saveSiteContent(_prev: FormState, form: FormData): Promise
     };
   } else if (key === "promo") {
     body = { title: text(form, "title"), body: text(form, "body"), cta: link(form, "cta") };
+  } else if (key === "slideshow") {
+    const rows = form.getAll("slideImage").map((imageId, i) => ({
+      imageId: String(imageId),
+      caption: String(form.getAll("slideCaption")[i] ?? "").trim(),
+      href: String(form.getAll("slideHref")[i] ?? "").trim(),
+      order: Number(form.getAll("slideOrder")[i] ?? i),
+      enabled: form.getAll("slideEnabled").includes(String(i)),
+    }));
+    const slides = rows
+      .filter((row) => row.imageId && row.caption)
+      .sort((a, b) => a.order - b.order)
+      .map(({ imageId, caption, href, enabled }) => ({ imageId, caption, enabled, ...(href ? { href } : {}) }));
+    if (slides.length === 0) return { error: "Keep at least one slide (a photo and a caption)." };
+    body = { enabled: form.get("enabled") === "on", intervalSeconds: Number(text(form, "intervalSeconds")), slides };
   } else {
     return { error: "Unknown content block." };
   }
@@ -293,6 +308,8 @@ function supplierBody(form: FormData) {
     contactName: text(form, "contactName"),
     contactPhone: text(form, "contactPhone"),
     isActive: form.get("isActive") === "on",
+    isVerifiedPartner: form.get("isVerifiedPartner") === "on",
+    sourceUrl: text(form, "sourceUrl"),
   };
 }
 
@@ -315,4 +332,118 @@ export async function deleteSupplier(form: FormData) {
   await api(`/suppliers/${encodeURIComponent(text(form, "id"))}`, { method: "DELETE", token: sessionToken() });
   revalidateSupplierNetwork();
   redirect("/admin/suppliers");
+}
+
+// --- payments -----------------------------------------------------------------
+
+/** Starts paying an order with the chosen method; the API re-checks eligibility and routes it to its gateway. */
+export async function payForOrder(orderId: string, methodKey: string): Promise<{ ok: boolean; message: string; redirectUrl?: string }> {
+  const result = await api<{ isLive: boolean; note: string; redirectUrl?: string }>("/payment-methods/initiate", {
+    method: "POST",
+    token: sessionToken(),
+    body: { orderId, methodKey },
+  });
+  if (!result.ok) return { ok: false, message: result.message };
+  const redirect = result.data.redirectUrl && /^https:\/\//.test(result.data.redirectUrl) ? result.data.redirectUrl : undefined;
+  return { ok: result.data.isLive, message: result.data.note, redirectUrl: redirect };
+}
+
+// --- ad system: promotions (staff) --------------------------------------------
+
+export async function savePromotion(_prev: FormState, form: FormData): Promise<FormState> {
+  const id = text(form, "id");
+  // Dates are South African days: a promotion runs from the start of its first day to the end of its last.
+  const day = (name: string, time: string) => (text(form, name) ? new Date(`${text(form, name)}T${time}+02:00`).toISOString() : null);
+  const result = await api(id ? `/promotions/${encodeURIComponent(id)}` : "/promotions", {
+    method: id ? "PUT" : "POST",
+    token: sessionToken(),
+    body: {
+      slot: text(form, "slot"),
+      title: text(form, "title"),
+      imageUrl: text(form, "imageUrl"),
+      linkUrl: text(form, "linkUrl") || null,
+      startsAt: day("startsAt", "00:00:00"),
+      endsAt: day("endsAt", "23:59:59"),
+      isActive: form.get("isActive") === "on",
+      sortOrder: Number(text(form, "sortOrder") || 0),
+    },
+  });
+  if (!result.ok) return { error: result.message };
+  revalidateStorefront();
+  return { success: id ? "Saved — live within a minute." : "Promotion added." };
+}
+
+export async function deletePromotion(form: FormData) {
+  await api(`/promotions/${encodeURIComponent(text(form, "id"))}`, { method: "DELETE", token: sessionToken() });
+  revalidateStorefront();
+}
+
+// --- blog (staff) -----------------------------------------------------------------
+
+export async function saveBlogPost(_prev: FormState, form: FormData): Promise<FormState> {
+  const id = text(form, "id");
+  const result = await api<{ id: string }>(id ? `/blog/admin/posts/${encodeURIComponent(id)}` : "/blog/admin/posts", {
+    method: id ? "PUT" : "POST",
+    token: sessionToken(),
+    body: {
+      slug: text(form, "slug"),
+      title: text(form, "title"),
+      excerpt: text(form, "excerpt"),
+      bodyMarkdown: String(form.get("bodyMarkdown") ?? ""),
+      coverImageUrl: text(form, "coverImageUrl") || null,
+      categorySlug: text(form, "categorySlug") || null,
+      authorName: text(form, "authorName"),
+      isPublished: form.get("isPublished") === "on",
+    },
+  });
+  if (!result.ok) return { error: result.message };
+  revalidateStorefront();
+  if (!id) redirect(`/admin/blog/${result.data.id}?created=1`);
+  return { success: form.get("isPublished") === "on" ? "Published — live within a minute." : "Saved as a draft." };
+}
+
+export async function deleteBlogPost(form: FormData) {
+  await api(`/blog/admin/posts/${encodeURIComponent(text(form, "id"))}`, { method: "DELETE", token: sessionToken() });
+  revalidateStorefront();
+  redirect("/admin/blog");
+}
+
+export async function createBlogCategory(_prev: FormState, form: FormData): Promise<FormState> {
+  const name = text(form, "name");
+  const slug = name.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const result = await api("/blog/categories", { method: "POST", token: sessionToken(), body: { slug, name } });
+  if (!result.ok) return { error: result.message };
+  revalidatePath("/admin", "layout");
+  return { success: `Category “${name}” added.` };
+}
+
+// --- payment routing (admin) ------------------------------------------------------
+
+export async function updatePaymentRouting(_prev: FormState, form: FormData): Promise<FormState> {
+  const numberOrNull = (name: string) => (text(form, name) === "" ? null : Number(text(form, name)));
+  const result = await api(`/payment-methods/${encodeURIComponent(text(form, "methodKey"))}`, {
+    method: "PUT",
+    token: sessionToken(),
+    body: {
+      activeGateway: text(form, "activeGateway"),
+      fallbackGateway: text(form, "fallbackGateway") || null,
+      minOrderValue: numberOrNull("minOrderValue"),
+      maxOrderValue: numberOrNull("maxOrderValue"),
+      isEnabled: form.get("isEnabled") === "on",
+    },
+  });
+  if (!result.ok) return { error: result.status === 403 ? "Only admins can change payment routing." : result.message };
+  revalidateStorefront();
+  return { success: "Routing saved — takes effect on the next payment." };
+}
+
+// --- WhatsApp chats (staff) -------------------------------------------------------
+
+export async function closeWhatsAppConversation(form: FormData) {
+  await api(`/channels/whatsapp/conversations/${encodeURIComponent(text(form, "id"))}/close`, {
+    method: "POST",
+    token: sessionToken(),
+    body: { state: text(form, "state") },
+  });
+  revalidatePath("/admin", "layout");
 }

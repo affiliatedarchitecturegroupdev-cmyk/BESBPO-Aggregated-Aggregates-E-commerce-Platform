@@ -16,13 +16,18 @@ of every phase.
 
 ## What this is (and isn't)
 
-This scaffold delivers the confirmed **Phase 1** roadmap scope: schema, auth
-scaffolding, category/product structure, base storefront, legal/compliance
-pages, and merchandising sections. It is a working, runnable foundation —
-not a finished storefront. Pricing calculators, trade-account logic, and the
-RFQ flow are wired with real logic against seed data, but production
-concerns (payment gateway integration, live inventory sync docs, full test
-coverage, deployment secrets) are intentionally left for Phases 2–5.
+The repository covers roadmap **Phases 1–4** (see `AGENTIC_RULES.md`): the
+workbook-priced catalogue (48 aggregate SKUs plus 7 B2B packaged goods),
+bulk/bag, packaged-goods and delivery calculators, trade accounts, the RFQ
+flow, compliance documents, the admin/CMS (site content, homepage
+slideshow, promotions, blog, products, suppliers, payment routing, WhatsApp
+orders), the partner-supplier network and delivery-point locator, the
+payment architecture (18 methods routed through 6 gateway adapters), WhatsApp
+Commerce, the Instagram/Facebook catalogue feed, and SEO hardening.
+
+It is not launched: payment gateways and the WhatsApp Business API need real
+credentials, the payment/social logos are placeholders for the Brandfetch
+files, and suppliers need map pins — see "Open items" in `AGENTIC_RULES.md`.
 
 ## Tech stack (confirmed in the spec)
 
@@ -38,7 +43,7 @@ coverage, deployment secrets) are intentionally left for Phases 2–5.
 
 ## Confirmed platform decisions
 
-- **Supplier network**: 87 approved partner suppliers (52 Tier 1, 35 Tier 2) — broker/network model, no owned yards or inventory. Imported by staff at `/admin/suppliers`; KZN and Gauteng active at launch
+- **Supplier network**: 87 approved partner suppliers (52 Tier 1, 35 Tier 2) plus 18 researched B2B leads — broker/network model, no owned yards or inventory. Seeded on deploy from `packages/database/prisma/seed-data/`, managed at `/admin/suppliers`; KZN and Gauteng active at launch
 - **Domain**: `aggregates.store` (corporate + storefront) / `app.aggregates.store` (platform app)
 - **VAT**: bills under Besbpo Group's company VAT registration from day one
 - **Hosting**: Render
@@ -50,19 +55,26 @@ coverage, deployment secrets) are intentionally left for Phases 2–5.
 ```
 aggregates-store-platform/
 ├── apps/
-│   ├── web/            Next.js storefront — merchandising, product, RFQ, trade dashboard, legal pages
-│   └── api/             NestJS backend — auth, catalogue, trade-accounts, quotes, orders, suppliers, compliance docs
+│   ├── web/            Next.js storefront + /admin — merchandising, products, RFQ, trade dashboard,
+│   │                   blog, FAQ, ways-to-pay, industries, partner network, orders, legal pages
+│   └── api/             NestJS backend — auth, catalogue, trade-accounts, quotes, orders, suppliers,
+│                        compliance docs, content, promotions, blog, payment-gateway, channels/whatsapp,
+│                        channels/catalogue-feed
 ├── services/
-│   └── pricing/         FastAPI microservice — tonnage/volume, delivery and order pricing
+│   └── pricing/         FastAPI microservice — tonnage/volume, packaged-goods, delivery and order pricing
 ├── packages/
-│   └── database/        Shared Prisma schema + seed data (12 core models)
+│   └── database/        Shared Prisma schema, migrations, seed, supplier CSVs (seed-data/)
 ├── content/
 │   └── legal/           Source Markdown for all legal/compliance pages (POPIA, PAIA, Terms, etc.)
 ├── infra/
 │   ├── terraform/        AWS af-south-1 IaC skeleton
 │   └── docker/           Local Dockerfiles for api + pricing service
 ├── render.yaml           Render Blueprint (web, api, private pricing service)
-└── AGENTIC_RULES.md      Human-in-the-loop rules for the Phase 2–5 build-out
+├── AGENTIC_RULES.md      Human-in-the-loop rules for the build-out, updated per phase
+├── B2B_BULK_CATALOGUE.md CAT-10/11 packaged goods and the dedup against the 48-SKU catalogue
+├── BLOG_CMS.md           Blog/CMS: API, admin, content rules
+├── PAYMENT_ASSETS.md     Logo/icon provenance (placeholders pending Brandfetch files)
+└── PAYMENT_PROVIDER_TERMS.md  Researched BNPL / trade-credit terms behind "Ways to Pay"
 ```
 
 ## Local development
@@ -74,6 +86,7 @@ pnpm install
 pnpm --filter @aggregates/database db:generate
 pnpm --filter @aggregates/database db:migrate
 pnpm --filter @aggregates/database db:seed
+pnpm --filter api build && node apps/api/dist/suppliers/seed-suppliers.js   # partner network
 
 pnpm --filter web dev              # storefront → http://localhost:3000
 pnpm --filter api dev              # backend    → http://localhost:4000
@@ -97,6 +110,11 @@ the platform and how to change a price.
 
 ## Reference
 
-The full architecture rationale, feature-adoption matrix, wireframes, and
-confirmed decisions live in the companion spec document:
-[`docs/aggregated-aggregates-ecommerce-spec.pdf`](docs/aggregated-aggregates-ecommerce-spec.pdf).
+- [`docs/aggregated-aggregates-ecommerce-spec.pdf`](docs/aggregated-aggregates-ecommerce-spec.pdf) —
+  the pre-build Technical & Product Specification: architecture rationale,
+  feature-adoption matrix, original wireframes, confirmed decisions.
+- [`docs/aggregated-aggregates-platform-build-documentation.pdf`](docs/aggregated-aggregates-platform-build-documentation.pdf) —
+  the as-built documentation (September 2026): architecture, data model and
+  payment-routing diagrams, updated page wireframes, module status, and the
+  pre-launch open items. The homepage, product page, RFQ and dashboard follow
+  its as-built wireframes.

@@ -1,0 +1,247 @@
+{
+  "_source": "Aggregated_Aggregates_B2B_Bulk_Infrastructure_Pricing.xlsx — 'Category Markup Bands' sheet (September 2026), as transcribed in the delivered B2B build. Where a unit has no real benchmark its price is null and pricing_status says why; never fill one in without a supplier quote (AGENTIC_RULES.md rules 1 and 10).",
+  "unit_weights_kg": {
+    "BAG_25KG": 25,
+    "BAG_50KG": 50
+  },
+  "categories": [
+    {
+      "slug": "cement-hydraulic-binders",
+      "name": "Cement & Hydraulic Binders",
+      "code": "CAT-10"
+    },
+    {
+      "slug": "mortars-grouts-admixtures",
+      "name": "Mortars, Grouts & Admixtures",
+      "code": "CAT-11"
+    }
+  ],
+  "products": [
+    {
+      "sku": "AA-CEM-425N-001",
+      "slug": "bulk-cement-42-5n",
+      "name": "Bulk Cement 42.5N",
+      "category_slug": "cement-hydraulic-binders",
+      "grading_standard": "SANS 50197-1 (CEM II 42.5N)",
+      "typical_uses": [
+        "General structural concrete",
+        "Brickwork and blockwork mortar",
+        "Precast concrete products"
+      ],
+      "handling_notes": "Store off the ground on pallets, under cover, away from moisture. Best used within 3 months of the manufacture date stamped on the bag.",
+      "units": [
+        {
+          "unit": "BAG_50KG",
+          "market_benchmark_price": 147.85,
+          "cost_basis_percent": 65,
+          "cost_per_unit": 96.1,
+          "markup_percent": 18,
+          "list_price_per_unit": 113.4,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild, PPC Surebuild 42.5N 50kg, Sep 2026.",
+          "unit_label": "50kg bag"
+        },
+        {
+          "unit": "BULK_BAG_1_5T",
+          "market_benchmark_price": null,
+          "cost_basis_percent": 65,
+          "cost_per_unit": null,
+          "markup_percent": 15,
+          "list_price_per_unit": null,
+          "pricing_status": "Provisional — confirm w/ supplier",
+          "source_note": "No public bulk-bag benchmark found. Confirm with supplier before publishing a price.",
+          "unit_label": "1.5-ton bulk bag"
+        },
+        {
+          "unit": "BULK_TANKER_PER_TON",
+          "market_benchmark_price": null,
+          "cost_basis_percent": 65,
+          "cost_per_unit": null,
+          "markup_percent": 10,
+          "list_price_per_unit": null,
+          "pricing_status": "Provisional — confirm w/ supplier",
+          "source_note": "No public tanker-load benchmark found. Confirm with supplier before publishing a price.",
+          "unit_label": "Bulk tanker (per ton)"
+        }
+      ]
+    },
+    {
+      "sku": "AA-CEM-525N-001",
+      "slug": "bulk-cement-52-5n-rapid-hardening",
+      "name": "Bulk Cement 52.5N (Rapid Hardening)",
+      "category_slug": "cement-hydraulic-binders",
+      "grading_standard": "SANS 50197-1 (CEM II 52.5N)",
+      "typical_uses": [
+        "Fast-track construction requiring early strength gain",
+        "Precast and prestressed concrete",
+        "Cold-weather concreting"
+      ],
+      "handling_notes": "Higher early-strength gain generates more heat of hydration — take care with large pours. Store cool, dry and off the ground, as with standard cement.",
+      "units": [
+        {
+          "unit": "BAG_50KG",
+          "market_benchmark_price": null,
+          "cost_basis_percent": 65,
+          "cost_per_unit": null,
+          "markup_percent": 18,
+          "list_price_per_unit": null,
+          "pricing_status": "Provisional — confirm w/ supplier",
+          "source_note": "No public 52.5N-specific SA retail benchmark found. Confirm with supplier before publishing.",
+          "unit_label": "50kg bag"
+        },
+        {
+          "unit": "BULK_TANKER_PER_TON",
+          "market_benchmark_price": null,
+          "cost_basis_percent": 65,
+          "cost_per_unit": null,
+          "markup_percent": 10,
+          "list_price_per_unit": null,
+          "pricing_status": "Provisional — confirm w/ supplier",
+          "source_note": "Same gap as the bagged unit. Confirm with supplier.",
+          "unit_label": "Bulk tanker (per ton)"
+        }
+      ]
+    },
+    {
+      "sku": "AA-BND-ROADCAP-001",
+      "slug": "road-capping-binder-fly-ash-slag",
+      "name": "Road-Capping Binder (Fly Ash / Slag Blend)",
+      "category_slug": "cement-hydraulic-binders",
+      "grading_standard": "COLTO/TRH14",
+      "typical_uses": [
+        "Stabilising road-capping and sub-base layers",
+        "Soil stabilisation for pavement works",
+        "Bulk earthworks on civil sites"
+      ],
+      "handling_notes": "Supplied in bulk for large-volume civil works. Mixing ratios are project- and soil-specific — confirm with the supplier or engineer before use.",
+      "units": [
+        {
+          "unit": "BAG_50KG",
+          "market_benchmark_price": null,
+          "cost_basis_percent": 60,
+          "cost_per_unit": null,
+          "markup_percent": 20,
+          "list_price_per_unit": null,
+          "pricing_status": "Quote-only — no retail benchmark",
+          "source_note": "Road-capping binders are sold bulk B2B, not bagged retail — quoted directly by the supplier.",
+          "unit_label": "50kg bag"
+        },
+        {
+          "unit": "BULK_TANKER_PER_TON",
+          "market_benchmark_price": null,
+          "cost_basis_percent": 60,
+          "cost_per_unit": null,
+          "markup_percent": 12,
+          "list_price_per_unit": null,
+          "pricing_status": "Quote-only — no retail benchmark",
+          "source_note": "Same gap as the bagged unit — quoted directly by the supplier.",
+          "unit_label": "Bulk tanker (per ton)"
+        }
+      ]
+    },
+    {
+      "sku": "AA-GRT-NSHRINK-001",
+      "slug": "structural-non-shrink-grout",
+      "name": "Structural Non-Shrink Grout",
+      "category_slug": "mortars-grouts-admixtures",
+      "grading_standard": null,
+      "typical_uses": [
+        "Baseplate and machine-base grouting",
+        "Precast connections and post-tensioning ducts",
+        "Structural repairs requiring no shrinkage"
+      ],
+      "handling_notes": "Mix strictly to the manufacturer's water ratio on the technical data sheet. Pot life is short (typically 30–45 minutes) — mix only what can be placed immediately.",
+      "units": [
+        {
+          "unit": "BAG_25KG",
+          "market_benchmark_price": 399.0,
+          "cost_basis_percent": 55,
+          "cost_per_unit": 219.45,
+          "markup_percent": 22,
+          "list_price_per_unit": 267.73,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Pinnacle Construction Products, SikaGrout 212 25kg, Sep 2026 (listed R379–R426; R399 used as the midpoint).",
+          "unit_label": "25kg bag"
+        }
+      ]
+    },
+    {
+      "sku": "AA-ADM-ACCEL-001",
+      "slug": "concrete-admixture-accelerator",
+      "name": "Concrete Admixture — Accelerator",
+      "category_slug": "mortars-grouts-admixtures",
+      "grading_standard": null,
+      "typical_uses": [
+        "Cold-weather concreting to speed up set time",
+        "Fast-turnaround precast production",
+        "Emergency and rapid repair works"
+      ],
+      "handling_notes": "Dose per the manufacturer's technical data sheet (TDS) — overdosing can cause flash setting. Always trial-batch before full-scale use.",
+      "units": [
+        {
+          "unit": "DRUM_210L",
+          "market_benchmark_price": null,
+          "cost_basis_percent": 55,
+          "cost_per_unit": null,
+          "markup_percent": 25,
+          "list_price_per_unit": null,
+          "pricing_status": "BLOCKED — no benchmark",
+          "source_note": "No public benchmark — bulk admixtures are quoted per project. A real supplier quote is needed before any price is published.",
+          "unit_label": "210L drum"
+        }
+      ]
+    },
+    {
+      "sku": "AA-ADM-PLAST-001",
+      "slug": "concrete-admixture-plasticizer",
+      "name": "Concrete Admixture — Plasticizer",
+      "category_slug": "mortars-grouts-admixtures",
+      "grading_standard": null,
+      "typical_uses": [
+        "Improving workability without adding water",
+        "High-strength, low water-cement-ratio mixes",
+        "Pumped concrete"
+      ],
+      "handling_notes": "Add at the batching plant or on site per the TDS dosage. Store above freezing and stir before use if the product has settled.",
+      "units": [
+        {
+          "unit": "DRUM_210L",
+          "market_benchmark_price": null,
+          "cost_basis_percent": 55,
+          "cost_per_unit": null,
+          "markup_percent": 25,
+          "list_price_per_unit": null,
+          "pricing_status": "BLOCKED — no benchmark",
+          "source_note": "Same gap as the accelerator — quote only until a real supplier quote is obtained.",
+          "unit_label": "210L drum"
+        }
+      ]
+    },
+    {
+      "sku": "AA-ADM-RETARD-001",
+      "slug": "concrete-admixture-retarder",
+      "name": "Concrete Admixture — Retarder",
+      "category_slug": "mortars-grouts-admixtures",
+      "grading_standard": null,
+      "typical_uses": [
+        "Hot-weather concreting to delay set time",
+        "Large pours needing extended workability",
+        "Long-haul ready-mix deliveries"
+      ],
+      "handling_notes": "Overdosing can significantly delay strength gain — dose per the TDS and trial-batch for the site's ambient conditions.",
+      "units": [
+        {
+          "unit": "DRUM_210L",
+          "market_benchmark_price": null,
+          "cost_basis_percent": 55,
+          "cost_per_unit": null,
+          "markup_percent": 25,
+          "list_price_per_unit": null,
+          "pricing_status": "BLOCKED — no benchmark",
+          "source_note": "Same gap as the accelerator — quote only until a real supplier quote is obtained.",
+          "unit_label": "210L drum"
+        }
+      ]
+    }
+  ]
+}

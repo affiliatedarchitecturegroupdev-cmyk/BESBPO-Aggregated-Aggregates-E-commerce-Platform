@@ -88,9 +88,19 @@ export function SupplierForm({ supplier }: { supplier?: Supplier }) {
           <input name="contactPhone" type="tel" defaultValue={supplier?.contactPhone ?? ""} className={inputClass} />
         </label>
       </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <label className="flex items-center gap-2 font-body text-sm text-basalt">
+          <input type="checkbox" name="isVerifiedPartner" defaultChecked={supplier?.isVerifiedPartner ?? true} />
+          Verified partner (untick for a researched lead not yet qualified)
+        </label>
+        <label className="block">
+          <span className={labelClass}>Source (researched leads)</span>
+          <input name="sourceUrl" type="url" defaultValue={supplier?.sourceUrl ?? ""} placeholder="https://…" className={inputClass} />
+        </label>
+      </div>
       <label className="flex items-center gap-2 font-body text-sm text-basalt">
         <input type="checkbox" name="isActive" defaultChecked={supplier?.isActive ?? true} />
-        Active — used for delivery coverage and distance estimates
+        Active — a delivery point for coverage and distance estimates (verified partners only)
       </label>
       <SubmitButton>{supplier ? "Save changes" : "Add supplier"}</SubmitButton>
     </ActionForm>

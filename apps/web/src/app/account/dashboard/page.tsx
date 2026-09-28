@@ -140,7 +140,9 @@ export default async function DashboardPage({ searchParams }: { searchParams: { 
             <tbody>
               {orders.map((order) => (
                 <tr key={order.id} className="border-b border-basalt/5 align-top">
-                  <td className="px-4 py-3 font-mono text-xs">{order.orderNumber}</td>
+                  <td className="px-4 py-3 font-mono text-xs">
+                    <Link href={`/orders/${order.id}/tracking`} className="text-seam-blue hover:underline">{order.orderNumber}</Link>
+                  </td>
                   <td className="py-3">{formatDate(order.createdAt)}</td>
                   <td className="py-3">{order.lineItems.map((l) => l.product.name).join(", ")}</td>
                   <td className="py-3">{order.status}</td>

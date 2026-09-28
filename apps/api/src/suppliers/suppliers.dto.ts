@@ -10,6 +10,7 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  Matches,
   MaxLength,
   MinLength,
   ValidateIf,
@@ -36,6 +37,9 @@ export class SupplierDto {
   @IsOptional() @IsString() @MaxLength(120) contactName?: string;
   @IsOptional() @IsString() @MaxLength(40) contactPhone?: string;
   @IsBoolean() isActive!: boolean;
+  /** false = a researched lead, not yet contacted or qualified. Omitted = unchanged (new: verified). */
+  @IsOptional() @IsBoolean() isVerifiedPartner?: boolean;
+  @IsOptional() @IsString() @MaxLength(500) @Matches(/^(https?:\/\/\S+)?$/) sourceUrl?: string;
 }
 
 export class ImportOptionsDto {
@@ -51,5 +55,5 @@ export class NearestQuery {
 
 export class ListSuppliersQuery {
   @IsOptional() @IsIn(PROVINCES) province?: string;
-  @IsOptional() @IsIn(["missing-coordinates", "inactive", "active"]) filter?: string;
+  @IsOptional() @IsIn(["missing-coordinates", "inactive", "active", "leads"]) filter?: string;
 }

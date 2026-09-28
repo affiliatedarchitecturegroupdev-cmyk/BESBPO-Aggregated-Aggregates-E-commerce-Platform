@@ -29,6 +29,13 @@ export class SuppliersController {
     return this.suppliers.coverage();
   }
 
+  /** Public partner network: names, towns and categories — never contacts. */
+  @Public()
+  @Get("network")
+  network() {
+    return this.suppliers.network();
+  }
+
   /** Public nearest delivery point for a location (not stored). */
   @Public()
   @Get("nearest")

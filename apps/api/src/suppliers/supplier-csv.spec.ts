@@ -77,4 +77,28 @@ describe("geography helpers", () => {
     expect(km).toBeGreaterThan(60);
     expect(km).toBeLessThan(70);
   });
+
+  it("reads the B2B research list as unverified leads with CAT-10/11 categories", () => {
+    const csv = [
+      "supplier_id,supplier_name,category,province,address_location,products_notes,sku_category_codes,source_url",
+      'TST-B-1,Test Cement Works,Cement & Binders,Northern Cape,"Kiln Road, Testburg",42.5N bulk cement,CAT-10,https://example.com/plant',
+      'TST-B-2,Test Admixtures,"Mortars, Grouts & Admixtures",Gauteng,"1 Chem St, Isando",Admixtures,CAT-11,https://example.com/chem',
+    ].join("\n");
+    const { rows, errors } = parseSupplierCsv(csv);
+    expect(errors).toEqual([]);
+    expect(rows[0]).toMatchObject({ categorySlugs: ["cement-hydraulic-binders"], isVerifiedPartner: false, sourceUrl: "https://example.com/plant", tier: "TIER_2", city: "Testburg", productNotes: "42.5N bulk cement" });
+    expect(rows[1].categorySlugs).toEqual(["mortars-grouts-admixtures"]);
+  });
+
+  it("treats rows without a source as verified partners, and a verified column overrides", () => {
+    const csv = [
+      "supplier_id,supplier_name,tier,province,address_location,category_codes,source_url,verified",
+      "TST-V-1,Test Quarry,Tier 1,Gauteng,\"Road 1, Midrand\",CAT-01,,",
+      "TST-V-2,Test Plant,Tier 2,Gauteng,\"Road 2, Midrand\",CAT-02,https://example.com,yes",
+      "TST-V-3,Test Pit,Tier 2,Gauteng,\"Road 3, Midrand\",CAT-02,ftp://nope,",
+    ].join("\n");
+    const { rows, errors } = parseSupplierCsv(csv);
+    expect(rows.map((r) => r.isVerifiedPartner)).toEqual([true, true]);
+    expect(errors).toEqual([{ line: 4, message: expect.stringContaining("source_url must be a web address") }]);
+  });
 });

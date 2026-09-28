@@ -39,7 +39,8 @@ export default async function DeliveryAreasPage() {
       <p className="mt-3 max-w-3xl font-body text-sm text-slate">
         Aggregated Aggregates sources from an approved network of partner suppliers rather than its own yards.
         Every delivery is measured from the partner supplier nearest your site and carried by Besfleet, the Group&apos;s
-        own fleet, or one of 15+ tipper-truck delivery partners.
+        own fleet, or one of 15+ tipper-truck delivery partners.{" "}
+        <Link href="/suppliers" className="text-seam-blue hover:underline">Meet the partner network →</Link>
       </p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">

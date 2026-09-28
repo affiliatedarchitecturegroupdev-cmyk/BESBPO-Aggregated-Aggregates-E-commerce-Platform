@@ -1,16 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PromoSlot } from "@/components/merchandising/PromoSlot";
+import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { ProductCard } from "@/components/product/ProductCard";
 import { GRADING_STANDARDS, type Product } from "@/data/catalogue";
-import { getCatalogue, type MerchandisedProduct } from "@/lib/cms";
-import { CATEGORIES } from "@/data/categories";
+import { getCatalogue, getPackagedCatalogue, type MerchandisedPackagedProduct, type MerchandisedProduct } from "@/lib/cms";
+import { B2B_CATEGORIES, CATEGORIES, CORE_CATEGORIES } from "@/data/categories";
+import { INDUSTRIES } from "@/data/industries";
+import { getActivePromotions } from "@/lib/promotions";
 
 export const metadata: Metadata = {
   title: "Products",
-  description: "Sub-base, crushed stone, sand, crusher run, ballast, drainage, decorative, lime and recycled aggregates.",
+  description:
+    "Sub-base, crushed stone, sand, crusher run, ballast, drainage, decorative, lime and recycled aggregates — plus bulk cement, binders, grout and admixtures.",
 };
 
-type SearchParams = { q?: string; category?: string; grading?: string; sale?: string; sort?: string };
+type SearchParams = { q?: string; category?: string; grading?: string; sale?: string; sort?: string; industry?: string; group?: string };
 
 const SORTS: Record<string, { label: string; compare?: (a: Product, b: Product) => number }> = {
   relevance: { label: "Relevance" },
@@ -28,7 +33,7 @@ function perTon(product: Product): number {
 }
 
 /** Every word of the query must appear in the name, SKU, category, standard or description. */
-function matchesSearch(product: MerchandisedProduct, query: string): boolean {
+function matchesSearch(product: MerchandisedProduct | MerchandisedPackagedProduct, query: string): boolean {
   const category = CATEGORIES.find((c) => c.slug === product.categorySlug)?.name ?? "";
   const haystack = [product.name, product.sku, category, product.gradingStandard, product.description].join(" ").toLowerCase();
   return query
@@ -38,11 +43,20 @@ function matchesSearch(product: MerchandisedProduct, query: string): boolean {
     .every((word) => haystack.includes(word));
 }
 
-function filterProducts(catalogue: MerchandisedProduct[], { q, category, grading, sale, sort }: SearchParams): MerchandisedProduct[] {
+function inScope(categorySlug: string, { category, industry, group }: SearchParams): boolean {
+  if (category) return categorySlug === category;
+  const industryMatch = INDUSTRIES.find((i) => i.slug === industry);
+  if (industryMatch) return industryMatch.relevantCategorySlugs.includes(categorySlug);
+  if (group === "b2b-bulk") return B2B_CATEGORIES.some((c) => c.slug === categorySlug);
+  return true;
+}
+
+function filterProducts(catalogue: MerchandisedProduct[], params: SearchParams): MerchandisedProduct[] {
+  const { q, grading, sale, sort } = params;
   const filtered = catalogue.filter(
     (p) =>
       (!q || matchesSearch(p, q)) &&
-      (!category || p.categorySlug === category) &&
+      inScope(p.categorySlug, params) &&
       (!grading || p.gradingStandard === grading) &&
       (!sale || (sale === "bag" ? p.units.includes("bag") : p.units.some((u) => u !== "bag"))),
   );
@@ -52,11 +66,23 @@ function filterProducts(catalogue: MerchandisedProduct[], { q, category, grading
 
 const selectClass = "mt-1 w-full rounded-sm border border-basalt/20 bg-white px-2 py-1.5 font-body text-sm";
 
+function filterPackaged(catalogue: MerchandisedPackagedProduct[], params: SearchParams): MerchandisedPackagedProduct[] {
+  // Packaged goods have no grading standard filter value or ton/m³/bag units.
+  if (params.grading || params.sale === "bulk") return [];
+  const filtered = catalogue.filter((p) => (!params.q || matchesSearch(p, params.q)) && inScope(p.categorySlug, params));
+  return params.sort === "name" ? [...filtered].sort((a, b) => a.name.localeCompare(b.name)) : filtered;
+}
+
 export default async function ProductListingPage({ searchParams }: { searchParams: SearchParams }) {
-  const products = filterProducts(await getCatalogue(), searchParams);
+  const [catalogue, packagedCatalogue, promotions] = await Promise.all([getCatalogue(), getPackagedCatalogue(), getActivePromotions()]);
+  const products = filterProducts(catalogue, searchParams);
+  const packaged = filterPackaged(packagedCatalogue, searchParams);
+  const total = products.length + packaged.length;
   const category = CATEGORIES.find((c) => c.slug === searchParams.category);
+  const industry = category ? undefined : INDUSTRIES.find((i) => i.slug === searchParams.industry);
+  const b2bGroup = !category && !industry && searchParams.group === "b2b-bulk";
   const query = searchParams.q?.trim();
-  const hasFilters = Boolean(query || searchParams.category || searchParams.grading || searchParams.sale);
+  const hasFilters = Boolean(query || searchParams.category || searchParams.grading || searchParams.sale || industry || b2bGroup);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
@@ -64,16 +90,27 @@ export default async function ProductListingPage({ searchParams }: { searchParam
         <Link href="/" className="hover:text-seam-blue">Home</Link> /{" "}
         <Link href="/products" className="hover:text-seam-blue">Products</Link>
         {category && <> / {category.name}</>}
+        {industry && <> / {industry.name}</>}
+        {b2bGroup && <> / Bulk &amp; Infrastructure</>}
       </nav>
       <h1 className="mt-3 font-display text-3xl font-bold text-basalt">
-        {query ? `Results for “${query}”` : (category?.name ?? "All Products")}
+        {query ? `Results for “${query}”` : (category?.name ?? industry?.name ?? (b2bGroup ? "Bulk & Infrastructure" : "All Products"))}
       </h1>
       {category && <p className="mt-1 font-body text-sm text-slate">{category.description}</p>}
+      {industry && (
+        <p className="mt-1 max-w-3xl font-body text-sm text-slate">
+          <span className="font-mono text-[10px] uppercase tracking-widest text-seam-blue">Shop by industry · </span>
+          {industry.description}
+        </p>
+      )}
+      {category && promotions.CATEGORY_TOP_BANNER && <PromoSlot promotion={promotions.CATEGORY_TOP_BANNER} className="mt-6" />}
 
       <div className="mt-8 grid gap-8 md:grid-cols-[230px_1fr]">
         <aside>
           <form method="get" action="/products" className="rounded-sm border border-basalt/10 bg-white p-4">
             <p className="font-body text-sm font-semibold text-basalt">Filters</p>
+            {industry && <input type="hidden" name="industry" value={industry.slug} />}
+            {b2bGroup && <input type="hidden" name="group" value="b2b-bulk" />}
             <label className="mt-4 block">
               <span className="font-mono text-[10px] uppercase text-slate">Search</span>
               <input name="q" type="search" defaultValue={query ?? ""} placeholder="e.g. river sand" className={selectClass} />
@@ -82,9 +119,16 @@ export default async function ProductListingPage({ searchParams }: { searchParam
               <span className="font-mono text-[10px] uppercase text-slate">Category</span>
               <select name="category" defaultValue={searchParams.category ?? ""} className={selectClass}>
                 <option value="">All categories</option>
-                {CATEGORIES.map((c) => (
-                  <option key={c.slug} value={c.slug}>{c.name}</option>
-                ))}
+                <optgroup label="Aggregates">
+                  {CORE_CATEGORIES.map((c) => (
+                    <option key={c.slug} value={c.slug}>{c.name}</option>
+                  ))}
+                </optgroup>
+                <optgroup label="Bulk & Infrastructure">
+                  {B2B_CATEGORIES.map((c) => (
+                    <option key={c.slug} value={c.slug}>{c.name}</option>
+                  ))}
+                </optgroup>
               </select>
             </label>
             <label className="mt-3 block">
@@ -121,6 +165,18 @@ export default async function ProductListingPage({ searchParams }: { searchParam
               </Link>
             )}
           </form>
+          <div className="mt-4 rounded-sm border border-basalt/10 bg-white p-4">
+            <p className="font-mono text-[10px] uppercase text-slate">Shop by industry</p>
+            <ul className="mt-2 space-y-1.5 font-body text-xs">
+              {INDUSTRIES.map((i) => (
+                <li key={i.slug}>
+                  <Link href={`/products?industry=${i.slug}`} className={industry?.slug === i.slug ? "font-semibold text-seam-blue" : "text-basalt hover:text-seam-blue"}>
+                    {i.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
           <div className="mt-4 rounded-sm border border-ochre-gold/40 bg-ochre-gold/10 p-4 font-body text-xs text-basalt">
             Civil order or delivery over 100km?{" "}
             <Link href="/quote" className="font-semibold text-seam-blue hover:underline">Request a bulk quote →</Link>
@@ -129,9 +185,9 @@ export default async function ProductListingPage({ searchParams }: { searchParam
 
         <div>
           <p className="font-body text-sm text-slate">
-            {products.length} {products.length === 1 ? "product" : "products"}
+            {total} {total === 1 ? "product" : "products"}
           </p>
-          {products.length === 0 ? (
+          {total === 0 ? (
             <div className="mt-4 rounded-sm border border-basalt/10 bg-white p-8 text-center font-body text-sm text-slate">
               No products match these filters.{" "}
               <Link href="/products" className="text-seam-blue hover:underline">Clear filters</Link>
@@ -140,6 +196,9 @@ export default async function ProductListingPage({ searchParams }: { searchParam
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {products.map((product) => (
                 <ProductCard key={product.sku} product={product} preferBag={searchParams.sale === "bag"} />
+              ))}
+              {packaged.map((product) => (
+                <PackagedProductCard key={product.sku} product={product} />
               ))}
             </div>
           )}

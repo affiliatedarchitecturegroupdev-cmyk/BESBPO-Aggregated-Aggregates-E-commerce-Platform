@@ -1,7 +1,9 @@
 import { BadGatewayException, HttpException, Injectable } from "@nestjs/common";
 
 export type CustomerTierName = "RETAIL" | "CONTRACTOR_TRADE" | "VOLUME_CIVIL_BULK";
-export type PricingUnit = "ton" | "m3" | "bag";
+export const PACKAGED_UNITS = ["BAG_25KG", "BAG_50KG", "BULK_BAG_1_5T", "BULK_TANKER_PER_TON", "DRUM_210L", "IBC_TOTE_1000L"] as const;
+export type PackagedUnit = (typeof PACKAGED_UNITS)[number];
+export type PricingUnit = "ton" | "m3" | "bag" | PackagedUnit;
 
 type TonnageVolumeRequest = {
   sku: string;
@@ -29,7 +31,9 @@ export type QuoteOnlyReasonCode =
   | "OVER_MAX_DISTANCE"
   | "SMALL_LOAD_OUT_OF_RANGE"
   | "BAGGED_OUT_OF_RANGE"
-  | "NO_MATCHING_BAND";
+  | "NO_MATCHING_BAND"
+  | "PRICE_ON_REQUEST" // a packaged unit with no confirmed price
+  | "PACKAGED_BULK_DELIVERY"; // bulk-bag / tanker / drum / tote delivery
 
 export type PricedLine = {
   sku: string;
@@ -37,9 +41,12 @@ export type PricedLine = {
   quantity: number;
   equivalent_tons: number;
   equivalent_m3: number;
-  list_unit_price: number;
-  unit_price: number;
-  total: number;
+  /** null for a packaged unit with no confirmed price (pricing_status says why). */
+  list_unit_price: number | null;
+  unit_price: number | null;
+  total: number | null;
+  unit_label?: string;
+  pricing_status?: string;
 };
 
 export type DeliveryQuote = {

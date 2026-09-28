@@ -9,6 +9,7 @@
  */
 import { INestApplication, ValidationPipe } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
+import { createHmac } from "crypto";
 import request from "supertest";
 import { AppModule } from "../src/app.module";
 import { PrismaService } from "../src/common/prisma.service";
@@ -31,7 +32,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({ imports: [AppModule] }).compile();
-    app = moduleRef.createNestApplication();
+    app = moduleRef.createNestApplication({ rawBody: true });
     app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
     await app.init();
     prisma = app.get(PrismaService);
@@ -334,7 +335,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
       const served = await http().get(`/merchandising/images/${image.body.id}`).expect(200);
       expect(served.headers["content-type"]).toBe("image/png");
       const overlay = await http().get("/merchandising/products").expect(200);
-      expect(overlay.body).toHaveLength(48);
+      expect(overlay.body).toHaveLength(55); // 48 aggregates + 7 B2B packaged goods
       expect(overlay.body.find((p: { sku: string }) => p.sku === sku)).toMatchObject({
         featuredRank: 2,
         images: [{ id: image.body.id, altText: "Filter media stockpile" }],
@@ -474,6 +475,256 @@ describe("Aggregated Aggregates API (e2e)", () => {
       expect(res.body.companyId).toBeNull();
       expect(Number(res.body.subtotal)).toBe(1805.4); // 5 x R361.08 retail
       await prisma.order.delete({ where: { id: res.body.id } });
+    });
+  });
+
+  describe("B2B packaged goods", () => {
+    it("quotes a benchmarked cement bag and routes unbenchmarked units to a human price", async () => {
+      const priced = await http()
+        .post("/quotes")
+        .send({
+          contactName: "Cement Buyer",
+          contactEmail: `cement-${run}@example.com`,
+          deliveryAddress: "1 Plant Road, Durban",
+          deliveryDistanceKm: 12,
+          lines: [{ sku: "AA-CEM-425N-001", unit: "BAG_50KG", quantity: 10 }],
+        })
+        .expect(201);
+      expect(priced.body.reasonCode).toBe("CUSTOMER_REQUEST");
+      expect(Number(priced.body.lineItems[0].estimatedUnitPrice)).toBe(113.4);
+      expect(priced.body.lineItems[0].unitOfSale).toBe("BAG_50KG");
+
+      const unpriced = await http()
+        .post("/quotes")
+        .send({
+          contactName: "Admixture Buyer",
+          contactEmail: `admix-${run}@example.com`,
+          deliveryAddress: "1 Plant Road, Durban",
+          lines: [{ sku: "AA-ADM-ACCEL-001", unit: "DRUM_210L", quantity: 2 }],
+        })
+        .expect(201);
+      expect(unpriced.body.reasonCode).toBe("PRICE_ON_REQUEST");
+      expect(unpriced.body.lineItems[0].estimatedUnitPrice).toBeNull();
+      await prisma.quote.deleteMany({ where: { id: { in: [priced.body.id, unpriced.body.id] } } });
+    });
+
+    it("rejects units a product isn't sold in", async () => {
+      await http()
+        .post("/quotes")
+        .send({ contactName: "X Y", contactEmail: `bad-${run}@example.com`, deliveryAddress: "Somewhere", lines: [{ sku: "AA-GRT-NSHRINK-001", unit: "DRUM_210L", quantity: 1 }] })
+        .expect(422);
+    });
+
+    it("lets a customer order benchmarked bags, with bagged-goods delivery", async () => {
+      const token = await register("cementorder");
+      const product = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-CEM-425N-001" } });
+      const res = await http()
+        .post("/orders")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ deliveryDistanceKm: 12, lineItems: [{ productId: product.id, unitOfSale: "BAG_50KG", quantity: 10 }] })
+        .expect(201);
+      expect(Number(res.body.subtotal)).toBe(1134);
+      expect(Number(res.body.deliveryFee)).toBe(350);
+      const drums = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-ADM-PLAST-001" } });
+      await http()
+        .post("/orders")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ deliveryDistanceKm: 12, lineItems: [{ productId: drums.id, unitOfSale: "DRUM_210L", quantity: 1 }] })
+        .expect(400);
+      await prisma.order.delete({ where: { id: res.body.id } });
+    });
+  });
+
+  describe("promotions (ad system)", () => {
+    let staff: string;
+    let customer: string;
+    beforeAll(async () => {
+      staff = await register("promostaff");
+      await prisma.user.update({ where: { email: `promostaff-${run}@example.com` }, data: { role: "STAFF" } });
+      customer = await register("promocustomer");
+    });
+
+    it("serves one live creative per slot, honouring dates, and is staff-editable only", async () => {
+      const promo = { slot: "FOOTER_STRIP", title: `Test promo ${run}`, imageUrl: "media:road-paving", linkUrl: "/quote", isActive: true, sortOrder: 0 };
+      await http().post("/promotions").set("Authorization", `Bearer ${customer}`).send(promo).expect(403);
+      await http().post("/promotions").set("Authorization", `Bearer ${staff}`).send({ ...promo, imageUrl: "javascript:alert(1)" }).expect(400);
+      await http().post("/promotions").set("Authorization", `Bearer ${staff}`).send({ ...promo, linkUrl: "javascript:alert(1)" }).expect(400);
+      await http()
+        .post("/promotions")
+        .set("Authorization", `Bearer ${staff}`)
+        .send({ ...promo, startsAt: "2026-10-10T00:00:00Z", endsAt: "2026-10-01T00:00:00Z" })
+        .expect(400);
+
+      // Lowest sort order wins, but a future start date keeps it off the site.
+      const future = await http().post("/promotions").set("Authorization", `Bearer ${staff}`).send({ ...promo, sortOrder: 0, startsAt: "2099-01-01T00:00:00Z" }).expect(201);
+      let live = await http().get("/promotions/active").expect(200);
+      expect(live.body.FOOTER_STRIP.id).not.toBe(future.body.id);
+
+      const now = await http().put(`/promotions/${future.body.id}`).set("Authorization", `Bearer ${staff}`).send({ ...promo, startsAt: null }).expect(200);
+      live = await http().get("/promotions/active").expect(200);
+      expect(live.body.FOOTER_STRIP).toMatchObject({ id: now.body.id, title: promo.title, imageUrl: "media:road-paving" });
+      expect(Object.keys(live.body).sort()).toEqual(["CATEGORY_TOP_BANNER", "FOOTER_STRIP", "HOMEPAGE_SECONDARY_BANNER", "QUOTE_FLOW_UPSELL"]);
+
+      await http().delete(`/promotions/${future.body.id}`).set("Authorization", `Bearer ${staff}`).expect(204);
+      await http().delete(`/promotions/${future.body.id}`).set("Authorization", `Bearer ${staff}`).expect(404);
+    });
+  });
+
+  describe("blog", () => {
+    let staff: string;
+    let customer: string;
+    beforeAll(async () => {
+      staff = await register("blogstaff");
+      await prisma.user.update({ where: { email: `blogstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      customer = await register("blogcustomer");
+    });
+
+    it("keeps drafts private and write routes staff-only", async () => {
+      const post = { slug: `test-post-${run}`, title: "A test article", bodyMarkdown: "## Heading\n\nSome body text that is long enough.", categorySlug: "technical", isPublished: false };
+      await http().post("/blog/admin/posts").send(post).expect(401);
+      await http().post("/blog/admin/posts").set("Authorization", `Bearer ${customer}`).send(post).expect(403);
+      await http().get("/blog/admin/posts").set("Authorization", `Bearer ${customer}`).expect(403);
+      await http().post("/blog/admin/posts").set("Authorization", `Bearer ${staff}`).send({ ...post, slug: "Not A Slug" }).expect(400);
+      await http().post("/blog/admin/posts").set("Authorization", `Bearer ${staff}`).send({ ...post, categorySlug: "no-such-category" }).expect(400);
+
+      const draft = await http().post("/blog/admin/posts").set("Authorization", `Bearer ${staff}`).send(post).expect(201);
+      expect(draft.body.publishedAt).toBeNull();
+      await http().get(`/blog/posts/${post.slug}`).expect(404);
+      expect((await http().get("/blog/posts").expect(200)).body.some((p: { slug: string }) => p.slug === post.slug)).toBe(false);
+
+      const published = await http().put(`/blog/admin/posts/${draft.body.id}`).set("Authorization", `Bearer ${staff}`).send({ ...post, isPublished: true }).expect(200);
+      expect(published.body.publishedAt).toBeTruthy();
+      const read = await http().get(`/blog/posts/${post.slug}`).expect(200);
+      expect(read.body).toMatchObject({ title: post.title, category: { slug: "technical" } });
+
+      await http().post("/blog/admin/posts").set("Authorization", `Bearer ${staff}`).send(post).expect(400); // duplicate slug
+      await http().delete(`/blog/admin/posts/${draft.body.id}`).set("Authorization", `Bearer ${staff}`).expect(204);
+      await http().get(`/blog/posts/${post.slug}`).expect(404);
+    });
+
+    it("lists the seeded starter articles publicly", async () => {
+      const posts = await http().get("/blog/posts").expect(200);
+      expect(posts.body.map((p: { slug: string }) => p.slug)).toEqual(expect.arrayContaining(["ton-vs-m3-which-should-you-order", "bulk-cement-buying-guide"]));
+    });
+  });
+
+  describe("payments", () => {
+    it("shows tiles without routing, and eligibility at the caller's own tier", async () => {
+      const tiles = await http().get("/payment-methods").expect(200);
+      expect(tiles.body).toHaveLength(18);
+      expect(tiles.body[0].activeGateway).toBeUndefined();
+
+      const anonymous = await http().get("/payment-methods/eligible?orderTotal=20000").expect(200);
+      const keys = [...anonymous.body.recommended, ...anonymous.body.available].map((m: { methodKey: string }) => m.methodKey);
+      expect(keys).toContain("CARD");
+      expect(keys).not.toContain("LULAPAY");
+      expect(keys).not.toContain("EFT_PO");
+      const quoteOnly = await http().get("/payment-methods/eligible?orderTotal=20000&isQuoteOnly=true").expect(200);
+      expect(quoteOnly.body.available.map((m: { methodKey: string }) => m.methodKey)).toEqual(["EFT_PO"]);
+    });
+
+    it("re-checks eligibility and ownership when paying, and routes through the gateway table", async () => {
+      const buyer = await register("payer");
+      const other = await register("payerother");
+      const product = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-SBC-05" } });
+      const order = await http()
+        .post("/orders")
+        .set("Authorization", `Bearer ${buyer}`)
+        .send({ deliveryDistanceKm: 20, lineItems: [{ productId: product.id, unitOfSale: "BULK_M3", quantity: 6 }] })
+        .expect(201);
+
+      await http().post("/payment-methods/initiate").set("Authorization", `Bearer ${other}`).send({ orderId: order.body.id, methodKey: "CARD" }).expect(404);
+      await http().post("/payment-methods/initiate").set("Authorization", `Bearer ${buyer}`).send({ orderId: order.body.id, methodKey: "EFT_PO" }).expect(400);
+      const card = await http().post("/payment-methods/initiate").set("Authorization", `Bearer ${buyer}`).send({ orderId: order.body.id, methodKey: "CARD" }).expect(201);
+      expect(card.body).toMatchObject({ isLive: false, method: "Card (Visa / Mastercard / Amex)" });
+      expect(card.body.note).toContain(order.body.orderNumber);
+      expect(card.body.note).not.toMatch(/PAYFAST_|env/i); // no configuration details for shoppers
+      await prisma.order.delete({ where: { id: order.body.id } });
+    });
+
+    it("lets admins, and only admins, change routing", async () => {
+      const staff = await register("paystaff");
+      await prisma.user.update({ where: { email: `paystaff-${run}@example.com` }, data: { role: "STAFF" } });
+      const admin = await register("payadmin");
+      await prisma.user.update({ where: { email: `payadmin-${run}@example.com` }, data: { role: "ADMIN" } });
+
+      const routing = await http().get("/payment-methods/routing").set("Authorization", `Bearer ${staff}`).expect(200);
+      expect(routing.body.gateways.find((g: { gateway: string }) => g.gateway === "MANUAL_EFT")).toMatchObject({ live: true });
+      const change = { activeGateway: "PEACH", fallbackGateway: "OZOW_DIRECT", minOrderValue: null, maxOrderValue: null, isEnabled: true };
+      await http().put("/payment-methods/OZOW").set("Authorization", `Bearer ${staff}`).send(change).expect(403);
+      await http().put("/payment-methods/OZOW").set("Authorization", `Bearer ${admin}`).send({ ...change, fallbackGateway: "PEACH" }).expect(400);
+      await http().put("/payment-methods/NOT_A_METHOD").set("Authorization", `Bearer ${admin}`).send(change).expect(400);
+      const updated = await http().put("/payment-methods/OZOW").set("Authorization", `Bearer ${admin}`).send(change).expect(200);
+      expect(updated.body).toMatchObject({ activeGateway: "PEACH", fallbackGateway: "OZOW_DIRECT" });
+      await http()
+        .put("/payment-methods/OZOW")
+        .set("Authorization", `Bearer ${admin}`)
+        .send({ ...change, activeGateway: "OZOW_DIRECT", fallbackGateway: "PEACH" })
+        .expect(200);
+    });
+  });
+
+  describe("channels", () => {
+    const secret = "test-app-secret";
+    const payload = (id: string, text: string) =>
+      JSON.stringify({ entry: [{ changes: [{ value: { messages: [{ id, from: "27820000001", type: "text", text: { body: text } }] } }] }] });
+    const sign = (body: string) => `sha256=${createHmac("sha256", secret).update(body).digest("hex")}`;
+
+    afterAll(async () => {
+      delete process.env.WHATSAPP_APP_SECRET;
+      delete process.env.WHATSAPP_WEBHOOK_VERIFY_TOKEN;
+      await prisma.whatsAppConversation.deleteMany({ where: { phoneNumber: "27820000001" } });
+    });
+
+    it("refuses WhatsApp webhooks until configured, then only with Meta's signature", async () => {
+      const body = payload(`wamid.${run}.1`, "Hi");
+      await http().post("/channels/whatsapp/webhook").set("Content-Type", "application/json").send(body).expect(503);
+      process.env.WHATSAPP_APP_SECRET = secret;
+      process.env.WHATSAPP_WEBHOOK_VERIFY_TOKEN = "verify-me";
+      await http().get("/channels/whatsapp/webhook?hub.mode=subscribe&hub.verify_token=wrong&hub.challenge=abc").expect(400);
+      const handshake = await http().get("/channels/whatsapp/webhook?hub.mode=subscribe&hub.verify_token=verify-me&hub.challenge=1158201444").expect(200);
+      expect(handshake.text).toBe("1158201444");
+      await http().post("/channels/whatsapp/webhook").set("Content-Type", "application/json").set("X-Hub-Signature-256", "sha256=bad").send(body).expect(403);
+    });
+
+    it("moves a chat from browsing to the sales queue, ignoring redeliveries", async () => {
+      const post = (body: string) => http().post("/channels/whatsapp/webhook").set("Content-Type", "application/json").set("X-Hub-Signature-256", sign(body)).send(body).expect(200);
+      await post(payload(`wamid.${run}.2`, "I want to order"));
+      const request = payload(`wamid.${run}.3`, "10 bags of river pebble to Umhlanga");
+      await post(request);
+      await post(request); // Meta retry
+      const conversation = await prisma.whatsAppConversation.findFirstOrThrow({ where: { phoneNumber: "27820000001" }, orderBy: { createdAt: "desc" } });
+      expect(conversation.state).toBe("HANDED_TO_SALES");
+      expect(conversation.draftCartJson).toEqual({ requests: ["10 bags of river pebble to Umhlanga"] });
+
+      const staff = await register("chatstaff");
+      await prisma.user.update({ where: { email: `chatstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      const open = await http().get("/channels/whatsapp/conversations").set("Authorization", `Bearer ${staff}`).expect(200);
+      expect(open.body.some((c: { id: string }) => c.id === conversation.id)).toBe(true);
+      await http().post(`/channels/whatsapp/conversations/${conversation.id}/close`).set("Authorization", `Bearer ${staff}`).send({ state: "ABANDONED" }).expect(200);
+    });
+
+    it("publishes a Meta catalogue feed of priced, photographed products only", async () => {
+      const feed = await http().get("/channels/catalogue-feed.csv").expect(200);
+      expect(feed.headers["content-type"]).toContain("text/csv");
+      const [header, ...rows] = feed.text.trim().split("\n");
+      expect(header).toBe("id,title,description,availability,condition,price,link,image_link,brand,google_product_category");
+      for (const row of rows) expect(row).toMatch(/ZAR/);
+      expect(feed.text).not.toContain("AA-ADM-ACCEL-001"); // no benchmark, no price, never on the feed
+    });
+  });
+
+  describe("public partner network", () => {
+    it("shows names and categories, never contacts, with leads apart", async () => {
+      const network = await http().get("/suppliers/network").expect(200);
+      expect(network.body).toHaveProperty("partners");
+      expect(network.body).toHaveProperty("leads");
+      const all = [...network.body.partners, ...network.body.leads];
+      for (const supplier of all) {
+        expect(supplier.contactName).toBeUndefined();
+        expect(supplier.contactPhone).toBeUndefined();
+        expect(supplier.latitude).toBeUndefined();
+      }
     });
   });
 });

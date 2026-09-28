@@ -13,6 +13,11 @@ import { QuotesModule } from "./quotes/quotes.module";
 import { StorageModule } from "./storage/storage.module";
 import { SuppliersModule } from "./suppliers/suppliers.module";
 import { TradeAccountsModule } from "./trade-accounts/trade-accounts.module";
+import { PromotionsModule } from "./promotions/promotions.module";
+import { BlogModule } from "./blog/blog.module";
+import { PaymentGatewayModule } from "./payment-gateway/payment-gateway.module";
+import { WhatsAppModule } from "./channels/whatsapp/whatsapp.module";
+import { CatalogueFeedModule } from "./channels/catalogue-feed/catalogue-feed.module";
 
 @Module({
   imports: [
@@ -30,6 +35,11 @@ import { TradeAccountsModule } from "./trade-accounts/trade-accounts.module";
     OrdersModule,
     SuppliersModule,
     ComplianceDocumentsModule,
+    PromotionsModule,
+    BlogModule,
+    PaymentGatewayModule,
+    WhatsAppModule,
+    CatalogueFeedModule,
   ],
 })
 export class AppModule {}

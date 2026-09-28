@@ -11,6 +11,7 @@ export const SITE_URL = (
 
 export const NAV_LINKS = [
   { href: "/products", label: "Products" },
+  { href: "/industries-we-serve", label: "Industries" },
   { href: "/trade-accounts", label: "Trade Accounts" },
   { href: "/delivery-areas", label: "Delivery Areas" },
   { href: "/about", label: "About" },

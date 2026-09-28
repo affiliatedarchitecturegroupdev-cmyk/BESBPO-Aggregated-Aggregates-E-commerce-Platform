@@ -12,6 +12,7 @@ const FILTERS = [
   { value: "active", label: "Active" },
   { value: "inactive", label: "Inactive" },
   { value: "missing-coordinates", label: "Needs a map pin" },
+  { value: "leads", label: "Researched leads" },
 ];
 
 const CATEGORY_NAME = new Map(CATEGORIES.map((c) => [c.slug, c.name]));
@@ -38,7 +39,8 @@ export default async function AdminSuppliersPage({ searchParams }: { searchParam
           <h2 className="font-body text-sm font-semibold text-basalt">Import the supplier database</h2>
           <p className="mt-1 font-body text-xs text-slate">
             Rows are matched on <code>supplier_id</code>: existing suppliers are updated, new ones added, and suppliers
-            missing from the file are left alone. A file with any bad row is rejected whole.
+            missing from the file are left alone. A file with any bad row is rejected whole. Both the partner database
+            and the B2B research list (with <code>source_url</code>, imported as unverified leads) are accepted.
           </p>
           <div className="mt-4">
             <SupplierImportForm />
@@ -107,8 +109,8 @@ export default async function AdminSuppliersPage({ searchParams }: { searchParam
                     </Link>
                     <span className="flex flex-wrap gap-3 font-mono text-[11px] text-slate">
                       {s.externalId && <span>{s.externalId}</span>}
-                      <span>{SUPPLIER_TIER_LABEL[s.tier]}</span>
-                      {s.latitude === null && <span className="text-ochre-gold">No map pin</span>}
+                      <span>{s.isVerifiedPartner ? SUPPLIER_TIER_LABEL[s.tier] : "Lead"}</span>
+                      {s.latitude === null && s.isVerifiedPartner && <span className="text-ochre-gold">No map pin</span>}
                       <span className={s.isActive ? "text-seam-blue" : "text-red-700"}>{s.isActive ? "Active" : "Inactive"}</span>
                     </span>
                   </div>

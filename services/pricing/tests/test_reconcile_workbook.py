@@ -21,6 +21,7 @@ sys.path.insert(0, str(SERVICE_DIR))
 sys.path.insert(0, str(SERVICE_DIR / "scripts"))
 
 import pricing_framework  # noqa: E402
+from calculators.packaged_goods import load as load_packaged  # noqa: E402
 from calculators.tonnage_volume import unit_price  # noqa: E402
 from import_pricing_framework import OUTPUT_PATHS, WORKBOOK_PATH, import_workbook, render  # noqa: E402
 
@@ -91,7 +92,13 @@ def test_delivery_fees_match():
             assert bands[label].fees[size] == Decimal(str(ws[f"{col}{row}"].value))
 
 
+PACKAGED_RAW, _ = load_packaged()
+
+
 def test_storefront_categories_match_workbook():
     categories_ts = (SERVICE_DIR.parent.parent / "apps" / "web" / "src" / "data" / "categories.ts").read_text()
-    storefront_slugs = re.findall(r'slug: "([a-z0-9-]+)"', categories_ts)
-    assert storefront_slugs == [c["slug"] for c in FRAMEWORK.raw["categories"]]
+    core = re.findall(r'slug: "([a-z0-9-]+)"[^}]*catalogueGroup: "core"', categories_ts)
+    b2b = re.findall(r'slug: "([a-z0-9-]+)"[^}]*catalogueGroup: "b2b-bulk"', categories_ts)
+    assert core == [c["slug"] for c in FRAMEWORK.raw["categories"]]
+    # The B2B Bulk & Infrastructure categories come from the B2B workbook instead.
+    assert b2b == [c["slug"] for c in PACKAGED_RAW["categories"]]

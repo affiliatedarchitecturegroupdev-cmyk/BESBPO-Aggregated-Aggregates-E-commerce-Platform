@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { PRODUCTS, type Unit } from "@/data/catalogue";
-import { CATEGORIES } from "@/data/categories";
+import { CORE_CATEGORIES } from "@/data/categories";
 import { estimateDelivery, estimateLine, formatZAR, UNIT_LABELS } from "@/lib/pricing";
 
 /**
@@ -46,7 +46,7 @@ export function QuickTonnageCalculator({ hiddenSkus = [] }: { hiddenSkus?: strin
               onChange={(e) => setSku(e.target.value)}
               className="mt-1 w-full rounded-sm border border-basalt/20 bg-white px-3 py-2 font-body text-sm"
             >
-              {CATEGORIES.map((category) => (
+              {CORE_CATEGORIES.map((category) => (
                 <optgroup key={category.slug} label={category.name}>
                   {available.filter((p) => p.categorySlug === category.slug).map((p) => (
                     <option key={p.sku} value={p.sku}>

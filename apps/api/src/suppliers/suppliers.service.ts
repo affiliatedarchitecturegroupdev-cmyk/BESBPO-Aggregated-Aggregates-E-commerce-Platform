@@ -9,8 +9,10 @@ export type ImportSummary = { created: number; updated: number; unchanged: numbe
 /**
  * Supplier & Delivery-Point Locator (Module 6): the approved partner-supplier
  * network — a broker model with no owned yards. Staff manage the full
- * records; the public only ever sees delivery points (town, province,
- * categories) and distances, never names or contacts.
+ * records. The public partner-network page shows names, towns and
+ * categories (verified partners and researched leads labelled apart);
+ * contact details are staff-only. Only active, verified partners count
+ * as delivery points.
  */
 @Injectable()
 export class SuppliersService {
@@ -35,6 +37,8 @@ export class SuppliersService {
           address: row.address,
           categorySlugs: row.categorySlugs,
           productNotes: row.productNotes,
+          isVerifiedPartner: row.isVerifiedPartner,
+          sourceUrl: row.sourceUrl,
           // Optional columns only overwrite when the file has them, so a re-import keeps staff edits.
           ...(row.explicitTown ? { city: row.city } : {}),
           ...(row.latitude !== undefined ? { latitude: row.latitude, longitude: row.longitude } : {}),
@@ -49,7 +53,8 @@ export class SuppliersService {
             ...fromFile,
             externalId: row.externalId,
             city: row.city,
-            isActive: row.isActive ?? (!activateLaunchProvincesOnly || LAUNCH_PROVINCES.includes(row.province)),
+            // Researched leads start inactive: they aren't delivery points until qualified.
+            isActive: row.isActive ?? (row.isVerifiedPartner && (!activateLaunchProvincesOnly || LAUNCH_PROVINCES.includes(row.province))),
           },
         });
       }),
@@ -77,6 +82,7 @@ export class SuppliersService {
         ...(filter === "missing-coordinates" ? { latitude: null } : {}),
         ...(filter === "inactive" ? { isActive: false } : {}),
         ...(filter === "active" ? { isActive: true } : {}),
+        ...(filter === "leads" ? { isVerifiedPartner: false } : {}),
       },
       orderBy: [{ province: "asc" }, { tier: "asc" }, { name: "asc" }],
     });
@@ -108,7 +114,7 @@ export class SuppliersService {
    */
   async coverage() {
     const suppliers = await this.prisma.supplierLocation.findMany({
-      where: { isActive: true },
+      where: { isActive: true, isVerifiedPartner: true },
       select: { province: true, city: true, categorySlugs: true, latitude: true },
     });
     const byProvince = new Map<string, { deliveryPoints: number; towns: Set<string>; categories: Set<string> }>();
@@ -129,6 +135,22 @@ export class SuppliersService {
   }
 
   /**
+   * Public: the partner network by province — names, towns, addresses and
+   * categories, never contacts. Verified partners and researched leads are
+   * returned separately so the storefront can label them honestly.
+   */
+  async network() {
+    const suppliers = await this.prisma.supplierLocation.findMany({
+      select: { externalId: true, name: true, province: true, city: true, address: true, categorySlugs: true, isVerifiedPartner: true, isActive: true, tier: true },
+      orderBy: [{ province: "asc" }, { tier: "asc" }, { name: "asc" }],
+    });
+    return {
+      partners: suppliers.filter((s) => s.isVerifiedPartner).map(({ isVerifiedPartner: _v, ...s }) => s),
+      leads: suppliers.filter((s) => !s.isVerifiedPartner).map(({ isVerifiedPartner: _v, isActive: _a, tier: _t, ...s }) => s),
+    };
+  }
+
+  /**
    * The nearest active delivery point that supplies the category, by
    * straight-line distance. Public callers get the town, province and
    * distance only.
@@ -137,6 +159,7 @@ export class SuppliersService {
     const candidates = await this.prisma.supplierLocation.findMany({
       where: {
         isActive: true,
+        isVerifiedPartner: true,
         latitude: { not: null },
         longitude: { not: null },
         ...(category ? { categorySlugs: { has: category } } : {}),
@@ -178,6 +201,8 @@ export class SuppliersService {
       contactName: optional(dto.contactName),
       contactPhone: optional(dto.contactPhone),
       isActive: dto.isActive,
+      isVerifiedPartner: dto.isVerifiedPartner,
+      sourceUrl: optional(dto.sourceUrl),
     };
     try {
       return id

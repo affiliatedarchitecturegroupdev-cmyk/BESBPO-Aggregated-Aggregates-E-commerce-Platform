@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getCatalogue } from "@/lib/cms";
-import { CATEGORIES } from "@/data/categories";
+import { CORE_CATEGORIES } from "@/data/categories";
 import { MaterialSwatch } from "@/components/product/MaterialSwatch";
 import { formatZAR } from "@/lib/pricing";
 
@@ -18,7 +18,7 @@ export async function CategoryGrid() {
         Nine categories, from sub-base to decorative — every price straight from our published pricing framework.
       </p>
       <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3">
-        {CATEGORIES.map((category) => {
+        {CORE_CATEGORIES.map((category) => {
           const products = catalogue.filter((p) => p.categorySlug === category.slug);
           const perTon = products.map((p) => p.prices.RETAIL.ton).filter((price): price is number => price !== undefined);
           const from = perTon.length > 0 ? Math.min(...perTon) : null;
