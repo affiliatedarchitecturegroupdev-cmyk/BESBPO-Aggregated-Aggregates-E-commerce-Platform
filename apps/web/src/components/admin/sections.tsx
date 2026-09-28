@@ -13,6 +13,7 @@ import {
   type QuoteRecord,
 } from "@/lib/account-types";
 import { PRODUCTS } from "@/data/catalogue";
+import { PACKAGED_PRODUCTS } from "@/data/packaged";
 import { CATEGORIES } from "@/data/categories";
 import { formatZAR } from "@/lib/pricing";
 import { sessionToken } from "@/lib/session";
@@ -172,7 +173,7 @@ export async function Documents() {
             <select name="productSku" required className={inputClass}>
               {CATEGORIES.map((category) => (
                 <optgroup key={category.slug} label={category.name}>
-                  {PRODUCTS.filter((p) => p.categorySlug === category.slug).map((p) => (
+                  {[...PRODUCTS, ...PACKAGED_PRODUCTS].filter((p) => p.categorySlug === category.slug).map((p) => (
                     <option key={p.sku} value={p.sku}>
                       {p.name} ({p.sku})
                     </option>

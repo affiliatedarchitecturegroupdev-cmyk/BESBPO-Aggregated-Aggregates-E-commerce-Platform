@@ -1,12 +1,12 @@
 import { ConflictException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
-import { Prisma, QuoteStatus, UnitOfSale } from "@aggregates/database";
+import { Prisma, QuoteStatus } from "@aggregates/database";
 import { STAFF_ROLES, type AuthUser } from "../common/auth/auth-user";
 import { PrismaService } from "../common/prisma.service";
 import { CustomerTierName, PricingService } from "../pricing/pricing.service";
 import { CreateQuoteDto, RespondToQuoteDto, UpdateQuoteDto } from "./dto/create-quote.dto";
 import { quoteReasonCode, quoteReference } from "./quote-reason";
 
-const UNIT_OF_SALE = { ton: UnitOfSale.BULK_TON, m3: UnitOfSale.BULK_M3, bag: UnitOfSale.BAGGED } as const;
+import { unitOfSale } from "../pricing/units";
 
 const QUOTE_INCLUDE = {
   lineItems: { include: { product: { select: { name: true, sku: true, slug: true } } } },
@@ -69,7 +69,7 @@ export class QuotesService {
       lineItems: {
         create: dto.lines.map((line, index) => ({
           productId: productId.get(line.sku)!,
-          unitOfSale: UNIT_OF_SALE[line.unit],
+          unitOfSale: unitOfSale(line.unit),
           quantity: line.quantity,
           estimatedUnitPrice: priced.lines[index].unit_price,
         })),

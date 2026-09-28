@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { CATEGORIES } from "@/data/categories";
 import { adminCatalogue } from "@/lib/admin-data";
-import { formatZAR } from "@/lib/pricing";
 
 export const metadata = { title: "Products" };
 
@@ -11,7 +10,7 @@ export default async function AdminProductsPage() {
   return (
     <div>
       <p className="font-body text-sm text-slate">
-        Names, units and prices come from the pricing framework workbook and can only change there. Here you manage
+        Names, units and prices come from the pricing workbooks (aggregates, and B2B packaged goods) and can only change there. Here you manage
         descriptions, photography, visibility and the homepage&apos;s featured row.
       </p>
       {CATEGORIES.map((category) => (
@@ -27,7 +26,7 @@ export default async function AdminProductsPage() {
                   </Link>
                   <span className="flex flex-wrap items-center gap-3 font-mono text-[11px] text-slate">
                     <span>{p.sku}</span>
-                    <span>{formatZAR(Object.values(p.prices.RETAIL)[0] ?? 0)}</span>
+                    <span>{p.priceSummary.split(" · ")[0]}</span>
                     <span>{p.images.length} photo{p.images.length === 1 ? "" : "s"}</span>
                     {p.featuredRank !== null && <span className="text-ochre-gold">Featured #{p.featuredRank}</span>}
                     <span className={p.isActive ? "text-seam-blue" : "text-red-700"}>{p.isActive ? "Visible" : "Hidden"}</span>

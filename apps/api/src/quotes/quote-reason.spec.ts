@@ -6,6 +6,9 @@ describe("quoteReasonCode", () => {
     [["VOLUME_THRESHOLD"], "VOLUME_CIVIL_BULK"],
     [["OVER_MAX_DISTANCE", "BAGGED_OUT_OF_RANGE"], "DELIVERY_OVER_100KM"],
     [["SMALL_LOAD_OUT_OF_RANGE"], "DELIVERY_NOT_PRICED"],
+    [["PRICE_ON_REQUEST"], "PRICE_ON_REQUEST"],
+    [["PACKAGED_BULK_DELIVERY", "PRICE_ON_REQUEST"], "PRICE_ON_REQUEST"],
+    [["VOLUME_THRESHOLD", "PRICE_ON_REQUEST"], "VOLUME_CIVIL_BULK"],
     [[], "CUSTOMER_REQUEST"],
   ] as const)("%j -> %s", (codes, expected) => {
     expect(quoteReasonCode([...codes])).toBe(expected);

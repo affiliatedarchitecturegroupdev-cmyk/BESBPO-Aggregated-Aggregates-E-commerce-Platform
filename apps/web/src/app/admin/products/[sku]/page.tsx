@@ -4,7 +4,6 @@ import { ActionForm, inputClass, SubmitButton } from "@/components/account/Forms
 import { deleteProductImage, updateProductMerchandising, uploadProductImage } from "@/app/account/actions";
 import { CATEGORIES } from "@/data/categories";
 import { adminCatalogue } from "@/lib/admin-data";
-import { formatZAR, UNIT_LABELS } from "@/lib/pricing";
 
 export default async function AdminProductPage({ params }: { params: { sku: string } }) {
   const product = (await adminCatalogue())?.find((p) => p.sku === params.sku);
@@ -18,7 +17,7 @@ export default async function AdminProductPage({ params }: { params: { sku: stri
         <h2 className="mt-2 font-display text-xl font-bold text-basalt">{product.name}</h2>
         <p className="font-mono text-xs text-slate">
           {product.sku} · {category?.name} · {product.gradingStandard ?? "no standard"} ·{" "}
-          {product.units.map((u) => `${formatZAR(product.prices.RETAIL[u] ?? 0)}/${UNIT_LABELS[u]}`).join(" · ")}
+          {product.priceSummary}
         </p>
 
         <div className="mt-6 rounded-sm border border-basalt/10 bg-white p-5">

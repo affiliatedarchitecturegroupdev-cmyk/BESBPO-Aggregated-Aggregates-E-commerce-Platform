@@ -8,6 +8,7 @@ export function quoteReasonCode(codes: QuoteOnlyReasonCode[]): QuoteReasonCode {
   if (volume && distance) return QuoteReasonCode.BOTH;
   if (volume) return QuoteReasonCode.VOLUME_CIVIL_BULK;
   if (distance) return QuoteReasonCode.DELIVERY_OVER_100KM;
+  if (codes.includes("PRICE_ON_REQUEST") || codes.includes("PACKAGED_BULK_DELIVERY")) return QuoteReasonCode.PRICE_ON_REQUEST;
   if (codes.length > 0) return QuoteReasonCode.DELIVERY_NOT_PRICED;
   return QuoteReasonCode.CUSTOMER_REQUEST;
 }

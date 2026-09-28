@@ -3,7 +3,8 @@ Aggregated Aggregates — Pricing Microservice
 
 FastAPI service implementing the calculators that make the storefront's
 pricing legible: the bulk/bag tonnage-volume calculator, the
-distance-banded delivery calculator, and whole-order pricing for checkout.
+distance-banded delivery calculator, the CAT-10/11 packaged-goods
+calculator, and whole-order pricing for checkout.
 
 Every figure comes from data/pricing_framework.json, which is generated
 from the pricing framework workbook (scripts/import_pricing_framework.py)
@@ -16,20 +17,23 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 import pricing_framework
+from calculators import packaged_goods
 from calculators.delivery_bands import calculate_delivery_fee
 from calculators.order import OrderLine, UnknownSku, price_order
 from calculators.tonnage_volume import UnitNotOffered, calculate
 
 app = FastAPI(
     title="Aggregated Aggregates Pricing Service",
-    description="Tonnage/volume, distance-banded delivery, and order pricing.",
+    description="Tonnage/volume, packaged-goods, distance-banded delivery, and order pricing.",
     version="0.2.0",
 )
 
 FRAMEWORK = pricing_framework.load()
+PACKAGED_RAW, PACKAGED = packaged_goods.load()
 
 TierName = Literal["RETAIL", "CONTRACTOR_TRADE", "VOLUME_CIVIL_BULK"]
 UnitName = Literal["ton", "m3", "bag"]
+PackagedUnitName = Literal["BAG_25KG", "BAG_50KG", "BULK_BAG_1_5T", "BULK_TANKER_PER_TON", "DRUM_210L", "IBC_TOTE_1000L"]
 
 
 @app.get("/health")
@@ -40,6 +44,12 @@ def health():
 @app.get("/products")
 def list_products():
     return FRAMEWORK.raw["products"]
+
+
+@app.get("/products/packaged")
+def list_packaged_products():
+    """CAT-10/CAT-11 packaged goods (B2B pricing workbook)."""
+    return PACKAGED_RAW["products"]
 
 
 @app.get("/customer-tiers")
@@ -107,10 +117,34 @@ def calculate_delivery(req: DeliveryFeeRequest):
     return result.as_dict()
 
 
+class PackagedGoodsRequest(BaseModel):
+    sku: str
+    quantity: Decimal = Field(gt=0)
+    unit: PackagedUnitName
+    customer_tier: TierName = "RETAIL"
+
+
+@app.post("/calculate/packaged-goods")
+def calculate_packaged_goods(req: PackagedGoodsRequest):
+    """
+    Prices a CAT-10/CAT-11 packaged unit. A unit without a confirmed
+    benchmark returns 422 — never a made-up price — so the caller routes it
+    to a quote.
+    """
+    product = PACKAGED.get(req.sku)
+    if product is None:
+        raise HTTPException(status_code=404, detail=f"Unknown packaged-goods SKU: {req.sku}")
+    tier = FRAMEWORK.tiers[req.customer_tier]
+    try:
+        return packaged_goods.calculate(product, req.quantity, req.unit, tier.discount).as_dict()
+    except (packaged_goods.PricingNotAvailable, packaged_goods.PackagedUnitNotOffered, ValueError) as exc:
+        raise HTTPException(status_code=422, detail=str(exc))
+
+
 class OrderLineRequest(BaseModel):
     sku: str
     quantity: Decimal = Field(gt=0)
-    unit: UnitName
+    unit: UnitName | PackagedUnitName
 
 
 class OrderRequest(BaseModel):
@@ -127,9 +161,10 @@ def calculate_order(req: OrderRequest):
             [OrderLine(sku=line.sku, quantity=line.quantity, unit=line.unit) for line in req.lines],
             distance_km=req.distance_km,
             customer_tier=req.customer_tier,
+            packaged=PACKAGED,
         )
     except UnknownSku as exc:
         raise HTTPException(status_code=404, detail=f"Unknown SKU: {exc.args[0]}")
-    except (UnitNotOffered, ValueError) as exc:
+    except (UnitNotOffered, packaged_goods.PackagedUnitNotOffered, ValueError) as exc:
         raise HTTPException(status_code=422, detail=str(exc))
     return result.as_dict()

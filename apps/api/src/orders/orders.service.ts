@@ -1,16 +1,11 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { OrderStatus, UnitOfSale } from "@aggregates/database";
+import { OrderStatus } from "@aggregates/database";
 import { STAFF_ROLES, type AuthUser } from "../common/auth/auth-user";
 import { ComplianceDocumentsService } from "../compliance-documents/compliance-documents.service";
 import { PrismaService } from "../common/prisma.service";
-import { CustomerTierName, PricingService, PricingUnit } from "../pricing/pricing.service";
+import { CustomerTierName, PricingService } from "../pricing/pricing.service";
+import { pricingUnit } from "../pricing/units";
 import { CreateOrderDto } from "./dto/create-order.dto";
-
-const UNIT_BY_UNIT_OF_SALE: Record<UnitOfSale, PricingUnit> = {
-  BULK_TON: "ton",
-  BULK_M3: "m3",
-  BAGGED: "bag",
-};
 
 /**
  * Confirmed checkout orders. Anything the pricing service marks quote-only
@@ -51,7 +46,7 @@ export class OrdersService {
       lines: dto.lineItems.map((item) => ({
         sku: skuById.get(item.productId)!,
         quantity: item.quantity,
-        unit: UNIT_BY_UNIT_OF_SALE[item.unitOfSale],
+        unit: pricingUnit(item.unitOfSale),
       })),
       distanceKm: dto.deliveryDistanceKm,
       customerTier: tierName,
@@ -77,8 +72,9 @@ export class OrdersService {
             productId: item.productId,
             unitOfSale: item.unitOfSale,
             quantity: item.quantity,
-            unitPrice: priced.lines[index].unit_price,
-            lineTotal: priced.lines[index].total,
+            // A priced (non-quote-only) order has a price on every line.
+            unitPrice: priced.lines[index].unit_price!,
+            lineTotal: priced.lines[index].total!,
           })),
         },
       },

@@ -19,7 +19,7 @@ export class CatalogueService {
         category: params.categorySlug ? { slug: params.categorySlug } : undefined,
         name: params.search ? { contains: params.search, mode: "insensitive" } : undefined,
       },
-      include: { category: true, priceBand: true, images: true },
+      include: { category: true, priceBand: true, packagedPriceBands: true, images: true },
       orderBy: { name: "asc" },
     });
   }
@@ -30,6 +30,7 @@ export class CatalogueService {
       include: {
         category: true,
         priceBand: true,
+        packagedPriceBands: true,
         images: { orderBy: { sortOrder: "asc" } },
         complianceDocuments: true,
       },

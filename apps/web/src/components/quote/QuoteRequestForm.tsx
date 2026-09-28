@@ -1,14 +1,29 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 import { submitQuoteRequest } from "@/app/account/actions";
-import { PRODUCTS, type Unit } from "@/data/catalogue";
+import { PRODUCTS } from "@/data/catalogue";
 import { CATEGORIES } from "@/data/categories";
+import { PACKAGED_PRODUCTS } from "@/data/packaged";
 import { formatZAR, UNIT_LABELS } from "@/lib/pricing";
 
-type LineItem = { sku: string; unit: Unit; quantity: number };
+/** Everything quotable: the 48 aggregate SKUs (ton/m³/bag) and the packaged goods (bag, drum, tanker…). */
+type QuotableUnit = { code: string; label: string; retailPrice: number | null };
+type Quotable = { sku: string; name: string; categorySlug: string; gradingStandard: string | null; units: QuotableUnit[] };
+
+const QUOTABLE: Quotable[] = [
+  ...PRODUCTS.map((p) => ({
+    ...p,
+    units: p.units.map((u) => ({ code: u, label: UNIT_LABELS[u], retailPrice: p.prices.RETAIL[u] ?? null })),
+  })),
+  ...PACKAGED_PRODUCTS.map((p) => ({
+    ...p,
+    units: p.units.map((u) => ({ code: u.unit, label: u.label, retailPrice: u.prices?.RETAIL ?? null })),
+  })),
+];
+
+type LineItem = { sku: string; unit: string; quantity: number };
 type Project = { projectName: string; company: string; contactName: string; email: string; phone: string };
 type Delivery = { address: string; province: string; distanceKm: string; notes: string };
 
@@ -18,16 +33,23 @@ const PROVINCES = ["KwaZulu-Natal", "Gauteng", "Other province (network expandin
 const inputClass = "w-full rounded-sm border border-basalt/20 bg-white px-3 py-2 font-body text-sm";
 
 function productFor(sku: string) {
-  return PRODUCTS.find((p) => p.sku === sku) ?? PRODUCTS[0];
+  return QUOTABLE.find((p) => p.sku === sku) ?? QUOTABLE[0];
 }
 
-function initialLine(params: URLSearchParams): LineItem {
-  const product = productFor(params.get("sku") ?? "");
-  const unit = params.get("unit") as Unit | null;
-  const quantity = Number(params.get("qty"));
+function unitFor(product: Quotable, code: string) {
+  return product.units.find((u) => u.code === code) ?? product.units[0];
+}
+
+/** Prefill from a product page link (?sku=&unit=&qty=&km=), read by the page on the server. */
+export type QuotePrefill = { sku?: string; unit?: string; qty?: string; km?: string };
+
+function initialLine(prefill: QuotePrefill): LineItem {
+  const product = productFor(prefill.sku ?? "");
+  const unit = prefill.unit;
+  const quantity = Number(prefill.qty);
   return {
     sku: product.sku,
-    unit: unit && product.units.includes(unit) ? unit : product.units[0],
+    unit: unit && product.units.some((u) => u.code === unit) ? unit : product.units[0].code,
     quantity: quantity > 0 ? quantity : 10,
   };
 }
@@ -42,16 +64,23 @@ function initialLine(params: URLSearchParams): LineItem {
  * requester's tier, records why the order needs a human quote, and returns
  * a reference. Signed-in requesters see it in their dashboard.
  */
-export function QuoteRequestForm({ hiddenSkus = [] }: { hiddenSkus?: string[] }) {
-  const available = PRODUCTS.filter((p) => !hiddenSkus.includes(p.sku));
-  const params = useSearchParams();
+export function QuoteRequestForm({
+  hiddenSkus = [],
+  upsell,
+  prefill = {},
+}: {
+  hiddenSkus?: string[];
+  upsell?: React.ReactNode;
+  prefill?: QuotePrefill;
+}) {
+  const available = QUOTABLE.filter((p) => !hiddenSkus.includes(p.sku));
   const [step, setStep] = useState(0);
   const [project, setProject] = useState<Project>({ projectName: "", company: "", contactName: "", email: "", phone: "" });
-  const [lines, setLines] = useState<LineItem[]>(() => [initialLine(params)]);
+  const [lines, setLines] = useState<LineItem[]>(() => [initialLine(prefill)]);
   const [delivery, setDelivery] = useState<Delivery>({
     address: "",
     province: PROVINCES[0],
-    distanceKm: params.get("km") ?? "",
+    distanceKm: prefill.km && Number(prefill.km) >= 0 ? prefill.km : "",
     notes: "",
   });
   const [submitted, setSubmitted] = useState<{ reference: string } | null>(null);
@@ -65,7 +94,7 @@ export function QuoteRequestForm({ hiddenSkus = [] }: { hiddenSkus?: string[] })
         const next = { ...item, ...patch };
         // Keep the unit only if the (possibly new) product is sold in it.
         const units = productFor(next.sku).units;
-        return units.includes(next.unit) ? next : { ...next, unit: units[0] };
+        return units.some((u) => u.code === next.unit) ? next : { ...next, unit: units[0].code };
       }),
     );
 
@@ -74,10 +103,8 @@ export function QuoteRequestForm({ hiddenSkus = [] }: { hiddenSkus?: string[] })
     (step !== 1 || (lines.length > 0 && lines.every((l) => l.quantity > 0))) &&
     (step !== 2 || delivery.address.trim() !== "");
 
-  const estimatedListValue = lines.reduce(
-    (sum, line) => sum + (productFor(line.sku).prices.RETAIL[line.unit] ?? 0) * line.quantity,
-    0,
-  );
+  const estimatedListValue = lines.reduce((sum, line) => sum + (unitFor(productFor(line.sku), line.unit).retailPrice ?? 0) * line.quantity, 0);
+  const hasUnpriced = lines.some((line) => unitFor(productFor(line.sku), line.unit).retailPrice === null);
 
   const submit = () => {
     setError(null);
@@ -150,6 +177,8 @@ export function QuoteRequestForm({ hiddenSkus = [] }: { hiddenSkus?: string[] })
         ))}
       </ol>
 
+      {upsell && step === 0 && <div className="mt-6">{upsell}</div>}
+
       <div className="mt-6 rounded-sm border border-basalt/10 bg-white p-6">
         {step === 0 && (
           <div className="grid gap-4 sm:grid-cols-2">
@@ -215,11 +244,12 @@ export function QuoteRequestForm({ hiddenSkus = [] }: { hiddenSkus?: string[] })
                         <td>
                           <select
                             value={line.unit}
-                            onChange={(e) => updateLine(index, { unit: e.target.value as Unit })}
+                            onChange={(e) => updateLine(index, { unit: e.target.value })}
                             className="rounded-sm border border-basalt/20 px-2 py-1"
+                            aria-label="Unit"
                           >
                             {product.units.map((unit) => (
-                              <option key={unit} value={unit}>{UNIT_LABELS[unit]}</option>
+                              <option key={unit.code} value={unit.code}>{unit.label}</option>
                             ))}
                           </select>
                         </td>
@@ -232,7 +262,7 @@ export function QuoteRequestForm({ hiddenSkus = [] }: { hiddenSkus?: string[] })
                             className="w-24 rounded-sm border border-basalt/20 px-2 py-1"
                           />
                         </td>
-                        <td>{formatZAR(product.prices.RETAIL[line.unit] ?? 0)}</td>
+                        <td>{unitFor(product, line.unit).retailPrice !== null ? formatZAR(unitFor(product, line.unit).retailPrice!) : <span className="text-xs text-slate">On request</span>}</td>
                         <td>
                           <button
                             type="button"
@@ -251,13 +281,14 @@ export function QuoteRequestForm({ hiddenSkus = [] }: { hiddenSkus?: string[] })
             </div>
             <button
               type="button"
-              onClick={() => setLines((items) => [...items, { sku: available[0].sku, unit: available[0].units[0], quantity: 1 }])}
+              onClick={() => setLines((items) => [...items, { sku: available[0].sku, unit: available[0].units[0].code, quantity: 1 }])}
               className="mt-3 rounded-sm border border-basalt/20 px-3 py-1.5 font-body text-xs font-semibold text-seam-blue"
             >
               + Add Another Product
             </button>
             <p className="mt-4 rounded-sm bg-seam-blue/5 p-3 font-body text-xs text-slate">
-              Estimated unit prices are retail list prices; trade accounts receive 8–15% off. Volume/Civil Bulk account
+              Estimated unit prices are retail list prices; trade accounts receive 8–15% off. Items marked “On request” have no
+              confirmed benchmark yet — our team confirms them with the supplier. Volume/Civil Bulk account
               orders of 10m³ or more, and any delivery beyond 100km, are quoted individually — our team responds within 1
               business day with delivered pricing.
             </p>
@@ -310,15 +341,17 @@ export function QuoteRequestForm({ hiddenSkus = [] }: { hiddenSkus?: string[] })
                 return (
                   <li key={index} className="flex justify-between gap-4">
                     <span>
-                      {line.quantity} {UNIT_LABELS[line.unit]} — {product.name}
+                      {line.quantity} × {unitFor(product, line.unit).label} — {product.name}
                     </span>
-                    <span className="text-slate">{formatZAR((product.prices.RETAIL[line.unit] ?? 0) * line.quantity)}</span>
+                    <span className="text-slate">
+                      {unitFor(product, line.unit).retailPrice !== null ? formatZAR(unitFor(product, line.unit).retailPrice! * line.quantity) : "On request"}
+                    </span>
                   </li>
                 );
               })}
             </ul>
             <p className="mt-3 flex justify-between border-t border-basalt/10 pt-3 font-semibold">
-              <span>Indicative list value (excl. delivery)</span>
+              <span>Indicative list value (excl. delivery{hasUnpriced ? "; items on request excluded" : ""})</span>
               <span>{formatZAR(estimatedListValue)}</span>
             </p>
           </div>

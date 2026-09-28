@@ -24,7 +24,7 @@ export type QuoteRecord = {
   createdAt: string;
   lineItems: {
     id: string;
-    unitOfSale: "BULK_TON" | "BULK_M3" | "BAGGED";
+    unitOfSale: keyof typeof UNIT_LABEL;
     quantity: number;
     estimatedUnitPrice: string | null;
     product: { name: string; sku: string };
@@ -57,10 +57,14 @@ export type CompanyDashboard = {
 export type OrderRecord = {
   id: string;
   orderNumber: string;
-  status: string;
+  status: "PENDING" | "CONFIRMED" | "IN_TRANSIT" | "DELIVERED" | "CANCELLED";
+  channel?: string;
+  subtotal: string;
+  deliveryFee: string;
   total: string;
   createdAt: string;
-  lineItems: { product: { name: string } }[];
+  lineItems: { id?: string; quantity?: number; unitOfSale?: keyof typeof UNIT_LABEL; lineTotal?: string; product: { name: string; sku?: string } }[];
+  shipment?: { carrier: string; externalPartnerName: string | null; trackingRef: string | null; dispatchedAt: string | null; deliveredAt: string | null } | null;
   documents: DocumentSummary[];
 };
 
@@ -79,7 +83,17 @@ export type Application = {
   users: { email: string; name: string | null }[];
 };
 
-export const UNIT_LABEL = { BULK_TON: "ton", BULK_M3: "m³", BAGGED: "bags" } as const;
+export const UNIT_LABEL = {
+  BULK_TON: "ton",
+  BULK_M3: "m³",
+  BAGGED: "bags",
+  BAG_25KG: "× 25kg bag",
+  BAG_50KG: "× 50kg bag",
+  BULK_BAG_1_5T: "× 1.5-ton bulk bag",
+  BULK_TANKER_PER_TON: "ton (tanker)",
+  DRUM_210L: "× 210L drum",
+  IBC_TOTE_1000L: "× 1,000L tote",
+} as const;
 
 export const TIER_LABEL: Record<TierName, string> = {
   RETAIL: "Retail",

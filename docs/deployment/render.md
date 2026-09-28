@@ -39,14 +39,21 @@ create a Render database.
      The browser never calls the API directly.
 4. Click **Apply**. The first deploy takes a few minutes.
 
-On each API deploy, the pre-deploy step runs `pnpm run db:deploy`:
+On each API deploy, the pre-deploy step runs:
 
-1. `prisma migrate deploy` applies any new migrations in
+1. `prisma migrate deploy`, which applies any new migrations in
    `packages/database/prisma/migrations`.
-2. `prisma/seed.ts` then updates the 9 categories, 48 products, price bands,
-   customer tiers and delivery bands from the pricing framework workbook. Every
-   write is an upsert, so running it on every deploy is safe, and a workbook
-   change reaches the database on the next API deploy.
+2. `prisma/seed.ts`, which updates the 9 core categories, 48 products, price
+   bands, customer tiers and delivery bands from the pricing framework
+   workbook, and the 2 B2B categories and 7 packaged products from
+   `services/pricing/data/b2b_packaged_catalogue.json`. Every write is an
+   upsert, so a workbook change reaches the database on the next deploy.
+   Payment routing, the four starter promotions and the three starter blog
+   posts are created once and then left to the admin.
+3. `apps/api/dist/suppliers/seed-suppliers.js`, which adds any supplier from
+   `packages/database/prisma/seed-data/*.csv` that isn't in the database yet
+   (87 verified partners and 18 B2B leads on the first deploy). Existing
+   suppliers — and staff edits to them — are never touched.
 
 ## 3. Check the deploy
 
@@ -104,24 +111,30 @@ Staff approve trade accounts and price quote requests in the staff console,
    - price quote requests;
    - upload compliance documents;
    - manage product descriptions, photos, visibility and featured products;
-   - edit the announcement bar, homepage hero and trade promo;
-   - manage the partner-supplier network (see step 6).
+   - edit the announcement bar, homepage hero, homepage slideshow and trade promo;
+   - run the four promotion slots (the ad system);
+   - write and publish blog articles;
+   - manage the partner-supplier network (see step 6);
+   - work WhatsApp chat orders;
+   - change payment routing (admins only — see step 7).
 
    Storefront changes go live within a minute. Prices can't be edited in the
    admin; they come from the pricing workbook.
 
-## 6. Import the supplier network
+## 6. Pin the supplier network
 
-The supplier database is not in the repository, because the repository is
-public and the file holds commercial names, addresses and contacts. Staff
-load it through the admin.
+The first deploy seeds the network from the CSVs in
+`packages/database/prisma/seed-data/`: 87 verified partners (KwaZulu-Natal
+and Gauteng ones active) and 18 B2B Bulk & Infrastructure leads (inactive,
+labelled as leads). To bring in a revised list later:
 
 1. Sign in as staff and open **Admin → Suppliers** (`/admin/suppliers`).
-2. Upload the supplier database CSV and keep **New suppliers outside
-   KwaZulu-Natal and Gauteng start inactive** ticked. The import matches rows
-   on `supplier_id`, so importing the same file again updates suppliers
-   rather than duplicating them. A file with any bad row is rejected whole,
-   with every problem listed by line number.
+2. Upload the CSV (either layout — the partner database or the B2B research
+   list) and keep **New suppliers outside KwaZulu-Natal and Gauteng start
+   inactive** ticked. The import matches rows on `supplier_id`, so importing
+   the same file again updates suppliers rather than duplicating them. A file
+   with any bad row is rejected whole, with every problem listed by line
+   number.
 3. Add a **map pin** (latitude and longitude) for each active supplier. The
    CSV has no coordinates, and a supplier without a pin never counts toward
    distance estimates. Either:
@@ -136,9 +149,36 @@ load it through the admin.
    least one has a pin, `/delivery-areas` shows provinces and towns but hides
    the **Use my location** finder.
 
-The public site shows only towns, provinces, material categories and
-straight-line distances, never supplier names or contacts. Keep exported
-CSVs off shared drives and out of the repository.
+The public partner-network page (`/suppliers`) shows supplier names, towns,
+addresses and categories, with researched leads listed separately. Contact
+details and map pins are staff-only — keep exported CSVs (which include
+them) off shared drives and out of the repository.
+
+## 7. Payments and WhatsApp (when the accounts exist)
+
+Nothing here blocks a deploy: until credentials are set, online payment
+methods tell the buyer to choose another method (Manual EFT / purchase order
+works today for trade accounts), and WhatsApp replies are logged rather than
+sent.
+
+- **Payment gateways.** Set the merchant variables for each provider on
+  **aggregates-store-api** (PayFast: `PAYFAST_MERCHANT_ID`,
+  `PAYFAST_MERCHANT_KEY`, `PAYFAST_PASSPHRASE`; Peach: `PEACH_ENTITY_ID`,
+  `PEACH_AUTH_TOKEN`; Ozow: `OZOW_SITE_CODE`, `OZOW_PRIVATE_KEY`,
+  `OZOW_API_KEY`; Stitch: `STITCH_CLIENT_ID`, `STITCH_CLIENT_SECRET`;
+  Lulapay: `LULAPAY_API_KEY`, `LULAPAY_MERCHANT_ID`). **Admin → Payments**
+  shows what each gateway still needs. Each adapter's request signing is
+  then built against the provider's sandbox before it is switched live.
+- **WhatsApp Business.** In Meta Business Manager, point the WhatsApp
+  webhook at `https://<api-url>/api/v1/channels/whatsapp/webhook`, and set
+  `WHATSAPP_WEBHOOK_VERIFY_TOKEN` (any secret you choose, entered in both
+  places), `WHATSAPP_APP_SECRET` (the Meta app secret — deliveries without a
+  valid signature are rejected), `WHATSAPP_PHONE_NUMBER_ID` and
+  `WHATSAPP_ACCESS_TOKEN`. Chats appear in **Admin → WhatsApp orders**.
+- **Instagram / Facebook Shop.** In Meta Commerce Manager, add a scheduled
+  data feed pointing at `https://<api-url>/api/v1/channels/catalogue-feed.csv`.
+  Only products with a photo and a real retail price are listed, so upload
+  product photography first.
 
 ## Later: custom domains and optional settings
 
@@ -149,6 +189,7 @@ CSVs off shared drives and out of the repository.
 | When the storefront starts calling the API from the browser | api | `CORS_ORIGINS` — comma-separated storefront origins |
 | Enabling Google / Microsoft sign-in | api | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` |
 | When queues are wired in | api | `REDIS_URL` (Upstash) |
+| Going live on `aggregates.store` | api | `NEXT_PUBLIC_SITE_URL=https://aggregates.store` (payment return links and the catalogue feed's product links) |
 
 ## Notes
 

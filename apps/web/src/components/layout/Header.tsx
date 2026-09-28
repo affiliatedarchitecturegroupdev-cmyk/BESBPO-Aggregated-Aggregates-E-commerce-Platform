@@ -16,8 +16,8 @@ export function Header() {
             </Link>
           ))}
         </nav>
-        <form action="/products" method="get" role="search" className="hidden xl:block">
-          <label className="sr-only" htmlFor="site-search">Search products</label>
+        <form action="/search" method="get" role="search" className="hidden xl:block">
+          <label className="sr-only" htmlFor="site-search">Search the site</label>
           <input
             id="site-search"
             name="q"
@@ -50,8 +50,8 @@ export function Header() {
             className="absolute right-0 mt-2 w-56 rounded-sm border border-basalt/10 bg-white p-2 font-body text-sm shadow-lg"
             aria-label="Mobile"
           >
-            <form action="/products" method="get" role="search" className="p-1">
-              <input name="q" type="search" placeholder="Search materials…" aria-label="Search products" className="w-full rounded-sm border border-basalt/20 px-3 py-2" />
+            <form action="/search" method="get" role="search" className="p-1">
+              <input name="q" type="search" placeholder="Search materials…" aria-label="Search the site" className="w-full rounded-sm border border-basalt/20 px-3 py-2" />
             </form>
             {[...NAV_LINKS, { href: "/quote", label: "Get a Quote" }, { href: "/account/dashboard", label: "Account" }].map(
               (link) => (

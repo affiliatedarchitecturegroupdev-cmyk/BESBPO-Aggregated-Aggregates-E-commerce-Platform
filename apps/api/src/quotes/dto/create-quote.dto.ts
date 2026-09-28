@@ -15,14 +15,16 @@ import {
   ValidateNested,
 } from "class-validator";
 import { QuoteStatus } from "@aggregates/database";
+import { PACKAGED_UNITS, type PricingUnit } from "../../pricing/pricing.service";
 
 export class QuoteLineDto {
   @IsString()
   @MaxLength(40)
   sku!: string;
 
-  @IsIn(["ton", "m3", "bag"])
-  unit!: "ton" | "m3" | "bag";
+  /** Bulk units for the aggregate catalogue; packaged units (BAG_50KG, DRUM_210L…) for CAT-10/11. */
+  @IsIn(["ton", "m3", "bag", ...PACKAGED_UNITS])
+  unit!: PricingUnit;
 
   @IsNumber()
   @IsPositive()

@@ -4,7 +4,7 @@
 // on the Roofsteel and Bricksplaza platforms.
 //
 // IMPORTANT: the confirmed platform decision is a broker/network supplier
-// model — ~50 approved partner suppliers, NO owned yards or inventory.
+// model — an approved partner-supplier network, NO owned yards or inventory.
 // There is deliberately no StockLevel / StockMovement model here — see
 // AGENTIC_RULES.md before adding one.
 
@@ -134,13 +134,18 @@ model DeliveryAddress {
 // Catalogue & pricing
 // ---------------------------------------------------------------------------
 
+/// catalogueGroup: "core" is the 9-category, 48-SKU aggregate catalogue from
+/// the pricing framework workbook; "b2b-bulk" is the B2B Bulk &
+/// Infrastructure expansion (cement/binders, mortars/grouts/admixtures),
+/// sold per packaged unit — see B2B_BULK_CATALOGUE.md.
 model Category {
-  id          String    @id @default(cuid())
-  slug        String    @unique
-  name        String
-  description String?
-  sortOrder   Int       @default(0)
-  products    Product[]
+  id             String    @id @default(cuid())
+  slug           String    @unique
+  name           String
+  description    String?
+  sortOrder      Int       @default(0)
+  catalogueGroup String    @default("core")
+  products       Product[]
 }
 
 model Product {
@@ -155,6 +160,7 @@ model Product {
   description         String?
   images              ProductImage[]
   priceBand           PriceBand?
+  packagedPriceBands  PackagedPriceBand[] // CAT-10/CAT-11 packaged goods only
   complianceDocuments ComplianceDocument[]
   quoteLineItems      QuoteLineItem[]
   orderLineItems      OrderLineItem[]
@@ -213,6 +219,30 @@ model PriceBand {
 // Delivery & the partner-supplier network
 // ---------------------------------------------------------------------------
 
+/// Pricing for CAT-10 (Cement & Hydraulic Binders) and CAT-11 (Mortars,
+/// Grouts & Admixtures), sold per packaged unit — no ton <-> m3 conversion.
+/// Mirrors the B2B pricing workbook's "Category Markup Bands" sheet,
+/// including its gaps: where there is no real benchmark, costPerUnit and
+/// listPricePerUnit stay null and pricingStatus says why. Only a unit that
+/// is "Ready — benchmarked" with a list price is ever priced to a customer;
+/// everything else goes to a quote (AGENTIC_RULES.md rules 1 and 10).
+model PackagedPriceBand {
+  id                   String     @id @default(cuid())
+  productId            String
+  product              Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  unit                 UnitOfSale // one of the packaged units
+  marketBenchmarkPrice Decimal?   @db.Decimal(10, 2)
+  costBasisPercent     Decimal    @db.Decimal(5, 2) // assumption — % of benchmark, confirm with supplier
+  costPerUnit          Decimal?   @db.Decimal(10, 2)
+  markupPercent        Decimal    @db.Decimal(5, 2)
+  listPricePerUnit     Decimal?   @db.Decimal(10, 2)
+  pricingStatus        String // "Ready — benchmarked" | "Provisional — confirm w/ supplier" | "Quote-only — no retail benchmark" | "BLOCKED — no benchmark"
+  sourceNote           String?
+  updatedAt            DateTime   @updatedAt
+
+  @@unique([productId, unit])
+}
+
 enum DeliveryBandLabel {
   INCLUDED_0_30
   BAND_30_60
@@ -252,23 +282,25 @@ enum SupplierTier {
 }
 
 model SupplierLocation {
-  id            String       @id @default(cuid())
-  externalId    String?      @unique // supplier_id in the supplier database, e.g. "SUP-001"
-  name          String
-  tier          SupplierTier @default(TIER_1)
-  province      String
-  city          String // town shown publicly for the delivery point
-  address       String?
-  latitude      Float?
-  longitude     Float?
-  categorySlugs String[] // storefront category slugs this supplier can supply
-  productNotes  String? // e.g. "CAT-01 (G1–G5), CAT-02 (13.2mm, 19mm Andesite)"
-  contactName   String?
-  contactPhone  String?
-  approvedSince DateTime?
-  isActive      Boolean      @default(true)
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @default(now()) @updatedAt
+  id                String       @id @default(cuid())
+  externalId        String?      @unique // supplier_id in the supplier database, e.g. "SUP-001"
+  name              String
+  tier              SupplierTier @default(TIER_1)
+  province          String
+  city              String // town shown publicly for the delivery point
+  address           String?
+  latitude          Float?
+  longitude         Float?
+  categorySlugs     String[] // storefront category slugs this supplier can supply
+  isVerifiedPartner Boolean      @default(true) // false = researched lead, not yet contacted or qualified
+  sourceUrl         String? // where a researched lead came from
+  productNotes      String? // e.g. "CAT-01 (G1–G5), CAT-02 (13.2mm, 19mm Andesite)"
+  contactName       String?
+  contactPhone      String?
+  approvedSince     DateTime?
+  isActive          Boolean      @default(true)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @default(now()) @updatedAt
 
   @@index([province])
 }
@@ -292,12 +324,20 @@ enum QuoteReasonCode {
   BOTH
   DELIVERY_NOT_PRICED // small-load or bagged delivery beyond 30km
   CUSTOMER_REQUEST // priceable at checkout, but the customer asked for a quote
+  PRICE_ON_REQUEST // packaged goods without a confirmed price, or bulk-format packaged delivery
 }
 
 enum UnitOfSale {
   BULK_TON
   BULK_M3
   BAGGED
+  // Packaged goods (CAT-10/CAT-11) — see PackagedPriceBand
+  BAG_25KG
+  BAG_50KG
+  BULK_BAG_1_5T
+  BULK_TANKER_PER_TON
+  DRUM_210L
+  IBC_TOTE_1000L
 }
 
 /// Captures quote-only orders before they become a priced Order — the RFQ
@@ -360,23 +400,35 @@ enum Carrier {
   EXTERNAL_PARTNER
 }
 
+/// Where an order came from. INSTAGRAM/FACEBOOK are referral attribution
+/// only — Meta dropped in-app checkout in 2025, so those buyers land on the
+/// normal storefront. WHATSAPP is the one channel with its own intake.
+enum OrderChannel {
+  WEBSITE
+  WHATSAPP
+  INSTAGRAM_REFERRAL
+  FACEBOOK_REFERRAL
+}
+
 model Order {
-  id          String               @id @default(cuid())
-  orderNumber String               @unique
-  userId      String?
-  user        User?                @relation(fields: [userId], references: [id])
-  companyId   String?
-  company     Company?             @relation(fields: [companyId], references: [id])
-  status      OrderStatus          @default(PENDING)
-  lineItems   OrderLineItem[]
-  shipment    Shipment?
-  invoice     Invoice?
-  documents   ComplianceDocument[]
-  subtotal    Decimal              @db.Decimal(12, 2)
-  deliveryFee Decimal              @db.Decimal(10, 2)
-  total       Decimal              @db.Decimal(12, 2)
-  createdAt   DateTime             @default(now())
-  updatedAt   DateTime             @updatedAt
+  id                   String                @id @default(cuid())
+  orderNumber          String                @unique
+  channel              OrderChannel          @default(WEBSITE)
+  whatsappConversation WhatsAppConversation?
+  userId               String?
+  user                 User?                 @relation(fields: [userId], references: [id])
+  companyId            String?
+  company              Company?              @relation(fields: [companyId], references: [id])
+  status               OrderStatus           @default(PENDING)
+  lineItems            OrderLineItem[]
+  shipment             Shipment?
+  invoice              Invoice?
+  documents            ComplianceDocument[]
+  subtotal             Decimal               @db.Decimal(12, 2)
+  deliveryFee          Decimal               @db.Decimal(10, 2)
+  total                Decimal               @db.Decimal(12, 2)
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
 }
 
 /// Confirmed orders — unit-of-sale (bulk/bag) and quantity recorded per line.
@@ -485,4 +537,151 @@ model Statement {
   totalDue    Decimal   @db.Decimal(12, 2)
   invoices    Invoice[]
   issuedAt    DateTime  @default(now())
+}
+
+// ---------------------------------------------------------------------------
+// Merchandising: the scaled-down ad system
+// ---------------------------------------------------------------------------
+
+enum PromotionSlot {
+  HOMEPAGE_SECONDARY_BANNER
+  CATEGORY_TOP_BANNER
+  QUOTE_FLOW_UPSELL
+  FOOTER_STRIP
+}
+
+/// A handful of staff-managed banner slots, not a targeting/bidding engine.
+/// The first active promotion in a slot (lowest sortOrder, inside its date
+/// window) is the one shown. imageUrl is a media-library id ("media:<id>",
+/// apps/web/src/data/media.ts) or an https image URL.
+model Promotion {
+  id        String        @id @default(cuid())
+  slot      PromotionSlot
+  title     String
+  imageUrl  String
+  linkUrl   String?
+  startsAt  DateTime?
+  endsAt    DateTime?
+  isActive  Boolean       @default(true)
+  sortOrder Int           @default(0)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@index([slot, isActive])
+}
+
+// ---------------------------------------------------------------------------
+// Blog / lightweight CMS
+// ---------------------------------------------------------------------------
+
+model BlogCategory {
+  id    String     @id @default(cuid())
+  slug  String     @unique
+  name  String
+  posts BlogPost[]
+}
+
+model BlogPost {
+  id            String        @id @default(cuid())
+  slug          String        @unique
+  title         String
+  excerpt       String?
+  bodyMarkdown  String        @db.Text
+  coverImageUrl String? // media-library id ("media:<id>") or an https image URL
+  categoryId    String?
+  category      BlogCategory? @relation(fields: [categoryId], references: [id])
+  authorName    String        @default("Aggregated Aggregates")
+  isPublished   Boolean       @default(false)
+  publishedAt   DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([isPublished, publishedAt])
+}
+
+// ---------------------------------------------------------------------------
+// Payments: standout tiles for the shopper, shared plumbing behind them
+// ---------------------------------------------------------------------------
+
+enum PaymentMethodKey {
+  CARD
+  INSTANT_EFT
+  CAPITEC_PAY
+  APPLE_PAY
+  GOOGLE_PAY
+  SAMSUNG_PAY
+  ZAPPER
+  SNAPSCAN
+  MOBICRED
+  MORETYME
+  PAYFLEX
+  PAYJUSTNOW
+  HAPPY_PAY
+  FLOAT
+  OZOW
+  STITCH
+  LULAPAY
+  EFT_PO
+}
+
+enum PaymentGateway {
+  PAYFAST
+  PEACH
+  OZOW_DIRECT
+  STITCH_DIRECT
+  LULAPAY_DIRECT
+  MANUAL_EFT
+}
+
+/// Every payment method is its own tile on the storefront; this table is
+/// the invisible routing behind each one, editable by admins so ops can
+/// fail a method over (e.g. Ozow outage -> Peach) without a deploy
+/// (AGENTIC_RULES.md rule 8). The gateway mapping is a researched default,
+/// not a confirmed merchant setup — see PAYMENT_PROVIDER_TERMS.md.
+model PaymentMethodConfig {
+  id              String           @id @default(cuid())
+  methodKey       PaymentMethodKey @unique
+  displayName     String
+  activeGateway   PaymentGateway
+  fallbackGateway PaymentGateway?
+  minOrderValue   Decimal?         @db.Decimal(12, 2)
+  maxOrderValue   Decimal?         @db.Decimal(12, 2)
+  tradeOnly       Boolean          @default(false) // Trade/Volume tiers only (LULAPAY, EFT_PO)
+  isEnabled       Boolean          @default(true)
+  sortOrder       Int              @default(0)
+  updatedAt       DateTime         @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Social commerce: WhatsApp conversation-to-order
+// ---------------------------------------------------------------------------
+
+enum WhatsAppConversationState {
+  BROWSING
+  CART_DRAFT
+  HANDED_TO_SALES
+  PAYMENT_LINK_SENT
+  PAID
+  ABANDONED
+}
+
+/// The WhatsApp Business API conversation behind a chat order — the only
+/// social channel with its own order intake, scoped to Retail-tier bagged
+/// and small orders (AGENTIC_RULES.md rule 11). The draft cart lives here
+/// until it becomes a normal Order (channel WHATSAPP); pricing and checkout
+/// stay in the existing modules.
+model WhatsAppConversation {
+  id              String                    @id @default(cuid())
+  phoneNumber     String
+  state           WhatsAppConversationState @default(BROWSING)
+  draftCartJson   Json?
+  lastInboundText String?
+  lastMessageId   String? // Meta retries webhooks; a repeated message id is ignored
+  paymentLinkUrl  String?
+  orderId         String?                   @unique
+  order           Order?                    @relation(fields: [orderId], references: [id])
+  lastMessageAt   DateTime                  @default(now())
+  createdAt       DateTime                  @default(now())
+
+  @@index([phoneNumber, state])
 }

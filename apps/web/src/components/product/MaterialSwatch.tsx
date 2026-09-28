@@ -13,6 +13,8 @@ const PALETTES: Record<string, { base: string; grains: string[] }> = {
   "decorative-landscaping": { base: "#B9A58C", grains: ["#E3D6C3", "#8E7A63", "#CBB9A0"] },
   "agricultural-industrial": { base: "#ECE8DF", grains: ["#D9D3C6", "#F7F5F0", "#C8C1B2"] },
   "recycled-sustainable": { base: "#A08A78", grains: ["#7E6A5A", "#BCA797", "#8F8F8B"] },
+  "cement-hydraulic-binders": { base: "#B7B5B0", grains: ["#9E9C97", "#CFCDC8", "#8A8883"] },
+  "mortars-grouts-admixtures": { base: "#C9C4BA", grains: ["#B0AA9F", "#DEDAD2", "#2C4A5E"] },
 };
 
 function seededRandom(seed: string) {

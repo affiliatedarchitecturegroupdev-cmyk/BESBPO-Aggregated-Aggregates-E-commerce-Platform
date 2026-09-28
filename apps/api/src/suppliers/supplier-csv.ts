@@ -6,9 +6,15 @@ import { SupplierTier } from "@aggregates/database";
  * The supplier database CSV: parsing for import, and the same columns for
  * export, so staff can export, add coordinates in a spreadsheet, and
  * re-import. supplier_id is the stable key; re-importing updates in place.
+ *
+ * Two source layouts are accepted: the verified partner network
+ * (tier, category_codes, core_categories) and the B2B Bulk & Infrastructure
+ * research list (category, sku_category_codes, products_notes, source_url).
+ * A row with a source_url and no "verified" column is a researched lead,
+ * not a qualified partner.
  */
 
-/** CAT-01..CAT-09 in the supplier database map onto the nine storefront categories. */
+/** CAT-01..CAT-09 map onto the nine core categories; CAT-10/11 onto the B2B packaged-goods ones. */
 export const CATEGORY_CODES: Record<string, string> = {
   "CAT-01": "sub-base-base-course",
   "CAT-02": "crushed-stone",
@@ -19,6 +25,8 @@ export const CATEGORY_CODES: Record<string, string> = {
   "CAT-07": "decorative-landscaping",
   "CAT-08": "agricultural-industrial",
   "CAT-09": "recycled-sustainable",
+  "CAT-10": "cement-hydraulic-binders",
+  "CAT-11": "mortars-grouts-admixtures",
 };
 const CODE_BY_SLUG = Object.fromEntries(Object.entries(CATEGORY_CODES).map(([code, slug]) => [slug, code]));
 
@@ -40,7 +48,9 @@ export const LAUNCH_PROVINCES = ["Gauteng", "KwaZulu-Natal"];
 const TIERS: Record<string, SupplierTier> = { "tier 1": SupplierTier.TIER_1, "tier 2": SupplierTier.TIER_2 };
 const TIER_LABEL: Record<SupplierTier, string> = { TIER_1: "Tier 1", TIER_2: "Tier 2" };
 
-const REQUIRED_COLUMNS = ["supplier_id", "supplier_name", "tier", "province", "address_location", "category_codes"];
+const REQUIRED_COLUMNS = ["supplier_id", "supplier_name", "province", "address_location"];
+const YES = ["yes", "true", "1", "y"];
+const NO = ["no", "false", "0", "n"];
 
 export type ParsedSupplier = {
   externalId: string;
@@ -51,6 +61,8 @@ export type ParsedSupplier = {
   city: string;
   categorySlugs: string[];
   productNotes: string | null;
+  isVerifiedPartner: boolean;
+  sourceUrl: string | null;
   // Optional columns: undefined means "not in the file", so existing values are kept.
   latitude?: number | null;
   longitude?: number | null;
@@ -93,7 +105,9 @@ export function parseSupplierCsv(text: string): { rows: ParsedSupplier[]; errors
     return { rows: [], errors: [{ line: 0, message: `Not a readable CSV file: ${(error as Error).message}` }] };
   }
   if (records.length === 0) return { rows: [], errors: [{ line: 0, message: "The file has no supplier rows." }] };
-  const missing = REQUIRED_COLUMNS.filter((c) => !(c in records[0]));
+  const codesColumn = "category_codes" in records[0] ? "category_codes" : "sku_category_codes";
+  const missing = [...REQUIRED_COLUMNS, codesColumn].filter((c) => !(c in records[0]));
+  if (!("tier" in records[0]) && !("source_url" in records[0])) missing.push("tier");
   if (missing.length > 0) return { rows: [], errors: [{ line: 1, message: `Missing column(s): ${missing.join(", ")}` }] };
 
   const rows: ParsedSupplier[] = [];
@@ -107,14 +121,25 @@ export function parseSupplierCsv(text: string): { rows: ParsedSupplier[]; errors
     else if (seen.has(externalId)) problems.push(`supplier_id ${externalId} appears more than once`);
     seen.add(externalId);
     if (!record.supplier_name) problems.push("supplier_name is empty");
-    const tier = TIERS[(record.tier ?? "").toLowerCase()];
+    // Researched leads (B2B list) have no tier; they're filed as Tier 2 until qualified.
+    const tier = "tier" in record ? TIERS[(record.tier ?? "").toLowerCase()] : SupplierTier.TIER_2;
     if (!tier) problems.push(`tier "${record.tier}" should be "Tier 1" or "Tier 2"`);
     if (!PROVINCES.includes(record.province)) problems.push(`province "${record.province}" isn't a South African province`);
     if (!record.address_location) problems.push("address_location is empty");
 
-    const codes = (record.category_codes ?? "").split(/[;,]/).map((c) => c.trim().toUpperCase()).filter(Boolean);
+    const codes = (record[codesColumn] ?? "").split(/[;,]/).map((c) => c.trim().toUpperCase()).filter(Boolean);
     const unknown = codes.filter((c) => !CATEGORY_CODES[c]);
-    if (codes.length === 0) problems.push("category_codes is empty");
+    if (codes.length === 0) problems.push(`${codesColumn} is empty`);
+
+    const sourceUrl = record.source_url?.trim() || null;
+    if (sourceUrl && !/^https?:\/\/\S+$/.test(sourceUrl)) problems.push("source_url must be a web address");
+    let isVerifiedPartner = !sourceUrl;
+    if ("verified" in record && record.verified !== "") {
+      const value = record.verified.toLowerCase();
+      if (YES.includes(value)) isVerifiedPartner = true;
+      else if (NO.includes(value)) isVerifiedPartner = false;
+      else problems.push(`verified "${record.verified}" should be yes or no`);
+    }
     if (unknown.length > 0) problems.push(`unknown category code(s): ${unknown.join(", ")}`);
 
     let latitude: number | null | undefined;
@@ -132,8 +157,8 @@ export function parseSupplierCsv(text: string): { rows: ParsedSupplier[]; errors
     let isActive: boolean | undefined;
     if ("active" in record && record.active !== "") {
       const value = record.active.toLowerCase();
-      if (["yes", "true", "1", "y"].includes(value)) isActive = true;
-      else if (["no", "false", "0", "n"].includes(value)) isActive = false;
+      if (YES.includes(value)) isActive = true;
+      else if (NO.includes(value)) isActive = false;
       else problems.push(`active "${record.active}" should be yes or no`);
     }
 
@@ -151,7 +176,9 @@ export function parseSupplierCsv(text: string): { rows: ParsedSupplier[]; errors
       city: explicitTown ? record.town.slice(0, 80) : townFromAddress(record.address_location),
       explicitTown,
       categorySlugs: [...new Set(codes.map((c) => CATEGORY_CODES[c]))],
-      productNotes: optionalText(record.core_categories) ?? null,
+      productNotes: optionalText(record.core_categories ?? record.products_notes) ?? null,
+      isVerifiedPartner,
+      sourceUrl: sourceUrl?.slice(0, 500) ?? null,
       latitude,
       longitude,
       contactName: optionalText(record.contact_name),
@@ -176,6 +203,8 @@ export type ExportableSupplier = {
   contactName: string | null;
   contactPhone: string | null;
   isActive: boolean;
+  isVerifiedPartner: boolean;
+  sourceUrl: string | null;
 };
 
 export function suppliersToCsv(suppliers: ExportableSupplier[]): string {
@@ -194,6 +223,8 @@ export function suppliersToCsv(suppliers: ExportableSupplier[]): string {
       contact_name: s.contactName ?? "",
       contact_phone: s.contactPhone ?? "",
       active: s.isActive ? "yes" : "no",
+      verified: s.isVerifiedPartner ? "yes" : "no",
+      source_url: s.sourceUrl ?? "",
     })),
     { header: true },
   );

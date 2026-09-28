@@ -31,6 +31,8 @@ export type Supplier = {
   contactName: string | null;
   contactPhone: string | null;
   isActive: boolean;
+  isVerifiedPartner: boolean;
+  sourceUrl: string | null;
   updatedAt: string;
 };
 

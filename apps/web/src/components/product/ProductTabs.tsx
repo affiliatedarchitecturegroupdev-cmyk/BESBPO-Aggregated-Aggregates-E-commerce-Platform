@@ -5,14 +5,18 @@ import { useEffect, useState } from "react";
 import { DOCUMENT_TYPE_LABEL, formatBytes, type DocumentSummary } from "@/lib/account-types";
 import { CUSTOMER_TIERS, DELIVERY_RULES, pricePoints, type Product } from "@/data/catalogue";
 import { formatZAR } from "@/lib/pricing";
+import { technicalSpec } from "@/data/technical-specs";
 
-const TABS = ["Specification", "Grading Curve", "Compliance Docs (SANS/COA)", "Delivery & Returns"] as const;
+const CAVEAT = "Typical values for this material class — confirm against the batch Certificate of Analysis before specifying structural or engineered work.";
+
+const TABS = ["Specification", "Typical Uses", "Handling & Storage", "Grading Curve", "Compliance Docs (SANS/COA)", "Delivery & Returns"] as const;
 type Tab = (typeof TABS)[number];
 
 const LOAD_LABELS = { M3_6: "6m³ load", M3_10: "10m³ load", M3_14_PLUS: "14m³+ / Interlink" } as const;
 
 export function ProductTabs({ product, categoryName }: { product: Product; categoryName: string }) {
   const [tab, setTab] = useState<Tab>("Specification");
+  const spec = technicalSpec(product.sku, product.categorySlug);
 
   return (
     <div className="rounded-sm border border-basalt/10 bg-white">
@@ -33,7 +37,20 @@ export function ProductTabs({ product, categoryName }: { product: Product; categ
         ))}
       </div>
       <div className="p-6 font-body text-sm text-basalt" role="tabpanel">
-        {tab === "Specification" && <Specification product={product} categoryName={categoryName} />}
+        {tab === "Specification" && <Specification product={product} categoryName={categoryName} particleSize={spec?.particleSize} />}
+        {tab === "Typical Uses" && spec && (
+          <ul className="list-disc space-y-1 pl-5">
+            {spec.typicalUses.map((use) => (
+              <li key={use}>{use}</li>
+            ))}
+          </ul>
+        )}
+        {tab === "Handling & Storage" && spec && (
+          <div className="space-y-3">
+            <p>{spec.handling}</p>
+            <p className="font-mono text-[11px] text-slate">{CAVEAT}</p>
+          </div>
+        )}
         {tab === "Grading Curve" && (
           <p className="text-slate">
             {product.gradingStandard
@@ -50,11 +67,12 @@ export function ProductTabs({ product, categoryName }: { product: Product; categ
   );
 }
 
-function Specification({ product, categoryName }: { product: Product; categoryName: string }) {
+function Specification({ product, categoryName, particleSize }: { product: Product; categoryName: string; particleSize?: string }) {
   const rows: [string, string][] = [
     ["SKU", product.sku],
     ["Category", categoryName],
     ["Reference standard", product.gradingStandard ?? "—"],
+    ...(particleSize ? [["Particle size (typical)", particleSize] as [string, string]] : []),
     ["Sold", product.unitOfSaleLabel],
     ["Bulk density (for ton ⇄ m³)", `${product.bulkDensityKgPerM3.toLocaleString("en-US")} kg/m³`],
     ...(product.bagWeightKg ? [["Bag weight", `${product.bagWeightKg} kg`] as [string, string]] : []),
@@ -65,16 +83,19 @@ function Specification({ product, categoryName }: { product: Product; categoryNa
     ),
   ];
   return (
-    <table className="w-full text-left">
-      <tbody>
-        {rows.map(([label, value]) => (
-          <tr key={label} className="border-b border-basalt/5">
-            <th className="py-2 pr-4 font-normal text-slate">{label}</th>
-            <td className="py-2">{value}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <>
+      <table className="w-full text-left">
+        <tbody>
+          {rows.map(([label, value]) => (
+            <tr key={label} className="border-b border-basalt/5">
+              <th className="py-2 pr-4 font-normal text-slate">{label}</th>
+              <td className="py-2">{value}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {particleSize && <p className="mt-3 font-mono text-[11px] text-slate">{CAVEAT}</p>}
+    </>
   );
 }
 
