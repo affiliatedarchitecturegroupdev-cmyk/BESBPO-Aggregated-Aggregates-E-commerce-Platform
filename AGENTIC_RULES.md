@@ -111,9 +111,18 @@ unreviewed work.
   are active at launch.
 - Payment gateways: every adapter except Manual EFT/PO is a structural stub
   until merchant credentials exist (PayFast, Peach, Ozow, Stitch, Lulapay —
-  see `/admin/payments` for what each still needs). There is no online
-  checkout yet: orders are created through the API and paid from
-  `/orders/[id]/confirmation`.
+  see `/admin/payments` for what each still needs). The cart (`/cart`) and
+  checkout (`/checkout`) create orders that are paid from
+  `/orders/[id]/confirmation`; staff confirm, dispatch and close them in
+  `/admin/orders`.
+- Cart delivery distance is straight-line from the buyer's location to the
+  nearest pinned supplier for each material (the furthest one sets the band);
+  road distance is confirmed at dispatch. A material with no pinned supplier
+  needs the buyer to enter a distance. Orders the pricing service marks
+  quote-only (e.g. over 100km, or Volume/Civil Bulk over 10m³) can't be
+  placed — the cart links to a prefilled quote request instead.
+- Prices are shown as the workbook gives them; whether storefront prices
+  should be labelled incl./excl. VAT is still to be confirmed.
 - WhatsApp Business API credentials (`WHATSAPP_PHONE_NUMBER_ID`,
   `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_WEBHOOK_VERIFY_TOKEN`,
   `WHATSAPP_APP_SECRET`). Free-text matching of chat requests to SKUs isn't

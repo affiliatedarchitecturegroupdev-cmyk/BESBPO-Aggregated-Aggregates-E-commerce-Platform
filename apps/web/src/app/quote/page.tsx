@@ -18,6 +18,7 @@ export default async function QuotePage({ searchParams }: { searchParams: QuoteP
     unit: typeof searchParams.unit === "string" ? searchParams.unit : undefined,
     qty: typeof searchParams.qty === "string" ? searchParams.qty : undefined,
     km: typeof searchParams.km === "string" ? searchParams.km : undefined,
+    lines: typeof searchParams.lines === "string" ? searchParams.lines.slice(0, 2000) : undefined,
   };
   return <QuoteRequestForm hiddenSkus={hiddenSkus} prefill={prefill} upsell={<PromoSlot promotion={promotions.QUOTE_FLOW_UPSELL} />} />;
 }

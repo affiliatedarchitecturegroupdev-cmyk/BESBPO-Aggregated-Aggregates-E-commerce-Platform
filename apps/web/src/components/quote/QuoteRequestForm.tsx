@@ -3,25 +3,9 @@
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { submitQuoteRequest } from "@/app/account/actions";
-import { PRODUCTS } from "@/data/catalogue";
 import { CATEGORIES } from "@/data/categories";
-import { PACKAGED_PRODUCTS } from "@/data/packaged";
-import { formatZAR, UNIT_LABELS } from "@/lib/pricing";
-
-/** Everything quotable: the 48 aggregate SKUs (ton/m³/bag) and the packaged goods (bag, drum, tanker…). */
-type QuotableUnit = { code: string; label: string; retailPrice: number | null };
-type Quotable = { sku: string; name: string; categorySlug: string; gradingStandard: string | null; units: QuotableUnit[] };
-
-const QUOTABLE: Quotable[] = [
-  ...PRODUCTS.map((p) => ({
-    ...p,
-    units: p.units.map((u) => ({ code: u, label: UNIT_LABELS[u], retailPrice: p.prices.RETAIL[u] ?? null })),
-  })),
-  ...PACKAGED_PRODUCTS.map((p) => ({
-    ...p,
-    units: p.units.map((u) => ({ code: u.unit, label: u.label, retailPrice: u.prices?.RETAIL ?? null })),
-  })),
-];
+import { QUOTABLE, type Quotable } from "@/data/quotable";
+import { formatZAR } from "@/lib/pricing";
 
 type LineItem = { sku: string; unit: string; quantity: number };
 type Project = { projectName: string; company: string; contactName: string; email: string; phone: string };
@@ -40,18 +24,30 @@ function unitFor(product: Quotable, code: string) {
   return product.units.find((u) => u.code === code) ?? product.units[0];
 }
 
-/** Prefill from a product page link (?sku=&unit=&qty=&km=), read by the page on the server. */
-export type QuotePrefill = { sku?: string; unit?: string; qty?: string; km?: string };
+/**
+ * Prefill, read by the page on the server: one line from a product page
+ * (?sku=&unit=&qty=&km=) or a whole cart (?lines=SKU~unit~qty,…).
+ */
+export type QuotePrefill = { sku?: string; unit?: string; qty?: string; km?: string; lines?: string };
 
-function initialLine(prefill: QuotePrefill): LineItem {
-  const product = productFor(prefill.sku ?? "");
-  const unit = prefill.unit;
-  const quantity = Number(prefill.qty);
+function prefillLine(sku: string | undefined, unit: string | undefined, qty: string | undefined): LineItem {
+  const product = productFor(sku ?? "");
+  const quantity = Number(qty);
   return {
     sku: product.sku,
     unit: unit && product.units.some((u) => u.code === unit) ? unit : product.units[0].code,
     quantity: quantity > 0 ? quantity : 10,
   };
+}
+
+function initialLines(prefill: QuotePrefill): LineItem[] {
+  const fromCart = (prefill.lines ?? "")
+    .split(",")
+    .map((part) => part.split("~"))
+    .filter(([sku]) => QUOTABLE.some((q) => q.sku === sku))
+    .slice(0, 30)
+    .map(([sku, unit, qty]) => prefillLine(sku, unit, qty));
+  return fromCart.length > 0 ? fromCart : [prefillLine(prefill.sku, prefill.unit, prefill.qty)];
 }
 
 /**
@@ -76,7 +72,7 @@ export function QuoteRequestForm({
   const available = QUOTABLE.filter((p) => !hiddenSkus.includes(p.sku));
   const [step, setStep] = useState(0);
   const [project, setProject] = useState<Project>({ projectName: "", company: "", contactName: "", email: "", phone: "" });
-  const [lines, setLines] = useState<LineItem[]>(() => [initialLine(prefill)]);
+  const [lines, setLines] = useState<LineItem[]>(() => initialLines(prefill));
   const [delivery, setDelivery] = useState<Delivery>({
     address: "",
     province: PROVINCES[0],

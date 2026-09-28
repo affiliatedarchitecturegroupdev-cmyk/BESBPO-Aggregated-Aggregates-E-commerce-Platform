@@ -52,6 +52,13 @@ export default async function OrderConfirmationPage({ params }: { params: { id: 
             </li>
           ))}
         </ul>
+        {order.deliveryAddress && (
+          <p className="mt-3 border-t border-basalt/10 pt-3 text-slate">
+            Delivering to {order.deliveryAddress}
+            {order.deliveryProvince && `, ${order.deliveryProvince}`}
+            {order.deliveryDistanceKm != null && ` · ${order.deliveryDistanceKm}km from our partner supplier (confirmed at dispatch)`}
+          </p>
+        )}
         <dl className="mt-3 space-y-1 border-t border-basalt/10 pt-3">
           <div className="flex justify-between">
             <dt className="text-slate">Materials</dt>

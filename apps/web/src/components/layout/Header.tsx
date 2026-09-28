@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
+import { CartLink } from "@/components/cart/CartLink";
 import { NAV_LINKS } from "@/lib/site";
 
 export function Header() {
@@ -27,6 +28,7 @@ export function Header() {
           />
         </form>
         <div className="hidden items-center gap-3 sm:flex">
+          <CartLink className="px-2 py-2 text-basalt hover:text-seam-blue" />
           <Link
             href="/quote"
             className="rounded-sm border border-basalt px-4 py-2 font-body text-sm hover:bg-basalt hover:text-limestone"
@@ -53,7 +55,7 @@ export function Header() {
             <form action="/search" method="get" role="search" className="p-1">
               <input name="q" type="search" placeholder="Search materials…" aria-label="Search the site" className="w-full rounded-sm border border-basalt/20 px-3 py-2" />
             </form>
-            {[...NAV_LINKS, { href: "/quote", label: "Get a Quote" }, { href: "/account/dashboard", label: "Account" }].map(
+            {[...NAV_LINKS, { href: "/cart", label: "Cart" }, { href: "/quote", label: "Get a Quote" }, { href: "/account/dashboard", label: "Account" }].map(
               (link) => (
                 <Link key={link.href} href={link.href} className="block rounded-sm px-3 py-2 text-basalt hover:bg-limestone">
                   {link.label}

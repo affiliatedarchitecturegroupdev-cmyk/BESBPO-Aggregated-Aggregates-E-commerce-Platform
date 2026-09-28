@@ -727,4 +727,158 @@ describe("Aggregated Aggregates API (e2e)", () => {
       }
     });
   });
+
+  describe("ad system: uploads, targeting, reporting", () => {
+    const png = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0, 0, 0, 13]);
+    let staff: string;
+    let customer: string;
+    beforeAll(async () => {
+      staff = await register("adstaff");
+      await prisma.user.update({ where: { email: `adstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      customer = await register("adcustomer");
+    });
+
+    it("uploads creative, serves it publicly, and won't delete it while in use", async () => {
+      await http().post("/media").set("Authorization", `Bearer ${customer}`).attach("file", png, "a.png").expect(403);
+      await http().post("/media").set("Authorization", `Bearer ${staff}`).field("label", "Not an image").attach("file", Buffer.from("%PDF-1.4"), "a.png").expect(400);
+      const asset = await http().post("/media").set("Authorization", `Bearer ${staff}`).field("label", `Spring ${run}`).attach("file", png, "spring.png").expect(201);
+      const served = await http().get(`/media/${asset.body.id}`).expect(200);
+      expect(served.headers["content-type"]).toBe("image/png");
+
+      const promo = await http()
+        .post("/promotions")
+        .set("Authorization", `Bearer ${staff}`)
+        .send({ slot: "QUOTE_FLOW_UPSELL", title: `Uploaded ${run}`, imageUrl: `upload:${asset.body.id}`, isActive: true, sortOrder: 0 })
+        .expect(201);
+      await http().delete(`/media/${asset.body.id}`).set("Authorization", `Bearer ${staff}`).expect(409);
+      await http().delete(`/promotions/${promo.body.id}`).set("Authorization", `Bearer ${staff}`).expect(204);
+      await http().delete(`/media/${asset.body.id}`).set("Authorization", `Bearer ${staff}`).expect(204);
+      await http().get(`/media/${asset.body.id}`).expect(404);
+    });
+
+    it("targets the category banner at one category or industry", async () => {
+      const base = { slot: "CATEGORY_TOP_BANNER", imageUrl: "media:stone-fragments", isActive: true, sortOrder: 5 };
+      await http().post("/promotions").set("Authorization", `Bearer ${staff}`).send({ ...base, slot: "FOOTER_STRIP", title: "Wrong slot", categorySlug: "crushed-stone" }).expect(400);
+      await http().post("/promotions").set("Authorization", `Bearer ${staff}`).send({ ...base, title: "Both", categorySlug: "crushed-stone", industrySlug: "ready-mix-precast" }).expect(400);
+      const stone = await http().post("/promotions").set("Authorization", `Bearer ${staff}`).send({ ...base, title: `Stone ${run}`, categorySlug: "crushed-stone" }).expect(201);
+      const readyMix = await http().post("/promotions").set("Authorization", `Bearer ${staff}`).send({ ...base, title: `Ready-mix ${run}`, industrySlug: "ready-mix-precast" }).expect(201);
+
+      // Targeted creative wins on its listing even with a higher order number; elsewhere the untargeted banner shows.
+      expect((await http().get("/promotions/active?category=crushed-stone").expect(200)).body.CATEGORY_TOP_BANNER.id).toBe(stone.body.id);
+      expect((await http().get("/promotions/active?industry=ready-mix-precast").expect(200)).body.CATEGORY_TOP_BANNER.id).toBe(readyMix.body.id);
+      const sand = (await http().get("/promotions/active?category=sand-fine-aggregates").expect(200)).body.CATEGORY_TOP_BANNER;
+      expect([stone.body.id, readyMix.body.id]).not.toContain(sand.id);
+      expect(sand.categorySlug).toBeNull();
+      await http().get("/promotions/active?category=Not A Slug").expect(400);
+
+      for (const id of [stone.body.id, readyMix.body.id]) await http().delete(`/promotions/${id}`).set("Authorization", `Bearer ${staff}`).expect(204);
+    });
+
+    it("counts impressions and clicks per day, for staff eyes only", async () => {
+      const promo = await http()
+        .post("/promotions")
+        .set("Authorization", `Bearer ${staff}`)
+        .send({ slot: "FOOTER_STRIP", title: `Counted ${run}`, imageUrl: "media:road-paving", isActive: true, sortOrder: 900 })
+        .expect(201);
+      for (let i = 0; i < 3; i++) await http().post(`/promotions/${promo.body.id}/events`).send({ type: "impression" }).expect(204);
+      await http().post(`/promotions/${promo.body.id}/events`).send({ type: "click" }).expect(204);
+      await http().post(`/promotions/${promo.body.id}/events`).send({ type: "purchase" }).expect(400);
+      await http().post("/promotions/not-a-real-id/events").send({ type: "click" }).expect(204); // ignored
+
+      await http().get("/promotions/stats").set("Authorization", `Bearer ${customer}`).expect(403);
+      const stats = await http().get("/promotions/stats?days=7").set("Authorization", `Bearer ${staff}`).expect(200);
+      const row = stats.body.promotions.find((p: { id: string }) => p.id === promo.body.id);
+      expect(row).toMatchObject({ impressions: 3, clicks: 1, clickThroughRate: 33.33 });
+      expect(row.daily).toHaveLength(1);
+      await http().delete(`/promotions/${promo.body.id}`).set("Authorization", `Bearer ${staff}`).expect(204);
+    });
+  });
+
+  describe("cart and checkout", () => {
+    // Test-only pins on two KZN partner suppliers (restored afterwards).
+    const pins = [
+      { externalId: "SUP-016", latitude: -29.62, longitude: 30.38 }, // Pietermaritzburg: sub-base & crushed stone
+      { externalId: "SUP-020", latitude: -29.7, longitude: 31.05 }, // Durban North: sand
+    ];
+    beforeAll(async () => {
+      for (const pin of pins) await prisma.supplierLocation.update({ where: { externalId: pin.externalId }, data: { latitude: pin.latitude, longitude: pin.longitude } });
+    });
+    afterAll(async () => {
+      for (const pin of pins) await prisma.supplierLocation.update({ where: { externalId: pin.externalId }, data: { latitude: null, longitude: null } });
+    });
+
+    it("prices a cart for anyone, from the customer's pin to the farthest supplier needed", async () => {
+      const durban = { deliveryLatitude: -29.86, deliveryLongitude: 31.02 };
+      const sandOnly = await http()
+        .post("/orders/price")
+        .send({ lines: [{ sku: "AA-SND-01", unit: "m3", quantity: 6 }], ...durban })
+        .expect(200);
+      expect(sandOnly.body.distance).toMatchObject({ source: "LOCATION", fromTown: "Durban North" });
+      expect(sandOnly.body.distance.distanceKm).toBeLessThan(30);
+      expect(sandOnly.body.delivery.fee).toBe(0);
+
+      const mixed = await http()
+        .post("/orders/price")
+        .send({ lines: [{ sku: "AA-SND-01", unit: "m3", quantity: 6 }, { sku: "AA-SBC-05", unit: "m3", quantity: 6 }], ...durban })
+        .expect(200);
+      expect(mixed.body.distance.fromTown).toBe("Pietermaritzburg");
+      expect(mixed.body.distance.distanceKm).toBeGreaterThan(55);
+
+      // No pinned supplier for lime: the customer has to enter a distance.
+      await http().post("/orders/price").send({ lines: [{ sku: "AA-AGR-01", unit: "ton", quantity: 6 }], ...durban }).expect(400);
+      const entered = await http().post("/orders/price").send({ lines: [{ sku: "AA-AGR-01", unit: "ton", quantity: 6 }], ...durban, deliveryDistanceKm: 20 }).expect(200);
+      expect(entered.body.distance).toMatchObject({ source: "CUSTOMER", distanceKm: 20 });
+      await http().post("/orders/price").send({ lines: [{ sku: "AA-SND-01", unit: "m3", quantity: 6 }] }).expect(400);
+    });
+
+    it("prices at the signed-in buyer's tier and flags quote-only carts", async () => {
+      const token = await register("cartbuyer");
+      const retail = await http().post("/orders/price").set("Authorization", `Bearer ${token}`).send({ lines: [{ sku: "AA-SBC-05", unit: "m3", quantity: 5 }], deliveryDistanceKm: 20 }).expect(200);
+      expect(retail.body).toMatchObject({ customer_tier: "RETAIL", subtotal: 1805.4, is_quote_only: false });
+      const far = await http().post("/orders/price").send({ lines: [{ sku: "AA-SBC-05", unit: "m3", quantity: 6 }], deliveryDistanceKm: 140 }).expect(200);
+      expect(far.body.is_quote_only).toBe(true);
+    });
+
+    it("checks out with delivery details, and staff move the order through dispatch", async () => {
+      const buyer = await register("checkout");
+      const order = await http()
+        .post("/orders")
+        .set("Authorization", `Bearer ${buyer}`)
+        .send({
+          lines: [{ sku: "AA-SND-01", unit: "m3", quantity: 6 }],
+          deliveryLatitude: -29.86,
+          deliveryLongitude: 31.02,
+          deliveryAddress: "12 Site Road, Umhlanga",
+          deliveryProvince: "KwaZulu-Natal",
+          contactPhone: "082 000 0000",
+          notes: "Gate code 1234",
+        })
+        .expect(201);
+      expect(order.body).toMatchObject({ status: "PENDING", distanceSource: "LOCATION", deliveryAddress: "12 Site Road, Umhlanga", notes: "Gate code 1234" });
+      await http().post("/orders").set("Authorization", `Bearer ${buyer}`).send({ lines: [{ sku: "AA-SBC-05", unit: "m3", quantity: 6 }], deliveryDistanceKm: 140 }).expect(400);
+
+      const staff = await register("orderstaff");
+      await prisma.user.update({ where: { email: `orderstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      await http().get("/orders").set("Authorization", `Bearer ${buyer}`).expect(403);
+      const pending = await http().get("/orders?status=PENDING").set("Authorization", `Bearer ${staff}`).expect(200);
+      expect(pending.body.some((o: { id: string }) => o.id === order.body.id)).toBe(true);
+
+      const status = (body: object) => http().patch(`/orders/${order.body.id}/status`).set("Authorization", `Bearer ${staff}`).send(body);
+      await http().patch(`/orders/${order.body.id}/status`).set("Authorization", `Bearer ${buyer}`).send({ status: "CONFIRMED" }).expect(403);
+      await status({ status: "DELIVERED" }).expect(400); // can't skip ahead
+      await status({ status: "CONFIRMED" }).expect(200);
+      await status({ status: "IN_TRANSIT" }).expect(400); // carrier needed
+      await status({ status: "IN_TRANSIT", carrier: "EXTERNAL_PARTNER" }).expect(400); // partner needs a name
+      const dispatched = await status({ status: "IN_TRANSIT", carrier: "EXTERNAL_PARTNER", externalPartnerName: "Coastal Tippers", trackingRef: "CT-881" }).expect(200);
+      expect(dispatched.body.shipment).toMatchObject({ carrier: "EXTERNAL_PARTNER", externalPartnerName: "Coastal Tippers", trackingRef: "CT-881" });
+      expect(dispatched.body.shipment.dispatchedAt).toBeTruthy();
+      const delivered = await status({ status: "DELIVERED" }).expect(200);
+      expect(delivered.body.shipment.deliveredAt).toBeTruthy();
+      await status({ status: "CANCELLED" }).expect(400);
+
+      const seen = await http().get(`/orders/${order.body.id}`).set("Authorization", `Bearer ${buyer}`).expect(200);
+      expect(seen.body.shipment.trackingRef).toBe("CT-881");
+      await prisma.order.delete({ where: { id: order.body.id } });
+    });
+  });
 });

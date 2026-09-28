@@ -6,11 +6,22 @@ import type { BlogPost } from "@/lib/blog";
 const label = "font-mono text-[10px] uppercase text-slate";
 
 /** Write or edit an article. The body is Markdown; raw HTML isn't rendered on the site. */
-export function BlogPostForm({ post, categories }: { post?: BlogPost; categories: { slug: string; name: string }[] }) {
+export function BlogPostForm({
+  post,
+  categories,
+  uploads = [],
+}: {
+  post?: BlogPost;
+  categories: { slug: string; name: string }[];
+  uploads?: { id: string; label: string }[];
+}) {
   return (
     <ActionForm action={saveBlogPost} className="space-y-4 rounded-sm border border-basalt/10 bg-white p-5">
       {post && <input type="hidden" name="id" value={post.id} />}
       <datalist id="blog-media">
+        {uploads.map((m) => (
+          <option key={m.id} value={`upload:${m.id}`}>{m.label} (upload)</option>
+        ))}
         {HERO_SLIDESHOW_IMAGES.map((img) => (
           <option key={img.id} value={`media:${img.id}`}>{img.alt}</option>
         ))}
@@ -44,7 +55,7 @@ export function BlogPostForm({ post, categories }: { post?: BlogPost; categories
       </label>
       <div className="grid gap-3 sm:grid-cols-2">
         <label className="block">
-          <span className={label}>Cover image — library photo or https URL</span>
+          <span className={label}>Cover image — library photo, upload (Promotions → Image library) or https URL</span>
           <input name="coverImageUrl" list="blog-media" defaultValue={post?.coverImageUrl ?? ""} placeholder="media:gravel-surface" className={inputClass} />
         </label>
         <label className="block">
