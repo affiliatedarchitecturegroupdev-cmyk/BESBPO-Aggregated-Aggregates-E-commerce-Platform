@@ -5,6 +5,7 @@ import { useState } from "react";
 import { CUSTOMER_TIERS, type CustomerTierName } from "@/data/catalogue";
 import type { PackagedProduct } from "@/data/packaged";
 import { formatZAR } from "@/lib/pricing";
+import { AddToCartButton } from "@/components/cart/AddToCartButton";
 
 /**
  * Unit-of-sale selector for packaged goods — the counterpart of the
@@ -86,9 +87,16 @@ export function PackagedUnitSelector({ product }: { product: PackagedProduct }) 
           <p className="mt-1 text-xs text-slate">{unit.sourceNote}</p>
         </div>
       )}
-      <Link href={quoteHref} className="mt-4 inline-block rounded-sm bg-seam-blue px-5 py-2.5 font-body text-sm font-semibold text-limestone hover:bg-basalt">
-        {unitPrice !== undefined ? "Add to Quote Request" : "Request a Quote"}
-      </Link>
+      <div className="mt-4 flex flex-wrap items-center gap-3">
+        {/* Only benchmarked units can be bought online; the rest are quoted. */}
+        {unitPrice !== undefined && <AddToCartButton sku={product.sku} unit={unit.unit} quantity={quantity} />}
+        <Link
+          href={quoteHref}
+          className={`rounded-sm px-5 py-2.5 font-body text-sm font-semibold ${unitPrice !== undefined ? "border border-seam-blue text-seam-blue hover:bg-seam-blue/5" : "bg-seam-blue text-limestone hover:bg-basalt"}`}
+        >
+          Request a Quote
+        </Link>
+      </div>
       <p className="mt-2 font-body text-[11px] text-slate">
         Estimate only — every order is re-priced by our pricing service. We never publish a price we can&apos;t back with a
         real benchmark.

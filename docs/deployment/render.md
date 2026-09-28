@@ -112,7 +112,12 @@ Staff approve trade accounts and price quote requests in the staff console,
    - upload compliance documents;
    - manage product descriptions, photos, visibility and featured products;
    - edit the announcement bar, homepage hero, homepage slideshow and trade promo;
-   - run the four promotion slots (the ad system);
+   - run the four promotion slots (the ad system): upload banner images to
+     the image library, target the category banner at one category or
+     industry listing, and see impressions, clicks and click-through rate;
+   - manage online orders (`/admin/orders`): confirm, dispatch with Besfleet
+     or an external partner and a tracking reference, mark delivered or
+     cancel;
    - write and publish blog articles;
    - manage the partner-supplier network (see step 6);
    - work WhatsApp chat orders;

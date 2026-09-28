@@ -18,9 +18,9 @@ of every phase.
 
 The repository covers roadmap **Phases 1–4** (see `AGENTIC_RULES.md`): the
 workbook-priced catalogue (48 aggregate SKUs plus 7 B2B packaged goods),
-bulk/bag, packaged-goods and delivery calculators, trade accounts, the RFQ
-flow, compliance documents, the admin/CMS (site content, homepage
-slideshow, promotions, blog, products, suppliers, payment routing, WhatsApp
+bulk/bag, packaged-goods and delivery calculators, a cart and checkout for
+mixed bulk and bagged loads, trade accounts, the RFQ flow, compliance documents, the admin/CMS (site content, homepage
+slideshow, promotions with image uploads, targeting and reporting, orders, blog, products, suppliers, payment routing, WhatsApp
 orders), the partner-supplier network and delivery-point locator, the
 payment architecture (18 methods routed through 6 gateway adapters), WhatsApp
 Commerce, the Instagram/Facebook catalogue feed, and SEO hardening.

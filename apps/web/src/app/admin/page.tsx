@@ -9,16 +9,20 @@ export const metadata = { title: "Overview" };
 
 export default async function AdminOverview() {
   const token = sessionToken();
-  const [applications, quotes, documents, catalogue, suppliers, chats] = await Promise.all([
+  const [applications, quotes, documents, catalogue, suppliers, chats, pendingOrders, confirmedOrders] = await Promise.all([
     api<Application[]>("/trade-accounts/applications?status=PENDING", { token }),
     api<QuoteRecord[]>("/quotes?status=SUBMITTED", { token }),
     api<DocumentSummary[]>("/compliance-documents/recent", { token }),
     adminCatalogue(),
     api<Supplier[]>("/suppliers?filter=active", { token }),
     api<unknown[]>("/channels/whatsapp/conversations", { token }),
+    api<unknown[]>("/orders?status=PENDING", { token }),
+    api<unknown[]>("/orders?status=CONFIRMED", { token }),
   ]);
   const count = <T,>(r: { ok: true; data: T[] } | { ok: false }) => (r.ok ? String(r.data.length) : "—");
   const cards = [
+    { href: "/admin/orders?status=PENDING", label: "Orders awaiting payment", value: count(pendingOrders) },
+    { href: "/admin/orders?status=CONFIRMED", label: "Orders to dispatch", value: count(confirmedOrders) },
     { href: "/admin/applications", label: "Trade applications awaiting review", value: count(applications) },
     { href: "/admin/quotes", label: "Quote requests awaiting a price", value: count(quotes) },
     { href: "/admin/documents", label: "Compliance documents (latest 100)", value: count(documents) },

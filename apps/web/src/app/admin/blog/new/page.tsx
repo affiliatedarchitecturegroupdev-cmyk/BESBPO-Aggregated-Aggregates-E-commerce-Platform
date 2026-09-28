@@ -6,13 +6,17 @@ import { sessionToken } from "@/lib/session";
 export const metadata = { title: "Write an article" };
 
 export default async function NewBlogPostPage() {
-  const categories = await api<{ slug: string; name: string }[]>("/blog/categories", { token: sessionToken() });
+  const token = sessionToken();
+  const [categories, uploads] = await Promise.all([
+    api<{ slug: string; name: string }[]>("/blog/categories", { token }),
+    api<{ id: string; label: string }[]>("/media", { token }),
+  ]);
   return (
     <div className="max-w-3xl">
       <Link href="/admin/blog" className="font-mono text-xs text-slate hover:text-seam-blue">← Blog</Link>
       <h2 className="mt-2 font-display text-xl font-bold text-basalt">Write an article</h2>
       <div className="mt-4">
-        <BlogPostForm categories={categories.ok ? categories.data : []} />
+        <BlogPostForm categories={categories.ok ? categories.data : []} uploads={uploads.ok ? uploads.data : []} />
       </div>
     </div>
   );

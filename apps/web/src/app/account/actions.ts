@@ -366,11 +366,31 @@ export async function savePromotion(_prev: FormState, form: FormData): Promise<F
       endsAt: day("endsAt", "23:59:59"),
       isActive: form.get("isActive") === "on",
       sortOrder: Number(text(form, "sortOrder") || 0),
+      categorySlug: text(form, "target").startsWith("category:") ? text(form, "target").slice("category:".length) : null,
+      industrySlug: text(form, "target").startsWith("industry:") ? text(form, "target").slice("industry:".length) : null,
     },
   });
   if (!result.ok) return { error: result.message };
   revalidateStorefront();
   return { success: id ? "Saved — live within a minute." : "Promotion added." };
+}
+
+export async function uploadMedia(_prev: FormState, form: FormData): Promise<FormState> {
+  const file = form.get("file");
+  if (!(file instanceof File) || file.size === 0) return { error: "Choose a PNG, JPEG or WebP image." };
+  if (file.size > 5 * 1024 * 1024) return { error: "Images must be 5MB or smaller." };
+  const upload = new FormData();
+  upload.set("label", text(form, "label"));
+  upload.set("file", file, file.name);
+  const result = await apiUpload<{ id: string }>("/media", upload, sessionToken());
+  if (!result.ok) return { error: result.message };
+  revalidatePath("/admin", "layout");
+  return { success: `Uploaded — use it as upload:${result.data.id}` };
+}
+
+export async function deleteMedia(form: FormData) {
+  await api(`/media/${encodeURIComponent(text(form, "id"))}`, { method: "DELETE", token: sessionToken() });
+  revalidatePath("/admin", "layout");
 }
 
 export async function deletePromotion(form: FormData) {
@@ -446,4 +466,77 @@ export async function closeWhatsAppConversation(form: FormData) {
     body: { state: text(form, "state") },
   });
   revalidatePath("/admin", "layout");
+}
+
+// --- cart & checkout ------------------------------------------------------------
+
+export type CartPricing = {
+  customer_tier: string;
+  is_quote_only: boolean;
+  reasons: string[];
+  lines: { sku: string; unit: string; quantity: number; unit_price: number | null; total: number | null; pricing_status?: string }[];
+  subtotal: number;
+  delivery: { fee: number | null; load_size: string | null };
+  total: number | null;
+  distance: { distanceKm: number; source: "LOCATION" | "CUSTOMER"; fromTown: string | null; fromProvince: string | null };
+};
+
+type CartInput = {
+  lines: { sku: string; unit: string; quantity: number }[];
+  delivery: { latitude: number; longitude: number } | { distanceKm: number };
+};
+
+function deliveryBody(delivery: CartInput["delivery"]) {
+  return "distanceKm" in delivery
+    ? { deliveryDistanceKm: delivery.distanceKm }
+    : { deliveryLatitude: delivery.latitude, deliveryLongitude: delivery.longitude };
+}
+
+/** Prices the cart at the shopper's own tier (Retail when signed out). Nothing is saved. */
+export async function priceCart(input: CartInput): Promise<{ ok: true; pricing: CartPricing } | { ok: false; error: string }> {
+  const result = await api<CartPricing>("/orders/price", {
+    method: "POST",
+    token: sessionToken(),
+    body: { lines: input.lines, ...deliveryBody(input.delivery) },
+  });
+  return result.ok ? { ok: true, pricing: result.data } : { ok: false, error: result.message };
+}
+
+/** Places the order; the API re-prices everything and refuses quote-only carts. */
+export async function placeOrder(
+  input: CartInput & { deliveryAddress: string; deliveryProvince: string; contactPhone?: string; notes?: string },
+): Promise<{ ok: true; orderId: string } | { ok: false; error: string }> {
+  const result = await api<{ id: string }>("/orders", {
+    method: "POST",
+    token: sessionToken(),
+    body: {
+      lines: input.lines,
+      ...deliveryBody(input.delivery),
+      deliveryAddress: input.deliveryAddress,
+      deliveryProvince: input.deliveryProvince,
+      contactPhone: input.contactPhone || undefined,
+      notes: input.notes || undefined,
+    },
+  });
+  if (!result.ok) return { ok: false, error: result.status === 401 ? "Please sign in again to place your order." : result.message };
+  revalidatePath("/account/dashboard");
+  return { ok: true, orderId: result.data.id };
+}
+
+// --- orders (staff) ---------------------------------------------------------------
+
+export async function updateOrderStatus(_prev: FormState, form: FormData): Promise<FormState> {
+  const result = await api(`/orders/${encodeURIComponent(text(form, "id"))}/status`, {
+    method: "PATCH",
+    token: sessionToken(),
+    body: {
+      status: text(form, "status"),
+      carrier: optional(form, "carrier"),
+      externalPartnerName: optional(form, "externalPartnerName"),
+      trackingRef: optional(form, "trackingRef"),
+    },
+  });
+  if (!result.ok) return { error: result.message };
+  revalidatePath("/admin", "layout");
+  return { success: "Order updated." };
 }

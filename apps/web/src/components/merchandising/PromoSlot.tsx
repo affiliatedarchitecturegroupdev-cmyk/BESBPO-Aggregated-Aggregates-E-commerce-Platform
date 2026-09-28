@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { resolveImage, type Promotion } from "@/lib/promotions";
+import { PromoTracker } from "./PromoTracker";
 
 /**
  * One ad-system slot: staff-managed creative (Admin → Promotions) — sourced
- * photography with a headline, never a placeholder box. Renders nothing
- * when the slot is empty.
+ * or uploaded photography with a headline, never a placeholder box. Renders
+ * nothing when the slot is empty; counts impressions and clicks.
  */
 export function PromoSlot({ promotion, className = "" }: { promotion?: Promotion; className?: string }) {
   const image = resolveImage(promotion?.imageUrl);
@@ -20,13 +21,17 @@ export function PromoSlot({ promotion, className = "" }: { promotion?: Promotion
     </>
   );
   const classes = `group relative block h-40 overflow-hidden rounded-sm border border-basalt/10 bg-basalt ${className}`;
-  return promotion.linkUrl ? (
-    <Link href={promotion.linkUrl} className={classes} aria-label={promotion.title} data-promo-slot={promotion.slot}>
-      {inner}
-    </Link>
-  ) : (
-    <div className={classes} data-promo-slot={promotion.slot}>
-      {inner}
-    </div>
+  return (
+    <PromoTracker promotionId={promotion.id}>
+      {promotion.linkUrl ? (
+        <Link href={promotion.linkUrl} className={classes} aria-label={promotion.title} data-promo-slot={promotion.slot}>
+          {inner}
+        </Link>
+      ) : (
+        <div className={classes} data-promo-slot={promotion.slot}>
+          {inner}
+        </div>
+      )}
+    </PromoTracker>
   );
 }

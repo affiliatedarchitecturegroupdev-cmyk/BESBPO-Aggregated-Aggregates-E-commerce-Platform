@@ -74,7 +74,11 @@ function filterPackaged(catalogue: MerchandisedPackagedProduct[], params: Search
 }
 
 export default async function ProductListingPage({ searchParams }: { searchParams: SearchParams }) {
-  const [catalogue, packagedCatalogue, promotions] = await Promise.all([getCatalogue(), getPackagedCatalogue(), getActivePromotions()]);
+  const [catalogue, packagedCatalogue, promotions] = await Promise.all([
+    getCatalogue(),
+    getPackagedCatalogue(),
+    getActivePromotions({ category: searchParams.category, industry: searchParams.industry }),
+  ]);
   const products = filterProducts(catalogue, searchParams);
   const packaged = filterPackaged(packagedCatalogue, searchParams);
   const total = products.length + packaged.length;
@@ -103,7 +107,7 @@ export default async function ProductListingPage({ searchParams }: { searchParam
           {industry.description}
         </p>
       )}
-      {category && promotions.CATEGORY_TOP_BANNER && <PromoSlot promotion={promotions.CATEGORY_TOP_BANNER} className="mt-6" />}
+      {(category || industry) && promotions.CATEGORY_TOP_BANNER && <PromoSlot promotion={promotions.CATEGORY_TOP_BANNER} className="mt-6" />}
 
       <div className="mt-8 grid gap-8 md:grid-cols-[230px_1fr]">
         <aside>

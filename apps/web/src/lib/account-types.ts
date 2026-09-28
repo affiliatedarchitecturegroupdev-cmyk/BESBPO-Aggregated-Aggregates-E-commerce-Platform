@@ -59,6 +59,9 @@ export type OrderRecord = {
   orderNumber: string;
   status: "PENDING" | "CONFIRMED" | "IN_TRANSIT" | "DELIVERED" | "CANCELLED";
   channel?: string;
+  deliveryAddress?: string | null;
+  deliveryProvince?: string | null;
+  deliveryDistanceKm?: number | null;
   subtotal: string;
   deliveryFee: string;
   total: string;

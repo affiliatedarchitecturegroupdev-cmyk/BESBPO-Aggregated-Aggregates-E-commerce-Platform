@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { CUSTOMER_TIERS, type CustomerTierName, type Product, type Unit } from "@/data/catalogue";
+import { AddToCartButton } from "@/components/cart/AddToCartButton";
 import { useNearestDeliveryPoint } from "@/components/suppliers/useNearestDeliveryPoint";
 import { estimateDelivery, estimateLine, formatZAR, UNIT_LABELS } from "@/lib/pricing";
 
@@ -170,15 +171,14 @@ export function BulkBagCalculator({ product }: { product: Product }) {
           Estimated total: <strong>{formatZAR(line.total + delivery.fee)}</strong>
         </div>
       ) : null}
-      {/* No cart yet: every order starts as a quote request carrying this load. */}
-      <Link
-        href={quoteHref}
-        className="mt-4 inline-block rounded-sm bg-seam-blue px-5 py-2.5 font-body text-sm font-semibold text-limestone hover:bg-basalt"
-      >
-        Add to Quote Request
-      </Link>
+      <div className="mt-4 flex flex-wrap items-center gap-3">
+        <AddToCartButton sku={product.sku} unit={unit} quantity={quantity} />
+        <Link href={quoteHref} className="rounded-sm border border-seam-blue px-5 py-2.5 font-body text-sm font-semibold text-seam-blue hover:bg-seam-blue/5">
+          Request a Quote
+        </Link>
+      </div>
       <p className="mt-2 font-body text-[11px] text-slate">
-        Estimate only — your order is re-priced at checkout. Delivery distance is measured from the nearest approved
+        Estimate only — your cart is re-priced at checkout. Delivery distance is measured from the nearest approved
         partner supplier.
       </p>
     </div>

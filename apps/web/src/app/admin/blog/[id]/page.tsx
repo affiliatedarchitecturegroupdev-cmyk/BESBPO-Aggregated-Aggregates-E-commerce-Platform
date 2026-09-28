@@ -10,9 +10,10 @@ export const metadata = { title: "Article" };
 
 export default async function EditBlogPostPage({ params, searchParams }: { params: { id: string }; searchParams: { created?: string } }) {
   const token = sessionToken();
-  const [post, categories] = await Promise.all([
+  const [post, categories, uploads] = await Promise.all([
     api<BlogPost>(`/blog/admin/posts/${encodeURIComponent(params.id)}`, { token }),
     api<{ slug: string; name: string }[]>("/blog/categories", { token }),
+    api<{ id: string; label: string }[]>("/media", { token }),
   ]);
   if (!post.ok) {
     if (post.status === 404) notFound();
@@ -31,7 +32,7 @@ export default async function EditBlogPostPage({ params, searchParams }: { param
       </div>
       {searchParams.created && <p className="mt-3 rounded-sm border border-seam-blue/30 bg-seam-blue/5 p-3 font-body text-sm text-seam-blue">Article created.</p>}
       <div className="mt-4">
-        <BlogPostForm post={post.data} categories={categories.ok ? categories.data : []} />
+        <BlogPostForm post={post.data} categories={categories.ok ? categories.data : []} uploads={uploads.ok ? uploads.data : []} />
       </div>
       <form action={deleteBlogPost} className="mt-6">
         <input type="hidden" name="id" value={post.data.id} />

@@ -414,6 +414,13 @@ model Order {
   id                   String                @id @default(cuid())
   orderNumber          String                @unique
   channel              OrderChannel          @default(WEBSITE)
+  // Delivery details captured at checkout.
+  deliveryAddress      String?
+  deliveryProvince     String?
+  deliveryDistanceKm   Float?
+  distanceSource       String? // "LOCATION" (buyer's pin to the nearest supplier) or "CUSTOMER" (entered)
+  contactPhone         String?
+  notes                String?
   whatsappConversation WhatsAppConversation?
   userId               String?
   user                 User?                 @relation(fields: [userId], references: [id])
@@ -551,9 +558,11 @@ enum PromotionSlot {
 }
 
 /// A handful of staff-managed banner slots, not a targeting/bidding engine.
-/// The first active promotion in a slot (lowest sortOrder, inside its date
-/// window) is the one shown. imageUrl is a media-library id ("media:<id>",
-/// apps/web/src/data/media.ts) or an https image URL.
+/// The first active promotion in a slot (lowest sortOrder, newest on a tie,
+/// inside its date window) is the one shown. A promotion can target one
+/// category or industry listing; targeted creative beats untargeted.
+/// imageUrl is a media-library id ("media:<id>", apps/web/src/data/media.ts),
+/// an uploaded asset ("upload:<MediaAsset id>") or an https image URL.
 model Promotion {
   id        String        @id @default(cuid())
   slot      PromotionSlot
@@ -567,7 +576,33 @@ model Promotion {
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
 
+  categorySlug String? // targets one category listing (CATEGORY_TOP_BANNER)
+  industrySlug String? // targets one industry listing (CATEGORY_TOP_BANNER)
+  stats        PromotionStat[]
+
   @@index([slot, isActive])
+}
+
+/// Daily impressions and clicks per promotion — counts only, no visitor data.
+model PromotionStat {
+  promotionId String
+  promotion   Promotion @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+  day         DateTime  @db.Date
+  impressions Int       @default(0)
+  clicks      Int       @default(0)
+
+  @@id([promotionId, day])
+}
+
+/// Staff-uploaded images for promotions and blog covers, kept in the same
+/// storage as compliance documents and served publicly by id.
+model MediaAsset {
+  id          String   @id @default(cuid())
+  storageKey  String   @unique
+  contentType String
+  sizeBytes   Int
+  label       String // what staff called it, for picking it later
+  createdAt   DateTime @default(now())
 }
 
 // ---------------------------------------------------------------------------
