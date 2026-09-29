@@ -2,6 +2,7 @@ import { ConflictException, ForbiddenException, Injectable, NotFoundException } 
 import { Prisma, QuoteStatus } from "@aggregates/database";
 import { STAFF_ROLES, type AuthUser } from "../common/auth/auth-user";
 import { PrismaService } from "../common/prisma.service";
+import { NotificationsService } from "../notifications/notifications.service";
 import { CustomerTierName, PricingService } from "../pricing/pricing.service";
 import { CreateQuoteDto, RespondToQuoteDto, UpdateQuoteDto } from "./dto/create-quote.dto";
 import { quoteReasonCode, quoteReference } from "./quote-reason";
@@ -26,6 +27,7 @@ export class QuotesService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly pricing: PricingService,
+    private readonly notifications: NotificationsService,
   ) {}
 
   async create(dto: CreateQuoteDto, user?: AuthUser) {
@@ -59,6 +61,7 @@ export class QuotesService {
       contactName: dto.contactName.trim(),
       contactEmail: dto.contactEmail,
       contactPhone: dto.contactPhone?.trim() || null,
+      whatsappUpdates: Boolean(dto.whatsappUpdates && dto.contactPhone?.trim()),
       companyName: dto.companyName?.trim() || company?.name || null,
       projectName: dto.projectName?.trim() || null,
       deliveryAddress: dto.deliveryAddress.trim(),
@@ -79,7 +82,9 @@ export class QuotesService {
     // References are short enough to read over the phone, so retry the rare collision.
     for (let attempt = 0; attempt < 5; attempt++) {
       try {
-        return await this.prisma.quote.create({ data: { ...data, reference: quoteReference() }, include: QUOTE_INCLUDE });
+        const quote = await this.prisma.quote.create({ data: { ...data, reference: quoteReference() }, include: QUOTE_INCLUDE });
+        await this.notifications.quote("QUOTE_RECEIVED", quote.id);
+        return quote;
       } catch (error) {
         if (!(error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002")) throw error;
       }
@@ -113,7 +118,7 @@ export class QuotesService {
   async update(id: string, dto: UpdateQuoteDto) {
     const quoted = dto.quotedTotal !== undefined;
     try {
-      return await this.prisma.quote.update({
+      const quote = await this.prisma.quote.update({
         where: { id },
         data: {
           status: quoted ? QuoteStatus.QUOTED : dto.status,
@@ -123,6 +128,8 @@ export class QuotesService {
         },
         include: QUOTE_INCLUDE,
       });
+      if (quoted) await this.notifications.quote("QUOTE_PRICED", quote.id);
+      return quote;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2025") {
         throw new NotFoundException("Quote not found.");
@@ -137,11 +144,13 @@ export class QuotesService {
       throw new ConflictException("Only a quote with a price can be accepted or declined.");
     }
     if (!this.isOwner(quote, user)) throw new ForbiddenException("Only the requester can respond to this quote.");
-    return this.prisma.quote.update({
+    const updated = await this.prisma.quote.update({
       where: { id },
       data: { status: dto.decision === "ACCEPT" ? QuoteStatus.ACCEPTED : QuoteStatus.DECLINED },
       include: QUOTE_INCLUDE,
     });
+    await this.notifications.quote(dto.decision === "ACCEPT" ? "QUOTE_ACCEPTED" : "QUOTE_DECLINED", id);
+    return updated;
   }
 
   private isOwner(quote: { userId: string | null; companyId: string | null }, user: AuthUser) {

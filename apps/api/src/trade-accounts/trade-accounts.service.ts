@@ -2,6 +2,7 @@ import { BadRequestException, ConflictException, ForbiddenException, Injectable,
 import { CompanyStatus, CustomerTierName, UserRole } from "@aggregates/database";
 import type { AuthUser } from "../common/auth/auth-user";
 import { PrismaService } from "../common/prisma.service";
+import { NotificationsService } from "../notifications/notifications.service";
 import { ApplyForTradeAccountDto, CreateDeliveryAddressDto, ReviewApplicationDto } from "./dto/trade-account.dto";
 
 /**
@@ -15,7 +16,10 @@ import { ApplyForTradeAccountDto, CreateDeliveryAddressDto, ReviewApplicationDto
  */
 @Injectable()
 export class TradeAccountsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly notifications: NotificationsService,
+  ) {}
 
   listCustomerTiers() {
     return this.prisma.customerTier.findMany({ orderBy: { discountPercent: "asc" } });
@@ -29,7 +33,7 @@ export class TradeAccountsService {
       this.tier(CustomerTierName.RETAIL),
       this.tier(dto.requestedTier),
     ]);
-    return this.prisma.$transaction(async (tx) => {
+    const company = await this.prisma.$transaction(async (tx) => {
       const company = await tx.company.create({
         data: {
           name: dto.companyName.trim(),
@@ -47,6 +51,8 @@ export class TradeAccountsService {
       await tx.user.update({ where: { id: user.id }, data: { companyId: company.id, role } });
       return company;
     });
+    await this.notifications.company("TRADE_APPLICATION_RECEIVED", company.id);
+    return company;
   }
 
   /** The signed-in user's company dashboard, or null if they haven't applied. */
@@ -98,19 +104,26 @@ export class TradeAccountsService {
     if (!company) throw new NotFoundException("Company not found.");
 
     if (dto.decision === "DECLINE") {
-      return this.prisma.company.update({
+      const declined = await this.prisma.company.update({
         where: { id: companyId },
         data: { status: CompanyStatus.DECLINED, tierId: (await this.tier(CustomerTierName.RETAIL)).id, reviewNotes: dto.notes, reviewedAt: new Date() },
         include: { tier: true },
       });
+      if (company.status !== CompanyStatus.DECLINED) await this.notifications.company("TRADE_APPLICATION_DECLINED", companyId);
+      return declined;
     }
     const tierName = dto.tier ?? company.requestedTier?.name;
     if (!tierName) throw new BadRequestException("Choose a tier to approve this company onto.");
-    return this.prisma.company.update({
+    const approved = await this.prisma.company.update({
       where: { id: companyId },
       data: { status: CompanyStatus.APPROVED, tierId: (await this.tier(tierName)).id, reviewNotes: dto.notes, reviewedAt: new Date() },
       include: { tier: true },
     });
+    // Re-approving onto a different tier is news too; an unchanged re-save isn't.
+    if (company.status !== CompanyStatus.APPROVED || company.tierId !== approved.tierId) {
+      await this.notifications.company("TRADE_APPLICATION_APPROVED", companyId);
+    }
+    return approved;
   }
 
   private requireCompany(user: AuthUser): string {

@@ -357,6 +357,7 @@ model Quote {
   contactName        String?
   contactEmail       String?
   contactPhone       String?
+  whatsappUpdates    Boolean         @default(false) // requester opted in to quote updates on WhatsApp
   companyName        String?
   projectName        String?
   deliveryAddress    String?
@@ -420,6 +421,7 @@ model Order {
   deliveryDistanceKm   Float?
   distanceSource       String? // "LOCATION" (buyer's pin to the nearest supplier) or "CUSTOMER" (entered)
   contactPhone         String?
+  whatsappUpdates      Boolean               @default(false) // buyer opted in to order updates on WhatsApp
   notes                String?
   whatsappConversation WhatsAppConversation?
   userId               String?
@@ -719,4 +721,86 @@ model WhatsAppConversation {
   createdAt       DateTime                  @default(now())
 
   @@index([phoneNumber, state])
+}
+
+// ---------------------------------------------------------------------------
+// Notifications (email + WhatsApp)
+// ---------------------------------------------------------------------------
+
+enum NotificationEvent {
+  ORDER_PLACED
+  ORDER_CONFIRMED
+  ORDER_DISPATCHED
+  ORDER_DELIVERED
+  ORDER_CANCELLED
+  QUOTE_RECEIVED
+  QUOTE_PRICED
+  QUOTE_ACCEPTED
+  QUOTE_DECLINED
+  TRADE_APPLICATION_RECEIVED
+  TRADE_APPLICATION_APPROVED
+  TRADE_APPLICATION_DECLINED
+}
+
+enum NotificationChannel {
+  EMAIL
+  WHATSAPP
+}
+
+enum NotificationAudience {
+  CUSTOMER
+  STAFF
+}
+
+enum NotificationStatus {
+  PENDING
+  SENT
+  LOGGED // no provider configured yet — written to the log instead of sent
+  FAILED
+}
+
+/// Every email and WhatsApp message the platform sends (or would have sent),
+/// so staff can see what a customer was told and resend a failed message.
+model Notification {
+  id                String               @id @default(cuid())
+  event             NotificationEvent
+  channel           NotificationChannel
+  audience          NotificationAudience
+  recipient         String // email address, or WhatsApp number in international format
+  subject           String?
+  body              String               @db.Text // plain-text body (email) or the rendered template text (WhatsApp)
+  html              String?              @db.Text
+  templateName      String? // WhatsApp message template
+  templateParams    String[]
+  status            NotificationStatus   @default(PENDING)
+  provider          String?
+  providerMessageId String?
+  error             String?
+  attempts          Int                  @default(0)
+  orderId           String?
+  quoteId           String?
+  companyId         String?
+  createdAt         DateTime             @default(now())
+  sentAt            DateTime?
+
+  @@index([createdAt])
+  @@index([status])
+  @@index([orderId])
+  @@index([quoteId])
+}
+
+/// Which channels each event uses. Customer WhatsApp starts off: Meta must
+/// approve each message template before business-initiated messages send.
+model NotificationSetting {
+  event            NotificationEvent @id
+  customerEmail    Boolean           @default(true)
+  customerWhatsApp Boolean           @default(false)
+  staffEmail       Boolean           @default(true)
+  updatedAt        DateTime          @updatedAt
+}
+
+/// Staff inboxes that receive new-order, new-quote and trade-application alerts.
+model NotificationRecipient {
+  email     String   @id
+  createdAt DateTime @default(now())
 }

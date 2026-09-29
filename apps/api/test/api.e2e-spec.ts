@@ -881,4 +881,134 @@ describe("Aggregated Aggregates API (e2e)", () => {
       await prisma.order.delete({ where: { id: order.body.id } });
     });
   });
+
+  describe("notifications", () => {
+    const ops = `ops-${run}@example.com`;
+    let admin: string;
+
+    /** Messages are recorded synchronously and delivered in the background; wait until none is still sending. */
+    async function settled(query: string) {
+      for (let i = 0; i < 50; i++) {
+        const res = await http().get(`/notifications?${query}`).set("Authorization", `Bearer ${admin}`).expect(200);
+        if (res.body.every((n: { status: string }) => n.status !== "PENDING")) return res.body as { event: string; channel: string; audience: string; recipient: string; status: string; subject: string | null; templateName: string | null; body: string; id: string }[];
+        await new Promise((r) => setTimeout(r, 50));
+      }
+      throw new Error("notifications still pending");
+    }
+
+    beforeAll(async () => {
+      admin = await register("notifadmin");
+      await prisma.user.update({ where: { email: `notifadmin-${run}@example.com` }, data: { role: "ADMIN" } });
+      await http().post("/notifications/recipients").set("Authorization", `Bearer ${admin}`).send({ email: ops.toUpperCase() }).expect(201);
+    });
+    afterAll(async () => {
+      await http().delete(`/notifications/recipients/${encodeURIComponent(ops)}`).set("Authorization", `Bearer ${admin}`).expect(200);
+      await prisma.notificationSetting.deleteMany({});
+    });
+
+    it("keeps the log, settings and recipients to staff, and changes to admins", async () => {
+      const buyer = await register("notifbuyer");
+      await http().get("/notifications").set("Authorization", `Bearer ${buyer}`).expect(403);
+      await http().get("/notifications").expect(401);
+      const staff = await register("notifstaff");
+      await prisma.user.update({ where: { email: `notifstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      await http().get("/notifications/settings").set("Authorization", `Bearer ${staff}`).expect(200);
+      await http().put("/notifications/settings/ORDER_PLACED").set("Authorization", `Bearer ${staff}`).send({ staffEmail: false }).expect(403);
+      await http().post("/notifications/recipients").set("Authorization", `Bearer ${staff}`).send({ email: "x@example.com" }).expect(403);
+
+      const recipients = await http().get("/notifications/recipients").set("Authorization", `Bearer ${staff}`).expect(200);
+      expect(recipients.body.recipients).toEqual([ops]);
+      const status = await http().get("/notifications/status").set("Authorization", `Bearer ${staff}`).expect(200);
+      expect(status.body).toMatchObject({ staffRecipientCount: 1, email: { live: false } });
+    });
+
+    it("tells the buyer and staff about an order, then the buyer (and their WhatsApp, if opted in) at each step", async () => {
+      const buyer = await register("notiforder");
+      const order = await http()
+        .post("/orders")
+        .set("Authorization", `Bearer ${buyer}`)
+        .send({ lines: [{ sku: "AA-SND-01", unit: "m3", quantity: 6 }], deliveryDistanceKm: 20, deliveryAddress: "3 Dune Rd, Ballito", contactPhone: "082 123 4567", whatsappUpdates: true })
+        .expect(201);
+      expect(order.body.whatsappUpdates).toBe(true);
+
+      const placed = await settled(`orderId=${order.body.id}`);
+      expect(placed).toHaveLength(2);
+      expect(placed).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ event: "ORDER_PLACED", audience: "CUSTOMER", channel: "EMAIL", recipient: `notiforder-${run}@example.com`, status: "LOGGED" }),
+          expect.objectContaining({ event: "ORDER_PLACED", audience: "STAFF", channel: "EMAIL", recipient: ops, status: "LOGGED" }),
+        ]),
+      );
+      expect(placed.find((n) => n.audience === "CUSTOMER")!.subject).toBe(`Order ${order.body.orderNumber} received — choose how to pay`);
+
+      // WhatsApp is off until an admin switches it on (once Meta approves the template); staff alerts only exist for some events.
+      await http().put("/notifications/settings/ORDER_CONFIRMED").set("Authorization", `Bearer ${admin}`).send({ staffEmail: true }).expect(400);
+      const setting = await http().put("/notifications/settings/ORDER_CONFIRMED").set("Authorization", `Bearer ${admin}`).send({ customerWhatsApp: true }).expect(200);
+      expect(setting.body).toMatchObject({ event: "ORDER_CONFIRMED", customerEmail: true, customerWhatsApp: true, staffEmail: false });
+
+      await http().patch(`/orders/${order.body.id}/status`).set("Authorization", `Bearer ${admin}`).send({ status: "CONFIRMED" }).expect(200);
+      const confirmed = (await settled(`orderId=${order.body.id}`)).filter((n) => n.event === "ORDER_CONFIRMED");
+      expect(confirmed).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ channel: "EMAIL", recipient: `notiforder-${run}@example.com` }),
+          expect.objectContaining({ channel: "WHATSAPP", recipient: "27821234567", templateName: "aa_order_confirmed" }),
+        ]),
+      );
+      expect(confirmed.find((n) => n.channel === "WHATSAPP")!.body).toContain(order.body.orderNumber);
+
+      // Re-saving the same status (e.g. a tracking edit) doesn't message the customer again.
+      await http().patch(`/orders/${order.body.id}/status`).set("Authorization", `Bearer ${admin}`).send({ status: "CONFIRMED" }).expect(200);
+      await http().patch(`/orders/${order.body.id}/status`).set("Authorization", `Bearer ${admin}`).send({ status: "IN_TRANSIT", carrier: "BESFLEET", trackingRef: "BF-9" }).expect(200);
+      const all = await settled(`orderId=${order.body.id}`);
+      expect(all.filter((n) => n.event === "ORDER_CONFIRMED")).toHaveLength(2);
+      const dispatched = all.find((n) => n.event === "ORDER_DISPATCHED" && n.channel === "EMAIL")!;
+      expect(dispatched.body).toContain("with Besfleet. Tracking reference: BF-9.");
+
+      // A logged message can be resent (e.g. once a provider is configured); a missing one can't.
+      const resent = await http().post(`/notifications/${dispatched.id}/resend`).set("Authorization", `Bearer ${admin}`).expect(201);
+      expect(resent.body).toMatchObject({ status: "LOGGED", attempts: 2 });
+      await http().post("/notifications/nope/resend").set("Authorization", `Bearer ${admin}`).expect(404);
+      await prisma.order.delete({ where: { id: order.body.id } });
+    });
+
+    it("acknowledges quote requests, alerts staff, and sends the priced quote", async () => {
+      const guest = await http()
+        .post("/quotes")
+        .send({ contactName: "Nomsa Khumalo", contactEmail: `quoter-${run}@example.com`, deliveryAddress: "Harrismith", deliveryDistanceKm: 140, lines: [{ sku: "AA-DEC-01", unit: "bag", quantity: 40 }] })
+        .expect(201);
+      const received = await settled(`quoteId=${guest.body.id}`);
+      expect(received.map((n) => `${n.event}:${n.audience}:${n.recipient}`).sort()).toEqual([
+        `QUOTE_RECEIVED:CUSTOMER:quoter-${run}@example.com`,
+        `QUOTE_RECEIVED:STAFF:${ops}`,
+      ]);
+      expect(received.find((n) => n.audience === "STAFF")!.body).toContain("Why it needs a quote:");
+
+      await http().patch(`/quotes/${guest.body.id}`).set("Authorization", `Bearer ${admin}`).send({ staffNotes: "Checking haulage" }).expect(200);
+      expect(await settled(`quoteId=${guest.body.id}`)).toHaveLength(2); // a note alone isn't news
+      await http().patch(`/quotes/${guest.body.id}`).set("Authorization", `Bearer ${admin}`).send({ quotedTotal: 3120 }).expect(200);
+      const priced = (await settled(`quoteId=${guest.body.id}`)).find((n) => n.event === "QUOTE_PRICED")!;
+      expect(priced).toMatchObject({ audience: "CUSTOMER", recipient: `quoter-${run}@example.com` });
+      expect(priced.subject).toBe(`Your quote ${guest.body.reference} is ready: R3,120.00`);
+      await prisma.quote.delete({ where: { id: guest.body.id } });
+    });
+
+    it("confirms a trade application to the applicant and staff, then sends the decision", async () => {
+      const applicant = await register("notifapply");
+      const company = await http()
+        .post("/trade-accounts/apply")
+        .set("Authorization", `Bearer ${applicant}`)
+        .send({ companyName: `Notify Civils ${run}`, requestedTier: "CONTRACTOR_TRADE" })
+        .expect(201);
+      const events = async () => (await http().get("/notifications?event=TRADE_APPLICATION_RECEIVED").set("Authorization", `Bearer ${admin}`)).body.filter((n: { recipient: string; subject: string }) => n.subject?.includes(`Notify Civils ${run}`));
+      await settled("event=TRADE_APPLICATION_RECEIVED");
+      expect((await events()).map((n: { audience: string }) => n.audience).sort()).toEqual(["CUSTOMER", "STAFF"]);
+
+      await http().post(`/trade-accounts/applications/${company.body.id}/review`).set("Authorization", `Bearer ${admin}`).send({ decision: "APPROVE" }).expect(201);
+      const approved = (await settled("event=TRADE_APPLICATION_APPROVED")).filter((n) => n.recipient === `notifapply-${run}@example.com`);
+      expect(approved).toHaveLength(1);
+      expect(approved[0].body).toContain("approved as a Contractor/Trade account");
+      await prisma.user.update({ where: { email: `notifapply-${run}@example.com` }, data: { companyId: null } });
+      await prisma.company.delete({ where: { id: company.body.id } });
+    });
+  });
 });

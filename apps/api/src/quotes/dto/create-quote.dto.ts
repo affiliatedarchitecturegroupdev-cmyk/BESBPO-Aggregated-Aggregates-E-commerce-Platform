@@ -2,6 +2,7 @@ import { Transform, Type } from "class-transformer";
 import {
   ArrayMaxSize,
   ArrayMinSize,
+  IsBoolean,
   IsEmail,
   IsIn,
   IsNumber,
@@ -40,6 +41,7 @@ export class CreateQuoteDto {
   contactEmail!: string;
 
   @IsOptional() @IsString() @MaxLength(40) contactPhone?: string;
+  @IsOptional() @IsBoolean() whatsappUpdates?: boolean;
   @IsOptional() @IsString() @MaxLength(160) companyName?: string;
   @IsOptional() @IsString() @MaxLength(160) projectName?: string;
   @IsString() @MinLength(3) @MaxLength(300) deliveryAddress!: string;

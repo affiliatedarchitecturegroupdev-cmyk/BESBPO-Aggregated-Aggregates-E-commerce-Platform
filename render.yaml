@@ -82,6 +82,16 @@ services:
         sync: false
       - key: STORAGE_BUCKET
         value: compliance-documents
+      # Transactional email (docs/notifications.md). Until these are set,
+      # messages are logged in Admin -> Notifications and can be resent later.
+      - key: EMAIL_PROVIDER
+        sync: false
+      - key: EMAIL_API_KEY
+        sync: false
+      - key: EMAIL_FROM
+        sync: false
+      - key: EMAIL_REPLY_TO
+        sync: false
 
   - type: pserv
     name: aggregates-store-pricing

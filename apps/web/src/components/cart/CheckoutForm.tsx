@@ -33,6 +33,7 @@ export function CheckoutForm({ addresses, email }: { addresses: SavedAddress[]; 
   const [province, setProvince] = useState(initial?.province ?? "KwaZulu-Natal");
   const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
+  const [whatsappUpdates, setWhatsappUpdates] = useState(false);
   const [pricing, setPricing] = useState<CartPricing | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [placing, startPlacing] = useTransition();
@@ -65,7 +66,7 @@ export function CheckoutForm({ addresses, email }: { addresses: SavedAddress[]; 
     e.preventDefault();
     setError(null);
     startPlacing(async () => {
-      const result = await placeOrder({ lines, delivery: input, deliveryAddress: address, deliveryProvince: province, contactPhone: phone, notes });
+      const result = await placeOrder({ lines, delivery: input, deliveryAddress: address, deliveryProvince: province, contactPhone: phone, whatsappUpdates: whatsappUpdates && phone.trim() !== "", notes });
       if (!result.ok) {
         setError(result.error);
         return;
@@ -119,11 +120,18 @@ export function CheckoutForm({ addresses, email }: { addresses: SavedAddress[]; 
             <input type="tel" maxLength={40} value={phone} onChange={(e) => setPhone(e.target.value)} autoComplete="tel" className={inputClass} />
           </label>
         </div>
+        <label className="flex items-start gap-2 font-body text-sm text-basalt">
+          <input type="checkbox" checked={whatsappUpdates && phone.trim() !== ""} disabled={phone.trim() === ""} onChange={(e) => setWhatsappUpdates(e.target.checked)} className="mt-1" />
+          <span>
+            Send delivery updates to this number on WhatsApp too
+            {phone.trim() === "" && <span className="block text-xs text-slate">Add a phone number to choose this.</span>}
+          </span>
+        </label>
         <label className="block">
           <span className={labelClass}>Site access and delivery notes</span>
           <textarea rows={3} maxLength={2000} value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Gate code, tipping spot, access for a 10m³ tipper…" className={inputClass} />
         </label>
-        <p className="font-body text-xs text-slate">Order confirmations go to {email}.</p>
+        <p className="font-body text-xs text-slate">Order confirmations and delivery updates are emailed to {email}.</p>
       </div>
 
       <aside className="space-y-4">

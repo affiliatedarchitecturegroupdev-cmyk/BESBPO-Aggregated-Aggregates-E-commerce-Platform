@@ -2,6 +2,7 @@ import { Type } from "class-transformer";
 import {
   ArrayMaxSize,
   ArrayMinSize,
+  IsBoolean,
   IsEnum,
   IsIn,
   IsLatitude,
@@ -76,6 +77,7 @@ export class CreateOrderDto extends DeliveryDto {
   @IsOptional() @IsString() @MinLength(3) @MaxLength(300) deliveryAddress?: string;
   @IsOptional() @IsString() @MaxLength(80) deliveryProvince?: string;
   @IsOptional() @IsString() @MaxLength(40) contactPhone?: string;
+  @IsOptional() @IsBoolean() whatsappUpdates?: boolean;
   @IsOptional() @IsString() @MaxLength(2000) notes?: string;
 }
 

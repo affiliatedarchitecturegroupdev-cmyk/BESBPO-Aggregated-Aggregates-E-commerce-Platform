@@ -122,6 +122,7 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
                     <input name="trackingRef" defaultValue={order.shipment?.trackingRef ?? ""} className={inputClass} />
                   </label>
                   <SubmitButton>Update</SubmitButton>
+                  <p className="font-mono text-[10px] text-slate sm:col-span-full">A status change emails the buyer (and WhatsApps them, if they opted in).</p>
                 </ActionForm>
               )}
             </li>
