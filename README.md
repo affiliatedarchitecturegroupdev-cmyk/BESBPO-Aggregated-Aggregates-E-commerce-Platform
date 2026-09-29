@@ -29,8 +29,8 @@ payment architecture (18 methods routed through 6 gateway adapters), WhatsApp
 Commerce, the Instagram/Facebook catalogue feed, and SEO hardening.
 
 It is not launched: payment gateways, transactional email and the WhatsApp
-Business API need real credentials, some payment logos and the social icons are still placeholders
-for Brandfetch files, and suppliers need map pins — see "Open items" in `AGENTIC_RULES.md`.
+Business API need real credentials, three payment logos and the social icons are still placeholders
+for official files, and suppliers need map pins — see "Open items" in `AGENTIC_RULES.md`.
 
 ## Tech stack (confirmed in the spec)
 
