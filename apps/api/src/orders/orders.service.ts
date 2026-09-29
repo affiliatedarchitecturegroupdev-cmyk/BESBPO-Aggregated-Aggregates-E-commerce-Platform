@@ -112,7 +112,11 @@ export class OrdersService {
       where: { OR: [{ userId: user.id }, ...(user.companyId ? [{ companyId: user.companyId }] : [])] },
       orderBy: { createdAt: "desc" },
       take: 50,
-      include: { lineItems: { include: { product: { select: { name: true, sku: true } } } }, shipment: true },
+      include: {
+        lineItems: { include: { product: { select: { name: true, sku: true, slug: true } } } },
+        shipment: true,
+        invoice: { select: { id: true, invoiceNumber: true, status: true, amountDue: true, createdAt: true } },
+      },
     });
     return this.documents.attachToOrders(orders);
   }
@@ -139,6 +143,7 @@ export class OrdersService {
       include: {
         lineItems: { include: { product: { select: { name: true, sku: true } } } },
         shipment: true,
+        invoice: { select: { id: true, invoiceNumber: true, status: true } },
         user: { select: { email: true, name: true } },
         company: { select: { name: true } },
       },
@@ -179,6 +184,13 @@ export class OrdersService {
       },
       include: { shipment: true },
     });
+    // An issued invoice follows the order: paid once payment is confirmed, void if cancelled.
+    if (order.status !== dto.status && (dto.status === "CONFIRMED" || dto.status === "CANCELLED")) {
+      await this.prisma.invoice.updateMany({
+        where: { orderId: id, status: dto.status === "CONFIRMED" ? "UNPAID" : { not: "VOID" } },
+        data: dto.status === "CONFIRMED" ? { status: "PAID", paidAt: now } : { status: "VOID" },
+      });
+    }
     // Only a real status change is news to the customer (tracking edits aren't).
     if (order.status !== dto.status) await this.notifications.order(STATUS_EVENT[dto.status], id);
     return updated;

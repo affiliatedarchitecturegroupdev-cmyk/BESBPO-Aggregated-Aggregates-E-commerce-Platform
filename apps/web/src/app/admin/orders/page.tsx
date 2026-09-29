@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { updateOrderStatus } from "@/app/account/actions";
+import { issueInvoice, updateOrderStatus } from "@/app/account/actions";
 import { ActionForm, inputClass, SubmitButton } from "@/components/account/Forms";
 import { api } from "@/lib/api";
-import { formatDate, UNIT_LABEL, type OrderRecord } from "@/lib/account-types";
+import { formatDate, UNIT_LABEL, type InvoiceSummary, type OrderRecord } from "@/lib/account-types";
 import { formatZAR } from "@/lib/pricing";
 import { sessionToken } from "@/lib/session";
 
@@ -17,6 +17,7 @@ type StaffOrder = OrderRecord & {
   notes: string | null;
   user: { email: string; name: string | null } | null;
   company: { name: string } | null;
+  invoice: InvoiceSummary | null;
 };
 
 const STATUSES = ["PENDING", "CONFIRMED", "IN_TRANSIT", "DELIVERED", "CANCELLED"] as const;
@@ -42,7 +43,12 @@ const NEXT: Record<(typeof STATUSES)[number], (typeof STATUSES)[number][]> = {
  */
 export default async function AdminOrdersPage({ searchParams }: { searchParams: { status?: string } }) {
   const status = STATUSES.find((s) => s === searchParams.status) ?? "PENDING";
-  const result = await api<StaffOrder[]>(`/orders?status=${status}`, { token: sessionToken() });
+  const token = sessionToken();
+  const [result, invoicing] = await Promise.all([
+    api<StaffOrder[]>(`/orders?status=${status}`, { token }),
+    api<{ ready: boolean; problems: string[] }>("/orders/invoicing-status", { token }),
+  ]);
+  const invoicingReady = invoicing.ok && invoicing.data.ready;
   return (
     <section>
       <div className="flex flex-wrap gap-2 font-mono text-[11px]">
@@ -52,6 +58,11 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
           </Link>
         ))}
       </div>
+      {invoicing.ok && !invoicing.data.ready && status !== "CANCELLED" && (
+        <p className="mt-4 rounded-sm border border-ochre-gold/40 bg-ochre-gold/10 p-3 font-body text-xs text-basalt">
+          Tax invoices can&apos;t be issued yet. {invoicing.data.problems.join(" ")} (Set these on the API service — see docs/deployment/render.md.)
+        </p>
+      )}
       {!result.ok ? (
         <p className="mt-4 font-body text-sm text-slate">{result.message}</p>
       ) : result.data.length === 0 ? (
@@ -94,6 +105,25 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
                   {order.shipment.trackingRef && ` · ref ${order.shipment.trackingRef}`}
                 </p>
               )}
+              <div className="mt-3 flex flex-wrap items-center gap-3 text-xs">
+                <a href={`/api/orders/${order.id}/documents/confirmation`} target="_blank" rel="noopener" className="text-seam-blue hover:underline">Order confirmation</a>
+                {order.shipment && (order.status === "IN_TRANSIT" || order.status === "DELIVERED") && (
+                  <a href={`/api/orders/${order.id}/documents/delivery-note`} target="_blank" rel="noopener" className="text-seam-blue hover:underline">Delivery note</a>
+                )}
+                {order.invoice ? (
+                  <a href={`/api/orders/${order.id}/documents/invoice`} target="_blank" rel="noopener" className="text-seam-blue hover:underline">
+                    Tax invoice {order.invoice.invoiceNumber} ({order.invoice.status.toLowerCase()})
+                  </a>
+                ) : (
+                  order.status !== "CANCELLED" &&
+                  invoicingReady && (
+                    <ActionForm action={issueInvoice} className="flex flex-wrap items-center gap-2">
+                      <input type="hidden" name="id" value={order.id} />
+                      <SubmitButton variant="subtle">Issue tax invoice</SubmitButton>
+                    </ActionForm>
+                  )
+                )}
+              </div>
               {NEXT[order.status].length > 0 && (
                 <ActionForm action={updateOrderStatus} className="mt-4 grid gap-3 sm:grid-cols-[1fr_1fr_1.2fr_1fr_auto] sm:items-end">
                   <input type="hidden" name="id" value={order.id} />

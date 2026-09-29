@@ -57,32 +57,6 @@ export async function applyForTradeAccount(_prev: FormState, form: FormData): Pr
   redirect("/account/dashboard?applied=1");
 }
 
-export async function addDeliveryAddress(_prev: FormState, form: FormData): Promise<FormState> {
-  const result = await api("/trade-accounts/me/addresses", {
-    method: "POST",
-    token: sessionToken(),
-    body: {
-      label: text(form, "label"),
-      addressLine1: text(form, "addressLine1"),
-      addressLine2: optional(form, "addressLine2"),
-      city: text(form, "city"),
-      province: text(form, "province"),
-      postalCode: text(form, "postalCode"),
-    },
-  });
-  if (!result.ok) return { error: result.message };
-  revalidatePath("/account/dashboard");
-  return { success: "Address saved." };
-}
-
-export async function removeDeliveryAddress(form: FormData) {
-  await api(`/trade-accounts/me/addresses/${encodeURIComponent(text(form, "id"))}`, {
-    method: "DELETE",
-    token: sessionToken(),
-  });
-  revalidatePath("/account/dashboard");
-}
-
 export async function respondToQuote(form: FormData) {
   await api(`/quotes/${encodeURIComponent(text(form, "id"))}/respond`, {
     method: "POST",
@@ -584,4 +558,62 @@ export async function sendTestEmail(_prev: FormState, form: FormData): Promise<F
 export async function resendNotification(form: FormData) {
   await api(`/notifications/${encodeURIComponent(text(form, "id"))}/resend`, { method: "POST", token: sessionToken() });
   revalidatePath("/admin/notifications");
+}
+
+// --- account settings -------------------------------------------------------------
+
+export async function updateProfile(_prev: FormState, form: FormData): Promise<FormState> {
+  const result = await api("/account/profile", { method: "PATCH", token: sessionToken(), body: { name: text(form, "name") } });
+  if (!result.ok) return { error: result.message };
+  revalidatePath("/account", "layout");
+  return { success: "Name saved." };
+}
+
+export async function changePassword(_prev: FormState, form: FormData): Promise<FormState> {
+  const newPassword = text(form, "newPassword");
+  if (newPassword !== text(form, "confirmPassword")) return { error: "The new passwords don't match." };
+  const result = await api("/account/password", {
+    method: "POST",
+    token: sessionToken(),
+    body: { currentPassword: text(form, "currentPassword") || undefined, newPassword },
+  });
+  if (!result.ok) return { error: result.status === 400 && /least 10/.test(result.message) ? "Use at least 10 characters." : result.message };
+  return { success: "Password changed. Use it next time you sign in." };
+}
+
+export async function addSavedAddress(_prev: FormState, form: FormData): Promise<FormState> {
+  const result = await api("/account/addresses", {
+    method: "POST",
+    token: sessionToken(),
+    body: {
+      label: text(form, "label"),
+      addressLine1: text(form, "addressLine1"),
+      addressLine2: optional(form, "addressLine2"),
+      city: text(form, "city"),
+      province: text(form, "province"),
+      postalCode: text(form, "postalCode"),
+    },
+  });
+  if (!result.ok) return { error: result.message };
+  revalidatePath("/account", "layout");
+  return { success: "Delivery site saved — it's offered at checkout." };
+}
+
+export async function setDefaultAddress(form: FormData) {
+  await api(`/account/addresses/${encodeURIComponent(text(form, "id"))}/default`, { method: "POST", token: sessionToken() });
+  revalidatePath("/account", "layout");
+}
+
+export async function removeSavedAddress(form: FormData) {
+  await api(`/account/addresses/${encodeURIComponent(text(form, "id"))}`, { method: "DELETE", token: sessionToken() });
+  revalidatePath("/account", "layout");
+}
+
+// --- tax invoices (staff) ---------------------------------------------------------
+
+export async function issueInvoice(_prev: FormState, form: FormData): Promise<FormState> {
+  const result = await api<{ invoiceNumber: string }>(`/orders/${encodeURIComponent(text(form, "id"))}/invoice`, { method: "POST", token: sessionToken() });
+  if (!result.ok) return { error: result.message };
+  revalidatePath("/admin/orders");
+  return { success: `Tax invoice ${result.data.invoiceNumber} issued — the buyer can download it from their order.` };
 }

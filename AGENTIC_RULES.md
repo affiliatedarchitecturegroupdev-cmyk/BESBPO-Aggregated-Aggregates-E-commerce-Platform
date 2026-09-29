@@ -122,7 +122,13 @@ unreviewed work.
   quote-only (e.g. over 100km, or Volume/Civil Bulk over 10m³) can't be
   placed — the cart links to a prefilled quote request instead.
 - Prices are shown as the workbook gives them; whether storefront prices
-  should be labelled incl./excl. VAT is still to be confirmed.
+  should be labelled incl./excl. VAT is still to be confirmed. Tax invoices
+  are built (Admin → Orders → Issue tax invoice; PDF for the buyer) but are
+  refused until `GROUP_VAT_NUMBER` holds the Group's real VAT number and
+  `PRICES_INCLUDE_VAT=true` confirms prices include VAT. If prices turn out
+  to be VAT-exclusive, checkout must add VAT before invoices can be issued.
+- Order confirmations tell EFT payers to ask for banking details until
+  `EFT_BANKING_DETAILS` is set — banking details are never invented.
 - Transactional email: the notifications module is built (order, quote and
   trade-account messages to customers and staff, logged in
   `/admin/notifications`), but nothing is emailed until an email provider is

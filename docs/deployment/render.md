@@ -117,7 +117,8 @@ Staff approve trade accounts and price quote requests in the staff console,
      industry listing, and see impressions, clicks and click-through rate;
    - manage online orders (`/admin/orders`): confirm, dispatch with Besfleet
      or an external partner and a tracking reference, mark delivered or
-     cancel;
+     cancel, download each order's confirmation and delivery note, and issue
+     its tax invoice (once invoicing is set up — see step 7);
    - write and publish blog articles;
    - manage the partner-supplier network (see step 6);
    - work WhatsApp chat orders;
@@ -169,6 +170,13 @@ methods tell the buyer to choose another method (Manual EFT / purchase order
 works today for trade accounts), and emails and WhatsApp messages are logged
 in **Admin → Notifications** rather than sent.
 
+- **Tax invoices.** On **aggregates-store-api** set `GROUP_VAT_NUMBER` to
+  Besbpo Group's VAT registration number and `PRICES_INCLUDE_VAT=true` to
+  confirm storefront prices already include VAT. Until both are set, staff
+  can't issue invoices (Admin → Orders says what's missing) — the platform
+  won't print a tax invoice with a placeholder VAT number or a VAT split it
+  isn't sure of. Optionally set `EFT_BANKING_DETAILS` (bank, account number,
+  branch code — one per line) to print on order confirmations for EFT payers.
 - **Email.** Verify `aggregates.store` with a transactional email provider
   (Resend, Postmark or SendGrid), then set `EMAIL_PROVIDER`, `EMAIL_API_KEY`,
   `EMAIL_FROM` and optionally `EMAIL_REPLY_TO` on **aggregates-store-api**.

@@ -66,10 +66,47 @@ export type OrderRecord = {
   deliveryFee: string;
   total: string;
   createdAt: string;
-  lineItems: { id?: string; quantity?: number; unitOfSale?: keyof typeof UNIT_LABEL; lineTotal?: string; product: { name: string; sku?: string } }[];
+  lineItems: { id?: string; quantity?: number; unitOfSale?: keyof typeof UNIT_LABEL; lineTotal?: string; product: { name: string; sku?: string; slug?: string } }[];
   shipment?: { carrier: string; externalPartnerName: string | null; trackingRef: string | null; dispatchedAt: string | null; deliveredAt: string | null } | null;
   documents: DocumentSummary[];
+  invoice?: InvoiceSummary | null;
 };
+
+export type InvoiceSummary = { id: string; invoiceNumber: string; status: "UNPAID" | "PAID" | "OVERDUE" | "VOID"; amountDue?: string; createdAt?: string };
+
+/** A saved delivery site — a trade company's (shared) or the customer's own. */
+export type SavedAddress = {
+  id: string;
+  label: string;
+  addressLine1: string;
+  addressLine2: string | null;
+  city: string;
+  province: string;
+  postalCode: string;
+  isDefault: boolean;
+  shared?: boolean;
+};
+
+export const ORDER_STATUS_LABEL: Record<OrderRecord["status"], string> = {
+  PENDING: "Awaiting payment",
+  CONFIRMED: "Confirmed",
+  IN_TRANSIT: "Out for delivery",
+  DELIVERED: "Delivered",
+  CANCELLED: "Cancelled",
+};
+
+export const ORDER_STATUS_STYLE: Record<OrderRecord["status"], string> = {
+  PENDING: "bg-ochre-gold/15 text-basalt",
+  CONFIRMED: "bg-seam-blue/10 text-seam-blue",
+  IN_TRANSIT: "bg-seam-blue/10 text-seam-blue",
+  DELIVERED: "bg-limestone text-basalt",
+  CANCELLED: "bg-red-50 text-red-800",
+};
+
+/** The cart unit a stored unit of sale reorders as (packaged units keep their own codes). */
+export function cartUnit(unitOfSale: keyof typeof UNIT_LABEL): string {
+  return unitOfSale === "BULK_TON" ? "ton" : unitOfSale === "BULK_M3" ? "m3" : unitOfSale === "BAGGED" ? "bag" : unitOfSale;
+}
 
 export type Application = {
   id: string;
