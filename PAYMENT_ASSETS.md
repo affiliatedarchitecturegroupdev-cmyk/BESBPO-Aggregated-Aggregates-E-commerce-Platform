@@ -1,65 +1,65 @@
 # Payment Method Logo Assets — Provenance
 
-Referenced by `apps/web/src/data/payment-methods.ts`'s `logoAssetPath` field.
-Every path is relative to `apps/web/public/payment-logos/`, and every logo is
-drawn by `components/payment/PaymentLogo.tsx` on a white badge — so dark or
-black official marks read the same on the dark footer as on white cards.
+Referenced by `apps/web/src/data/payment-methods.ts`'s `logoAssetPath` field
+(plus `extraLogoPaths` for Card, which shows three networks). Every path is
+relative to `apps/web/public/payment-logos/`, and every logo is drawn by
+`components/payment/PaymentLogo.tsx` on a white badge — so dark or black
+official marks read the same on the dark footer as on white cards.
 
-**Status (Sep 2026):** 11 methods now use the official Brandfetch files
-Fortune supplied (in `brandfetch/`). The rest are still generated placeholder
-SVGs — a dashed tile with the method name — until their files are found.
-Swapping a placeholder for a real file: drop it in `brandfetch/`, point the
-method's `logoAssetPath` at it, delete the placeholder, and update the table.
+**Status (Sep 2026):** 15 of the 18 methods use official logo files. Float,
+Lulapay and EFT / Purchase Order are still generated placeholders — a dashed
+tile with the method name — until their files are found.
 
-Apple, Google, Samsung and Capitec are the parent-brand marks (Brandfetch
-has no separate "Pay" files for them); `logoLabel: "Pay"` sets the word
-"Pay" beside the mark, the way those wallets present themselves. SnapScan's
-Brandfetch file is the icon only, so its badge adds the name the same way.
+"Frame tightened" means only the SVG's viewBox/size was changed to remove
+empty margin, so the logo fills its badge; no shapes or colours were edited.
+
+Swapping a placeholder for a real file: drop it in the folder for its source,
+point the method's `logoAssetPath` at it, delete the placeholder, and update
+the table below.
 
 ## Source libraries
 
-1. **Roofsteel-shared zip** (`roofsteel-shared/`) — a payment-provider asset
-   library originally built for the Roofsteel division and explicitly
-   reused across Besbpo Group divisions, sourced via Manus. Covers most of
-   the PayFast-aggregated methods.
-2. **Brandfetch** (`brandfetch/`) — official brand assets fetched directly
-   from each provider's brand page. Used for providers missing from, or
-   with quality issues in, the Roofsteel zip.
-3. **PayFast's own asset kit** (`payfast/`) — official PayFast-hosted logos
-   for every method PayFast itself aggregates (card networks, EFT, wallets,
-   QR, several BNPLs).
-4. **Generic** (`generic/`) — a house-style icon for methods with no
-   third-party brand asset to display (e.g. EFT/PO invoicing).
+1. **PayFast Payment Methods Logo Pack** (`payfast/`) — the logo pack PayFast
+   publishes for merchants, supplied by Fortune (Sep 2026). Preferred source:
+   it has the product marks ("Apple Pay", "G Pay", "Capitec Pay"…) rather than
+   the parent brands. Files are used as supplied except where noted below.
+2. **Brandfetch** (`brandfetch/`) — official brand assets from each provider's
+   Brandfetch page, supplied by Fortune (Sep 2026). Used where the PayFast pack
+   has no file.
+3. **Generic** (`generic/`) — a house-style icon for methods with no
+   third-party brand (EFT / Purchase Order).
 
 ## Per-method provenance
 
-| Method | Path | Source | Status |
+| Method | Path | Source | Notes |
 |---|---|---|---|
-| Card (Visa/Mastercard/Amex) | `payfast/visa-mastercard-amex.svg` | PayFast kit | Placeholder |
-| Instant EFT | `payfast/instant-eft.svg` | PayFast kit | Placeholder |
-| Capitec Pay | `brandfetch/capitec.svg` + "Pay" | Brandfetch (Capitec Bank logo) | **Official** — parent-brand mark |
-| Apple Pay | `brandfetch/apple.svg` + "Pay" | Brandfetch (Apple logo) | **Official** — parent-brand mark |
-| Google Pay | `brandfetch/google-g.svg` + "Pay" | Brandfetch (Google "G" symbol) | **Official** — parent-brand mark |
-| Samsung Pay | `brandfetch/samsung.svg` + "Pay" | Brandfetch (Samsung wordmark) | **Official** — parent-brand mark |
-| SnapScan | `brandfetch/snapscan.svg` + "SnapScan" | Brandfetch (icon) | **Official** — icon only, name set beside it |
-| Zapper | `brandfetch/zapper.png` | Brandfetch | **Official** — PNG only (217×59); swap for an SVG if one turns up |
-| PayJustNow | `brandfetch/payjustnow.svg` | Brandfetch | **Official** |
-| Payflex | `payfast/payflex.svg` | PayFast kit | Placeholder |
-| Mobicred | `brandfetch/mobicred.png` | Brandfetch | **Official** — small white PNG (152×30), so `logoOnDark` gives it a dark badge; swap for a larger/SVG file if one turns up |
-| MoreTyme | `payfast/moretyme.svg` | PayFast kit | Placeholder |
-| Happy Pay | `brandfetch/happy-pay.svg` | Brandfetch | **Official** |
-| Float | `brandfetch/float.svg` | Brandfetch | Placeholder |
-| Ozow | `brandfetch/ozow.svg` | Brandfetch | **Official** — SVG, resolves the earlier PNG-only flag |
-| Stitch | `brandfetch/stitch.svg` | Brandfetch | **Official** — the Brandfetch file had a broken root tag (viewBox lost) and an undefined CSS-variable fill; both repaired, artwork unchanged |
-| Lulapay | `brandfetch/lulapay.svg` | Brandfetch | Placeholder |
-| EFT / Purchase Order | `generic/eft-po.svg` | House icon | Placeholder — no third-party brand |
+| Card (Visa / Mastercard / Amex) | `payfast/visa.svg`, `payfast/mastercard.svg`, `payfast/amex.svg` | PayFast pack | Three marks in one badge |
+| Instant EFT | `payfast/instant-eft.svg` | PayFast pack | "instantEFT by payfast" |
+| Capitec Pay | `payfast/capitec-pay.svg` | PayFast pack | Colour version; frame (viewBox) tightened to the artwork — the file was 45% empty margin |
+| Apple Pay | `payfast/apple-pay.png` | PayFast pack | Pack has PNG only; scaled from 2560×1050 to 390×160 for the web (46KB → 11KB), not otherwise changed |
+| Google Pay | `payfast/google-pay.svg` | PayFast pack | "G Pay" mark |
+| Samsung Pay | `payfast/samsung-pay.png` | PayFast pack | Pack has PNG only; used as supplied |
+| SnapScan | `payfast/snapscan.svg` | PayFast pack | Frame tightened to the artwork (30% margin). Replaces the Brandfetch file, which turned out to be an Apple-style icon, not SnapScan's mark |
+| Zapper | `payfast/zapper.svg` | PayFast pack | SVG replaces the earlier Brandfetch PNG |
+| PayJustNow | `brandfetch/payjustnow.svg` | Brandfetch | Not in the PayFast pack |
+| Payflex | `payfast/payflex.svg` | PayFast pack | Shown at full badge height (`logoFill`). The pack's "vectorised" SVG had a full-page grey background rectangle; that one shape was removed and the frame fitted to the badge. Artwork unchanged |
+| Mobicred | `payfast/mobicred.svg` | PayFast pack | SVG replaces the earlier small white Brandfetch PNG |
+| MoreTyme | `payfast/moretyme.png` | PayFast pack | Shown at full badge height (`logoFill`). The pack's files are a small logo centred on a 4000×4000 white square (the SVG only wraps that bitmap); trimmed to the logo and scaled to 160px tall (205KB → 20KB). Artwork unchanged |
+| Happy Pay | `brandfetch/happy-pay.svg` | Brandfetch | Not in the PayFast pack; frame tightened to the artwork |
+| Float | `brandfetch/float.svg` | — | **Placeholder** |
+| Ozow | `brandfetch/ozow.svg` | Brandfetch | Not in the PayFast pack |
+| Stitch | `brandfetch/stitch.svg` | Brandfetch | The Brandfetch file had a broken root tag (viewBox lost) and an undefined CSS-variable fill; both repaired, artwork unchanged |
+| Lulapay | `brandfetch/lulapay.svg` | — | **Placeholder** — AA's own B2B credit-facility strategy |
+| EFT / Purchase Order | `generic/eft-po.svg` | House icon | **Placeholder** — no third-party brand |
+
+The PayFast pack also has logos for methods the platform doesn't offer
+(Absa Pay, Diners Club, Maestro, MTN MoMoPay, Mukuru, PayPal, RCS, SCode,
+Scan to Pay, SiD, Visa Electron, Visa Checkout, 3-D Secure badges). They are
+not copied into the repo; add them from the pack if those methods are enabled.
 
 ## Still open
 
-- Official files still to source: Card (Visa/Mastercard/Amex), Instant EFT,
-  Payflex, MoreTyme, Float, Lulapay, and a house EFT/PO icon.
-- Dedicated "Apple Pay" / "Google Pay" / "Samsung Pay" / "Capitec Pay" marks,
-  if found, replace the parent-brand mark + "Pay" label (drop `logoLabel`).
+- Official files still to source: Float and Lulapay, and a house EFT / PO icon.
 - Social media icons follow the same pattern — see `apps/web/src/data/social.ts`'s
   `iconAssetPath` field and `apps/web/public/social-icons/` (still generated
   placeholders).

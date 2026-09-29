@@ -12,10 +12,8 @@ export type PaymentMethod = {
   displayName: string;
   category: "card" | "eft" | "wallet" | "qr" | "bnpl" | "b2b" | "manual";
   logoAssetPath: string; // relative to /public/payment-logos/ — see PAYMENT_ASSETS.md for sourcing
-  // Text set beside the logo when the file is the parent brand's mark rather
-  // than the payment product's own (e.g. the Apple logo + "Pay").
-  logoLabel?: string;
-  logoOnDark?: boolean; // the only official file is a white mark — badge it dark
+  extraLogoPaths?: string[]; // further marks shown in the same badge (Card: Visa + Mastercard + Amex)
+  logoFill?: boolean; // compact badge or stacked lockup that needs the badge's full height to stay legible
   tradeOnly: boolean;
   minOrderValue?: number;
   maxOrderValue?: number;
@@ -23,14 +21,14 @@ export type PaymentMethod = {
 };
 
 export const PAYMENT_METHODS: PaymentMethod[] = [
-  { key: "CARD", displayName: "Card (Visa / Mastercard / Amex)", category: "card", logoAssetPath: "payfast/visa-mastercard-amex.svg", tradeOnly: false },
+  { key: "CARD", displayName: "Card (Visa / Mastercard / Amex)", category: "card", logoAssetPath: "payfast/visa.svg", extraLogoPaths: ["payfast/mastercard.svg", "payfast/amex.svg"], tradeOnly: false },
   { key: "INSTANT_EFT", displayName: "Instant EFT", category: "eft", logoAssetPath: "payfast/instant-eft.svg", tradeOnly: false },
-  { key: "CAPITEC_PAY", displayName: "Capitec Pay", category: "eft", logoAssetPath: "brandfetch/capitec.svg", logoLabel: "Pay", tradeOnly: false },
-  { key: "APPLE_PAY", displayName: "Apple Pay", category: "wallet", logoAssetPath: "brandfetch/apple.svg", logoLabel: "Pay", tradeOnly: false },
-  { key: "GOOGLE_PAY", displayName: "Google Pay", category: "wallet", logoAssetPath: "brandfetch/google-g.svg", logoLabel: "Pay", tradeOnly: false },
-  { key: "SAMSUNG_PAY", displayName: "Samsung Pay", category: "wallet", logoAssetPath: "brandfetch/samsung.svg", logoLabel: "Pay", tradeOnly: false },
-  { key: "SNAPSCAN", displayName: "SnapScan", category: "qr", logoAssetPath: "brandfetch/snapscan.svg", logoLabel: "SnapScan", tradeOnly: false },
-  { key: "ZAPPER", displayName: "Zapper", category: "qr", logoAssetPath: "brandfetch/zapper.png", tradeOnly: false },
+  { key: "CAPITEC_PAY", displayName: "Capitec Pay", category: "eft", logoAssetPath: "payfast/capitec-pay.svg", tradeOnly: false },
+  { key: "APPLE_PAY", displayName: "Apple Pay", category: "wallet", logoAssetPath: "payfast/apple-pay.png", tradeOnly: false },
+  { key: "GOOGLE_PAY", displayName: "Google Pay", category: "wallet", logoAssetPath: "payfast/google-pay.svg", tradeOnly: false },
+  { key: "SAMSUNG_PAY", displayName: "Samsung Pay", category: "wallet", logoAssetPath: "payfast/samsung-pay.png", tradeOnly: false },
+  { key: "SNAPSCAN", displayName: "SnapScan", category: "qr", logoAssetPath: "payfast/snapscan.svg", tradeOnly: false },
+  { key: "ZAPPER", displayName: "Zapper", category: "qr", logoAssetPath: "payfast/zapper.svg", tradeOnly: false },
   {
     key: "PAYJUSTNOW",
     displayName: "PayJustNow",
@@ -44,11 +42,12 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
     displayName: "Payflex",
     category: "bnpl",
     logoAssetPath: "payfast/payflex.svg",
+    logoFill: true,
     tradeOnly: false,
     instalments: "4 payments over 6 weeks, interest-free and fee-free.",
   },
-  { key: "MOBICRED", displayName: "Mobicred", category: "bnpl", logoAssetPath: "brandfetch/mobicred.png", logoOnDark: true, tradeOnly: false, instalments: "Revolving credit — one monthly payment for all your spend." },
-  { key: "MORETYME", displayName: "MoreTyme", category: "bnpl", logoAssetPath: "payfast/moretyme.svg", tradeOnly: false },
+  { key: "MOBICRED", displayName: "Mobicred", category: "bnpl", logoAssetPath: "payfast/mobicred.svg", tradeOnly: false, instalments: "Revolving credit — one monthly payment for all your spend." },
+  { key: "MORETYME", displayName: "MoreTyme", category: "bnpl", logoAssetPath: "payfast/moretyme.png", logoFill: true, tradeOnly: false },
   {
     key: "HAPPY_PAY",
     displayName: "Happy Pay",

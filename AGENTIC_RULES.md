@@ -142,9 +142,9 @@ unreviewed work.
   `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_WEBHOOK_VERIFY_TOKEN`,
   `WHATSAPP_APP_SECRET`). Free-text matching of chat requests to SKUs isn't
   automated; sales prices them from `/admin/whatsapp`.
-- Payment-method logos: 11 are the official Brandfetch files; Card, Instant
-  EFT, Payflex, MoreTyme, Float, Lulapay and EFT/PO are still placeholders,
-  as are the social icons (`PAYMENT_ASSETS.md`).
+- Payment-method logos: 15 of 18 are official files (PayFast's logo pack,
+  then Brandfetch); Float, Lulapay and EFT/PO are still placeholders, as are
+  the social icons (`PAYMENT_ASSETS.md`).
 - Hero slideshow: 10 of the planned 10–12 licensed photos are sourced
   (`apps/web/src/data/media.ts`); staff manage captions, order and visibility
   in Site content.
