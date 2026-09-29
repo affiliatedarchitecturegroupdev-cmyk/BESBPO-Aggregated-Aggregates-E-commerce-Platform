@@ -1,5 +1,5 @@
 import { Prisma, type UnitOfSale } from "@aggregates/database";
-import { formatDateZA, formatZAR, SELLER, UNIT_LABEL, type Money } from "../common/format";
+import { bankingDetailLines, formatDateZA, formatZAR, SELLER, UNIT_LABEL, type Money } from "../common/format";
 import type { DocSpec } from "./pdf-renderer";
 
 /**
@@ -76,13 +76,16 @@ export function vatBreakdown(totalInclVat: Money, ratePercent = VAT_RATE_PERCENT
   return { total, vat, exVat: total.minus(vat), ratePercent };
 }
 
+/** How to pay by EFT: the configured bank account, or where to ask for it. */
+function eftNote(orderNumber: string, bankingDetails?: string): string[] {
+  const bank = bankingDetailLines(bankingDetails);
+  return bank.length
+    ? [`Paying by EFT: use ${orderNumber} as the payment reference.`, ...bank]
+    : [`Pay by EFT quoting ${orderNumber} as the reference — our team will send banking details on request (${SELLER.email}).`];
+}
+
 export function orderConfirmationSpec(o: OrderDocData, bankingDetails?: string): DocSpec {
-  const payNote =
-    o.status === "PENDING"
-      ? bankingDetails?.trim()
-        ? [`Paying by EFT: use ${o.orderNumber} as the payment reference.`, ...bankingDetails.trim().split(/\r?\n/)]
-        : [`Pay online from your order page, or by EFT quoting ${o.orderNumber} as the reference — our team will send banking details on request (${SELLER.email}).`]
-      : [];
+  const payNote = o.status === "PENDING" ? ["You can also pay online from your order page.", ...eftNote(o.orderNumber, bankingDetails)] : [];
   return {
     title: "Order confirmation",
     subtitle: "This is not a tax invoice",
@@ -151,7 +154,7 @@ export function deliveryNoteSpec(o: OrderDocData): DocSpec {
   };
 }
 
-export function taxInvoiceSpec(inv: InvoiceDocData, o: OrderDocData): DocSpec {
+export function taxInvoiceSpec(inv: InvoiceDocData, o: OrderDocData, bankingDetails?: string): DocSpec {
   const rate = inv.vatRatePercent !== null ? Number(inv.vatRatePercent.toString()) : VAT_RATE_PERCENT;
   const status = inv.status === "PAID" ? `Paid${inv.paidAt ? ` ${formatDateZA(inv.paidAt)}` : ""}` : inv.status === "VOID" ? "Void" : "Unpaid";
   return {
@@ -190,7 +193,7 @@ export function taxInvoiceSpec(inv: InvoiceDocData, o: OrderDocData): DocSpec {
     ],
     notes: [
       `Prices include VAT at ${rate}%. ${SELLER.tradingName} trades as a division of ${SELLER.legalName} and invoices under the Group's VAT registration.`,
-      ...(inv.status === "UNPAID" ? [`Payment reference: ${o.orderNumber}.`] : []),
+      ...(inv.status === "UNPAID" ? eftNote(o.orderNumber, bankingDetails) : []),
     ],
     footer: `${SELLER.legalName} · VAT ${inv.vatNumberBilled} · Invoice ${inv.invoiceNumber}`,
   };

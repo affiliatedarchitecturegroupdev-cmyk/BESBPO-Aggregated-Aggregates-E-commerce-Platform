@@ -59,7 +59,7 @@ export class OrderDocumentsService {
       return { fileName: `${order.orderNumber}-delivery-note.pdf`, pdf: await renderPdf(deliveryNoteSpec(data)) };
     }
     if (!order.invoice) throw new NotFoundException("No tax invoice has been issued for this order yet.");
-    return { fileName: `${order.invoice.invoiceNumber}.pdf`, pdf: await renderPdf(taxInvoiceSpec(order.invoice, data)) };
+    return { fileName: `${order.invoice.invoiceNumber}.pdf`, pdf: await renderPdf(taxInvoiceSpec(order.invoice, data, process.env.EFT_BANKING_DETAILS)) };
   }
 
   /** Staff: issue the tax invoice for an order — once, with its details frozen. */

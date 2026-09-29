@@ -127,8 +127,11 @@ unreviewed work.
   refused until `GROUP_VAT_NUMBER` holds the Group's real VAT number and
   `PRICES_INCLUDE_VAT=true` confirms prices include VAT. If prices turn out
   to be VAT-exclusive, checkout must add VAT before invoices can be issued.
-- Order confirmations tell EFT payers to ask for banking details until
-  `EFT_BANKING_DETAILS` is set — banking details are never invented.
+- EFT banking details come only from `EFT_BANKING_DETAILS` on the API
+  (order confirmations, unpaid tax invoices, the EFT / purchase-order payment
+  message). The Group's Nedbank account details were supplied (Sep 2026) and
+  go into that Render setting, not the repository. Until it's set, buyers
+  are told to ask for them — banking details are never invented.
 - Transactional email: the notifications module is built (order, quote and
   trade-account messages to customers and staff, logged in
   `/admin/notifications`), but nothing is emailed until an email provider is
