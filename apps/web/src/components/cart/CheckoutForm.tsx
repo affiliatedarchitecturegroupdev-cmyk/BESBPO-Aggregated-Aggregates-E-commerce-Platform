@@ -9,8 +9,9 @@ import { findQuotable } from "@/data/quotable";
 import { cart, useCart } from "@/lib/cart";
 import { PROVINCES } from "@/lib/suppliers";
 import { formatZAR } from "@/lib/pricing";
+import type { SavedAddress } from "@/lib/account-types";
 
-export type SavedAddress = { id: string; label: string; addressLine1: string; addressLine2: string | null; city: string; province: string; postalCode: string; isDefault: boolean };
+export type { SavedAddress };
 
 const inputClass = "mt-1 w-full rounded-sm border border-basalt/20 bg-white px-3 py-2 font-body text-sm";
 const labelClass = "font-mono text-[10px] uppercase text-slate";
@@ -102,6 +103,12 @@ export function CheckoutForm({ addresses, email }: { addresses: SavedAddress[]; 
             </select>
           </label>
         )}
+        <p className="font-body text-xs text-slate">
+          <Link href="/account/settings#addresses" className="text-seam-blue hover:underline">
+            {addresses.length > 0 ? "Manage your saved delivery sites" : "Save your delivery sites"}
+          </Link>{" "}
+          {addresses.length > 0 ? "in account settings." : "in account settings to pick them here next time."}
+        </p>
         <label className="block">
           <span className={labelClass}>Site address *</span>
           <textarea required minLength={3} maxLength={300} rows={2} value={address} onChange={(e) => { setAddress(e.target.value); setAddressId(""); }} className={inputClass} />

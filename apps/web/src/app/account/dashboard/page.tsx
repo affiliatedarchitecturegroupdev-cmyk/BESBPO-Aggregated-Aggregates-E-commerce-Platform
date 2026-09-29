@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ActionForm, Field, SubmitButton } from "@/components/account/Forms";
+import { AccountNav } from "@/components/account/AccountNav";
+import { OrderCard } from "@/components/account/OrderCard";
 import { api } from "@/lib/api";
 import {
   formatDate,
@@ -13,15 +14,18 @@ import {
 } from "@/lib/account-types";
 import { formatZAR } from "@/lib/pricing";
 import { isStaff, requireSession, sessionToken, type SessionUser } from "@/lib/session";
-import { addDeliveryAddress, logout, removeDeliveryAddress, respondToQuote } from "../actions";
+import { logout, respondToQuote } from "../actions";
+
+const INVOICE_STATUS_LABEL = { UNPAID: "Unpaid", PAID: "Paid", OVERDUE: "Overdue", VOID: "Void" } as const;
 
 export const metadata: Metadata = { title: "Trade Account Dashboard", robots: { index: false } };
 
 const card = "rounded-sm border border-basalt/10 bg-white";
 
 /**
- * Module 4 dashboard (wireframe 05): tier status, quotes, orders, standing
- * addresses and invoices for the signed-in user's company.
+ * Module 4 dashboard (wireframe 05): tier status, quotes, recent orders and
+ * tax invoices. Full order history is /account/orders; delivery sites, name
+ * and password are /account/settings.
  */
 export default async function DashboardPage({ searchParams }: { searchParams: { applied?: string } }) {
   const user = await requireSession("/account/dashboard");
@@ -32,6 +36,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: { 
     api<OrderRecord[]>("/orders/mine", { token }),
   ]);
   const orders = ordersResult.ok ? ordersResult.data : [];
+  const invoices = orders.flatMap((order) => (order.invoice ? [{ order, invoice: order.invoice }] : []));
   const dashboard = company.ok ? company.data : null;
 
   return (
@@ -60,6 +65,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: { 
           Application received — we&apos;ll review it within one business day. You can request quotes at list price in the meantime.
         </p>
       )}
+
+      <AccountNav current="/account/dashboard" />
 
       <StatusCards user={user} dashboard={dashboard} quotes={quotes.ok ? quotes.data : []} orderCount={orders.length} />
 
@@ -121,111 +128,49 @@ export default async function DashboardPage({ searchParams }: { searchParams: { 
         )}
       </section>
 
-      <section id="orders" className={`mt-8 overflow-x-auto ${card}`}>
-        <h2 className="border-b border-basalt/10 px-4 py-3 font-body text-sm font-semibold text-basalt">Recent orders</h2>
+      <section id="orders" className="mt-8">
+        <div className="flex items-center justify-between">
+          <h2 className="font-body text-sm font-semibold text-basalt">Recent orders</h2>
+          <Link href="/account/orders" className="font-body text-xs font-semibold text-seam-blue hover:underline">All orders →</Link>
+        </div>
         {orders.length === 0 ? (
-          <p className="p-4 font-body text-sm text-slate">No orders yet — accepted quotes become orders once confirmed by our team.</p>
+          <p className={`mt-3 p-4 font-body text-sm text-slate ${card}`}>No orders yet — add materials to your cart, or request a quote for bulk and civil loads.</p>
         ) : (
-          <table className="w-full min-w-[560px] font-body text-sm">
-            <thead>
-              <tr className="border-b border-basalt/10 text-left text-xs text-slate">
-                <th className="px-4 py-2">Order #</th>
-                <th>Date</th>
-                <th>Products</th>
-                <th>Status</th>
-                <th>Documents</th>
-                <th className="pr-4 text-right">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order) => (
-                <tr key={order.id} className="border-b border-basalt/5 align-top">
-                  <td className="px-4 py-3 font-mono text-xs">
-                    <Link href={`/orders/${order.id}/tracking`} className="text-seam-blue hover:underline">{order.orderNumber}</Link>
-                  </td>
-                  <td className="py-3">{formatDate(order.createdAt)}</td>
-                  <td className="py-3">{order.lineItems.map((l) => l.product.name).join(", ")}</td>
-                  <td className="py-3">{order.status}</td>
-                  <td className="py-3">
-                    {order.documents.length === 0 ? (
-                      <span className="text-xs text-slate">—</span>
-                    ) : (
-                      <ul className="space-y-1">
-                        {order.documents.map((doc) => (
-                          <li key={doc.id}>
-                            <a href={`/api/documents/${doc.id}`} target="_blank" rel="noopener" className="text-xs text-seam-blue hover:underline">
-                              {doc.title}
-                            </a>
-                            {doc.batchReference && <span className="text-[10px] text-slate"> · batch {doc.batchReference}</span>}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </td>
-                  <td className="py-3 pr-4 text-right">{formatZAR(Number(order.total))}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <ul className="mt-3 space-y-4">
+            {orders.slice(0, 3).map((order) => (
+              <OrderCard key={order.id} order={order} />
+            ))}
+          </ul>
         )}
       </section>
 
-      {dashboard && (
-        <>
-          <section id="addresses" className={`mt-8 ${card}`}>
-            <h2 className="border-b border-basalt/10 px-4 py-3 font-body text-sm font-semibold text-basalt">Delivery addresses</h2>
-            <div className="grid gap-6 p-4 md:grid-cols-2">
-              <ul className="space-y-3 font-body text-sm">
-                {dashboard.deliveryAddresses.length === 0 && <li className="text-slate">No saved addresses yet.</li>}
-                {dashboard.deliveryAddresses.map((a) => (
-                  <li key={a.id} className="flex justify-between gap-3 rounded-sm bg-limestone p-3">
-                    <span>
-                      <strong className="text-basalt">{a.label}</strong>
-                      {a.isDefault && <span className="ml-2 font-mono text-[10px] text-seam-blue">DEFAULT</span>}
-                      <span className="block text-slate">
-                        {[a.addressLine1, a.addressLine2, a.city, a.province, a.postalCode].filter(Boolean).join(", ")}
-                      </span>
-                    </span>
-                    <form action={removeDeliveryAddress}>
-                      <input type="hidden" name="id" value={a.id} />
-                      <button className="text-xs text-slate hover:text-basalt" aria-label={`Remove ${a.label}`}>Remove</button>
-                    </form>
-                  </li>
-                ))}
-              </ul>
-              <ActionForm action={addDeliveryAddress} className="grid gap-3 sm:grid-cols-2">
-                <Field label="Label (e.g. Site A)" name="label" required />
-                <Field label="Postal code" name="postalCode" required />
-                <div className="sm:col-span-2"><Field label="Street address" name="addressLine1" required /></div>
-                <Field label="City / town" name="city" required />
-                <Field label="Province" name="province" required />
-                <div className="sm:col-span-2"><SubmitButton variant="subtle">Save address</SubmitButton></div>
-              </ActionForm>
-            </div>
-          </section>
+      <section id="invoices" className={`mt-8 ${card}`}>
+        <h2 className="border-b border-basalt/10 px-4 py-3 font-body text-sm font-semibold text-basalt">Tax invoices</h2>
+        {invoices.length === 0 ? (
+          <p className="p-4 font-body text-sm text-slate">No tax invoices yet — they appear here once our team issues them for an order.</p>
+        ) : (
+          <ul className="divide-y divide-basalt/5 font-body text-sm">
+            {invoices.map(({ order, invoice }) => (
+              <li key={invoice.id} className="flex flex-wrap items-center justify-between gap-3 px-4 py-3">
+                <a href={`/api/orders/${order.id}/documents/invoice`} target="_blank" rel="noopener" className="font-mono text-xs text-seam-blue hover:underline">
+                  {invoice.invoiceNumber} (PDF)
+                </a>
+                <span className="text-xs text-slate">Order {order.orderNumber}</span>
+                <span className="text-xs">{INVOICE_STATUS_LABEL[invoice.status]}</span>
+                <span>{formatZAR(Number(invoice.amountDue ?? order.total))}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
 
-          <section id="invoices" className={`mt-8 ${card}`}>
-            <h2 className="border-b border-basalt/10 px-4 py-3 font-body text-sm font-semibold text-basalt">Invoices & statements</h2>
-            {dashboard.invoices.length === 0 ? (
-              <p className="p-4 font-body text-sm text-slate">No invoices yet.</p>
-            ) : (
-              <ul className="divide-y divide-basalt/5 font-body text-sm">
-                {dashboard.invoices.map((inv) => (
-                  <li key={inv.id} className="flex justify-between px-4 py-3">
-                    <span className="font-mono text-xs">{inv.invoiceNumber}</span>
-                    <span>{inv.status}</span>
-                    <span>{formatZAR(Number(inv.amountDue))}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </section>
-        </>
-      )}
+      <p className="mt-8 font-body text-sm text-slate">
+        Delivery sites, your name and password are in{" "}
+        <Link href="/account/settings" className="font-semibold text-seam-blue hover:underline">account settings</Link>.
+      </p>
     </div>
   );
 }
-
 function StatusCards({
   user,
   dashboard,

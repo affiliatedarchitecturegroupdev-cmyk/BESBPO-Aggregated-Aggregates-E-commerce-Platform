@@ -35,18 +35,19 @@ enum OAuthProvider {
 }
 
 model User {
-  id            String         @id @default(cuid())
-  email         String         @unique
-  name          String?
-  passwordHash  String? // null for OAuth-only users (Email/Google/Microsoft SSO)
-  role          UserRole       @default(CUSTOMER)
-  companyId     String?
-  company       Company?       @relation(fields: [companyId], references: [id])
-  oauthAccounts OAuthAccount[]
-  quotes        Quote[]
-  orders        Order[]
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  id                String            @id @default(cuid())
+  email             String            @unique
+  name              String?
+  passwordHash      String? // null for OAuth-only users (Email/Google/Microsoft SSO)
+  role              UserRole          @default(CUSTOMER)
+  companyId         String?
+  company           Company?          @relation(fields: [companyId], references: [id])
+  oauthAccounts     OAuthAccount[]
+  quotes            Quote[]
+  orders            Order[]
+  deliveryAddresses DeliveryAddress[]
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
 }
 
 model OAuthAccount {
@@ -114,10 +115,14 @@ model Company {
   updatedAt            DateTime          @updatedAt
 }
 
+/// A saved delivery site: shared by a trade company's users (companyId), or a
+/// personal one for a customer without a company (userId). Exactly one is set.
 model DeliveryAddress {
   id           String   @id @default(cuid())
-  companyId    String
-  company      Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId    String?
+  company      Company? @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  userId       String?
+  user         User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   label        String
   addressLine1 String
   addressLine2 String?
@@ -128,6 +133,9 @@ model DeliveryAddress {
   longitude    Float?
   isDefault    Boolean  @default(false)
   createdAt    DateTime @default(now())
+
+  @@index([companyId])
+  @@index([userId])
 }
 
 // ---------------------------------------------------------------------------
@@ -519,20 +527,28 @@ enum InvoiceStatus {
 }
 
 model Invoice {
-  id              String        @id @default(cuid())
-  orderId         String        @unique
-  order           Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  companyId       String?
-  company         Company?      @relation(fields: [companyId], references: [id])
-  statementId     String?
-  statement       Statement?    @relation(fields: [statementId], references: [id])
-  invoiceNumber   String        @unique
-  vatNumberBilled String // Besbpo Group VAT number — this division bills under group VAT, not its own registration
-  amountDue       Decimal       @db.Decimal(12, 2)
-  status          InvoiceStatus @default(UNPAID)
-  dueDate         DateTime?
-  paidAt          DateTime?
-  createdAt       DateTime      @default(now())
+  id                String        @id @default(cuid())
+  orderId           String        @unique
+  order             Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  companyId         String?
+  company           Company?      @relation(fields: [companyId], references: [id])
+  statementId       String?
+  statement         Statement?    @relation(fields: [statementId], references: [id])
+  invoiceNumber     String        @unique
+  vatNumberBilled   String // Besbpo Group VAT number — this division bills under group VAT, not its own registration
+  amountDue         Decimal       @db.Decimal(12, 2) // the invoice total, VAT included
+  // Snapshot at issue, so an issued tax invoice never changes afterwards.
+  billedToName      String?
+  billedToAddress   String?
+  billedToVatNumber String?
+  amountExVat       Decimal?      @db.Decimal(12, 2)
+  vatAmount         Decimal?      @db.Decimal(12, 2)
+  vatRatePercent    Decimal?      @db.Decimal(5, 2)
+  pricesIncludedVat Boolean? // how the order's prices were treated when VAT was worked out
+  status            InvoiceStatus @default(UNPAID)
+  dueDate           DateTime?
+  paidAt            DateTime?
+  createdAt         DateTime      @default(now())
 }
 
 /// Periodic PO-based billing rollup for Volume/Civil Bulk tier standing

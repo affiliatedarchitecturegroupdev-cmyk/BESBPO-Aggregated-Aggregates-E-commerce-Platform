@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { orderDocuments } from "@/components/account/OrderCard";
+import { ReorderButton } from "@/components/account/ReorderButton";
 import { PaymentMethodSelector, type EligibleMethods } from "@/components/payment/PaymentMethodSelector";
 import { api } from "@/lib/api";
 import { UNIT_LABEL, type OrderRecord } from "@/lib/account-types";
@@ -85,13 +87,35 @@ export default async function OrderConfirmationPage({ params }: { params: { id: 
         </section>
       )}
 
+      <section className="mt-8 rounded-sm border border-basalt/10 bg-white p-5 font-body text-sm" aria-labelledby="order-documents">
+        <h2 id="order-documents" className="font-semibold text-basalt">Documents</h2>
+        <ul className="mt-2 space-y-1">
+          {orderDocuments(order).map((d) => (
+            <li key={d.href}>
+              <a href={d.href} target="_blank" rel="noopener" className="text-seam-blue hover:underline">{d.label}</a>
+            </li>
+          ))}
+          {order.documents.map((doc) => (
+            <li key={doc.id}>
+              <a href={`/api/documents/${doc.id}`} target="_blank" rel="noopener" className="text-seam-blue hover:underline">{doc.title}</a>
+              {doc.batchReference && <span className="text-xs text-slate"> · batch {doc.batchReference}</span>}
+            </li>
+          ))}
+        </ul>
+        <p className="mt-2 text-xs text-slate">
+          {order.invoice ? "" : "Your tax invoice appears here once our team issues it. "}
+          {order.shipment ? "" : "The delivery note appears once your order is dispatched."}
+        </p>
+      </section>
+
       <div className="mt-10 flex flex-wrap justify-center gap-3">
         <Link href={`/orders/${order.id}/tracking`} className="rounded-sm bg-seam-blue px-5 py-2.5 font-body text-sm font-semibold text-limestone hover:bg-basalt">
           Track this order
         </Link>
-        <Link href="/products" className="rounded-sm border border-basalt px-5 py-2.5 font-body text-sm text-basalt hover:bg-basalt hover:text-limestone">
-          Continue shopping
+        <Link href="/account/orders" className="rounded-sm border border-basalt px-5 py-2.5 font-body text-sm text-basalt hover:bg-basalt hover:text-limestone">
+          All my orders
         </Link>
+        <ReorderButton lines={order.lineItems.map((l) => ({ sku: l.product.sku, unitOfSale: l.unitOfSale, quantity: l.quantity, name: l.product.name }))} />
       </div>
     </div>
   );

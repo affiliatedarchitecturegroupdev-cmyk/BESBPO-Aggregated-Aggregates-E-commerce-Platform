@@ -1,4 +1,7 @@
 import type { NotificationEvent, UnitOfSale } from "@aggregates/database";
+import { formatZAR, UNIT_LABEL, type Money } from "../common/format";
+
+export { formatZAR };
 
 /**
  * Every message the platform sends, as pure functions of the record it's
@@ -10,8 +13,6 @@ import type { NotificationEvent, UnitOfSale } from "@aggregates/database";
  * Copy rules: never promise a delivery time or a price the platform didn't
  * calculate, and never show supplier contact details (AGENTIC_RULES.md).
  */
-
-export type Money = number | string | { toString(): string };
 
 export type OrderData = {
   id: string;
@@ -56,26 +57,6 @@ export type CompanyData = {
 
 export type EmailMessage = { subject: string; text: string; html: string };
 export type WhatsAppMessage = { templateName: string; params: string[]; text: string };
-
-const UNIT_LABEL: Record<UnitOfSale, string> = {
-  BULK_TON: "ton",
-  BULK_M3: "m³",
-  BAGGED: "bags",
-  BAG_25KG: "× 25kg bag",
-  BAG_50KG: "× 50kg bag",
-  BULK_BAG_1_5T: "× 1.5-ton bulk bag",
-  BULK_TANKER_PER_TON: "ton (tanker)",
-  DRUM_210L: "× 210L drum",
-  IBC_TOTE_1000L: "× 1,000L tote",
-};
-
-const ZAR = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-/** "R1,234.56" — the same style as the storefront. */
-export function formatZAR(value: Money): string {
-  const n = Number(value.toString());
-  return `${n < 0 ? "-" : ""}R${ZAR.format(Math.abs(n))}`;
-}
 
 export function siteUrl(): string {
   return (process.env.NEXT_PUBLIC_SITE_URL ?? "https://aggregates.store").replace(/\/+$/, "");

@@ -1011,4 +1011,135 @@ describe("Aggregated Aggregates API (e2e)", () => {
       await prisma.company.delete({ where: { id: company.body.id } });
     });
   });
+
+  describe("customer account", () => {
+    const address = { label: "Main site", addressLine1: "8 Harbour Rd", city: "Ballito", province: "KwaZulu-Natal", postalCode: "4420" };
+
+    it("keeps personal delivery sites for customers without a company, with one default", async () => {
+      const buyer = await register("sites");
+      const auth = { Authorization: `Bearer ${buyer}` };
+      const first = await http().post("/account/addresses").set(auth).send(address).expect(201);
+      expect(first.body).toMatchObject({ isDefault: true, companyId: null });
+      const second = await http().post("/account/addresses").set(auth).send({ ...address, label: "Yard" }).expect(201);
+      expect(second.body.isDefault).toBe(false);
+
+      const swapped = await http().post(`/account/addresses/${second.body.id}/default`).set(auth).expect(200);
+      expect(swapped.body.map((a: { label: string; isDefault: boolean }) => [a.label, a.isDefault])).toEqual([["Yard", true], ["Main site", false]]);
+
+      // Someone else can't touch them.
+      const stranger = await register("sitestranger");
+      await http().delete(`/account/addresses/${first.body.id}`).set("Authorization", `Bearer ${stranger}`).expect(404);
+      expect((await http().get("/account/addresses").set("Authorization", `Bearer ${stranger}`).expect(200)).body).toEqual([]);
+
+      // Removing the default promotes the remaining site.
+      await http().delete(`/account/addresses/${second.body.id}`).set(auth).expect(204);
+      const left = await http().get("/account/addresses").set(auth).expect(200);
+      expect(left.body).toEqual([expect.objectContaining({ label: "Main site", isDefault: true, shared: false })]);
+      await http().post("/account/addresses").set(auth).send({ ...address, postalCode: "x" }).expect(400);
+    });
+
+    it("shares a trade company's sites and still shows personal ones", async () => {
+      const buyer = await register("sitesco");
+      const auth = { Authorization: `Bearer ${buyer}` };
+      await http().post("/account/addresses").set(auth).send({ ...address, label: "Before applying" }).expect(201);
+      const company = await http().post("/trade-accounts/apply").set(auth).send({ companyName: `Sites Co ${run}`, requestedTier: "CONTRACTOR_TRADE" }).expect(201);
+      const shared = await http().post("/account/addresses").set(auth).send({ ...address, label: "Company yard" }).expect(201);
+      expect(shared.body).toMatchObject({ companyId: company.body.id, userId: null, isDefault: true });
+      const list = await http().get("/account/addresses").set(auth).expect(200);
+      expect(list.body.map((a: { label: string; shared: boolean }) => [a.label, a.shared])).toEqual([["Company yard", true], ["Before applying", false]]);
+      await prisma.user.update({ where: { email: `sitesco-${run}@example.com` }, data: { companyId: null } });
+      await prisma.company.delete({ where: { id: company.body.id } });
+    });
+
+    it("updates the name and changes the password only with the current one", async () => {
+      const token = await register("profile");
+      const auth = { Authorization: `Bearer ${token}` };
+      await http().patch("/account/profile").set(auth).send({ name: "Nomsa Khumalo" }).expect(200);
+      expect((await http().get("/auth/me").set(auth).expect(200)).body.name).toBe("Nomsa Khumalo");
+
+      await http().post("/account/password").set(auth).send({ currentPassword: "wrong-password", newPassword: "a-brand-new-passphrase" }).expect(400);
+      await http().post("/account/password").set(auth).send({ currentPassword: password, newPassword: "short" }).expect(400);
+      await http().post("/account/password").set(auth).send({ currentPassword: password, newPassword: password }).expect(400);
+      await http().post("/account/password").set(auth).send({ currentPassword: password, newPassword: "a-brand-new-passphrase" }).expect(204);
+      await http().post("/auth/login").send({ email: `profile-${run}@example.com`, password }).expect(401);
+      await http().post("/auth/login").send({ email: `profile-${run}@example.com`, password: "a-brand-new-passphrase" }).expect(200);
+      await http().post("/account/password").send({ newPassword: "whatever-long-enough" }).expect(401);
+    });
+
+    it("serves order documents to the buyer, and staff issue a tax invoice once invoicing is configured", async () => {
+      const saved = { vat: process.env.GROUP_VAT_NUMBER, inclusive: process.env.PRICES_INCLUDE_VAT };
+      delete process.env.GROUP_VAT_NUMBER;
+      delete process.env.PRICES_INCLUDE_VAT;
+      try {
+        const buyer = await register("pdfbuyer");
+        const staff = await register("pdfstaff");
+        await prisma.user.update({ where: { email: `pdfstaff-${run}@example.com` }, data: { role: "STAFF" } });
+        const as = (t: string) => ({ Authorization: `Bearer ${t}` });
+        const order = await http()
+          .post("/orders")
+          .set(as(buyer))
+          .send({ lines: [{ sku: "AA-SND-01", unit: "m3", quantity: 6 }], deliveryDistanceKm: 20, deliveryAddress: "8 Harbour Rd, Ballito", deliveryProvince: "KwaZulu-Natal" })
+          .expect(201);
+        const id = order.body.id;
+
+        const pdf = await http().get(`/orders/${id}/documents/confirmation`).set(as(buyer)).buffer(true).expect(200);
+        expect(pdf.headers["content-type"]).toBe("application/pdf");
+        expect(pdf.headers["content-disposition"]).toContain(`${order.body.orderNumber}-order-confirmation.pdf`);
+        expect(Buffer.from(pdf.body).subarray(0, 5).toString()).toBe("%PDF-");
+        const stranger = await register("pdfstranger");
+        await http().get(`/orders/${id}/documents/confirmation`).set(as(stranger)).expect(404);
+        await http().get(`/orders/${id}/documents/receipt`).set(as(buyer)).expect(400);
+        await http().get(`/orders/${id}/documents/delivery-note`).set(as(buyer)).expect(404);
+        await http().get(`/orders/${id}/documents/invoice`).set(as(buyer)).expect(404);
+
+        // No invoice until the Group VAT number and VAT-inclusive pricing are confirmed.
+        const notReady = await http().get("/orders/invoicing-status").set(as(staff)).expect(200);
+        expect(notReady.body.ready).toBe(false);
+        expect(notReady.body.problems).toHaveLength(2);
+        await http().post(`/orders/${id}/invoice`).set(as(staff)).expect(400);
+        process.env.GROUP_VAT_NUMBER = "REPLACE_WITH_BESBPO_GROUP_VAT_NUMBER";
+        process.env.PRICES_INCLUDE_VAT = "false";
+        expect((await http().get("/orders/invoicing-status").set(as(staff))).body.problems).toHaveLength(2);
+        process.env.GROUP_VAT_NUMBER = "4000000000";
+        process.env.PRICES_INCLUDE_VAT = "true";
+        expect((await http().get("/orders/invoicing-status").set(as(staff))).body).toEqual({ ready: true, problems: [] });
+        await http().post(`/orders/${id}/invoice`).set(as(buyer)).expect(403);
+
+        const invoice = await http().post(`/orders/${id}/invoice`).set(as(staff)).expect(201);
+        expect(invoice.body.invoiceNumber).toMatch(/^AAI-\d{6}$/);
+        expect(invoice.body).toMatchObject({ status: "UNPAID", vatNumberBilled: "4000000000", billedToName: "pdfbuyer", pricesIncludedVat: true });
+        const total = Number(order.body.total);
+        expect(Number(invoice.body.amountDue)).toBe(total);
+        expect(Number(invoice.body.vatAmount)).toBe(Math.round((total * 15) / 115 * 100) / 100);
+        expect(Number(invoice.body.amountExVat) + Number(invoice.body.vatAmount)).toBeCloseTo(total, 2);
+        await http().post(`/orders/${id}/invoice`).set(as(staff)).expect(409);
+
+        // The invoice follows the order: paid on confirmation; the delivery note appears on dispatch.
+        await http().patch(`/orders/${id}/status`).set(as(staff)).send({ status: "CONFIRMED" }).expect(200);
+        await http().patch(`/orders/${id}/status`).set(as(staff)).send({ status: "IN_TRANSIT", carrier: "BESFLEET", trackingRef: "BF-1" }).expect(200);
+        const mine = await http().get("/orders/mine").set(as(buyer)).expect(200);
+        expect(mine.body.find((o: { id: string }) => o.id === id).invoice).toMatchObject({ invoiceNumber: invoice.body.invoiceNumber, status: "PAID" });
+        const invoicePdf = await http().get(`/orders/${id}/documents/invoice`).set(as(buyer)).buffer(true).expect(200);
+        expect(invoicePdf.headers["content-disposition"]).toContain(`${invoice.body.invoiceNumber}.pdf`);
+        await http().get(`/orders/${id}/documents/delivery-note`).set(as(buyer)).expect(200);
+
+        // A cancelled order voids its invoice, and can't be invoiced afresh.
+        const other = await http()
+          .post("/orders")
+          .set(as(buyer))
+          .send({ lines: [{ sku: "AA-SND-01", unit: "m3", quantity: 6 }], deliveryDistanceKm: 20, deliveryAddress: "8 Harbour Rd, Ballito" })
+          .expect(201);
+        const second = await http().post(`/orders/${other.body.id}/invoice`).set(as(staff)).expect(201);
+        expect(Number(second.body.invoiceNumber.slice(4))).toBe(Number(invoice.body.invoiceNumber.slice(4)) + 1);
+        await http().patch(`/orders/${other.body.id}/status`).set(as(staff)).send({ status: "CANCELLED" }).expect(200);
+        expect((await prisma.invoice.findUnique({ where: { id: second.body.id } }))!.status).toBe("VOID");
+        await prisma.order.deleteMany({ where: { id: { in: [id, other.body.id] } } });
+      } finally {
+        if (saved.vat === undefined) delete process.env.GROUP_VAT_NUMBER;
+        else process.env.GROUP_VAT_NUMBER = saved.vat;
+        if (saved.inclusive === undefined) delete process.env.PRICES_INCLUDE_VAT;
+        else process.env.PRICES_INCLUDE_VAT = saved.inclusive;
+      }
+    });
+  });
 });

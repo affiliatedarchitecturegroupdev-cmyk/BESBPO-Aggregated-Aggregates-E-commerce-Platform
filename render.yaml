@@ -84,6 +84,13 @@ services:
         value: compliance-documents
       # Transactional email (docs/notifications.md). Until these are set,
       # messages are logged in Admin -> Notifications and can be resent later.
+      # Tax invoices (Admin -> Orders): refused until both are set — see render.md.
+      - key: GROUP_VAT_NUMBER
+        sync: false
+      - key: PRICES_INCLUDE_VAT
+        sync: false
+      - key: EFT_BANKING_DETAILS
+        sync: false
       - key: EMAIL_PROVIDER
         sync: false
       - key: EMAIL_API_KEY
