@@ -121,6 +121,9 @@ Staff approve trade accounts and price quote requests in the staff console,
    - write and publish blog articles;
    - manage the partner-supplier network (see step 6);
    - work WhatsApp chat orders;
+   - see every email and WhatsApp message sent to customers and staff, and
+     resend failed ones (**Notifications**; admins also choose what is sent
+     and which staff inboxes get alerts);
    - change payment routing (admins only — see step 7).
 
    Storefront changes go live within a minute. Prices can't be edited in the
@@ -159,12 +162,18 @@ addresses and categories, with researched leads listed separately. Contact
 details and map pins are staff-only — keep exported CSVs (which include
 them) off shared drives and out of the repository.
 
-## 7. Payments and WhatsApp (when the accounts exist)
+## 7. Email, payments and WhatsApp (when the accounts exist)
 
 Nothing here blocks a deploy: until credentials are set, online payment
 methods tell the buyer to choose another method (Manual EFT / purchase order
-works today for trade accounts), and WhatsApp replies are logged rather than
-sent.
+works today for trade accounts), and emails and WhatsApp messages are logged
+in **Admin → Notifications** rather than sent.
+
+- **Email.** Verify `aggregates.store` with a transactional email provider
+  (Resend, Postmark or SendGrid), then set `EMAIL_PROVIDER`, `EMAIL_API_KEY`,
+  `EMAIL_FROM` and optionally `EMAIL_REPLY_TO` on **aggregates-store-api**.
+  In **Admin → Notifications**, add the staff inboxes, send a test email and
+  resend anything logged. Full steps: `docs/notifications.md`.
 
 - **Payment gateways.** Set the merchant variables for each provider on
   **aggregates-store-api** (PayFast: `PAYFAST_MERCHANT_ID`,
@@ -180,6 +189,9 @@ sent.
   places), `WHATSAPP_APP_SECRET` (the Meta app secret — deliveries without a
   valid signature are rejected), `WHATSAPP_PHONE_NUMBER_ID` and
   `WHATSAPP_ACCESS_TOKEN`. Chats appear in **Admin → WhatsApp orders**.
+  For order and quote updates on WhatsApp, submit the five message templates
+  in `docs/notifications.md` for approval, then switch each on in
+  **Admin → Notifications**.
 - **Instagram / Facebook Shop.** In Meta Commerce Manager, add a scheduled
   data feed pointing at `https://<api-url>/api/v1/channels/catalogue-feed.csv`.
   Only products with a photo and a real retail price are listed, so upload
@@ -194,7 +206,7 @@ sent.
 | When the storefront starts calling the API from the browser | api | `CORS_ORIGINS` — comma-separated storefront origins |
 | Enabling Google / Microsoft sign-in | api | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` |
 | When queues are wired in | api | `REDIS_URL` (Upstash) |
-| Going live on `aggregates.store` | api | `NEXT_PUBLIC_SITE_URL=https://aggregates.store` (payment return links and the catalogue feed's product links) |
+| Going live on `aggregates.store` | api | `NEXT_PUBLIC_SITE_URL=https://aggregates.store` (payment return links, links in emails and WhatsApp messages, and the catalogue feed's product links) |
 
 ## Notes
 

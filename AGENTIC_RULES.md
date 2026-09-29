@@ -123,6 +123,12 @@ unreviewed work.
   placed — the cart links to a prefilled quote request instead.
 - Prices are shown as the workbook gives them; whether storefront prices
   should be labelled incl./excl. VAT is still to be confirmed.
+- Transactional email: the notifications module is built (order, quote and
+  trade-account messages to customers and staff, logged in
+  `/admin/notifications`), but nothing is emailed until an email provider is
+  chosen and `EMAIL_PROVIDER`, `EMAIL_API_KEY` and `EMAIL_FROM` are set
+  (`docs/notifications.md`). WhatsApp order/quote updates also need the five
+  message templates approved by Meta.
 - WhatsApp Business API credentials (`WHATSAPP_PHONE_NUMBER_ID`,
   `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_WEBHOOK_VERIFY_TOKEN`,
   `WHATSAPP_APP_SECRET`). Free-text matching of chat requests to SKUs isn't

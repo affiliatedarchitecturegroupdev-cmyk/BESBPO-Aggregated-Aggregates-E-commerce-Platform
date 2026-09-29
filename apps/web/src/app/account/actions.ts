@@ -128,6 +128,7 @@ export type QuoteRequest = {
   contactName: string;
   contactEmail: string;
   contactPhone?: string;
+  whatsappUpdates?: boolean;
   companyName?: string;
   projectName?: string;
   deliveryAddress: string;
@@ -504,7 +505,7 @@ export async function priceCart(input: CartInput): Promise<{ ok: true; pricing: 
 
 /** Places the order; the API re-prices everything and refuses quote-only carts. */
 export async function placeOrder(
-  input: CartInput & { deliveryAddress: string; deliveryProvince: string; contactPhone?: string; notes?: string },
+  input: CartInput & { deliveryAddress: string; deliveryProvince: string; contactPhone?: string; whatsappUpdates?: boolean; notes?: string },
 ): Promise<{ ok: true; orderId: string } | { ok: false; error: string }> {
   const result = await api<{ id: string }>("/orders", {
     method: "POST",
@@ -515,6 +516,7 @@ export async function placeOrder(
       deliveryAddress: input.deliveryAddress,
       deliveryProvince: input.deliveryProvince,
       contactPhone: input.contactPhone || undefined,
+      whatsappUpdates: input.whatsappUpdates || undefined,
       notes: input.notes || undefined,
     },
   });
@@ -539,4 +541,47 @@ export async function updateOrderStatus(_prev: FormState, form: FormData): Promi
   if (!result.ok) return { error: result.message };
   revalidatePath("/admin", "layout");
   return { success: "Order updated." };
+}
+
+// --- notifications (staff view; admins change settings) ---------------------------
+
+const NOTIFICATION_CHANNEL_KEYS = ["customerEmail", "customerWhatsApp", "staffEmail"] as const;
+
+export async function updateNotificationSetting(_prev: FormState, form: FormData): Promise<FormState> {
+  // Only the channels an event can use are posted as "available"; the rest stay untouched.
+  const available = form.getAll("available").map(String);
+  const body = Object.fromEntries(NOTIFICATION_CHANNEL_KEYS.filter((k) => available.includes(k)).map((k) => [k, form.get(k) === "on"]));
+  const result = await api(`/notifications/settings/${encodeURIComponent(text(form, "event"))}`, { method: "PUT", token: sessionToken(), body });
+  if (!result.ok) return { error: result.status === 403 ? "Only admins can change notification settings." : result.message };
+  revalidatePath("/admin/notifications");
+  return { success: "Saved." };
+}
+
+export async function addNotificationRecipient(_prev: FormState, form: FormData): Promise<FormState> {
+  const result = await api("/notifications/recipients", { method: "POST", token: sessionToken(), body: { email: text(form, "email") } });
+  if (!result.ok) return { error: result.status === 403 ? "Only admins can change staff recipients." : result.message };
+  revalidatePath("/admin/notifications");
+  return { success: "Added — staff alerts go to this inbox from now on." };
+}
+
+export async function removeNotificationRecipient(form: FormData) {
+  await api(`/notifications/recipients/${encodeURIComponent(text(form, "email"))}`, { method: "DELETE", token: sessionToken() });
+  revalidatePath("/admin/notifications");
+}
+
+export async function sendTestEmail(_prev: FormState, form: FormData): Promise<FormState> {
+  const result = await api<{ delivered: boolean; logged?: boolean; error?: string }>("/notifications/test", {
+    method: "POST",
+    token: sessionToken(),
+    body: { email: text(form, "email") },
+  });
+  if (!result.ok) return { error: result.status === 403 ? "Only admins can send test emails." : result.message };
+  if (result.data.delivered) return { success: "Test email sent — check the inbox (and spam folder)." };
+  if (result.data.logged) return { error: "No email provider is configured yet, so the test was only logged. See the set-up notes above." };
+  return { error: `The provider rejected the test email: ${result.data.error ?? "unknown error"}` };
+}
+
+export async function resendNotification(form: FormData) {
+  await api(`/notifications/${encodeURIComponent(text(form, "id"))}/resend`, { method: "POST", token: sessionToken() });
+  revalidatePath("/admin/notifications");
 }

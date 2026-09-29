@@ -19,14 +19,15 @@ of every phase.
 The repository covers roadmap **Phases 1–4** (see `AGENTIC_RULES.md`): the
 workbook-priced catalogue (48 aggregate SKUs plus 7 B2B packaged goods),
 bulk/bag, packaged-goods and delivery calculators, a cart and checkout for
-mixed bulk and bagged loads, trade accounts, the RFQ flow, compliance documents, the admin/CMS (site content, homepage
+mixed bulk and bagged loads, order/quote/account notifications by email and
+WhatsApp, trade accounts, the RFQ flow, compliance documents, the admin/CMS (site content, homepage
 slideshow, promotions with image uploads, targeting and reporting, orders, blog, products, suppliers, payment routing, WhatsApp
 orders), the partner-supplier network and delivery-point locator, the
 payment architecture (18 methods routed through 6 gateway adapters), WhatsApp
 Commerce, the Instagram/Facebook catalogue feed, and SEO hardening.
 
-It is not launched: payment gateways and the WhatsApp Business API need real
-credentials, some payment logos and the social icons are still placeholders
+It is not launched: payment gateways, transactional email and the WhatsApp
+Business API need real credentials, some payment logos and the social icons are still placeholders
 for Brandfetch files, and suppliers need map pins — see "Open items" in `AGENTIC_RULES.md`.
 
 ## Tech stack (confirmed in the spec)
@@ -59,7 +60,7 @@ aggregates-store-platform/
 │   │                   blog, FAQ, ways-to-pay, industries, partner network, orders, legal pages
 │   └── api/             NestJS backend — auth, catalogue, trade-accounts, quotes, orders, suppliers,
 │                        compliance docs, content, promotions, blog, payment-gateway, channels/whatsapp,
-│                        channels/catalogue-feed
+│                        channels/catalogue-feed, notifications (email + WhatsApp)
 ├── services/
 │   └── pricing/         FastAPI microservice — tonnage/volume, packaged-goods, delivery and order pricing
 ├── packages/

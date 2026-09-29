@@ -18,6 +18,7 @@ const NAV = [
   { href: "/admin/blog", label: "Blog" },
   { href: "/admin/payments", label: "Payments" },
   { href: "/admin/whatsapp", label: "WhatsApp orders" },
+  { href: "/admin/notifications", label: "Notifications" },
 ];
 
 /**

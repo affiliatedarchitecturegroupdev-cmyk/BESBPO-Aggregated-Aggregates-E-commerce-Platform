@@ -79,6 +79,7 @@ export function QuoteRequestForm({
     distanceKm: prefill.km && Number(prefill.km) >= 0 ? prefill.km : "",
     notes: "",
   });
+  const [whatsappUpdates, setWhatsappUpdates] = useState(false);
   const [submitted, setSubmitted] = useState<{ reference: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
@@ -110,6 +111,7 @@ export function QuoteRequestForm({
         contactName: project.contactName,
         contactEmail: project.email,
         contactPhone: project.phone || undefined,
+        whatsappUpdates: whatsappUpdates && project.phone.trim() !== "" ? true : undefined,
         companyName: project.company || undefined,
         projectName: project.projectName || undefined,
         deliveryAddress: delivery.address,
@@ -198,6 +200,19 @@ export function QuoteRequestForm({
                 />
               </label>
             ))}
+            <label className="flex items-start gap-2 font-body text-sm text-basalt sm:col-span-2">
+              <input
+                type="checkbox"
+                checked={whatsappUpdates && project.phone.trim() !== ""}
+                disabled={project.phone.trim() === ""}
+                onChange={(e) => setWhatsappUpdates(e.target.checked)}
+                className="mt-1"
+              />
+              <span>
+                Also send my priced quote to this number on WhatsApp
+                {project.phone.trim() === "" && <span className="block text-xs text-slate">Add a phone number to choose this.</span>}
+              </span>
+            </label>
           </div>
         )}
 

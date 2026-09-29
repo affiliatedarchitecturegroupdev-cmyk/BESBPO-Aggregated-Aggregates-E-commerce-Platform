@@ -19,6 +19,7 @@ import { BlogModule } from "./blog/blog.module";
 import { PaymentGatewayModule } from "./payment-gateway/payment-gateway.module";
 import { WhatsAppModule } from "./channels/whatsapp/whatsapp.module";
 import { CatalogueFeedModule } from "./channels/catalogue-feed/catalogue-feed.module";
+import { NotificationsModule } from "./notifications/notifications.module";
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { CatalogueFeedModule } from "./channels/catalogue-feed/catalogue-feed.mo
     PaymentGatewayModule,
     WhatsAppModule,
     CatalogueFeedModule,
+    NotificationsModule,
   ],
 })
 export class AppModule {}

@@ -1,7 +1,8 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { Carrier, OrderStatus, Prisma } from "@aggregates/database";
+import { Carrier, NotificationEvent, OrderStatus, Prisma } from "@aggregates/database";
 import { STAFF_ROLES, type AuthUser } from "../common/auth/auth-user";
 import { ComplianceDocumentsService } from "../compliance-documents/compliance-documents.service";
+import { NotificationsService } from "../notifications/notifications.service";
 import { PrismaService } from "../common/prisma.service";
 import { CustomerTierName, PricingService, type PricingUnit } from "../pricing/pricing.service";
 import { pricingUnit, unitOfSale } from "../pricing/units";
@@ -19,6 +20,14 @@ const NEXT_STATUSES: Record<OrderStatus, OrderStatus[]> = {
   CANCELLED: [],
 };
 
+const STATUS_EVENT = {
+  PENDING: "ORDER_PLACED",
+  CONFIRMED: "ORDER_CONFIRMED",
+  IN_TRANSIT: "ORDER_DISPATCHED",
+  DELIVERED: "ORDER_DELIVERED",
+  CANCELLED: "ORDER_CANCELLED",
+} as const satisfies Record<OrderStatus, NotificationEvent>;
+
 /**
  * Checkout orders. Everything is priced by the pricing service at the
  * buyer's own tier. Anything it marks quote-only — Volume/Civil Bulk orders
@@ -33,6 +42,7 @@ export class OrdersService {
     private readonly pricingService: PricingService,
     private readonly documents: ComplianceDocumentsService,
     private readonly suppliers: SuppliersService,
+    private readonly notifications: NotificationsService,
   ) {}
 
   /** Prices a cart at the caller's tier without saving anything. */
@@ -63,7 +73,7 @@ export class OrdersService {
       );
     }
 
-    return this.prisma.order.create({
+    const order = await this.prisma.order.create({
       data: {
         orderNumber: `AA-${Date.now()}`,
         userId: user.id,
@@ -77,6 +87,7 @@ export class OrdersService {
         deliveryDistanceKm: delivery.distanceKm,
         distanceSource: delivery.source,
         contactPhone: dto.contactPhone?.trim() || null,
+        whatsappUpdates: Boolean(dto.whatsappUpdates && dto.contactPhone?.trim()),
         notes: dto.notes?.trim() || null,
         lineItems: {
           create: lines.map((line, index) => ({
@@ -91,6 +102,8 @@ export class OrdersService {
       },
       include: { lineItems: { include: { product: true } } },
     });
+    await this.notifications.order("ORDER_PLACED", order.id);
+    return order;
   }
 
   /** The caller's own orders and their company's, newest first, with documents. */
@@ -158,7 +171,7 @@ export class OrdersService {
             deliveredAt: dto.status === "DELIVERED" ? now : (order.shipment?.deliveredAt ?? null),
           }
         : null;
-    return this.prisma.order.update({
+    const updated = await this.prisma.order.update({
       where: { id },
       data: {
         status: dto.status,
@@ -166,6 +179,9 @@ export class OrdersService {
       },
       include: { shipment: true },
     });
+    // Only a real status change is news to the customer (tracking edits aren't).
+    if (order.status !== dto.status) await this.notifications.order(STATUS_EVENT[dto.status], id);
+    return updated;
   }
 
   private async resolveLines(dto: Pick<CreateOrderDto, "lines" | "lineItems">): Promise<Line[]> {
