@@ -58,6 +58,8 @@ describe("order documents", () => {
     const withBank = orderConfirmationSpec(order, "Bank: Example Bank\nAccount: 123");
     expect(withBank.notes).toEqual(expect.arrayContaining(["Bank: Example Bank", "Account: 123"]));
     expect(orderConfirmationSpec({ ...order, status: "CONFIRMED" }).notes!.join(" ")).not.toContain("EFT");
+    // Render stores a one-line value, so a literal "\\n" separates lines too.
+    expect(orderConfirmationSpec(order, "Bank: Example Bank\\nBranch code: 000000").notes).toEqual(expect.arrayContaining(["Bank: Example Bank", "Branch code: 000000"]));
   });
 
   it("gives the site a delivery note without prices, with signature lines", () => {
@@ -84,6 +86,10 @@ describe("order documents", () => {
     ]);
     expect(spec.table.rows.at(-1)).toEqual(["Delivery (67.3km)", "1", "R1,800.00", "R1,800.00"]);
     expect(taxInvoiceSpec({ ...invoice, status: "VOID" }, order).subtitle).toContain("VOID");
+    // An unpaid invoice says where to pay; a paid one doesn't.
+    const unpaid = taxInvoiceSpec({ ...invoice, status: "UNPAID", paidAt: null }, order, "Bank: Example Bank\nAccount number: 000").notes!;
+    expect(unpaid).toEqual(expect.arrayContaining(["Paying by EFT: use AA-100 as the payment reference.", "Account number: 000"]));
+    expect(taxInvoiceSpec(invoice, order, "Bank: Example Bank").notes!.join(" ")).not.toContain("Example Bank");
   });
 
   it("renders each document to a PDF", async () => {

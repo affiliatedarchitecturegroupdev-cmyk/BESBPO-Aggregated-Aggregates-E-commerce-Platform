@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { bankingDetailLines, formatZAR, SELLER } from "../../common/format";
 import type {
   GatewayStatus,
   InitiatePaymentRequest,
@@ -23,9 +24,13 @@ export class ManualEftAdapter implements PaymentGatewayAdapter {
   }
 
   async initiate(request: InitiatePaymentRequest): Promise<InitiatePaymentResult> {
+    const bank = bankingDetailLines();
+    const where = bank.length
+      ? `Our bank account: ${bank.join(" · ")}.`
+      : `Our team will send banking details on request (${SELLER.email}).`;
     return {
       isLive: true,
-      note: `Pay R${request.amount.toFixed(2)} by EFT or send a purchase order quoting ${request.orderNumber}. Our banking details are on your invoice; finance confirms payment against that reference.`,
+      note: `Pay ${formatZAR(request.amount)} by EFT, or send a purchase order, quoting ${request.orderNumber} as the reference. ${where} Finance confirms payment against that reference; the details are also on your order confirmation (PDF).`,
     };
   }
 

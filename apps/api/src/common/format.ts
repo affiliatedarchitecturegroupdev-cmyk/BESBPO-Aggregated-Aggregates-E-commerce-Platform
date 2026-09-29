@@ -28,6 +28,20 @@ export function formatDateZA(date: Date | string): string {
 }
 
 /**
+ * The bank account EFT payers pay into, one detail per line, from the
+ * EFT_BANKING_DETAILS setting on the API (never hard-coded, so finance can
+ * change it without a deploy and a code change can't quietly redirect
+ * payments). Empty until it's set.
+ */
+export function bankingDetailLines(value = process.env.EFT_BANKING_DETAILS): string[] {
+  return (value ?? "")
+    .split(/\r?\n|\\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .slice(0, 8);
+}
+
+/**
  * Who sells: Aggregated Aggregates trades as a division of Besbpo Group and
  * bills under the Group's VAT registration (Terms & Conditions). Same details
  * as the storefront's corporate-contact data.

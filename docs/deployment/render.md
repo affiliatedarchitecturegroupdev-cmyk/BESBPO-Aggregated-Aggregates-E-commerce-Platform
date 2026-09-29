@@ -175,8 +175,15 @@ in **Admin → Notifications** rather than sent.
   confirm storefront prices already include VAT. Until both are set, staff
   can't issue invoices (Admin → Orders says what's missing) — the platform
   won't print a tax invoice with a placeholder VAT number or a VAT split it
-  isn't sure of. Optionally set `EFT_BANKING_DETAILS` (bank, account number,
-  branch code — one per line) to print on order confirmations for EFT payers.
+  isn't sure of.
+- **EFT banking details.** Set `EFT_BANKING_DETAILS` on
+  **aggregates-store-api** to the account EFT payers use, one detail per line
+  (or separated by `\n` when pasted as one line), e.g.
+  `Bank: …\nAccount holder: …\nAccount number: …\nAccount type: …\nBranch code: …`.
+  It's printed on order confirmations and unpaid tax invoices, and shown when
+  a buyer chooses EFT / purchase order. It's kept in Render rather than the
+  code so finance can change it without a deploy, and so a code change can't
+  quietly redirect payments. Until it's set, buyers are told to ask for it.
 - **Email.** Verify `aggregates.store` with a transactional email provider
   (Resend, Postmark or SendGrid), then set `EMAIL_PROVIDER`, `EMAIL_API_KEY`,
   `EMAIL_FROM` and optionally `EMAIL_REPLY_TO` on **aggregates-store-api**.
