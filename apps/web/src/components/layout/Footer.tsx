@@ -4,6 +4,7 @@ import { PromoSlot } from "@/components/merchandising/PromoSlot";
 import { CORPORATE_EMAILS, PHONE_LINES, REGISTERED_ADDRESS } from "@/data/corporate-contact";
 import { CORE_CATEGORIES } from "@/data/categories";
 import { PAYMENT_METHODS } from "@/data/payment-methods";
+import { PaymentLogo } from "@/components/payment/PaymentLogo";
 import { CORPORATE_SITE_URL, SOCIAL_LINKS } from "@/data/social";
 import { getActivePromotions } from "@/lib/promotions";
 
@@ -92,8 +93,7 @@ export async function Footer() {
             {PAYMENT_METHODS.filter((m) => !m.tradeOnly).map((method) => (
               <li key={method.key}>
                 <Link href="/ways-to-pay" title={method.displayName}>
-                  {/* eslint-disable-next-line @next/next/no-img-element -- provider logo (see PAYMENT_ASSETS.md) */}
-                  <img src={`/payment-logos/${method.logoAssetPath}`} alt={method.displayName} className="h-6 opacity-80 hover:opacity-100" />
+                  <PaymentLogo method={method} />
                 </Link>
               </li>
             ))}

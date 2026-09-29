@@ -26,8 +26,8 @@ payment architecture (18 methods routed through 6 gateway adapters), WhatsApp
 Commerce, the Instagram/Facebook catalogue feed, and SEO hardening.
 
 It is not launched: payment gateways and the WhatsApp Business API need real
-credentials, the payment/social logos are placeholders for the Brandfetch
-files, and suppliers need map pins — see "Open items" in `AGENTIC_RULES.md`.
+credentials, some payment logos and the social icons are still placeholders
+for Brandfetch files, and suppliers need map pins — see "Open items" in `AGENTIC_RULES.md`.
 
 ## Tech stack (confirmed in the spec)
 
@@ -73,7 +73,7 @@ aggregates-store-platform/
 ├── AGENTIC_RULES.md      Human-in-the-loop rules for the build-out, updated per phase
 ├── B2B_BULK_CATALOGUE.md CAT-10/11 packaged goods and the dedup against the 48-SKU catalogue
 ├── BLOG_CMS.md           Blog/CMS: API, admin, content rules
-├── PAYMENT_ASSETS.md     Logo/icon provenance (placeholders pending Brandfetch files)
+├── PAYMENT_ASSETS.md     Logo/icon provenance (Brandfetch files and remaining placeholders)
 └── PAYMENT_PROVIDER_TERMS.md  Researched BNPL / trade-credit terms behind "Ways to Pay"
 ```
 

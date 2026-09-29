@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PAYMENT_METHODS } from "@/data/payment-methods";
+import { PaymentLogo } from "@/components/payment/PaymentLogo";
 import { apiCached } from "@/lib/api";
 import { formatZAR } from "@/lib/pricing";
 
@@ -52,8 +53,7 @@ export default async function WaysToPayPage() {
             <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {group.methods.map((method) => (
                 <div key={method.key} className="flex gap-4 rounded-sm border border-basalt/10 bg-white p-5">
-                  {/* eslint-disable-next-line @next/next/no-img-element -- provider logo (see PAYMENT_ASSETS.md) */}
-                  <img src={`/payment-logos/${method.logoAssetPath}`} alt="" className="h-8 w-24 shrink-0 object-contain" />
+                  <PaymentLogo method={method} size="md" decorative />
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
                       <p className="font-body text-sm font-semibold text-basalt">{method.displayName}</p>

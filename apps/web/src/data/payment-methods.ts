@@ -12,6 +12,10 @@ export type PaymentMethod = {
   displayName: string;
   category: "card" | "eft" | "wallet" | "qr" | "bnpl" | "b2b" | "manual";
   logoAssetPath: string; // relative to /public/payment-logos/ — see PAYMENT_ASSETS.md for sourcing
+  // Text set beside the logo when the file is the parent brand's mark rather
+  // than the payment product's own (e.g. the Apple logo + "Pay").
+  logoLabel?: string;
+  logoOnDark?: boolean; // the only official file is a white mark — badge it dark
   tradeOnly: boolean;
   minOrderValue?: number;
   maxOrderValue?: number;
@@ -21,17 +25,17 @@ export type PaymentMethod = {
 export const PAYMENT_METHODS: PaymentMethod[] = [
   { key: "CARD", displayName: "Card (Visa / Mastercard / Amex)", category: "card", logoAssetPath: "payfast/visa-mastercard-amex.svg", tradeOnly: false },
   { key: "INSTANT_EFT", displayName: "Instant EFT", category: "eft", logoAssetPath: "payfast/instant-eft.svg", tradeOnly: false },
-  { key: "CAPITEC_PAY", displayName: "Capitec Pay", category: "eft", logoAssetPath: "payfast/capitec-pay.svg", tradeOnly: false },
-  { key: "APPLE_PAY", displayName: "Apple Pay", category: "wallet", logoAssetPath: "payfast/apple-pay.svg", tradeOnly: false },
-  { key: "GOOGLE_PAY", displayName: "Google Pay", category: "wallet", logoAssetPath: "payfast/google-pay.svg", tradeOnly: false },
-  { key: "SAMSUNG_PAY", displayName: "Samsung Pay", category: "wallet", logoAssetPath: "payfast/samsung-pay.svg", tradeOnly: false },
-  { key: "SNAPSCAN", displayName: "SnapScan", category: "qr", logoAssetPath: "payfast/snapscan.svg", tradeOnly: false },
-  { key: "ZAPPER", displayName: "Zapper", category: "qr", logoAssetPath: "brandfetch/zapper.svg", tradeOnly: false },
+  { key: "CAPITEC_PAY", displayName: "Capitec Pay", category: "eft", logoAssetPath: "brandfetch/capitec.svg", logoLabel: "Pay", tradeOnly: false },
+  { key: "APPLE_PAY", displayName: "Apple Pay", category: "wallet", logoAssetPath: "brandfetch/apple.svg", logoLabel: "Pay", tradeOnly: false },
+  { key: "GOOGLE_PAY", displayName: "Google Pay", category: "wallet", logoAssetPath: "brandfetch/google-g.svg", logoLabel: "Pay", tradeOnly: false },
+  { key: "SAMSUNG_PAY", displayName: "Samsung Pay", category: "wallet", logoAssetPath: "brandfetch/samsung.svg", logoLabel: "Pay", tradeOnly: false },
+  { key: "SNAPSCAN", displayName: "SnapScan", category: "qr", logoAssetPath: "brandfetch/snapscan.svg", logoLabel: "SnapScan", tradeOnly: false },
+  { key: "ZAPPER", displayName: "Zapper", category: "qr", logoAssetPath: "brandfetch/zapper.png", tradeOnly: false },
   {
     key: "PAYJUSTNOW",
     displayName: "PayJustNow",
     category: "bnpl",
-    logoAssetPath: "peach/payjustnow.svg",
+    logoAssetPath: "brandfetch/payjustnow.svg",
     tradeOnly: false,
     instalments: "3 payments — 1/3 upfront, 2 more on your salary date. 0% interest, no fees on time.",
   },
@@ -43,7 +47,7 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
     tradeOnly: false,
     instalments: "4 payments over 6 weeks, interest-free and fee-free.",
   },
-  { key: "MOBICRED", displayName: "Mobicred", category: "bnpl", logoAssetPath: "payfast/mobicred.svg", tradeOnly: false, instalments: "Revolving credit — one monthly payment for all your spend." },
+  { key: "MOBICRED", displayName: "Mobicred", category: "bnpl", logoAssetPath: "brandfetch/mobicred.png", logoOnDark: true, tradeOnly: false, instalments: "Revolving credit — one monthly payment for all your spend." },
   { key: "MORETYME", displayName: "MoreTyme", category: "bnpl", logoAssetPath: "payfast/moretyme.svg", tradeOnly: false },
   {
     key: "HAPPY_PAY",
@@ -61,7 +65,7 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
     tradeOnly: false,
     instalments: "Up to 24 monthly instalments, zero interest, zero fees — uses your existing card's available credit.",
   },
-  { key: "OZOW", displayName: "Ozow", category: "eft", logoAssetPath: "roofsteel-shared/ozow.svg", tradeOnly: false },
+  { key: "OZOW", displayName: "Ozow", category: "eft", logoAssetPath: "brandfetch/ozow.svg", tradeOnly: false },
   { key: "STITCH", displayName: "Stitch", category: "eft", logoAssetPath: "brandfetch/stitch.svg", tradeOnly: false },
   {
     key: "LULAPAY",
