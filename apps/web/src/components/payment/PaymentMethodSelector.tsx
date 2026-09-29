@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { PAYMENT_METHODS } from "@/data/payment-methods";
+import { PaymentLogo } from "@/components/payment/PaymentLogo";
 import { payForOrder } from "@/app/account/actions";
 
 export type EligibleMethods = { recommended: { methodKey: string }[]; available: { methodKey: string }[] };
@@ -50,8 +51,7 @@ export function PaymentMethodSelector({ orderId, eligible }: { orderId: string; 
                   chosen === methodKey ? "border-seam-blue" : "border-basalt/10 hover:border-seam-blue"
                 }`}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element -- provider logo (see PAYMENT_ASSETS.md) */}
-                <img src={`/payment-logos/${method.logoAssetPath}`} alt="" className="h-6" />
+                <PaymentLogo method={method} decorative />
                 <span className="font-body text-sm font-semibold text-basalt">{method.displayName}</span>
                 {method.instalments && <span className="font-body text-[11px] text-slate">{method.instalments}</span>}
               </button>
