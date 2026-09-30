@@ -1,16 +1,18 @@
 import Link from "next/link";
 import { MaterialSwatch } from "@/components/product/MaterialSwatch";
+import { PendingPhotoTag } from "@/components/product/PendingPhotoTag";
 import { headlineUnit, type PackagedProduct } from "@/data/packaged";
 import { formatZAR } from "@/lib/pricing";
 
 /** Listing card for CAT-10/11 packaged goods: a real price only where the unit is benchmarked. */
-export function PackagedProductCard({ product }: { product: PackagedProduct & { images?: { src: string; alt: string }[] } }) {
+export function PackagedProductCard({ product }: { product: PackagedProduct & { images?: { src: string; alt: string; pending?: boolean }[] } }) {
   const headline = headlineUnit(product);
   const photo = product.images?.[0];
   const href = `/products/${product.slug}`;
   return (
     <div className="group flex flex-col rounded-sm border border-basalt/10 bg-white p-4 transition hover:border-seam-blue hover:shadow-sm">
-      <Link href={href} tabIndex={-1} aria-hidden="true">
+      <Link href={href} tabIndex={-1} aria-hidden="true" className="relative block">
+        {photo?.pending && <PendingPhotoTag />}
         {photo ? (
           // eslint-disable-next-line @next/next/no-img-element -- served and cached by our own image route
           <img src={photo.src} alt={photo.alt} loading="lazy" className="h-28 w-full rounded-sm object-cover" />

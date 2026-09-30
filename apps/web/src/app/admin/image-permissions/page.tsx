@@ -64,6 +64,12 @@ export default async function ImagePermissionsPage({ searchParams }: { searchPar
           the storefront until the owner agrees: email each source (a draft is on every card), then record their answer here.
           {isAdmin ? "" : " Only admins can record permission."} See PRODUCT_IMAGES.md for why each photo was chosen.
         </p>
+        <p className="mt-3">
+          <a href="/api/preview/photos?on&next=/products" className="inline-block rounded-sm bg-basalt px-3 py-1.5 text-xs font-semibold text-limestone hover:bg-seam-blue">
+            Preview the storefront with these photos
+          </a>
+          <span className="ml-2 text-xs text-slate">Only you see them, tagged &ldquo;awaiting permission&rdquo;; exit from the banner.</span>
+        </p>
         <p className="mt-3 font-mono text-[11px] text-slate">
           {all.length} sources · <span className="text-ochre-gold">{pendingPhotos} photos awaiting permission</span> · <span className="text-seam-blue">{livePhotos} live</span>
         </p>

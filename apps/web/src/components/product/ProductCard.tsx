@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { pricePoints, type Product } from "@/data/catalogue";
 import { MaterialSwatch } from "@/components/product/MaterialSwatch";
+import { PendingPhotoTag } from "@/components/product/PendingPhotoTag";
 import { formatZAR } from "@/lib/pricing";
 
 type Mode = "bulk" | "bag";
@@ -16,7 +17,7 @@ export function ProductCard({
   product,
   preferBag = false,
 }: {
-  product: Product & { images?: { src: string; alt: string }[] };
+  product: Product & { images?: { src: string; alt: string; pending?: boolean }[] };
   preferBag?: boolean;
 }) {
   const photo = product.images?.[0];
@@ -30,7 +31,8 @@ export function ProductCard({
 
   return (
     <div className="group flex flex-col rounded-sm border border-basalt/10 bg-white p-4 transition hover:border-seam-blue hover:shadow-sm">
-      <Link href={href} tabIndex={-1} aria-hidden="true">
+      <Link href={href} tabIndex={-1} aria-hidden="true" className="relative block">
+        {photo?.pending && <PendingPhotoTag />}
         {photo ? (
           // eslint-disable-next-line @next/next/no-img-element -- served and cached by our own image route
           <img src={photo.src} alt={photo.alt} loading="lazy" className="h-28 w-full rounded-sm object-cover" />

@@ -18,6 +18,12 @@ imported **hidden** (`PERMISSION_PENDING`):
   page links and a draft permission-request email;
 - the public never does. They're left out of the storefront, the product API,
   the Meta catalogue feed, and the image route (a direct link returns 404);
+- to see the store as it will look, staff click **Preview the storefront with
+  these photos** (on Admin → Image permissions). It uses Next.js draft mode,
+  for that browser only: pending photos appear on the real storefront with an
+  orange "Awaiting permission" tag and a banner with **Exit preview**. Visitors
+  and customers keep the normal cached store, and the API still checks the
+  staff session on every photo;
 - when a source agrees, an admin clicks **Permission received — publish** on
   its card, and all of that source's photos go live at once. **Withdraw** hides
   them again. Single photos can also be held back or cleared from the product
