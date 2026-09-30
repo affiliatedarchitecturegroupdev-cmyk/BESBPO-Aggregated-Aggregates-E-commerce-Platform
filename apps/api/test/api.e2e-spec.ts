@@ -13,6 +13,7 @@ import { createHmac } from "crypto";
 import request from "supertest";
 import { AppModule } from "../src/app.module";
 import { PrismaService } from "../src/common/prisma.service";
+import { readManifest, seedProductImages } from "../src/merchandising/seed-product-images";
 
 const run = Date.now().toString(36);
 const password = "correct-horse-battery";
@@ -1140,6 +1141,74 @@ describe("Aggregated Aggregates API (e2e)", () => {
         if (saved.inclusive === undefined) delete process.env.PRICES_INCLUDE_VAT;
         else process.env.PRICES_INCLUDE_VAT = saved.inclusive;
       }
+    });
+  });
+
+  describe("sourced product photography", () => {
+    const manifest = readManifest();
+    const firstSku = Object.keys(manifest.products)[0];
+
+    it("imports sourced photos once, hidden until an admin records permission for their source", async () => {
+      const created = await seedProductImages(prisma as never);
+      expect(created).toBe(Object.values(manifest.products).flat().length);
+      expect(await seedProductImages(prisma as never)).toBe(0); // idempotent
+
+      const staff = await register("photostaff");
+      await prisma.user.update({ where: { email: `photostaff-${run}@example.com` }, data: { role: "STAFF" } });
+      const admin = await register("photoadmin");
+      await prisma.user.update({ where: { email: `photoadmin-${run}@example.com` }, data: { role: "ADMIN" } });
+      const as = (t: string) => ({ Authorization: `Bearer ${t}` });
+
+      // The public catalogue shows none of them; staff see them, with their source.
+      const publicOverlay = await http().get("/merchandising/products").expect(200);
+      const publicSku = publicOverlay.body.find((p: { sku: string }) => p.sku === firstSku);
+      expect(publicSku.images).toEqual([]);
+      await http().get("/merchandising/staff/products").expect(401);
+      const staffOverlay = await http().get("/merchandising/staff/products").set(as(staff)).expect(200);
+      const staffImages = staffOverlay.body.find((p: { sku: string }) => p.sku === firstSku).images;
+      expect(staffImages.length).toBe(manifest.products[firstSku].length);
+      expect(staffImages[0]).toMatchObject({ licence: "PERMISSION_PENDING", sourceName: expect.any(String) });
+      const slug = (await prisma.product.findUniqueOrThrow({ where: { sku: firstSku } })).slug;
+      expect((await http().get(`/products/${slug}`).expect(200)).body.images).toEqual([]);
+
+      // A pending photo can't be fetched by link — except by staff, uncached.
+      const id = staffImages[0].id;
+      await http().get(`/merchandising/images/${id}`).expect(404);
+      const preview = await http().get(`/merchandising/images/${id}`).set(as(staff)).buffer(true).expect(200);
+      expect(preview.headers["content-type"]).toBe("image/webp");
+      expect(preview.headers["cache-control"]).toBe("private, no-store");
+      expect(Buffer.from(preview.body).subarray(8, 12).toString()).toBe("WEBP");
+
+      // Recording permission is an admin decision, per source.
+      const sources = await http().get("/merchandising/image-sources").set(as(staff)).expect(200);
+      const source = sources.body.find((s: { sourceName: string }) => s.sourceName === staffImages[0].sourceName);
+      expect(source.pending).toBeGreaterThan(0);
+      await http().post("/merchandising/image-sources/licence").set(as(staff)).send({ sourceName: source.sourceName, licence: "CLEARED" }).expect(403);
+      await http().post("/merchandising/image-sources/licence").set(as(admin)).send({ sourceName: source.sourceName, licence: "REMOVED" }).expect(400);
+      const cleared = await http().post("/merchandising/image-sources/licence").set(as(admin)).send({ sourceName: source.sourceName, licence: "CLEARED" }).expect(200);
+      expect(cleared.body.updated).toBe(source.pending);
+
+      const live = await http().get(`/merchandising/images/${id}`).buffer(true).expect(200);
+      expect(live.headers["cache-control"]).toBe("public, max-age=3600");
+      const nowPublic = (await http().get("/merchandising/products").expect(200)).body.find((p: { sku: string }) => p.sku === firstSku);
+      expect(nowPublic.images.map((i: { id: string }) => i.id)).toContain(id);
+
+      // One photo can be held back on its own; withdrawing the source hides the rest again.
+      await http().patch(`/merchandising/images/${id}/licence`).set(as(admin)).send({ licence: "PERMISSION_PENDING" }).expect(200);
+      await http().get(`/merchandising/images/${id}`).expect(404);
+      await http().post("/merchandising/image-sources/licence").set(as(admin)).send({ sourceName: source.sourceName, licence: "PERMISSION_PENDING" }).expect(200);
+      expect((await http().get("/merchandising/products").expect(200)).body.find((p: { sku: string }) => p.sku === firstSku).images).toEqual([]);
+
+      // Removing an imported photo hides it for good; the next deploy doesn't bring it back.
+      await http().delete(`/merchandising/images/${id}`).set(as(staff)).expect(204);
+      await http().get(`/merchandising/images/${id}`).set(as(staff)).expect(404);
+      expect(await seedProductImages(prisma as never)).toBe(0);
+      const after = (await http().get("/merchandising/staff/products").set(as(staff)).expect(200)).body.find((p: { sku: string }) => p.sku === firstSku);
+      expect(after.images.map((i: { id: string }) => i.id)).not.toContain(id);
+
+      // The Meta catalogue feed never lists a product on the strength of a pending photo.
+      const feed = await http().get("/channels/catalogue-feed.csv").expect(200);
+      expect(feed.text).not.toContain(id);
     });
   });
 });

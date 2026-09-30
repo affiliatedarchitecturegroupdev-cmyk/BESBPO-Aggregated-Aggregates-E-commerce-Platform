@@ -19,7 +19,7 @@ export class CatalogueService {
         category: params.categorySlug ? { slug: params.categorySlug } : undefined,
         name: params.search ? { contains: params.search, mode: "insensitive" } : undefined,
       },
-      include: { category: true, priceBand: true, packagedPriceBands: true, images: true },
+      include: { category: true, priceBand: true, packagedPriceBands: true, images: { where: { licence: "CLEARED" }, orderBy: { sortOrder: "asc" } } },
       orderBy: { name: "asc" },
     });
   }
@@ -31,7 +31,7 @@ export class CatalogueService {
         category: true,
         priceBand: true,
         packagedPriceBands: true,
-        images: { orderBy: { sortOrder: "asc" } },
+        images: { where: { licence: "CLEARED" }, orderBy: { sortOrder: "asc" } }, // public: cleared photography only
         complianceDocuments: true,
       },
     });

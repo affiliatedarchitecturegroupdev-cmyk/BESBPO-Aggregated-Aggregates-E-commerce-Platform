@@ -1,4 +1,4 @@
-import { IsBoolean, IsInt, IsOptional, IsString, Max, MaxLength, Min, ValidateIf } from "class-validator";
+import { IsBoolean, IsIn, IsInt, IsOptional, IsString, Max, MaxLength, Min, MinLength, ValidateIf } from "class-validator";
 
 export class UpdateProductMerchandisingDto {
   @IsOptional() @IsString() @MaxLength(4000) description?: string;
@@ -15,4 +15,12 @@ export class UpdateProductMerchandisingDto {
 
 export class UploadProductImageDto {
   @IsOptional() @IsString() @MaxLength(160) altText?: string;
+}
+
+export class SetLicenceDto {
+  @IsIn(["CLEARED", "PERMISSION_PENDING"]) licence!: "CLEARED" | "PERMISSION_PENDING";
+}
+
+export class SetSourceLicenceDto extends SetLicenceDto {
+  @IsString() @MinLength(1) @MaxLength(200) sourceName!: string;
 }

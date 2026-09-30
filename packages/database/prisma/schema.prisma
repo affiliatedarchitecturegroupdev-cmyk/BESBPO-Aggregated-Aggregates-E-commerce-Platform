@@ -180,18 +180,35 @@ model Product {
 
 /// Product photography uploaded by staff, stored in object storage and
 /// served publicly through the API.
+/// Whether a product photo may be shown publicly. Staff uploads are CLEARED
+/// (their own photography); sourced candidates arrive PERMISSION_PENDING and
+/// only reach the storefront once staff record the source's permission.
+/// REMOVED keeps a deleted imported photo's record so the deploy import
+/// doesn't bring it back.
+enum ImageLicence {
+  CLEARED
+  PERMISSION_PENDING
+  REMOVED
+}
+
 model ProductImage {
-  id          String   @id @default(cuid())
+  id          String       @id @default(cuid())
   productId   String
-  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  storageKey  String   @unique
+  product     Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  storageKey  String       @unique // "seed:<file>" for images served from the repository's sourced set
   contentType String
   sizeBytes   Int
   altText     String?
-  sortOrder   Int      @default(0)
-  createdAt   DateTime @default(now())
+  sortOrder   Int          @default(0)
+  licence     ImageLicence @default(CLEARED)
+  sourceName  String? // who owns the photo, for sourced candidates
+  sourceUrl   String?
+  sourceNote  String? // flags and sourcing notes shown to staff
+  importKey   String?      @unique // "<sku>:<file>" for the deploy import
+  createdAt   DateTime     @default(now())
 
   @@index([productId])
+  @@index([sourceName])
 }
 
 /// Editable storefront copy (announcement bar, homepage hero, trade promo),

@@ -20,12 +20,13 @@ export class CatalogueFeedService {
 
   async rows(site = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://aggregates.store").replace(/\/+$/, "")) {
     const products = await this.prisma.product.findMany({
-      where: { isActive: true, images: { some: {} } },
+      // Only photos we're cleared to publish ever go to Meta.
+      where: { isActive: true, images: { some: { licence: "CLEARED" } } },
       include: {
         category: true,
         priceBand: true,
         packagedPriceBands: true,
-        images: { orderBy: { sortOrder: "asc" }, take: 1 },
+        images: { where: { licence: "CLEARED" }, orderBy: { sortOrder: "asc" }, take: 1 },
       },
       orderBy: { sku: "asc" },
     });
