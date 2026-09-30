@@ -55,10 +55,13 @@ On each API deploy, the pre-deploy step runs:
    (87 verified partners and 18 B2B leads on the first deploy). Existing
    suppliers — and staff edits to them — are never touched.
 4. `apps/api/dist/merchandising/seed-product-images.js`, which attaches the
-   sourced product photos in `packages/database/prisma/seed-data/product-images`
-   to their products, hidden until staff record the source's permission
-   (`PRODUCT_IMAGES.md`). It only adds photos it hasn't imported before, so
-   staff decisions survive every deploy.
+   product photos in `packages/database/prisma/seed-data/product-images` to
+   their products. Open-licence photos go live; sourced photos stay hidden
+   until staff record the source's permission (`PRODUCT_IMAGES.md`). It only
+   adds photos it hasn't imported before, so staff decisions survive every
+   deploy. The API also runs the same import each time it starts, so photos
+   arrive even if a service's pre-deploy command predates this step. Look for
+   `Product photos: N added on startup; M live.` in the API's logs.
 
 ## 3. Check the deploy
 
