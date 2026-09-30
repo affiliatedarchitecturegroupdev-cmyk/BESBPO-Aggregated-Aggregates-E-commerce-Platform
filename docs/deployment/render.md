@@ -22,8 +22,15 @@ create a Render database.
    put your database password into each:
    - **`DATABASE_URL`**: the **Transaction pooler** URI (port `6543`), with
      `?pgbouncer=true&connection_limit=1` appended. The API uses it at runtime.
-   - **`DIRECT_URL`**: the **Session pooler** or direct URI (port `5432`).
-     Prisma uses it to run migrations.
+   - **`DIRECT_URL`**: the **Session pooler** URI (port `5432`, host
+     `aws-0-<region>.pooler.supabase.com`). Prisma uses it to run migrations.
+     Don't use the **Direct connection** URI (`db.<project>.supabase.co`):
+     it's IPv6-only, Render can't reach it, and every API deploy then fails
+     at `prisma migrate deploy` with `P1001: Can't reach database server`.
+
+   Both URIs use the user `postgres.<project-ref>`. If the password contains
+   characters such as `@`, `#`, `/` or `%`, URL-encode them (for example `@`
+   becomes `%40`), or reset the password to letters and digits.
 
 ## 2. Create the Blueprint
 
