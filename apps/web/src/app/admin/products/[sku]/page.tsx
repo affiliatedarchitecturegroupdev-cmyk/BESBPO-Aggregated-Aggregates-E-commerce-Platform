@@ -62,9 +62,9 @@ export default async function AdminProductPage({ params }: { params: { sku: stri
                 <span className="min-w-0 flex-1 font-body text-xs text-slate">
                   {image.id === firstLive && <strong className="block text-basalt">Main photo</strong>}
                   {image.licence === "PERMISSION_PENDING" ? (
-                    <span className="block font-semibold text-ochre-gold">Hidden — awaiting permission</span>
+                    <span className="block font-semibold text-ochre-gold">{image.licenceName ? "Hidden by staff" : "Hidden — awaiting permission"}</span>
                   ) : (
-                    <span className="block text-seam-blue">Live</span>
+                    <span className="block text-seam-blue">Live{image.licenceName ? ` — open licence (${image.licenceName})` : ""}</span>
                   )}
                   {image.sourceName ? (
                     <span className="block">
@@ -78,12 +78,13 @@ export default async function AdminProductPage({ params }: { params: { sku: stri
                   ) : (
                     <span className="block">{image.altText ?? "Uploaded by staff"}</span>
                   )}
+                  {image.credit && <span className="block text-[10px]">Credit shown on the page: {image.credit}</span>}
                   {image.sourceNote && <span className="block text-[10px]">{image.sourceNote}</span>}
                   {isAdmin && image.sourceName && (
                     <form action={setImageLicence} className="mt-1">
                       <input type="hidden" name="id" value={image.id} />
                       <input type="hidden" name="licence" value={image.licence === "CLEARED" ? "PERMISSION_PENDING" : "CLEARED"} />
-                      <button className="text-seam-blue hover:underline">{image.licence === "CLEARED" ? "Hide this photo" : "Permission received — show this photo"}</button>
+                      <button className="text-seam-blue hover:underline">{image.licence === "CLEARED" ? "Hide this photo" : image.licenceName ? "Show this photo" : "Permission received — show this photo"}</button>
                     </form>
                   )}
                 </span>

@@ -1,9 +1,16 @@
 /**
  * Deploy-time import of the sourced product photography in
  * packages/database/prisma/seed-data/product-images (manifest.json + WebP
- * files). Each photo is attached to its products as PERMISSION_PENDING —
- * visible to staff, never to the public — until staff record permission for
- * its source in Admin → Image permissions (PRODUCT_IMAGES.md).
+ * files). Two kinds of photo live there:
+ *
+ * - Open-licence photos (an `openLicence` entry — Wikimedia Commons CC0,
+ *   public domain, CC BY, CC BY-SA) are published straight away as CLEARED,
+ *   with the licence and any required credit stored for the storefront.
+ * - Everything else was found on other companies' websites and is attached as
+ *   PERMISSION_PENDING — visible to staff, never to the public — until staff
+ *   record permission for its source in Admin → Image permissions.
+ *
+ * See PRODUCT_IMAGES.md.
  *
  * Create-only and idempotent: a photo already imported for a product (by
  * importKey, even if staff since removed it) is never touched again, so
@@ -28,6 +35,15 @@ export type SeedImage = {
   sourcePage: string | null;
   sourcingNote: string | null;
   flags: ("LOW_RES" | "BRAND_VISIBLE" | "NON_SA" | "SHARED")[];
+  /** Set only for photos under a licence that already allows commercial use. */
+  openLicence?: OpenLicence;
+};
+export type OpenLicence = {
+  name: string; // "CC BY-SA 4.0", "CC0", "Public domain"
+  url: string | null;
+  author: string;
+  /** The credit line the licence requires on the page; null for CC0 / public domain. */
+  credit: string | null;
 };
 export type SeedManifest = { images: SeedImage[]; products: Record<string, string[]> };
 
@@ -68,6 +84,7 @@ export async function seedProductImages(prisma: PrismaClient, dir = SEED_IMAGE_D
       const path = seedImagePath(file, dir);
       if (existing.has(importKey) || !image || !path || !existsSync(path)) continue;
       const notes = [image.sourcingNote, ...image.flags.map((f) => FLAG_NOTE[f])].filter(Boolean).join(" · ");
+      const open = image.openLicence;
       await prisma.productImage.create({
         data: {
           productId: id,
@@ -77,10 +94,13 @@ export async function seedProductImages(prisma: PrismaClient, dir = SEED_IMAGE_D
           sizeBytes: image.bytes,
           altText: null,
           sortOrder: order++,
-          licence: "PERMISSION_PENDING",
+          licence: open ? "CLEARED" : "PERMISSION_PENDING",
           sourceName: image.source,
           sourceUrl: image.sourcePage,
           sourceNote: notes || null,
+          licenceName: open?.name ?? null,
+          licenceUrl: open?.url ?? null,
+          credit: open?.credit ?? null,
           importKey,
         },
       });
@@ -93,7 +113,7 @@ export async function seedProductImages(prisma: PrismaClient, dir = SEED_IMAGE_D
 if (require.main === module) {
   const prisma = new PrismaClient();
   seedProductImages(prisma)
-    .then((created) => console.log(`Product images: ${created} sourced photo(s) added, awaiting permission.`))
+    .then((created) => console.log(`Product images: ${created} photo(s) added.`))
     .catch((error) => {
       console.error(error);
       process.exitCode = 1;

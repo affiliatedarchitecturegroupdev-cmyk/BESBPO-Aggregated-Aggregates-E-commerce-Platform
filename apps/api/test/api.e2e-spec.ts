@@ -339,7 +339,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
       expect(overlay.body).toHaveLength(55); // 48 aggregates + 7 B2B packaged goods
       expect(overlay.body.find((p: { sku: string }) => p.sku === sku)).toMatchObject({
         featuredRank: 2,
-        images: [{ id: image.body.id, altText: "Filter media stockpile" }],
+        images: expect.arrayContaining([expect.objectContaining({ id: image.body.id, altText: "Filter media stockpile" })]),
       });
 
       // Hidden products drop out of the catalogue and can't be quoted or ordered.
@@ -1146,9 +1146,14 @@ describe("Aggregated Aggregates API (e2e)", () => {
 
   describe("sourced product photography", () => {
     const manifest = readManifest();
-    const firstSku = Object.keys(manifest.products)[0];
+    const openFiles = new Set(manifest.images.filter((i) => i.openLicence).map((i) => i.file));
+    // A product whose photos all still need their owner's permission, and one with a credited open-licence photo.
+    const firstSku = Object.keys(manifest.products).find((sku) => manifest.products[sku].every((f) => !openFiles.has(f)))!;
+    const creditedFile = manifest.images.find((i) => i.openLicence?.credit)!;
+    const creditedSku = Object.keys(manifest.products).find((sku) => manifest.products[sku][0] === creditedFile.file)!;
 
     it("imports sourced photos once, hidden until an admin records permission for their source", async () => {
+      await prisma.productImage.deleteMany({ where: { importKey: { not: null } } }); // a clean import, whatever ran before
       const created = await seedProductImages(prisma as never);
       expect(created).toBe(Object.values(manifest.products).flat().length);
       expect(await seedProductImages(prisma as never)).toBe(0); // idempotent
@@ -1209,6 +1214,32 @@ describe("Aggregated Aggregates API (e2e)", () => {
       // The Meta catalogue feed never lists a product on the strength of a pending photo.
       const feed = await http().get("/channels/catalogue-feed.csv").expect(200);
       expect(feed.text).not.toContain(id);
+    });
+
+    it("publishes open-licence photos straight away, with the credit their licence requires", async () => {
+      const overlay = (await http().get("/merchandising/products").expect(200)).body.find((p: { sku: string }) => p.sku === creditedSku);
+      const photo = overlay.images[0];
+      expect(photo).toMatchObject({
+        licenceName: creditedFile.openLicence!.name,
+        licenceUrl: creditedFile.openLicence!.url,
+        credit: creditedFile.openLicence!.credit,
+        sourceUrl: creditedFile.sourcePage,
+      });
+      expect(photo).not.toHaveProperty("sourceNote"); // staff-only
+      const live = await http().get(`/merchandising/images/${photo.id}`).buffer(true).expect(200);
+      expect(live.headers["cache-control"]).toBe("public, max-age=3600");
+      const slug = (await prisma.product.findUniqueOrThrow({ where: { sku: creditedSku } })).slug;
+      expect((await http().get(`/products/${slug}`).expect(200)).body.images[0].credit).toBe(creditedFile.openLicence!.credit);
+
+      // They need nobody's permission, so they're not on the permissions checklist.
+      const staff = await register("openstaff");
+      await prisma.user.update({ where: { email: `openstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      const sources = await http().get("/merchandising/image-sources").set("Authorization", `Bearer ${staff}`).expect(200);
+      expect(sources.body.map((s: { sourceName: string }) => s.sourceName)).not.toContain("Wikimedia Commons");
+
+      // An ad can't carry a credit line, so credited photos stay out of the Meta feed.
+      const feed = await http().get("/channels/catalogue-feed.csv").expect(200);
+      expect(feed.text).not.toContain(photo.id);
     });
   });
 });

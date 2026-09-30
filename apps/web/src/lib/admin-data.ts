@@ -32,6 +32,10 @@ export type AdminImage = {
   sourceUrl: string | null;
   sourceNote: string | null;
   importKey: string | null;
+  /** Set for open-licence photos (CC0, public domain, CC BY, CC BY-SA). */
+  licenceName: string | null;
+  licenceUrl: string | null;
+  credit: string | null;
 };
 
 /** Live (uncached) merchandising state for the admin, including hidden products. */

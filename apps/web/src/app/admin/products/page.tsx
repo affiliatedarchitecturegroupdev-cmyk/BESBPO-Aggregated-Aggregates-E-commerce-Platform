@@ -3,7 +3,7 @@ import { CATEGORIES } from "@/data/categories";
 import { adminCatalogue, type AdminProduct } from "@/lib/admin-data";
 
 const live = (p: AdminProduct) => p.images.filter((i) => i.licence === "CLEARED").length;
-const pending = (p: AdminProduct) => p.images.filter((i) => i.licence === "PERMISSION_PENDING").length;
+const pending = (p: AdminProduct) => p.images.filter((i) => i.licence === "PERMISSION_PENDING" && !i.licenceName).length;
 
 export const metadata = { title: "Products" };
 

@@ -14,19 +14,22 @@ const READY = "Ready — benchmarked";
  * feed — and only products with a photo (Meta requires image_link) and a
  * real price: packaged units without a benchmark are left out.
  */
+const FEED_IMAGE = { licence: "CLEARED", credit: null } as const;
+
 @Injectable()
 export class CatalogueFeedService {
   constructor(private readonly prisma: PrismaService) {}
 
   async rows(site = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://aggregates.store").replace(/\/+$/, "")) {
     const products = await this.prisma.product.findMany({
-      // Only photos we're cleared to publish ever go to Meta.
-      where: { isActive: true, images: { some: { licence: "CLEARED" } } },
+      // Only photos we're cleared to publish ever go to Meta — and not ones whose
+      // licence requires a credit line, which an ad can't carry.
+      where: { isActive: true, images: { some: FEED_IMAGE } },
       include: {
         category: true,
         priceBand: true,
         packagedPriceBands: true,
-        images: { where: { licence: "CLEARED" }, orderBy: { sortOrder: "asc" }, take: 1 },
+        images: { where: FEED_IMAGE, orderBy: { sortOrder: "asc" }, take: 1 },
       },
       orderBy: { sku: "asc" },
     });

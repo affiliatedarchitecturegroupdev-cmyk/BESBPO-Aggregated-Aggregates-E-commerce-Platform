@@ -145,11 +145,15 @@ unreviewed work.
 - Payment-method logos: 15 of 18 are official files (PayFast's logo pack,
   then Brandfetch); Float, Lulapay and EFT/PO are still placeholders, as are
   the social icons (`PAYMENT_ASSETS.md`).
-- Product photography: 92 sourced photos (55 distinct) are attached to 43 of
-  the 48 SKUs but hidden until each source company gives permission —
-  record it in `/admin/image-permissions` (`PRODUCT_IMAGES.md`). Never publish
-  a sourced photo without permission. G3, G6, G7, G10 and Silica Sand still
-  have none; 9 files arrived damaged and need re-sending.
+- Product photography (`PRODUCT_IMAGES.md`): 40 open-licence photos from
+  Wikimedia Commons (CC0 / public domain / CC BY / CC BY-SA) are live on 45
+  of the 48 SKUs, each with the credit its licence requires (under the
+  photo and on `/photo-credits`); credited photos never go to the Meta feed.
+  Kimi's 55 sourced photos stay hidden until each source company gives
+  permission — record it in `/admin/image-permissions`. Never publish a
+  photo without a licence that allows commercial use or the owner's
+  permission, and never drop a required credit. Hydrated lime, crushed brick
+  and crusher dust still have no live photo; 9 Kimi files arrived damaged.
 - Hero slideshow: 10 of the planned 10–12 licensed photos are sourced
   (`apps/web/src/data/media.ts`); staff manage captions, order and visibility
   in Site content.

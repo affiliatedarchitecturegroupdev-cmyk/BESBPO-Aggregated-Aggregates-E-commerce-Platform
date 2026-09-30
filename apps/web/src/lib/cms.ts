@@ -48,11 +48,22 @@ type Overlay = {
   isActive: boolean;
   description: string | null;
   featuredRank: number | null;
-  images: { id: string; altText: string | null; licence?: "CLEARED" | "PERMISSION_PENDING" }[];
+  images: {
+    id: string;
+    altText: string | null;
+    licence?: "CLEARED" | "PERMISSION_PENDING";
+    licenceName?: string | null;
+    licenceUrl?: string | null;
+    credit?: string | null;
+    sourceUrl?: string | null;
+  }[];
 };
 
+/** The credit an open-licence photo's licence requires next to it (see /photo-credits). */
+export type PhotoCredit = { text: string; licence: string; licenceUrl: string | null; sourceUrl: string | null };
+
 /** A product photo as the storefront shows it; `pending` only ever appears in a staff preview. */
-export type ProductPhoto = { src: string; alt: string; pending?: boolean };
+export type ProductPhoto = { src: string; alt: string; pending?: boolean; credit?: PhotoCredit };
 
 export type MerchandisedProduct = Product & {
   description: string | null;
@@ -83,6 +94,9 @@ const photos = (o: Overlay | undefined, name: string): ProductPhoto[] =>
     src: `/api/product-images/${img.id}`,
     alt: img.altText ?? name,
     ...(img.licence === "PERMISSION_PENDING" ? { pending: true } : {}),
+    ...(img.credit && img.licenceName
+      ? { credit: { text: img.credit, licence: img.licenceName, licenceUrl: img.licenceUrl ?? null, sourceUrl: img.sourceUrl ?? null } }
+      : {}),
   }));
 
 export type MerchandisedPackagedProduct = PackagedProduct & {

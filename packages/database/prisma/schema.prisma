@@ -205,6 +205,11 @@ model ProductImage {
   sourceUrl   String?
   sourceNote  String? // flags and sourcing notes shown to staff
   importKey   String?      @unique // "<sku>:<file>" for the deploy import
+  // Open-licence photos (Wikimedia Commons etc.): the licence and, when it
+  // requires one, the credit the storefront must show next to the photo.
+  licenceName String? // e.g. "CC BY-SA 4.0", "CC0", "Public domain"
+  licenceUrl  String?
+  credit      String? // required attribution ("Jane Doe, via Wikimedia Commons"); null when none is required
   createdAt   DateTime     @default(now())
 
   @@index([productId])

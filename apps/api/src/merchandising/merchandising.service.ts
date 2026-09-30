@@ -9,7 +9,9 @@ import { StorageService } from "../storage/storage.service";
 import { UpdateProductMerchandisingDto, UploadProductImageDto } from "./merchandising.dto";
 import { SEED_IMAGE_PREFIX, seedImagePath } from "./seed-product-images";
 
-const STAFF_IMAGE_FIELDS = { id: true, altText: true, licence: true, sourceName: true, sourceUrl: true, sourceNote: true, importKey: true } as const;
+/** What the public sees for each photo: open-licence photos carry the credit their licence requires. */
+export const PUBLIC_IMAGE_FIELDS = { id: true, altText: true, licenceName: true, licenceUrl: true, credit: true, sourceUrl: true } as const;
+const STAFF_IMAGE_FIELDS = { ...PUBLIC_IMAGE_FIELDS, licence: true, sourceName: true, sourceNote: true, importKey: true } as const;
 
 /**
  * CMS for the catalogue: descriptions, photography, visibility and featured
@@ -36,7 +38,7 @@ export class MerchandisingService {
         isActive: true,
         description: true,
         featuredRank: true,
-        images: { where: { licence: "CLEARED" }, orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }], select: { id: true, altText: true } },
+        images: { where: { licence: "CLEARED" }, orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }], select: PUBLIC_IMAGE_FIELDS },
       },
     });
   }
@@ -58,7 +60,8 @@ export class MerchandisingService {
   /** Staff: sourced photography grouped by who owns it — the permission checklist. */
   async imageSources() {
     const images = await this.prisma.productImage.findMany({
-      where: { sourceName: { not: null }, licence: { not: "REMOVED" } },
+      // Open-licence photos need nobody's permission, so they aren't on the checklist.
+      where: { sourceName: { not: null }, licenceName: null, licence: { not: "REMOVED" } },
       select: { id: true, licence: true, sourceName: true, sourceUrl: true, sourceNote: true, product: { select: { sku: true, name: true } } },
       orderBy: [{ sourceName: "asc" }],
     });
@@ -90,7 +93,7 @@ export class MerchandisingService {
   /** Admin: record (or withdraw) a source's permission — applies to all of its photos at once. */
   async setSourceLicence(sourceName: string, licence: "CLEARED" | "PERMISSION_PENDING") {
     const { count } = await this.prisma.productImage.updateMany({
-      where: { sourceName, licence: { not: "REMOVED" } },
+      where: { sourceName, licenceName: null, licence: { not: "REMOVED" } },
       data: { licence },
     });
     if (count === 0) throw new NotFoundException(`No photos from ${sourceName}.`);

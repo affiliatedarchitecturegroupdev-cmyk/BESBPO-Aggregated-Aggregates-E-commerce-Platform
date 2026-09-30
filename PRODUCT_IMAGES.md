@@ -1,12 +1,155 @@
-# Product Photography — Sourced Candidates
+# Product Photography
 
-Kimi sourced about 140 candidate photos (Sep 2026) for the 48-SKU catalogue,
-delivered as 9 image ZIPs plus a manifest. This file records what was done with
-them. The images themselves are in
-`packages/database/prisma/seed-data/product-images/` (WebP, ≤1200px, ≤400KB),
-listed in its `manifest.json`.
+The store's product photos come from two places:
 
-## Licensing — why nothing is live yet
+1. **Open-licence photos from Wikimedia Commons.** These are live now, with
+   the credit their licence requires.
+2. **Photos Kimi found on supplier and other websites.** These are hidden
+   until each owner gives permission.
+
+Both sets are in `packages/database/prisma/seed-data/product-images/`
+(WebP, ≤1200px), listed in its `manifest.json`. Open-licence entries carry
+an `openLicence` block (licence, URL, author, credit). Staff uploads (your
+own photography) always go live straight away.
+
+## Open-licence photos — live now
+
+To give the store real photos before launch, 40 photos were
+chosen from **Wikimedia Commons** (Sep 2026) under licences that allow
+commercial use: CC0, public domain, CC BY and CC BY-SA. No non-commercial
+(NC) or no-derivatives (ND) licences. They're imported as `CLEARED`, so
+they're **live on the storefront**: 45 of the 48 aggregates SKUs now
+have at least one, and they show before any Kimi photo.
+
+- **Credit.** CC BY and CC BY-SA require the photographer, source and
+  licence to be credited. The storefront shows that under the photo on the
+  product page ("Photo: *name*, via Wikimedia Commons · CC BY-SA 4.0", each
+  part linked), and on **/photo-credits**, which is linked in the footer.
+  CC0 and public-domain photos need no credit.
+- **Meta catalogue feed.** An ad can't carry a credit line, so photos that
+  need one are left out of the feed. Products whose only live photos need
+  credit stay out of the feed until you add your own photos.
+- **Nothing was edited.** The photos are only resized (≤1200px) and
+  re-encoded as WebP, which counts as a format change, not an adaptation.
+- **Context.** Wikimedia has few photos of South African aggregates. The
+  gravel-road photos are from the Northern Cape; the rest are from wherever
+  the material looks the same (by country: United States 8, India 7, United Kingdom 3, South Africa 3, Australia 2, unknown 2, Germany 2, Nigeria 2, Spain 1, Malaysia 1, Russia 1, Cyprus 1, Iraq 1, Nepal 1, United Arab Emirates 1, Switzerland 1, China 1, Japan 1, Estonia 1).
+  Many are shared by similar products (for example, one photo of 19mm
+  single-size stone serves the drainage stones), so they show the type of
+  material, not the exact grading.
+- **Staff control.** Admin → Products shows each photo as "Live — open
+  licence (CC …)" with its credit. **Hide this photo** takes any one down.
+  They don't appear on Admin → Image permissions, because no permission is
+  needed.
+- **How they were chosen.** Pexels and Unsplash photos can be downloaded,
+  but their search pages block automated access from this build
+  environment, and Pixabay blocks it entirely. So the photos came from
+  Wikimedia Commons, where every file's licence and author can be checked
+  through its API. Each one was checked visually against its product.
+
+**Not found (Kimi photos still pending):** hydrated lime (only brand-labelled
+bags), crushed brick aggregate, and crusher dust. Kimi's photos for these
+stay hidden until their owners agree.
+
+### Per product (open-licence photos)
+
+| SKU | Product | Photos | What they show |
+|---|---|---|---|
+| AA-SBC-01 | G1 Crushed Stone | 2 | Crushed-stone stockpiles at a limestone quarry (Germany); Pile of crushed gravel delivered to site (United States) |
+| AA-SBC-02 | G2 Crushed Stone | 2 | Pile of crushed gravel delivered to site (United States); Crushed-stone stockpiles at a limestone quarry (Germany) |
+| AA-SBC-03 | G3 Crushed Stone | 2 | Aggregate stockpiles at a limestone quarry (Germany); Pile of crushed gravel delivered to site (United States) |
+| AA-SBC-04 | G4 Natural Gravel (Crushed) | 2 | Pile of crushed gravel delivered to site (United States); Gravel road to Olifantshoek, Northern Cape (South Africa) |
+| AA-SBC-05 | G5 Natural Gravel | 2 | Gravel road to Olifantshoek, Northern Cape (South Africa); Stockpile of natural (pit) gravel (United States) |
+| AA-SBC-06 | G6 Natural Gravel | 2 | Gravel road near Fraserburg, Northern Cape (South Africa); Stockpile of natural (pit) gravel (United States) |
+| AA-SBC-07 | G7 Natural Gravel (Sub-base) | 2 | Gravel road near Fraserburg, Northern Cape (South Africa); Gravel road to Olifantshoek, Northern Cape (South Africa) |
+| AA-SBC-08 | G8 Gravel (Fill) | 2 | Stockpile of natural (pit) gravel (United States); Gravel road near Fraserburg, Northern Cape (South Africa) |
+| AA-SBC-09 | G9 Gravel (Fill) | 2 | Red gravelly soil in a cutting — typical of in-situ subgrade and fill material (India); Stockpile of natural (pit) gravel (United States) |
+| AA-SBC-10 | G10 Selected Fill / Subgrade Material | 1 | Red gravelly soil in a cutting — typical of in-situ subgrade and fill material (India) |
+| AA-CRS-01 | 6.7mm Crushed Stone (Dolomite) | 1 | 6–10 mm crushed limestone aggregate in the hand — shows the chip size (Spain) |
+| AA-CRS-02 | 9.5mm Crushed Stone (Dolomite) | 1 | 6–10 mm crushed limestone aggregate in the hand — shows the chip size (Spain) |
+| AA-CRS-03 | 13.2mm Crushed Stone (Dolomite) | 1 | Single-size crushed stone for concrete (India) |
+| AA-CRS-04 | 19mm Crushed Stone (Dolomite) | 2 | Single-size crushed stone for concrete (India); Crushed stone laid as a driveway (United States) |
+| AA-CRS-05 | 19mm Crushed Stone (Andesite/Hornfels) | 1 | Pile of dark crushed stone for concrete (India) |
+| AA-CRS-06 | 19mm Crushed Stone (Granite) | 2 | Close-up of crushed granite aggregate; Crushed granite chips (United States) |
+| AA-CRS-07 | 26.5mm Crushed Stone (Dolomite) | 2 | Crushed stone laid as a driveway (United States); Heap of pale crushed stone on a building site (India) |
+| AA-CRS-08 | 37.5mm Crushed Stone (Dolomite) | 2 | Heap of pale crushed stone on a building site (India); Crushed-stone stockpiles at a limestone quarry (Germany) |
+| AA-CRS-09 | 53mm Crushed Stone (Dolomite) | 2 | Heap of pale crushed stone on a building site (India); Crushed-stone stockpiles at a limestone quarry (Germany) |
+| AA-CRS-10 | Crusher Dust / Stone Dust | — | Kimi photos only (awaiting permission) |
+| AA-SND-01 | River Sand (Washed) | 2 | River sand being landed from the River Niger at Onitsha (Nigeria); Riverside sand stockpile with tipper trucks (China) |
+| AA-SND-02 | Plaster Sand | 2 | Washed sand stockpile under a quarry conveyor (Estonia); Heap of building sand for mixing mortar and concrete (Nigeria) |
+| AA-SND-03 | Building Sand (Unwashed) | 1 | Heap of building sand for mixing mortar and concrete (Nigeria) |
+| AA-SND-04 | Filling Sand | 2 | Riverside sand stockpile with tipper trucks (China); Heap of building sand for mixing mortar and concrete (Nigeria) |
+| AA-SND-05 | Concrete Sand | 2 | Heap of washed river sand, used as fine aggregate in mortar and concrete (India); Washed sand stockpile under a quarry conveyor (Estonia) |
+| AA-SND-06 | Screeding Sand | 1 | Washed sand stockpile under a quarry conveyor (Estonia) |
+| AA-SND-07 | Silica Sand | 2 | Heap of white silica sand (India); Close-up of coarse quartz (silica) sand grains (Japan) |
+| AA-CRR-01 | Crusher Run 0-19mm | 2 | Mixed crushed stone with fines (Nepal); Aggregate stockpiles at a limestone quarry (Germany) |
+| AA-CRR-02 | Crusher Run 0-40mm | 2 | Mixed crushed stone with fines (Nepal); Crushed-stone stockpiles at a limestone quarry (Germany) |
+| AA-CRR-03 | Rip Rap / Rock Armour | 2 | Rock-armour (riprap) revetment being built (United Arab Emirates); Riverbank protected with rip rap (Switzerland) |
+| AA-CRR-04 | Gabion Stone | 2 | Stepped gabion retaining wall (Malaysia); Close-up of stone-filled gabion baskets (Russia) |
+| AA-BAL-01 | Ferrocrete Ballast | 1 | Single-size crushed stone for concrete (India) |
+| AA-BAL-02 | Rail Ballast | 2 | Close-up of track ballast, Pimpama Station, Gold Coast (Australia); Rail ballast on a rural line (Great Northern line, Queensland) (Australia) |
+| AA-BAL-03 | Building Rubble / Ballast Mix | 2 | Pile of broken stone and concrete rubble on a building site (United Kingdom); Pile of crushed demolition rubble (United Kingdom) |
+| AA-DRN-01 | French Drain Stone | 2 | Crushed stone laid as a driveway (United States); Single-size crushed stone for concrete (India) |
+| AA-DRN-02 | Filter Media Aggregate | 1 | Single-size crushed stone for concrete (India) |
+| AA-DRN-03 | Weeping Tile Bedding Stone | 1 | Single-size crushed stone for concrete (India) |
+| AA-DRN-04 | Subsoil Drainage Stone | 1 | Crushed stone laid as a driveway (United States) |
+| AA-DEC-01 | River Pebble | 2 | Rounded natural pebbles; Smooth dark pebbles (Cyprus) |
+| AA-DEC-02 | Crushed Stone Chips (Decorative) | 2 | Pale decorative stone chips in a garden bed (United States); Decorative stone chips in a planted bed (United States) |
+| AA-DEC-03 | Pea Gravel | 2 | Pea gravel (India); Rounded gravel laid on a yard (Iraq) |
+| AA-DEC-04 | Mineral Stone Mulch | 1 | Smooth dark pebbles (Cyprus) |
+| AA-AGR-01 | Agricultural Lime (Calcitic) | 1 | Agricultural lime spread on a ploughed field (United Kingdom) |
+| AA-AGR-02 | Dolomitic Lime | 1 | Agricultural lime spread on a ploughed field (United Kingdom) |
+| AA-AGR-03 | Hydrated Lime | — | Kimi photos only (awaiting permission) |
+| AA-REC-01 | Recycled Crushed Concrete Aggregate (RCA) | 1 | Pile of crushed demolition rubble (United Kingdom) |
+| AA-REC-02 | Recycled Crushed Brick Aggregate | — | Kimi photos only (awaiting permission) |
+| AA-REC-03 | Reclaimed Asphalt Planings (RAP) | 2 | Road surface after the old asphalt was milled off (United States); Asphalt being milled off a road and loaded into a truck (United States) |
+
+### Credits
+
+| Photo | Author | Licence | Credit shown |
+|---|---|---|---|
+| [6–10 mm crushed limestone aggregate in the hand — shows the chip size](https://commons.wikimedia.org/wiki/File:Gravel_03375C.JPG) | Emadrazo | CC BY-SA 4.0 | yes |
+| [Aggregate stockpiles at a limestone quarry](https://commons.wikimedia.org/wiki/File:Wuppertal_-_Hahnenfurth_-_Oetelshofen-Steinbruchtag_048_ies.jpg) | Frank Vincentz | CC BY-SA 3.0 | yes |
+| [Agricultural lime spread on a ploughed field](https://commons.wikimedia.org/wiki/File:Lime_spread_on_a_field_-_geograph.org.uk_-_7994384.jpg) | Philip Halling | CC BY-SA 2.0 | yes |
+| [Asphalt being milled off a road and loaded into a truck](https://commons.wikimedia.org/wiki/File:2021-07-29_14_39_10_Asphalt_road_surface_being_milled_in_preparation_for_the_addition_of_a_fresh_asphalt_surface_along_Tranquility_Court_in_the_Franklin_Farm_section_of_Oak_Hill,_Fairfax_County,_Virginia.jpg) | Famartin | CC BY-SA 4.0 | yes |
+| [Close-up of coarse quartz (silica) sand grains](https://commons.wikimedia.org/wiki/File:Osorezan_Gokurakuhama_Big_quartz_sand_P9151325.JPG) | あおもりくま | CC BY-SA 3.0 | yes |
+| [Close-up of crushed granite aggregate](https://commons.wikimedia.org/wiki/File:Coarse_Granite_Aggregate_Texture.jpg) | Paul The Writer | CC0 | no |
+| [Close-up of stone-filled gabion baskets](https://commons.wikimedia.org/wiki/File:Moscow,_Starodanilovsky_Proezd_2c9,_gabion_wall_finishes,_Apr_2026_02.jpg) | Retired electrician | CC0 | no |
+| [Close-up of track ballast, Pimpama Station, Gold Coast](https://commons.wikimedia.org/wiki/File:Tracks_and_ballast,_Pimpama_Railway_Station,_Old_Pacific_Highway,_Gold_Coast_P1013627.jpg) | John Robert McPherson | CC0 | no |
+| [Crushed granite chips](https://commons.wikimedia.org/wiki/File:Gravel_3_2018-06-17.JPG) | FASTILY | CC BY-SA 4.0 | yes |
+| [Crushed stone laid as a driveway](https://commons.wikimedia.org/wiki/File:Gravel_driveway_(28119645366).jpg) | dankeck | CC0 | no |
+| [Crushed-stone stockpiles at a limestone quarry](https://commons.wikimedia.org/wiki/File:Wuppertal_-_Hahnenfurth_-_Oetelshofen-Steinbruchtag_061_ies.jpg) | Frank Vincentz | CC BY-SA 3.0 | yes |
+| [Decorative stone chips in a planted bed](https://commons.wikimedia.org/wiki/File:Gravel_2_2017-05-14.jpg) | FASTILY | CC BY-SA 4.0 | yes |
+| [Gravel road near Fraserburg, Northern Cape](https://commons.wikimedia.org/wiki/File:Fraserburg,_South_Africa_-_panoramio_(7).jpg) | Graham Maclachlan | CC BY-SA 3.0 | yes |
+| [Gravel road near Fraserburg, Northern Cape](https://commons.wikimedia.org/wiki/File:Fraserburg,_South_Africa_-_panoramio_(8).jpg) | Graham Maclachlan | CC BY-SA 3.0 | yes |
+| [Gravel road to Olifantshoek, Northern Cape](https://commons.wikimedia.org/wiki/File:Road_to_Olifantshoek_-_panoramio.jpg) | Graham Maclachlan | CC BY-SA 3.0 | yes |
+| [Heap of building sand for mixing mortar and concrete](https://commons.wikimedia.org/wiki/File:Pile_of_Sand_for_Building_in_Anambra_State.jpg) | Johnnybam | CC BY-SA 4.0 | yes |
+| [Heap of pale crushed stone on a building site](https://commons.wikimedia.org/wiki/File:KaMkara.JPG) | Bhaskaranaidu | Public domain | no |
+| [Heap of washed river sand, used as fine aggregate in mortar and concrete](https://commons.wikimedia.org/wiki/File:River_sand_mining_in_orissa.jpg) | Mahimagroups | CC BY-SA 3.0 | yes |
+| [Heap of white silica sand](https://commons.wikimedia.org/wiki/File:Silica_Sand_deposits,_Udupi_district,Karnataka_02.jpg) | ರವಿಮುಂ | CC BY-SA 4.0 | yes |
+| [Mixed crushed stone with fines](https://commons.wikimedia.org/wiki/File:Varieties_of_Gravel_in_different_shapes_and_size._01.jpg) | Sabina Bajracharya | CC BY-SA 4.0 | yes |
+| [Pale decorative stone chips in a garden bed](https://commons.wikimedia.org/wiki/File:Gravel_1_2017-05-14.jpg) | FASTILY | CC BY-SA 4.0 | yes |
+| [Pea gravel](https://commons.wikimedia.org/wiki/File:PEA_GRAVEL.jpg) | Ranjithkumar Murugesan | CC0 | no |
+| [Pile of broken stone and concrete rubble on a building site](https://commons.wikimedia.org/wiki/File:Pile_of_rubble_at_a_construction_site,_Trenwith_Lane,_St_Ives,_Cornwall_-_April_2025.jpg) | Mutney | CC BY 4.0 | yes |
+| [Pile of crushed demolition rubble](https://commons.wikimedia.org/wiki/File:A_pile_of_rubble_-_geograph.org.uk_-_7197655.jpg) | Anthony O'Neil | CC BY-SA 2.0 | yes |
+| [Pile of crushed gravel delivered to site](https://commons.wikimedia.org/wiki/File:Lone_pile_of_gravel_-_Hillsboro,_Oregon.JPG) | M.O. Stevens | CC BY-SA 3.0 | yes |
+| [Pile of dark crushed stone for concrete](https://commons.wikimedia.org/wiki/File:Stone_Crush_Metel.JPG) | RanjithSiji | CC BY-SA 3.0 | yes |
+| [Rail ballast on a rural line (Great Northern line, Queensland)](https://commons.wikimedia.org/wiki/File:Tracks_and_ballast,_Great_Northern_railway_line_at_Maxwelton,_2019.jpg) | Kerry Raymond | CC BY 4.0 | yes |
+| [Red gravelly soil in a cutting — typical of in-situ subgrade and fill material](https://commons.wikimedia.org/wiki/File:Coarsening_upward.jpg) | Saran Rengaraj | CC BY-SA 4.0 | yes |
+| [River sand being landed from the River Niger at Onitsha](https://commons.wikimedia.org/wiki/File:Sand_mining_from_the_River_Niger_in_Onitsha_Anambra_State,_Nigeria.jpg) | Ngostary2k | CC0 | no |
+| [Riverbank protected with rip rap](https://commons.wikimedia.org/wiki/File:Difesa_della_sponda_del_fiume_Maggia_con_massicciata.jpg) | Arkelin | CC BY 4.0 | yes |
+| [Riverside sand stockpile with tipper trucks](https://commons.wikimedia.org/wiki/File:Red_River_valley_between_Nanping_and_Hekou_-_P1380291.JPG) | Vmenkov | CC BY-SA 3.0 | yes |
+| [Road surface after the old asphalt was milled off](https://commons.wikimedia.org/wiki/File:2014-09-09_09_03_10_Asphalt_milled_in_preparation_for_new_asphalt_overlay_with_new_overlay_partially_applied_on_Idaho_Street_(Interstate_80_Business_and_Nevada_State_Route_535)_in_Elko,_Nevada.JPG) | Famartin | CC BY-SA 4.0 | yes |
+| [Rock-armour (riprap) revetment being built](https://commons.wikimedia.org/wiki/File:Revetment_Dubai.jpg) | Henk Jan Verhagen | CC BY-SA 4.0 | yes |
+| [Rounded gravel laid on a yard](https://commons.wikimedia.org/wiki/File:Gravel_in_Duhok.jpg) | Firm Foundations Duhok | CC BY-SA 4.0 | yes |
+| [Rounded natural pebbles](https://commons.wikimedia.org/wiki/File:Saltation.JPG) | The High Fin Sperm Whale | CC BY-SA 3.0 | yes |
+| [Single-size crushed stone for concrete](https://commons.wikimedia.org/wiki/File:Gravel_Stones.jpg) | Saral Shots | CC0 | no |
+| [Smooth dark pebbles](https://commons.wikimedia.org/wiki/File:Plage_de_Galets.jpg) | Bachelot Pierre J-P | CC BY-SA 3.0 | yes |
+| [Stepped gabion retaining wall](https://commons.wikimedia.org/wiki/File:Gabion_Wall.jpg) | Encik Tekateki | CC0 | no |
+| [Stockpile of natural (pit) gravel](https://commons.wikimedia.org/wiki/File:Sorted_gravel_pile_from_Pleistocene_glacial_outwash_(St._Louisville_gravel_pits,_Licking_County,_Ohio,_USA)_17_(45396483065).jpg) | James St. John | CC BY 2.0 | yes |
+| [Washed sand stockpile under a quarry conveyor](https://commons.wikimedia.org/wiki/File:Estonia_sand_stockpile_under_conveyor_(6256459049).jpg) | Peter Craven | CC BY 2.0 | yes |
+
+## Kimi-sourced photos — why they're hidden
 
 None of these photos has a confirmed licence for commercial use (Kimi's own
 notes say so): they come from supplier, marketplace, blog and editorial
@@ -221,9 +364,11 @@ Flags on placed photos:
 
 ## Still needed
 
-- **G3, G6, G7, G10 and Silica Sand** have no usable photo. G3 and G6 are
-  in the damaged files; the others had only a diagram, tiny images, or
-  foreign branded bags.
+- **G3, G6, G7, G10 and Silica Sand** had no usable Kimi photo. They now
+  have open-licence photos (see above).
+- **Hydrated lime, crushed brick aggregate and crusher dust** have no live
+  photo yet. There are no suitable open-licence photos, and Kimi's are
+  awaiting permission.
 - **Lime:** the calcitic and dolomitic lime photos are single branded bag
   shots. Ask your lime supplier for packshots.
 - **Packaged goods** (cement, grout, admixtures) weren't part of this set.

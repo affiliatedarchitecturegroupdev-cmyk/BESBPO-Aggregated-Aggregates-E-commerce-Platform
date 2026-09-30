@@ -41,7 +41,7 @@ export default async function AdminOverview() {
     {
       href: "/admin/image-permissions",
       label: "Sourced photos awaiting permission",
-      value: catalogue ? String(catalogue.reduce((n, p) => n + p.images.filter((i) => i.licence === "PERMISSION_PENDING").length, 0)) : "—",
+      value: catalogue ? String(catalogue.reduce((n, p) => n + p.images.filter((i) => i.licence === "PERMISSION_PENDING" && !i.licenceName).length, 0)) : "—",
     },
     { href: "/admin/suppliers?filter=active", label: "Active partner suppliers", value: count(suppliers) },
     {

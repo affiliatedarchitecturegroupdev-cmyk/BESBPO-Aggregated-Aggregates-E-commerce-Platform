@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { MaterialSwatch } from "./MaterialSwatch";
+import type { ProductPhoto } from "@/lib/cms";
 import { PendingPhotoTag } from "./PendingPhotoTag";
+import { PhotoCreditLine } from "./PhotoCreditLine";
 
 /** Product photography with thumbnails; the generated texture stands in until staff upload photos. */
 export function ProductGallery({
@@ -12,7 +14,7 @@ export function ProductGallery({
 }: {
   sku: string;
   categorySlug: string;
-  images: { src: string; alt: string; pending?: boolean }[];
+  images: ProductPhoto[];
 }) {
   const [active, setActive] = useState(0);
   if (images.length === 0) {
@@ -49,6 +51,7 @@ export function ProductGallery({
         </div>
       )}
       <p className="mt-2 font-mono text-[10px] text-slate">Photos show the material type — colour and grading vary by source.</p>
+      {current.credit && <PhotoCreditLine credit={current.credit} />}
     </div>
   );
 }
