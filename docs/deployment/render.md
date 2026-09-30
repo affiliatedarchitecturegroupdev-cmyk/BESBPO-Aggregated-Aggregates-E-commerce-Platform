@@ -48,6 +48,12 @@ create a Render database.
 
 On each API deploy, the pre-deploy step runs:
 
+0. `packages/database/scripts/check-database-urls.js`, which checks
+   `DATABASE_URL` and `DIRECT_URL` and stops the deploy with a plain-English
+   reason if either is broken: missing, still holding `[YOUR-PASSWORD]`, split
+   apart by special characters in the password, pointing at the IPv6-only
+   direct host, or on the wrong pooler port. It prints each URL with the
+   password replaced by `****`.
 1. `prisma migrate deploy`, which applies any new migrations in
    `packages/database/prisma/migrations`.
 2. `prisma/seed.ts`, which updates the 9 core categories, 48 products, price
