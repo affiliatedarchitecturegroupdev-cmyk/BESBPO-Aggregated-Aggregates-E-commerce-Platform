@@ -22,8 +22,15 @@ create a Render database.
    put your database password into each:
    - **`DATABASE_URL`**: the **Transaction pooler** URI (port `6543`), with
      `?pgbouncer=true&connection_limit=1` appended. The API uses it at runtime.
-   - **`DIRECT_URL`**: the **Session pooler** or direct URI (port `5432`).
-     Prisma uses it to run migrations.
+   - **`DIRECT_URL`**: the **Session pooler** URI (port `5432`, host
+     `aws-0-<region>.pooler.supabase.com`). Prisma uses it to run migrations.
+     Don't use the **Direct connection** URI (`db.<project>.supabase.co`):
+     it's IPv6-only, Render can't reach it, and every API deploy then fails
+     at `prisma migrate deploy` with `P1001: Can't reach database server`.
+
+   Both URIs use the user `postgres.<project-ref>`. If the password contains
+   characters such as `@`, `#`, `/` or `%`, URL-encode them (for example `@`
+   becomes `%40`), or reset the password to letters and digits.
 
 ## 2. Create the Blueprint
 
@@ -41,6 +48,12 @@ create a Render database.
 
 On each API deploy, the pre-deploy step runs:
 
+0. `packages/database/scripts/check-database-urls.js`, which checks
+   `DATABASE_URL` and `DIRECT_URL` and stops the deploy with a plain-English
+   reason if either is broken: missing, still holding `[YOUR-PASSWORD]`, split
+   apart by special characters in the password, pointing at the IPv6-only
+   direct host, or on the wrong pooler port. It prints each URL with the
+   password replaced by `****`.
 1. `prisma migrate deploy`, which applies any new migrations in
    `packages/database/prisma/migrations`.
 2. `prisma/seed.ts`, which updates the 9 core categories, 48 products, price
@@ -55,10 +68,13 @@ On each API deploy, the pre-deploy step runs:
    (87 verified partners and 18 B2B leads on the first deploy). Existing
    suppliers — and staff edits to them — are never touched.
 4. `apps/api/dist/merchandising/seed-product-images.js`, which attaches the
-   sourced product photos in `packages/database/prisma/seed-data/product-images`
-   to their products, hidden until staff record the source's permission
-   (`PRODUCT_IMAGES.md`). It only adds photos it hasn't imported before, so
-   staff decisions survive every deploy.
+   product photos in `packages/database/prisma/seed-data/product-images` to
+   their products. Open-licence photos go live; sourced photos stay hidden
+   until staff record the source's permission (`PRODUCT_IMAGES.md`). It only
+   adds photos it hasn't imported before, so staff decisions survive every
+   deploy. The API also runs the same import each time it starts, so photos
+   arrive even if a service's pre-deploy command predates this step. Look for
+   `Product photos: N added on startup; M live.` in the API's logs.
 
 ## 3. Check the deploy
 
