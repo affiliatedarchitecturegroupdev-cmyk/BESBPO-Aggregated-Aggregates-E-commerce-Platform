@@ -35,8 +35,13 @@ export default async function AdminOverview() {
     },
     {
       href: "/admin/products",
-      label: "Products without photography",
-      value: catalogue ? String(catalogue.filter((p) => p.images.length === 0).length) : "—",
+      label: "Products without live photography",
+      value: catalogue ? String(catalogue.filter((p) => !p.images.some((i) => i.licence === "CLEARED")).length) : "—",
+    },
+    {
+      href: "/admin/image-permissions",
+      label: "Sourced photos awaiting permission",
+      value: catalogue ? String(catalogue.reduce((n, p) => n + p.images.filter((i) => i.licence === "PERMISSION_PENDING" && !i.licenceName).length, 0)) : "—",
     },
     { href: "/admin/suppliers?filter=active", label: "Active partner suppliers", value: count(suppliers) },
     {

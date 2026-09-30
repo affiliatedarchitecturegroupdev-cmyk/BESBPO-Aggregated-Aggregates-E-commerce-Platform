@@ -54,6 +54,11 @@ On each API deploy, the pre-deploy step runs:
    `packages/database/prisma/seed-data/*.csv` that isn't in the database yet
    (87 verified partners and 18 B2B leads on the first deploy). Existing
    suppliers — and staff edits to them — are never touched.
+4. `apps/api/dist/merchandising/seed-product-images.js`, which attaches the
+   sourced product photos in `packages/database/prisma/seed-data/product-images`
+   to their products, hidden until staff record the source's permission
+   (`PRODUCT_IMAGES.md`). It only adds photos it hasn't imported before, so
+   staff decisions survive every deploy.
 
 ## 3. Check the deploy
 
@@ -111,6 +116,8 @@ Staff approve trade accounts and price quote requests in the staff console,
    - price quote requests;
    - upload compliance documents;
    - manage product descriptions, photos, visibility and featured products;
+   - request and record permission for sourced product photos
+     (**Image permissions** — they stay hidden until a source agrees);
    - edit the announcement bar, homepage hero, homepage slideshow and trade promo;
    - run the four promotion slots (the ad system): upload banner images to
      the image library, target the category banner at one category or

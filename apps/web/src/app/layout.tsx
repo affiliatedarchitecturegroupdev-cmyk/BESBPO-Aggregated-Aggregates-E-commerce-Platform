@@ -4,6 +4,7 @@ import { Footer } from "@/components/layout/Footer";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { CookieConsentBanner } from "@/components/layout/CookieConsentBanner";
 import { Header } from "@/components/layout/Header";
+import { PhotoPreviewBanner } from "@/components/layout/PhotoPreviewBanner";
 import { CORPORATE_EMAILS, PHONE_LINES, REGISTERED_ADDRESS } from "@/data/corporate-contact";
 import { SOCIAL_LINKS } from "@/data/social";
 import { SITE_URL } from "@/lib/site";
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en-ZA">
       <body className={`${spaceGrotesk.variable} ${inter.variable} ${ibmPlexMono.variable} font-body`}>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION).replace(/</g, "\\u003c") }} />
+        <PhotoPreviewBanner />
         <AnnouncementBar />
         <Header />
         <main>{children}</main>

@@ -3,6 +3,7 @@ import { PRODUCTS } from "@/data/catalogue";
 import { PACKAGED_PRODUCTS } from "@/data/packaged";
 import { formatZAR, UNIT_LABELS } from "@/lib/pricing";
 import { api } from "./api";
+import { sessionToken } from "./session";
 import type { SiteContent } from "./cms";
 
 /** Every product staff merchandise — the 48 aggregates and the packaged goods — with a one-line price summary. */
@@ -17,13 +18,31 @@ export type AdminProduct = {
   isActive: boolean;
   description: string | null;
   featuredRank: number | null;
-  images: { id: string; altText: string | null }[];
+  images: AdminImage[];
+};
+
+export type ImageLicence = "CLEARED" | "PERMISSION_PENDING";
+
+/** A product photo as staff see it: whether it may be shown, and where it came from. */
+export type AdminImage = {
+  id: string;
+  altText: string | null;
+  licence: ImageLicence;
+  sourceName: string | null;
+  sourceUrl: string | null;
+  sourceNote: string | null;
+  importKey: string | null;
+  /** Set for open-licence photos (CC0, public domain, CC BY, CC BY-SA). */
+  licenceName: string | null;
+  licenceUrl: string | null;
+  credit: string | null;
 };
 
 /** Live (uncached) merchandising state for the admin, including hidden products. */
 export async function adminCatalogue(): Promise<AdminProduct[] | null> {
-  const result = await api<{ sku: string; isActive: boolean; description: string | null; featuredRank: number | null; images: { id: string; altText: string | null }[] }[]>(
-    "/merchandising/products",
+  const result = await api<{ sku: string; isActive: boolean; description: string | null; featuredRank: number | null; images: AdminImage[] }[]>(
+    "/merchandising/staff/products",
+    { token: sessionToken() },
   );
   if (!result.ok) return null;
   const bySku = new Map(result.data.map((o) => [o.sku, o]));

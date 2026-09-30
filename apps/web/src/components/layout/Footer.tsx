@@ -16,6 +16,7 @@ const LEGAL_LINKS = [
   { href: "/legal/returns-refunds", label: "Returns & Refunds" },
   { href: "/legal/shipping-delivery", label: "Shipping & Delivery" },
   { href: "/legal/paia-manual", label: "PAIA Manual" },
+  { href: "/photo-credits", label: "Photo Credits" },
 ];
 
 export async function Footer() {

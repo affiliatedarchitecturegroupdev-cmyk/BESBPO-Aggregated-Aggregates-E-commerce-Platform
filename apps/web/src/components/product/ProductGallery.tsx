@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { MaterialSwatch } from "./MaterialSwatch";
+import type { ProductPhoto } from "@/lib/cms";
+import { PendingPhotoTag } from "./PendingPhotoTag";
+import { PhotoCreditLine } from "./PhotoCreditLine";
 
 /** Product photography with thumbnails; the generated texture stands in until staff upload photos. */
 export function ProductGallery({
@@ -11,7 +14,7 @@ export function ProductGallery({
 }: {
   sku: string;
   categorySlug: string;
-  images: { src: string; alt: string }[];
+  images: ProductPhoto[];
 }) {
   const [active, setActive] = useState(0);
   if (images.length === 0) {
@@ -25,8 +28,11 @@ export function ProductGallery({
   const current = images[Math.min(active, images.length - 1)];
   return (
     <div>
-      {/* eslint-disable-next-line @next/next/no-img-element -- served and cached by our own image route */}
-      <img src={current.src} alt={current.alt} className="h-80 w-full rounded-sm bg-white object-cover" />
+      <div className="relative">
+        {current.pending && <PendingPhotoTag className="text-[10px]" />}
+        {/* eslint-disable-next-line @next/next/no-img-element -- served and cached by our own image route */}
+        <img src={current.src} alt={current.alt} className="h-80 w-full rounded-sm bg-white object-cover" />
+      </div>
       {images.length > 1 && (
         <div className="mt-3 grid grid-cols-4 gap-3">
           {images.map((image, index) => (
@@ -44,6 +50,8 @@ export function ProductGallery({
           ))}
         </div>
       )}
+      <p className="mt-2 font-mono text-[10px] text-slate">Photos show the material type — colour and grading vary by source.</p>
+      {current.credit && <PhotoCreditLine credit={current.credit} />}
     </div>
   );
 }

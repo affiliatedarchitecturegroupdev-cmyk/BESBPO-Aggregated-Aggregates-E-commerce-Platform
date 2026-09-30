@@ -1,9 +1,11 @@
 import "server-only";
+import { draftMode } from "next/headers";
 import { cache } from "react";
 import { PRODUCTS, type Product } from "@/data/catalogue";
 import { DEFAULT_SLIDES, MEDIA_BY_ID } from "@/data/media";
 import { PACKAGED_PRODUCTS, type PackagedProduct } from "@/data/packaged";
-import { apiCached } from "./api";
+import { api, apiCached } from "./api";
+import { sessionToken } from "./session";
 
 /**
  * Staff-editable storefront content (CMS) layered over the built-in copy and
@@ -46,21 +48,61 @@ type Overlay = {
   isActive: boolean;
   description: string | null;
   featuredRank: number | null;
-  images: { id: string; altText: string | null }[];
+  images: {
+    id: string;
+    altText: string | null;
+    licence?: "CLEARED" | "PERMISSION_PENDING";
+    licenceName?: string | null;
+    licenceUrl?: string | null;
+    credit?: string | null;
+    sourceUrl?: string | null;
+  }[];
 };
+
+/** The credit an open-licence photo's licence requires next to it (see /photo-credits). */
+export type PhotoCredit = { text: string; licence: string; licenceUrl: string | null; sourceUrl: string | null };
+
+/** A product photo as the storefront shows it; `pending` only ever appears in a staff preview. */
+export type ProductPhoto = { src: string; alt: string; pending?: boolean; credit?: PhotoCredit };
 
 export type MerchandisedProduct = Product & {
   description: string | null;
   featuredRank: number | null;
-  images: { src: string; alt: string }[];
+  images: ProductPhoto[];
 };
 
-const getOverlay = cache(async () => new Map(((await apiCached<Overlay[]>("/merchandising/products")) ?? []).map((o) => [o.sku, o])));
+/**
+ * Staff photo preview (Next.js draft mode, switched on at /api/preview/photos
+ * by a signed-in staff member): that one browser gets an uncached overlay that
+ * includes photos still awaiting permission. Everyone else — and any request
+ * without a staff session — gets the normal cached, cleared-only catalogue.
+ */
+export function isPhotoPreview(): boolean {
+  return draftMode().isEnabled;
+}
+
+const getOverlay = cache(async () => {
+  if (isPhotoPreview()) {
+    const staff = await api<Overlay[]>("/merchandising/staff/products", { token: sessionToken() });
+    if (staff.ok) return new Map(staff.data.map((o) => [o.sku, o]));
+  }
+  return new Map(((await apiCached<Overlay[]>("/merchandising/products")) ?? []).map((o) => [o.sku, o]));
+});
+
+const photos = (o: Overlay | undefined, name: string): ProductPhoto[] =>
+  (o?.images ?? []).map((img) => ({
+    src: `/api/product-images/${img.id}`,
+    alt: img.altText ?? name,
+    ...(img.licence === "PERMISSION_PENDING" ? { pending: true } : {}),
+    ...(img.credit && img.licenceName
+      ? { credit: { text: img.credit, licence: img.licenceName, licenceUrl: img.licenceUrl ?? null, sourceUrl: img.sourceUrl ?? null } }
+      : {}),
+  }));
 
 export type MerchandisedPackagedProduct = PackagedProduct & {
   description: string | null;
   featuredRank: number | null;
-  images: { src: string; alt: string }[];
+  images: ProductPhoto[];
 };
 
 /** The visible CAT-10/11 packaged goods, with staff descriptions and photography. */
@@ -72,7 +114,7 @@ export const getPackagedCatalogue = cache(async (): Promise<MerchandisedPackaged
       ...p,
       description: o?.description ?? null,
       featuredRank: o?.featuredRank ?? null,
-      images: (o?.images ?? []).map((img) => ({ src: `/api/product-images/${img.id}`, alt: img.altText ?? p.name })),
+      images: photos(o, p.name),
     };
   });
 });
@@ -86,7 +128,7 @@ export const getCatalogue = cache(async (): Promise<MerchandisedProduct[]> => {
       ...p,
       description: o?.description ?? null,
       featuredRank: o?.featuredRank ?? null,
-      images: (o?.images ?? []).map((img) => ({ src: `/api/product-images/${img.id}`, alt: img.altText ?? p.name })),
+      images: photos(o, p.name),
     };
   });
 });

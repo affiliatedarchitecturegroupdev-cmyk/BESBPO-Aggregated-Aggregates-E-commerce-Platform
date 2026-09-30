@@ -617,3 +617,31 @@ export async function issueInvoice(_prev: FormState, form: FormData): Promise<Fo
   revalidatePath("/admin/orders");
   return { success: `Tax invoice ${result.data.invoiceNumber} issued — the buyer can download it from their order.` };
 }
+
+// --- product image permissions (admins) --------------------------------------------
+
+export async function setSourceLicence(_prev: FormState, form: FormData): Promise<FormState> {
+  const licence = text(form, "licence");
+  const result = await api<{ updated: number }>("/merchandising/image-sources/licence", {
+    method: "POST",
+    token: sessionToken(),
+    body: { sourceName: text(form, "sourceName"), licence },
+  });
+  if (!result.ok) return { error: result.status === 403 ? "Only admins can record image permissions." : result.message };
+  revalidatePath("/", "layout");
+  return {
+    success:
+      licence === "CLEARED"
+        ? `Permission recorded — ${result.data.updated} photo${result.data.updated === 1 ? " is" : "s are"} now live on the storefront.`
+        : `Withdrawn — ${result.data.updated} photo${result.data.updated === 1 ? " is" : "s are"} hidden from the storefront again.`,
+  };
+}
+
+export async function setImageLicence(form: FormData) {
+  await api(`/merchandising/images/${encodeURIComponent(text(form, "id"))}/licence`, {
+    method: "PATCH",
+    token: sessionToken(),
+    body: { licence: text(form, "licence") },
+  });
+  revalidatePath("/", "layout");
+}

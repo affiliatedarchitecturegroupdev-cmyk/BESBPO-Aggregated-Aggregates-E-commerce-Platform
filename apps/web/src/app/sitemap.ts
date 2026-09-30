@@ -27,6 +27,7 @@ const STATIC_PATHS = [
   "/legal/returns-refunds",
   "/legal/shipping-delivery",
   "/legal/paia-manual",
+  "/photo-credits",
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

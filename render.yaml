@@ -50,7 +50,7 @@ services:
     # delivery bands from the pricing workbooks, then adds any supplier from
     # the seed-data CSVs not yet in the database (all idempotent; staff edits
     # to existing suppliers are never overwritten).
-    preDeployCommand: npx --yes pnpm@9.9.0 run db:deploy && node apps/api/dist/suppliers/seed-suppliers.js
+    preDeployCommand: npx --yes pnpm@9.9.0 run db:deploy && node apps/api/dist/suppliers/seed-suppliers.js && node apps/api/dist/merchandising/seed-product-images.js
     startCommand: node apps/api/dist/main.js
     healthCheckPath: /api/v1/health
     buildFilter:

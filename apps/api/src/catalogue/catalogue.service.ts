@@ -1,5 +1,9 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "../common/prisma.service";
+import { PUBLIC_IMAGE_FIELDS } from "../merchandising/merchandising.service";
+
+/** Public: cleared photography only, without storage keys or staff sourcing notes. */
+const PUBLIC_IMAGES = { where: { licence: "CLEARED" }, orderBy: { sortOrder: "asc" }, select: PUBLIC_IMAGE_FIELDS } as const;
 
 @Injectable()
 export class CatalogueService {
@@ -19,7 +23,7 @@ export class CatalogueService {
         category: params.categorySlug ? { slug: params.categorySlug } : undefined,
         name: params.search ? { contains: params.search, mode: "insensitive" } : undefined,
       },
-      include: { category: true, priceBand: true, packagedPriceBands: true, images: true },
+      include: { category: true, priceBand: true, packagedPriceBands: true, images: PUBLIC_IMAGES },
       orderBy: { name: "asc" },
     });
   }
@@ -31,7 +35,7 @@ export class CatalogueService {
         category: true,
         priceBand: true,
         packagedPriceBands: true,
-        images: { orderBy: { sortOrder: "asc" } },
+        images: PUBLIC_IMAGES,
         complianceDocuments: true,
       },
     });
