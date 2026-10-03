@@ -26,7 +26,7 @@ export const DEFAULT_CONTENT: SiteContent = {
   hero: {
     eyebrow: "SANS / COLTO Graded",
     headline: "Every Layer Starts Here.",
-    body: `Sub-base, crushed stone, sand and decorative aggregate — ${PRODUCTS.length} graded materials priced by ton, m³ or bag, delivered by tipper across KZN and Gauteng from our approved partner-supplier network.`,
+    body: `Sub-base, crushed stone, sand and decorative aggregate — ${PRODUCTS.length} graded materials priced by ton, m³ or bag, delivered by tipper across South Africa from our approved partner-supplier network.`,
     primaryCta: { label: "Shop Products", href: "/products" },
     secondaryCta: { label: "Request a Bulk Quote", href: "/quote" },
   },

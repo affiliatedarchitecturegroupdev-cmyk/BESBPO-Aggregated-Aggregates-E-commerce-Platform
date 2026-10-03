@@ -23,19 +23,23 @@ const CATEGORY_NAME = new Map(CATEGORIES.map((c) => [c.slug, c.name]));
 /**
  * Module 6: Supplier & Delivery-Point Locator (public view). Coverage comes
  * from the live partner-supplier network: provinces, towns and material
- * categories, never supplier names or contacts. When the API can't be
- * reached (e.g. at build time) it falls back to the launch provinces.
+ * categories, never supplier names or contacts. We deliver in all nine
+ * provinces; when the API can't be reached (e.g. at build time) the cards
+ * simply list them.
  */
 export default async function DeliveryAreasPage() {
   const [included, ...banded] = DELIVERY_RULES.bands;
   const coverage = await apiCached<Coverage>("/suppliers/coverage");
   const live = coverage && coverage.deliveryPoints > 0 ? coverage.provinces : null;
-  const served = new Set(live?.map((p) => p.province) ?? ["KwaZulu-Natal", "Gauteng"]);
+  const served = new Set(live?.map((p) => p.province) ?? PROVINCES);
   const upcoming = PROVINCES.filter((p) => !served.has(p));
   return (
     <div className="mx-auto max-w-5xl px-4 py-12">
       <p className="font-mono text-xs uppercase tracking-widest text-seam-blue">Delivery Areas</p>
       <h1 className="mt-2 font-display text-3xl font-bold text-basalt">Delivered from the nearest partner supplier</h1>
+      <p className="mt-3 font-body text-sm text-basalt">
+        We deliver across all nine provinces. <Link href="/coverage" className="text-seam-blue hover:underline">Check your town on the map →</Link>
+      </p>
       <p className="mt-3 max-w-3xl font-body text-sm text-slate">
         Aggregated Aggregates sources from an approved network of partner suppliers rather than its own yards.
         Every delivery is measured from the partner supplier nearest your site and carried by Besfleet, the Group&apos;s
@@ -67,8 +71,8 @@ export default async function DeliveryAreasPage() {
       </div>
       {upcoming.length > 0 && (
         <p className="mt-3 font-body text-xs text-slate">
-          Coming as the partner network grows: {upcoming.join(", ")}. Need material there now?{" "}
-          <Link href="/quote" className="text-seam-blue hover:underline">Request a quote</Link>.
+          {upcoming.join(", ")}: supplied from the nearest partner in a neighbouring province while local partners are onboarded —{" "}
+          <Link href="/quote" className="text-seam-blue hover:underline">request a quote</Link> for a delivery price.
         </p>
       )}
 

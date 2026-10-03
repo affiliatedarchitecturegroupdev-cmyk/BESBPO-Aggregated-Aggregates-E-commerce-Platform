@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { PackagedUnitSelector } from "@/components/product/PackagedUnitSelector";
+import { GroupServiceBanner } from "@/components/merchandising/GroupServiceBanner";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { SocialShareButtons } from "@/components/social/SocialShareButtons";
 import { WhatsAppOrderButton } from "@/components/social/WhatsAppCta";
@@ -119,6 +120,10 @@ export function PackagedProductPage({ product }: { product: MerchandisedPackaged
             <Link href="/legal/returns-refunds" className="text-seam-blue underline">Returns &amp; Refunds</Link> policies.
           </p>
         </section>
+      </div>
+
+      <div className="mt-10">
+        <GroupServiceBanner categorySlug={product.categorySlug} placement={`product_${product.categorySlug}`} />
       </div>
 
       {related.length > 0 && (

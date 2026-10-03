@@ -90,8 +90,10 @@ unreviewed work.
     social handles (`apps/web/src/data/social.ts`: 5 live, 3 placeholder),
     the WhatsApp number (`wa.me/27683676276`), corporate contact details
     (`apps/web/src/data/corporate-contact.ts`: 1 live line, 3 RICA-pending),
-    the corporate site (`aggregates.besbpo.co.za`) and the storefront domain
-    (`aggregates.store`) are client-confirmed.
+    the corporate site (`aggregated.besbpo.co.za`), the group site
+    (`besbpo.co.za`), the storefront domain (`aggregates.store`) and the legal
+    line "Besbpo Group (Pty) Ltd T/A Aggregated Aggregates (2026/490480/07)"
+    (footer and documents) are client-confirmed.
 13. **Supplier data policy.** The supplier CSVs are committed
     (`packages/database/prisma/seed-data/`) and the public partner-network
     page shows supplier names, towns and categories, as the build
@@ -107,8 +109,8 @@ unreviewed work.
   staff edits survive). Neither CSV has coordinates, so each active supplier
   needs a map pin from staff before it's used for distance estimates. Pins
   must come from a map, never be guessed: a wrong pin moves customers across
-  the 30/60/100km delivery bands. Only KwaZulu-Natal and Gauteng partners
-  are active at launch.
+  the 30/60/100km delivery bands. Delivery is national (all nine provinces,
+  Oct 2026): verified partners in every province are active.
 - Payment gateways: every adapter except Manual EFT/PO is a structural stub
   until merchant credentials exist (PayFast, Peach, Ozow, Stitch, Lulapay —
   see `/admin/payments` for what each still needs). The cart (`/cart`) and
@@ -163,3 +165,15 @@ unreviewed work.
   the data model supports either via `Shipment.carrier`, but the dispatch
   rule (which orders go to Besfleet vs. which external partner) isn't
   specified yet and shouldn't be hardcoded without confirmation.
+- People data (POPIA): job applications (CVs are private, staff-only;
+  delete after 12 months or on request — Admin → Careers) and newsletter
+  subscribers (consent recorded; every email must carry the subscriber's
+  unsubscribe link from the CSV export). Never email the list from a copy that
+  includes unsubscribed people.
+- `/coverage` town coordinates come from GeoNames (CC BY 4.0), never typed by
+  hand; suburbs not in GeoNames are aliases of the town they belong to
+  (`apps/web/src/data/coverage-towns.ts`). Keep the GeoNames credit on the page.
+- Cross-sell copy for Affiliated Builders and Finishes Construction
+  (`apps/web/src/data/group-companies.ts`) is deliberately general — confirm
+  services with each company before adding specifics.
+

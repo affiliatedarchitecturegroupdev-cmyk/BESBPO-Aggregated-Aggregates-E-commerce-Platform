@@ -5,7 +5,8 @@ import { CORPORATE_EMAILS, PHONE_LINES, REGISTERED_ADDRESS } from "@/data/corpor
 import { CORE_CATEGORIES } from "@/data/categories";
 import { PAYMENT_METHODS } from "@/data/payment-methods";
 import { PaymentLogo } from "@/components/payment/PaymentLogo";
-import { CORPORATE_SITE_URL, SOCIAL_LINKS } from "@/data/social";
+import { NewsletterSignup } from "@/components/newsletter/NewsletterSignup";
+import { CORPORATE_SITE_URL, GROUP_SITE_URL, LEGAL_ENTITY, SOCIAL_LINKS } from "@/data/social";
 import { getActivePromotions } from "@/lib/promotions";
 
 const LEGAL_LINKS = [
@@ -29,6 +30,7 @@ export async function Footer() {
           <PromoSlot promotion={promotions.FOOTER_STRIP} />
         </div>
       )}
+      <NewsletterSignup />
       <div className="border-t border-basalt/10 bg-basalt text-limestone">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 lg:grid-cols-5">
           <div>
@@ -44,17 +46,28 @@ export async function Footer() {
                 <a href={`mailto:${CORPORATE_EMAILS.sales}`} className="hover:text-ochre-gold">{CORPORATE_EMAILS.sales}</a>
               </p>
             </address>
-            <a href={CORPORATE_SITE_URL} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block font-mono text-xs text-limestone/60 hover:text-ochre-gold">
-              A Besbpo Group division ↗
-            </a>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {SOCIAL_LINKS.filter((social) => social.status === "live").map((social) => (
-                <a key={social.platform} href={social.url} target="_blank" rel="noopener noreferrer" aria-label={`Besbpo Group on ${social.platform}`} className="opacity-80 hover:opacity-100">
-                  {/* eslint-disable-next-line @next/next/no-img-element -- brand icon (see PAYMENT_ASSETS.md) */}
-                  <img src={`/social-icons/${social.iconAssetPath}`} alt="" className="h-6 w-6" />
+            <ul className="mt-3 space-y-1 font-mono text-xs text-limestone/60">
+              <li>
+                <a href={CORPORATE_SITE_URL} target="_blank" rel="noopener noreferrer" className="hover:text-ochre-gold">
+                  Aggregated Aggregates corporate site ↗
                 </a>
+              </li>
+              <li>
+                <a href={GROUP_SITE_URL} target="_blank" rel="noopener noreferrer" className="hover:text-ochre-gold">
+                  A Besbpo Group division ↗
+                </a>
+              </li>
+            </ul>
+            <ul className="mt-4 flex flex-wrap items-center gap-3" aria-label="Follow us">
+              {SOCIAL_LINKS.filter((social) => social.status === "live").map((social) => (
+                <li key={social.platform}>
+                  <a href={social.url} target="_blank" rel="noopener noreferrer" aria-label={`Besbpo Group on ${social.platform}`} title={social.platform} className="flex h-8 w-8 items-center justify-center rounded-sm transition-opacity hover:opacity-80">
+                    {/* eslint-disable-next-line @next/next/no-img-element -- official brand icon (PAYMENT_ASSETS.md, "Social icons") */}
+                    <img src={`/social-icons/${social.iconAssetPath}`} alt="" className="h-6 w-6 object-contain" />
+                  </a>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
           <FooterColumn title="Shop">
             {CORE_CATEGORIES.slice(0, 5).map((c) => (
@@ -67,6 +80,7 @@ export async function Footer() {
           </FooterColumn>
           <FooterColumn title="Buy">
             <li><Link href="/quote">Request a Quote</Link></li>
+            <li><Link href="/coverage">Where We Deliver</Link></li>
             <li><Link href="/delivery-areas">Delivery Areas & Charges</Link></li>
             <li><Link href="/suppliers">Partner Network</Link></li>
             <li><Link href="/ways-to-pay">Ways to Pay</Link></li>
@@ -77,6 +91,7 @@ export async function Footer() {
             <li><Link href="/about">About</Link></li>
             <li><Link href="/industries-we-serve">Industries We Serve</Link></li>
             <li><Link href="/case-studies">Case Studies</Link></li>
+            <li><Link href="/careers">Careers</Link></li>
             <li><Link href="/blog">Blog</Link></li>
             <li><Link href="/faq">FAQ</Link></li>
             <li><Link href="/contact">Contact & Sales</Link></li>
@@ -101,7 +116,10 @@ export async function Footer() {
           </ul>
         </div>
         <div className="border-t border-limestone/10 px-4 py-4 text-center font-mono text-xs text-limestone/50">
-          © {new Date().getFullYear()} Aggregated Aggregates, a division of Besbpo Group (Pty) Ltd. All rights reserved.
+          <p>
+            {LEGAL_ENTITY.name} T/A {LEGAL_ENTITY.tradingAs} · Reg. no. {LEGAL_ENTITY.registrationNumber}
+          </p>
+          <p className="mt-1">© {new Date().getFullYear()} {LEGAL_ENTITY.name}. All rights reserved.</p>
         </div>
       </div>
     </footer>

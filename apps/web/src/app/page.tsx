@@ -4,6 +4,7 @@ import { CategoryGrid } from "@/components/merchandising/CategoryGrid";
 import { ComplianceBar } from "@/components/merchandising/ComplianceBar";
 import { CoverageStrip } from "@/components/merchandising/CoverageStrip";
 import { FeaturedProducts } from "@/components/merchandising/FeaturedProducts";
+import { GroupCrossSell } from "@/components/merchandising/GroupCrossSell";
 import { HeroBanner } from "@/components/merchandising/HeroBanner";
 import { HeroSlideshow } from "@/components/merchandising/HeroSlideshow";
 import { IndustriesWeServe } from "@/components/merchandising/IndustriesWeServe";
@@ -44,6 +45,7 @@ export default async function HomePage() {
           <PromoSlot promotion={promotions.HOMEPAGE_SECONDARY_BANNER} />
         </section>
       )}
+      <GroupCrossSell promotion={promotions.GROUP_CROSS_SELL} />
       <IndustriesWeServe />
       <B2BBulkSection />
       <QuarryToSite partnerSuppliers={partnerSuppliers} />

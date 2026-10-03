@@ -59,7 +59,8 @@ const customerLines = (o: OrderDocData) =>
   [o.company?.name, o.customer?.name, o.customer?.email, o.company?.vatNumber ? `VAT ${o.company.vatNumber}` : null].filter((l): l is string => Boolean(l));
 const carrier = (s: NonNullable<OrderDocData["shipment"]>) => (s.carrier === "BESFLEET" ? "Besfleet" : (s.externalPartnerName ?? "Delivery partner"));
 const sellerLines = (vatNumber?: string) => [
-  `A division of ${SELLER.legalName}`,
+  `${SELLER.legalName} T/A ${SELLER.tradingName}`,
+  `Reg. no. ${SELLER.registrationNumber}`,
   ...SELLER.addressLines,
   `${SELLER.phone} · ${SELLER.email}`,
   ...(vatNumber ? [`VAT registration ${vatNumber} (Besbpo Group)`] : []),
@@ -195,6 +196,6 @@ export function taxInvoiceSpec(inv: InvoiceDocData, o: OrderDocData, bankingDeta
       `Prices include VAT at ${rate}%. ${SELLER.tradingName} trades as a division of ${SELLER.legalName} and invoices under the Group's VAT registration.`,
       ...(inv.status === "UNPAID" ? eftNote(o.orderNumber, bankingDetails) : []),
     ],
-    footer: `${SELLER.legalName} · VAT ${inv.vatNumberBilled} · Invoice ${inv.invoiceNumber}`,
+    footer: `${SELLER.legalName} T/A ${SELLER.tradingName} · Reg. ${SELLER.registrationNumber} · VAT ${inv.vatNumberBilled} · Invoice ${inv.invoiceNumber}`,
   };
 }

@@ -1,12 +1,10 @@
 import { Global, Module } from "@nestjs/common";
 import { APP_GUARD } from "@nestjs/core";
 import { JwtModule } from "@nestjs/jwt";
-import { PassportModule } from "@nestjs/passport";
 import { AuthGuard } from "../common/auth/auth.guard";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
-import { GoogleStrategy } from "./strategies/google.strategy";
-import { MicrosoftStrategy } from "./strategies/microsoft.strategy";
+import { OAuthService } from "./oauth/oauth.service";
 
 function authSecret(): string {
   const secret = process.env.AUTH_SECRET;
@@ -19,21 +17,17 @@ function authSecret(): string {
 }
 
 /**
- * Confirmed SSO set (per the feature adoption matrix): Email + Google +
- * Microsoft — reduced from the generic blueprint's 6-option SSO because
- * this buyer base (contractors, civil buyers) skews B2B; consumer-social
- * logins are low-value here. Email sign-in is live; the Google and
- * Microsoft strategies are registered but their routes wait on OAuth client
- * credentials (docs/deployment/render.md).
+ * Six ways to sign in: Email (always on) plus Google, Microsoft, X, Facebook
+ * and Instagram, each switched on by its client ID and secret on the API
+ * service (docs/sign-in.md). The OAuth flow lives in oauth/oauth.service.ts.
  */
 @Global()
 @Module({
   imports: [
-    PassportModule,
     JwtModule.register({ secret: authSecret(), signOptions: { expiresIn: "7d" } }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, GoogleStrategy, MicrosoftStrategy, { provide: APP_GUARD, useClass: AuthGuard }],
+  providers: [AuthService, OAuthService, { provide: APP_GUARD, useClass: AuthGuard }],
   exports: [AuthService, JwtModule],
 })
 export class AuthModule {}

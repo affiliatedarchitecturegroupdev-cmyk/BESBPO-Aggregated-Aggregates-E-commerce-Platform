@@ -389,7 +389,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
       await http().post("/suppliers/import").set("Authorization", `Bearer ${customer}`).attach("file", Buffer.from(csv), "s.csv").expect(403);
     });
 
-    it("imports the supplier database, activating only launch provinces, and rejects bad files whole", async () => {
+    it("imports the supplier database, activating verified partners in every province, and rejects bad files whole", async () => {
       const bad = await http()
         .post("/suppliers/import")
         .set("Authorization", `Bearer ${staff}`)
@@ -405,7 +405,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
       expect(imported.map((s) => [s.city, s.tier, s.isActive])).toEqual([
         ["Pietermaritzburg", "TIER_1", true],
         ["Durban North", "TIER_2", true],
-        ["Worcester", "TIER_1", false], // Western Cape isn't a launch province yet
+        ["Worcester", "TIER_1", true], // national: every province is served
       ]);
     });
 
@@ -445,7 +445,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
       expect(JSON.stringify(coverage.body)).not.toMatch(/Secret|Site Office/);
       const kzn = coverage.body.provinces.find((p: { province: string }) => p.province === "KwaZulu-Natal");
       expect(kzn.towns).toEqual(expect.arrayContaining(["Pietermaritzburg", "Durban North"]));
-      expect(coverage.body.provinces.map((p: { province: string }) => p.province)).not.toContain("Western Cape");
+      expect(coverage.body.provinces.map((p: { province: string }) => p.province)).toContain("Western Cape"); // national delivery
 
       // From central Durban: nearest crushed stone is the Pietermaritzburg quarry; nearest sand is Durban North.
       const stone = await http().get("/suppliers/nearest?lat=-29.8587&lng=31.0218&category=crushed-stone").expect(200);
@@ -1240,6 +1240,225 @@ describe("Aggregated Aggregates API (e2e)", () => {
       // An ad can't carry a credit line, so credited photos stay out of the Meta feed.
       const feed = await http().get("/channels/catalogue-feed.csv").expect(200);
       expect(feed.text).not.toContain(photo.id);
+    });
+  });
+
+  describe("sign-in with Google, Microsoft, X, Facebook and Instagram", () => {
+    const env = ["GOOGLE", "MICROSOFT", "INSTAGRAM"].flatMap((p) => [`${p}_CLIENT_ID`, `${p}_CLIENT_SECRET`]);
+    const redirect = (p: string) => `https://aggregates.store/api/auth/oauth/${p}/callback`;
+    const realFetch = global.fetch;
+    let profiles: Record<string, unknown> = {};
+
+    beforeAll(() => {
+      for (const key of env) process.env[key] = `test-${key.toLowerCase()}`;
+      // Stand in for the providers: token exchange and profile endpoints only.
+      jest.spyOn(global, "fetch").mockImplementation(async (input, init) => {
+        const url = String(input instanceof Request ? input.url : input);
+        const host = new URL(url).host;
+        if (/oauth2\.googleapis\.com|login\.microsoftonline\.com|api\.instagram\.com/.test(host)) {
+          return new Response(JSON.stringify({ access_token: "provider-token", user_id: "ig-user" }), { status: 200 });
+        }
+        for (const [needle, body] of Object.entries(profiles)) {
+          if (url.includes(needle)) return new Response(JSON.stringify(body), { status: 200 });
+        }
+        return realFetch(input, init);
+      });
+    });
+
+    afterAll(() => {
+      for (const key of env) delete process.env[key];
+      jest.restoreAllMocks();
+    });
+
+    async function signIn(provider: string, status: number) {
+      const start = await http().post(`/auth/oauth/${provider}/start`).send({ redirectUri: redirect(provider) }).expect(200);
+      const state = new URL(start.body.url).searchParams.get("state")!;
+      return http().post(`/auth/oauth/${provider}/callback`).send({ code: "auth-code", state, stateToken: start.body.stateToken }).expect(status);
+    }
+
+    it("lists every provider and only switches on the configured ones", async () => {
+      const list = await http().get("/auth/oauth/providers").expect(200);
+      expect(list.body.map((p: { provider: string }) => p.provider)).toEqual(["google", "microsoft", "facebook", "x", "instagram"]);
+      expect(list.body.find((p: { provider: string }) => p.provider === "google").enabled).toBe(true);
+      expect(list.body.find((p: { provider: string }) => p.provider === "x").enabled).toBe(false);
+      await http().post("/auth/oauth/x/start").send({ redirectUri: redirect("x") }).expect(503);
+      await http().post("/auth/oauth/myspace/start").send({ redirectUri: redirect("myspace") }).expect(404);
+    });
+
+    it("starts with PKCE and only ever redirects back to our own callback", async () => {
+      const start = await http().post("/auth/oauth/google/start").send({ redirectUri: redirect("google") }).expect(200);
+      const url = new URL(start.body.url);
+      expect(url.origin + url.pathname).toBe("https://accounts.google.com/o/oauth2/v2/auth");
+      expect(url.searchParams.get("redirect_uri")).toBe(redirect("google"));
+      expect(url.searchParams.get("code_challenge_method")).toBe("S256");
+      expect(start.body.stateToken).not.toContain(url.searchParams.get("code_challenge"));
+      await http().post("/auth/oauth/google/start").send({ redirectUri: "https://aggregates.store/somewhere-else" }).expect(400);
+      await http().post("/auth/oauth/google/start").send({ redirectUri: "http://aggregates.store/api/auth/oauth/google/callback" }).expect(400);
+      // A tampered state is refused.
+      await http().post("/auth/oauth/google/callback").send({ code: "c", state: "wrong", stateToken: start.body.stateToken }).expect(400);
+    });
+
+    it("signs in with a verified email, and the same account every time", async () => {
+      profiles = { "openidconnect.googleapis.com": { sub: `g-${run}`, email: `oauthg-${run}@example.com`, email_verified: true, name: "Gugu" } };
+      const first = await signIn("google", 200);
+      const me = await http().get("/auth/me").set("Authorization", `Bearer ${first.body.accessToken}`).expect(200);
+      expect(me.body).toMatchObject({ email: `oauthg-${run}@example.com`, name: "Gugu", role: "CUSTOMER" });
+      const again = await signIn("google", 200);
+      const meAgain = await http().get("/auth/me").set("Authorization", `Bearer ${again.body.accessToken}`).expect(200);
+      expect(meAgain.body.id).toBe(me.body.id);
+    });
+
+    it("never takes over an existing account on an unverified email", async () => {
+      await register("oauthtarget");
+      profiles = { "graph.microsoft.com": { sub: `m-${run}`, email: `oauthtarget-${run}@example.com`, name: "Not Them" } };
+      const res = await signIn("microsoft", 409);
+      expect(res.body.message).toContain("Sign in with your email and password");
+      expect(await prisma.oAuthAccount.count({ where: { providerAccountId: `m-${run}` } })).toBe(0);
+    });
+
+    it("asks for an email when the provider shares none (Instagram), and pending tokens are never sessions", async () => {
+      profiles = { "graph.instagram.com": { user_id: `ig-${run}`, username: "site_boss" } };
+      const res = await signIn("instagram", 200);
+      expect(res.body.accessToken).toBeUndefined();
+      expect(res.body).toMatchObject({ provider: "instagram", name: "site_boss" });
+      await http().get("/auth/me").set("Authorization", `Bearer ${res.body.pendingToken}`).expect(401);
+      await http().post("/auth/oauth/complete").send({ pendingToken: res.body.pendingToken, email: `buyer-${run}@example.com` }).expect(409);
+      const done = await http().post("/auth/oauth/complete").send({ pendingToken: res.body.pendingToken, email: `Insta-${run}@Example.com`, name: "Sipho" }).expect(200);
+      const me = await http().get("/auth/me").set("Authorization", `Bearer ${done.body.accessToken}`).expect(200);
+      expect(me.body).toMatchObject({ email: `insta-${run}@example.com`, name: "Sipho" });
+      // Next time Instagram signs straight in.
+      const next = await signIn("instagram", 200);
+      expect(next.body.accessToken).toBeTruthy();
+    });
+  });
+
+  describe("careers", () => {
+    let staff: string;
+    let admin: string;
+    let vacancyId: string;
+    let slug: string;
+    const pdf = Buffer.from("%PDF-1.7\n% CV\n1 0 obj << >> endobj\ntrailer << >>\n%%EOF");
+
+    beforeAll(async () => {
+      staff = await register("hrstaff");
+      await prisma.user.update({ where: { email: `hrstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      admin = await register("hradmin");
+      await prisma.user.update({ where: { email: `hradmin-${run}@example.com` }, data: { role: "ADMIN" } });
+    });
+
+    afterAll(async () => {
+      await prisma.jobApplication.deleteMany({ where: { email: { endsWith: `-${run}@example.com` } } });
+      await prisma.vacancy.deleteMany({ where: { title: { contains: run } } });
+    });
+
+    const apply = (fields: Record<string, string>, file: Buffer | null = pdf, name = "cv.pdf") => {
+      const req = http().post("/careers/applications");
+      for (const [k, v] of Object.entries(fields)) req.field(k, v);
+      return file ? req.attach("cv", file, name) : req;
+    };
+    const applicant = { fullName: "Thandi Mokoena", email: `thandi-${run}@example.com`, phone: "082 555 0101", province: "Gauteng", consent: "yes" };
+
+    it("lets staff publish a vacancy; only open, unexpired ones are public", async () => {
+      const body = {
+        title: `Dispatch Coordinator ${run}`,
+        department: "Logistics & Dispatch",
+        location: "Durban, KwaZulu-Natal",
+        employmentType: "FULL_TIME",
+        workplace: "ON_SITE",
+        summary: "Plan and track tipper deliveries from partner quarries to site.",
+        description: "## About the role\n\nYou'll plan daily tipper routes.\n\n## What you'll need\n\n- Matric\n- A driver's licence",
+        status: "DRAFT",
+      };
+      await http().post("/careers/admin/vacancies").send(body).expect(401);
+      const draft = await http().post("/careers/admin/vacancies").set("Authorization", `Bearer ${staff}`).send(body).expect(201);
+      vacancyId = draft.body.id;
+      slug = draft.body.slug;
+      expect(slug).toMatch(/^dispatch-coordinator-/);
+      expect((await http().get("/careers/vacancies").expect(200)).body.map((v: { id: string }) => v.id)).not.toContain(vacancyId);
+      await http().get(`/careers/vacancies/${slug}`).expect(404);
+
+      await http().patch(`/careers/admin/vacancies/${vacancyId}`).set("Authorization", `Bearer ${staff}`).send({ ...body, status: "OPEN", salary: "Market related" }).expect(200);
+      const open = await http().get(`/careers/vacancies/${slug}`).expect(200);
+      expect(open.body).toMatchObject({ title: body.title, salary: "Market related" });
+      expect(open.body.status).toBeUndefined();
+
+      // A closing date in the past takes it down.
+      await http().patch(`/careers/admin/vacancies/${vacancyId}`).set("Authorization", `Bearer ${staff}`).send({ ...body, status: "OPEN", closingDate: "2020-01-01" }).expect(200);
+      await http().get(`/careers/vacancies/${slug}`).expect(404);
+      await http().patch(`/careers/admin/vacancies/${vacancyId}`).set("Authorization", `Bearer ${staff}`).send({ ...body, status: "OPEN", closingDate: null }).expect(200);
+    });
+
+    it("takes applications with a real CV and consent, and keeps CVs staff-only", async () => {
+      await apply({ ...applicant, vacancyId }, null).expect(400);
+      await apply({ ...applicant, vacancyId }, Buffer.from("MZ not a cv"), "cv.pdf").expect(400);
+      await apply({ ...applicant, vacancyId, consent: "no" }).expect(400);
+      await apply({ ...applicant, vacancyId, website: "spam.example" }).expect(400);
+      const ok = await apply({ ...applicant, vacancyId, coverNote: "Five years in dispatch." }).expect(201);
+      await apply({ ...applicant, vacancyId }).expect(400); // the same person, the same role, the same day
+
+      const list = await http().get(`/careers/admin/applications?vacancyId=${vacancyId}`).set("Authorization", `Bearer ${staff}`).expect(200);
+      expect(list.body).toHaveLength(1);
+      expect(list.body[0]).toMatchObject({ id: ok.body.id, fullName: "Thandi Mokoena", status: "NEW", vacancy: { id: vacancyId } });
+      expect(list.body[0].cvStorageKey).toBeUndefined();
+
+      await http().get(`/careers/admin/applications/${ok.body.id}/cv`).expect(401);
+      const customer = await register("jobcustomer");
+      await http().get(`/careers/admin/applications/${ok.body.id}/cv`).set("Authorization", `Bearer ${customer}`).expect(403);
+      const cv = await http().get(`/careers/admin/applications/${ok.body.id}/cv`).set("Authorization", `Bearer ${staff}`).buffer(true).expect(200);
+      expect(cv.headers["content-type"]).toBe("application/pdf");
+      expect(cv.headers["content-disposition"]).toContain("attachment");
+
+      const moved = await http().patch(`/careers/admin/applications/${ok.body.id}`).set("Authorization", `Bearer ${staff}`).send({ status: "SHORTLISTED", staffNotes: "Call Monday" }).expect(200);
+      expect(moved.body).toMatchObject({ status: "SHORTLISTED", staffNotes: "Call Monday" });
+
+      // Talent pool: no vacancy. Word documents are accepted too.
+      const docx = Buffer.concat([Buffer.from([0x50, 0x4b, 0x03, 0x04]), Buffer.from("....word/document.xml....")]);
+      await apply({ ...applicant, email: `pool-${run}@example.com` }, docx, "cv.docx").expect(201);
+      const pool = await http().get("/careers/admin/applications?vacancyId=pool").set("Authorization", `Bearer ${staff}`).expect(200);
+      expect(pool.body.some((a: { email: string }) => a.email === `pool-${run}@example.com`)).toBe(true);
+
+      // POPIA erasure is an admin action; a vacancy with applications can't be deleted.
+      await http().delete(`/careers/admin/vacancies/${vacancyId}`).set("Authorization", `Bearer ${admin}`).expect(400);
+      await http().delete(`/careers/admin/applications/${ok.body.id}`).set("Authorization", `Bearer ${staff}`).expect(403);
+      await http().delete(`/careers/admin/applications/${ok.body.id}`).set("Authorization", `Bearer ${admin}`).expect(204);
+      await http().get(`/careers/admin/applications/${ok.body.id}/cv`).set("Authorization", `Bearer ${staff}`).expect(404);
+    });
+  });
+
+  describe("newsletter", () => {
+    const email = `news-${run}@example.com`;
+    afterAll(async () => {
+      await prisma.newsletterSubscriber.deleteMany({ where: { email: { endsWith: `-${run}@example.com` } } });
+    });
+
+    it("subscribes with consent, unsubscribes by private link, and exports for staff only", async () => {
+      await http().post("/newsletter/subscribe").send({ email, audience: "CONTRACTOR" }).expect(400);
+      await http().post("/newsletter/subscribe").send({ email, audience: "CONTRACTOR", consent: "yes", website: "bot" }).expect(400);
+      await http().post("/newsletter/subscribe").send({ email: email.toUpperCase(), audience: "CONTRACTOR", province: "Limpopo", consent: "yes", source: "/products" }).expect(200);
+      // Signing up twice is harmless and answers the same.
+      const again = await http().post("/newsletter/subscribe").send({ email, audience: "PARTNER", consent: "yes" }).expect(200);
+      expect(again.body).toEqual({ subscribed: true });
+      const row = await prisma.newsletterSubscriber.findUniqueOrThrow({ where: { email } });
+      expect(row).toMatchObject({ audience: "PARTNER", province: "Limpopo", unsubscribedAt: null });
+
+      await http().get("/newsletter/admin/export.csv").expect(401);
+      const staff = await register("newsstaff");
+      await prisma.user.update({ where: { email: `newsstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      const csv = await http().get("/newsletter/admin/export.csv").set("Authorization", `Bearer ${staff}`).expect(200);
+      expect(csv.text.split("\n")[0]).toBe("email,name,audience,province,consent_at,unsubscribe_url");
+      expect(csv.text).toContain(`${email},,PARTNER,Limpopo,`);
+      expect(csv.text).toContain(`/newsletter/unsubscribe?token=${row.unsubscribeToken}`);
+
+      await http().post("/newsletter/unsubscribe").send({ token: "x".repeat(32) }).expect(404);
+      const gone = await http().post("/newsletter/unsubscribe").send({ token: row.unsubscribeToken }).expect(200);
+      expect(gone.body.email).toBe("n•••@example.com");
+      const list = await http().get("/newsletter/admin/subscribers").set("Authorization", `Bearer ${staff}`).expect(200);
+      expect(list.body.subscribers.map((s: { email: string }) => s.email)).not.toContain(email);
+      expect((await http().get("/newsletter/admin/export.csv").set("Authorization", `Bearer ${staff}`).expect(200)).text).not.toContain(email);
+
+      // Signing up again is fresh consent.
+      await http().post("/newsletter/subscribe").send({ email, audience: "CUSTOMER", consent: "yes" }).expect(200);
+      expect((await prisma.newsletterSubscriber.findUniqueOrThrow({ where: { email } })).unsubscribedAt).toBeNull();
     });
   });
 });

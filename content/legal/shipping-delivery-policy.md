@@ -50,11 +50,13 @@ at your delivery address, including road access, overhead clearance, and a
 suitable offloading area. Additional charges may apply where a delivery
 attempt fails due to inadequate site access.
 
-## 6. Launch geography
+## 6. Where we deliver
 
-At launch, our delivery network covers KwaZulu-Natal and Gauteng, with
-plans to expand to the Besbpo Group's standard 7-province footprint as our
-partner-supplier network grows.
+We deliver across all nine provinces of South Africa, from the approved
+partner supplier nearest your site. Our Where We Deliver page
+(aggregates.store/coverage) lists the towns and cities we serve by province.
+For a site that isn't listed, or more than 100km from the nearest partner
+supplier, we quote the delivery separately before you pay.
 
 ## 7. Contact
 

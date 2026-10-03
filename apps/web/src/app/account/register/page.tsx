@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ActionForm, Field, SubmitButton } from "@/components/account/Forms";
+import { OrDivider, SocialSignIn } from "@/components/account/SocialSignIn";
 import { getSession, safeReturnPath } from "@/lib/session";
 import { register } from "../actions";
 
 export const metadata: Metadata = { title: "Create an Account", robots: { index: false } };
 
-export default async function RegisterPage({ searchParams }: { searchParams: { next?: string } }) {
+export default async function RegisterPage({ searchParams }: { searchParams: { next?: string; error?: string } }) {
   const next = safeReturnPath(searchParams.next);
   if (await getSession()) redirect(next);
   return (
@@ -16,7 +17,14 @@ export default async function RegisterPage({ searchParams }: { searchParams: { n
       <p className="mt-1 font-body text-sm text-slate">
         Anyone can buy at list price. Contractors and civil buyers can apply for a trade account once signed in.
       </p>
-      <div className="mt-8 rounded-sm border border-basalt/10 bg-white p-6">
+      {searchParams.error && (
+        <p role="alert" className="mt-6 rounded-sm border border-red-200 bg-red-50 px-4 py-3 font-body text-sm text-red-800">
+          {searchParams.error.slice(0, 300)}
+        </p>
+      )}
+      <div className="mt-6 rounded-sm border border-basalt/10 bg-white p-6">
+        <SocialSignIn next={next} />
+        <OrDivider />
         <ActionForm action={register}>
           <input type="hidden" name="next" value={next} />
           <Field label="Full name" name="name" autoComplete="name" />

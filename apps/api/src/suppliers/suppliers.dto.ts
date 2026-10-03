@@ -42,11 +42,6 @@ export class SupplierDto {
   @IsOptional() @IsString() @MaxLength(500) @Matches(/^(https?:\/\/\S+)?$/) sourceUrl?: string;
 }
 
-export class ImportOptionsDto {
-  /** New suppliers outside the launch provinces (KZN, Gauteng) import inactive. Default true. */
-  @IsOptional() @IsIn(["true", "false"]) activateLaunchProvincesOnly?: "true" | "false";
-}
-
 export class NearestQuery {
   @Type(() => Number) @IsNumber() @IsLatitude() lat!: number;
   @Type(() => Number) @IsNumber() @IsLongitude() lng!: number;

@@ -15,7 +15,7 @@ import {
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Public, Roles } from "../common/auth/decorators";
-import { ImportOptionsDto, ListSuppliersQuery, NearestQuery, SupplierDto } from "./suppliers.dto";
+import { ListSuppliersQuery, NearestQuery, SupplierDto } from "./suppliers.dto";
 import { SuppliersService } from "./suppliers.service";
 
 @Controller("suppliers")
@@ -62,9 +62,9 @@ export class SuppliersController {
   @Post("import")
   @HttpCode(200)
   @UseInterceptors(FileInterceptor("file", { limits: { fileSize: 2 * 1024 * 1024, files: 1 } }))
-  import(@UploadedFile() file: Express.Multer.File | undefined, @Body() options: ImportOptionsDto) {
+  import(@UploadedFile() file: Express.Multer.File | undefined) {
     if (!file?.buffer?.length) throw new BadRequestException("Attach the supplier database CSV.");
-    return this.suppliers.importCsv(file.buffer.toString("utf8"), options.activateLaunchProvincesOnly !== "false");
+    return this.suppliers.importCsv(file.buffer.toString("utf8"));
   }
 
   @Roles("STAFF", "ADMIN")

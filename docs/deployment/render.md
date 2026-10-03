@@ -156,14 +156,14 @@ Staff approve trade accounts and price quote requests in the staff console,
 ## 6. Pin the supplier network
 
 The first deploy seeds the network from the CSVs in
-`packages/database/prisma/seed-data/`: 87 verified partners (KwaZulu-Natal
-and Gauteng ones active) and 18 B2B Bulk & Infrastructure leads (inactive,
+`packages/database/prisma/seed-data/`: 87 verified partners (all active —
+delivery is national) and 18 B2B Bulk & Infrastructure leads (inactive,
 labelled as leads). To bring in a revised list later:
 
 1. Sign in as staff and open **Admin → Suppliers** (`/admin/suppliers`).
 2. Upload the CSV (either layout — the partner database or the B2B research
-   list) and keep **New suppliers outside KwaZulu-Natal and Gauteng start
-   inactive** ticked. The import matches rows on `supplier_id`, so importing
+   list). New verified partners go live in every province; researched leads
+   start inactive. The import matches rows on `supplier_id`, so importing
    the same file again updates suppliers rather than duplicating them. A file
    with any bad row is rejected whole, with every problem listed by line
    number.
@@ -240,9 +240,10 @@ in **Admin → Notifications** rather than sent.
 | When | Set on | Variable / action |
 |---|---|---|
 | Going live on `aggregates.store` | web | Add the custom domain in Render; set `NEXT_PUBLIC_SITE_URL=https://aggregates.store` (used for canonical URLs and the sitemap; it falls back to the Render URL) |
-| Going live on `app.aggregates.store` | api | Add the custom domain; set `NEXT_PUBLIC_APP_URL=https://app.aggregates.store` (used for OAuth callbacks; it falls back to the Render URL) |
+| Going live on `app.aggregates.store` | api | Add the custom domain; set `NEXT_PUBLIC_APP_URL=https://app.aggregates.store` |
 | When the storefront starts calling the API from the browser | api | `CORS_ORIGINS` — comma-separated storefront origins |
-| Enabling Google / Microsoft sign-in | api | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` |
+| Enabling Google / Microsoft / X / Facebook / Instagram sign-in | api | `<PROVIDER>_CLIENT_ID` and `<PROVIDER>_CLIENT_SECRET` for each — see `docs/sign-in.md` for the redirect URI to register |
+| Using a different map tile provider on `/coverage` | web | `NEXT_PUBLIC_MAP_TILE_URL` and `NEXT_PUBLIC_MAP_ATTRIBUTION` (default: OpenStreetMap's standard tiles, fine for normal traffic; switch to a commercial tile service if traffic grows) |
 | When queues are wired in | api | `REDIS_URL` (Upstash) |
 | Going live on `aggregates.store` | api | `NEXT_PUBLIC_SITE_URL=https://aggregates.store` (payment return links, links in emails and WhatsApp messages, and the catalogue feed's product links) |
 

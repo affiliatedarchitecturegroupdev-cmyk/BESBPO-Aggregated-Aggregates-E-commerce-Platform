@@ -11,7 +11,7 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 import { PrismaClient } from "@aggregates/database";
-import { LAUNCH_PROVINCES, parseSupplierCsv } from "./supplier-csv";
+import { parseSupplierCsv, SERVICE_PROVINCES } from "./supplier-csv";
 
 const FILES = ["suppliers-aggregates.csv", "suppliers-b2b-bulk.csv"];
 
@@ -36,8 +36,8 @@ export async function seedSuppliers(prisma: PrismaClient, dir = join(__dirname, 
         productNotes: row.productNotes,
         isVerifiedPartner: row.isVerifiedPartner,
         sourceUrl: row.sourceUrl,
-        // Verified partners in the launch provinces go live; everything else waits for staff.
-        isActive: row.isVerifiedPartner && LAUNCH_PROVINCES.includes(row.province),
+        // Verified partners go live in every province; researched leads wait for staff.
+        isActive: row.isVerifiedPartner && SERVICE_PROVINCES.includes(row.province),
       })),
     });
     created += fresh.length;

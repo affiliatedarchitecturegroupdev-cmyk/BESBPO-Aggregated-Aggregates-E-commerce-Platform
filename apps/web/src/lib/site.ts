@@ -13,7 +13,7 @@ export const NAV_LINKS = [
   { href: "/products", label: "Products" },
   { href: "/industries-we-serve", label: "Industries" },
   { href: "/trade-accounts", label: "Trade Accounts" },
-  { href: "/delivery-areas", label: "Delivery Areas" },
+  { href: "/coverage", label: "Where We Deliver" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];

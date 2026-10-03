@@ -35,6 +35,26 @@ export async function register(_prev: FormState, form: FormData): Promise<FormSt
   redirect(safeReturnPath(form.get("next")));
 }
 
+/** Finishes an Instagram / X sign-up that came without an email address. */
+export async function completeOAuthSignUp(_prev: FormState, form: FormData): Promise<FormState> {
+  const { cookies } = await import("next/headers");
+  let pendingToken = "";
+  try {
+    pendingToken = JSON.parse(cookies().get("aa_oauth_pending")?.value ?? "{}").pendingToken ?? "";
+  } catch {
+    pendingToken = "";
+  }
+  if (!pendingToken) return { error: "This sign-up has expired. Please start again from the sign-in page." };
+  const result = await api<{ accessToken: string }>("/auth/oauth/complete", {
+    method: "POST",
+    body: { pendingToken, email: text(form, "email"), name: optional(form, "name") },
+  });
+  if (!result.ok) return { error: result.message };
+  cookies().delete("aa_oauth_pending");
+  startSession(result.data.accessToken);
+  redirect(safeReturnPath(form.get("next")));
+}
+
 export async function logout() {
   endSession();
   redirect("/");
@@ -258,7 +278,6 @@ export async function importSuppliers(_prev: SupplierImportState, form: FormData
   if (!(file instanceof File) || file.size === 0) return { error: "Choose the supplier database CSV." };
   if (file.size > 2 * 1024 * 1024) return { error: "The CSV must be 2MB or smaller." };
   const upload = new FormData();
-  upload.set("activateLaunchProvincesOnly", form.get("activateLaunchProvincesOnly") === "on" ? "true" : "false");
   upload.set("file", file, file.name);
   const result = await apiUpload<ImportSummary>("/suppliers/import", upload, sessionToken());
   if (!result.ok) return { error: result.message };
