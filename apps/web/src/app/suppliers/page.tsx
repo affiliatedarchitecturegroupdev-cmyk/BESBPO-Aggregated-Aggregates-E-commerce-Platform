@@ -11,7 +11,6 @@ export const metadata: Metadata = {
 };
 
 const CATEGORY_NAME = new Map(CATEGORIES.map((c) => [c.slug, c.name]));
-const LAUNCH = ["KwaZulu-Natal", "Gauteng"];
 
 /**
  * Module 6, public side: the partner network behind every delivery. A
@@ -28,7 +27,7 @@ export default async function SuppliersPage() {
       </div>
     );
   }
-  const provinces = [...LAUNCH, ...PROVINCES.filter((p) => !LAUNCH.includes(p))].filter((p) =>
+  const provinces = PROVINCES.filter((p) =>
     network.partners.some((s) => s.province === p),
   );
   const active = network.partners.filter((s) => s.isActive).length;
@@ -41,12 +40,12 @@ export default async function SuppliersPage() {
       <p className="mt-3 max-w-3xl font-body text-sm text-slate">
         Aggregated Aggregates holds no stock of its own: every order is supplied by an approved partner quarry or plant —
         {` ${network.partners.length}`} across {provinces.length} provinces — and delivered from the one nearest your site.
-        {` ${active}`} are live now in {LAUNCH.join(" and ")}; the rest go live as delivery opens in their province.{" "}
+        {` ${active}`} are live now; any others are being onboarded.{" "}
         <Link href="/delivery-areas" className="text-seam-blue hover:underline">Delivery areas & charges →</Link>
       </p>
       <div className="mt-4 flex flex-wrap gap-3 font-mono text-[10px] uppercase tracking-widest">
         <span className="rounded-sm bg-seam-blue/10 px-2 py-1 text-seam-blue">● Delivering now</span>
-        <span className="rounded-sm bg-basalt/5 px-2 py-1 text-slate">○ Approved partner, province opening soon</span>
+        <span className="rounded-sm bg-basalt/5 px-2 py-1 text-slate">○ Approved partner, being onboarded</span>
       </div>
 
       {provinces.map((province) => (

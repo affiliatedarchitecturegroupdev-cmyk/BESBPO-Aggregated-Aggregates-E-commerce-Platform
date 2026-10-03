@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     template: "%s — Aggregated Aggregates",
   },
   description:
-    "Sub-base, crushed stone, sand, and decorative aggregates — sold by ton, m³ or bag, delivered across KZN and Gauteng. A Besbpo Group division.",
+    "Sub-base, crushed stone, sand, and decorative aggregates — sold by ton, m³ or bag, delivered across all nine provinces of South Africa. A Besbpo Group division.",
   openGraph: { siteName: "Aggregated Aggregates", locale: "en_ZA", type: "website" },
 };
 

@@ -38,10 +38,7 @@ export function SupplierImportForm() {
         <span className="font-mono text-[10px] uppercase text-slate">Supplier database CSV *</span>
         <input name="file" type="file" required accept=".csv,text/csv" className="mt-1 block w-full font-body text-sm" />
       </label>
-      <label className="flex items-start gap-2 font-body text-xs text-slate">
-        <input name="activateLaunchProvincesOnly" type="checkbox" defaultChecked className="mt-0.5" />
-        <span>New suppliers outside KwaZulu-Natal and Gauteng start inactive (an <code>active</code> column overrides this).</span>
-      </label>
+      <p className="font-body text-xs text-slate">New verified partners go live in every province; researched leads start inactive (an <code>active</code> column overrides this).</p>
       <SubmitButton>Import</SubmitButton>
     </form>
   );

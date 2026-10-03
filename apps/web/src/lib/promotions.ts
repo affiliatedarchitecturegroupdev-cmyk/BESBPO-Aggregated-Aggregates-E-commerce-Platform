@@ -3,7 +3,7 @@ import { cache } from "react";
 import { MEDIA_BY_ID } from "@/data/media";
 import { apiCached } from "./api";
 
-export type PromotionSlotKey = "HOMEPAGE_SECONDARY_BANNER" | "CATEGORY_TOP_BANNER" | "QUOTE_FLOW_UPSELL" | "FOOTER_STRIP";
+export type PromotionSlotKey = "HOMEPAGE_SECONDARY_BANNER" | "CATEGORY_TOP_BANNER" | "QUOTE_FLOW_UPSELL" | "FOOTER_STRIP" | "GROUP_CROSS_SELL";
 export type Promotion = {
   id: string;
   slot: PromotionSlotKey;
@@ -19,6 +19,11 @@ export const PROMOTION_SLOTS: { slot: PromotionSlotKey; label: string; where: st
   { slot: "CATEGORY_TOP_BANNER", label: "Category banner", where: "Top of a category or industry listing — can target one category or industry" },
   { slot: "QUOTE_FLOW_UPSELL", label: "Quote upsell", where: "Quote request page, above the form" },
   { slot: "FOOTER_STRIP", label: "Footer strip", where: "Above the footer on every page" },
+  {
+    slot: "GROUP_CROSS_SELL",
+    label: "Group cross-sell",
+    where: "Homepage \"Need it built or finished?\" section — banners for Affiliated Builders or Finishes Construction (link to their sites)",
+  },
 ];
 
 /**

@@ -6,10 +6,10 @@ export function TrustBadges({ partnerSuppliers, liveProvinces }: { partnerSuppli
   const badges = [
     { label: "SANS 1200 / 1083 Graded", detail: "Reference standard shown on every graded product" },
     {
-      label: `${liveProvinces.length > 0 ? liveProvinces.join(" + ") : "KZN + Gauteng"} Network`,
+      label: "Delivering Nationwide",
       detail: partnerSuppliers
-        ? `${partnerSuppliers} approved partner suppliers, expanding province by province`
-        : "Approved partner suppliers, expanding province by province",
+        ? `${partnerSuppliers} approved partner suppliers across ${liveProvinces.length > 0 ? `${liveProvinces.length} provinces` : "all nine provinces"}`
+        : "Approved partner suppliers across all nine provinces",
     },
     { label: "Trade Accounts Available", detail: `Contractor/Trade ${pct("CONTRACTOR_TRADE")}% and Volume/Civil Bulk ${pct("VOLUME_CIVIL_BULK")}% off list` },
     { label: "Besbpo Group Division", detail: "Delivered by Besfleet and 15+ tipper-truck partners" },

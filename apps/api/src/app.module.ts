@@ -22,6 +22,9 @@ import { WhatsAppModule } from "./channels/whatsapp/whatsapp.module";
 import { CatalogueFeedModule } from "./channels/catalogue-feed/catalogue-feed.module";
 import { NotificationsModule } from "./notifications/notifications.module";
 
+import { CareersModule } from "./careers/careers.module";
+import { NewsletterModule } from "./newsletter/newsletter.module";
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -46,6 +49,8 @@ import { NotificationsModule } from "./notifications/notifications.module";
     WhatsAppModule,
     CatalogueFeedModule,
     NotificationsModule,
+    CareersModule,
+    NewsletterModule,
   ],
 })
 export class AppModule {}

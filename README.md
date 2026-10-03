@@ -26,7 +26,13 @@ email and WhatsApp, trade accounts, the RFQ flow, compliance documents, the admi
 slideshow, promotions with image uploads, targeting and reporting, orders, blog, products, suppliers, payment routing, WhatsApp
 orders), the partner-supplier network and delivery-point locator, the
 payment architecture (18 methods routed through 6 gateway adapters), WhatsApp
-Commerce, the Instagram/Facebook catalogue feed, and SEO hardening.
+Commerce, the Instagram/Facebook catalogue feed, and SEO hardening. Also: six
+sign-in options (email, Google, Microsoft, X, Facebook, Instagram —
+`docs/sign-in.md`), a careers section with vacancies and CV applications
+(`/careers`, Admin → Careers), a newsletter sign-up above the footer (Admin →
+Newsletter, CSV export), Besbpo Group cross-selling (Affiliated Builders,
+Finishes Construction), and a "Where We Deliver" page (`/coverage`) with 192
+towns across all nine provinces, a search and a map.
 
 It is not launched: payment gateways, transactional email and the WhatsApp
 Business API need real credentials, three payment logos and the social icons are still placeholders
@@ -51,7 +57,7 @@ for official files, and suppliers need map pins — see "Open items" in `AGENTIC
 - **VAT**: bills under Besbpo Group's company VAT registration from day one
 - **Hosting**: Render
 - **Courier**: Besfleet + 15+ external tipper-truck delivery partners (hybrid)
-- **Launch geography**: KZN + Gauteng first, expanding to the Group's standard 7-province footprint
+- **Geography**: national — all nine provinces (Gauteng and KZN were the first markets). `/coverage` lists the 150+ towns we serve, with a search and map
 
 ## Repository layout
 

@@ -49,7 +49,10 @@ export class AuthGuard implements CanActivate {
     const token = header?.startsWith("Bearer ") ? header.slice(7) : null;
     if (!token) return null;
     try {
-      const { sub } = await this.jwt.verifyAsync<{ sub: string }>(token);
+      const claims = await this.jwt.verifyAsync<{ sub?: unknown; kind?: unknown }>(token);
+      // Sign-in state and pending tokens share the signing key but are never sessions.
+      if (typeof claims.sub !== "string" || claims.kind !== undefined) return null;
+      const sub = claims.sub;
       return await this.prisma.user.findUnique({
         where: { id: sub },
         select: { id: true, email: true, name: true, role: true, companyId: true },

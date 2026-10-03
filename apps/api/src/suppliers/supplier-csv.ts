@@ -42,8 +42,8 @@ export const PROVINCES = [
   "Western Cape",
 ];
 
-/** The confirmed launch geography: KZN + Gauteng first (spec, "Confirmed Decisions"). */
-export const LAUNCH_PROVINCES = ["Gauteng", "KwaZulu-Natal"];
+/** Where we deliver: all nine provinces (national launch, Oct 2026 — Gauteng and KZN were the first markets). */
+export const SERVICE_PROVINCES: readonly string[] = PROVINCES;
 
 const TIERS: Record<string, SupplierTier> = { "tier 1": SupplierTier.TIER_1, "tier 2": SupplierTier.TIER_2 };
 const TIER_LABEL: Record<SupplierTier, string> = { TIER_1: "Tier 1", TIER_2: "Tier 2" };

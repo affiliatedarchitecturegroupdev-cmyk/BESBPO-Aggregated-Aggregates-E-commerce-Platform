@@ -49,6 +49,7 @@ export function bankingDetailLines(value = process.env.EFT_BANKING_DETAILS): str
 export const SELLER = {
   tradingName: "Aggregated Aggregates",
   legalName: "Besbpo Group (Pty) Ltd",
+  registrationNumber: "2026/490480/07",
   addressLines: ["2 Ncondo Place, Ridgeside Dr", "Umhlanga Ridge, Durban, KwaZulu-Natal, 4319"],
   phone: "087 265 2505",
   email: "sales@aggregates.store",

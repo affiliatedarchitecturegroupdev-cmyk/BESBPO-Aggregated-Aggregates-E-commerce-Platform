@@ -1,7 +1,7 @@
 import { ConflictException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcrypt";
-import { OAuthProvider, UserRole } from "@aggregates/database";
+import { UserRole } from "@aggregates/database";
 import { PrismaService } from "../common/prisma.service";
 import { RegisterDto } from "./dto/register.dto";
 
@@ -63,26 +63,14 @@ export class AuthService {
     });
   }
 
-  /** Finds or creates a user from an OAuth (Google/Microsoft) profile. */
-  async findOrCreateOAuthUser(provider: OAuthProvider, providerAccountId: string, email: string, name?: string) {
-    const existingLink = await this.prisma.oAuthAccount.findUnique({
-      where: { provider_providerAccountId: { provider, providerAccountId } },
-    });
-    if (existingLink) {
-      return this.profile(existingLink.userId);
-    }
-    const user = await this.prisma.user.upsert({
-      where: { email: email.toLowerCase() },
-      update: {},
-      create: { email: email.toLowerCase(), name, role: UserRole.CUSTOMER },
-    });
-    await this.prisma.oAuthAccount.create({ data: { provider, providerAccountId, userId: user.id } });
-    return this.profile(user.id);
+  /** A signed session token for a user — the storefront keeps it in an httpOnly cookie. */
+  issueToken(userId: string) {
+    return this.jwt.signAsync({ sub: userId });
   }
 
   private async session(userId: string) {
     return {
-      accessToken: await this.jwt.signAsync({ sub: userId }),
+      accessToken: await this.issueToken(userId),
       user: await this.profile(userId),
     };
   }

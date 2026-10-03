@@ -12,7 +12,7 @@ type Project = { projectName: string; company: string; contactName: string; emai
 type Delivery = { address: string; province: string; distanceKm: string; notes: string };
 
 const STEPS = ["Project Details", "Materials & Quantities", "Delivery Location", "Review & Submit"];
-const PROVINCES = ["KwaZulu-Natal", "Gauteng", "Other province (network expanding)"];
+const PROVINCES = ["KwaZulu-Natal", "Gauteng", "Western Cape", "Eastern Cape", "Free State", "Limpopo", "Mpumalanga", "North West", "Northern Cape"];
 
 const inputClass = "w-full rounded-sm border border-basalt/20 bg-white px-3 py-2 font-body text-sm";
 

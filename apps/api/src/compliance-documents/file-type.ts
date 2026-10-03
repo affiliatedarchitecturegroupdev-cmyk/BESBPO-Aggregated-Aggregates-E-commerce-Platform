@@ -32,3 +32,16 @@ export function safeFileName(original: string | undefined, extension: string): s
     .slice(0, 80);
   return `${stem || "document"}.${extension}`;
 }
+
+export const MAX_CV_BYTES = 5 * 1024 * 1024;
+
+/** CVs: PDF or Word (.docx — a zip whose entries include word/document.xml). Identified by content. */
+export function detectCvType(body: Buffer): { contentType: string; extension: string } | null {
+  const pdf = detectDocumentType(body);
+  if (pdf?.contentType === "application/pdf") return pdf;
+  const isZip = body[0] === 0x50 && body[1] === 0x4b && body[2] === 0x03 && body[3] === 0x04;
+  if (isZip && body.includes(Buffer.from("word/"))) {
+    return { contentType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document", extension: "docx" };
+  }
+  return null;
+}

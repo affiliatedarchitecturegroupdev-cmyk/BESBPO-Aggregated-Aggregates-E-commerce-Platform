@@ -32,6 +32,9 @@ enum UserRole {
 enum OAuthProvider {
   GOOGLE
   MICROSOFT
+  FACEBOOK
+  X
+  INSTAGRAM
 }
 
 model User {
@@ -595,6 +598,7 @@ enum PromotionSlot {
   CATEGORY_TOP_BANNER
   QUOTE_FLOW_UPSELL
   FOOTER_STRIP
+  GROUP_CROSS_SELL
 }
 
 /// A handful of staff-managed banner slots, not a targeting/bidding engine.
@@ -841,4 +845,121 @@ model NotificationSetting {
 model NotificationRecipient {
   email     String   @id
   createdAt DateTime @default(now())
+}
+
+// ---------------------------------------------------------------------------
+// Careers
+// ---------------------------------------------------------------------------
+
+enum VacancyStatus {
+  DRAFT
+  OPEN
+  CLOSED
+}
+
+enum EmploymentType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  TEMPORARY
+  INTERNSHIP
+  LEARNERSHIP
+}
+
+enum WorkplaceType {
+  ON_SITE
+  HYBRID
+  REMOTE
+}
+
+/// A job advert on /careers. Only OPEN vacancies (before their closing date)
+/// are public; staff manage them in Admin -> Careers.
+model Vacancy {
+  id             String           @id @default(cuid())
+  slug           String           @unique
+  title          String
+  department     String
+  location       String // "Durban, KwaZulu-Natal" or "Any province"
+  employmentType EmploymentType
+  workplace      WorkplaceType    @default(ON_SITE)
+  summary        String // one or two sentences for the listing
+  description    String // Markdown: the role, responsibilities, requirements, benefits
+  salary         String? // shown as written ("Market related", "R18 000 – R22 000 per month")
+  closingDate    DateTime?
+  status         VacancyStatus    @default(DRAFT)
+  publishedAt    DateTime?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  applications   JobApplication[]
+
+  @@index([status, closingDate])
+}
+
+enum ApplicationStatus {
+  NEW
+  REVIEWING
+  SHORTLISTED
+  INTERVIEW
+  OFFER
+  HIRED
+  UNSUCCESSFUL
+  WITHDRAWN
+}
+
+/// A CV sent for a vacancy, or to the talent pool when vacancyId is null.
+/// The CV is stored privately (same storage as compliance documents) and only
+/// staff can download it. POPIA: consentAt records the applicant's consent,
+/// and applications are kept for 12 months unless they agree to longer.
+model JobApplication {
+  id            String            @id @default(cuid())
+  vacancyId     String?
+  vacancy       Vacancy?          @relation(fields: [vacancyId], references: [id], onDelete: SetNull)
+  fullName      String
+  email         String
+  phone         String
+  province      String?
+  town          String?
+  linkedinUrl   String?
+  coverNote     String?
+  cvStorageKey  String            @unique
+  cvFileName    String
+  cvContentType String
+  cvSizeBytes   Int
+  consentAt     DateTime
+  status        ApplicationStatus @default(NEW)
+  staffNotes    String?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@index([vacancyId, status])
+  @@index([createdAt])
+}
+
+// ---------------------------------------------------------------------------
+// Newsletter
+// ---------------------------------------------------------------------------
+
+enum SubscriberAudience {
+  CUSTOMER
+  CONTRACTOR
+  PARTNER
+  OTHER
+}
+
+/// Newsletter sign-ups from the strip above the footer. POPIA s69: consentAt
+/// records opt-in; every email carries the unsubscribe link (by token).
+model NewsletterSubscriber {
+  id               String             @id @default(cuid())
+  email            String             @unique
+  name             String?
+  audience         SubscriberAudience @default(CUSTOMER)
+  province         String?
+  source           String? // the page they signed up on
+  consentAt        DateTime
+  unsubscribeToken String             @unique
+  unsubscribedAt   DateTime?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  @@index([unsubscribedAt])
 }

@@ -12,5 +12,8 @@ __pycache__/
 .venv/
 .DS_Store
 prisma/*.db
+# Jest coverage reports (not the storefront's /coverage page)
 coverage/
+!apps/web/src/app/coverage/
+!apps/web/src/components/coverage/
 .storage/

@@ -6,9 +6,9 @@ relative to `apps/web/public/payment-logos/`, and every logo is drawn by
 `components/payment/PaymentLogo.tsx` on a white badge — so dark or black
 official marks read the same on the dark footer as on white cards.
 
-**Status (Sep 2026):** 15 of the 18 methods use official logo files. Float,
-Lulapay and EFT / Purchase Order are still generated placeholders — a dashed
-tile with the method name — until their files are found.
+**Status (Oct 2026):** 16 of the 18 methods use official logo files. Float
+and EFT / Purchase Order are still generated placeholders — a dashed tile
+with the method name — until their files are found.
 
 "Frame tightened" means only the SVG's viewBox/size was changed to remove
 empty margin, so the logo fills its badge; no shapes or colours were edited.
@@ -26,7 +26,8 @@ the table below.
 2. **Brandfetch** (`brandfetch/`) — official brand assets from each provider's
    Brandfetch page, supplied by Fortune (Sep 2026). Used where the PayFast pack
    has no file.
-3. **Generic** (`generic/`) — a house-style icon for methods with no
+3. **Lula** (`lula/`) — Lula's brand pack, supplied by Fortune (Oct 2026).
+4. **Generic** (`generic/`) — a house-style icon for methods with no
    third-party brand (EFT / Purchase Order).
 
 ## Per-method provenance
@@ -49,7 +50,7 @@ the table below.
 | Float | `brandfetch/float.svg` | — | **Placeholder** |
 | Ozow | `brandfetch/ozow.svg` | Brandfetch | Not in the PayFast pack |
 | Stitch | `brandfetch/stitch.svg` | Brandfetch | The Brandfetch file had a broken root tag (viewBox lost) and an undefined CSS-variable fill; both repaired, artwork unchanged |
-| Lulapay | `brandfetch/lulapay.svg` | — | **Placeholder** — AA's own B2B credit-facility strategy |
+| Lulapay | `lula/lula.png` | Lula pack | The pack has the symbol only (no wordmark). Cropped from the 1098px square to the mark, white made transparent, scaled to 160px tall. Artwork unchanged |
 | EFT / Purchase Order | `generic/eft-po.svg` | House icon | **Placeholder** — no third-party brand |
 
 The PayFast pack also has logos for methods the platform doesn't offer
@@ -59,7 +60,39 @@ not copied into the repo; add them from the pack if those methods are enabled.
 
 ## Still open
 
-- Official files still to source: Float and Lulapay, and a house EFT / PO icon.
-- Social media icons follow the same pattern — see `apps/web/src/data/social.ts`'s
-  `iconAssetPath` field and `apps/web/public/social-icons/` (still generated
-  placeholders).
+- Official files still to source: Float, and a house EFT / PO icon.
+
+## Social icons
+
+`apps/web/public/social-icons/`, referenced by `apps/web/src/data/social.ts`.
+From the brand packs Fortune supplied (Oct 2026). The symbol (icon), not the
+wordmark, is used in every case, in the version that reads on the dark
+footer. Files are used as supplied unless noted.
+
+| Platform | File | Pack file | Notes |
+|---|---|---|---|
+| Facebook | `facebook.png` | `Facebook_Symbol_0.png` | Blue "f" circle; pack has PNG only — trimmed and scaled to 128px |
+| Instagram | `instagram.svg` | `Instagram_Symbol_1.svg` | Gradient glyph tile |
+| X | `x.svg` | `X_idVRwaKp9b_3.svg` | White X for the dark footer |
+| TikTok | `tiktok.svg` | `TikTok_Symbol_27.svg` | White note with cyan/red offset |
+| WhatsApp | `whatsapp.svg` | `WhatsApp_idCBBZAMfN_2.svg` | Green glyph |
+| LinkedIn | `linkedin.svg` | `LinkedIn_Symbol_9.svg` | Placeholder handle — not shown until live |
+| YouTube | `youtube.svg` | `YouTube_Symbol_9.svg` | Placeholder handle — not shown until live |
+| Behance | `behance.svg` | `Behance_id8HQT_mlw_4.svg` | Placeholder handle — not shown until live |
+
+Threads (listed in the earlier handles reference) had no pack, so it's not
+shown. Add `threads.svg` and an entry in `social.ts` if it's still in use.
+
+## Sign-in logos
+
+`apps/web/public/sign-in-logos/`, used by the sign-in buttons
+(`components/account/SocialSignIn.tsx`). Following each provider's button
+convention, the buttons show the logo with the wordmark where the pack has one.
+
+| Provider | Files | Notes |
+|---|---|---|
+| Google | `google-symbol.svg` + `google-wordmark.svg` | `Google_Symbol_3.svg`, `Google_Logo_0.svg` |
+| Microsoft | `microsoft.svg` | `Microsoft_Logo_0.svg` (four squares + wordmark) |
+| Instagram | `instagram-symbol.svg` + `instagram-wordmark.svg` | `Instagram_Symbol_1.svg`, `Instagram_Logo_15.svg` |
+| X | `x.svg` | `X_idJxGuURW1_0.svg` — X's logo is the letter itself |
+| Facebook | `facebook.png` | `Facebook_Symbol_0.png`; the pack has no wordmark, so the button names Facebook in text |

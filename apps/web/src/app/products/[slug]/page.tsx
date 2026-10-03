@@ -5,6 +5,7 @@ import { BulkBagCalculator } from "@/components/product/BulkBagCalculator";
 import { ProductCard } from "@/components/product/ProductCard";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductTabs } from "@/components/product/ProductTabs";
+import { GroupServiceBanner } from "@/components/merchandising/GroupServiceBanner";
 import { SocialShareButtons } from "@/components/social/SocialShareButtons";
 import { WhatsAppOrderButton } from "@/components/social/WhatsAppCta";
 import { PackagedProductPage } from "@/components/product/PackagedProductPage";
@@ -37,7 +38,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const [headline] = pricePoints(product);
   return {
     title: product.name,
-    description: `${product.name} from ${formatZAR(headline.price)}/${headline.label}, sold ${product.unitOfSaleLabel}. Delivered across KZN and Gauteng.`,
+    description: `${product.name} from ${formatZAR(headline.price)}/${headline.label}, sold ${product.unitOfSaleLabel}. Delivered across South Africa.`,
     alternates: { canonical: `/products/${product.slug}` },
     openGraph: product.images[0] ? { images: [{ url: product.images[0].src, alt: product.images[0].alt }] } : undefined,
   };
@@ -120,6 +121,10 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
 
       <div className="mt-12">
         <ProductTabs product={product} categoryName={category.name} />
+      </div>
+
+      <div className="mt-10">
+        <GroupServiceBanner categorySlug={product.categorySlug} placement={`product_${product.categorySlug}`} />
       </div>
 
       {related.length > 0 && (

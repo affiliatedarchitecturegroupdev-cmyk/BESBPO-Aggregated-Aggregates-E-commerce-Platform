@@ -20,6 +20,8 @@ const NAV = [
   { href: "/admin/payments", label: "Payments" },
   { href: "/admin/whatsapp", label: "WhatsApp orders" },
   { href: "/admin/notifications", label: "Notifications" },
+  { href: "/admin/careers", label: "Careers" },
+  { href: "/admin/newsletter", label: "Newsletter" },
 ];
 
 /**

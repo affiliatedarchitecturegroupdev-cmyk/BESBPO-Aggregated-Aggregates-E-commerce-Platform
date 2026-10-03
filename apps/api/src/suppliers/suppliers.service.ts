@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { Prisma } from "@aggregates/database";
 import { PrismaService } from "../common/prisma.service";
-import { coordinateError, haversineKm, LAUNCH_PROVINCES, parseSupplierCsv, suppliersToCsv, type CsvError } from "./supplier-csv";
+import { coordinateError, haversineKm, parseSupplierCsv, SERVICE_PROVINCES, suppliersToCsv, type CsvError } from "./supplier-csv";
 import { SupplierDto } from "./suppliers.dto";
 
 export type ImportSummary = { created: number; updated: number; unchanged: number; errors: CsvError[]; missingCoordinates: number };
@@ -19,7 +19,7 @@ export class SuppliersService {
   constructor(private readonly prisma: PrismaService) {}
 
   /** Imports the supplier database CSV. All-or-nothing: any bad row rejects the file with every problem listed. */
-  async importCsv(text: string, activateLaunchProvincesOnly = true): Promise<ImportSummary> {
+  async importCsv(text: string): Promise<ImportSummary> {
     const { rows, errors } = parseSupplierCsv(text);
     if (errors.length > 0) return { created: 0, updated: 0, unchanged: 0, errors, missingCoordinates: 0 };
 
@@ -54,7 +54,7 @@ export class SuppliersService {
             externalId: row.externalId,
             city: row.city,
             // Researched leads start inactive: they aren't delivery points until qualified.
-            isActive: row.isActive ?? (row.isVerifiedPartner && (!activateLaunchProvincesOnly || LAUNCH_PROVINCES.includes(row.province))),
+            isActive: row.isActive ?? (row.isVerifiedPartner && SERVICE_PROVINCES.includes(row.province)),
           },
         });
       }),

@@ -70,7 +70,7 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
     key: "LULAPAY",
     displayName: "Lulapay",
     category: "b2b",
-    logoAssetPath: "brandfetch/lulapay.svg",
+    logoAssetPath: "lula/lula.png",
     tradeOnly: true,
     minOrderValue: 10000,
     maxOrderValue: 5000000,

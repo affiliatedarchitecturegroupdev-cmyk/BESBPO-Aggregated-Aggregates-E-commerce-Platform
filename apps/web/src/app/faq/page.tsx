@@ -49,7 +49,7 @@ const FAQS: { question: string; answer: string }[] = [
   {
     question: "Which provinces do you deliver to?",
     answer:
-      "We're live in KwaZulu-Natal and Gauteng, with partner suppliers already on record in every province. Delivery opens province by province as those partners are onboarded — request a quote if you need material elsewhere now.",
+      "Yes — we deliver across all nine provinces, from the approved partner supplier nearest your site. Check your town on our Where We Deliver page (/coverage); if it isn't listed, request a quote and we'll confirm.",
   },
   {
     question: "How far is my site from your nearest supplier?",
