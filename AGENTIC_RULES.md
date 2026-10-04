@@ -144,9 +144,10 @@ unreviewed work.
   `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_WEBHOOK_VERIFY_TOKEN`,
   `WHATSAPP_APP_SECRET`). Free-text matching of chat requests to SKUs isn't
   automated; sales prices them from `/admin/whatsapp`.
-- Payment-method logos: 15 of 18 are official files (PayFast's logo pack,
-  then Brandfetch); Float, Lulapay and EFT/PO are still placeholders, as are
-  the social icons (`PAYMENT_ASSETS.md`).
+- Payment-method logos: 17 of 18 are official files (PayFast's logo pack,
+  Brandfetch, and the Lula and Float files Fortune supplied); EFT/PO uses a
+  house icon. Social icons are the official symbols; LinkedIn stays hidden
+  until it's registered (`PAYMENT_ASSETS.md`).
 - Product photography (`PRODUCT_IMAGES.md`): 40 open-licence photos from
   Wikimedia Commons (CC0 / public domain / CC BY / CC BY-SA) are live on 45
   of the 48 SKUs, each with the credit its licence requires (under the
