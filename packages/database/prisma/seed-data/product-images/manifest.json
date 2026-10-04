@@ -1,5 +1,5 @@
 {
-  "about": "Candidate product photography sourced via Kimi (Sep 2026) from supplier, marketplace and editorial sites. None has a confirmed commercial licence: every image is imported as PERMISSION_PENDING and stays off the storefront until staff record permission for its source (Admin -> Image permissions). See PRODUCT_IMAGES.md.",
+  "about": "Product photography. Two kinds: (1) photos sourced via Kimi (Sep 2026) from supplier, marketplace and editorial sites \u2014 the owners' permission was received in Oct 2026 (\"permission\": \"GRANTED\"), so they're imported live and shown first; (2) open-licence photos from Wikimedia Commons (an \"openLicence\" block), live with the credit their licence requires. A sourced photo without \"permission\": \"GRANTED\" is imported hidden (PERMISSION_PENDING) until staff record permission in Admin -> Image permissions. \"retiredOpenLicence\" lists Commons photos taken down in Oct 2026 (weak matches). See PRODUCT_IMAGES.md.",
   "images": [
     {
       "file": "03a76b21fa07.webp",
@@ -11,11 +11,12 @@
       "source": "Cloete's Sand & Stone",
       "sourceCountry": "SA",
       "sourcePage": "https://www.cloetesand.co.za/products/36-builders-mix-r604m.html",
-      "sourcingNote": "Supplier photo \u2014 request permission",
+      "sourcingNote": "Supplier photo",
       "flags": [],
       "originalPaths": [
         "05-ballast-rail/Building Rubble - Ballast Mix/04.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "0d62e95fc162.webp",
@@ -27,13 +28,14 @@
       "source": "Palmetto Sand & Gravel",
       "sourceCountry": "US",
       "sourcePage": "https://www.palmettosg.com/aggregate-materials/p/recycled-crusher-run-abc",
-      "sourcingNote": "Supplier photo (US) \u2014 non-SA, request permission",
+      "sourcingNote": "Supplier photo (US) \u2014 non-SA",
       "flags": [
         "NON_SA"
       ],
       "originalPaths": [
         "09-recycled-sustainable/Recycled Crushed Concrete Aggregate (RCA)/02.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "10120da969c8.webp",
@@ -45,14 +47,15 @@
       "source": "Robert Price / Heidelberg",
       "sourceCountry": "UK",
       "sourcePage": "https://www.robert-price.co.uk/shop/product/heidelberg-materials-hydrated-lime-25kg-paper/",
-      "sourcingNote": "Supplier photo (UK brand) \u2014 non-SA, request permission",
+      "sourcingNote": "Supplier photo (UK brand) \u2014 non-SA",
       "flags": [
         "BRAND_VISIBLE",
         "NON_SA"
       ],
       "originalPaths": [
         "08-agricultural-industrial/Hydrated Lime/02.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "1911ba995826.webp",
@@ -64,7 +67,7 @@
       "source": "Gravel Delivery",
       "sourceCountry": "US",
       "sourcePage": "https://graveldelivery.com/3-4-road-base-stone-base/",
-      "sourcingNote": "Supplier photo (US) \u2014 non-SA, verify license",
+      "sourcingNote": "Supplier photo (US) \u2014 non-SA",
       "flags": [
         "NON_SA",
         "SHARED"
@@ -72,7 +75,8 @@
       "originalPaths": [
         "04-crusher-run-road-building/Crusher Run 0-19mm/01.png",
         "04-crusher-run-road-building/Crusher Run 0-40mm/02.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "1b1d7e536807.webp",
@@ -84,7 +88,7 @@
       "source": "Green Stone Company",
       "sourceCountry": "US",
       "sourcePage": "https://greenstonecompany.com/products/slate-chips/",
-      "sourcingNote": "Supplier photo (US) \u2014 non-SA, verify license",
+      "sourcingNote": "Supplier photo (US) \u2014 non-SA",
       "flags": [
         "NON_SA",
         "SHARED"
@@ -92,7 +96,8 @@
       "originalPaths": [
         "07-decorative-landscaping/Crushed Stone Chips (Decorative)/03.png",
         "07-decorative-landscaping/Mineral Stone Mulch/01.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "270062616217.webp",
@@ -104,11 +109,12 @@
       "source": "Sand Masters",
       "sourceCountry": "SA",
       "sourcePage": "https://sandmasters999045182.wordpress.com/sub-base-materials/",
-      "sourcingNote": "Supplier site photo \u2014 request written reuse permission",
+      "sourcingNote": "Supplier site photo",
       "flags": [],
       "originalPaths": [
         "01-sub-base-base-course/G4 Natural Gravel (Crushed)/02.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "289f7b1ae10e.webp",
@@ -120,7 +126,7 @@
       "source": "Complex Plumbing",
       "sourceCountry": "NZ",
       "sourcePage": "https://www.complexplumbing.co.nz/what-is-subsoil-drainage/",
-      "sourcingNote": "Article photo (NZ) \u2014 verify license",
+      "sourcingNote": "Article photo (NZ)",
       "flags": [
         "NON_SA",
         "SHARED"
@@ -128,7 +134,8 @@
       "originalPaths": [
         "06-drainage-filter/Weeping Tile Bedding Stone/02.png",
         "06-drainage-filter/Subsoil Drainage Stone/01.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "3147b2a6f55f.webp",
@@ -140,11 +147,12 @@
       "source": "INFRAMAT (inframat.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://www.inframat.co.za/products/19mm-brown-crushed-stone-gravel-8-tons",
-      "sourcingNote": "Supplier photo \u2014 request permission",
+      "sourcingNote": "Supplier photo",
       "flags": [],
       "originalPaths": [
         "05-ballast-rail/Ferrocrete Ballast/04.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "31e0c4f4a6f0.webp",
@@ -156,7 +164,7 @@
       "source": "Gardenista",
       "sourceCountry": "US",
       "sourcePage": "https://www.gardenista.com/posts/hardscaping-101-pea-gravel/",
-      "sourcingNote": "Editorial photo (US) \u2014 verify license",
+      "sourcingNote": "Editorial photo (US)",
       "flags": [
         "NON_SA",
         "SHARED"
@@ -164,7 +172,8 @@
       "originalPaths": [
         "07-decorative-landscaping/River Pebble/02.png",
         "07-decorative-landscaping/Pea Gravel/03.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "365199df5cf7.webp",
@@ -176,13 +185,14 @@
       "source": "Holcim UK",
       "sourceCountry": "UK",
       "sourcePage": "https://www.holcim.co.uk/products/aggregates/sea-flood-defence/rip-rap",
-      "sourcingNote": "Supplier photo (UK) \u2014 non-SA, request permission",
+      "sourcingNote": "Supplier photo (UK) \u2014 non-SA",
       "flags": [
         "NON_SA"
       ],
       "originalPaths": [
         "04-crusher-run-road-building/Rip Rap - Rock Armour/03.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "3ebe009f500c.webp",
@@ -194,14 +204,15 @@
       "source": "INFRAMAT (inframat.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://www.inframat.co.za/products/g5-sub-base-material-10-cubic-meter",
-      "sourcingNote": "Supplier site photo \u2014 request written reuse permission",
+      "sourcingNote": "Supplier site photo",
       "flags": [
         "SHARED"
       ],
       "originalPaths": [
         "01-sub-base-base-course/G5 Natural Gravel/02.png",
         "01-sub-base-base-course/G9 Gravel (Fill)/01.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "42a3db306e01.webp",
@@ -213,14 +224,15 @@
       "source": "International Railway Journal",
       "sourceCountry": "Generic",
       "sourcePage": "https://www.railjournal.com/in_depth/rubber-coated-ballast-demonstrates-improved-track-resilience/",
-      "sourcingNote": "Editorial photo \u2014 verify license",
+      "sourcingNote": "Editorial photo",
       "flags": [
         "LOW_RES",
         "NON_SA"
       ],
       "originalPaths": [
         "05-ballast-rail/Rail Ballast/05.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "469ece051b6d.webp",
@@ -232,11 +244,12 @@
       "source": "Builders Merchant (buildersmerchant.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://www.buildersmerchant.co.za/products/13mm-crushed-stone-aggregate-30-ton-pink",
-      "sourcingNote": "Supplier photo \u2014 pink crush, request permission",
+      "sourcingNote": "Supplier photo \u2014 pink crush",
       "flags": [],
       "originalPaths": [
         "09-recycled-sustainable/Recycled Crushed Brick Aggregate/03.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "470e2931e801.webp",
@@ -248,7 +261,7 @@
       "source": "INFRAMAT (inframat.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://www.inframat.co.za/products/19mm-grey-crushed-stone-gravel-16-tons",
-      "sourcingNote": "Supplier site photo \u2014 request written reuse permission",
+      "sourcingNote": "Supplier site photo",
       "flags": [
         "SHARED"
       ],
@@ -259,7 +272,8 @@
         "02-crushed-stone/26.5mm Crushed Stone (Dolomite)/03.png",
         "02-crushed-stone/37.5mm Crushed Stone (Dolomite)/02.png",
         "02-crushed-stone/53mm Crushed Stone (Dolomite)/02.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "487d7630fee9.webp",
@@ -271,7 +285,7 @@
       "source": "Cloete's Sand & Stone",
       "sourceCountry": "SA",
       "sourcePage": "https://www.cloetesand.co.za/stone/24-19mm-stone.html",
-      "sourcingNote": "Supplier site photo \u2014 request written reuse permission",
+      "sourcingNote": "Supplier site photo",
       "flags": [
         "SHARED"
       ],
@@ -281,7 +295,8 @@
         "02-crushed-stone/19mm Crushed Stone (Granite)/02.png",
         "02-crushed-stone/26.5mm Crushed Stone (Dolomite)/02.png",
         "02-crushed-stone/53mm Crushed Stone (Dolomite)/03.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "4a59d9dcc916.webp",
@@ -293,13 +308,14 @@
       "source": "North West Aggregates",
       "sourceCountry": "UK",
       "sourcePage": "https://www.northwestaggregates.com/product/concrete-ballast-bulk-bag",
-      "sourcingNote": "Supplier photo (UK) \u2014 non-SA, request permission",
+      "sourcingNote": "Supplier photo (UK) \u2014 non-SA",
       "flags": [
         "NON_SA"
       ],
       "originalPaths": [
         "05-ballast-rail/Building Rubble - Ballast Mix/02.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "5a4a3fe1a541.webp",
@@ -311,11 +327,12 @@
       "source": "Pavement Materials Group",
       "sourceCountry": "SA",
       "sourcePage": "https://www.pavementmaterials.co.za/products/19mm-crushed-stone-aggregate-16-ton-brown",
-      "sourcingNote": "Supplier photo \u2014 Worcester Brown stone, request permission",
+      "sourcingNote": "Supplier photo \u2014 Worcester Brown stone",
       "flags": [],
       "originalPaths": [
         "06-drainage-filter/Subsoil Drainage Stone/03.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "5f06bee3406b.webp",
@@ -333,7 +350,8 @@
       ],
       "originalPaths": [
         "06-drainage-filter/Filter Media Aggregate/03.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "5fd436ba83e7.webp",
@@ -345,7 +363,7 @@
       "source": "Gomes Sand (gomessand.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://gomessand.co.za/product/g5-40mm/",
-      "sourcingNote": "Supplier site photo \u2014 request written reuse permission",
+      "sourcingNote": "Supplier site photo",
       "flags": [
         "LOW_RES",
         "SHARED"
@@ -354,7 +372,8 @@
         "01-sub-base-base-course/G4 Natural Gravel (Crushed)/01.png",
         "01-sub-base-base-course/G5 Natural Gravel/01.png",
         "01-sub-base-base-course/G8 Gravel (Fill)/02.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "618f030454d3.webp",
@@ -366,13 +385,14 @@
       "source": "Hammarlund Nursery",
       "sourceCountry": "US",
       "sourcePage": "https://hammarlundnursery.com/products/crusher-fines",
-      "sourcingNote": "Supplier photo (US) \u2014 non-SA, request permission",
+      "sourcingNote": "Supplier photo (US) \u2014 non-SA",
       "flags": [
         "NON_SA"
       ],
       "originalPaths": [
         "02-crushed-stone/Crusher Dust - Stone Dust/03.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "62f66a7e18d3.webp",
@@ -384,14 +404,15 @@
       "source": "Agrimark (agrimark.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://www.agrimark.co.za/product/bontebok-calcitic-lime-bredasdorp-25kg",
-      "sourcingNote": "Supplier site photo \u2014 request permission; Bredasdorp brand visible",
+      "sourcingNote": "Supplier site photo; Bredasdorp brand visible",
       "flags": [
         "LOW_RES",
         "BRAND_VISIBLE"
       ],
       "originalPaths": [
         "08-agricultural-industrial/Agricultural Lime (Calcitic)/01.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "64aacf471492.webp",
@@ -403,7 +424,7 @@
       "source": "Topsoil Tippers (Pretoria)",
       "sourceCountry": "SA",
       "sourcePage": "https://topsoiltippers.co.za/af/shop/concrete-stone-13mm/",
-      "sourcingNote": "Supplier site photo \u2014 request written reuse permission",
+      "sourcingNote": "Supplier site photo",
       "flags": [
         "SHARED"
       ],
@@ -413,7 +434,8 @@
         "02-crushed-stone/26.5mm Crushed Stone (Dolomite)/01.png",
         "02-crushed-stone/37.5mm Crushed Stone (Dolomite)/01.png",
         "02-crushed-stone/53mm Crushed Stone (Dolomite)/01.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "660fc610df5d.webp",
@@ -425,13 +447,14 @@
       "source": "Hinterland (hinterland.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://www.hinterland.co.za/products/hydrated-lime-25kg",
-      "sourcingNote": "Supplier site photo \u2014 Powerlime/Lime Distributors SA, request permission",
+      "sourcingNote": "Supplier site photo \u2014 Powerlime/Lime Distributors SA",
       "flags": [
         "LOW_RES"
       ],
       "originalPaths": [
         "08-agricultural-industrial/Hydrated Lime/01.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "73ab9ebc6576.webp",
@@ -443,7 +466,7 @@
       "source": "Bray Topsoil & Gravel",
       "sourceCountry": "US",
       "sourcePage": "https://braytopsoilandgravel.com/why-drain-rock-is-great-for-french-drains-trenches-driveways-landscaping-and-more/",
-      "sourcingNote": "Supplier photo (US) \u2014 non-SA, verify license",
+      "sourcingNote": "Supplier photo (US) \u2014 non-SA",
       "flags": [
         "NON_SA",
         "SHARED"
@@ -452,7 +475,8 @@
         "06-drainage-filter/French Drain Stone/01.png",
         "06-drainage-filter/Filter Media Aggregate/02.png",
         "06-drainage-filter/Weeping Tile Bedding Stone/01.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "7ab65824491f.webp",
@@ -464,14 +488,15 @@
       "source": "Ferguson Waterworks",
       "sourceCountry": "US",
       "sourcePage": "https://www.fergusonwaterworks.com/product/gabions/",
-      "sourcingNote": "Supplier photo (US) \u2014 non-SA, request permission",
+      "sourcingNote": "Supplier photo (US) \u2014 non-SA",
       "flags": [
         "LOW_RES",
         "NON_SA"
       ],
       "originalPaths": [
         "04-crusher-run-road-building/Gabion Stone/01.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "7c229ee83c0e.webp",
@@ -483,13 +508,14 @@
       "source": "Longwater Gravel",
       "sourceCountry": "UK",
       "sourcePage": "https://longwatergravel.co.uk/gravel-and-aggregate/crushed-brick",
-      "sourcingNote": "Supplier photo (UK) \u2014 non-SA, request permission",
+      "sourcingNote": "Supplier photo (UK) \u2014 non-SA",
       "flags": [
         "NON_SA"
       ],
       "originalPaths": [
         "09-recycled-sustainable/Recycled Crushed Brick Aggregate/01.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "7dfae230cb50.webp",
@@ -501,7 +527,7 @@
       "source": "Shelar Infrastructure / TradeIndia",
       "sourceCountry": "India",
       "sourcePage": "https://www.shelarinfrastructure.com/crusher-run-12498965.html",
-      "sourcingNote": "Marketplace photo (India) \u2014 non-SA, verify license",
+      "sourcingNote": "Marketplace photo (India) \u2014 non-SA",
       "flags": [
         "NON_SA",
         "SHARED"
@@ -509,7 +535,8 @@
       "originalPaths": [
         "04-crusher-run-road-building/Crusher Run 0-19mm/02.png",
         "04-crusher-run-road-building/Crusher Run 0-40mm/01.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "7e3c491f9f6a.webp",
@@ -521,7 +548,7 @@
       "source": "Chips Groundcover",
       "sourceCountry": "US",
       "sourcePage": "https://www.chipsgroundcover.com/crushed-stone-2-3",
-      "sourcingNote": "Supplier photo (US) \u2014 non-SA, verify license",
+      "sourcingNote": "Supplier photo (US) \u2014 non-SA",
       "flags": [
         "NON_SA",
         "SHARED"
@@ -529,7 +556,8 @@
       "originalPaths": [
         "07-decorative-landscaping/Crushed Stone Chips (Decorative)/01.png",
         "07-decorative-landscaping/Mineral Stone Mulch/02.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "7f53ec0b963a.webp",
@@ -541,7 +569,7 @@
       "source": "Gomes Sand (gomessand.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://gomessand.co.za/product/g1-40mm/",
-      "sourcingNote": "Supplier site photo \u2014 request written reuse permission",
+      "sourcingNote": "Supplier site photo",
       "flags": [
         "LOW_RES",
         "SHARED"
@@ -549,7 +577,8 @@
       "originalPaths": [
         "01-sub-base-base-course/G1 Crushed Stone/03.png",
         "01-sub-base-base-course/G8 Gravel (Fill)/01.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "8318320243fe.webp",
@@ -561,11 +590,12 @@
       "source": "Imperial Paving (imperialpaving.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://imperialpaving.co.za/product/flower-gabion-rocks/",
-      "sourcingNote": "Supplier photo \u2014 request permission",
+      "sourcingNote": "Supplier photo",
       "flags": [],
       "originalPaths": [
         "04-crusher-run-road-building/Gabion Stone/04.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "928962415f04.webp",
@@ -577,7 +607,7 @@
       "source": "IndiaMART listing",
       "sourceCountry": "India",
       "sourcePage": "https://www.indiamart.com/proddetail/construction-plaster-sand-25057167897.html",
-      "sourcingNote": "Marketplace photo (India) \u2014 non-SA, verify license",
+      "sourcingNote": "Marketplace photo (India) \u2014 non-SA",
       "flags": [
         "LOW_RES",
         "NON_SA",
@@ -586,7 +616,8 @@
       "originalPaths": [
         "03-sand-fine/Plaster Sand/01.png",
         "03-sand-fine/Screeding Sand/01.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "a6882bb12b89.webp",
@@ -598,11 +629,12 @@
       "source": "INFRAMAT (inframat.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://www.inframat.co.za/products/38mm-rail-ballast-stone-4-tons",
-      "sourcingNote": "Supplier photo \u2014 request permission",
+      "sourcingNote": "Supplier photo",
       "flags": [],
       "originalPaths": [
         "05-ballast-rail/Rail Ballast/04.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "a9b951724248.webp",
@@ -614,14 +646,15 @@
       "source": "Tarmac",
       "sourceCountry": "UK",
       "sourcePage": "https://www.tarmac.com/products/aggregates/construction-aggregates/rail-track-ballast/",
-      "sourcingNote": "Supplier photo (UK) \u2014 non-SA, request permission",
+      "sourcingNote": "Supplier photo (UK) \u2014 non-SA",
       "flags": [
         "LOW_RES",
         "NON_SA"
       ],
       "originalPaths": [
         "05-ballast-rail/Ferrocrete Ballast/01.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "aa38a2892328.webp",
@@ -633,7 +666,7 @@
       "source": "Gomes Sand (gomessand.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://gomessand.co.za/product/river-sand/",
-      "sourcingNote": "Supplier site photo \u2014 request written reuse permission",
+      "sourcingNote": "Supplier site photo",
       "flags": [
         "LOW_RES",
         "SHARED"
@@ -641,7 +674,8 @@
       "originalPaths": [
         "03-sand-fine/Building Sand (Unwashed)/01.png",
         "03-sand-fine/Filling Sand/01.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "aabc0d042df2.webp",
@@ -653,7 +687,7 @@
       "source": "French Drain Man",
       "sourceCountry": "US",
       "sourcePage": "https://frenchdrainman.com/why-use-a-coarse-washed-rock-for-construction-of-a-michigan-french-drain/",
-      "sourcingNote": "Article photo (US) \u2014 verify license",
+      "sourcingNote": "Article photo (US)",
       "flags": [
         "NON_SA",
         "SHARED"
@@ -661,7 +695,8 @@
       "originalPaths": [
         "06-drainage-filter/French Drain Stone/02.png",
         "06-drainage-filter/Subsoil Drainage Stone/02.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "acb287e2a860.webp",
@@ -673,7 +708,7 @@
       "source": "Topsoil Tippers (Pretoria)",
       "sourceCountry": "SA",
       "sourcePage": "https://topsoiltippers.co.za/af/shop/concrete-stone-13mm/",
-      "sourcingNote": "Supplier site photo \u2014 request written reuse permission",
+      "sourcingNote": "Supplier site photo",
       "flags": [
         "SHARED"
       ],
@@ -681,7 +716,8 @@
         "02-crushed-stone/6.7mm Crushed Stone (Dolomite)/01.png",
         "02-crushed-stone/9.5mm Crushed Stone (Dolomite)/02.png",
         "02-crushed-stone/13.2mm Crushed Stone (Dolomite)/02.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "b55e6eabdccc.webp",
@@ -693,7 +729,7 @@
       "source": "Builders (builders.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://www.builders.co.za/Building-Materials/Stones-Sands-and-Premix/Sand-and-Stone/Builders-River-Sand-Aggregate-for-Concrete-and-Paving--Bulk-Yard-Sale---ndash--Price-Per-m3/p/000000000000127142",
-      "sourcingNote": "Supplier site photo \u2014 request written reuse permission",
+      "sourcingNote": "Supplier site photo",
       "flags": [
         "SHARED"
       ],
@@ -704,7 +740,8 @@
         "03-sand-fine/Filling Sand/02.png",
         "03-sand-fine/Concrete Sand/01.png",
         "03-sand-fine/Screeding Sand/02.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "bb3624d6136b.webp",
@@ -716,7 +753,7 @@
       "source": "Gomes Sand (gomessand.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://gomessand.co.za/product/g1-40mm/",
-      "sourcingNote": "Supplier site photo \u2014 request written reuse permission",
+      "sourcingNote": "Supplier site photo",
       "flags": [
         "LOW_RES",
         "SHARED"
@@ -724,7 +761,8 @@
       "originalPaths": [
         "01-sub-base-base-course/G1 Crushed Stone/02.png",
         "01-sub-base-base-course/G9 Gravel (Fill)/02.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "bea88615e21f.webp",
@@ -736,14 +774,15 @@
       "source": "Rock Stone & Pebble blog",
       "sourceCountry": "US",
       "sourcePage": "https://rockstoneandpebble.com/landscaping-using-river-rock/",
-      "sourcingNote": "Blog photo (US) \u2014 verify license",
+      "sourcingNote": "Blog photo (US)",
       "flags": [
         "LOW_RES",
         "NON_SA"
       ],
       "originalPaths": [
         "07-decorative-landscaping/River Pebble/01.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "c0e431769751.webp",
@@ -755,13 +794,14 @@
       "source": "Imperial Paving (imperialpaving.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://imperialpaving.co.za/product/13mm-grey-crushed-stone-gravel-8-tons/",
-      "sourcingNote": "Supplier photo \u2014 request permission",
+      "sourcingNote": "Supplier photo",
       "flags": [
         "LOW_RES"
       ],
       "originalPaths": [
         "06-drainage-filter/Weeping Tile Bedding Stone/03.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "c15a3904b207.webp",
@@ -773,11 +813,12 @@
       "source": "INFRAMAT (inframat.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://www.inframat.co.za/products/armor-stone-rip-rap-rock-supplier-cape-town-johannesburg-pretoria-durban",
-      "sourcingNote": "Supplier photo \u2014 request permission",
+      "sourcingNote": "Supplier photo",
       "flags": [],
       "originalPaths": [
         "04-crusher-run-road-building/Rip Rap - Rock Armour/04.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "d4d79853769f.webp",
@@ -789,11 +830,12 @@
       "source": "Sika South Africa (zaf.sika.com)",
       "sourceCountry": "SA",
       "sourcePage": "https://zaf.sika.com/en/knowledge-hub/reco2ver-concrete-recycling.html",
-      "sourcingNote": "Corporate photo \u2014 request permission",
+      "sourcingNote": "Corporate photo",
       "flags": [],
       "originalPaths": [
         "09-recycled-sustainable/Recycled Crushed Concrete Aggregate (RCA)/03.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "dab58217f454.webp",
@@ -805,13 +847,14 @@
       "source": "Crushcrete",
       "sourceCountry": "US",
       "sourcePage": "https://www.crushcrete.com/stone",
-      "sourcingNote": "Supplier photo (US) \u2014 request permission; hi-res 2500px",
+      "sourcingNote": "Supplier photo (US); hi-res 2500px",
       "flags": [
         "NON_SA"
       ],
       "originalPaths": [
         "09-recycled-sustainable/Recycled Crushed Concrete Aggregate (RCA)/04.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "de3f9dbf79ab.webp",
@@ -823,11 +866,12 @@
       "source": "Crown Publications (crown.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://www.crown.co.za/construction-world/equipment/37973-giving-reclaimed-asphalt-a-second-life-with-rubble-master",
-      "sourcingNote": "Editorial photo (SA) \u2014 verify license",
+      "sourcingNote": "Editorial photo (SA)",
       "flags": [],
       "originalPaths": [
         "09-recycled-sustainable/Reclaimed Asphalt Planings (RAP)/03.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "e072db7c7333.webp",
@@ -839,11 +883,12 @@
       "source": "INFRAMAT (inframat.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://www.inframat.co.za/products/g1-g7-road-base-and-subbase-supplier-cape-town-johannesburg-pretoria-durban",
-      "sourcingNote": "Supplier site photo \u2014 request written reuse permission",
+      "sourcingNote": "Supplier site photo",
       "flags": [],
       "originalPaths": [
         "01-sub-base-base-course/G2 Crushed Stone/01.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "e148d76a9903.webp",
@@ -855,13 +900,14 @@
       "source": "Project Landscape",
       "sourceCountry": "CA",
       "sourcePage": "https://www.projectlandscape.ca/using-pea-gravel-for-landscaping/",
-      "sourcingNote": "Blog photo (CA) \u2014 verify license",
+      "sourcingNote": "Blog photo (CA)",
       "flags": [
         "NON_SA"
       ],
       "originalPaths": [
         "07-decorative-landscaping/Pea Gravel/01.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "e5624e1c8691.webp",
@@ -873,11 +919,12 @@
       "source": "Imperial Paving (imperialpaving.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://imperialpaving.co.za/product/brown-dump-rocks-4-tons/",
-      "sourcingNote": "Supplier photo \u2014 request permission",
+      "sourcingNote": "Supplier photo",
       "flags": [],
       "originalPaths": [
         "06-drainage-filter/French Drain Stone/04.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "e62c2b758694.webp",
@@ -889,13 +936,14 @@
       "source": "Gardenscape",
       "sourceCountry": "NZ",
       "sourcePage": "https://gardenscape.co.nz/product/gap-7-crusher-dust-quarry-fines/",
-      "sourcingNote": "Supplier site photo (NZ) \u2014 non-SA, request permission",
+      "sourcingNote": "Supplier site photo (NZ) \u2014 non-SA",
       "flags": [
         "NON_SA"
       ],
       "originalPaths": [
         "02-crushed-stone/Crusher Dust - Stone Dust/02.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "eb3a51b6e1ee.webp",
@@ -907,13 +955,14 @@
       "source": "A-1 Grass Sand & Stone",
       "sourceCountry": "US",
       "sourcePage": "https://a1grass.com/blogs/articles/pea-gravel-a-practical-guide-for-landscaping-pathways-and-more",
-      "sourcingNote": "Blog photo (US) \u2014 verify license",
+      "sourcingNote": "Blog photo (US)",
       "flags": [
         "NON_SA"
       ],
       "originalPaths": [
         "07-decorative-landscaping/Pea Gravel/02.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "ec821cb8727e.webp",
@@ -925,13 +974,14 @@
       "source": "Gabion Supplier",
       "sourceCountry": "Generic",
       "sourcePage": "https://www.gabionsupplier.com/articles/use-gabion-baskets.html",
-      "sourcingNote": "Article photo \u2014 verify license",
+      "sourcingNote": "Article photo",
       "flags": [
         "NON_SA"
       ],
       "originalPaths": [
         "04-crusher-run-road-building/Gabion Stone/02.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "ed01731f9586.webp",
@@ -943,13 +993,14 @@
       "source": "Glory Track blog",
       "sourceCountry": "Generic",
       "sourcePage": "https://glorytrack.com/railway-track-ballast-benefits/",
-      "sourcingNote": "Blog photo \u2014 verify license",
+      "sourcingNote": "Blog photo",
       "flags": [
         "NON_SA"
       ],
       "originalPaths": [
         "05-ballast-rail/Rail Ballast/01.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "f3ec9c85b2fc.webp",
@@ -961,13 +1012,14 @@
       "source": "Mainland Aggregates UK",
       "sourceCountry": "UK",
       "sourcePage": "https://www.mainlandaggregates.co.uk/blog/what-is-rip-rap.html",
-      "sourcingNote": "Blog photo (UK) \u2014 verify license",
+      "sourcingNote": "Blog photo (UK)",
       "flags": [
         "NON_SA"
       ],
       "originalPaths": [
         "04-crusher-run-road-building/Rip Rap - Rock Armour/02.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "fa6c7affba90.webp",
@@ -979,13 +1031,14 @@
       "source": "Breedon Group",
       "sourceCountry": "UK",
       "sourcePage": "https://www.breedongroup.com/products/products-gb/asphalt/sustainable-asphalt/rap-content",
-      "sourcingNote": "Supplier photo (UK) \u2014 non-SA, request permission",
+      "sourcingNote": "Supplier photo (UK) \u2014 non-SA",
       "flags": [
         "NON_SA"
       ],
       "originalPaths": [
         "09-recycled-sustainable/Reclaimed Asphalt Planings (RAP)/01.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "fde46d33623d.webp",
@@ -1005,7 +1058,8 @@
       "originalPaths": [
         "03-sand-fine/River Sand (Washed)/03.png",
         "03-sand-fine/Concrete Sand/02.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "fff26cbf02c4.webp",
@@ -1017,35 +1071,14 @@
       "source": "Newtown Fertilizers (gardenonline.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://www.gardenonline.co.za/product/agricultural-lime-dolomitic-50kg/",
-      "sourcingNote": "Supplier site photo \u2014 Pistorius brand visible (Afrikaans packaging), request permission",
+      "sourcingNote": "Supplier site photo \u2014 Pistorius brand visible (Afrikaans packaging)",
       "flags": [
         "BRAND_VISIBLE"
       ],
       "originalPaths": [
         "08-agricultural-industrial/Dolomitic Lime/01.png"
-      ]
-    },
-    {
-      "file": "399f45bd1005.webp",
-      "width": 1200,
-      "height": 673,
-      "bytes": 171674,
-      "originalWidth": 1600,
-      "originalHeight": 898,
-      "source": "Wikimedia Commons",
-      "sourceCountry": "United Kingdom",
-      "sourcePage": "https://commons.wikimedia.org/wiki/File:Lime_spread_on_a_field_-_geograph.org.uk_-_7994384.jpg",
-      "sourcingNote": "Agricultural lime spread on a ploughed field",
-      "flags": [
-        "SHARED"
       ],
-      "originalPaths": [],
-      "openLicence": {
-        "name": "CC BY-SA 2.0",
-        "url": "https://creativecommons.org/licenses/by-sa/2.0",
-        "author": "Philip Halling",
-        "credit": "Philip Halling, via Wikimedia Commons"
-      }
+      "permission": "GRANTED"
     },
     {
       "file": "47f42bc19b73.webp",
@@ -1758,26 +1791,6 @@
       }
     },
     {
-      "file": "92cbcaee3493.webp",
-      "width": 1200,
-      "height": 900,
-      "bytes": 211016,
-      "originalWidth": 4000,
-      "originalHeight": 3000,
-      "source": "Wikimedia Commons",
-      "sourceCountry": "Nigeria",
-      "sourcePage": "https://commons.wikimedia.org/wiki/File:Sand_mining_from_the_River_Niger_in_Onitsha_Anambra_State,_Nigeria.jpg",
-      "sourcingNote": "River sand being landed from the River Niger at Onitsha",
-      "flags": [],
-      "originalPaths": [],
-      "openLicence": {
-        "name": "CC0",
-        "url": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
-        "author": "Ngostary2k",
-        "credit": null
-      }
-    },
-    {
       "file": "5bf734eb72d0.webp",
       "width": 900,
       "height": 1200,
@@ -1797,46 +1810,6 @@
         "url": "https://creativecommons.org/licenses/by-sa/4.0",
         "author": "Johnnybam",
         "credit": "Johnnybam, via Wikimedia Commons"
-      }
-    },
-    {
-      "file": "b2081778e6a7.webp",
-      "width": 1200,
-      "height": 675,
-      "bytes": 208278,
-      "originalWidth": 2578,
-      "originalHeight": 1450,
-      "source": "Wikimedia Commons",
-      "sourceCountry": "India",
-      "sourcePage": "https://commons.wikimedia.org/wiki/File:Silica_Sand_deposits,_Udupi_district,Karnataka_02.jpg",
-      "sourcingNote": "Heap of white silica sand",
-      "flags": [],
-      "originalPaths": [],
-      "openLicence": {
-        "name": "CC BY-SA 4.0",
-        "url": "https://creativecommons.org/licenses/by-sa/4.0",
-        "author": "\u0cb0\u0cb5\u0cbf\u0cae\u0cc1\u0c82",
-        "credit": "\u0cb0\u0cb5\u0cbf\u0cae\u0cc1\u0c82, via Wikimedia Commons"
-      }
-    },
-    {
-      "file": "bf6f14ba0e77.webp",
-      "width": 1200,
-      "height": 802,
-      "bytes": 142230,
-      "originalWidth": 2400,
-      "originalHeight": 1603,
-      "source": "Wikimedia Commons",
-      "sourceCountry": "Japan",
-      "sourcePage": "https://commons.wikimedia.org/wiki/File:Osorezan_Gokurakuhama_Big_quartz_sand_P9151325.JPG",
-      "sourcingNote": "Close-up of coarse quartz (silica) sand grains",
-      "flags": [],
-      "originalPaths": [],
-      "openLicence": {
-        "name": "CC BY-SA 3.0",
-        "url": "https://creativecommons.org/licenses/by-sa/3.0",
-        "author": "\u3042\u304a\u3082\u308a\u304f\u307e",
-        "credit": "\u3042\u304a\u3082\u308a\u304f\u307e, via Wikimedia Commons"
       }
     },
     {
@@ -1860,231 +1833,267 @@
         "author": "Peter Craven",
         "credit": "Peter Craven, via Wikimedia Commons"
       }
+    },
+    {
+      "file": "e44cc79b06dc.webp",
+      "width": 960,
+      "height": 720,
+      "bytes": 105212,
+      "originalWidth": 960,
+      "originalHeight": 720,
+      "source": "Wikimedia Commons",
+      "sourceCountry": "Vietnam",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:White_quartz_sand.jpg",
+      "sourcingNote": "Heap of white quartz (silica) sand",
+      "flags": [],
+      "originalPaths": [],
+      "openLicence": {
+        "name": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "author": "cty long lanh",
+        "credit": "cty long lanh, via Wikimedia Commons"
+      }
+    },
+    {
+      "file": "a28fc122fce8.webp",
+      "width": 500,
+      "height": 375,
+      "bytes": 62864,
+      "originalWidth": 640,
+      "originalHeight": 480,
+      "source": "Wikimedia Commons",
+      "sourceCountry": "United Kingdom",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Strontian_sand_mine-washed_sand_-_geograph.org.uk_-_747805.jpg",
+      "sourcingNote": "Washed silica sand stockpiles at a sand mine, ready for shipping",
+      "flags": [
+        "LOW_RES"
+      ],
+      "originalPaths": [],
+      "openLicence": {
+        "name": "CC BY-SA 2.0",
+        "url": "https://creativecommons.org/licenses/by-sa/2.0",
+        "author": "David Hogg",
+        "credit": "David Hogg, via Wikimedia Commons"
+      }
     }
   ],
   "products": {
     "AA-SBC-01": [
-      "382c2dfa488f.webp",
-      "94ce74e3d75f.webp",
       "bb3624d6136b.webp",
-      "7f53ec0b963a.webp"
+      "7f53ec0b963a.webp",
+      "382c2dfa488f.webp",
+      "94ce74e3d75f.webp"
     ],
     "AA-SBC-02": [
+      "e072db7c7333.webp",
       "94ce74e3d75f.webp",
-      "382c2dfa488f.webp",
-      "e072db7c7333.webp"
+      "382c2dfa488f.webp"
     ],
     "AA-SBC-04": [
-      "94ce74e3d75f.webp",
-      "def426758d21.webp",
       "270062616217.webp",
-      "5fd436ba83e7.webp"
+      "5fd436ba83e7.webp",
+      "94ce74e3d75f.webp",
+      "def426758d21.webp"
     ],
     "AA-SBC-05": [
-      "def426758d21.webp",
-      "b907d422c274.webp",
       "3ebe009f500c.webp",
-      "5fd436ba83e7.webp"
+      "5fd436ba83e7.webp",
+      "def426758d21.webp",
+      "b907d422c274.webp"
     ],
     "AA-SBC-08": [
-      "b907d422c274.webp",
-      "755685286f4e.webp",
       "7f53ec0b963a.webp",
-      "5fd436ba83e7.webp"
+      "5fd436ba83e7.webp",
+      "b907d422c274.webp",
+      "755685286f4e.webp"
     ],
     "AA-SBC-09": [
-      "0391a91038ee.webp",
-      "b907d422c274.webp",
       "3ebe009f500c.webp",
-      "bb3624d6136b.webp"
+      "bb3624d6136b.webp",
+      "0391a91038ee.webp",
+      "b907d422c274.webp"
     ],
     "AA-CRS-01": [
-      "802136e53dd9.webp",
-      "acb287e2a860.webp"
+      "acb287e2a860.webp",
+      "802136e53dd9.webp"
     ],
     "AA-CRS-02": [
-      "802136e53dd9.webp",
-      "acb287e2a860.webp"
+      "acb287e2a860.webp",
+      "802136e53dd9.webp"
     ],
     "AA-CRS-03": [
-      "2a4922e18469.webp",
       "acb287e2a860.webp",
-      "64aacf471492.webp"
+      "64aacf471492.webp",
+      "2a4922e18469.webp"
     ],
     "AA-CRS-04": [
-      "2a4922e18469.webp",
-      "07aa8bedee45.webp",
       "487d7630fee9.webp",
       "470e2931e801.webp",
-      "64aacf471492.webp"
+      "64aacf471492.webp",
+      "2a4922e18469.webp",
+      "07aa8bedee45.webp"
     ],
     "AA-CRS-05": [
-      "b61cc6b89136.webp",
       "470e2931e801.webp",
-      "487d7630fee9.webp"
+      "487d7630fee9.webp",
+      "b61cc6b89136.webp"
     ],
     "AA-CRS-06": [
-      "90364bccbd54.webp",
-      "6f470243cb99.webp",
       "487d7630fee9.webp",
-      "470e2931e801.webp"
+      "470e2931e801.webp",
+      "90364bccbd54.webp",
+      "6f470243cb99.webp"
     ],
     "AA-CRS-07": [
-      "07aa8bedee45.webp",
-      "3ec6e4a7fb18.webp",
       "487d7630fee9.webp",
       "470e2931e801.webp",
-      "64aacf471492.webp"
+      "64aacf471492.webp",
+      "07aa8bedee45.webp",
+      "3ec6e4a7fb18.webp"
     ],
     "AA-CRS-08": [
-      "3ec6e4a7fb18.webp",
-      "382c2dfa488f.webp",
       "470e2931e801.webp",
-      "64aacf471492.webp"
+      "64aacf471492.webp",
+      "3ec6e4a7fb18.webp",
+      "382c2dfa488f.webp"
     ],
     "AA-CRS-09": [
-      "3ec6e4a7fb18.webp",
-      "382c2dfa488f.webp",
       "470e2931e801.webp",
       "487d7630fee9.webp",
-      "64aacf471492.webp"
+      "64aacf471492.webp",
+      "3ec6e4a7fb18.webp",
+      "382c2dfa488f.webp"
     ],
     "AA-CRS-10": [
       "e62c2b758694.webp",
       "618f030454d3.webp"
     ],
     "AA-SND-01": [
-      "92cbcaee3493.webp",
-      "1f7563dbe6ee.webp",
       "b55e6eabdccc.webp",
       "fde46d33623d.webp"
     ],
     "AA-SND-02": [
-      "9b291f3c82ff.webp",
-      "5bf734eb72d0.webp",
       "928962415f04.webp",
       "b55e6eabdccc.webp"
     ],
     "AA-SND-03": [
-      "5bf734eb72d0.webp",
       "aa38a2892328.webp",
-      "b55e6eabdccc.webp"
+      "b55e6eabdccc.webp",
+      "5bf734eb72d0.webp"
     ],
     "AA-SND-04": [
-      "1f7563dbe6ee.webp",
-      "5bf734eb72d0.webp",
       "aa38a2892328.webp",
-      "b55e6eabdccc.webp"
+      "b55e6eabdccc.webp",
+      "1f7563dbe6ee.webp",
+      "5bf734eb72d0.webp"
     ],
     "AA-SND-05": [
-      "90d571764ac6.webp",
-      "9b291f3c82ff.webp",
       "fde46d33623d.webp",
-      "b55e6eabdccc.webp"
+      "b55e6eabdccc.webp",
+      "90d571764ac6.webp",
+      "9b291f3c82ff.webp"
     ],
     "AA-SND-06": [
-      "9b291f3c82ff.webp",
       "928962415f04.webp",
-      "b55e6eabdccc.webp"
+      "b55e6eabdccc.webp",
+      "9b291f3c82ff.webp"
     ],
     "AA-CRR-01": [
-      "09ba0b65b988.webp",
-      "57ec3d6ca9ca.webp",
       "1911ba995826.webp",
-      "7dfae230cb50.webp"
+      "7dfae230cb50.webp",
+      "09ba0b65b988.webp",
+      "57ec3d6ca9ca.webp"
     ],
     "AA-CRR-02": [
-      "09ba0b65b988.webp",
-      "382c2dfa488f.webp",
       "1911ba995826.webp",
-      "7dfae230cb50.webp"
+      "7dfae230cb50.webp",
+      "09ba0b65b988.webp",
+      "382c2dfa488f.webp"
     ],
     "AA-CRR-03": [
-      "10ea4c87934c.webp",
-      "c4e95a2baac4.webp",
       "c15a3904b207.webp",
       "f3ec9c85b2fc.webp",
-      "365199df5cf7.webp"
+      "365199df5cf7.webp",
+      "10ea4c87934c.webp",
+      "c4e95a2baac4.webp"
     ],
     "AA-CRR-04": [
-      "5944f39eed4c.webp",
-      "5e59b48d13f3.webp",
       "ec821cb8727e.webp",
       "8318320243fe.webp",
-      "7ab65824491f.webp"
+      "7ab65824491f.webp",
+      "5944f39eed4c.webp",
+      "5e59b48d13f3.webp"
     ],
     "AA-BAL-01": [
-      "2a4922e18469.webp",
       "a9b951724248.webp",
-      "3147b2a6f55f.webp"
+      "3147b2a6f55f.webp",
+      "2a4922e18469.webp"
     ],
     "AA-BAL-02": [
-      "597742b79ff2.webp",
-      "47f42bc19b73.webp",
       "a6882bb12b89.webp",
       "ed01731f9586.webp",
-      "42a3db306e01.webp"
+      "42a3db306e01.webp",
+      "597742b79ff2.webp",
+      "47f42bc19b73.webp"
     ],
     "AA-BAL-03": [
-      "1f086b521dfc.webp",
-      "d3c86909be16.webp",
       "03a76b21fa07.webp",
-      "4a59d9dcc916.webp"
+      "4a59d9dcc916.webp",
+      "1f086b521dfc.webp",
+      "d3c86909be16.webp"
     ],
     "AA-DRN-01": [
-      "07aa8bedee45.webp",
-      "2a4922e18469.webp",
       "73ab9ebc6576.webp",
       "aabc0d042df2.webp",
-      "e5624e1c8691.webp"
+      "e5624e1c8691.webp",
+      "07aa8bedee45.webp",
+      "2a4922e18469.webp"
     ],
     "AA-DRN-02": [
-      "2a4922e18469.webp",
       "73ab9ebc6576.webp",
-      "5f06bee3406b.webp"
+      "5f06bee3406b.webp",
+      "2a4922e18469.webp"
     ],
     "AA-DRN-03": [
-      "2a4922e18469.webp",
       "289f7b1ae10e.webp",
       "c0e431769751.webp",
-      "73ab9ebc6576.webp"
+      "73ab9ebc6576.webp",
+      "2a4922e18469.webp"
     ],
     "AA-DRN-04": [
-      "07aa8bedee45.webp",
       "289f7b1ae10e.webp",
       "5a4a3fe1a541.webp",
-      "aabc0d042df2.webp"
+      "aabc0d042df2.webp",
+      "07aa8bedee45.webp"
     ],
     "AA-DEC-01": [
-      "da67a0e65eb2.webp",
-      "7a36af9dfa53.webp",
       "bea88615e21f.webp",
-      "31e0c4f4a6f0.webp"
+      "31e0c4f4a6f0.webp",
+      "da67a0e65eb2.webp",
+      "7a36af9dfa53.webp"
     ],
     "AA-DEC-02": [
-      "b2f3a9966493.webp",
-      "c60d1d76482a.webp",
       "1b1d7e536807.webp",
-      "7e3c491f9f6a.webp"
+      "7e3c491f9f6a.webp",
+      "b2f3a9966493.webp",
+      "c60d1d76482a.webp"
     ],
     "AA-DEC-03": [
-      "7944e0510302.webp",
-      "a5d7c8b8b2b3.webp",
       "e148d76a9903.webp",
       "eb3a51b6e1ee.webp",
-      "31e0c4f4a6f0.webp"
+      "31e0c4f4a6f0.webp",
+      "7944e0510302.webp",
+      "a5d7c8b8b2b3.webp"
     ],
     "AA-DEC-04": [
-      "7a36af9dfa53.webp",
       "1b1d7e536807.webp",
-      "7e3c491f9f6a.webp"
+      "7e3c491f9f6a.webp",
+      "7a36af9dfa53.webp"
     ],
     "AA-AGR-01": [
-      "399f45bd1005.webp",
       "62f66a7e18d3.webp"
     ],
     "AA-AGR-02": [
-      "399f45bd1005.webp",
       "fff26cbf02c4.webp"
     ],
     "AA-AGR-03": [
@@ -2092,20 +2101,20 @@
       "660fc610df5d.webp"
     ],
     "AA-REC-01": [
-      "d3c86909be16.webp",
       "dab58217f454.webp",
       "0d62e95fc162.webp",
-      "d4d79853769f.webp"
+      "d4d79853769f.webp",
+      "d3c86909be16.webp"
     ],
     "AA-REC-02": [
       "7c229ee83c0e.webp",
       "469ece051b6d.webp"
     ],
     "AA-REC-03": [
-      "201061f00296.webp",
-      "43d228ce519b.webp",
       "fa6c7affba90.webp",
-      "de3f9dbf79ab.webp"
+      "de3f9dbf79ab.webp",
+      "201061f00296.webp",
+      "43d228ce519b.webp"
     ],
     "AA-SBC-03": [
       "57ec3d6ca9ca.webp",
@@ -2123,8 +2132,8 @@
       "0391a91038ee.webp"
     ],
     "AA-SND-07": [
-      "b2081778e6a7.webp",
-      "bf6f14ba0e77.webp"
+      "e44cc79b06dc.webp",
+      "a28fc122fce8.webp"
     ]
   },
   "noImage": {
@@ -2185,5 +2194,25 @@
     "02-crushed-stone/6.7mm Crushed Stone (Dolomite)/02.png",
     "02-crushed-stone/6.7mm Crushed Stone (Dolomite)/03.png",
     "02-crushed-stone/9.5mm Crushed Stone (Dolomite)/01.png"
-  ]
+  ],
+  "retiredOpenLicence": {
+    "AA-SND-01": [
+      "92cbcaee3493.webp",
+      "1f7563dbe6ee.webp"
+    ],
+    "AA-SND-02": [
+      "9b291f3c82ff.webp",
+      "5bf734eb72d0.webp"
+    ],
+    "AA-AGR-01": [
+      "399f45bd1005.webp"
+    ],
+    "AA-AGR-02": [
+      "399f45bd1005.webp"
+    ],
+    "AA-SND-07": [
+      "b2081778e6a7.webp",
+      "bf6f14ba0e77.webp"
+    ]
+  }
 }

@@ -38,10 +38,11 @@ export function HeroBanner({ content }: { content: HeroContent }) {
           </div>
         </div>
         <div className="flex flex-col items-center gap-1.5" aria-hidden="true">
+          {/* Labels wrap and stay centred when a course is narrower than its text (the top one, on phones). */}
           {STRATA.map((layer) => (
             <div
               key={layer.label}
-              className="flex h-12 items-center justify-center rounded-sm font-mono text-[10px] uppercase tracking-wider text-white/85"
+              className="flex h-12 items-center justify-center rounded-sm px-2 text-center font-mono text-[10px] uppercase leading-tight tracking-wider text-white/85"
               style={{ width: layer.width, backgroundColor: layer.color }}
             >
               {layer.label}

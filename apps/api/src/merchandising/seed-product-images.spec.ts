@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "fs";
 import { join } from "path";
-import { readManifest, SEED_IMAGE_DIR, seedImagePath } from "./seed-product-images";
+import { displayOrder, readManifest, SEED_IMAGE_DIR, seedImagePath } from "./seed-product-images";
 
 const framework = JSON.parse(readFileSync(join(__dirname, "../../../../services/pricing/data/pricing_framework.json"), "utf8")) as {
   products: { sku: string }[];
@@ -62,5 +62,15 @@ describe("sourced product image set", () => {
         expect(licence.credit).toBeNull();
       }
     }
+  });
+
+  it("lists sourced photos before open-licence ones, and never a retired photo", () => {
+    const images = new Map(manifest.images.map((i) => [i.file, i]));
+    const retired = (manifest as unknown as { retiredOpenLicence: Record<string, string[]> }).retiredOpenLicence;
+    for (const [sku, list] of Object.entries(manifest.products)) {
+      expect(displayOrder(list, images)).toEqual(list);
+      for (const file of retired[sku] ?? []) expect(list).not.toContain(file);
+    }
+    expect(displayOrder(["b.webp", "a.webp"], new Map([["b.webp", { openLicence: {} } as never], ["a.webp", {} as never]]))).toEqual(["a.webp", "b.webp"]);
   });
 });

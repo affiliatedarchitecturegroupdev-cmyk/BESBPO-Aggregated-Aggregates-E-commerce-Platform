@@ -17,10 +17,11 @@
 
 export type SlideImage = {
   id: string;
-  url: string; // clean, hotlink-safe Unsplash CDN URL
+  url: string; // clean, hotlink-safe Unsplash CDN URL, or a /media/ file hosted with the site
   alt: string;
-  credit: string; // Unsplash photographer, kept for on-site attribution even though the license doesn't require it
+  credit: string; // photographer and source — Unsplash doesn't require it; CC BY-SA (Wikimedia Commons) does
   theme: "quarry" | "machinery" | "delivery" | "material-closeup" | "application";
+  sourceUrl?: string; // the photo's own page, for licences that ask for a link
 };
 
 function unsplashUrl(photoId: string, w = 1600, q = 80) {
@@ -92,11 +93,15 @@ export const HERO_SLIDESHOW_IMAGES: SlideImage[] = [
     theme: "material-closeup",
   },
   {
+    // Replaced Oct 2026: the earlier paving photo's setting didn't read as
+    // South African. Same id, so saved slides and the "Civil & Road Works"
+    // promotion pick this one up. Hosted with the site (public/media).
     id: "road-paving",
-    url: unsplashUrl("photo-1772852311587-329719989e2b"),
-    alt: "Road paving machine laying fresh asphalt on a civil works street",
-    credit: "Brian J. Tromp / Unsplash",
+    url: "/media/road-works-cape-town.webp",
+    alt: "Rollers and a paver laying fresh asphalt on a road-works project in Cape Town's city centre",
+    credit: "Wisdom Nyaguwa / Wikimedia Commons, CC BY-SA 4.0",
     theme: "application",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Road_construction_in_Cape_Town_city_center.jpg",
   },
 ];
 

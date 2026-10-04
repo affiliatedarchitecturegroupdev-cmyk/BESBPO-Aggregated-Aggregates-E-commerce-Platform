@@ -65,7 +65,7 @@ On each API deploy, the pre-deploy step runs:
    posts are created once and then left to the admin.
 3. `apps/api/dist/suppliers/seed-suppliers.js`, which adds any supplier from
    `packages/database/prisma/seed-data/*.csv` that isn't in the database yet
-   (87 verified partners and 18 B2B leads on the first deploy). Existing
+   (104 verified partners and 18 B2B leads). Existing
    suppliers — and staff edits to them — are never touched.
 4. `apps/api/dist/merchandising/seed-product-images.js`, which attaches the
    product photos in `packages/database/prisma/seed-data/product-images` to
@@ -119,7 +119,9 @@ storage isn't configured yet". The API's startup log shows
 ## 5. Create the first staff account
 
 Staff approve trade accounts and price quote requests in the staff console,
-`/account/staff`. Roles can't be granted through the website.
+`/account/staff`. Nobody can sign up as staff: the first admin is made from
+the Render shell, and after that admins add the rest of the team on
+**Admin → Team** (`/admin/team`).
 
 1. Register normally on the storefront.
 2. In Render, open **aggregates-store-api → Shell** and run:
@@ -132,8 +134,8 @@ Staff approve trade accounts and price quote requests in the staff console,
    - price quote requests;
    - upload compliance documents;
    - manage product descriptions, photos, visibility and featured products;
-   - request and record permission for sourced product photos
-     (**Image permissions** — they stay hidden until a source agrees);
+   - record or withdraw permission for sourced product photos
+     (**Image permissions** — a withdrawn source's photos are hidden);
    - edit the announcement bar, homepage hero, homepage slideshow and trade promo;
    - run the four promotion slots (the ad system): upload banner images to
      the image library, target the category banner at one category or
@@ -156,7 +158,7 @@ Staff approve trade accounts and price quote requests in the staff console,
 ## 6. Pin the supplier network
 
 The first deploy seeds the network from the CSVs in
-`packages/database/prisma/seed-data/`: 87 verified partners (all active —
+`packages/database/prisma/seed-data/`: 104 verified partners (all active —
 delivery is national) and 18 B2B Bulk & Infrastructure leads (inactive,
 labelled as leads). To bring in a revised list later:
 

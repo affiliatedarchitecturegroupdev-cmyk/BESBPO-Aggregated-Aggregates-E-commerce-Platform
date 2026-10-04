@@ -6,9 +6,14 @@
  * - Open-licence photos (an `openLicence` entry — Wikimedia Commons CC0,
  *   public domain, CC BY, CC BY-SA) are published straight away as CLEARED,
  *   with the licence and any required credit stored for the storefront.
- * - Everything else was found on other companies' websites and is attached as
- *   PERMISSION_PENDING — visible to staff, never to the public — until staff
- *   record permission for its source in Admin → Image permissions.
+ * - Everything else was found on other companies' websites. Photos whose
+ *   owners have given permission (`"permission": "GRANTED"`) are published
+ *   as CLEARED; any others are attached as PERMISSION_PENDING — visible to
+ *   staff, never to the public — until staff record permission for their
+ *   source in Admin → Image permissions.
+ *
+ * Within a product, sourced photos come before open-licence ones (the
+ * manifest lists them in that order); staff photography always comes first.
  *
  * See PRODUCT_IMAGES.md.
  *
@@ -37,6 +42,8 @@ export type SeedImage = {
   flags: ("LOW_RES" | "BRAND_VISIBLE" | "NON_SA" | "SHARED")[];
   /** Set only for photos under a licence that already allows commercial use. */
   openLicence?: OpenLicence;
+  /** "GRANTED" once the owner of a sourced photo has agreed to its use. */
+  permission?: "GRANTED";
 };
 export type OpenLicence = {
   name: string; // "CC BY-SA 4.0", "CC0", "Public domain"
@@ -46,6 +53,11 @@ export type OpenLicence = {
   credit: string | null;
 };
 export type SeedManifest = { images: SeedImage[]; products: Record<string, string[]> };
+
+/** Sourced photos first, then open-licence ones; the manifest order otherwise. */
+export function displayOrder(files: string[], images: Map<string, SeedImage>) {
+  return [...files].sort((a, b) => Number(Boolean(images.get(a)?.openLicence)) - Number(Boolean(images.get(b)?.openLicence)));
+}
 
 const FLAG_NOTE: Record<SeedImage["flags"][number], string> = {
   LOW_RES: "Low resolution — replace with a larger photo when possible",
@@ -78,7 +90,7 @@ export async function seedProductImages(prisma: PrismaClient, dir = SEED_IMAGE_D
     if (!id) continue; // SKU not in this database (e.g. a trimmed dev seed)
     // Sourced photos go after any photography staff have already added.
     let order = await prisma.productImage.count({ where: { productId: id } });
-    for (const file of files) {
+    for (const file of displayOrder(files, images)) {
       const importKey = `${sku}:${file}`;
       const image = images.get(file);
       const path = seedImagePath(file, dir);
@@ -94,7 +106,7 @@ export async function seedProductImages(prisma: PrismaClient, dir = SEED_IMAGE_D
           sizeBytes: image.bytes,
           altText: null,
           sortOrder: order++,
-          licence: open ? "CLEARED" : "PERMISSION_PENDING",
+          licence: open || image.permission === "GRANTED" ? "CLEARED" : "PERMISSION_PENDING",
           sourceName: image.source,
           sourceUrl: image.sourcePage,
           sourceNote: notes || null,

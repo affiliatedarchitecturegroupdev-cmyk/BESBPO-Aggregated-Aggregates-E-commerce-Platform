@@ -2,10 +2,27 @@
 
 The store's product photos come from two places:
 
-1. **Open-licence photos from Wikimedia Commons.** These are live now, with
-   the credit their licence requires.
-2. **Photos Kimi found on supplier and other websites.** These are hidden
-   until each owner gives permission.
+1. **Photos Kimi found on supplier and other websites.** The owners gave
+   permission in October 2026, so these are live and **shown first** on
+   every product.
+2. **Open-licence photos from Wikimedia Commons.** These are live too, after
+   the sourced photos, with the credit their licence requires.
+
+## October 2026 update
+
+- All 55 Kimi-sourced photos were published (`"permission": "GRANTED"` in the
+  manifest). A one-time database migration
+  (`20261004090000_publish_sourced_photos`) cleared them on the live site and
+  re-ordered every product's photos: staff photography first, then sourced
+  photos, then open-licence ones.
+- Weak Wikimedia matches were retired (set to removed, and dropped from the
+  manifest's product lists — see `retiredOpenLicence`): River Sand (Washed)
+  and Plaster Sand (2 each), Silica Sand (2), Agricultural Lime and Dolomitic
+  Lime (1 each). The sourced photos replace them.
+- Silica Sand had no sourced photo, so it got two better Commons photos: a
+  heap of white quartz sand, and washed silica sand stockpiled at a sand mine.
+- Admins can still withdraw a source on **Admin → Image permissions**, which
+  hides its photos again.
 
 Both sets are in `packages/database/prisma/seed-data/product-images/`
 (WebP, ≤1200px), listed in its `manifest.json`. Open-licence entries carry
@@ -14,12 +31,12 @@ own photography) always go live straight away.
 
 ## Open-licence photos — live now
 
-To give the store real photos before launch, 40 photos were
-chosen from **Wikimedia Commons** (Sep 2026) under licences that allow
-commercial use: CC0, public domain, CC BY and CC BY-SA. No non-commercial
-(NC) or no-derivatives (ND) licences. They're imported as `CLEARED`, so
-they're **live on the storefront**: 45 of the 48 aggregates SKUs now
-have at least one, and they show before any Kimi photo.
+To give the store real photos before launch, photos were chosen from
+**Wikimedia Commons** (Sep 2026; revised Oct 2026 — 38 now in use) under
+licences that allow commercial use: CC0, public domain, CC BY and CC BY-SA.
+No non-commercial (NC) or no-derivatives (ND) licences. They're imported as
+`CLEARED`, so they're **live on the storefront** on 41 of the 48 aggregates
+SKUs, shown after the sourced photos.
 
 - **Credit.** CC BY and CC BY-SA require the photographer, source and
   licence to be credited. The storefront shows that under the photo on the
@@ -33,7 +50,7 @@ have at least one, and they show before any Kimi photo.
   re-encoded as WebP, which counts as a format change, not an adaptation.
 - **Context.** Wikimedia has few photos of South African aggregates. The
   gravel-road photos are from the Northern Cape; the rest are from wherever
-  the material looks the same (by country: United States 8, India 7, United Kingdom 3, South Africa 3, Australia 2, unknown 2, Germany 2, Nigeria 2, Spain 1, Malaysia 1, Russia 1, Cyprus 1, Iraq 1, Nepal 1, United Arab Emirates 1, Switzerland 1, China 1, Japan 1, Estonia 1).
+  the material looks the same (by country: United States 8, India 6, South Africa 3, United Kingdom 3, Australia 2, unknown 2, Germany 2, Spain 1, Malaysia 1, Russia 1, Cyprus 1, Iraq 1, Nepal 1, United Arab Emirates 1, Switzerland 1, China 1, Nigeria 1, Estonia 1, Vietnam 1).
   Many are shared by similar products (for example, one photo of 19mm
   single-size stone serves the drainage stones), so they show the type of
   material, not the exact grading.
@@ -47,9 +64,8 @@ have at least one, and they show before any Kimi photo.
   Wikimedia Commons, where every file's licence and author can be checked
   through its API. Each one was checked visually against its product.
 
-**Not found (Kimi photos still pending):** hydrated lime (only brand-labelled
-bags), crushed brick aggregate, and crusher dust. Kimi's photos for these
-stay hidden until their owners agree.
+**Not found on Commons:** hydrated lime (only brand-labelled bags), crushed
+brick aggregate, and crusher dust — these show Kimi's sourced photos.
 
 ### Per product (open-licence photos)
 
@@ -75,13 +91,13 @@ stay hidden until their owners agree.
 | AA-CRS-08 | 37.5mm Crushed Stone (Dolomite) | 2 | Heap of pale crushed stone on a building site (India); Crushed-stone stockpiles at a limestone quarry (Germany) |
 | AA-CRS-09 | 53mm Crushed Stone (Dolomite) | 2 | Heap of pale crushed stone on a building site (India); Crushed-stone stockpiles at a limestone quarry (Germany) |
 | AA-CRS-10 | Crusher Dust / Stone Dust | — | Kimi photos only (awaiting permission) |
-| AA-SND-01 | River Sand (Washed) | 2 | River sand being landed from the River Niger at Onitsha (Nigeria); Riverside sand stockpile with tipper trucks (China) |
-| AA-SND-02 | Plaster Sand | 2 | Washed sand stockpile under a quarry conveyor (Estonia); Heap of building sand for mixing mortar and concrete (Nigeria) |
+| AA-SND-01 | River Sand (Washed) | — | Retired Oct 2026 — sourced photos only |
+| AA-SND-02 | Plaster Sand | — | Retired Oct 2026 — sourced photos only |
 | AA-SND-03 | Building Sand (Unwashed) | 1 | Heap of building sand for mixing mortar and concrete (Nigeria) |
 | AA-SND-04 | Filling Sand | 2 | Riverside sand stockpile with tipper trucks (China); Heap of building sand for mixing mortar and concrete (Nigeria) |
 | AA-SND-05 | Concrete Sand | 2 | Heap of washed river sand, used as fine aggregate in mortar and concrete (India); Washed sand stockpile under a quarry conveyor (Estonia) |
 | AA-SND-06 | Screeding Sand | 1 | Washed sand stockpile under a quarry conveyor (Estonia) |
-| AA-SND-07 | Silica Sand | 2 | Heap of white silica sand (India); Close-up of coarse quartz (silica) sand grains (Japan) |
+| AA-SND-07 | Silica Sand | 2 | Heap of white quartz (silica) sand (Vietnam); Washed silica sand stockpiles at a sand mine, ready for shipping (United Kingdom) |
 | AA-CRR-01 | Crusher Run 0-19mm | 2 | Mixed crushed stone with fines (Nepal); Aggregate stockpiles at a limestone quarry (Germany) |
 | AA-CRR-02 | Crusher Run 0-40mm | 2 | Mixed crushed stone with fines (Nepal); Crushed-stone stockpiles at a limestone quarry (Germany) |
 | AA-CRR-03 | Rip Rap / Rock Armour | 2 | Rock-armour (riprap) revetment being built (United Arab Emirates); Riverbank protected with rip rap (Switzerland) |
@@ -97,8 +113,8 @@ stay hidden until their owners agree.
 | AA-DEC-02 | Crushed Stone Chips (Decorative) | 2 | Pale decorative stone chips in a garden bed (United States); Decorative stone chips in a planted bed (United States) |
 | AA-DEC-03 | Pea Gravel | 2 | Pea gravel (India); Rounded gravel laid on a yard (Iraq) |
 | AA-DEC-04 | Mineral Stone Mulch | 1 | Smooth dark pebbles (Cyprus) |
-| AA-AGR-01 | Agricultural Lime (Calcitic) | 1 | Agricultural lime spread on a ploughed field (United Kingdom) |
-| AA-AGR-02 | Dolomitic Lime | 1 | Agricultural lime spread on a ploughed field (United Kingdom) |
+| AA-AGR-01 | Agricultural Lime (Calcitic) | — | Retired Oct 2026 — sourced photo only |
+| AA-AGR-02 | Dolomitic Lime | — | Retired Oct 2026 — sourced photo only |
 | AA-AGR-03 | Hydrated Lime | — | Kimi photos only (awaiting permission) |
 | AA-REC-01 | Recycled Crushed Concrete Aggregate (RCA) | 1 | Pile of crushed demolition rubble (United Kingdom) |
 | AA-REC-02 | Recycled Crushed Brick Aggregate | — | Kimi photos only (awaiting permission) |
@@ -110,9 +126,7 @@ stay hidden until their owners agree.
 |---|---|---|---|
 | [6–10 mm crushed limestone aggregate in the hand — shows the chip size](https://commons.wikimedia.org/wiki/File:Gravel_03375C.JPG) | Emadrazo | CC BY-SA 4.0 | yes |
 | [Aggregate stockpiles at a limestone quarry](https://commons.wikimedia.org/wiki/File:Wuppertal_-_Hahnenfurth_-_Oetelshofen-Steinbruchtag_048_ies.jpg) | Frank Vincentz | CC BY-SA 3.0 | yes |
-| [Agricultural lime spread on a ploughed field](https://commons.wikimedia.org/wiki/File:Lime_spread_on_a_field_-_geograph.org.uk_-_7994384.jpg) | Philip Halling | CC BY-SA 2.0 | yes |
 | [Asphalt being milled off a road and loaded into a truck](https://commons.wikimedia.org/wiki/File:2021-07-29_14_39_10_Asphalt_road_surface_being_milled_in_preparation_for_the_addition_of_a_fresh_asphalt_surface_along_Tranquility_Court_in_the_Franklin_Farm_section_of_Oak_Hill,_Fairfax_County,_Virginia.jpg) | Famartin | CC BY-SA 4.0 | yes |
-| [Close-up of coarse quartz (silica) sand grains](https://commons.wikimedia.org/wiki/File:Osorezan_Gokurakuhama_Big_quartz_sand_P9151325.JPG) | あおもりくま | CC BY-SA 3.0 | yes |
 | [Close-up of crushed granite aggregate](https://commons.wikimedia.org/wiki/File:Coarse_Granite_Aggregate_Texture.jpg) | Paul The Writer | CC0 | no |
 | [Close-up of stone-filled gabion baskets](https://commons.wikimedia.org/wiki/File:Moscow,_Starodanilovsky_Proezd_2c9,_gabion_wall_finishes,_Apr_2026_02.jpg) | Retired electrician | CC0 | no |
 | [Close-up of track ballast, Pimpama Station, Gold Coast](https://commons.wikimedia.org/wiki/File:Tracks_and_ballast,_Pimpama_Railway_Station,_Old_Pacific_Highway,_Gold_Coast_P1013627.jpg) | John Robert McPherson | CC0 | no |
@@ -126,7 +140,6 @@ stay hidden until their owners agree.
 | [Heap of building sand for mixing mortar and concrete](https://commons.wikimedia.org/wiki/File:Pile_of_Sand_for_Building_in_Anambra_State.jpg) | Johnnybam | CC BY-SA 4.0 | yes |
 | [Heap of pale crushed stone on a building site](https://commons.wikimedia.org/wiki/File:KaMkara.JPG) | Bhaskaranaidu | Public domain | no |
 | [Heap of washed river sand, used as fine aggregate in mortar and concrete](https://commons.wikimedia.org/wiki/File:River_sand_mining_in_orissa.jpg) | Mahimagroups | CC BY-SA 3.0 | yes |
-| [Heap of white silica sand](https://commons.wikimedia.org/wiki/File:Silica_Sand_deposits,_Udupi_district,Karnataka_02.jpg) | ರವಿಮುಂ | CC BY-SA 4.0 | yes |
 | [Mixed crushed stone with fines](https://commons.wikimedia.org/wiki/File:Varieties_of_Gravel_in_different_shapes_and_size._01.jpg) | Sabina Bajracharya | CC BY-SA 4.0 | yes |
 | [Pale decorative stone chips in a garden bed](https://commons.wikimedia.org/wiki/File:Gravel_1_2017-05-14.jpg) | FASTILY | CC BY-SA 4.0 | yes |
 | [Pea gravel](https://commons.wikimedia.org/wiki/File:PEA_GRAVEL.jpg) | Ranjithkumar Murugesan | CC0 | no |
@@ -136,7 +149,6 @@ stay hidden until their owners agree.
 | [Pile of dark crushed stone for concrete](https://commons.wikimedia.org/wiki/File:Stone_Crush_Metel.JPG) | RanjithSiji | CC BY-SA 3.0 | yes |
 | [Rail ballast on a rural line (Great Northern line, Queensland)](https://commons.wikimedia.org/wiki/File:Tracks_and_ballast,_Great_Northern_railway_line_at_Maxwelton,_2019.jpg) | Kerry Raymond | CC BY 4.0 | yes |
 | [Red gravelly soil in a cutting — typical of in-situ subgrade and fill material](https://commons.wikimedia.org/wiki/File:Coarsening_upward.jpg) | Saran Rengaraj | CC BY-SA 4.0 | yes |
-| [River sand being landed from the River Niger at Onitsha](https://commons.wikimedia.org/wiki/File:Sand_mining_from_the_River_Niger_in_Onitsha_Anambra_State,_Nigeria.jpg) | Ngostary2k | CC0 | no |
 | [Riverbank protected with rip rap](https://commons.wikimedia.org/wiki/File:Difesa_della_sponda_del_fiume_Maggia_con_massicciata.jpg) | Arkelin | CC BY 4.0 | yes |
 | [Riverside sand stockpile with tipper trucks](https://commons.wikimedia.org/wiki/File:Red_River_valley_between_Nanping_and_Hekou_-_P1380291.JPG) | Vmenkov | CC BY-SA 3.0 | yes |
 | [Road surface after the old asphalt was milled off](https://commons.wikimedia.org/wiki/File:2014-09-09_09_03_10_Asphalt_milled_in_preparation_for_new_asphalt_overlay_with_new_overlay_partially_applied_on_Idaho_Street_(Interstate_80_Business_and_Nevada_State_Route_535)_in_Elko,_Nevada.JPG) | Famartin | CC BY-SA 4.0 | yes |
@@ -148,13 +160,17 @@ stay hidden until their owners agree.
 | [Stepped gabion retaining wall](https://commons.wikimedia.org/wiki/File:Gabion_Wall.jpg) | Encik Tekateki | CC0 | no |
 | [Stockpile of natural (pit) gravel](https://commons.wikimedia.org/wiki/File:Sorted_gravel_pile_from_Pleistocene_glacial_outwash_(St._Louisville_gravel_pits,_Licking_County,_Ohio,_USA)_17_(45396483065).jpg) | James St. John | CC BY 2.0 | yes |
 | [Washed sand stockpile under a quarry conveyor](https://commons.wikimedia.org/wiki/File:Estonia_sand_stockpile_under_conveyor_(6256459049).jpg) | Peter Craven | CC BY 2.0 | yes |
+| [Heap of white quartz (silica) sand](https://commons.wikimedia.org/wiki/File:White_quartz_sand.jpg) | cty long lanh | CC BY-SA 4.0 | yes |
+| [Washed silica sand stockpiles at a sand mine](https://commons.wikimedia.org/wiki/File:Strontian_sand_mine-washed_sand_-_geograph.org.uk_-_747805.jpg) | David Hogg | CC BY-SA 2.0 | yes |
 
-## Kimi-sourced photos — why they're hidden
+## Kimi-sourced photos — live with the owners' permission
 
-None of these photos has a confirmed licence for commercial use (Kimi's own
-notes say so): they come from supplier, marketplace, blog and editorial
-websites, and the copyright stays with each owner. So every sourced photo is
-imported **hidden** (`PERMISSION_PENDING`):
+These come from supplier, marketplace, blog and editorial websites, and the
+copyright stays with each owner. They were imported hidden until the owners
+agreed; permission was received in October 2026, so they're now live and
+shown before any open-licence photo. A sourced photo added to the manifest
+later without `"permission": "GRANTED"` is still imported **hidden**
+(`PERMISSION_PENDING`), and the controls below still apply:
 
 - staff see them on each product in **Admin → Products** and in
   **Admin → Image permissions**, grouped by source company, with the source

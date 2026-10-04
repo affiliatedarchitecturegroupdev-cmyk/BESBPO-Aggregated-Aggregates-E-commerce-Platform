@@ -1146,17 +1146,23 @@ describe("Aggregated Aggregates API (e2e)", () => {
 
   describe("sourced product photography", () => {
     const manifest = readManifest();
+    const byFile = new Map(manifest.images.map((i) => [i.file, i]));
     const openFiles = new Set(manifest.images.filter((i) => i.openLicence).map((i) => i.file));
-    // A product whose photos all still need their owner's permission, and one with a credited open-licence photo.
+    // A product shown only with sourced photos, one with sourced and open-licence photos, and one led by a credited open-licence photo.
     const firstSku = Object.keys(manifest.products).find((sku) => manifest.products[sku].every((f) => !openFiles.has(f)))!;
-    const creditedFile = manifest.images.find((i) => i.openLicence?.credit)!;
-    const creditedSku = Object.keys(manifest.products).find((sku) => manifest.products[sku][0] === creditedFile.file)!;
+    const mixedSku = Object.keys(manifest.products).find((sku) => {
+      const files = manifest.products[sku];
+      return files.some((f) => openFiles.has(f)) && files.some((f) => !openFiles.has(f));
+    })!;
+    const creditedSku = Object.keys(manifest.products).find((sku) => byFile.get(manifest.products[sku][0])?.openLicence?.credit)!;
+    const creditedFile = byFile.get(manifest.products[creditedSku][0])!;
 
-    it("imports sourced photos once, hidden until an admin records permission for their source", async () => {
+    it("imports sourced photos once, live and first once their owners agree; admins can still withdraw a source", async () => {
       await prisma.productImage.deleteMany({ where: { importKey: { not: null } } }); // a clean import, whatever ran before
       const created = await seedProductImages(prisma as never);
       expect(created).toBe(Object.values(manifest.products).flat().length);
       expect(await seedProductImages(prisma as never)).toBe(0); // idempotent
+      expect(manifest.images.filter((i) => !i.openLicence).every((i) => i.permission === "GRANTED")).toBe(true);
 
       const staff = await register("photostaff");
       await prisma.user.update({ where: { email: `photostaff-${run}@example.com` }, data: { role: "STAFF" } });
@@ -1164,35 +1170,39 @@ describe("Aggregated Aggregates API (e2e)", () => {
       await prisma.user.update({ where: { email: `photoadmin-${run}@example.com` }, data: { role: "ADMIN" } });
       const as = (t: string) => ({ Authorization: `Bearer ${t}` });
 
-      // The public catalogue shows none of them; staff see them, with their source.
-      const publicOverlay = await http().get("/merchandising/products").expect(200);
-      const publicSku = publicOverlay.body.find((p: { sku: string }) => p.sku === firstSku);
-      expect(publicSku.images).toEqual([]);
+      // Sourced photos with permission are public straight away.
+      const publicOverlay = (await http().get("/merchandising/products").expect(200)).body;
+      expect(publicOverlay.find((p: { sku: string }) => p.sku === firstSku).images.length).toBe(manifest.products[firstSku].length);
       await http().get("/merchandising/staff/products").expect(401);
       const staffOverlay = await http().get("/merchandising/staff/products").set(as(staff)).expect(200);
       const staffImages = staffOverlay.body.find((p: { sku: string }) => p.sku === firstSku).images;
-      expect(staffImages.length).toBe(manifest.products[firstSku].length);
-      expect(staffImages[0]).toMatchObject({ licence: "PERMISSION_PENDING", sourceName: expect.any(String) });
+      expect(staffImages[0]).toMatchObject({ licence: "CLEARED", sourceName: expect.any(String) });
       const slug = (await prisma.product.findUniqueOrThrow({ where: { sku: firstSku } })).slug;
-      expect((await http().get(`/products/${slug}`).expect(200)).body.images).toEqual([]);
+      expect((await http().get(`/products/${slug}`).expect(200)).body.images.length).toBe(manifest.products[firstSku].length);
 
-      // A pending photo can't be fetched by link — except by staff, uncached.
+      // On a product with both kinds, the sourced photos come first.
+      const mixed = publicOverlay.find((p: { sku: string }) => p.sku === mixedSku).images as { licenceName: string | null }[];
+      const firstOpen = mixed.findIndex((i) => i.licenceName);
+      expect(firstOpen).toBeGreaterThan(0);
+      expect(mixed.slice(firstOpen).every((i) => i.licenceName)).toBe(true);
+
+      // Withdrawing a source is an admin decision: its photos go private (staff can still preview, uncached).
       const id = staffImages[0].id;
+      const sources = await http().get("/merchandising/image-sources").set(as(staff)).expect(200);
+      const source = sources.body.find((s: { sourceName: string }) => s.sourceName === staffImages[0].sourceName);
+      expect(source.cleared).toBeGreaterThan(0);
+      await http().post("/merchandising/image-sources/licence").set(as(staff)).send({ sourceName: source.sourceName, licence: "PERMISSION_PENDING" }).expect(403);
+      await http().post("/merchandising/image-sources/licence").set(as(admin)).send({ sourceName: source.sourceName, licence: "REMOVED" }).expect(400);
+      const withdrawn = await http().post("/merchandising/image-sources/licence").set(as(admin)).send({ sourceName: source.sourceName, licence: "PERMISSION_PENDING" }).expect(200);
+      expect(withdrawn.body.updated).toBe(source.cleared);
       await http().get(`/merchandising/images/${id}`).expect(404);
       const preview = await http().get(`/merchandising/images/${id}`).set(as(staff)).buffer(true).expect(200);
       expect(preview.headers["content-type"]).toBe("image/webp");
       expect(preview.headers["cache-control"]).toBe("private, no-store");
       expect(Buffer.from(preview.body).subarray(8, 12).toString()).toBe("WEBP");
 
-      // Recording permission is an admin decision, per source.
-      const sources = await http().get("/merchandising/image-sources").set(as(staff)).expect(200);
-      const source = sources.body.find((s: { sourceName: string }) => s.sourceName === staffImages[0].sourceName);
-      expect(source.pending).toBeGreaterThan(0);
-      await http().post("/merchandising/image-sources/licence").set(as(staff)).send({ sourceName: source.sourceName, licence: "CLEARED" }).expect(403);
-      await http().post("/merchandising/image-sources/licence").set(as(admin)).send({ sourceName: source.sourceName, licence: "REMOVED" }).expect(400);
-      const cleared = await http().post("/merchandising/image-sources/licence").set(as(admin)).send({ sourceName: source.sourceName, licence: "CLEARED" }).expect(200);
-      expect(cleared.body.updated).toBe(source.pending);
-
+      // Recording permission again publishes them.
+      await http().post("/merchandising/image-sources/licence").set(as(admin)).send({ sourceName: source.sourceName, licence: "CLEARED" }).expect(200);
       const live = await http().get(`/merchandising/images/${id}`).buffer(true).expect(200);
       expect(live.headers["cache-control"]).toBe("public, max-age=3600");
       const nowPublic = (await http().get("/merchandising/products").expect(200)).body.find((p: { sku: string }) => p.sku === firstSku);
@@ -1202,7 +1212,8 @@ describe("Aggregated Aggregates API (e2e)", () => {
       await http().patch(`/merchandising/images/${id}/licence`).set(as(admin)).send({ licence: "PERMISSION_PENDING" }).expect(200);
       await http().get(`/merchandising/images/${id}`).expect(404);
       await http().post("/merchandising/image-sources/licence").set(as(admin)).send({ sourceName: source.sourceName, licence: "PERMISSION_PENDING" }).expect(200);
-      expect((await http().get("/merchandising/products").expect(200)).body.find((p: { sku: string }) => p.sku === firstSku).images).toEqual([]);
+      const hidden = (await http().get("/merchandising/products").expect(200)).body.find((p: { sku: string }) => p.sku === firstSku).images;
+      expect(hidden.map((i: { id: string }) => i.id)).not.toContain(id);
 
       // Removing an imported photo hides it for good; the next deploy doesn't bring it back.
       await http().delete(`/merchandising/images/${id}`).set(as(staff)).expect(204);
@@ -1211,7 +1222,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
       const after = (await http().get("/merchandising/staff/products").set(as(staff)).expect(200)).body.find((p: { sku: string }) => p.sku === firstSku);
       expect(after.images.map((i: { id: string }) => i.id)).not.toContain(id);
 
-      // The Meta catalogue feed never lists a product on the strength of a pending photo.
+      // The Meta catalogue feed never shows a withdrawn or removed photo.
       const feed = await http().get("/channels/catalogue-feed.csv").expect(200);
       expect(feed.text).not.toContain(id);
     });
@@ -1241,6 +1252,46 @@ describe("Aggregated Aggregates API (e2e)", () => {
       const feed = await http().get("/channels/catalogue-feed.csv").expect(200);
       expect(feed.text).not.toContain(photo.id);
     });
+  });
+
+  describe("admin team", () => {
+    it("lets admins give, change and remove staff access, with guard rails", async () => {
+      const as = (t: string) => ({ Authorization: `Bearer ${t}` });
+      const admin = await register("teamadmin");
+      await prisma.user.update({ where: { email: `teamadmin-${run}@example.com` }, data: { role: "ADMIN" } });
+      const staffer = await register("teamstaff");
+      await prisma.user.update({ where: { email: `teamstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      const recruit = await register("teamrecruit");
+      const recruitEmail = `teamrecruit-${run}@example.com`;
+
+      // Admins only.
+      await http().get("/team").expect(401);
+      await http().get("/team").set(as(staffer)).expect(403);
+      await http().post("/team").set(as(staffer)).send({ email: recruitEmail, role: "ADMIN" }).expect(403);
+
+      // Only registered accounts can be added; the role must be staff or admin.
+      await http().post("/team").set(as(admin)).send({ email: `nobody-${run}@example.com`, role: "STAFF" }).expect(404);
+      await http().post("/team").set(as(admin)).send({ email: recruitEmail, role: "CUSTOMER" }).expect(400);
+      const added = await http().post("/team").set(as(admin)).send({ email: recruitEmail.toUpperCase(), role: "STAFF" }).expect(201);
+      expect(added.body).toMatchObject({ email: recruitEmail, role: "STAFF" });
+      await http().post("/team").set(as(admin)).send({ email: recruitEmail, role: "STAFF" }).expect(409);
+      // The new role works on the next request, without signing in again.
+      await http().get("/newsletter/admin/subscribers").set(as(recruit)).expect(200);
+
+      const list = await http().get("/team").set(as(admin)).expect(200);
+      expect(list.body.members.map((m: { email: string }) => m.email)).toEqual(expect.arrayContaining([recruitEmail, `teamadmin-${run}@example.com`]));
+
+      // Nobody changes their own role, so the store always keeps at least one admin.
+      const me = (await prisma.user.findUniqueOrThrow({ where: { email: `teamadmin-${run}@example.com` } })).id;
+      await http().patch(`/team/${me}`).set(as(admin)).send({ role: "STAFF" }).expect(400);
+
+      // Remove: back to a customer, and the admin panel API refuses them.
+      const id = added.body.id;
+      await http().patch(`/team/${id}`).set(as(admin)).send({ role: "CUSTOMER" }).expect(200);
+      await http().get("/newsletter/admin/subscribers").set(as(recruit)).expect(403);
+      await http().patch(`/team/${id}`).set(as(admin)).send({ role: "COMPANY_ADMIN" }).expect(400);
+    });
+
   });
 
   describe("sign-in with Google, Microsoft, X, Facebook and Instagram", () => {

@@ -18,6 +18,10 @@ export function PromoSlot({ promotion, className = "" }: { promotion?: Promotion
         <span className="font-display text-base font-semibold text-limestone sm:text-lg">{promotion.title}</span>
         {promotion.linkUrl && <span className="shrink-0 font-mono text-[11px] uppercase text-ochre-gold">Shop now →</span>}
       </div>
+      {/* Creative Commons photos must carry their credit wherever they're shown. */}
+      {image.credit?.includes("CC BY") && (
+        <span className="absolute right-1.5 top-1.5 rounded-sm bg-basalt/60 px-1.5 py-0.5 font-mono text-[9px] text-limestone/80">Photo: {image.credit}</span>
+      )}
     </>
   );
   const classes = `group relative block h-40 overflow-hidden rounded-sm border border-basalt/10 bg-basalt ${className}`;

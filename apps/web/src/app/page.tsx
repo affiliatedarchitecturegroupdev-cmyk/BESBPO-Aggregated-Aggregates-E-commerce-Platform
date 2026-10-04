@@ -3,6 +3,7 @@ import { B2BBulkSection } from "@/components/merchandising/B2BBulkSection";
 import { CategoryGrid } from "@/components/merchandising/CategoryGrid";
 import { ComplianceBar } from "@/components/merchandising/ComplianceBar";
 import { BadgeCarouselCompact } from "@/components/sourcing/BadgeCarouselCompact";
+import { CorporateSiteBand } from "@/components/merchandising/CorporateSiteBand";
 import { CoverageStrip } from "@/components/merchandising/CoverageStrip";
 import { FeaturedProducts } from "@/components/merchandising/FeaturedProducts";
 import { GroupCrossSell } from "@/components/merchandising/GroupCrossSell";
@@ -48,6 +49,7 @@ export default async function HomePage() {
         </section>
       )}
       <GroupCrossSell promotion={promotions.GROUP_CROSS_SELL} />
+      <CorporateSiteBand partnerSuppliers={partnerSuppliers} />
       <IndustriesWeServe />
       <B2BBulkSection />
       <QuarryToSite partnerSuppliers={partnerSuppliers} />
