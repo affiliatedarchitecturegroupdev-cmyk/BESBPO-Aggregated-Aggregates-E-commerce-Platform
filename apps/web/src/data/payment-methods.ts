@@ -60,7 +60,7 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
     key: "FLOAT",
     displayName: "Float",
     category: "bnpl",
-    logoAssetPath: "brandfetch/float.svg", // re-sourced via Brandfetch — see PAYMENT_ASSETS.md, the original AI-search find was unverifiable
+    logoAssetPath: "float/float.png",
     tradeOnly: false,
     instalments: "Up to 24 monthly instalments, zero interest, zero fees — uses your existing card's available credit.",
   },

@@ -6,9 +6,8 @@ relative to `apps/web/public/payment-logos/`, and every logo is drawn by
 `components/payment/PaymentLogo.tsx` on a white badge — so dark or black
 official marks read the same on the dark footer as on white cards.
 
-**Status (Oct 2026):** 16 of the 18 methods use official logo files. Float
-and EFT / Purchase Order are still generated placeholders — a dashed tile
-with the method name — until their files are found.
+**Status (Oct 2026):** 17 of the 18 methods use official logo files. EFT /
+Purchase Order uses a house icon, since it has no third-party brand.
 
 "Frame tightened" means only the SVG's viewBox/size was changed to remove
 empty margin, so the logo fills its badge; no shapes or colours were edited.
@@ -27,7 +26,8 @@ the table below.
    Brandfetch page, supplied by Fortune (Sep 2026). Used where the PayFast pack
    has no file.
 3. **Lula** (`lula/`) — Lula's brand pack, supplied by Fortune (Oct 2026).
-4. **Generic** (`generic/`) — a house-style icon for methods with no
+4. **Float** (`float/`) — Float's official logo, supplied by Fortune (Oct 2026).
+5. **Generic** (`generic/`) — a house-style icon for methods with no
    third-party brand (EFT / Purchase Order).
 
 ## Per-method provenance
@@ -47,7 +47,7 @@ the table below.
 | Mobicred | `payfast/mobicred.svg` | PayFast pack | SVG replaces the earlier small white Brandfetch PNG |
 | MoreTyme | `payfast/moretyme.png` | PayFast pack | Shown at full badge height (`logoFill`). The pack's files are a small logo centred on a 4000×4000 white square (the SVG only wraps that bitmap); trimmed to the logo and scaled to 160px tall (205KB → 20KB). Artwork unchanged |
 | Happy Pay | `brandfetch/happy-pay.svg` | Brandfetch | Not in the PayFast pack; frame tightened to the artwork |
-| Float | `brandfetch/float.svg` | — | **Placeholder** |
+| Float | `float/float.png` | Float (official) | Trimmed to the wordmark, transparent background, scaled to 160px tall. Artwork unchanged |
 | Ozow | `brandfetch/ozow.svg` | Brandfetch | Not in the PayFast pack |
 | Stitch | `brandfetch/stitch.svg` | Brandfetch | The Brandfetch file had a broken root tag (viewBox lost) and an undefined CSS-variable fill; both repaired, artwork unchanged |
 | Lulapay | `lula/lula.png` | Lula pack | The pack has the symbol only (no wordmark). Cropped from the 1098px square to the mark, white made transparent, scaled to 160px tall. Artwork unchanged |
@@ -79,9 +79,8 @@ footer. Files are used as supplied unless noted.
 | LinkedIn | `linkedin.svg` | `LinkedIn_Symbol_9.svg` | Placeholder handle — not shown until live |
 | YouTube | `youtube.svg` | `YouTube_Symbol_9.svg` | Live — youtube.com/@BesbpoGroup |
 | Behance | `behance.svg` | `Behance_id8HQT_mlw_4.svg` | Live — behance.net/besbpogroup |
+| Threads | `threads.svg` | `Threads_Logo_5.svg` | Glyph set to white for the dark footer; links to threads.net/@besbpo_group (Threads uses the Instagram handle) |
 
-Threads (listed in the earlier handles reference) had no pack, so it's not
-shown. Add `threads.svg` and an entry in `social.ts` if it's still in use.
 
 ## Sign-in logos
 

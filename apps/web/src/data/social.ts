@@ -1,4 +1,4 @@
-// Group-level social handles: 7 live, 1 placeholder pending registration —
+// Group-level social handles: 8 live, 1 placeholder pending registration —
 // all Besbpo Group-branded, not AA-specific. Icons are the official symbols
 // from the brand packs Fortune supplied (Oct 2026), not wordmarks; see
 // PAYMENT_ASSETS.md ("Social icons").
@@ -18,6 +18,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
   { platform: "X", url: "https://x.com/BesbpoGroup", iconAssetPath: "x.svg", status: "live" },
   { platform: "TikTok", url: "https://tiktok.com/@besbpo.group", iconAssetPath: "tiktok.svg", status: "live" },
   { platform: "WhatsApp", url: `https://wa.me/${WHATSAPP_NUMBER}`, iconAssetPath: "whatsapp.svg", status: "live" },
+  { platform: "Threads", url: "https://threads.net/@besbpo_group", iconAssetPath: "threads.svg", status: "live" },
   { platform: "LinkedIn", url: "https://linkedin.com/company/besbpo-group", iconAssetPath: "linkedin.svg", status: "placeholder" },
   { platform: "YouTube", url: "https://youtube.com/@BesbpoGroup", iconAssetPath: "youtube.svg", status: "live" },
   { platform: "Behance", url: "https://behance.net/besbpogroup", iconAssetPath: "behance.svg", status: "live" },
