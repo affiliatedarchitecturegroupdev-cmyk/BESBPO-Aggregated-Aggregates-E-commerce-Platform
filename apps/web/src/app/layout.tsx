@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Inter, Space_Grotesk } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
+import { CorporateBar } from "@/components/layout/CorporateBar";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { CookieConsentBanner } from "@/components/layout/CookieConsentBanner";
 import { Header } from "@/components/layout/Header";
@@ -56,6 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${spaceGrotesk.variable} ${inter.variable} ${ibmPlexMono.variable} font-body`}>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION).replace(/</g, "\\u003c") }} />
         <PhotoPreviewBanner />
+        <CorporateBar />
         <AnnouncementBar />
         <Header />
         <main>{children}</main>

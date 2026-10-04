@@ -52,7 +52,7 @@ for official files, and suppliers need map pins — see "Open items" in `AGENTIC
 
 ## Confirmed platform decisions
 
-- **Supplier network**: 87 approved partner suppliers (52 Tier 1, 35 Tier 2) plus 18 researched B2B leads — broker/network model, no owned yards or inventory. Seeded on deploy from `packages/database/prisma/seed-data/`, managed at `/admin/suppliers`; KZN and Gauteng active at launch
+- **Supplier network**: 104 approved partner suppliers (60 Tier 1, 44 Tier 2) across all nine provinces plus 18 researched B2B leads — broker/network model, no owned yards or inventory. Seeded on deploy from `packages/database/prisma/seed-data/`, managed at `/admin/suppliers`; KZN and Gauteng active at launch
 - **Domain**: `aggregates.store` (corporate + storefront) / `app.aggregates.store` (platform app)
 - **VAT**: bills under Besbpo Group's company VAT registration from day one
 - **Hosting**: Render

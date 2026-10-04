@@ -29,7 +29,7 @@ unreviewed work.
    workbook to the cent — see `docs/pricing/README.md`. Never hand-edit the
    generated JSON; flag any mismatch rather than silently "fixing" the number.
 2. **No owned-yard logic.** The confirmed model is broker/network: an
-   approved partner-supplier network (87 verified partners), no owned inventory. Do not add `StockLevel` /
+   approved partner-supplier network (104 verified partners), no owned inventory. Do not add `StockLevel` /
    `StockMovement` models or any owned-inventory tracking — that was
    explicitly dropped. Stock questions route to a supplier, not a warehouse.
 3. **Quote-only stays quote-only.** Volume/Civil Bulk tier orders (≥10m³)
@@ -103,8 +103,9 @@ unreviewed work.
 
 ## Open items carried into the build-out
 
-- Partner-supplier network: **received and seeded** — 87 verified partners
-  (52 Tier 1 + 35 Tier 2) plus 18 researched B2B Bulk & Infrastructure leads,
+- Partner-supplier network: **received and seeded** — 104 verified partners
+  (60 Tier 1 + 44 Tier 2; SUP-088–104 are the Free State and Northern Cape
+  suppliers added Oct 2026, each with its source page in `source_url`) plus 18 researched B2B Bulk & Infrastructure leads,
   added on deploy by `apps/api/dist/suppliers/seed-suppliers.js` (create-only;
   staff edits survive). Neither CSV has coordinates, so each active supplier
   needs a map pin from staff before it's used for distance estimates. Pins
@@ -148,15 +149,14 @@ unreviewed work.
   Brandfetch, and the Lula and Float files Fortune supplied); EFT/PO uses a
   house icon. Social icons are the official symbols; LinkedIn stays hidden
   until it's registered (`PAYMENT_ASSETS.md`).
-- Product photography (`PRODUCT_IMAGES.md`): 40 open-licence photos from
-  Wikimedia Commons (CC0 / public domain / CC BY / CC BY-SA) are live on 45
-  of the 48 SKUs, each with the credit its licence requires (under the
-  photo and on `/photo-credits`); credited photos never go to the Meta feed.
-  Kimi's 55 sourced photos stay hidden until each source company gives
-  permission — record it in `/admin/image-permissions`. Never publish a
-  photo without a licence that allows commercial use or the owner's
-  permission, and never drop a required credit. Hydrated lime, crushed brick
-  and crusher dust still have no live photo; 9 Kimi files arrived damaged.
+- Product photography (`PRODUCT_IMAGES.md`): Kimi's 55 sourced photos are
+  live (owners' permission received Oct 2026) and shown first; open-licence
+  Wikimedia Commons photos follow, each with the credit its licence requires
+  (under the photo and on `/photo-credits`); credited photos never go to the
+  Meta feed. Weak Commons photos for the sands and limes were retired.
+  Never publish a photo without a licence that allows commercial use or the
+  owner's permission, and never drop a required credit. 9 Kimi files arrived
+  damaged.
 - Hero slideshow: 10 of the planned 10–12 licensed photos are sourced
   (`apps/web/src/data/media.ts`); staff manage captions, order and visibility
   in Site content.

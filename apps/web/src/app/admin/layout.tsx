@@ -22,12 +22,13 @@ const NAV = [
   { href: "/admin/notifications", label: "Notifications" },
   { href: "/admin/careers", label: "Careers" },
   { href: "/admin/newsletter", label: "Newsletter" },
+  { href: "/admin/team", label: "Team", adminOnly: true },
 ];
 
 /**
  * Staff admin (Phase 4 CMS). Every page below requires a STAFF or ADMIN
- * session — the API enforces the same on every call. Roles are granted with
- * `pnpm db:set-role`, never from here.
+ * session — the API enforces the same on every call. Admins grant and remove
+ * access on Team (/admin/team); `pnpm db:set-role` remains for the first admin.
  */
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const user = await requireSession("/admin");
@@ -41,7 +42,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         </p>
       </div>
       <nav className="mt-6 flex flex-wrap gap-2 font-body text-sm" aria-label="Admin">
-        {NAV.map((item) => (
+        {NAV.filter((item) => !("adminOnly" in item) || user.role === "ADMIN").map((item) => (
           <Link key={item.href} href={item.href} className="rounded-sm border border-basalt/20 bg-white px-3 py-1.5 text-basalt hover:border-seam-blue">
             {item.label}
           </Link>
