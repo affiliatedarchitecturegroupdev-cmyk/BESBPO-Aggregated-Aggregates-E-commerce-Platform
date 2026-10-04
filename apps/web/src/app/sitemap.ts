@@ -13,6 +13,7 @@ const STATIC_PATHS = [
   "/trade-accounts",
   "/delivery-areas",
   "/coverage",
+  "/responsible-sourcing",
   "/careers",
   "/suppliers",
   "/quote",

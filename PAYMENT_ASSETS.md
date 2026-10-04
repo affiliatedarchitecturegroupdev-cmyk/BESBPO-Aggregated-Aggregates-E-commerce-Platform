@@ -77,8 +77,8 @@ footer. Files are used as supplied unless noted.
 | TikTok | `tiktok.svg` | `TikTok_Symbol_27.svg` | White note with cyan/red offset |
 | WhatsApp | `whatsapp.svg` | `WhatsApp_idCBBZAMfN_2.svg` | Green glyph |
 | LinkedIn | `linkedin.svg` | `LinkedIn_Symbol_9.svg` | Placeholder handle — not shown until live |
-| YouTube | `youtube.svg` | `YouTube_Symbol_9.svg` | Placeholder handle — not shown until live |
-| Behance | `behance.svg` | `Behance_id8HQT_mlw_4.svg` | Placeholder handle — not shown until live |
+| YouTube | `youtube.svg` | `YouTube_Symbol_9.svg` | Live — youtube.com/@BesbpoGroup |
+| Behance | `behance.svg` | `Behance_id8HQT_mlw_4.svg` | Live — behance.net/besbpogroup |
 
 Threads (listed in the earlier handles reference) had no pack, so it's not
 shown. Add `threads.svg` and an entry in `social.ts` if it's still in use.

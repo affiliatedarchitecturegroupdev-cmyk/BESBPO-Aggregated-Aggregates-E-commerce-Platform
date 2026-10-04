@@ -83,6 +83,7 @@ aggregates-store-platform/
 ├── B2B_BULK_CATALOGUE.md CAT-10/11 packaged goods and the dedup against the 48-SKU catalogue
 ├── BLOG_CMS.md           Blog/CMS: API, admin, content rules
 ├── PAYMENT_ASSETS.md     Logo/icon provenance (Brandfetch files and remaining placeholders)
+├── RESPONSIBLE_SOURCING.md Badges on /responsible-sourcing: provenance, rules, claims to avoid
 ├── PRODUCT_IMAGES.md     Product photos: open-licence credits, sourced photos awaiting permission
 └── PAYMENT_PROVIDER_TERMS.md  Researched BNPL / trade-credit terms behind "Ways to Pay"
 ```
