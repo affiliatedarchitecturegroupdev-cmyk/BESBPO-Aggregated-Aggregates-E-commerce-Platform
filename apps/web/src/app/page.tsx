@@ -2,6 +2,7 @@ import { BulkVsBagged } from "@/components/merchandising/BulkVsBagged";
 import { B2BBulkSection } from "@/components/merchandising/B2BBulkSection";
 import { CategoryGrid } from "@/components/merchandising/CategoryGrid";
 import { ComplianceBar } from "@/components/merchandising/ComplianceBar";
+import { BadgeCarouselCompact } from "@/components/sourcing/BadgeCarouselCompact";
 import { CoverageStrip } from "@/components/merchandising/CoverageStrip";
 import { FeaturedProducts } from "@/components/merchandising/FeaturedProducts";
 import { GroupCrossSell } from "@/components/merchandising/GroupCrossSell";
@@ -36,6 +37,7 @@ export default async function HomePage() {
       <HeroSlideshow slides={slideshowSlides(content.slideshow)} intervalSeconds={content.slideshow.intervalSeconds} />
       <TrustBadges partnerSuppliers={partnerSuppliers} liveProvinces={liveProvinces} />
       <ComplianceBar />
+      <BadgeCarouselCompact />
       <QuickTonnageCalculator hiddenSkus={hiddenSkus} />
       <CategoryGrid />
       <BulkVsBagged />

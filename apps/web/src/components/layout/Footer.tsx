@@ -91,6 +91,7 @@ export async function Footer() {
             <li><Link href="/about">About</Link></li>
             <li><Link href="/industries-we-serve">Industries We Serve</Link></li>
             <li><Link href="/case-studies">Case Studies</Link></li>
+            <li><Link href="/responsible-sourcing">Responsible Sourcing</Link></li>
             <li><Link href="/careers">Careers</Link></li>
             <li><Link href="/blog">Blog</Link></li>
             <li><Link href="/faq">FAQ</Link></li>
