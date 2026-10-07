@@ -3,6 +3,7 @@ import { NotificationAudience, NotificationChannel, NotificationEvent, Notificat
 import { PrismaService } from "../common/prisma.service";
 import {
   customerCompanyEmail,
+  customerBookingEmail,
   customerEnquiryEmail,
   customerOrderEmail,
   customerOrderWhatsApp,
@@ -11,12 +12,16 @@ import {
   EVENT_CHANNELS,
   EVENT_LABEL,
   staffCompanyEmail,
+  partnerBookingEmail,
+  PARTNER_EVENTS,
+  staffBookingEmail,
   staffEnquiryEmail,
   staffOrderEmail,
   staffQuoteEmail,
   whatsappNumber,
   type CompanyData,
   type EmailMessage,
+  type BookingData,
   type EnquiryData,
   type OrderData,
   type QuoteData,
@@ -32,7 +37,20 @@ type Outgoing = {
   email?: EmailMessage;
   whatsapp?: WhatsAppMessage;
 };
-type Links = { orderId?: string; quoteId?: string; companyId?: string; enquiryId?: string };
+type Links = { orderId?: string; quoteId?: string; companyId?: string; enquiryId?: string; bookingId?: string };
+
+const BASIS_UNITS: Record<string, [string, string]> = {
+  DAY: ["day", "days"],
+  WEEK: ["week", "weeks"],
+  LOAD: ["load", "loads"],
+  SKIP: ["skip", "skips"],
+  M2: ["m²", "m²"],
+  JOB: ["job", "jobs"],
+};
+const BASIS_LABEL = (basis: string, quantity: number) => {
+  const [one, many] = BASIS_UNITS[basis] ?? ["", ""];
+  return `${quantity} ${quantity === 1 ? one : many}`.trim();
+};
 
 const ENQUIRY_KIND_LABEL: Record<string, string> = {
   PLANT_HIRE: "Plant hire",
@@ -204,6 +222,50 @@ export class NotificationsService implements OnModuleDestroy {
       const staff = setting.staffEmail ? staffEnquiryEmail(event, data) : null;
       if (staff) out.push(...(await this.staffRecipients()).map((recipient) => ({ audience: "STAFF" as const, channel: "EMAIL" as const, recipient, email: staff })));
       await this.enqueue(event, out, { enquiryId: e.id });
+    });
+  }
+
+  async booking(event: NotificationEvent, bookingId: string, extra: { disputeReason?: string; partnerId?: string } = {}) {
+    await this.safely(event, async () => {
+      const b = await this.prisma.booking.findUnique({
+        where: { id: bookingId },
+        include: { user: { select: { email: true, name: true } }, assignedPartner: { include: { users: { select: { email: true } } } } },
+      });
+      if (!b) return;
+      const day = (d: Date) => d.toLocaleDateString("en-ZA", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+      const data: BookingData = {
+        id: b.id,
+        reference: b.reference,
+        itemName: b.itemName,
+        status: b.status,
+        customerName: b.user.name,
+        partnerName: b.assignedPartner?.name ?? null,
+        province: b.province,
+        siteAddress: b.siteAddress,
+        startDate: day(b.startDate),
+        endDate: day(b.endDate),
+        quantityLabel: BASIS_LABEL(b.basis, b.quantity),
+        customerTotal: b.customerTotal,
+        partnerAmount: b.partnerAmount,
+        quoteValidUntil: b.quoteValidUntil ? day(b.quoteValidUntil) : null,
+        disputeReason: extra.disputeReason ?? null,
+      };
+      const setting = await this.setting(event);
+      const out: Outgoing[] = [];
+      const customer = setting.customerEmail ? customerBookingEmail(event, data) : null;
+      if (customer) out.push({ audience: "CUSTOMER", channel: "EMAIL", recipient: b.user.email, email: customer });
+      const staff = setting.staffEmail ? staffBookingEmail(event, data) : null;
+      if (staff) out.push(...(await this.staffRecipients()).map((recipient) => ({ audience: "STAFF" as const, channel: "EMAIL" as const, recipient, email: staff })));
+      if (PARTNER_EVENTS.includes(event)) {
+        // Offers go to the partner being offered the job; everything else to the assigned partner.
+        const partner = event === "BOOKING_OFFERED" && extra.partnerId ? await this.prisma.hirePartner.findUnique({ where: { id: extra.partnerId }, include: { users: { select: { email: true } } } }) : b.assignedPartner;
+        const message = partner ? partnerBookingEmail(event, data) : null;
+        if (partner && message) {
+          const recipients = [...new Set([partner.contactEmail, ...partner.users.map((u) => u.email)].map((e) => e.toLowerCase()).filter((e) => EMAIL_PATTERN.test(e)))];
+          out.push(...recipients.map((recipient) => ({ audience: "PARTNER" as const, channel: "EMAIL" as const, recipient, email: message })));
+        }
+      }
+      await this.enqueue(event, out, { bookingId: b.id });
     });
   }
 

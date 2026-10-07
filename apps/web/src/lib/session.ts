@@ -7,7 +7,7 @@ import { api } from "./api";
 const COOKIE = "aa_session";
 const MAX_AGE = 7 * 24 * 60 * 60; // matches the API's token lifetime
 
-export type Role = "CUSTOMER" | "COMPANY_ADMIN" | "STAFF" | "ADMIN";
+export type Role = "CUSTOMER" | "COMPANY_ADMIN" | "STAFF" | "ADMIN" | "PARTNER";
 export type TierName = "RETAIL" | "CONTRACTOR_TRADE" | "VOLUME_CIVIL_BULK";
 
 export type SessionUser = {

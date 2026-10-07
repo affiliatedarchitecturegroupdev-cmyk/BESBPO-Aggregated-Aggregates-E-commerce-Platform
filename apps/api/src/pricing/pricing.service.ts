@@ -77,9 +77,33 @@ function normaliseBaseUrl(url: string): string {
   return withScheme.replace(/\/+$/, "");
 }
 
+/** A plant-hire or site-service line from the pricing service's CAT-13/14 catalogue. */
+export type HireItem = { sku: string; name: string; kind: "PLANT" | "SERVICE"; unit: string | null };
+export type HireCatalogue = { commissionPercent: number; items: Map<string, HireItem> };
+
 @Injectable()
 export class PricingService {
   private readonly baseUrl = normaliseBaseUrl(process.env.PRICING_SERVICE_URL ?? "http://localhost:8000");
+  private hireCache: { at: number; value: HireCatalogue } | null = null;
+
+  /** CAT-13/14 SKUs and the Agent commission, cached for five minutes (bookings validate against it). */
+  async hireCatalogue(): Promise<HireCatalogue> {
+    if (this.hireCache && Date.now() - this.hireCache.at < 300_000) return this.hireCache.value;
+    const [plant, services] = await Promise.all([this.get("/products/plant-hire"), this.get("/products/site-services")]);
+    const items = new Map<string, HireItem>();
+    for (const p of plant.plant as { sku: string; name: string }[]) items.set(p.sku, { sku: p.sku, name: p.name, kind: "PLANT", unit: null });
+    for (const s of services.services as { sku: string; name: string; unit: string }[]) items.set(s.sku, { sku: s.sku, name: s.name, kind: "SERVICE", unit: s.unit });
+    const value = { commissionPercent: Number(plant.commission_percent), items };
+    if (!Number.isFinite(value.commissionPercent)) throw new BadGatewayException("Pricing service didn't return the hire commission.");
+    this.hireCache = { at: Date.now(), value };
+    return value;
+  }
+
+  private async get(path: string) {
+    const response = await fetch(`${this.baseUrl}${path}`, { signal: AbortSignal.timeout(5000) });
+    if (!response.ok) throw new BadGatewayException(`Pricing service error: ${response.status}`);
+    return response.json();
+  }
 
   async health(): Promise<unknown> {
     const response = await fetch(`${this.baseUrl}/health`, { signal: AbortSignal.timeout(3000) });

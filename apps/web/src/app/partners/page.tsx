@@ -23,7 +23,7 @@ const STEPS = [
   { Icon: ClipboardList, title: "Apply", text: "Tell us about your business, your fleet and the provinces you work in." },
   { Icon: BadgeCheck, title: "Get vetted", text: "We check your documents, insurance and equipment before you receive any work." },
   { Icon: FileSpreadsheet, title: "Send your rate card", text: "Written rates per machine and province. Once two partners have rates in a province, customers there can see a price." },
-  { Icon: Handshake, title: "Receive jobs", text: "We send you requests from customers near you. You confirm availability; we handle the customer and the quote." },
+  { Icon: Handshake, title: "Receive paid jobs", text: "Offers arrive in your partner portal already paid. Accept within 30 minutes; you're paid by EFT 48 hours after the customer signs off." },
 ];
 
 const PARTNER_TYPES = ["Plant hire (wet hire)", "Tipper haulage", "Skip bins / rubble removal", "Site clearing / demolition", "Testing laboratory", "Small equipment hire", "Fuel supply", "Other"];
@@ -42,9 +42,14 @@ export default function PartnersPage() {
             We already supply aggregates, cement and ready-mix to contractors across South Africa. Those same customers need machines, trucks and site
             services — and we&apos;re building a vetted partner network in every province to do the work.
           </p>
-          <a href="#apply" className="mt-6 inline-block rounded-sm bg-ochre-gold px-5 py-2.5 font-body text-sm font-semibold text-basalt hover:bg-limestone">
-            Apply to join
-          </a>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a href="#apply" className="rounded-sm bg-ochre-gold px-5 py-2.5 font-body text-sm font-semibold text-basalt hover:bg-limestone">
+              Apply to join
+            </a>
+            <Link href="/partners/portal" className="rounded-sm border border-limestone/30 px-5 py-2.5 font-body text-sm font-semibold hover:border-ochre-gold">
+              Partner sign-in
+            </Link>
+          </div>
         </div>
       </section>
 

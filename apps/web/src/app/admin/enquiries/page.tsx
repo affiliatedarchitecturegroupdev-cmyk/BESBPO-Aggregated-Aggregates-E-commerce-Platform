@@ -137,6 +137,16 @@ export default async function EnquiriesPage({ searchParams }: { searchParams: { 
               </dl>
             )}
             {e.message && <p className="mt-3 whitespace-pre-line text-xs text-basalt">{e.message}</p>}
+            {(e.kind === "PLANT_HIRE" || e.kind === "SITE_SERVICE" || e.kind === "JOB_PACK" || e.kind === "ESTIMATE") && (
+              <Link href={`/admin/bookings/new?enquiry=${e.id}`} className="mt-3 inline-block font-body text-xs font-semibold text-seam-blue hover:underline">
+                Price as a booking from a partner&apos;s quote →
+              </Link>
+            )}
+            {e.kind === "PARTNER_APPLICATION" && (
+              <Link href="/admin/hire-partners" className="mt-3 inline-block font-body text-xs font-semibold text-seam-blue hover:underline">
+                Add as a hire partner →
+              </Link>
+            )}
             <form action={updateEnquiry} className="mt-3 flex flex-wrap items-end gap-2">
               <input type="hidden" name="id" value={e.id} />
               <select name="status" defaultValue={e.status} className={select} aria-label="Status">

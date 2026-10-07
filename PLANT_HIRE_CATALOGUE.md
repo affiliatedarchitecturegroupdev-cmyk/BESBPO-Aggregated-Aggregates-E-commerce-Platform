@@ -1,9 +1,10 @@
 # Plant Hire & Site Services (CAT-13 / CAT-14)
 
-Phase B of the October 2026 plan. Plant hire, site services, five further
-lines, job packs, the project estimator and partner recruitment are live as
-**enquiry-led, quote-only** pages. Online booking, dispatch and payouts are
-Phase C and are not built yet.
+Phases B and C of the October 2026 plan. Plant hire, site services, five
+further lines, job packs, the project estimator and partner recruitment are
+live as **quote-only** pages (Phase B). A quoted job then runs as a
+**booking** — accepted and paid by the customer, dispatched to partners,
+started with an arrival code and paid out after sign-off (Phase C).
 
 ## Model
 
@@ -73,17 +74,85 @@ to partners without their agreement — only the job details.
 carousel, a plant & services section, job packs and a partner call to action.
 Job packs only reference real SKUs (aggregates, ready-mix, plant, services).
 
-## Not built yet (Phase C)
+## Bookings (Phase C)
 
-Bookings and payment before dispatch, partner offers and acceptance,
-arrival OTP, job cards, masked chat, disputes and payout release, partner
-availability and the partner portal. Until then nothing on these pages says
-a job is paid, protected or dispatched online.
+```
+QUOTED → AWAITING_PAYMENT → DISPATCHING → ACCEPTED → IN_PROGRESS → COMPLETED → CLOSED
+                                   ↘ UNFULFILLED          ↘ DISPUTED ↗ / CANCELLED
+```
+
+1. **Quote.** From an enquiry (Admin → Enquiries → "Price as a booking"),
+   staff enter the partner's **written quote for the whole job** and where
+   it's on record (`quoteSource`, required). The customer price is that
+   amount plus the commission, calculated by the API — never typed in. The
+   customer needs an account with the enquiry's email; they're emailed the
+   quote (`BOOKING_QUOTED`).
+2. **Accept and pay.** The customer accepts in Account → Hire bookings and
+   pays by **EFT** with the booking reference (banking details from
+   `EFT_BANKING_DETAILS`). Staff confirm the payment on the booking, which
+   starts dispatch. Online card/instant-EFT payment for bookings needs live
+   gateway credentials and isn't wired yet.
+3. **Dispatch.** The job is offered to one partner at a time with a
+   **30-minute window**: the quoting partner first, then ACTIVE partners with
+   an active fleet unit for the SKU in the province, free on the dates
+   (partner calendar blocks), ranked by proximity (only where both sides
+   have a map pin — pins are never guessed), reliability (acceptance rate,
+   disputes, ratings) and a small Group-company tie-break. Declines and
+   expiries move to the next partner; when none are left the booking is
+   UNFULFILLED and staff re-dispatch, re-date or refund. Offers show the
+   partner the job, site and **their payout** — never the customer's name or
+   contact details.
+4. **Assigned.** The partner who accepts is named to the customer (name
+   only). Their fleet unit is blocked for the dates and a payout record is
+   opened. Chat opens.
+5. **Arrival code.** On site, the customer opens a 6-digit code in their
+   booking (each new code replaces the last; only its SHA-256 hash is
+   stored) and the operator enters it in the portal. Five wrong codes lock
+   it until the customer opens a new one.
+6. **Job cards.** The partner records hours, hour-meter readings or loads
+   per day, within the booking's dates; the customer sees them.
+7. **Sign-off and payout.** The customer signs off (optional 1–5 rating),
+   starting a **48-hour dispute window**. With no open dispute the minute
+   sweep marks the payout **due**; staff pay it by EFT (bank confirmation
+   letter must be on file) and record the reference, which closes the
+   booking. Automatic split payouts need gateway credentials.
+8. **Disputes.** Either side can dispute while the job is in progress or
+   within the window. The payout is held; staff resolve it as *pay the
+   partner* (payout due now) or *refund the customer* (payout cancelled,
+   refund paid by staff).
+
+**Anti-bypass.** Partners and customers never see each other's contact
+details. Chat messages and job-card notes are stored with phone numbers,
+emails, links, WhatsApp links and handles removed
+(`apps/api/src/common/redact.ts`); each removal raises a **review flag**, as
+does a customer–partner pair that booked three or more times and then
+stopped (Admin → Hire bookings → Review flags → Scan). Flags are prompts
+for a conversation, never automatic penalties. Staff messages aren't
+redacted (e.g. to share a gate code on request).
+
+**Partners.** Staff add partners in Admin → Hire partners (contact details
+staff-only), set them ACTIVE, record their fleet per province, and link the
+account they registered on the site as a portal login (role `PARTNER`). The
+portal (`/partners/portal`) shows open offers, jobs, fleet calendars and
+payouts. Suspended partners lose portal access.
+
+**The sweep.** Every minute the API expires offers past their window and
+marks payouts due (`BookingsScheduler`; `BOOKINGS_SCHEDULER=off` disables
+it). Each step is a conditional update, so a second instance can't
+double-process. Admins can run it on demand (`POST /bookings/admin/sweep`).
+
+**Emails.** Customers: quoted, payment received, partner assigned, no
+partner found. Staff: no partner, signed off, disputed, payout due.
+Partners (always on): job offered, signed off, disputed, payout released.
 
 ## Needs a decision or advice
 
 - Partner rate cards (two per province per SKU) before any price is shown.
-- Agent invoicing and VAT (who invoices the hire; commission on ex-VAT) — tax advice.
+- Agent invoicing and VAT (who invoices the hire; whether the commission is
+  charged on a VAT-inclusive partner quote) — tax advice. Bookings currently
+  take the partner's quote as the total they're paid and add 12% on top.
+- Holding customer funds before payout (EFT into the Group account today;
+  gateway split payouts later) — legal/banking advice.
 - Diesel: the plan names a Group fuel entity; the page says "a licensed fuel
   supplier" until its licences and the arrangement are confirmed.
 - Non-circumvention wording in partner agreements — legal review.

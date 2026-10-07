@@ -105,13 +105,14 @@ unreviewed work.
     `max(list × (1 − tier discount), cost × 1.03)`, and cement and ready-mix
     Volume/Civil Bulk orders are quoted (`PRICING_POLICY.md`). Change the
     schedule in `discount_floor.py` and `tier-pricing.ts` together.
-15. **Hire and services are quoted until partners put rates in writing.**
-    Plant hire, site services and the further lines (recycled loop, fill
-    exchange, testing, diesel, small-equipment hire) show no price until at
-    least two partners' written rate cards exist for a SKU in a province,
-    loaded only by `services/pricing/ratecards/load_rate_cards.py`
-    (`PLANT_HIRE_CATALOGUE.md`). Until Phase C ships, never say a hire is
-    booked, paid or protected online — requests are enquiries.
+15. **Hire and services are priced only from partners' written rates.**
+    Catalogue rates appear only once two partners per province have given
+    written rate cards (`load_rate_cards.py`). A booking's price is a
+    partner's written quote (its source recorded) plus the fixed commission,
+    calculated by the API. Partners and customers never see each other's
+    contact details; redaction flags are reviewed by people, never
+    auto-penalised. Payouts go out only after customer sign-off plus the
+    48-hour dispute window (`PLANT_HIRE_CATALOGUE.md`).
 
 ## Open items carried into the build-out
 
