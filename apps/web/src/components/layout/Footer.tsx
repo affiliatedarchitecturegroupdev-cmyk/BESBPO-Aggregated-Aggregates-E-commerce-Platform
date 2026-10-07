@@ -12,6 +12,8 @@ import { getActivePromotions } from "@/lib/promotions";
 const LEGAL_LINKS = [
   { href: "/legal/privacy-policy", label: "Privacy Policy" },
   { href: "/legal/terms-and-conditions", label: "Terms & Conditions" },
+  { href: "/legal/hire-terms", label: "Hire & Services Terms" },
+  { href: "/legal/partner-terms", label: "Partner Terms" },
   { href: "/legal/popia-notice", label: "POPIA Notice" },
   { href: "/legal/cookie-policy", label: "Cookie Policy" },
   { href: "/legal/returns-refunds", label: "Returns & Refunds" },
@@ -75,18 +77,20 @@ export async function Footer() {
                 <Link href={`/products?category=${c.slug}`}>{c.name}</Link>
               </li>
             ))}
-            <li><Link href="/products?group=b2b-bulk">Cement & Admixtures</Link></li>
-            <li><Link href="/products?category=ready-mix-concrete">Ready-Mix Concrete</Link></li>
+            <li><Link href="/cement">Cement</Link></li>
+            <li><Link href="/ready-mix">Ready-Mix Concrete</Link></li>
             <li><Link href="/products">All products</Link></li>
           </FooterColumn>
           <FooterColumn title="Hire & Services">
             <li><Link href="/plant-hire">Plant Hire</Link></li>
             <li><Link href="/services">Site Services</Link></li>
             <li><Link href="/job-packs">Job Packs</Link></li>
+            <li><Link href="/plant-hire/how-it-works">How Hire Bookings Work</Link></li>
             <li><Link href="/estimator">Project Estimator</Link></li>
             <li><Link href="/recycled">Recycled Aggregate Loop</Link></li>
             <li><Link href="/testing">Cube & Compaction Testing</Link></li>
             <li><Link href="/partners">Become a Partner</Link></li>
+            <li><Link href="/partners/onboarding">Partner Onboarding</Link></li>
           </FooterColumn>
           <FooterColumn title="Buy">
             <li><Link href="/quote">Request a Quote</Link></li>

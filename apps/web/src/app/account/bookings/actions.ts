@@ -18,7 +18,8 @@ async function call(id: string, action: string, body?: unknown): Promise<FormSta
 }
 
 export async function acceptBookingQuote(_prev: FormState, form: FormData): Promise<FormState> {
-  return call(text(form, "id"), "accept");
+  if (form.get("acceptTerms") !== "on") return { error: "Please tick the box to agree to the Plant Hire & Site Services Terms." };
+  return call(text(form, "id"), "accept", { acceptTerms: true });
 }
 
 export async function declineBookingQuote(_prev: FormState, form: FormData): Promise<FormState> {

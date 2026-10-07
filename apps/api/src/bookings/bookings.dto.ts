@@ -32,6 +32,11 @@ export class ListBookingsQuery {
   @IsOptional() @IsEnum(BookingStatus) status?: BookingStatus;
 }
 
+export class AcceptQuoteDto {
+  /** The customer ticked "I agree to the Plant Hire & Site Services Terms". */
+  @IsOptional() @IsBoolean() acceptTerms?: boolean;
+}
+
 export class ConfirmPaymentDto {
   @Transform(trim) @IsString() @MinLength(3) @MaxLength(120) paymentReference!: string;
 }

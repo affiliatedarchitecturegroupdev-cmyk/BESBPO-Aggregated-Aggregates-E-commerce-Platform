@@ -3,6 +3,7 @@ import Link from "next/link";
 import { HireHowItWorks } from "@/components/plant/HowItWorks";
 import { PlantCard } from "@/components/plant/PlantCard";
 import { HOURS_PER_DAY_CAP, plantByClass } from "@/data/plant-services";
+import { getHireCoverage, provinceSlug } from "@/lib/hire-coverage";
 
 export const metadata: Metadata = {
   title: "Plant Hire — TLBs, Excavators, Tippers & Rollers",
@@ -12,8 +13,11 @@ export const metadata: Metadata = {
 };
 
 /** CAT-13 plant hire. Quote-only until partner rate cards are in (PLANT_HIRE_CATALOGUE.md). */
-export default function PlantHirePage() {
+export const revalidate = 300;
+
+export default async function PlantHirePage() {
   const groups = plantByClass();
+  const coverage = await getHireCoverage();
   return (
     <div>
       <section className="bg-basalt text-limestone">
@@ -44,7 +48,7 @@ export default function PlantHirePage() {
           every request gets a written quote from us.
         </div>
 
-        <h2 className="mt-12 font-display text-2xl font-bold text-basalt">How it works</h2>
+        <div className="flex flex-wrap items-end justify-between gap-3"><h2 className="mt-12 font-display text-2xl font-bold text-basalt">How it works</h2><Link href="/plant-hire/how-it-works" className="font-body text-sm font-semibold text-seam-blue hover:underline">The full step-by-step →</Link></div>
         <div className="mt-5">
           <HireHowItWorks />
         </div>
@@ -61,6 +65,19 @@ export default function PlantHirePage() {
             </section>
           ))}
         </div>
+
+        {coverage.length > 0 && (
+          <section className="mt-14">
+            <h2 className="font-display text-xl font-bold text-basalt">Where our partners are active</h2>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {coverage.map((c) => (
+                <Link key={c.province} href={`/plant-hire/areas/${provinceSlug(c.province)}`} className="rounded-sm border border-basalt/15 bg-white px-3 py-1.5 font-body text-sm text-basalt hover:border-seam-blue">
+                  {c.province}
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
 
         <section className="mt-14 grid gap-6 md:grid-cols-3">
           <div className="rounded-sm border border-basalt/10 bg-white p-5">

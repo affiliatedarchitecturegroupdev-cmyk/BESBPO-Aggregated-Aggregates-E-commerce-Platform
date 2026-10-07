@@ -1108,6 +1108,9 @@ model HirePartner {
   latitude               Float? // staff pin from a map, never guessed
   longitude              Float?
   payoutDetailsConfirmed Boolean            @default(false) // bank confirmation letter on file
+  termsVersion           String? // Partner Terms version accepted in the portal (content/legal/partner-terms.md)
+  termsAcceptedAt        DateTime?
+  termsAcceptedById      String?
   notes                  String?
   createdAt              DateTime           @default(now())
   updatedAt              DateTime           @updatedAt
@@ -1201,6 +1204,7 @@ model Booking {
   arrivalOtpHash     String? // sha256 of the 6-digit arrival code; the code itself is never stored
   otpFailures        Int              @default(0)
   paymentReference   String?
+  termsVersion       String? // Plant Hire & Site Services Terms version the customer accepted with the quote
   customerRating     Int?
   cancelledReason    String?
   acceptedAt         DateTime?

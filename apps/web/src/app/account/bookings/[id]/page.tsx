@@ -67,15 +67,28 @@ export default async function BookingPage({ params }: { params: { id: string } }
           </section>
 
           {b.status === "QUOTED" && (
-            <section className={`${panel} flex flex-wrap items-center gap-3`}>
-              <ActionForm action={acceptBookingQuote} className="contents">
+            <section className={panel}>
+              <ActionForm action={acceptBookingQuote} className="space-y-3">
                 <input type="hidden" name="id" value={b.id} />
+                <label className="flex items-start gap-2 font-body text-sm text-basalt">
+                  <input type="checkbox" name="acceptTerms" required className="mt-0.5 h-4 w-4 shrink-0" />
+                  <span>
+                    I agree to the{" "}
+                    <Link href="/legal/hire-terms" target="_blank" className="text-seam-blue underline">
+                      Plant Hire &amp; Site Services Terms
+                    </Link>
+                    , including the arrival code, sign-off and 48-hour dispute window.
+                  </span>
+                </label>
                 <SubmitButton>Accept quote — {formatZAR(Number(b.customerTotal))}</SubmitButton>
               </ActionForm>
-              <ActionForm action={declineBookingQuote} className="contents">
+              <ActionForm action={declineBookingQuote} className="mt-3">
                 <input type="hidden" name="id" value={b.id} />
                 <SubmitButton variant="subtle">Decline</SubmitButton>
               </ActionForm>
+              <p className="mt-3 font-body text-xs text-slate">
+                New to hire bookings? <Link href="/plant-hire/how-it-works" className="text-seam-blue hover:underline">See how it works</Link>.
+              </p>
             </section>
           )}
 

@@ -8,6 +8,7 @@ import { redactContactDetails } from "../common/redact";
 import { NotificationsService } from "../notifications/notifications.service";
 import { PricingService } from "../pricing/pricing.service";
 import type { ConfirmPaymentDto, CreateBookingDto, JobCardDto, ResolveDisputeDto } from "./bookings.dto";
+import { HIRE_TERMS_VERSION, PARTNER_TERMS_VERSION } from "./terms";
 import {
   chatOpen,
   customerTotal,
@@ -301,6 +302,7 @@ export class BookingsService {
       status: b.status,
       cancelledReason: b.cancelledReason,
       customerRating: b.customerRating,
+      termsVersion: b.termsVersion,
       paidAt: b.paidAt,
       completedAt: b.completedAt,
       disputeWindowEndsAt: b.payout?.releaseAfter ?? null,
@@ -314,13 +316,14 @@ export class BookingsService {
     };
   }
 
-  async acceptQuote(id: string, user: AuthUser) {
+  async acceptQuote(id: string, user: AuthUser, acceptTerms: boolean) {
+    if (!acceptTerms) throw new BadRequestException("Please agree to the Plant Hire & Site Services Terms to accept this quote.");
     const b = await this.owned(id, user);
     if (b.status !== "QUOTED") throw new BadRequestException("This quote is no longer open.");
     if (b.quoteValidUntil && b.quoteValidUntil.getTime() + 86_400_000 <= Date.now()) {
       throw new BadRequestException("This quote has expired — reply to our email and we'll re-confirm the price with the partner.");
     }
-    await this.prisma.booking.updateMany({ where: { id, status: "QUOTED" }, data: { status: "AWAITING_PAYMENT", acceptedAt: new Date() } });
+    await this.prisma.booking.updateMany({ where: { id, status: "QUOTED" }, data: { status: "AWAITING_PAYMENT", acceptedAt: new Date(), termsVersion: HIRE_TERMS_VERSION } });
     return this.customerView(id, user);
   }
 
@@ -381,6 +384,8 @@ export class BookingsService {
           province: true,
           status: true,
           payoutDetailsConfirmed: true,
+          termsVersion: true,
+          termsAcceptedAt: true,
           fleet: { orderBy: { createdAt: "asc" }, include: { availability: { where: { endsOn: { gte: new Date(now.toISOString().slice(0, 10)) } }, orderBy: { startsOn: "asc" } } } },
         },
       }),
@@ -401,7 +406,17 @@ export class BookingsService {
         select: { id: true, amount: true, status: true, releaseAfter: true, paidAt: true, paidReference: true, booking: { select: { reference: true, itemName: true } } },
       }),
     ]);
-    return { partner, offers, jobs, payouts };
+    return { partner, offers, jobs, payouts, currentTermsVersion: PARTNER_TERMS_VERSION, termsCurrent: partner.termsVersion === PARTNER_TERMS_VERSION };
+  }
+
+  /** A partner login accepts the current Partner Terms for its partner. */
+  async acceptPartnerTerms(user: AuthUser) {
+    const partnerId = await this.partnerIdOf(user);
+    await this.prisma.hirePartner.update({
+      where: { id: partnerId },
+      data: { termsVersion: PARTNER_TERMS_VERSION, termsAcceptedAt: new Date(), termsAcceptedById: user.id },
+    });
+    return this.portal(user);
   }
 
   async respondToOffer(offerId: string, user: AuthUser, accept: boolean) {
@@ -417,6 +432,8 @@ export class BookingsService {
       if (declined.count) await this.dispatch(offer.bookingId);
       return { status: "DECLINED" as const };
     }
+    const terms = await this.prisma.hirePartner.findUnique({ where: { id: partnerId }, select: { termsVersion: true } });
+    if (terms?.termsVersion !== PARTNER_TERMS_VERSION) throw new ForbiddenException("Please accept the current Partner Terms in the portal before accepting a job.");
     const unit = await this.freeUnit(partnerId, offer.booking);
     if (!unit) throw new ConflictException("None of your active fleet for this job is free on these dates. Decline the offer, or free up a unit first.");
     // Conditional updates so a late sweep or a second click can't double-assign.

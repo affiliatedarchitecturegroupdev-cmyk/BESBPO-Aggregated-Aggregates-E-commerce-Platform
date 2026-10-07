@@ -1637,6 +1637,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
         partnerIds[key] = partner.body.id;
         await http().post(`/bookings/admin/partners/${partner.body.id}/users`).set(auth(staff)).send({ email: `${tag}-p${key}-${run}@example.com` }).expect(201);
         await http().post(`/bookings/admin/partners/${partner.body.id}/fleet`).set(auth(staff)).send({ sku: "AA-PLT-EXC-20T", label: "CAT 320", province: "Gauteng" }).expect(201);
+        if (key !== "c") await http().post("/partner-portal/terms").set(auth(partnerTokens[key])).expect(200);
       }
     });
 
@@ -1699,7 +1700,9 @@ describe("Aggregated Aggregates API (e2e)", () => {
     });
 
     it("waits for the EFT, then offers the quoting partner first and cascades on decline and expiry", async () => {
-      const accepted = await http().post(`/bookings/${bookingId}/accept`).set(auth(customer)).expect(201);
+      await http().post(`/bookings/${bookingId}/accept`).set(auth(customer)).send({}).expect(400); // must agree to the hire terms
+      const accepted = await http().post(`/bookings/${bookingId}/accept`).set(auth(customer)).send({ acceptTerms: true }).expect(201);
+      expect((await prisma.booking.findUniqueOrThrow({ where: { id: bookingId } })).termsVersion).toBe("2026-10-07");
       expect(accepted.body.status).toBe("AWAITING_PAYMENT");
       expect(accepted.body.payment.reference).toBe(accepted.body.reference);
       await http().post(`/bookings/admin/${bookingId}/payment`).set(auth(staff)).send({ paymentReference: "EFT 0042" }).expect(201);
@@ -1735,6 +1738,9 @@ describe("Aggregated Aggregates API (e2e)", () => {
       await http().patch(`/bookings/admin/partners/${partnerIds.c}`).set(auth(staff)).send({ name: `${tag} Plant C`, province: "Gauteng", contactEmail: `${tag}-opsc@example.com`, status: "ACTIVE" }).expect(200);
       await http().post(`/bookings/admin/${bookingId}/redispatch`).set(auth(staff)).expect(201);
       const toC = await prisma.dispatchOffer.findFirstOrThrow({ where: { bookingId, partnerId: partnerIds.c } });
+      await http().post(`/partner-portal/offers/${toC.id}/accept`).set(auth(partnerTokens.c)).expect(403); // Partner Terms not yet accepted
+      const terms = await http().post("/partner-portal/terms").set(auth(partnerTokens.c)).expect(200);
+      expect(terms.body).toMatchObject({ termsCurrent: true, currentTermsVersion: "2026-10-07" });
       await http().post(`/partner-portal/offers/${toC.id}/accept`).set(auth(partnerTokens.c)).expect(200);
       await http().post(`/partner-portal/offers/${toC.id}/accept`).set(auth(partnerTokens.c)).expect(409);
 
@@ -1823,7 +1829,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
       // A second job for C on new dates runs straight through.
       const created = await quote({ startDate: day(20), endDate: day(20), quantity: 1, partnerAmount: 5000, preferredPartnerId: partnerIds.c }).expect(201);
       const id = created.body.id;
-      await http().post(`/bookings/${id}/accept`).set(auth(customer)).expect(201);
+      await http().post(`/bookings/${id}/accept`).set(auth(customer)).send({ acceptTerms: true }).expect(201);
       await http().post(`/bookings/admin/${id}/payment`).set(auth(staff)).send({ paymentReference: "EFT 0043" }).expect(201);
       const offer = await prisma.dispatchOffer.findFirstOrThrow({ where: { bookingId: id, status: "PENDING" } });
       expect(offer.partnerId).toBe(partnerIds.c);
@@ -1842,7 +1848,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
       await http().post(`/partner-portal/fleet/${unit.id}/blocks`).set(auth(partnerTokens.b)).send({ startsOn: day(40), endsOn: day(41) }).expect(404);
       const block = await http().post(`/partner-portal/fleet/${unit.id}/blocks`).set(auth(partnerTokens.a)).send({ startsOn: day(40), endsOn: day(41), reason: "Service" }).expect(201);
       const third = await quote({ startDate: day(41), endDate: day(42), preferredPartnerId: partnerIds.a }).expect(201);
-      await http().post(`/bookings/${third.body.id}/accept`).set(auth(customer)).expect(201);
+      await http().post(`/bookings/${third.body.id}/accept`).set(auth(customer)).send({ acceptTerms: true }).expect(201);
       await http().post(`/bookings/admin/${third.body.id}/payment`).set(auth(staff)).send({ paymentReference: "EFT 0044" }).expect(201);
       const firstOffer = await prisma.dispatchOffer.findFirstOrThrow({ where: { bookingId: third.body.id } });
       expect(firstOffer.partnerId).not.toBe(partnerIds.a);
@@ -1855,6 +1861,12 @@ describe("Aggregated Aggregates API (e2e)", () => {
 
       await http().patch(`/bookings/admin/partners/${partnerIds.a}`).set(auth(staff)).send({ name: `${tag} Plant A`, province: "Gauteng", contactEmail: `${tag}-opsa@example.com`, status: "SUSPENDED" }).expect(200);
       await http().get("/partner-portal").set(auth(partnerTokens.a)).expect(403);
+
+      // Public coverage lists provinces and SKUs only — never partners.
+      const coverage = await http().get("/hire-coverage").expect(200);
+      const gauteng = coverage.body.find((c: { province: string }) => c.province === "Gauteng");
+      expect(gauteng.skus).toContain("AA-PLT-EXC-20T");
+      expect(JSON.stringify(coverage.body)).not.toMatch(new RegExp(`${tag}|@example|011 555`));
     });
   });
 });

@@ -16,6 +16,13 @@ async function post(path: string, body: unknown = {}) {
   return api<{ status?: string; bookingId?: string }>(`/partner-portal${path}`, { method: "POST", token: sessionToken(), body });
 }
 
+export async function acceptPartnerTerms(_prev: FormState, form: FormData): Promise<FormState> {
+  if (form.get("accept") !== "on") return { error: "Please tick the box to accept the Partner Terms." };
+  const result = await post("/terms");
+  revalidatePath("/partners/portal");
+  return result.ok ? { success: "Thank you — you can now accept job offers." } : { error: result.message };
+}
+
 export async function respondToOffer(_prev: FormState, form: FormData): Promise<FormState> {
   const accept = text(form, "decision") === "accept";
   const result = await post(`/offers/${encodeURIComponent(text(form, "id"))}/${accept ? "accept" : "decline"}`);

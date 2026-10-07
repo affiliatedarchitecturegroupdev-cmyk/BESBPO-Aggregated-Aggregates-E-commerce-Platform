@@ -130,6 +130,20 @@ stopped (Admin → Hire bookings → Review flags → Scan). Flags are prompts
 for a conversation, never automatic penalties. Staff messages aren't
 redacted (e.g. to share a gate code on request).
 
+**Terms.** Customers must agree to the Plant Hire & Site Services Terms
+(`/legal/hire-terms`) to accept a quote, and partners must accept the
+Partner Terms (`/legal/partner-terms`) in the portal before accepting any
+offer; the accepted versions are stored (`apps/api/src/bookings/terms.ts`).
+Both are drafts awaiting attorney review — `content/legal/README.md`.
+
+**Public pages.** `/plant-hire/how-it-works` (walk-through + FAQs, also on
+`/faq`), `/plant-hire/safety` (vetting and site responsibilities),
+`/partners/onboarding` (documents, rate-card template download at
+`/downloads/partner-rate-card-template.csv`, portal, payouts) and
+`/plant-hire/areas/[province]` — published **only** for provinces with an
+active partner and active fleet (`GET /hire-coverage`, provinces and SKUs
+only, no partner details); other provinces 404 and stay out of the sitemap.
+
 **Partners.** Staff add partners in Admin → Hire partners (contact details
 staff-only), set them ACTIVE, record their fleet per province, and link the
 account they registered on the site as a portal login (role `PARTNER`). The

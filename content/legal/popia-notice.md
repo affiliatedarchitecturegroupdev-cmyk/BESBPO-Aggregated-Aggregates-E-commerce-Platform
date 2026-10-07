@@ -1,6 +1,6 @@
 # POPIA Notice (Notice of Processing of Personal Information)
 
-_Last updated: 26 September 2026_
+_Last updated: 7 October 2026_
 
 This notice is provided in terms of Section 18 of the Protection of
 Personal Information Act 4 of 2013 ("POPIA"). It supplements, and should be
@@ -21,23 +21,34 @@ are lodged with the Information Regulator of South Africa.
 ## 3. Purpose of collection
 
 Personal information is collected directly from you when you: register an
-account or trade account; place an order or request a quote; contact us;
-or browse the Platform (via cookies — see our
+account or trade account; place an order or request a quote; send a plant
+hire, site service or other enquiry; accept and use a booking (including
+booking messages); apply to become a partner or use the partner portal;
+apply for a job; subscribe to our newsletter; contact us; or browse the
+Platform (via cookies — see our
 [Cookie Policy](/legal/cookie-policy)). It is used strictly for the
-purposes set out in our Privacy Policy, principally to fulfil orders,
-administer trade accounts, and comply with legal and tax obligations.
+purposes set out in our Privacy Policy, principally to fulfil orders and
+bookings, administer trade and partner accounts, and comply with legal and
+tax obligations. Booking messages are checked automatically for contact
+details and may be reviewed by our staff, as described in Section 5A of
+our Privacy Policy.
 
 ## 4. Source of information
 
 In most cases, personal information is collected directly from you. Where
-you sign in via Google or Microsoft, we receive your name and email
-address from that provider with your consent.
+you sign in with Google, Microsoft, X, Facebook or Instagram, we receive
+your name and email address (where the provider shares it) from that
+provider with your consent. For a booking, the partner who does the work
+records job cards (hours, readings, loads and notes) about your job.
 
 ## 5. Recipients of information
 
 Personal information may be shared with our approved partner-supplier
 network, delivery partners (Besfleet and external tipper-truck partners),
-payment processors, and Besbpo Group entities for VAT invoicing purposes —
+plant hire and site service partners (the job details and your first name
+only — never your contact details), payment processors, our email and
+WhatsApp messaging providers, and Besbpo Group entities for VAT invoicing
+purposes —
 see Section 5 of our Privacy Policy for the full list.
 
 ## 6. Cross-border transfers
