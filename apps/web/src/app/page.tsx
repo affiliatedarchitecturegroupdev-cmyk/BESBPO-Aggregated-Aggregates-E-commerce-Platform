@@ -1,3 +1,5 @@
+import { BusinessLinesCarousel } from "@/components/merchandising/BusinessLinesCarousel";
+import { JobPacksSection, PartnerCta, PlantAndServicesSection } from "@/components/merchandising/BusinessSections";
 import { BulkVsBagged } from "@/components/merchandising/BulkVsBagged";
 import { B2BBulkSection } from "@/components/merchandising/B2BBulkSection";
 import { CategoryGrid } from "@/components/merchandising/CategoryGrid";
@@ -43,6 +45,9 @@ export default async function HomePage() {
       <CategoryGrid />
       <BulkVsBagged />
       <FeaturedProducts />
+      <BusinessLinesCarousel />
+      <PlantAndServicesSection />
+      <JobPacksSection />
       {promotions.HOMEPAGE_SECONDARY_BANNER && (
         <section className="mx-auto max-w-6xl px-4 pb-4">
           <PromoSlot promotion={promotions.HOMEPAGE_SECONDARY_BANNER} />
@@ -54,6 +59,7 @@ export default async function HomePage() {
       <B2BBulkSection />
       <QuarryToSite partnerSuppliers={partnerSuppliers} />
       <TierComparison />
+      <PartnerCta />
       <CoverageStrip coverage={coverage} />
       <WhatsAppCta />
       <PromoStrip content={content.promo} />

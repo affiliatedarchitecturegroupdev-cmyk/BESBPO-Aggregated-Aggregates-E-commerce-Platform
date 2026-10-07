@@ -55,6 +55,21 @@ export type CompanyData = {
   reviewNotes: string | null;
 };
 
+export type EnquiryData = {
+  id: string;
+  reference: string;
+  kindLabel: string;
+  subject: string;
+  contactName: string;
+  contactEmail: string;
+  contactPhone: string | null;
+  companyName: string | null;
+  province: string | null;
+  siteAddress: string | null;
+  message: string | null;
+  details: [string, string][];
+};
+
 export type EmailMessage = { subject: string; text: string; html: string };
 export type WhatsAppMessage = { templateName: string; params: string[]; text: string };
 
@@ -276,6 +291,37 @@ export function staffCompanyEmail(event: NotificationEvent, c: CompanyData): Ema
   ]);
 }
 
+export function customerEnquiryEmail(event: NotificationEvent, e: EnquiryData): EmailMessage | null {
+  if (event !== "ENQUIRY_RECEIVED") return null;
+  return email(`We've received your request ${e.reference}`, [
+    { kind: "p", text: greeting(e.contactName) },
+    { kind: "p", text: `Thanks — we've logged your ${e.kindLabel.toLowerCase()} request "${e.subject}" as ${e.reference}. Our team will come back to you with availability and a written quote. Nothing is booked or charged until you accept that quote.` },
+    ...(e.details.length ? [{ kind: "rows" as const, rows: e.details }] : []),
+    { kind: "p", text: `Reply to this email quoting ${e.reference} if anything changes.` },
+  ]);
+}
+
+export function staffEnquiryEmail(event: NotificationEvent, e: EnquiryData): EmailMessage | null {
+  if (event !== "ENQUIRY_RECEIVED") return null;
+  const who = e.companyName ?? e.contactName;
+  return email(`New ${e.kindLabel.toLowerCase()} enquiry ${e.reference} — ${who}`, [
+    { kind: "p", text: `${who} sent a ${e.kindLabel.toLowerCase()} enquiry: ${e.subject}.` },
+    {
+      kind: "rows",
+      rows: [
+        ["Contact", e.contactName],
+        ["Email", e.contactEmail],
+        ...(e.contactPhone ? ([["Phone", e.contactPhone]] as [string, string][]) : []),
+        ...(e.province ? ([["Province", e.province]] as [string, string][]) : []),
+        ...(e.siteAddress ? ([["Site", e.siteAddress]] as [string, string][]) : []),
+        ...e.details,
+      ],
+    },
+    ...(e.message ? [{ kind: "p" as const, text: `Message: ${e.message}` }] : []),
+    { kind: "cta", label: "Open the enquiry", href: `${siteUrl()}/admin/enquiries` },
+  ]);
+}
+
 // ---------------------------------------------------------------------------
 // WhatsApp (customer only, opt-in, template messages)
 // ---------------------------------------------------------------------------
@@ -332,6 +378,7 @@ export const EVENT_CHANNELS: Record<NotificationEvent, { customerEmail: boolean;
   TRADE_APPLICATION_RECEIVED: { customerEmail: true, customerWhatsApp: false, staffEmail: true },
   TRADE_APPLICATION_APPROVED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
   TRADE_APPLICATION_DECLINED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
+  ENQUIRY_RECEIVED: { customerEmail: true, customerWhatsApp: false, staffEmail: true },
 };
 
 export const EVENT_LABEL: Record<NotificationEvent, string> = {
@@ -347,6 +394,7 @@ export const EVENT_LABEL: Record<NotificationEvent, string> = {
   TRADE_APPLICATION_RECEIVED: "Trade application received",
   TRADE_APPLICATION_APPROVED: "Trade application approved",
   TRADE_APPLICATION_DECLINED: "Trade application declined",
+  ENQUIRY_RECEIVED: "Hire, service or partner enquiry received",
 };
 
 /** A South African or international number in the digits-only form WhatsApp expects, or null. */

@@ -1,6 +1,7 @@
 import { NotificationEvent } from "@aggregates/database";
 import {
   customerCompanyEmail,
+  customerEnquiryEmail,
   customerOrderEmail,
   customerOrderWhatsApp,
   customerQuoteEmail,
@@ -8,11 +9,13 @@ import {
   EVENT_CHANNELS,
   formatZAR,
   staffCompanyEmail,
+  staffEnquiryEmail,
   staffOrderEmail,
   staffQuoteEmail,
   whatsappNumber,
   WHATSAPP_TEMPLATES,
   type CompanyData,
+  type EnquiryData,
   type OrderData,
   type QuoteData,
 } from "./notification-templates";
@@ -56,6 +59,21 @@ const company: CompanyData = {
   tierLabel: "Contractor/Trade",
   requestedTierLabel: "Contractor/Trade",
   reviewNotes: null,
+};
+
+const enquiry: EnquiryData = {
+  id: "e_1",
+  reference: "ENQ-261008-A1B2C3",
+  kindLabel: "Plant hire",
+  subject: "20t excavator — wet hire",
+  contactName: "Thandi Mokoena",
+  contactEmail: "thandi@example.com",
+  contactPhone: "082 123 4567",
+  companyName: null,
+  province: "Gauteng",
+  siteAddress: "Midrand",
+  message: "Trenching for 3 days",
+  details: [["Basis", "Daily"], ["Quantity", "3"]],
 };
 
 describe("notification templates", () => {
@@ -104,13 +122,24 @@ describe("notification templates", () => {
   it("has a message for every channel an event is allowed to use", () => {
     for (const event of Object.values(NotificationEvent)) {
       const channels = EVENT_CHANNELS[event];
-      const customerEmail = customerOrderEmail(event, order) ?? customerQuoteEmail(event, quote) ?? customerCompanyEmail(event, company);
+      const customerEmail = customerOrderEmail(event, order) ?? customerQuoteEmail(event, quote) ?? customerCompanyEmail(event, company) ?? customerEnquiryEmail(event, enquiry);
       const customerWhatsApp = customerOrderWhatsApp(event, order) ?? customerQuoteWhatsApp(event, quote);
-      const staffEmail = staffOrderEmail(event, order) ?? staffQuoteEmail(event, quote) ?? staffCompanyEmail(event, company);
+      const staffEmail = staffOrderEmail(event, order) ?? staffQuoteEmail(event, quote) ?? staffCompanyEmail(event, company) ?? staffEnquiryEmail(event, enquiry);
       expect([event, customerEmail !== null]).toEqual([event, channels.customerEmail]);
       expect([event, customerWhatsApp !== null]).toEqual([event, channels.customerWhatsApp]);
       expect([event, staffEmail !== null]).toEqual([event, channels.staffEmail]);
     }
+  });
+
+  it("acknowledges an enquiry without promising a booking or price", () => {
+    const customer = customerEnquiryEmail("ENQUIRY_RECEIVED", enquiry)!;
+    expect(customer.subject).toBe("We've received your request ENQ-261008-A1B2C3");
+    expect(customer.text).toContain("Nothing is booked or charged until you accept");
+    expect(customer.text).not.toMatch(/R\d/);
+    const staff = staffEnquiryEmail("ENQUIRY_RECEIVED", enquiry)!;
+    expect(staff.subject).toBe("New plant hire enquiry ENQ-261008-A1B2C3 — Thandi Mokoena");
+    expect(staff.text).toContain("/admin/enquiries");
+    expect(staff.text).toContain("Basis: Daily");
   });
 
   it("gives staff the quote-only reason and a link to the admin", () => {

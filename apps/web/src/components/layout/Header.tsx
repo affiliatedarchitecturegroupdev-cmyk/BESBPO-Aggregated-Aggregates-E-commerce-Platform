@@ -11,7 +11,7 @@ export function Header() {
         <Link href="/" aria-label="Aggregated Aggregates — home">
           <Logo />
         </Link>
-        <nav className="hidden gap-6 font-body text-sm text-basalt lg:flex" aria-label="Main">
+        <nav className="hidden gap-4 whitespace-nowrap font-body text-sm text-basalt lg:flex xl:gap-5" aria-label="Main">
           {NAV_LINKS.map((link) => (
             <Link key={link.href} href={link.href} className="hover:text-seam-blue">
               {link.label}
@@ -25,10 +25,10 @@ export function Header() {
             name="q"
             type="search"
             placeholder="Search materials…"
-            className="w-44 rounded-sm border border-basalt/20 bg-white px-3 py-2 font-body text-sm"
+            className="w-36 rounded-sm border border-basalt/20 bg-white px-3 py-2 font-body text-sm"
           />
         </form>
-        <div className="hidden items-center gap-3 sm:flex">
+        <div className="hidden items-center gap-3 whitespace-nowrap sm:flex">
           <CartLink className="px-2 py-2 text-basalt hover:text-seam-blue" />
           <Link
             href="/quote"

@@ -32,7 +32,7 @@ export async function Footer() {
       )}
       <NewsletterSignup />
       <div className="border-t border-basalt/10 bg-basalt text-limestone">
-        <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           <div>
             <Logo inverted />
             <p className="mt-4 font-body text-sm text-limestone/70">Every Layer Starts Here.</p>
@@ -78,6 +78,15 @@ export async function Footer() {
             <li><Link href="/products?group=b2b-bulk">Cement & Admixtures</Link></li>
             <li><Link href="/products?category=ready-mix-concrete">Ready-Mix Concrete</Link></li>
             <li><Link href="/products">All products</Link></li>
+          </FooterColumn>
+          <FooterColumn title="Hire & Services">
+            <li><Link href="/plant-hire">Plant Hire</Link></li>
+            <li><Link href="/services">Site Services</Link></li>
+            <li><Link href="/job-packs">Job Packs</Link></li>
+            <li><Link href="/estimator">Project Estimator</Link></li>
+            <li><Link href="/recycled">Recycled Aggregate Loop</Link></li>
+            <li><Link href="/testing">Cube & Compaction Testing</Link></li>
+            <li><Link href="/partners">Become a Partner</Link></li>
           </FooterColumn>
           <FooterColumn title="Buy">
             <li><Link href="/quote">Request a Quote</Link></li>

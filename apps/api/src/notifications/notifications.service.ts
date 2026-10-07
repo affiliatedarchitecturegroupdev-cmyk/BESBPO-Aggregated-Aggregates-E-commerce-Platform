@@ -3,6 +3,7 @@ import { NotificationAudience, NotificationChannel, NotificationEvent, Notificat
 import { PrismaService } from "../common/prisma.service";
 import {
   customerCompanyEmail,
+  customerEnquiryEmail,
   customerOrderEmail,
   customerOrderWhatsApp,
   customerQuoteEmail,
@@ -10,11 +11,13 @@ import {
   EVENT_CHANNELS,
   EVENT_LABEL,
   staffCompanyEmail,
+  staffEnquiryEmail,
   staffOrderEmail,
   staffQuoteEmail,
   whatsappNumber,
   type CompanyData,
   type EmailMessage,
+  type EnquiryData,
   type OrderData,
   type QuoteData,
   type WhatsAppMessage,
@@ -29,13 +32,22 @@ type Outgoing = {
   email?: EmailMessage;
   whatsapp?: WhatsAppMessage;
 };
-type Links = { orderId?: string; quoteId?: string; companyId?: string };
+type Links = { orderId?: string; quoteId?: string; companyId?: string; enquiryId?: string };
+
+const ENQUIRY_KIND_LABEL: Record<string, string> = {
+  PLANT_HIRE: "Plant hire",
+  SITE_SERVICE: "Site service",
+  BUSINESS_LINE: "Supply",
+  JOB_PACK: "Job pack",
+  ESTIMATE: "Project estimate",
+  PARTNER_APPLICATION: "Partner application",
+};
 
 const TIER_LABEL: Record<string, string> = { RETAIL: "Retail", CONTRACTOR_TRADE: "Contractor/Trade", VOLUME_CIVIL_BULK: "Volume/Civil Bulk" };
 const EMAIL_PATTERN = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/;
 
 /**
- * Transactional notifications. Services call `order`, `quote` or `company`
+ * Transactional notifications. Services call `order`, `quote`, `company` or `enquiry`
  * after a change is saved; this decides who hears about it on which channel
  * (EVENT_CHANNELS, narrowed by the admin settings and the customer's own
  * WhatsApp opt-in), records every message, then delivers in the background.
@@ -163,6 +175,35 @@ export class NotificationsService implements OnModuleDestroy {
       const staff = setting.staffEmail ? staffCompanyEmail(event, data) : null;
       if (staff) out.push(...(await this.staffRecipients()).map((recipient) => ({ audience: "STAFF" as const, channel: "EMAIL" as const, recipient, email: staff })));
       await this.enqueue(event, out, { companyId: company.id });
+    });
+  }
+
+  async enquiry(event: NotificationEvent, enquiryId: string) {
+    await this.safely(event, async () => {
+      const e = await this.prisma.enquiry.findUnique({ where: { id: enquiryId } });
+      if (!e) return;
+      const details = e.details && typeof e.details === "object" && !Array.isArray(e.details) ? (e.details as Record<string, unknown>) : {};
+      const data: EnquiryData = {
+        id: e.id,
+        reference: e.reference,
+        kindLabel: ENQUIRY_KIND_LABEL[e.kind] ?? "General",
+        subject: e.subject,
+        contactName: e.contactName,
+        contactEmail: e.contactEmail,
+        contactPhone: e.contactPhone,
+        companyName: e.companyName,
+        province: e.province,
+        siteAddress: e.siteAddress,
+        message: e.message,
+        details: Object.entries(details).map(([k, v]) => [k, String(v)] as [string, string]),
+      };
+      const setting = await this.setting(event);
+      const out: Outgoing[] = [];
+      const customer = setting.customerEmail ? customerEnquiryEmail(event, data) : null;
+      if (customer && EMAIL_PATTERN.test(e.contactEmail)) out.push({ audience: "CUSTOMER", channel: "EMAIL", recipient: e.contactEmail, email: customer });
+      const staff = setting.staffEmail ? staffEnquiryEmail(event, data) : null;
+      if (staff) out.push(...(await this.staffRecipients()).map((recipient) => ({ audience: "STAFF" as const, channel: "EMAIL" as const, recipient, email: staff })));
+      await this.enqueue(event, out, { enquiryId: e.id });
     });
   }
 
