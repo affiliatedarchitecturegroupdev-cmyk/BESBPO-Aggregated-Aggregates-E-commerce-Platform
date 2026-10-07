@@ -13,7 +13,7 @@ import { join } from "path";
 import { PrismaClient } from "@aggregates/database";
 import { parseSupplierCsv, SERVICE_PROVINCES } from "./supplier-csv";
 
-const FILES = ["suppliers-aggregates.csv", "suppliers-b2b-bulk.csv"];
+const FILES = ["suppliers-aggregates.csv", "suppliers-b2b-bulk.csv", "suppliers-ready-mix.csv"];
 
 export async function seedSuppliers(prisma: PrismaClient, dir = join(__dirname, "../../../../packages/database/prisma/seed-data")) {
   let created = 0;
@@ -35,6 +35,7 @@ export async function seedSuppliers(prisma: PrismaClient, dir = join(__dirname, 
         categorySlugs: row.categorySlugs,
         productNotes: row.productNotes,
         isVerifiedPartner: row.isVerifiedPartner,
+        isGroupEntity: row.isGroupEntity ?? false,
         sourceUrl: row.sourceUrl,
         // Verified partners go live in every province; researched leads wait for staff.
         isActive: row.isVerifiedPartner && SERVICE_PROVINCES.includes(row.province),

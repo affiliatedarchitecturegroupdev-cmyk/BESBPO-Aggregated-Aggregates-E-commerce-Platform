@@ -40,11 +40,19 @@ CAT-10 Cement & Hydraulic Binders (`cement-hydraulic-binders`) and CAT-11
 Mortars, Grouts & Admixtures (`mortars-grouts-admixtures`), catalogue group
 `b2b-bulk`.
 
-**Bucket 2 — new SKUs in existing categories: none.** The delivered B2B
-build proposed Silica Sand (Industrial Grade), Gabion Stone, Dump Rock /
-Selected Pioneer Layer, Pipe Bedding Sand and Filter Stone, but it was
-checked against a 9-product sample catalogue. Against the real workbook
-they are all Bucket 3.
+**Bucket 2 — new SKUs in existing categories (updated Oct 2026).** The
+first pass judged Dump Rock / Selected Pioneer Layer, Pipe Bedding Sand and
+Filter Stone to be covered by existing SKUs. The Oct 2026 plan
+(`aggregates-store-platform.zip`) approved them as distinct products, so they
+are now catalogued — priced by their category band (base cost × markup),
+exactly as the workbook prices every row, with no product-specific number
+invented (`services/pricing/data/additional_aggregates.json`):
+
+| Added | Category | SKU | Price basis |
+|---|---|---|---|
+| Dump Rock / Selected Pioneer Layer | Crushed Stone | AA-CRS-11 | crushed-stone band (R400.00/ton) |
+| Pipe Bedding Sand (SANS 1200 LB) | Sand & Fine Aggregates | AA-SND-08 | sand band (R358.40/ton) |
+| Filter Stone (19/26.5mm washed) | Drainage & Filter | AA-DRN-05 | drainage band (R390.00/ton) |
 
 **Bucket 3 — already covered, not added:**
 
@@ -52,15 +60,10 @@ they are all Bucket 3.
 |---|---|
 | Silica Sand (Industrial Grade) | AA-SND-07 Silica Sand |
 | Gabion Stone (100–250mm) | AA-CRR-04 Gabion Stone |
-| Filter Stone (19/26.5mm washed) | AA-DRN-02 Filter Media Aggregate |
-| Dump Rock / Selected Pioneer Layer | AA-CRR-03 Rip Rap / Rock Armour and AA-SBC-10 G10 Selected Fill (closest equivalents) |
 
-Pipe Bedding Sand (SANS 1200 LB) has no workbook price and no B2B benchmark,
-so it is **not** added (rule 1): bedding and filling sand (AA-SND-04,
-AA-CRS-10 crusher dust) cover the application until a benchmark exists.
-
-Catalogue after the expansion: **48 + 7 = 55 products**, **9 + 2 = 11
-categories**.
+Catalogue after the expansions: **51 aggregates + 41 packaged products
+(37 cement — `CEMENT_MASTER_CATALOGUE.md` — and 4 mortar/grout/admixture)
++ 7 ready-mix grades (`READY_MIX_CATALOGUE.md`)**, in 12 categories.
 
 ## Pricing
 

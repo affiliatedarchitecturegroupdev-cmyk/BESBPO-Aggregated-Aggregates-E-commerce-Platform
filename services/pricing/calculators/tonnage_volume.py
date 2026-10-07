@@ -13,6 +13,7 @@ output reconciles with it to the cent (tests/test_reconcile_workbook.py):
     List Price (R/m3)  = List Price (R/ton) x Density / 1000   [Category Markup Bands!F]
     List Price (R/bag) = R/ton x Bag Premium x Bag Weight/1000 [Sample Priced Catalogue!J]
     Tier price         = List price x (1 - tier discount)      [Sample Priced Catalogue!K,L]
+                         never below cost x 1.03 (the floor, PRICING_POLICY.md — Oct 2026)
 
 Money is computed in Decimal and rounded half-up to the cent only at the
 unit-price step, the same as Excel's ROUND(x, 2).
@@ -22,6 +23,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from decimal import ROUND_HALF_UP, Decimal
 from typing import Literal, Optional
+
+from calculators.discount_floor import AGGREGATE, TierPrice, tier_price
 
 Unit = Literal["ton", "m3", "bag"]
 
@@ -84,8 +87,13 @@ def unrounded_list_price(product: ProductPricing, unit: Unit) -> Decimal:
 
 
 def unit_price(product: ProductPricing, unit: Unit, discount: Decimal = Decimal(0)) -> Decimal:
-    """Unit price in the given tier, rounded to the cent. `discount` is a fraction (0.08 = 8%)."""
+    """List price less a flat discount, rounded to the cent — the workbook's own formula (no floor)."""
     return to_cents(unrounded_list_price(product, unit) * (1 - discount))
+
+
+def tier_unit_price(product: ProductPricing, unit: Unit, tier: str) -> TierPrice:
+    """The customer's price in `tier`: the tier discount, capped by the margin floor."""
+    return tier_price(unrounded_list_price(product, unit), product.markup, AGGREGATE, tier)
 
 
 @dataclass
@@ -113,7 +121,7 @@ class LineResult:
             "equivalent_m3": float(round(self.equivalent_m3, 3)),
             "list_unit_price": float(self.list_unit_price),
             "unit_price": float(self.unit_price),
-            "discount_percent": float(self.discount * 100),
+            "discount_percent": float(round(self.discount * 100, 2)),
             "subtotal_before_discount": float(self.subtotal_before_discount),
             "total": float(self.total),
         }
@@ -123,7 +131,7 @@ def calculate(
     product: ProductPricing,
     quantity: Decimal,
     unit: Unit,
-    discount: Decimal = Decimal(0),
+    tier: str = "RETAIL",
 ) -> LineResult:
     """
     Price one line: the equivalent tons/m3 for the quantity, the unit price
@@ -153,7 +161,8 @@ def calculate(
         m3 = tons_to_m3(tons, density)
 
     list_price = unit_price(product, unit)
-    tier_price = unit_price(product, unit, discount)
+    priced = tier_unit_price(product, unit, tier)
+    discount = priced.discount
 
     return LineResult(
         sku=product.sku,
@@ -164,8 +173,8 @@ def calculate(
         equivalent_m3=m3,
         bagged_kg=bagged_kg,
         list_unit_price=list_price,
-        unit_price=tier_price,
+        unit_price=priced.unit_price,
         discount=discount,
         subtotal_before_discount=to_cents(quantity * list_price),
-        total=to_cents(quantity * tier_price),
+        total=to_cents(quantity * priced.unit_price),
     )

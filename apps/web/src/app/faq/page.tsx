@@ -24,7 +24,7 @@ const FAQS: { question: string; answer: string }[] = [
   },
   {
     question: "What are the Retail, Contractor/Trade and Volume/Civil Bulk tiers?",
-    answer: `Retail is standard list pricing. Contractor/Trade is an approved trade account with ${pct("CONTRACTOR_TRADE")}% off list. Volume/Civil Bulk gets ${pct("VOLUME_CIVIL_BULK")}% off with purchase-order invoicing; its orders of 10m³ or more are quoted with delivered pricing rather than priced online.`,
+    answer: `Retail is standard list pricing. Contractor/Trade is an approved trade account: ${pct("CONTRACTOR_TRADE")}% off aggregates, 4% off bagged cement and 2% off ready-mix. Volume/Civil Bulk gets up to ${pct("VOLUME_CIVIL_BULK")}% off aggregates with purchase-order invoicing; its cement and ready-mix, and any order of 10m³ or more, are quoted with delivered pricing rather than priced online. No discount ever takes a price below our minimum margin, so on low-margin materials the saving can be a little smaller.`,
   },
   {
     question: "Why do some products say “Price on request”?",

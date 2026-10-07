@@ -112,7 +112,7 @@ export function QuickTonnageCalculator({ hiddenSkus = [] }: { hiddenSkus?: strin
         {result && (
           <p className="mt-2 font-body text-xs text-slate">
             ≈ {result.line.tons.toFixed(2)} tons ⇄ {result.line.m3.toFixed(2)} m³ at retail list price. Distance is
-            measured from the nearest approved partner supplier; trade accounts save 8–15%.
+            measured from the nearest approved partner supplier; trade accounts save up to 8–15%.
           </p>
         )}
       </div>

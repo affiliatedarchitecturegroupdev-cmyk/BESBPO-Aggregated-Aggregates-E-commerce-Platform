@@ -1,247 +1,1991 @@
 {
-  "_source": "Aggregated_Aggregates_B2B_Bulk_Infrastructure_Pricing.xlsx — 'Category Markup Bands' sheet (September 2026), as transcribed in the delivered B2B build. Where a unit has no real benchmark its price is null and pricing_status says why; never fill one in without a supplier quote (AGENTIC_RULES.md rules 1 and 10).",
-  "unit_weights_kg": {
-    "BAG_25KG": 25,
-    "BAG_50KG": 50
+ "_source": "Aggregated_Aggregates_B2B_Bulk_Infrastructure_Pricing.xlsx (Sep 2026) for the original CAT-10/11 records, plus the Cement Master Catalogue (Oct 2026, CEMENT_MASTER_CATALOGUE.md): bagged cement is live only where >=2 retailers' regular (non-promo) prices were found — list = lowest x 1.08. Where a unit has no real benchmark its price is null and pricing_status says why; never fill one in without a supplier quote (AGENTIC_RULES.md rules 1 and 10).",
+ "unit_weights_kg": {
+  "BAG_25KG": 25,
+  "BAG_50KG": 50
+ },
+ "categories": [
+  {
+   "slug": "cement-hydraulic-binders",
+   "name": "Cement & Hydraulic Binders",
+   "code": "CAT-10"
   },
-  "categories": [
+  {
+   "slug": "mortars-grouts-admixtures",
+   "name": "Mortars, Grouts & Admixtures",
+   "code": "CAT-11"
+  }
+ ],
+ "products": [
+  {
+   "sku": "AA-CEM-425N-001",
+   "slug": "bulk-cement-42-5n",
+   "name": "Bulk Cement 42.5N",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 42.5N)",
+   "manufacturer": "PPC Ltd",
+   "brand": "PPC",
+   "cement_family": "General Purpose Cement",
+   "cement_class": "42,5N",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "General structural concrete",
+    "Brickwork and blockwork mortar",
+    "Precast concrete products"
+   ],
+   "handling_notes": "Store off the ground on pallets, under cover, away from moisture. Best used within 3 months of the manufacture date stamped on the bag.",
+   "units": [
     {
-      "slug": "cement-hydraulic-binders",
-      "name": "Cement & Hydraulic Binders",
-      "code": "CAT-10"
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": 126.0,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 126.0,
+     "markup_percent": 8,
+     "list_price_per_unit": 136.08,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Chamberlains R126.00 (collection) is lowest; Leroy Merlin R128.00, Cashbuild Upington R147.85, Buildmate R151.00. PPC SureBuild 42.5N 50kg, regular (non-promo) prices from 2 retailers, fetched 2026-10-06 (pages undated). Benchmark = lowest regular price; list = benchmark x 1.08 (8% AA storefront markup)."
     },
     {
-      "slug": "mortars-grouts-admixtures",
-      "name": "Mortars, Grouts & Admixtures",
-      "code": "CAT-11"
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
     }
-  ],
-  "products": [
+   ]
+  },
+  {
+   "sku": "AA-CEM-525N-001",
+   "slug": "bulk-cement-52-5n-rapid-hardening",
+   "name": "Bulk Cement 52.5N (Rapid Hardening)",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 52.5N)",
+   "manufacturer": "Multiple approved brands (unbranded bulk/project supply)",
+   "brand": "Generic — brand confirmed at quote stage",
+   "cement_family": "High Strength Cement",
+   "cement_class": "52,5N",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Fast-track construction requiring early strength gain",
+    "Precast and prestressed concrete",
+    "Cold-weather concreting"
+   ],
+   "handling_notes": "Higher early-strength gain generates more heat of hydration — take care with large pours. Store cool, dry and off the ground, as with standard cement.",
+   "units": [
     {
-      "sku": "AA-CEM-425N-001",
-      "slug": "bulk-cement-42-5n",
-      "name": "Bulk Cement 42.5N",
-      "category_slug": "cement-hydraulic-binders",
-      "grading_standard": "SANS 50197-1 (CEM II 42.5N)",
-      "typical_uses": [
-        "General structural concrete",
-        "Brickwork and blockwork mortar",
-        "Precast concrete products"
-      ],
-      "handling_notes": "Store off the ground on pallets, under cover, away from moisture. Best used within 3 months of the manufacture date stamped on the bag.",
-      "units": [
-        {
-          "unit": "BAG_50KG",
-          "market_benchmark_price": 147.85,
-          "cost_basis_percent": 65,
-          "cost_per_unit": 96.1,
-          "markup_percent": 18,
-          "list_price_per_unit": 113.4,
-          "pricing_status": "Ready — benchmarked",
-          "source_note": "Cashbuild, PPC Surebuild 42.5N 50kg, Sep 2026.",
-          "unit_label": "50kg bag"
-        },
-        {
-          "unit": "BULK_BAG_1_5T",
-          "market_benchmark_price": null,
-          "cost_basis_percent": 65,
-          "cost_per_unit": null,
-          "markup_percent": 15,
-          "list_price_per_unit": null,
-          "pricing_status": "Provisional — confirm w/ supplier",
-          "source_note": "No public bulk-bag benchmark found. Confirm with supplier before publishing a price.",
-          "unit_label": "1.5-ton bulk bag"
-        },
-        {
-          "unit": "BULK_TANKER_PER_TON",
-          "market_benchmark_price": null,
-          "cost_basis_percent": 65,
-          "cost_per_unit": null,
-          "markup_percent": 10,
-          "list_price_per_unit": null,
-          "pricing_status": "Provisional — confirm w/ supplier",
-          "source_note": "No public tanker-load benchmark found. Confirm with supplier before publishing a price.",
-          "unit_label": "Bulk tanker (per ton)"
-        }
-      ]
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public 52.5N-specific SA retail benchmark found — confirm with supplier before ordering."
     },
     {
-      "sku": "AA-CEM-525N-001",
-      "slug": "bulk-cement-52-5n-rapid-hardening",
-      "name": "Bulk Cement 52.5N (Rapid Hardening)",
-      "category_slug": "cement-hydraulic-binders",
-      "grading_standard": "SANS 50197-1 (CEM II 52.5N)",
-      "typical_uses": [
-        "Fast-track construction requiring early strength gain",
-        "Precast and prestressed concrete",
-        "Cold-weather concreting"
-      ],
-      "handling_notes": "Higher early-strength gain generates more heat of hydration — take care with large pours. Store cool, dry and off the ground, as with standard cement.",
-      "units": [
-        {
-          "unit": "BAG_50KG",
-          "market_benchmark_price": null,
-          "cost_basis_percent": 65,
-          "cost_per_unit": null,
-          "markup_percent": 18,
-          "list_price_per_unit": null,
-          "pricing_status": "Provisional — confirm w/ supplier",
-          "source_note": "No public 52.5N-specific SA retail benchmark found. Confirm with supplier before publishing.",
-          "unit_label": "50kg bag"
-        },
-        {
-          "unit": "BULK_TANKER_PER_TON",
-          "market_benchmark_price": null,
-          "cost_basis_percent": 65,
-          "cost_per_unit": null,
-          "markup_percent": 10,
-          "list_price_per_unit": null,
-          "pricing_status": "Provisional — confirm w/ supplier",
-          "source_note": "Same gap as the bagged unit. Confirm with supplier.",
-          "unit_label": "Bulk tanker (per ton)"
-        }
-      ]
-    },
-    {
-      "sku": "AA-BND-ROADCAP-001",
-      "slug": "road-capping-binder-fly-ash-slag",
-      "name": "Road-Capping Binder (Fly Ash / Slag Blend)",
-      "category_slug": "cement-hydraulic-binders",
-      "grading_standard": "COLTO/TRH14",
-      "typical_uses": [
-        "Stabilising road-capping and sub-base layers",
-        "Soil stabilisation for pavement works",
-        "Bulk earthworks on civil sites"
-      ],
-      "handling_notes": "Supplied in bulk for large-volume civil works. Mixing ratios are project- and soil-specific — confirm with the supplier or engineer before use.",
-      "units": [
-        {
-          "unit": "BAG_50KG",
-          "market_benchmark_price": null,
-          "cost_basis_percent": 60,
-          "cost_per_unit": null,
-          "markup_percent": 20,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Road-capping binders are sold bulk B2B, not bagged retail — quoted directly by the supplier.",
-          "unit_label": "50kg bag"
-        },
-        {
-          "unit": "BULK_TANKER_PER_TON",
-          "market_benchmark_price": null,
-          "cost_basis_percent": 60,
-          "cost_per_unit": null,
-          "markup_percent": 12,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Same gap as the bagged unit — quoted directly by the supplier.",
-          "unit_label": "Bulk tanker (per ton)"
-        }
-      ]
-    },
-    {
-      "sku": "AA-GRT-NSHRINK-001",
-      "slug": "structural-non-shrink-grout",
-      "name": "Structural Non-Shrink Grout",
-      "category_slug": "mortars-grouts-admixtures",
-      "grading_standard": null,
-      "typical_uses": [
-        "Baseplate and machine-base grouting",
-        "Precast connections and post-tensioning ducts",
-        "Structural repairs requiring no shrinkage"
-      ],
-      "handling_notes": "Mix strictly to the manufacturer's water ratio on the technical data sheet. Pot life is short (typically 30–45 minutes) — mix only what can be placed immediately.",
-      "units": [
-        {
-          "unit": "BAG_25KG",
-          "market_benchmark_price": 399.0,
-          "cost_basis_percent": 55,
-          "cost_per_unit": 219.45,
-          "markup_percent": 22,
-          "list_price_per_unit": 267.73,
-          "pricing_status": "Ready — benchmarked",
-          "source_note": "Pinnacle Construction Products, SikaGrout 212 25kg, Sep 2026 (listed R379–R426; R399 used as the midpoint).",
-          "unit_label": "25kg bag"
-        }
-      ]
-    },
-    {
-      "sku": "AA-ADM-ACCEL-001",
-      "slug": "concrete-admixture-accelerator",
-      "name": "Concrete Admixture — Accelerator",
-      "category_slug": "mortars-grouts-admixtures",
-      "grading_standard": null,
-      "typical_uses": [
-        "Cold-weather concreting to speed up set time",
-        "Fast-turnaround precast production",
-        "Emergency and rapid repair works"
-      ],
-      "handling_notes": "Dose per the manufacturer's technical data sheet (TDS) — overdosing can cause flash setting. Always trial-batch before full-scale use.",
-      "units": [
-        {
-          "unit": "DRUM_210L",
-          "market_benchmark_price": null,
-          "cost_basis_percent": 55,
-          "cost_per_unit": null,
-          "markup_percent": 25,
-          "list_price_per_unit": null,
-          "pricing_status": "BLOCKED — no benchmark",
-          "source_note": "No public benchmark — bulk admixtures are quoted per project. A real supplier quote is needed before any price is published.",
-          "unit_label": "210L drum"
-        }
-      ]
-    },
-    {
-      "sku": "AA-ADM-PLAST-001",
-      "slug": "concrete-admixture-plasticizer",
-      "name": "Concrete Admixture — Plasticizer",
-      "category_slug": "mortars-grouts-admixtures",
-      "grading_standard": null,
-      "typical_uses": [
-        "Improving workability without adding water",
-        "High-strength, low water-cement-ratio mixes",
-        "Pumped concrete"
-      ],
-      "handling_notes": "Add at the batching plant or on site per the TDS dosage. Store above freezing and stir before use if the product has settled.",
-      "units": [
-        {
-          "unit": "DRUM_210L",
-          "market_benchmark_price": null,
-          "cost_basis_percent": 55,
-          "cost_per_unit": null,
-          "markup_percent": 25,
-          "list_price_per_unit": null,
-          "pricing_status": "BLOCKED — no benchmark",
-          "source_note": "Same gap as the accelerator — quote only until a real supplier quote is obtained.",
-          "unit_label": "210L drum"
-        }
-      ]
-    },
-    {
-      "sku": "AA-ADM-RETARD-001",
-      "slug": "concrete-admixture-retarder",
-      "name": "Concrete Admixture — Retarder",
-      "category_slug": "mortars-grouts-admixtures",
-      "grading_standard": null,
-      "typical_uses": [
-        "Hot-weather concreting to delay set time",
-        "Large pours needing extended workability",
-        "Long-haul ready-mix deliveries"
-      ],
-      "handling_notes": "Overdosing can significantly delay strength gain — dose per the TDS and trial-batch for the site's ambient conditions.",
-      "units": [
-        {
-          "unit": "DRUM_210L",
-          "market_benchmark_price": null,
-          "cost_basis_percent": 55,
-          "cost_per_unit": null,
-          "markup_percent": 25,
-          "list_price_per_unit": null,
-          "pricing_status": "BLOCKED — no benchmark",
-          "source_note": "Same gap as the accelerator — quote only until a real supplier quote is obtained.",
-          "unit_label": "210L drum"
-        }
-      ]
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "Same gap as the bagged unit — confirm with supplier."
     }
-  ]
+   ]
+  },
+  {
+   "sku": "AA-BND-ROADCAP-001",
+   "slug": "road-capping-binder-fly-ash-slag",
+   "name": "Road-Capping Binder (Fly Ash / Slag Blend)",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "COLTO/TRH14",
+   "manufacturer": "AfriSam (South Africa) (Pty) Ltd / PPC Ltd",
+   "brand": "AfriSam / PPC",
+   "cement_family": "Road Stabilisation Cement",
+   "cement_class": "N/A (fly ash / slag blend binder)",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Stabilising road-capping and sub-base layers",
+    "Soil stabilisation for pavement works",
+    "Bulk earthworks on civil sites"
+   ],
+   "handling_notes": "Supplied in bulk (tanker or bulk bag) for large-volume civil works. Mixing ratios are project- and soil-specific — confirm with supplier/engineer before use.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold bulk B2B by AfriSam/PPC, not bagged retail — request a direct quote."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Same gap as the bagged unit — request a direct quote."
+    }
+   ]
+  },
+  {
+   "sku": "AA-GRT-NSHRINK-001",
+   "slug": "structural-non-shrink-grout",
+   "name": "Structural Non-Shrink Grout",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Baseplate and machine-base grouting",
+    "Precast connections and post-tensioning ducts",
+    "Structural repairs requiring no shrinkage"
+   ],
+   "handling_notes": "Mix strictly to the manufacturer's water ratio on the technical data sheet. Pot life is short (typically 30–45 minutes) — mix only what can be placed immediately.",
+   "units": [
+    {
+     "unit": "BAG_25KG",
+     "unit_label": "25kg bag",
+     "market_benchmark_price": 399.0,
+     "cost_basis_percent": 55,
+     "cost_per_unit": 219.45,
+     "markup_percent": 22,
+     "list_price_per_unit": 267.73,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Pinnacle Construction Products, SikaGrout 212 25kg, Sep 2026."
+    }
+   ]
+  },
+  {
+   "sku": "AA-ADM-ACCEL-001",
+   "slug": "concrete-admixture-accelerator",
+   "name": "Concrete Admixture — Accelerator",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Cold-weather concreting to speed up set time",
+    "Fast-turnaround precast production",
+    "Emergency and rapid repair works"
+   ],
+   "handling_notes": "Dose per the manufacturer's technical data sheet (TDS) — overdosing can cause flash setting. Always trial-batch before full-scale use.",
+   "units": [
+    {
+     "unit": "DRUM_210L",
+     "unit_label": "210L drum",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 55,
+     "cost_per_unit": null,
+     "markup_percent": 25,
+     "list_price_per_unit": null,
+     "pricing_status": "BLOCKED — no benchmark",
+     "source_note": "No public benchmark — Sika/Chryso quote per-project. Request a quote."
+    }
+   ]
+  },
+  {
+   "sku": "AA-ADM-PLAST-001",
+   "slug": "concrete-admixture-plasticizer",
+   "name": "Concrete Admixture — Plasticizer",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Improving workability without adding water",
+    "High-strength / low water-cement-ratio mixes",
+    "Pumped concrete applications"
+   ],
+   "handling_notes": "Add at the batching plant or on-site per the TDS dosage. Store above freezing and stir before use if the product has settled.",
+   "units": [
+    {
+     "unit": "DRUM_210L",
+     "unit_label": "210L drum",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 55,
+     "cost_per_unit": null,
+     "markup_percent": 25,
+     "list_price_per_unit": null,
+     "pricing_status": "BLOCKED — no benchmark",
+     "source_note": "Same gap as Accelerator — request a quote."
+    }
+   ]
+  },
+  {
+   "sku": "AA-ADM-RETARD-001",
+   "slug": "concrete-admixture-retarder",
+   "name": "Concrete Admixture — Retarder",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Hot-weather concreting to delay set time",
+    "Large pours requiring extended workability",
+    "Long-haul ready-mix deliveries"
+   ],
+   "handling_notes": "Overdosing can significantly delay strength gain — dose per the TDS and trial-batch for ambient site conditions.",
+   "units": [
+    {
+     "unit": "DRUM_210L",
+     "unit_label": "210L drum",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 55,
+     "cost_per_unit": null,
+     "markup_percent": 25,
+     "list_price_per_unit": null,
+     "pricing_status": "BLOCKED — no benchmark",
+     "source_note": "Same gap as Accelerator — request a quote."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-PPC-SURECEM-325N",
+   "slug": "ppc-surecem-32-5n",
+   "name": "PPC SURECEM 32,5N",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 32,5N)",
+   "manufacturer": "PPC Ltd",
+   "brand": "PPC",
+   "cement_family": "General Purpose Cement",
+   "cement_class": "32,5N",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "General-purpose concrete and mortar",
+    "Everyday brickwork and plastering",
+    "Value-tier structural work"
+   ],
+   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "Only one retail source found (Oct 2026) — below the 2-retailer threshold for a live price. Confirm current price with supplier before publishing."
+    },
+    {
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-AFS-STARBUILD-325N",
+   "slug": "afrisam-starbuild-32-5n",
+   "name": "AfriSam StarBuild Cement 32,5N",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 32,5N)",
+   "manufacturer": "AfriSam (South Africa) (Pty) Ltd",
+   "brand": "AfriSam",
+   "cement_family": "General Purpose Cement",
+   "cement_class": "32,5N",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "General-purpose/value-tier concrete",
+    "Brickwork and blockwork mortar",
+    "Domestic and small-contractor builds"
+   ],
+   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": 89.42,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 89.42,
+     "markup_percent": 8,
+     "list_price_per_unit": 96.57,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "BUCO 'from' R89.42 is lowest; Cashbuild Upington R113.95. AfriSam StarBuild 32.5N 50kg, regular (non-promo) prices from 2 retailers, fetched 2026-10-06 (pages undated). Benchmark = lowest regular price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-CMZ-GP-325N",
+   "slug": "cemza-general-purpose-32-5n",
+   "name": "Cemza General Purpose Cement 32,5N",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 32,5N)",
+   "manufacturer": "Cemza (Pty) Ltd",
+   "brand": "Cemza",
+   "cement_family": "General Purpose Cement",
+   "cement_class": "32,5N",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "General-purpose concrete and mortar",
+    "Brickwork and blockwork",
+    "Everyday structural work"
+   ],
+   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": 106.47,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 106.47,
+     "markup_percent": 8,
+     "list_price_per_unit": 114.99,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "BUCO 'from' R106.47 is lowest; Cashbuild Upington R116.35. Cemza GP 32.5N 50kg, regular (non-promo) prices from 2 retailers, fetched 2026-10-06 (pages undated). Benchmark = lowest regular price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-NPC-NEWCASTLE-PFA",
+   "slug": "npc-newcastle-portland-fly-ash",
+   "name": "NPC Newcastle Portland-Fly Ash Cement",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II/B-V)",
+   "manufacturer": "Natal Portland Cement (NPC)",
+   "brand": "NPC",
+   "cement_family": "General Purpose Cement",
+   "cement_class": "32,5N / 42,5N (plant-certified range)",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "General-purpose concrete and mortar",
+    "Brickwork and blockwork mortar",
+    "Structural concrete where a fly-ash blend is specified"
+   ],
+   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No retail benchmark captured yet for this specific brand/SKU — commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+    },
+    {
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-NPC-DURBAN-PL",
+   "slug": "npc-durban-portland-limestone",
+   "name": "NPC Durban Portland-Limestone Cement",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II/A-LL)",
+   "manufacturer": "Natal Portland Cement (NPC)",
+   "brand": "NPC",
+   "cement_family": "General Purpose Cement",
+   "cement_class": "32,5R / 42,5R (plant-certified range)",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Early-strength general concrete",
+    "Brickwork and blockwork mortar",
+    "Faster-turnaround structural work"
+   ],
+   "handling_notes": "Store off the ground, under cover, away from moisture; early-strength blends generate heat faster -- take care with large pours.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No retail benchmark captured yet for this specific brand/SKU — commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+    },
+    {
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-NPC-SIMUMA-PL",
+   "slug": "npc-simuma-portland-limestone",
+   "name": "NPC Simuma Portland-Limestone Cement",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II/A-LL)",
+   "manufacturer": "Natal Portland Cement (NPC)",
+   "brand": "NPC",
+   "cement_family": "General Purpose Cement",
+   "cement_class": "32,5R / 42,5R (plant-certified range)",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Early-strength general concrete",
+    "Brickwork and blockwork mortar",
+    "Faster-turnaround structural work"
+   ],
+   "handling_notes": "Store off the ground, under cover, away from moisture; early-strength blends generate heat faster -- take care with large pours.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No retail benchmark captured yet for this specific brand/SKU — commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+    },
+    {
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-SEPHAKU-32",
+   "slug": "sephaku-32",
+   "name": "Sephaku 32",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 32,5)",
+   "manufacturer": "Sephaku Cement (Pty) Ltd / Dangote Cement South Africa",
+   "brand": "Sephaku Cement",
+   "cement_family": "General Purpose Cement",
+   "cement_class": "32,5N / 32,5R variants",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "General-purpose and early-strength concrete",
+    "Brickwork and blockwork mortar",
+    "Everyday structural work"
+   ],
+   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": 106.39,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 106.39,
+     "markup_percent": 8,
+     "list_price_per_unit": 114.9,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "BUCO 'from' R106.39 is lowest; Cashbuild Upington R118.25. Sephaku 32.5R 50kg, regular (non-promo) prices from 2 retailers, fetched 2026-10-06 (pages undated). Benchmark = lowest regular price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-DANGOTE-FALCON",
+   "slug": "dangote-falcon",
+   "name": "Dangote Falcon",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 32,5R)",
+   "manufacturer": "Sephaku Cement (Pty) Ltd / Dangote Cement South Africa",
+   "brand": "Dangote Falcon",
+   "cement_family": "General Purpose Cement",
+   "cement_class": "32,5R variants",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Early-strength general-purpose concrete",
+    "Brickwork and blockwork mortar",
+    "Value-tier structural work"
+   ],
+   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No retail benchmark captured yet for this specific brand/SKU — commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+    },
+    {
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-KWIKBUILD-325N",
+   "slug": "kwikbuild-32-5n",
+   "name": "KWIKBUILD 32.5N",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 32,5N)",
+   "manufacturer": "Kwikbuild Cement (Pty) Ltd",
+   "brand": "Kwikbuild Cement",
+   "cement_family": "General Purpose Cement",
+   "cement_class": "32,5N",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "General-purpose concrete and mortar",
+    "Brickwork and blockwork",
+    "Small-contractor and DIY builds"
+   ],
+   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": 99.3,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 99.3,
+     "markup_percent": 8,
+     "list_price_per_unit": 107.24,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Cashbuild Upington R99.30 is lowest; BUCO 'from' R104.94. Kwikbuild 32.5N 50kg, regular (non-promo) prices from 2 retailers, fetched 2026-10-06 (pages undated). Benchmark = lowest regular price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-AFRIMAT-DURABUILD",
+   "slug": "afrimat-durabuild",
+   "name": "Afrimat DuraBuild",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 32,5N)",
+   "manufacturer": "Afrimat Ltd",
+   "brand": "Afrimat",
+   "cement_family": "General Purpose Cement",
+   "cement_class": "32,5N",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "General-purpose concrete and mortar",
+    "Brickwork and blockwork",
+    "Everyday structural work"
+   ],
+   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "Only one retail source found (Oct 2026) — below the 2-retailer threshold for a live price. Confirm current price with supplier before publishing."
+    },
+    {
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-AFS-ALLPURPOSE-425N",
+   "slug": "afrisam-all-purpose-42-5n",
+   "name": "AfriSam All Purpose Cement 42,5N",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 42,5N)",
+   "manufacturer": "AfriSam (South Africa) (Pty) Ltd",
+   "brand": "AfriSam",
+   "cement_family": "General Purpose Cement",
+   "cement_class": "42,5N",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [
+    "Reduced heat of hydration in mass concrete",
+    "Improved chemical resistance",
+    "Reduced permeability"
+   ],
+   "typical_uses": [
+    "General and structural concrete",
+    "Brickwork and blockwork mortar",
+    "Precast concrete products"
+   ],
+   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": 129.75,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 129.75,
+     "markup_percent": 8,
+     "list_price_per_unit": 140.13,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Cashbuild Upington R129.75 (lowest of three page prices) vs BUCO 'from' R132.92. AfriSam All Purpose 42.5N 50kg, regular (non-promo) prices from 2 retailers, fetched 2026-10-06 (pages undated). Benchmark = lowest regular price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-SEPHAKU-42",
+   "slug": "sephaku-42",
+   "name": "Sephaku 42",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 42,5)",
+   "manufacturer": "Sephaku Cement (Pty) Ltd / Dangote Cement South Africa",
+   "brand": "Sephaku Cement",
+   "cement_family": "General Purpose Cement",
+   "cement_class": "42,5N / 42,5R variants",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "General and structural concrete",
+    "High-early-strength applications (42,5R variant)",
+    "Precast concrete products"
+   ],
+   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": 118.62,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 118.62,
+     "markup_percent": 8,
+     "list_price_per_unit": 128.11,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "BUCO 'from' R118.62 is lowest; Cashbuild Upington R139.55. Sephaku 42.5N 50kg, regular (non-promo) prices from 2 retailers, fetched 2026-10-06 (pages undated). Benchmark = lowest regular price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-CMZ-ALLPURPOSE-425N",
+   "slug": "cemza-all-purpose-42-5n",
+   "name": "Cemza All Purpose Cement (42,5N range)",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 42,5N)",
+   "manufacturer": "Cemza (Pty) Ltd",
+   "brand": "Cemza",
+   "cement_family": "General Purpose Cement",
+   "cement_class": "42,5N",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "General and structural concrete",
+    "Brickwork and blockwork mortar",
+    "Precast concrete products"
+   ],
+   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": 126.55,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 126.55,
+     "markup_percent": 8,
+     "list_price_per_unit": 136.67,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Cashbuild Upington R126.55 is lowest; BUCO 'from' R127.44 (mapped from the retailers' Cemza 42.5N listing). Cemza 42.5N 50kg, regular (non-promo) prices from 2 retailers, fetched 2026-10-06 (pages undated). Benchmark = lowest regular price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-AFRIMAT-BUILDCRETE",
+   "slug": "afrimat-buildcrete",
+   "name": "Afrimat Buildcrete",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 42,5N)",
+   "manufacturer": "Afrimat Ltd",
+   "brand": "Afrimat",
+   "cement_family": "General Purpose Cement",
+   "cement_class": "42,5N",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "General-purpose structural concrete",
+    "Brickwork and blockwork mortar",
+    "Everyday building work"
+   ],
+   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": 109.86,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 109.86,
+     "markup_percent": 8,
+     "list_price_per_unit": 118.65,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "BUCO 'from' R109.86 is lowest; Cashbuild Upington R122.95. Afrimat BuildCrete 42.5N 50kg, regular (non-promo) prices from 2 retailers, fetched 2026-10-06 (pages undated). Benchmark = lowest regular price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-KWIKBUILD-425N",
+   "slug": "kwikbuild-42-5n",
+   "name": "KWIKBUILD 42.5N",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM V/A 42,5N)",
+   "manufacturer": "Kwikbuild Cement (Pty) Ltd",
+   "brand": "Kwikbuild Cement",
+   "cement_family": "General Purpose Cement",
+   "cement_class": "42,5N",
+   "cement_type": "CEM V/A (high-strength composite)",
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "High-strength composite structural concrete",
+    "Brickwork and blockwork mortar",
+    "General building work"
+   ],
+   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "Only one retail source found (Oct 2026) — below the 2-retailer threshold for a live price. Confirm current price with supplier before publishing."
+    },
+    {
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-DUGONGO-425N",
+   "slug": "dugongo-cement-42-5n",
+   "name": "Dugongo Cement 42,5N",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 42,5N)",
+   "manufacturer": "Dugongo Cement",
+   "brand": "Dugongo Cement",
+   "cement_family": "General Purpose Cement",
+   "cement_class": "42,5N variants",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "General and structural concrete",
+    "Brickwork and blockwork mortar",
+    "Everyday building work"
+   ],
+   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "Only one retail source found (Oct 2026) — below the 2-retailer threshold for a live price. Confirm current price with supplier before publishing."
+    },
+    {
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-MAMBA-425N",
+   "slug": "mamba-cement-42-5n",
+   "name": "Mamba Cement 42,5N",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 42,5)",
+   "manufacturer": "Mamba Cement",
+   "brand": "Mamba Cement",
+   "cement_family": "General Purpose Cement",
+   "cement_class": "42,5N / 42,5R variants",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "General and structural concrete",
+    "High-early-strength applications (42,5R variant)",
+    "Brickwork and blockwork mortar"
+   ],
+   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No retail benchmark captured yet for this specific brand/SKU — commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+    },
+    {
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-PPC-SURECAST-425R",
+   "slug": "ppc-surecast-42-5r",
+   "name": "PPC SURECAST 42,5R",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 42,5R)",
+   "manufacturer": "PPC Ltd",
+   "brand": "PPC",
+   "cement_family": "General Purpose Cement",
+   "cement_class": "42,5R",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [
+    "High early strength"
+   ],
+   "typical_uses": [
+    "Fast-track construction requiring early strength gain",
+    "Precast and prestressed concrete",
+    "Cold-weather concreting"
+   ],
+   "handling_notes": "Higher early-strength gain generates more heat of hydration -- take care with large pours.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Performance/specialist cement of this class is typically project- or contractor-specified rather than bagged retail — request a direct supplier quote."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-CMZ-RAPIDSTRENGTH-425R",
+   "slug": "cemza-rapid-strength-premium-42-5r",
+   "name": "Cemza Rapid Strength Premium Cement 42,5R",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 42,5R)",
+   "manufacturer": "Cemza (Pty) Ltd",
+   "brand": "Cemza",
+   "cement_family": "General Purpose Cement",
+   "cement_class": "42,5R",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Rapid-strength structural concrete",
+    "Precast and prestressed concrete",
+    "Cold-weather concreting"
+   ],
+   "handling_notes": "Higher early-strength gain generates more heat of hydration -- take care with large pours.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Performance/specialist cement of this class is typically project- or contractor-specified rather than bagged retail — request a direct supplier quote."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-PPC-SURETECH-525N",
+   "slug": "ppc-suretech-52-5n",
+   "name": "PPC SURETECH 52,5N",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM I 52,5N)",
+   "manufacturer": "PPC Ltd",
+   "brand": "PPC",
+   "cement_family": "High Strength Cement",
+   "cement_class": "52,5N",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [
+    "High-performance / specialist"
+   ],
+   "typical_uses": [
+    "Precast concrete",
+    "Ready-mix concrete",
+    "Civil, specialist and proprietary concrete products"
+   ],
+   "handling_notes": "Higher heat of hydration than 42,5-class cement -- take care with large pours; store cool, dry and off the ground.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retail source found (Oct 2026) — below the 2-retailer threshold for a live price. Confirm current price with supplier before publishing."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-AFS-HSC-REGIONAL",
+   "slug": "afrisam-high-strength-cement-hsc",
+   "name": "AfriSam High Strength Cement (HSC)",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM I/II 42,5R or 52,5N, region-dependent)",
+   "manufacturer": "AfriSam (South Africa) (Pty) Ltd",
+   "brand": "AfriSam",
+   "cement_family": "High Strength Cement",
+   "cement_class": "42,5R (northern region) / 52,5N (southern region)",
+   "cement_type": null,
+   "region_note": "Sold as 42,5R in AfriSam's northern market and 52,5N in its southern market -- the same product line, not a nationally identical SKU. Confirm the class supplied for your delivery region with the supplier before ordering.",
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Precast concrete",
+    "High-strength structural concrete",
+    "Specialist/civil concrete products"
+   ],
+   "handling_notes": "Region-dependent strength class -- confirm with supplier which class serves your delivery area. Store cool, dry and off the ground.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Performance/specialist cement of this class is typically project- or contractor-specified rather than bagged retail — request a direct supplier quote."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-CMZ-ULTRASTRONG-525N",
+   "slug": "cemza-ultra-strong-high-performance",
+   "name": "Cemza Ultra Strong High Performance Cement",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM I 52,5N)",
+   "manufacturer": "Cemza (Pty) Ltd",
+   "brand": "Cemza",
+   "cement_family": "High Strength Cement",
+   "cement_class": "52,5N",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [
+    "High-performance"
+   ],
+   "typical_uses": [
+    "High-performance precast and structural concrete",
+    "Specialist engineered concrete",
+    "Civil works requiring superior strength"
+   ],
+   "handling_notes": "Higher heat of hydration than 42,5-class cement -- take care with large pours; store cool, dry and off the ground.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Performance/specialist cement of this class is typically project- or contractor-specified rather than bagged retail — request a direct supplier quote."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-SEPHAKU-52",
+   "slug": "sephaku-52-cem-i-52-5n",
+   "name": "Sephaku 52 / Portland Cement CEM I 52,5N",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM I 52,5N)",
+   "manufacturer": "Sephaku Cement (Pty) Ltd / Dangote Cement South Africa",
+   "brand": "Sephaku Cement",
+   "cement_family": "High Strength Cement",
+   "cement_class": "52,5N",
+   "cement_type": "CEM I 52,5N",
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "High-strength structural concrete",
+    "Precast concrete products",
+    "Specialist engineered concrete"
+   ],
+   "handling_notes": "Higher heat of hydration than 42,5-class cement -- take care with large pours; store cool, dry and off the ground.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Performance/specialist cement of this class is typically project- or contractor-specified rather than bagged retail — request a direct supplier quote."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-AFS-RAPIDHARD-525R",
+   "slug": "afrisam-rapid-hard-cement-rhc",
+   "name": "AfriSam Rapid Hard Cement (RHC)",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM I 52,5R)",
+   "manufacturer": "AfriSam (South Africa) (Pty) Ltd",
+   "brand": "AfriSam",
+   "cement_family": "High Strength Cement",
+   "cement_class": "52,5R",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Precast and rapid-demoulding applications",
+    "High early-strength concrete products manufacture",
+    "Fast-turnaround structural work"
+   ],
+   "handling_notes": "Rapid early-strength gain generates significant heat of hydration -- not for large unsegmented pours without an engineer's sign-off.",
+   "units": [
+    {
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold in bulk to precast/specialist producers, not bagged retail — request a direct supplier quote."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold in bulk to precast/specialist producers, not bagged retail — request a direct supplier quote."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-PPC-SUREWALL-225X",
+   "slug": "ppc-surewall-22-5x",
+   "name": "PPC SUREWALL 22,5X",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50413-1 (MC 22,5X)",
+   "manufacturer": "PPC Ltd",
+   "brand": "PPC",
+   "cement_family": "Masonry Cement",
+   "cement_class": "22,5X",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Mortar for brickwork and blockwork",
+    "Plastering",
+    "NOT for structural concrete"
+   ],
+   "handling_notes": "Masonry cement is formulated for mortar and plaster only -- do not substitute for structural cement in concrete mixes.",
+   "units": [
+    {
+     "unit": "BAG_25KG",
+     "unit_label": "25kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No retail benchmark captured yet for this specific brand/SKU — masonry cement is commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+    },
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No retail benchmark captured yet for this specific brand/SKU — masonry cement is commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-CMZ-MASONRY-225X",
+   "slug": "cemza-masonry-cement-22-5x",
+   "name": "Cemza Masonry Cement 22,5X",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50413-1 (MC 22,5X)",
+   "manufacturer": "Cemza (Pty) Ltd",
+   "brand": "Cemza",
+   "cement_family": "Masonry Cement",
+   "cement_class": "22,5X",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Mortar for brickwork and blockwork",
+    "Plastering",
+    "NOT for structural concrete"
+   ],
+   "handling_notes": "Masonry cement is formulated for mortar and plaster only -- do not substitute for structural cement in concrete mixes.",
+   "units": [
+    {
+     "unit": "BAG_25KG",
+     "unit_label": "25kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No retail benchmark captured yet for this specific brand/SKU — masonry cement is commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+    },
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No retail benchmark captured yet for this specific brand/SKU — masonry cement is commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-KWIKBUILD-MASONRY-225X",
+   "slug": "kwikbuild-masonry-cement-22-5x",
+   "name": "Kwikbuild Masonry Cement 22,5X",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50413-1 (MC 22,5X)",
+   "manufacturer": "Kwikbuild Cement (Pty) Ltd",
+   "brand": "Kwikbuild Cement",
+   "cement_family": "Masonry Cement",
+   "cement_class": "22,5X",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Mortar for brickwork and blockwork",
+    "Plastering",
+    "NOT for structural concrete"
+   ],
+   "handling_notes": "Masonry cement is formulated for mortar and plaster only -- do not substitute for structural cement in concrete mixes.",
+   "units": [
+    {
+     "unit": "BAG_25KG",
+     "unit_label": "25kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No retail benchmark captured yet for this specific brand/SKU — masonry cement is commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+    },
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Provisional — confirm w/ supplier",
+     "source_note": "No retail benchmark captured yet for this specific brand/SKU — masonry cement is commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-PPC-SUREROAD-325N",
+   "slug": "ppc-sureroad-32-5n",
+   "name": "PPC SUREROAD 32,5N",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 32,5N, road-stabilisation grade)",
+   "manufacturer": "PPC Ltd",
+   "brand": "PPC",
+   "cement_family": "Road Stabilisation Cement",
+   "cement_class": "32,5N",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Road-base and sub-base stabilisation",
+    "Soil stabilisation for pavement works",
+    "Bulk civil earthworks"
+   ],
+   "handling_notes": "Mixing ratios are project- and soil-specific -- confirm with supplier/engineer before use.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Performance/specialist cement of this class is typically project- or contractor-specified rather than bagged retail — request a direct supplier quote."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-AFS-ROADSTAB-325N",
+   "slug": "afrisam-roadstab-cement-32-5n",
+   "name": "AfriSam Roadstab Cement",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 32,5N, road-stabilisation grade)",
+   "manufacturer": "AfriSam (South Africa) (Pty) Ltd",
+   "brand": "AfriSam",
+   "cement_family": "Road Stabilisation Cement",
+   "cement_class": "32,5N",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Soil and road stabilisation (longer setting time)",
+    "Road-base and sub-base layers",
+    "Bulk civil earthworks"
+   ],
+   "handling_notes": "Formulated with a longer setting time for soil-stabilisation work -- confirm mixing ratios with supplier/engineer before use.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Performance/specialist cement of this class is typically project- or contractor-specified rather than bagged retail — request a direct supplier quote."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-AFRIMAT-ROADCEM-325N",
+   "slug": "afrimat-roadcem-32-5n",
+   "name": "Afrimat RoadCem",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 32,5N, road-stabilisation grade)",
+   "manufacturer": "Afrimat Ltd",
+   "brand": "Afrimat",
+   "cement_family": "Road Stabilisation Cement",
+   "cement_class": "32,5N",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Road-base, sub-base and subgrade stabilisation",
+    "Civil earthworks",
+    "Pavement rehabilitation"
+   ],
+   "handling_notes": "Mixing ratios are project- and soil-specific -- confirm with supplier/engineer before use.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Performance/specialist cement of this class is typically project- or contractor-specified rather than bagged retail — request a direct supplier quote."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-CMZ-ROADPRO-325N",
+   "slug": "cemza-roadpro-32-5n",
+   "name": "Cemza RoadPro Road Stabilising Cement",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 32,5N, road-stabilisation grade)",
+   "manufacturer": "Cemza (Pty) Ltd",
+   "brand": "Cemza",
+   "cement_family": "Road Stabilisation Cement",
+   "cement_class": "32,5N",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Road-base and sub-base stabilisation",
+    "Soil stabilisation for pavement works",
+    "Bulk civil earthworks"
+   ],
+   "handling_notes": "Mixing ratios are project- and soil-specific -- confirm with supplier/engineer before use.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Performance/specialist cement of this class is typically project- or contractor-specified rather than bagged retail — request a direct supplier quote."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-SEPHAKU-SEPROAD-325N",
+   "slug": "sephaku-seproad-32-5n",
+   "name": "Sephaku SepROAD",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50197-1 (CEM II 32,5N, road-stabilisation grade)",
+   "manufacturer": "Sephaku Cement (Pty) Ltd / Dangote Cement South Africa",
+   "brand": "Sephaku Cement",
+   "cement_family": "Road Stabilisation Cement",
+   "cement_class": "32,5N",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Road-base and sub-base stabilisation",
+    "Soil stabilisation for pavement works",
+    "Bulk civil earthworks"
+   ],
+   "handling_notes": "Mixing ratios are project- and soil-specific -- confirm with supplier/engineer before use.",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Performance/specialist cement of this class is typically project- or contractor-specified rather than bagged retail — request a direct supplier quote."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-AFRIMAT-FASTCAST",
+   "slug": "afrimat-fastcast",
+   "name": "Afrimat FastCast",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "Manufacturer technical data sheet (precast-grade)",
+   "manufacturer": "Afrimat Ltd",
+   "brand": "Afrimat",
+   "cement_family": "Precast & Concrete Products Cement",
+   "cement_class": "Specialist / high early strength",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Precast blocks, pipes and poles",
+    "Spun concrete pipe manufacture",
+    "Roof tile and brick/block manufacture"
+   ],
+   "handling_notes": "Formulated for rapid demoulding in precast production -- follow the manufacturer's technical data sheet for mix design and cure schedule.",
+   "units": [
+    {
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold in bulk to precast/specialist producers, not bagged retail — request a direct supplier quote."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold in bulk to precast/specialist producers, not bagged retail — request a direct supplier quote."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-AFRIMAT-POWERCRETE-PLUS",
+   "slug": "afrimat-powercrete-plus",
+   "name": "Afrimat Powercrete Plus",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "Manufacturer technical data sheet (prestressed/precast-grade)",
+   "manufacturer": "Afrimat Ltd",
+   "brand": "Afrimat",
+   "cement_family": "Precast & Concrete Products Cement",
+   "cement_class": "Specialist",
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [
+    "Lower heat of hydration"
+   ],
+   "typical_uses": [
+    "Post-tensioned / prestressed slabs and beams",
+    "Spun concrete pipes",
+    "Dams, reservoirs and mass structural concrete"
+   ],
+   "handling_notes": "Lower heat of hydration suits large pours and prestressed elements -- follow the manufacturer's technical data sheet for mix design.",
+   "units": [
+    {
+     "unit": "BULK_BAG_1_5T",
+     "unit_label": "1.5-ton bulk bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold in bulk to precast/specialist producers, not bagged retail — request a direct supplier quote."
+    },
+    {
+     "unit": "BULK_TANKER_PER_TON",
+     "unit_label": "Bulk tanker (per ton)",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold in bulk to precast/specialist producers, not bagged retail — request a direct supplier quote."
+    }
+   ]
+  }
+ ]
 }

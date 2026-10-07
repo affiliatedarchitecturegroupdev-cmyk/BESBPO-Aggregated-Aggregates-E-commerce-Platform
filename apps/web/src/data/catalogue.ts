@@ -1,5 +1,5 @@
 /**
- * The storefront catalogue: all 48 SKUs from the Aggregated Aggregates
+ * The storefront catalogue: the 48 SKUs from the Aggregated Aggregates
  * pricing framework workbook, with every unit price pre-computed by the
  * pricing service's own calculators.
  *

@@ -208,8 +208,8 @@
           "m3": 332.19
         },
         "VOLUME_CIVIL_BULK": {
-          "ton": 180.54,
-          "m3": 306.92
+          "ton": 185.4,
+          "m3": 315.18
         }
       }
     },
@@ -241,8 +241,8 @@
           "m3": 332.19
         },
         "VOLUME_CIVIL_BULK": {
-          "ton": 180.54,
-          "m3": 306.92
+          "ton": 185.4,
+          "m3": 315.18
         }
       }
     },
@@ -274,8 +274,8 @@
           "m3": 332.19
         },
         "VOLUME_CIVIL_BULK": {
-          "ton": 180.54,
-          "m3": 306.92
+          "ton": 185.4,
+          "m3": 315.18
         }
       }
     },
@@ -307,8 +307,8 @@
           "m3": 332.19
         },
         "VOLUME_CIVIL_BULK": {
-          "ton": 180.54,
-          "m3": 306.92
+          "ton": 185.4,
+          "m3": 315.18
         }
       }
     },
@@ -340,8 +340,8 @@
           "m3": 332.19
         },
         "VOLUME_CIVIL_BULK": {
-          "ton": 180.54,
-          "m3": 306.92
+          "ton": 185.4,
+          "m3": 315.18
         }
       }
     },
@@ -373,8 +373,8 @@
           "m3": 332.19
         },
         "VOLUME_CIVIL_BULK": {
-          "ton": 180.54,
-          "m3": 306.92
+          "ton": 185.4,
+          "m3": 315.18
         }
       }
     },
@@ -406,8 +406,8 @@
           "m3": 332.19
         },
         "VOLUME_CIVIL_BULK": {
-          "ton": 180.54,
-          "m3": 306.92
+          "ton": 185.4,
+          "m3": 315.18
         }
       }
     },
@@ -439,8 +439,8 @@
           "m3": 332.19
         },
         "VOLUME_CIVIL_BULK": {
-          "ton": 180.54,
-          "m3": 306.92
+          "ton": 185.4,
+          "m3": 315.18
         }
       }
     },
@@ -472,8 +472,8 @@
           "m3": 332.19
         },
         "VOLUME_CIVIL_BULK": {
-          "ton": 180.54,
-          "m3": 306.92
+          "ton": 185.4,
+          "m3": 315.18
         }
       }
     },
@@ -505,8 +505,8 @@
           "m3": 332.19
         },
         "VOLUME_CIVIL_BULK": {
-          "ton": 180.54,
-          "m3": 306.92
+          "ton": 185.4,
+          "m3": 315.18
         }
       }
     },
@@ -1060,8 +1060,8 @@
           "m3": 371.28
         },
         "VOLUME_CIVIL_BULK": {
-          "ton": 190.57,
-          "m3": 343.03
+          "ton": 195.7,
+          "m3": 352.26
         }
       }
     },
@@ -1093,8 +1093,8 @@
           "m3": 371.28
         },
         "VOLUME_CIVIL_BULK": {
-          "ton": 190.57,
-          "m3": 343.03
+          "ton": 195.7,
+          "m3": 352.26
         }
       }
     },
@@ -1123,7 +1123,7 @@
           "ton": 206.26
         },
         "VOLUME_CIVIL_BULK": {
-          "ton": 190.57
+          "ton": 195.7
         }
       }
     },
@@ -1152,7 +1152,7 @@
           "ton": 206.26
         },
         "VOLUME_CIVIL_BULK": {
-          "ton": 190.57
+          "ton": 195.7
         }
       }
     },
@@ -1618,7 +1618,7 @@
           "ton": 95.22
         },
         "VOLUME_CIVIL_BULK": {
-          "ton": 87.98
+          "ton": 92.7
         }
       }
     },
@@ -1647,7 +1647,7 @@
           "ton": 95.22
         },
         "VOLUME_CIVIL_BULK": {
-          "ton": 87.98
+          "ton": 92.7
         }
       }
     },
@@ -1676,7 +1676,109 @@
           "ton": 95.22
         },
         "VOLUME_CIVIL_BULK": {
-          "ton": 87.98
+          "ton": 92.7
+        }
+      }
+    },
+    {
+      "sku": "AA-CRS-11",
+      "slug": "dump-rock-selected-pioneer-layer",
+      "name": "Dump Rock / Selected Pioneer Layer",
+      "category_slug": "crushed-stone",
+      "grading_standard": null,
+      "unit_of_sale_label": "per m³ / per ton",
+      "units": [
+        "ton",
+        "m3"
+      ],
+      "bag_weight_kg": null,
+      "source": "category-band",
+      "bulk_density_kg_per_m3": 1450,
+      "bag_premium_multiplier": null,
+      "list_prices": {
+        "ton": 400.0,
+        "m3": 580.0
+      },
+      "prices": {
+        "RETAIL": {
+          "ton": 400.0,
+          "m3": 580.0
+        },
+        "CONTRACTOR_TRADE": {
+          "ton": 368.0,
+          "m3": 533.6
+        },
+        "VOLUME_CIVIL_BULK": {
+          "ton": 340.0,
+          "m3": 493.0
+        }
+      }
+    },
+    {
+      "sku": "AA-SND-08",
+      "slug": "pipe-bedding-sand-sans-1200-lb",
+      "name": "Pipe Bedding Sand (SANS 1200 LB)",
+      "category_slug": "sand-fine-aggregates",
+      "grading_standard": "SANS 1200 LB",
+      "unit_of_sale_label": "per m³ / per ton",
+      "units": [
+        "ton",
+        "m3"
+      ],
+      "bag_weight_kg": null,
+      "source": "category-band",
+      "bulk_density_kg_per_m3": 1550,
+      "bag_premium_multiplier": null,
+      "list_prices": {
+        "ton": 358.4,
+        "m3": 555.52
+      },
+      "prices": {
+        "RETAIL": {
+          "ton": 358.4,
+          "m3": 555.52
+        },
+        "CONTRACTOR_TRADE": {
+          "ton": 329.73,
+          "m3": 511.08
+        },
+        "VOLUME_CIVIL_BULK": {
+          "ton": 304.64,
+          "m3": 472.19
+        }
+      }
+    },
+    {
+      "sku": "AA-DRN-05",
+      "slug": "filter-stone-19mm-26-5mm-washed",
+      "name": "Filter Stone (19mm/26.5mm, washed)",
+      "category_slug": "drainage-filter",
+      "grading_standard": null,
+      "unit_of_sale_label": "per m³ / per ton",
+      "units": [
+        "ton",
+        "m3"
+      ],
+      "bag_weight_kg": null,
+      "source": "category-band",
+      "bulk_density_kg_per_m3": 1500,
+      "bag_premium_multiplier": null,
+      "list_prices": {
+        "ton": 390.0,
+        "m3": 585.0
+      },
+      "prices": {
+        "RETAIL": {
+          "ton": 390.0,
+          "m3": 585.0
+        },
+        "CONTRACTOR_TRADE": {
+          "ton": 358.8,
+          "m3": 538.2
+        },
+        "VOLUME_CIVIL_BULK": {
+          "ton": 331.5,
+          "m3": 497.25
         }
       }
     }

@@ -9,7 +9,8 @@
  * shows why and routes to a quote (AGENTIC_RULES.md rules 1 and 10).
  */
 import catalogue from "./b2b-packaged-catalogue.json";
-import { CUSTOMER_TIERS, type CustomerTierName } from "./catalogue";
+import { CUSTOMER_TIERS } from "./catalogue";
+import { packagedFamily, tierPrice } from "@/lib/tier-pricing";
 
 export type PackagedUnitCode = "BAG_25KG" | "BAG_50KG" | "BULK_BAG_1_5T" | "BULK_TANKER_PER_TON" | "DRUM_210L" | "IBC_TOTE_1000L";
 export const READY = "Ready — benchmarked";
@@ -19,8 +20,22 @@ export type PackagedUnit = {
   label: string;
   pricingStatus: string;
   sourceNote: string;
-  /** Tier unit prices — only for a benchmarked unit. */
-  prices: Record<CustomerTierName, number> | null;
+  /** Tier unit prices — only for a benchmarked unit; a tier whose price is quoted is null. */
+  prices: TierPrices | null;
+};
+
+/** Retail always has a price; a trade or volume price is null when that tier is quoted. */
+export type TierPrices = { RETAIL: number; CONTRACTOR_TRADE: number | null; VOLUME_CIVIL_BULK: number | null };
+
+/** The cement taxonomy, carried as product attributes (CEMENT_MASTER_CATALOGUE.md). */
+export type CementAttributes = {
+  manufacturer: string | null;
+  brand: string | null;
+  cementFamily: string | null;
+  cementClass: string | null;
+  cementType: string | null;
+  regionNote: string | null;
+  specialistCharacteristics: string[];
 };
 
 export type PackagedProduct = {
@@ -33,12 +48,7 @@ export type PackagedProduct = {
   handlingNotes: string;
   units: PackagedUnit[];
   kind: "packaged";
-};
-
-/** List price less the tier discount, rounded half-up to the cent — as the pricing service does. */
-function tierPrice(list: number, discount: number): number {
-  return Math.round(Math.round(list * 100) * (1 - discount) + 1e-9) / 100;
-}
+} & CementAttributes;
 
 export const PACKAGED_PRODUCTS: PackagedProduct[] = catalogue.products.map((p) => ({
   sku: p.sku,
@@ -49,6 +59,13 @@ export const PACKAGED_PRODUCTS: PackagedProduct[] = catalogue.products.map((p) =
   typicalUses: p.typical_uses,
   handlingNotes: p.handling_notes,
   kind: "packaged",
+  manufacturer: p.manufacturer ?? null,
+  brand: p.brand ?? null,
+  cementFamily: p.cement_family ?? null,
+  cementClass: p.cement_class ?? null,
+  cementType: p.cement_type ?? null,
+  regionNote: p.region_note ?? null,
+  specialistCharacteristics: p.specialist_characteristics ?? [],
   units: p.units.map((u) => ({
     unit: u.unit as PackagedUnitCode,
     label: u.unit_label,
@@ -56,7 +73,9 @@ export const PACKAGED_PRODUCTS: PackagedProduct[] = catalogue.products.map((p) =
     sourceNote: u.source_note,
     prices:
       u.pricing_status === READY && u.list_price_per_unit !== null
-        ? (Object.fromEntries(CUSTOMER_TIERS.map((t) => [t.name, tierPrice(u.list_price_per_unit as number, t.discount)])) as Record<CustomerTierName, number>)
+        ? (Object.fromEntries(
+            CUSTOMER_TIERS.map((t) => [t.name, tierPrice(u.list_price_per_unit as number, u.markup_percent / 100, packagedFamily(u.unit), t.name)]),
+          ) as TierPrices)
         : null,
   })),
 }));
@@ -66,7 +85,7 @@ export function findPackagedProduct(slug: string) {
 }
 
 /** The first benchmarked unit, for "from" prices on cards. */
-export function headlineUnit(product: PackagedProduct): PackagedUnit | undefined {
+export function headlineUnit<U extends { prices: TierPrices | null }>(product: { units: U[] }): U | undefined {
   return product.units.find((u) => u.prices !== null);
 }
 

@@ -10,7 +10,12 @@ calculator refuses to price them rather than inventing a number
 (AGENTIC_RULES.md rules 1 and 10), and the order calculator routes them to
 a quote.
 
-    Tier price = List price x (1 - tier discount), rounded half-up to the cent
+    Tier price = List price x (1 - tier discount), rounded half-up to the cent,
+                 never below cost x 1.03 (calculators/discount_floor.py)
+
+Bagged cement and mortar (25/50kg) take a 4% trade discount; bulk formats
+(bulk bag, tanker, drum, tote) have no self-serve trade price, and every
+Volume/Civil Bulk order of these goods is quoted (PRICING_POLICY.md).
 """
 from __future__ import annotations
 
@@ -20,11 +25,19 @@ from decimal import Decimal
 from pathlib import Path
 from typing import Optional
 
+from calculators.discount_floor import CEMENT_BAGGED, CEMENT_BULK, STOREFRONT_MARKUP, TierQuoteOnly, tier_price
 from calculators.tonnage_volume import to_cents
 
 DATA_PATH = Path(__file__).parent.parent / "data" / "b2b_packaged_catalogue.json"
 READY_STATUS = "Ready — benchmarked"
 PACKAGED_UNITS = ("BAG_25KG", "BAG_50KG", "BULK_BAG_1_5T", "BULK_TANKER_PER_TON", "DRUM_210L", "IBC_TOTE_1000L")
+BAGGED_UNITS = ("BAG_25KG", "BAG_50KG")
+TIER_QUOTE_STATUS = "Quoted for your tier"
+
+
+def family_for_unit(unit: str) -> str:
+    """Bags take the bagged-cement trade discount; bulk formats are quoted for trade and volume."""
+    return CEMENT_BAGGED if unit in BAGGED_UNITS else CEMENT_BULK
 
 
 class PricingNotAvailable(ValueError):
@@ -43,6 +56,7 @@ class PackagedUnit:
     pricing_status: str
     source_note: str
     weight_kg: Optional[Decimal]  # known for bags only
+    markup: Decimal = STOREFRONT_MARKUP  # fraction; sets the margin floor
 
     @property
     def is_priced(self) -> bool:
@@ -72,6 +86,7 @@ def load(path: Path = DATA_PATH) -> tuple[dict, dict[str, PackagedProduct]]:
                 pricing_status=u["pricing_status"],
                 source_note=u["source_note"],
                 weight_kg=weights.get(u["unit"]),
+                markup=STOREFRONT_MARKUP if u.get("markup_percent") is None else Decimal(str(u["markup_percent"])) / 100,
             )
         products[p["sku"]] = PackagedProduct(sku=p["sku"], name=p["name"], category_slug=p["category_slug"], units=units)
     return raw, products
@@ -111,17 +126,19 @@ class PackagedLineResult:
             "source_note": self.source_note,
             "list_unit_price": money(self.list_unit_price),
             "unit_price": money(self.unit_price),
-            "discount_percent": float(self.discount * 100),
+            "discount_percent": float(round(self.discount * 100, 2)),
             "subtotal_before_discount": money(self.subtotal_before_discount),
             "total": money(self.total),
         }
 
 
-def calculate(product: PackagedProduct, quantity: Decimal, unit: str, discount: Decimal = Decimal(0), *, allow_unpriced: bool = False) -> PackagedLineResult:
+def calculate(product: PackagedProduct, quantity: Decimal, unit: str, tier: str = "RETAIL", *, allow_unpriced: bool = False) -> PackagedLineResult:
     """
     Price one packaged line in the customer's tier. A unit without a
-    confirmed price raises PricingNotAvailable, unless allow_unpriced (the
-    order calculator), in which case the line comes back with no price.
+    confirmed price raises PricingNotAvailable, and a tier with no
+    self-serve price for the unit raises TierQuoteOnly — unless
+    allow_unpriced (the order calculator), in which case the line comes back
+    with no price.
     """
     packaged = product.units.get(unit)
     if packaged is None:
@@ -133,23 +150,29 @@ def calculate(product: PackagedProduct, quantity: Decimal, unit: str, discount: 
         raise ValueError("Packaged quantities must be a whole number of units.")
     bagged_kg = quantity * packaged.weight_kg if packaged.weight_kg is not None else Decimal(0)
 
+    unpriced = lambda status: PackagedLineResult(  # noqa: E731
+        sku=product.sku, name=product.name, unit=unit, unit_label=packaged.label, quantity=quantity,
+        bagged_kg=bagged_kg, pricing_status=status, source_note=packaged.source_note,
+        list_unit_price=None, unit_price=None, discount=Decimal(0), subtotal_before_discount=None, total=None,
+    )
     if not packaged.is_priced:
         if not allow_unpriced:
             raise PricingNotAvailable(
                 f"{product.name} ({packaged.label}) has no confirmed price yet ({packaged.pricing_status}) — "
                 "request a quote and our team will confirm it with the supplier."
             )
-        return PackagedLineResult(
-            sku=product.sku, name=product.name, unit=unit, unit_label=packaged.label, quantity=quantity,
-            bagged_kg=bagged_kg, pricing_status=packaged.pricing_status, source_note=packaged.source_note,
-            list_unit_price=None, unit_price=None, discount=discount, subtotal_before_discount=None, total=None,
-        )
+        return unpriced(packaged.pricing_status)
 
+    try:
+        priced = tier_price(packaged.list_price, packaged.markup, family_for_unit(unit), tier)
+    except TierQuoteOnly:
+        if not allow_unpriced:
+            raise
+        return unpriced(TIER_QUOTE_STATUS)
     list_price = to_cents(packaged.list_price)
-    tier_price = to_cents(packaged.list_price * (1 - discount))
     return PackagedLineResult(
         sku=product.sku, name=product.name, unit=unit, unit_label=packaged.label, quantity=quantity,
         bagged_kg=bagged_kg, pricing_status=packaged.pricing_status, source_note=packaged.source_note,
-        list_unit_price=list_price, unit_price=tier_price, discount=discount,
-        subtotal_before_discount=to_cents(quantity * list_price), total=to_cents(quantity * tier_price),
+        list_unit_price=list_price, unit_price=priced.unit_price, discount=priced.discount,
+        subtotal_before_discount=to_cents(quantity * list_price), total=to_cents(quantity * priced.unit_price),
     )

@@ -81,6 +81,13 @@ type PackagedCatalogue = {
     name: string;
     category_slug: string;
     grading_standard: string | null;
+    manufacturer?: string | null;
+    brand?: string | null;
+    cement_family?: string | null;
+    cement_class?: string | null;
+    cement_type?: string | null;
+    region_note?: string | null;
+    specialist_characteristics?: string[];
     units: {
       unit: UnitOfSale;
       market_benchmark_price: number | null;
@@ -96,6 +103,41 @@ type PackagedCatalogue = {
 
 const PACKAGED: PackagedCatalogue = JSON.parse(
   readFileSync(join(__dirname, "../../../services/pricing/data/b2b_packaged_catalogue.json"), "utf8"),
+);
+
+type ReadyMixCatalogue = {
+  category: { slug: string; name: string; code: string };
+  products: {
+    sku: string;
+    slug: string;
+    name: string;
+    category_slug: string;
+    grading_standard: string | null;
+    strength_grade_mpa: number;
+    mix_type: string;
+    minimum_load_m3: number;
+    market_benchmark_price: number | null;
+    cost_basis_percent: number;
+    markup_percent: number;
+    list_price_per_m3: number | null;
+    pricing_status: string;
+    source_note: string;
+  }[];
+  pumps: {
+    code: string;
+    name: string;
+    pump_type: "STATIC_LINE" | "BOOM";
+    boom_length_m: number | null;
+    capacity_m3_per_hr: number | null;
+    call_out_fee: number | null;
+    rate_per_m3: number | null;
+    pricing_status: string;
+    source_note: string;
+  }[];
+};
+
+const READY_MIX: ReadyMixCatalogue = JSON.parse(
+  readFileSync(join(__dirname, "../../../services/pricing/data/ready_mix_catalogue.json"), "utf8"),
 );
 
 const UNIT_OF_SALE: Record<Unit, UnitOfSale> = {
@@ -165,6 +207,13 @@ async function seedPackagedCatalogue() {
       categoryId: categoryIds[p.category_slug],
       gradingStandard: p.grading_standard,
       unitsOfSale: p.units.map((u) => u.unit),
+      manufacturer: p.manufacturer ?? null,
+      brand: p.brand ?? null,
+      cementFamily: p.cement_family ?? null,
+      cementClass: p.cement_class ?? null,
+      cementType: p.cement_type ?? null,
+      regionNote: p.region_note ?? null,
+      specialistCharacteristics: p.specialist_characteristics ?? [],
     };
     const product = await prisma.product.upsert({ where: { sku: p.sku }, update: productData, create: { sku: p.sku, ...productData } });
     for (const u of p.units) {
@@ -185,6 +234,48 @@ async function seedPackagedCatalogue() {
     }
     // A unit dropped from the workbook stops being sold.
     await prisma.packagedPriceBand.deleteMany({ where: { productId: product.id, unit: { notIn: p.units.map((u) => u.unit) } } });
+  }
+}
+
+/** CAT-12 ready-mix: the category (after the packaged ones), one product and price band per strength grade, and the pump options. */
+async function seedReadyMix() {
+  const category = READY_MIX.category;
+  const data = { name: category.name, sortOrder: FRAMEWORK.categories.length + PACKAGED.categories.length + 1, catalogueGroup: "ready-mix" };
+  const { id: categoryId } = await prisma.category.upsert({ where: { slug: category.slug }, update: data, create: { slug: category.slug, ...data } });
+  for (const p of READY_MIX.products) {
+    const productData = {
+      slug: p.slug,
+      name: p.name,
+      categoryId,
+      gradingStandard: p.grading_standard,
+      unitsOfSale: [UnitOfSale.BULK_M3],
+      strengthGradeMPa: p.strength_grade_mpa,
+      mixType: p.mix_type,
+      minimumLoadM3: p.minimum_load_m3,
+    };
+    const product = await prisma.product.upsert({ where: { sku: p.sku }, update: productData, create: { sku: p.sku, ...productData } });
+    const band = {
+      marketBenchmarkPrice: p.market_benchmark_price,
+      costBasisPercent: p.cost_basis_percent,
+      markupPercent: p.markup_percent,
+      listPricePerM3: p.list_price_per_m3,
+      pricingStatus: p.pricing_status,
+      sourceNote: p.source_note,
+    };
+    await prisma.readyMixPriceBand.upsert({ where: { productId: product.id }, update: band, create: { productId: product.id, ...band } });
+  }
+  for (const pump of READY_MIX.pumps) {
+    const data = {
+      name: pump.name,
+      pumpType: pump.pump_type,
+      boomLengthM: pump.boom_length_m,
+      capacityM3PerHr: pump.capacity_m3_per_hr,
+      callOutFee: pump.call_out_fee,
+      ratePerM3: pump.rate_per_m3,
+      pricingStatus: pump.pricing_status,
+      sourceNote: pump.source_note,
+    };
+    await prisma.readyMixPumpOption.upsert({ where: { code: pump.code }, update: data, create: { code: pump.code, ...data } });
   }
 }
 
@@ -376,6 +467,7 @@ async function main() {
   console.log("Seeding Aggregated Aggregates platform data...");
   await seedCatalogue();
   await seedPackagedCatalogue();
+  await seedReadyMix();
   await seedCustomerTiers();
   await seedDeliveryBands();
   await seedPaymentMethods();
@@ -383,7 +475,7 @@ async function main() {
   await seedBlog();
   console.log(
     `Seed complete: ${FRAMEWORK.products.length} products across ${FRAMEWORK.categories.length} categories, ` +
-      `plus ${PACKAGED.products.length} B2B packaged products.`,
+      `plus ${PACKAGED.products.length} B2B packaged products and ${READY_MIX.products.length} ready-mix grades.`,
   );
 }
 

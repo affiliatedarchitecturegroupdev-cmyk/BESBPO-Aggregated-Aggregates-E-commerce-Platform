@@ -88,11 +88,35 @@ export function PackagedProductPage({ product }: { product: MerchandisedPackaged
                 <th className="py-2 pr-4 font-normal text-slate">Standard</th>
                 <td className="py-2">{product.gradingStandard ?? "Manufacturer's technical data sheet applies"}</td>
               </tr>
+              {(
+                [
+                  ["Manufacturer", product.manufacturer],
+                  ["Brand", product.brand],
+                  ["Cement type", product.cementFamily],
+                  ["Strength class", product.cementClass],
+                  ["CEM designation", product.cementType],
+                  ["Regional note", product.regionNote],
+                  ["Characteristics", product.specialistCharacteristics.join(", ") || null],
+                ] as [string, string | null][]
+              )
+                .filter(([, value]) => value)
+                .map(([label, value]) => (
+                  <tr key={label} className="border-b border-basalt/5">
+                    <th className="py-2 pr-4 font-normal text-slate">{label}</th>
+                    <td className="py-2">{value}</td>
+                  </tr>
+                ))}
               {product.units.map((u) => (
                 <tr key={u.unit} className="border-b border-basalt/5">
                   <th className="py-2 pr-4 font-normal text-slate">{u.label}</th>
                   <td className="py-2">
-                    {u.prices ? `${formatZAR(u.prices.RETAIL)} retail · ${formatZAR(u.prices.CONTRACTOR_TRADE)} trade · ${formatZAR(u.prices.VOLUME_CIVIL_BULK)} volume` : u.pricingStatus}
+                    {u.prices
+                      ? [
+                          `${formatZAR(u.prices.RETAIL)} retail`,
+                          u.prices.CONTRACTOR_TRADE === null ? "trade quoted" : `${formatZAR(u.prices.CONTRACTOR_TRADE)} trade`,
+                          u.prices.VOLUME_CIVIL_BULK === null ? "volume quoted" : `${formatZAR(u.prices.VOLUME_CIVIL_BULK)} volume`,
+                        ].join(" · ")
+                      : u.pricingStatus}
                   </td>
                 </tr>
               ))}

@@ -1,13 +1,24 @@
 /**
  * Everything a customer can put in a cart or a quote: the 48 aggregate SKUs
- * (ton / m³ / bag) and the CAT-10/11 packaged goods (bag, drum, tanker…),
+ * (ton / m³ / bag), the CAT-10/11 packaged goods (bag, drum, tanker…) and
+ * CAT-12 ready-mix (per m³),
  * with the retail list price of each unit where one exists.
  */
 import { PRODUCTS } from "./catalogue";
 import { PACKAGED_PRODUCTS } from "./packaged";
+import { READY_MIX_PRODUCTS } from "./ready-mix";
 
 export type QuotableUnit = { code: string; label: string; retailPrice: number | null };
-export type Quotable = { sku: string; slug: string; name: string; categorySlug: string; gradingStandard: string | null; units: QuotableUnit[] };
+export type Quotable = {
+  sku: string;
+  slug: string;
+  name: string;
+  categorySlug: string;
+  gradingStandard: string | null;
+  units: QuotableUnit[];
+  /** Ready-mix: the smallest full mixer-truck load. */
+  minimumQuantity?: number;
+};
 
 const BULK_LABELS: Record<string, string> = { ton: "ton", m3: "m³", bag: "bag" };
 
@@ -30,6 +41,15 @@ export const QUOTABLE: Quotable[] = [
     name: p.name,
     categorySlug: p.categorySlug,
     gradingStandard: p.gradingStandard,
+    units: p.units.map((u) => ({ code: u.unit, label: u.label, retailPrice: u.prices?.RETAIL ?? null })),
+  })),
+  ...READY_MIX_PRODUCTS.map((p) => ({
+    sku: p.sku,
+    slug: p.slug,
+    name: p.name,
+    categorySlug: p.categorySlug,
+    gradingStandard: p.gradingStandard,
+    minimumQuantity: p.minimumLoadM3,
     units: p.units.map((u) => ({ code: u.unit, label: u.label, retailPrice: u.prices?.RETAIL ?? null })),
   })),
 ];

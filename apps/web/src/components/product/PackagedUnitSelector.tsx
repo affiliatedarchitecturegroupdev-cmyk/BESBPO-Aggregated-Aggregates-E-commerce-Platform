@@ -5,6 +5,7 @@ import { useState } from "react";
 import { CUSTOMER_TIERS, type CustomerTierName } from "@/data/catalogue";
 import type { PackagedProduct } from "@/data/packaged";
 import { formatZAR } from "@/lib/pricing";
+import { packagedFamily, tierOptionLabel } from "@/lib/tier-pricing";
 import { AddToCartButton } from "@/components/cart/AddToCartButton";
 
 /**
@@ -18,7 +19,9 @@ export function PackagedUnitSelector({ product }: { product: PackagedProduct }) 
   const [quantity, setQuantity] = useState(10);
   const [tierName, setTierName] = useState<CustomerTierName>("RETAIL");
   const unit = product.units[index];
-  const unitPrice = unit.prices?.[tierName];
+  const unitPrice = unit.prices?.[tierName] ?? undefined;
+  // A benchmarked unit whose price for this tier is quoted (bulk cement for trade, all cement for volume).
+  const tierQuoted = unit.prices !== null && unitPrice === undefined;
   const total = unitPrice !== undefined ? Math.round(quantity * Math.round(unitPrice * 100)) / 100 : null;
   const quoteHref = `/quote?sku=${product.sku}&unit=${unit.unit}&qty=${quantity}`;
 
@@ -60,7 +63,7 @@ export function PackagedUnitSelector({ product }: { product: PackagedProduct }) 
           >
             {CUSTOMER_TIERS.map((t) => (
               <option key={t.name} value={t.name}>
-                {t.label} ({Math.round(t.discount * 100)}% off)
+                {tierOptionLabel(packagedFamily(unit.unit), t.name, t.label)}
               </option>
             ))}
           </select>
@@ -81,6 +84,15 @@ export function PackagedUnitSelector({ product }: { product: PackagedProduct }) 
           </div>
           <p className="mt-2 font-mono text-[10px] text-slate">Benchmark: {unit.sourceNote}</p>
         </>
+      ) : tierQuoted ? (
+        <div className="mt-4 rounded-sm border border-ochre-gold/50 bg-ochre-gold/10 p-3 font-body text-sm text-basalt">
+          <p className="font-semibold">Quoted for your tier</p>
+          <p className="mt-1 text-xs text-slate">
+            {tierName === "VOLUME_CIVIL_BULK"
+              ? "Volume / Civil Bulk cement is priced per project — request a quote and we confirm your price with the supplier."
+              : "Trade pricing on bulk-bag and tanker cement is quoted with the supplier."}
+          </p>
+        </div>
       ) : (
         <div className="mt-4 rounded-sm border border-ochre-gold/50 bg-ochre-gold/10 p-3 font-body text-sm text-basalt">
           <p className="font-semibold">{unit.pricingStatus.startsWith("Quote-only") ? "Quote only" : "Price on request"}</p>

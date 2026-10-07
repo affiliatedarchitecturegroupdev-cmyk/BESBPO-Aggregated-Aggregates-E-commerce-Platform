@@ -34,10 +34,12 @@ SERVICE_DIR = Path(__file__).resolve().parent.parent
 REPO_ROOT = SERVICE_DIR.parent.parent
 sys.path.insert(0, str(SERVICE_DIR))
 
-from calculators.tonnage_volume import to_cents, unit_price  # noqa: E402
+from calculators.tonnage_volume import tier_unit_price, to_cents, unit_price  # noqa: E402
 from pricing_framework import build  # noqa: E402
 
 WORKBOOK_PATH = REPO_ROOT / "docs" / "pricing" / "aggregated-aggregates-pricing-framework.xlsx"
+# Approved aggregates the workbook doesn't list, priced by their category band.
+ADDITIONAL_PATH = SERVICE_DIR / "data" / "additional_aggregates.json"
 OUTPUT_PATHS = [
     SERVICE_DIR / "data" / "pricing_framework.json",
     REPO_ROOT / "apps" / "web" / "src" / "data" / "pricing-framework.json",
@@ -256,6 +258,37 @@ def read_products(wb, categories: list[dict]) -> list[dict]:
     return products
 
 
+def read_additional(categories: list[dict], products: list[dict]) -> list[dict]:
+    """Approved aggregates the workbook's catalogue sheet doesn't list — numbered after its rows, priced by category band."""
+    raw = json.loads(ADDITIONAL_PATH.read_text(encoding="utf-8"))
+    by_slug = {c["slug"]: c for c in categories}
+    counters: dict[str, int] = {}
+    for p in products:
+        code = p["sku"].split("-")[1]
+        counters[code] = max(counters.get(code, 0), int(p["sku"].split("-")[2]))
+    extra = []
+    for item in raw["products"]:
+        expect(item["category_slug"] in by_slug, f"additional_aggregates.json: unknown category {item['category_slug']!r}")
+        expect(set(item["units"]) <= {"ton", "m3"}, f"additional_aggregates.json: {item['name']} — bulk units only")
+        category = by_slug[item["category_slug"]]
+        counters[category["sku_code"]] = counters.get(category["sku_code"], 0) + 1
+        unit_label = " / ".join(f"per {'m³' if u == 'm3' else u}" for u in sorted(item["units"], key=["m3", "ton"].index))
+        extra.append(
+            {
+                "sku": f"AA-{category['sku_code']}-{counters[category['sku_code']]:02d}",
+                "slug": slugify(item["name"]),
+                "name": item["name"],
+                "category_slug": category["slug"],
+                "grading_standard": item["grading_standard"],
+                "unit_of_sale_label": unit_label,
+                "units": item["units"],
+                "bag_weight_kg": None,
+                "source": "category-band",
+            }
+        )
+    return extra
+
+
 def add_derived_prices(data: dict) -> None:
     """Price every product with the service's own calculators, for display and seeding."""
     framework = build(data)
@@ -278,7 +311,7 @@ def add_derived_prices(data: dict) -> None:
         }
         # Tier prices for the units the product is actually sold in.
         p["prices"] = {
-            tier: {unit: float(unit_price(product, unit, framework.tiers[tier].discount)) for unit in product.units}
+            tier: {unit: float(tier_unit_price(product, unit, tier).unit_price) for unit in product.units}
             for tier in TIERS_WITH_PRICES
         }
 
@@ -298,6 +331,9 @@ def import_workbook(path: Path = WORKBOOK_PATH) -> dict:
         "delivery": read_delivery(wb),
         "products": read_products(wb, categories),
     }
+    data["products"] += read_additional(categories, data["products"])
+    slugs = [p["slug"] for p in data["products"]]
+    expect(len(set(slugs)) == len(slugs), "Duplicate product slugs")
     add_derived_prices(data)
     return data
 
