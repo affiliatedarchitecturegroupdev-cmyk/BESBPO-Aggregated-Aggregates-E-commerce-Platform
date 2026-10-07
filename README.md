@@ -85,6 +85,7 @@ aggregates-store-platform/
 ├── B2B_BULK_CATALOGUE.md CAT-10/11 packaged goods and the dedup against the aggregate catalogue
 ├── CEMENT_MASTER_CATALOGUE.md 37 cement SKUs (9 live-priced): taxonomy, benchmarks, dedup
 ├── READY_MIX_CATALOGUE.md CAT-12 ready-mix grades, pumps and the producer network
+├── PLANT_HIRE_CATALOGUE.md CAT-13/14 plant hire and site services: Agent model, rate cards, enquiries
 ├── PRICING_POLICY.md     Floor-based tier discounts for every catalogue
 ├── BLOG_CMS.md           Blog/CMS: API, admin, content rules
 ├── PAYMENT_ASSETS.md     Logo/icon provenance (Brandfetch files and remaining placeholders)

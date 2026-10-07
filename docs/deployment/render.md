@@ -251,6 +251,14 @@ in **Admin → Notifications** rather than sent.
 
 ## Notes
 
+- **Plant hire and services (Oct 2026).** The migration
+  `20261008090000_enquiries` adds the `Enquiry` table. Requests from the
+  hire, services, job-pack, estimator and partner pages arrive in
+  Admin → Enquiries and are emailed to the staff recipients in
+  Admin → Notifications (or `STAFF_NOTIFICATION_EMAILS`). No new environment
+  variables. Hire rates go live only through the rate-card loader
+  (`PLANT_HIRE_CATALOGUE.md`) and a redeploy.
+
 - **Data residency.** The spec's infrastructure standard names AWS
   `af-south-1` for data sovereignty. Render has no African region, so the
   Blueprint uses Frankfurt as the closest. Confirm this is acceptable for

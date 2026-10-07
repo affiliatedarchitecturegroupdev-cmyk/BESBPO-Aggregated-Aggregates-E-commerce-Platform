@@ -834,6 +834,7 @@ enum NotificationEvent {
   TRADE_APPLICATION_RECEIVED
   TRADE_APPLICATION_APPROVED
   TRADE_APPLICATION_DECLINED
+  ENQUIRY_RECEIVED
 }
 
 enum NotificationChannel {
@@ -874,6 +875,7 @@ model Notification {
   orderId           String?
   quoteId           String?
   companyId         String?
+  enquiryId         String?
   createdAt         DateTime             @default(now())
   sentAt            DateTime?
 
@@ -1014,4 +1016,51 @@ model NewsletterSubscriber {
   updatedAt        DateTime           @updatedAt
 
   @@index([unsubscribedAt])
+}
+
+/// What a customer is asking about on the hire, services and project pages.
+enum EnquiryKind {
+  PLANT_HIRE // a wet-hire machine (PLANT_HIRE_CATALOGUE.md)
+  SITE_SERVICE // haulage, rubble removal, skips, clearing, demolition
+  BUSINESS_LINE // recycled loop, fill exchange, testing, diesel, small equipment
+  JOB_PACK // a bundle of materials, hire and services
+  ESTIMATE // a sized job from the project estimator
+  PARTNER_APPLICATION // a plant or haulage operator applying to join
+}
+
+enum EnquiryStatus {
+  NEW
+  IN_PROGRESS
+  QUOTED
+  WON
+  LOST
+  CLOSED
+}
+
+/// Requests from the plant-hire, services, job-pack, estimator and partner
+/// pages. These lines are quoted (no written partner rates yet), so a
+/// request is an enquiry that sales prices with partners — not a quote on
+/// catalogue SKUs. Contact details are personal information (POPIA): staff only.
+model Enquiry {
+  id           String        @id @default(cuid())
+  reference    String        @unique // ENQ-YYMMDD-XXXX, shown to the customer
+  kind         EnquiryKind
+  subject      String // what it's about, e.g. "Excavator 5t" or "Fill Exchange"
+  sku          String? // the machine, service or pack, when there is one
+  details      Json // the form's answers (region, hire period, dates, sizes…)
+  contactName  String
+  contactEmail String
+  contactPhone String?
+  companyName  String?
+  province     String?
+  siteAddress  String?
+  message      String?
+  userId       String? // signed-in customer, if any
+  status       EnquiryStatus @default(NEW)
+  staffNotes   String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([status, createdAt])
+  @@index([kind])
 }

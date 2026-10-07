@@ -1547,4 +1547,67 @@ describe("Aggregated Aggregates API (e2e)", () => {
       expect((await prisma.newsletterSubscriber.findUniqueOrThrow({ where: { email } })).unsubscribedAt).toBeNull();
     });
   });
+
+  describe("enquiries (plant hire, services, job packs, partners)", () => {
+    const email = `hire-${run}@example.com`;
+    afterAll(async () => {
+      const ids = (await prisma.enquiry.findMany({ where: { contactEmail: email }, select: { id: true } })).map((e) => e.id);
+      await prisma.notification.deleteMany({ where: { enquiryId: { in: ids } } });
+      await prisma.enquiry.deleteMany({ where: { contactEmail: email } });
+    });
+
+    const body = {
+      kind: "PLANT_HIRE",
+      subject: "Excavator 20t — wet hire",
+      sku: "AA-PLT-EXC-20T",
+      details: { "Hire basis": "By the day", Duration: "3", nested: { evil: true }, "bad key!": "x", Notes: "y".repeat(900) },
+      contactName: "Thandi Mokoena",
+      contactEmail: email.toUpperCase(),
+      contactPhone: "082 123 4567",
+      province: "Gauteng",
+      siteAddress: "Midrand",
+    };
+
+    it("takes a guest's request, keeps only short scalar answers and emails both sides", async () => {
+      const res = await http().post("/enquiries").send(body).expect(201);
+      expect(res.body.reference).toMatch(/^ENQ-\d{6}-[0-9A-F]{6}$/);
+      const row = await prisma.enquiry.findUniqueOrThrow({ where: { id: res.body.id } });
+      expect(row.contactEmail).toBe(email);
+      expect(row.userId).toBeNull();
+      expect(row.details).toEqual({ "Hire basis": "By the day", Duration: "3", Notes: "y".repeat(500) });
+      const sent = await prisma.notification.findMany({ where: { enquiryId: row.id } });
+      expect(sent.some((n) => n.audience === "CUSTOMER" && n.recipient === email && n.subject === `We've received your request ${row.reference}`)).toBe(true);
+    });
+
+    it("rejects bad input and bots", async () => {
+      await http().post("/enquiries").send({ ...body, kind: "BOOKING" }).expect(400);
+      await http().post("/enquiries").send({ ...body, province: "Gautengg" }).expect(400);
+      await http().post("/enquiries").send({ ...body, contactEmail: "nope" }).expect(400);
+      await http().post("/enquiries").send({ ...body, website: "http://spam.example" }).expect(400);
+    });
+
+    it("links a signed-in customer and lets staff work the inbox; only admins erase", async () => {
+      const customer = await register("hirer");
+      const mine = await http().post("/enquiries").set("Authorization", `Bearer ${customer}`).send({ ...body, kind: "JOB_PACK", subject: "Job pack: Driveway" }).expect(201);
+      expect((await prisma.enquiry.findUniqueOrThrow({ where: { id: mine.body.id } })).userId).not.toBeNull();
+
+      await http().get("/enquiries/admin").set("Authorization", `Bearer ${customer}`).expect(403);
+      const staff = await register("hirestaff");
+      await prisma.user.update({ where: { email: `hirestaff-${run}@example.com` }, data: { role: "STAFF" } });
+      const list = await http().get("/enquiries/admin?kind=JOB_PACK").set("Authorization", `Bearer ${staff}`).expect(200);
+      expect(list.body.enquiries.map((e: { id: string }) => e.id)).toContain(mine.body.id);
+      expect(list.body.enquiries.every((e: { kind: string }) => e.kind === "JOB_PACK")).toBe(true);
+      expect(list.body.counts.NEW).toBeGreaterThan(0);
+
+      const updated = await http().patch(`/enquiries/admin/${mine.body.id}`).set("Authorization", `Bearer ${staff}`).send({ status: "QUOTED", staffNotes: "Two partners priced" }).expect(200);
+      expect(updated.body).toMatchObject({ status: "QUOTED", staffNotes: "Two partners priced" });
+
+      await http().delete(`/enquiries/admin/${mine.body.id}`).set("Authorization", `Bearer ${staff}`).expect(403);
+      const admin = await register("hireadmin");
+      await prisma.user.update({ where: { email: `hireadmin-${run}@example.com` }, data: { role: "ADMIN" } });
+      await http().delete(`/enquiries/admin/${mine.body.id}`).set("Authorization", `Bearer ${admin}`).expect(204);
+      expect(await prisma.enquiry.findUnique({ where: { id: mine.body.id } })).toBeNull();
+      expect(await prisma.notification.count({ where: { enquiryId: mine.body.id } })).toBe(0);
+    });
+  });
 });

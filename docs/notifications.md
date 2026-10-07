@@ -22,6 +22,7 @@ Code: `apps/api/src/notifications/` (message texts live in
 | Quote accepted / declined | — | — | ✓ |
 | Trade application received | ✓ | — | ✓ |
 | Trade application approved / declined | ✓ | — | — |
+| Hire, service or partner enquiry received | ✓ acknowledgement + reference, "nothing booked until you accept" | — | ✓ with the form's answers and a link to Admin → Enquiries |
 
 ¹ Only to buyers who ticked "send updates on WhatsApp" at checkout or on the
 quote form, and only for events an admin has switched on (off by default —

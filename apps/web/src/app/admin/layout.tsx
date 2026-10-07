@@ -10,6 +10,7 @@ const NAV = [
   { href: "/admin/applications", label: "Trade applications" },
   { href: "/admin/orders", label: "Orders" },
   { href: "/admin/quotes", label: "Quote requests" },
+  { href: "/admin/enquiries", label: "Enquiries" },
   { href: "/admin/documents", label: "Compliance documents" },
   { href: "/admin/products", label: "Products" },
   { href: "/admin/image-permissions", label: "Image permissions" },

@@ -2,7 +2,10 @@ import type { MetadataRoute } from "next";
 import { PRODUCTS } from "@/data/catalogue";
 import { CATEGORIES } from "@/data/categories";
 import { INDUSTRIES } from "@/data/industries";
+import { EXTRA_LINES } from "@/data/extra-lines";
 import { PACKAGED_PRODUCTS } from "@/data/packaged";
+import { PLANT, SERVICES } from "@/data/plant-services";
+import { READY_MIX_PRODUCTS } from "@/data/ready-mix";
 import { getPublishedPosts } from "@/lib/blog";
 import { getOpenVacancies } from "@/lib/careers";
 import { SITE_URL } from "@/lib/site";
@@ -10,6 +13,11 @@ import { SITE_URL } from "@/lib/site";
 const STATIC_PATHS = [
   "",
   "/products",
+  "/plant-hire",
+  "/services",
+  "/job-packs",
+  "/estimator",
+  "/partners",
   "/trade-accounts",
   "/delivery-areas",
   "/coverage",
@@ -40,7 +48,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...STATIC_PATHS.map((path) => ({ url: `${SITE_URL}${path}` })),
     ...CATEGORIES.map((c) => ({ url: `${SITE_URL}/products?category=${c.slug}` })),
     ...INDUSTRIES.map((i) => ({ url: `${SITE_URL}/products?industry=${i.slug}` })),
-    ...[...PRODUCTS, ...PACKAGED_PRODUCTS].map((p) => ({ url: `${SITE_URL}/products/${p.slug}` })),
+    ...EXTRA_LINES.map((l) => ({ url: `${SITE_URL}${l.path}` })),
+    ...PLANT.map((p) => ({ url: `${SITE_URL}/plant-hire/${p.slug}` })),
+    ...SERVICES.map((s) => ({ url: `${SITE_URL}/services/${s.slug}` })),
+    ...[...PRODUCTS, ...PACKAGED_PRODUCTS, ...READY_MIX_PRODUCTS].map((p) => ({ url: `${SITE_URL}/products/${p.slug}` })),
     ...posts.map((p) => ({ url: `${SITE_URL}/blog/${p.slug}`, lastModified: p.updatedAt })),
     ...vacancies.map((v) => ({ url: `${SITE_URL}/careers/${v.slug}`, lastModified: v.publishedAt ?? undefined })),
   ];

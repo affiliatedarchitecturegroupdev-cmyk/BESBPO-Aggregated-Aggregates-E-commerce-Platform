@@ -103,6 +103,21 @@ export const HERO_SLIDESHOW_IMAGES: SlideImage[] = [
     theme: "application",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:Road_construction_in_Cape_Town_city_center.jpg",
   },
+  // Business-line imagery (Oct 2026), checked by eye: both show the plant they're captioned with.
+  {
+    id: "excavator-yellow",
+    url: unsplashUrl("photo-1580901369227-308f6f40bdeb"),
+    alt: "Yellow tracked excavator with its bucket resting on loose rock",
+    credit: "Gerold Hinzen / Unsplash",
+    theme: "machinery",
+  },
+  {
+    id: "demolition-bulldozer",
+    url: unsplashUrl("photo-1677588508537-5106322c2d40"),
+    alt: "Excavator demolishing a house, with rubble across the site",
+    credit: "Vincenzo Cassano / Unsplash",
+    theme: "machinery",
+  },
 ];
 
 export const MEDIA_BY_ID = new Map(HERO_SLIDESHOW_IMAGES.map((image) => [image.id, image]));

@@ -9,12 +9,13 @@ export const SITE_URL = (
   "http://localhost:3000"
 ).replace(/\/+$/, "");
 
+/** Industries, About and Where We Deliver moved to the footer when plant hire and services joined (Oct 2026). */
 export const NAV_LINKS = [
-  { href: "/products", label: "Products" },
-  { href: "/industries-we-serve", label: "Industries" },
+  { href: "/products", label: "Materials" },
+  { href: "/plant-hire", label: "Plant Hire" },
+  { href: "/services", label: "Services" },
+  { href: "/job-packs", label: "Job Packs" },
   { href: "/trade-accounts", label: "Trade Accounts" },
-  { href: "/coverage", label: "Where We Deliver" },
-  { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
 

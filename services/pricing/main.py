@@ -17,7 +17,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 import pricing_framework
-from calculators import packaged_goods, ready_mix
+from calculators import packaged_goods, ready_mix, rental
 from calculators.delivery_bands import calculate_delivery_fee
 from calculators.discount_floor import TierQuoteOnly
 from calculators.order import OrderLine, UnknownSku, price_order
@@ -32,6 +32,7 @@ app = FastAPI(
 FRAMEWORK = pricing_framework.load()
 PACKAGED_RAW, PACKAGED = packaged_goods.load()
 READY_MIX_RAW, READY_MIX, PUMPS = ready_mix.load()
+PLANT_SERVICES = rental.load()
 
 TierName = Literal["RETAIL", "CONTRACTOR_TRADE", "VOLUME_CIVIL_BULK"]
 UnitName = Literal["ton", "m3", "bag"]
@@ -63,6 +64,17 @@ def list_ready_mix_products():
 @app.get("/products/ready-mix/pumps")
 def list_ready_mix_pumps():
     return READY_MIX_RAW["pumps"]
+
+
+@app.get("/products/plant-hire")
+def list_plant_hire():
+    """CAT-13 wet-hire machines (Agent model). Rates appear only once loaded from written partner rate cards."""
+    return {"plant": PLANT_SERVICES.raw["plant"], "rates": {k: v for k, v in PLANT_SERVICES.raw["rates"].items() if k in PLANT_SERVICES.plant}}
+
+
+@app.get("/products/site-services")
+def list_site_services():
+    return {"services": PLANT_SERVICES.raw["services"], "rates": {k: v for k, v in PLANT_SERVICES.raw["rates"].items() if k in PLANT_SERVICES.services}}
 
 
 @app.get("/customer-tiers")
@@ -184,6 +196,42 @@ def calculate_ready_mix_pump(req: PumpRequest):
     try:
         return ready_mix.price_pump(pump, req.quantity_m3)
     except ready_mix.PricingNotAvailable as exc:
+        raise HTTPException(status_code=422, detail=str(exc))
+
+
+class RentalRequest(BaseModel):
+    sku: str
+    region: str
+    basis: Literal["DAY", "WEEK", "MONTH", "LONG_TERM"]
+    quantity: int = Field(ge=1)
+    extra_hours: Decimal = Field(default=Decimal(0), ge=0)
+    distance_km: Decimal | None = Field(default=None, ge=0)
+
+
+@app.post("/calculate/rental")
+def calculate_rental(req: RentalRequest):
+    """Wet hire at partner rate x 1.12. Quoted (422) until two written partner rate cards exist for the province."""
+    try:
+        return rental.price_rental(PLANT_SERVICES, req.sku, req.region, req.basis, req.quantity, req.extra_hours, req.distance_km)
+    except KeyError:
+        raise HTTPException(status_code=404, detail=f"Unknown machine: {req.sku}")
+    except (rental.PricingNotAvailable, rental.QuoteOnly, ValueError) as exc:
+        raise HTTPException(status_code=422, detail=str(exc))
+
+
+class ServiceRequest(BaseModel):
+    sku: str
+    region: str
+    quantity: Decimal = Field(gt=0)
+
+
+@app.post("/calculate/service")
+def calculate_service(req: ServiceRequest):
+    try:
+        return rental.price_service(PLANT_SERVICES, req.sku, req.region, req.quantity)
+    except KeyError:
+        raise HTTPException(status_code=404, detail=f"Unknown service: {req.sku}")
+    except (rental.PricingNotAvailable, rental.QuoteOnly, ValueError) as exc:
         raise HTTPException(status_code=422, detail=str(exc))
 
 

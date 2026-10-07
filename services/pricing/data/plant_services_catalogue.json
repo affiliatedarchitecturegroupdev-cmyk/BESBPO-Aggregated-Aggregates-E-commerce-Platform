@@ -1,0 +1,434 @@
+{
+ "_source": "Plant hire (CAT-13, wet hire) and site services (CAT-14) — Agent model, PLANT_HIRE_CATALOGUE.md. Customer price = the partner's written rate x 1.12 (12% commission). No rate is published until at least two partners' written rate cards exist for a SKU in a province (services/pricing/ratecards/load_rate_cards.py writes 'rates'); until then everything is quoted. Monthly and long-term hire, demolition and scheduled waste contracts are always quoted.",
+ "commission_percent": 12,
+ "hours_per_day_cap": 8,
+ "min_partner_cards": 2,
+ "regions": [
+  "Eastern Cape",
+  "Free State",
+  "Gauteng",
+  "KwaZulu-Natal",
+  "Limpopo",
+  "Mpumalanga",
+  "North West",
+  "Northern Cape",
+  "Western Cape"
+ ],
+ "mobilisation_bands": [
+  {
+   "label": "0–30km",
+   "min_km": 0,
+   "max_km": 30,
+   "fee": null,
+   "is_quote_only": false
+  },
+  {
+   "label": "30–60km",
+   "min_km": 30,
+   "max_km": 60,
+   "fee": null,
+   "is_quote_only": false
+  },
+  {
+   "label": "60–100km",
+   "min_km": 60,
+   "max_km": 100,
+   "fee": null,
+   "is_quote_only": false
+  },
+  {
+   "label": "100km+",
+   "min_km": 100,
+   "max_km": null,
+   "fee": null,
+   "is_quote_only": true
+  }
+ ],
+ "plant": [
+  {
+   "sku": "AA-PLT-TLB-4X4",
+   "slug": "tlb-4x4-90hp-class",
+   "name": "TLB 4x4 (90hp class)",
+   "plant_class": "TLB",
+   "size_label": "90hp class, 4x4",
+   "needs_lowbed": false,
+   "typical_uses": [
+    "General excavation and trenching",
+    "Loading, backfilling and levelling",
+    "Small-scale earthworks and site clean-up"
+   ],
+   "hire_notes": "Wet hire: machine, operator, fuel and PPE included. 8-hour day cap; excess hours, standing time and transport (mobilisation) are quoted separately. Minimum hire one day."
+  },
+  {
+   "sku": "AA-PLT-EXC-1-7T",
+   "slug": "mini-excavator-1-7t",
+   "name": "Mini Excavator 1.7t",
+   "plant_class": "EXCAVATOR",
+   "size_label": "1.7t",
+   "needs_lowbed": false,
+   "typical_uses": [
+    "Residential trenching and tight-access digging",
+    "Landscaping and small foundations",
+    "Service and drainage trenches"
+   ],
+   "hire_notes": "Wet hire: machine, operator, fuel and PPE included. 8-hour day cap; excess hours, standing time and transport (mobilisation) are quoted separately. Minimum hire one day."
+  },
+  {
+   "sku": "AA-PLT-EXC-3T",
+   "slug": "mini-excavator-3t",
+   "name": "Mini Excavator 3t",
+   "plant_class": "EXCAVATOR",
+   "size_label": "3t",
+   "needs_lowbed": false,
+   "typical_uses": [
+    "Trenching and small foundations",
+    "Pipe and cable laying",
+    "Landscaping and site preparation"
+   ],
+   "hire_notes": "Wet hire: machine, operator, fuel and PPE included. 8-hour day cap; excess hours, standing time and transport (mobilisation) are quoted separately. Minimum hire one day."
+  },
+  {
+   "sku": "AA-PLT-EXC-5T",
+   "slug": "excavator-5t",
+   "name": "Excavator 5t",
+   "plant_class": "EXCAVATOR",
+   "size_label": "5t",
+   "needs_lowbed": true,
+   "typical_uses": [
+    "Foundation and basement digging",
+    "Drainage and services trenching",
+    "Light demolition support"
+   ],
+   "hire_notes": "Wet hire: machine, operator, fuel and PPE included. 8-hour day cap; excess hours, standing time and transport (mobilisation) are quoted separately. Minimum hire one day."
+  },
+  {
+   "sku": "AA-PLT-EXC-8T",
+   "slug": "excavator-8t",
+   "name": "Excavator 8t",
+   "plant_class": "EXCAVATOR",
+   "size_label": "8t",
+   "needs_lowbed": true,
+   "typical_uses": [
+    "Foundations and bulk excavation",
+    "Trenching and stormwater work",
+    "Loading tipper trucks"
+   ],
+   "hire_notes": "Wet hire: machine, operator, fuel and PPE included. 8-hour day cap; excess hours, standing time and transport (mobilisation) are quoted separately. Minimum hire one day."
+  },
+  {
+   "sku": "AA-PLT-EXC-14T",
+   "slug": "excavator-14t",
+   "name": "Excavator 14t",
+   "plant_class": "EXCAVATOR",
+   "size_label": "14t",
+   "needs_lowbed": true,
+   "typical_uses": [
+    "Bulk earthworks",
+    "Road and platform construction",
+    "Loading and general civil work"
+   ],
+   "hire_notes": "Wet hire: machine, operator, fuel and PPE included. 8-hour day cap; excess hours, standing time and transport (mobilisation) are quoted separately. Minimum hire one day."
+  },
+  {
+   "sku": "AA-PLT-EXC-20T",
+   "slug": "excavator-20t",
+   "name": "Excavator 20t",
+   "plant_class": "EXCAVATOR",
+   "size_label": "20t",
+   "needs_lowbed": true,
+   "typical_uses": [
+    "Large-scale bulk excavation",
+    "Civil and infrastructure projects",
+    "Quarry and stockpile loading"
+   ],
+   "hire_notes": "Wet hire: machine, operator, fuel and PPE included. 8-hour day cap; excess hours, standing time and transport (mobilisation) are quoted separately. Minimum hire one day."
+  },
+  {
+   "sku": "AA-PLT-EXC-30T",
+   "slug": "excavator-30t",
+   "name": "Excavator 30t",
+   "plant_class": "EXCAVATOR",
+   "size_label": "30t",
+   "needs_lowbed": true,
+   "typical_uses": [
+    "Heavy bulk excavation",
+    "Mining and large civil projects",
+    "High-volume loading"
+   ],
+   "hire_notes": "Wet hire: machine, operator, fuel and PPE included. 8-hour day cap; excess hours, standing time and transport (mobilisation) are quoted separately. Minimum hire one day."
+  },
+  {
+   "sku": "AA-PLT-TIP-6M3",
+   "slug": "tipper-truck-6m3",
+   "name": "Tipper Truck 6m³",
+   "plant_class": "TIPPER",
+   "size_label": "6m³",
+   "needs_lowbed": false,
+   "typical_uses": [
+    "Hauling aggregates, soil and rubble",
+    "Small and residential projects",
+    "Site clean-up"
+   ],
+   "hire_notes": "Wet hire: machine, operator, fuel and PPE included. 8-hour day cap; excess hours, standing time and transport (mobilisation) are quoted separately. Minimum hire one day."
+  },
+  {
+   "sku": "AA-PLT-TIP-10M3",
+   "slug": "tipper-truck-10m3",
+   "name": "Tipper Truck 10m³",
+   "plant_class": "TIPPER",
+   "size_label": "10m³",
+   "needs_lowbed": false,
+   "typical_uses": [
+    "Hauling bulk aggregates and spoil",
+    "Civil and commercial projects",
+    "Rubble removal"
+   ],
+   "hire_notes": "Wet hire: machine, operator, fuel and PPE included. 8-hour day cap; excess hours, standing time and transport (mobilisation) are quoted separately. Minimum hire one day."
+  },
+  {
+   "sku": "AA-PLT-TIP-34T",
+   "slug": "tipper-truck-34t-side-or-rear-tipper",
+   "name": "Tipper Truck 34t (side or rear tipper)",
+   "plant_class": "TIPPER",
+   "size_label": "34t payload class",
+   "needs_lowbed": false,
+   "typical_uses": [
+    "High-volume material haulage",
+    "Road and bulk-fill projects",
+    "Long-distance spoil removal"
+   ],
+   "hire_notes": "Wet hire: machine, operator, fuel and PPE included. 8-hour day cap; excess hours, standing time and transport (mobilisation) are quoted separately. Minimum hire one day."
+  },
+  {
+   "sku": "AA-PLT-ROL-1-3T",
+   "slug": "roller-1-3t-compactor",
+   "name": "Roller 1–3t (compactor)",
+   "plant_class": "ROLLER",
+   "size_label": "1–3t",
+   "needs_lowbed": false,
+   "typical_uses": [
+    "Compacting driveways, paths and trenches",
+    "Paving sub-base",
+    "Small-area asphalt and gravel"
+   ],
+   "hire_notes": "Wet hire: machine, operator, fuel and PPE included. 8-hour day cap; excess hours, standing time and transport (mobilisation) are quoted separately. Minimum hire one day."
+  },
+  {
+   "sku": "AA-PLT-ROL-8-12T",
+   "slug": "smooth-drum-roller-8-12t",
+   "name": "Smooth-Drum Roller 8–12t",
+   "plant_class": "ROLLER",
+   "size_label": "8–12t",
+   "needs_lowbed": true,
+   "typical_uses": [
+    "Compacting G-grade base layers",
+    "Road and hardstand construction",
+    "Asphalt and crusher-run finishing"
+   ],
+   "hire_notes": "Wet hire: machine, operator, fuel and PPE included. 8-hour day cap; excess hours, standing time and transport (mobilisation) are quoted separately. Minimum hire one day."
+  },
+  {
+   "sku": "AA-PLT-ROL-PAD",
+   "slug": "padfoot-roller-12t",
+   "name": "Padfoot Roller 12t",
+   "plant_class": "ROLLER",
+   "size_label": "12t",
+   "needs_lowbed": true,
+   "typical_uses": [
+    "Compacting cohesive soils and fill",
+    "Embankments and platforms",
+    "Landfill and bulk-fill compaction"
+   ],
+   "hire_notes": "Wet hire: machine, operator, fuel and PPE included. 8-hour day cap; excess hours, standing time and transport (mobilisation) are quoted separately. Minimum hire one day."
+  },
+  {
+   "sku": "AA-PLT-SKID-STEER",
+   "slug": "skid-steer-loader",
+   "name": "Skid-Steer Loader",
+   "plant_class": "SKID_STEER",
+   "size_label": "Compact loader",
+   "needs_lowbed": false,
+   "typical_uses": [
+    "Loading, levelling and clean-up",
+    "Tight-access site work",
+    "Attachment-based work"
+   ],
+   "hire_notes": "Wet hire: machine, operator, fuel and PPE included. 8-hour day cap; excess hours, standing time and transport (mobilisation) are quoted separately. Minimum hire one day."
+  },
+  {
+   "sku": "AA-PLT-WHEEL-LOADER",
+   "slug": "wheel-loader",
+   "name": "Wheel Loader",
+   "plant_class": "WHEEL_LOADER",
+   "size_label": "By bucket capacity",
+   "needs_lowbed": true,
+   "typical_uses": [
+    "Loading aggregates and bulk material",
+    "Stockpile handling",
+    "Yard and site loading"
+   ],
+   "hire_notes": "Wet hire: machine, operator, fuel and PPE included. 8-hour day cap; excess hours, standing time and transport (mobilisation) are quoted separately. Minimum hire one day."
+  },
+  {
+   "sku": "AA-PLT-SITE-DUMPER",
+   "slug": "site-dumper",
+   "name": "Site Dumper",
+   "plant_class": "SITE_DUMPER",
+   "size_label": "Articulated or forward-tip",
+   "needs_lowbed": false,
+   "typical_uses": [
+    "Moving material within a site",
+    "Rough-terrain hauling",
+    "Concrete and aggregate transfer"
+   ],
+   "hire_notes": "Wet hire: machine, operator, fuel and PPE included. 8-hour day cap; excess hours, standing time and transport (mobilisation) are quoted separately. Minimum hire one day."
+  },
+  {
+   "sku": "AA-PLT-WATER-TRUCK",
+   "slug": "water-truck",
+   "name": "Water Truck",
+   "plant_class": "WATER_TRUCK",
+   "size_label": "By tank capacity",
+   "needs_lowbed": false,
+   "typical_uses": [
+    "Dust suppression",
+    "Compaction moisture conditioning",
+    "Road and haul-road maintenance"
+   ],
+   "hire_notes": "Wet hire: machine, operator, fuel and PPE included. 8-hour day cap; excess hours, standing time and transport (mobilisation) are quoted separately. Minimum hire one day."
+  }
+ ],
+ "services": [
+  {
+   "sku": "AA-SVC-HAUL-6M3",
+   "slug": "tipper-haulage-6m3-load",
+   "name": "Tipper Haulage — 6m³ Load",
+   "service_type": "HAULAGE",
+   "unit": "PER_LOAD",
+   "description": "Per tipper load. Move aggregates, soil or spoil between points; cart pricing inside the delivery distance bands, quote beyond.",
+   "typical_uses": [
+    "Material delivery from quarry to site",
+    "Spoil removal",
+    "Site-to-site transfers"
+   ]
+  },
+  {
+   "sku": "AA-SVC-HAUL-10M3",
+   "slug": "tipper-haulage-10m3-load",
+   "name": "Tipper Haulage — 10m³ Load",
+   "service_type": "HAULAGE",
+   "unit": "PER_LOAD",
+   "description": "Per tipper load, larger trucks for bulk material.",
+   "typical_uses": [
+    "Bulk aggregate delivery",
+    "Bulk spoil removal",
+    "Civil project haulage"
+   ]
+  },
+  {
+   "sku": "AA-SVC-HAUL-DAY",
+   "slug": "tipper-with-driver-per-day",
+   "name": "Tipper with Driver — Per Day",
+   "service_type": "HAULAGE",
+   "unit": "PER_DAY",
+   "description": "Tipper truck with driver and fuel for the day, for repeated runs.",
+   "typical_uses": [
+    "Multiple-run haulage days",
+    "Project material shuttling",
+    "Spoil removal across a day"
+   ]
+  },
+  {
+   "sku": "AA-SVC-RUBBLE-6M3",
+   "slug": "rubble-removal-6m3-load",
+   "name": "Rubble Removal — 6m³ Load",
+   "service_type": "RUBBLE_REMOVAL",
+   "unit": "PER_LOAD",
+   "description": "Per tipper load of clean rubble; licensed disposal and weighbridge slip included. Mixed or hazardous waste is quoted or declined.",
+   "typical_uses": [
+    "Renovation and demolition clean-up",
+    "Garden and driveway rubble",
+    "Builders' rubble"
+   ]
+  },
+  {
+   "sku": "AA-SVC-RUBBLE-10M3",
+   "slug": "rubble-removal-10m3-load",
+   "name": "Rubble Removal — 10m³ Load",
+   "service_type": "RUBBLE_REMOVAL",
+   "unit": "PER_LOAD",
+   "description": "Per tipper load of clean rubble, larger trucks; licensed disposal and weighbridge slip included.",
+   "typical_uses": [
+    "Larger demolition clean-ups",
+    "Commercial rubble removal",
+    "Site clearance spoil"
+   ]
+  },
+  {
+   "sku": "AA-SVC-SKIP-6M3",
+   "slug": "skip-bin-6m3",
+   "name": "Skip Bin — 6m³",
+   "service_type": "SKIP_BIN",
+   "unit": "PER_SKIP",
+   "description": "Per skip: hire period plus one collection; size and rate to be confirmed with partners.",
+   "typical_uses": [
+    "Renovation waste",
+    "Garden and builders' waste",
+    "Small site waste"
+   ]
+  },
+  {
+   "sku": "AA-SVC-SKIP-12M3",
+   "slug": "skip-bin-12m3",
+   "name": "Skip Bin — 12m³",
+   "service_type": "SKIP_BIN",
+   "unit": "PER_SKIP",
+   "description": "Per skip: hire period plus one collection; size and rate to be confirmed with partners.",
+   "typical_uses": [
+    "Larger renovation and site waste",
+    "Commercial clean-outs",
+    "Project waste"
+   ]
+  },
+  {
+   "sku": "AA-SVC-CLEAR",
+   "slug": "site-clearing",
+   "name": "Site Clearing",
+   "service_type": "SITE_CLEARING",
+   "unit": "PER_M2",
+   "description": "Per m² by vegetation density, from photos and a rough area; partner site visit for larger areas. Quote at launch.",
+   "typical_uses": [
+    "Bush and vegetation clearing",
+    "Pre-construction site preparation",
+    "Stripping and stockpiling topsoil"
+   ]
+  },
+  {
+   "sku": "AA-SVC-DEMOLITION",
+   "slug": "demolition",
+   "name": "Demolition",
+   "service_type": "DEMOLITION",
+   "unit": "QUOTE",
+   "description": "Always quoted per job and subcontracted to vetted partners; competent person and method statement required. Asbestos excluded at launch.",
+   "typical_uses": [
+    "Building and structure demolition",
+    "Selective strip-out",
+    "Slab and foundation removal"
+   ]
+  },
+  {
+   "sku": "AA-SVC-WASTE",
+   "slug": "waste-management-scheduled",
+   "name": "Waste Management (Scheduled)",
+   "service_type": "WASTE_MANAGEMENT",
+   "unit": "QUOTE",
+   "description": "Scheduled collection contracts, quoted after a site audit.",
+   "typical_uses": [
+    "Ongoing construction-site waste",
+    "Commercial and industrial collections",
+    "Recycling streams"
+   ]
+  }
+ ],
+ "rates": {}
+}
