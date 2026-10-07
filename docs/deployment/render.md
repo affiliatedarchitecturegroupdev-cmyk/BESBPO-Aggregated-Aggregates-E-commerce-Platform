@@ -251,6 +251,12 @@ in **Admin → Notifications** rather than sent.
 
 ## Notes
 
+- **Hire bookings (Oct 2026).** Migration `20261009090000_bookings` adds
+  partners, fleet, bookings, offers, job cards, chat, disputes, payouts and
+  review flags, plus the `PARTNER` role. The API runs a once-a-minute sweep
+  (offer expiry, payouts due); set `BOOKINGS_SCHEDULER=off` on any extra API
+  instance if you scale out (the sweep is safe to run twice, but once is
+  enough). Booking payments use `EFT_BANKING_DETAILS`.
 - **Plant hire and services (Oct 2026).** The migration
   `20261008090000_enquiries` adds the `Enquiry` table. Requests from the
   hire, services, job-pack, estimator and partner pages arrive in

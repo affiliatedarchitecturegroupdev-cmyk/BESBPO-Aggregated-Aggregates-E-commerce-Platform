@@ -1,11 +1,11 @@
 const STEPS = [
   { n: "01", title: "Tell us the job", text: "Machine or service, province, site and dates. It takes a couple of minutes." },
-  { n: "02", title: "We match a vetted partner", text: "We check availability with partners near your site and confirm transport to site." },
-  { n: "03", title: "You get a written quote", text: "One price for the hire, operator, fuel and mobilisation. Nothing is booked until you accept." },
-  { n: "04", title: "On site, on record", text: "Hours worked and tip or weighbridge slips are kept with your quote, so the invoice matches the job." },
-];
+  { n: "02", title: "Accept a written quote", text: "Priced from a vetted partner's written quote. Accept it in your account — nothing is booked until you pay." },
+  { n: "03", title: "Pay, and we confirm a partner", text: "Pay by EFT. The job then goes to vetted partners near you, and we name the one who accepts." },
+  { n: "04", title: "Start with your code, pay on sign-off", text: "The crew starts with your arrival code. The partner is paid only after you sign off, with 48 hours to raise a problem." },
+]
 
-/** The current (enquiry-led) flow. Online booking and payment come with Phase C, once partner rates are in place. */
+/** The booking flow (PLANT_HIRE_CATALOGUE.md): quote → EFT → partner accepts → arrival code → sign-off → partner paid. */
 export function HireHowItWorks({ dark = false }: { dark?: boolean }) {
   return (
     <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

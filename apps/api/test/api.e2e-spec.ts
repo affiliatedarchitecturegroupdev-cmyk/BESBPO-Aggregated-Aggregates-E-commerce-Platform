@@ -1610,4 +1610,251 @@ describe("Aggregated Aggregates API (e2e)", () => {
       expect(await prisma.notification.count({ where: { enquiryId: mine.body.id } })).toBe(0);
     });
   });
+
+  describe("bookings: quote → payment → dispatch → arrival code → sign-off → payout", () => {
+    const tag = `bk-${run}`;
+    let staff: string, admin: string, customer: string, other: string;
+    const partnerTokens: Record<string, string> = {};
+    const partnerIds: Record<string, string> = {};
+    const auth = (t: string) => ({ Authorization: `Bearer ${t}` });
+    const day = (offset: number) => new Date(Date.now() + offset * 86_400_000).toISOString().slice(0, 10);
+
+    beforeAll(async () => {
+      staff = await register(`${tag}-staff`);
+      await prisma.user.update({ where: { email: `${tag}-staff-${run}@example.com` }, data: { role: "STAFF" } });
+      admin = await register(`${tag}-admin`);
+      await prisma.user.update({ where: { email: `${tag}-admin-${run}@example.com` }, data: { role: "ADMIN", name: "Ops Admin" } });
+      customer = await register(`${tag}-cust`);
+      await prisma.user.update({ where: { email: `${tag}-cust-${run}@example.com` }, data: { name: "Thandi Mokoena" } });
+      other = await register(`${tag}-other`);
+      for (const key of ["a", "b", "c"]) {
+        partnerTokens[key] = await register(`${tag}-p${key}`);
+        const partner = await http()
+          .post("/bookings/admin/partners")
+          .set(auth(staff))
+          .send({ name: `${tag} Plant ${key.toUpperCase()}`, province: "Gauteng", contactEmail: `${tag}-ops${key}@example.com`, contactPhone: "011 555 0000", status: key === "c" ? "ONBOARDING" : "ACTIVE" })
+          .expect(201);
+        partnerIds[key] = partner.body.id;
+        await http().post(`/bookings/admin/partners/${partner.body.id}/users`).set(auth(staff)).send({ email: `${tag}-p${key}-${run}@example.com` }).expect(201);
+        await http().post(`/bookings/admin/partners/${partner.body.id}/fleet`).set(auth(staff)).send({ sku: "AA-PLT-EXC-20T", label: "CAT 320", province: "Gauteng" }).expect(201);
+      }
+    });
+
+    afterAll(async () => {
+      const bookings = await prisma.booking.findMany({ where: { user: { email: { startsWith: `${tag}-` } } }, select: { id: true } });
+      const ids = bookings.map((b) => b.id);
+      await prisma.notification.deleteMany({ where: { bookingId: { in: ids } } });
+      await prisma.circumventionFlag.deleteMany({ where: { bookingId: { in: ids } } });
+      await prisma.booking.deleteMany({ where: { id: { in: ids } } });
+      await prisma.hirePartner.deleteMany({ where: { name: { startsWith: tag } } });
+    });
+
+    const quote = (overrides: Record<string, unknown> = {}) =>
+      http()
+        .post("/bookings/admin")
+        .set(auth(staff))
+        .send({
+          customerEmail: `${tag}-cust-${run}@example.com`,
+          sku: "AA-PLT-EXC-20T",
+          basis: "DAY",
+          quantity: 3,
+          startDate: day(5),
+          endDate: day(7),
+          province: "Gauteng",
+          siteAddress: "12 Main Rd, Midrand",
+          partnerAmount: 30000,
+          quoteSource: "Plant B email quote, 9 Oct 2026",
+          preferredPartnerId: partnerIds.b,
+          ...overrides,
+        });
+
+    it("keeps each side to its own routes", async () => {
+      await http().post("/bookings/admin").set(auth(customer)).send({}).expect(403);
+      await http().get("/partner-portal").set(auth(customer)).expect(403);
+      await http().get("/bookings/admin/partners").set(auth(partnerTokens.a)).expect(403);
+      await quote({ sku: "AA-PLT-NOPE" }).expect(400);
+      await quote({ customerEmail: `nobody-${run}@example.com` }).expect(404);
+      await quote({ quoteSource: "" }).expect(400);
+      await quote({ endDate: day(1) }).expect(400);
+      await http().post("/bookings/admin/partners").set(auth(staff)).send({ name: "Half pin", province: "Gauteng", contactEmail: "x@example.com", latitude: -26.1 }).expect(400);
+    });
+
+    let bookingId: string;
+    it("prices from the partner's written quote plus commission, and only the customer sees it", async () => {
+      const created = await quote().expect(201);
+      bookingId = created.body.id;
+      expect(created.body.reference).toMatch(/^BK-\d{6}-[0-9A-F]{6}$/);
+      expect(Number(created.body.customerTotal)).toBe(33600);
+      expect(Number(created.body.commissionPercent)).toBe(12);
+      const quoted = await prisma.notification.findFirst({ where: { bookingId, event: "BOOKING_QUOTED", audience: "CUSTOMER" } });
+      expect(quoted?.subject).toContain("R33,600.00");
+
+      await http().get(`/bookings/${bookingId}`).set(auth(other)).expect(404);
+      const view = await http().get(`/bookings/${bookingId}`).set(auth(customer)).expect(200);
+      expect(view.body).toMatchObject({ status: "QUOTED", partnerName: null, chatOpen: false, payment: null });
+      expect(JSON.stringify(view.body)).not.toMatch(/partnerAmount|quoteSource|30000/);
+      expect((await http().get("/bookings/mine").set(auth(customer)).expect(200)).body.map((b: { id: string }) => b.id)).toContain(bookingId);
+      await http().post(`/bookings/${bookingId}/arrival-code`).set(auth(customer)).expect(400);
+      await http().post(`/bookings/${bookingId}/messages`).set(auth(customer)).send({ body: "hi" }).expect(400);
+    });
+
+    it("waits for the EFT, then offers the quoting partner first and cascades on decline and expiry", async () => {
+      const accepted = await http().post(`/bookings/${bookingId}/accept`).set(auth(customer)).expect(201);
+      expect(accepted.body.status).toBe("AWAITING_PAYMENT");
+      expect(accepted.body.payment.reference).toBe(accepted.body.reference);
+      await http().post(`/bookings/admin/${bookingId}/payment`).set(auth(staff)).send({ paymentReference: "EFT 0042" }).expect(201);
+
+      const offers = async () => prisma.dispatchOffer.findMany({ where: { bookingId }, orderBy: { rank: "asc" } });
+      expect((await offers()).map((o) => [o.partnerId, o.status])).toEqual([[partnerIds.b, "PENDING"]]);
+      const offerToB = (await offers())[0];
+      const offered = await prisma.notification.findMany({ where: { bookingId, event: "BOOKING_OFFERED" } });
+      expect(offered.map((n) => n.recipient).sort()).toEqual([`${tag}-opsb@example.com`, `${tag}-pb-${run}@example.com`]);
+      expect(offered.every((n) => n.audience === "PARTNER" && !n.body.includes("Thandi") && !n.body.includes(`${tag}-cust`))).toBe(true);
+
+      // Only the partner offered can answer; the portal shows the job and payout, never the customer.
+      await http().post(`/partner-portal/offers/${offerToB.id}/accept`).set(auth(partnerTokens.a)).expect(404);
+      const portal = await http().get("/partner-portal").set(auth(partnerTokens.b)).expect(200);
+      expect(portal.body.offers).toHaveLength(1);
+      expect(Number(portal.body.offers[0].booking.partnerAmount)).toBe(30000);
+      expect(JSON.stringify(portal.body)).not.toMatch(/Thandi|-cust-|customerTotal|33600/);
+
+      await http().post(`/partner-portal/offers/${offerToB.id}/decline`).set(auth(partnerTokens.b)).expect(200);
+      const toA = (await offers())[1];
+      expect([toA.partnerId, toA.status, toA.rank]).toEqual([partnerIds.a, "PENDING", 1]);
+
+      // A lets it lapse; partner C is still onboarding, so nobody is left.
+      await prisma.dispatchOffer.update({ where: { id: toA.id }, data: { expiresAt: new Date(Date.now() - 1000) } });
+      await http().post(`/partner-portal/offers/${toA.id}/accept`).set(auth(partnerTokens.a)).expect(409);
+      const sweep = await http().post("/bookings/admin/sweep").set(auth(admin)).expect(201);
+      expect(sweep.body.expired).toBe(1);
+      expect((await prisma.booking.findUniqueOrThrow({ where: { id: bookingId } })).status).toBe("UNFULFILLED");
+      expect(await prisma.notification.count({ where: { bookingId, event: "BOOKING_UNFULFILLED", audience: "CUSTOMER" } })).toBe(1);
+    });
+
+    it("re-dispatches to a newly active partner, who accepts once; the customer sees only their name", async () => {
+      await http().patch(`/bookings/admin/partners/${partnerIds.c}`).set(auth(staff)).send({ name: `${tag} Plant C`, province: "Gauteng", contactEmail: `${tag}-opsc@example.com`, status: "ACTIVE" }).expect(200);
+      await http().post(`/bookings/admin/${bookingId}/redispatch`).set(auth(staff)).expect(201);
+      const toC = await prisma.dispatchOffer.findFirstOrThrow({ where: { bookingId, partnerId: partnerIds.c } });
+      await http().post(`/partner-portal/offers/${toC.id}/accept`).set(auth(partnerTokens.c)).expect(200);
+      await http().post(`/partner-portal/offers/${toC.id}/accept`).set(auth(partnerTokens.c)).expect(409);
+
+      const view = await http().get(`/bookings/${bookingId}`).set(auth(customer)).expect(200);
+      expect(view.body).toMatchObject({ status: "ACCEPTED", partnerName: `${tag} Plant C`, chatOpen: true });
+      expect(JSON.stringify(view.body)).not.toMatch(/opsc|011 555/);
+      expect(await prisma.partnerAvailabilityBlock.count({ where: { bookingId } })).toBe(1);
+      expect((await prisma.partnerPayout.findUniqueOrThrow({ where: { bookingId } })).status).toBe("PENDING");
+      const job = await http().get(`/partner-portal/jobs/${bookingId}`).set(auth(partnerTokens.c)).expect(200);
+      expect(job.body.customerFirstName).toBe("Thandi");
+      expect(JSON.stringify(job.body)).not.toMatch(/Mokoena|-cust-/);
+      await http().get(`/partner-portal/jobs/${bookingId}`).set(auth(partnerTokens.a)).expect(404);
+    });
+
+    it("redacts contact details in chat and job cards and flags them for review", async () => {
+      const sent = await http().post(`/bookings/${bookingId}/messages`).set(auth(customer)).send({ body: "Call me on 082 123 4567 when you're at the gate" }).expect(201);
+      const last = sent.body.messages.at(-1);
+      expect(last.body).toBe("Call me on [contact details removed] when you're at the gate");
+      expect(last.wasRedacted).toBe(true);
+      const flags = await http().get("/bookings/admin/flags").set(auth(staff)).expect(200);
+      const flag = flags.body.find((f: { bookingId: string }) => f.bookingId === bookingId);
+      expect(flag).toMatchObject({ signal: "REDACTION_HIT", partnerId: partnerIds.c });
+      await http().patch(`/bookings/admin/flags/${flag.id}`).set(auth(staff)).send({ status: "DISMISSED", reviewNote: "Gate call only" }).expect(200);
+      const partnerSees = await http().get(`/partner-portal/jobs/${bookingId}`).set(auth(partnerTokens.c)).expect(200);
+      expect(JSON.stringify(partnerSees.body)).not.toContain("082 123 4567");
+    });
+
+    it("starts only with the customer's current arrival code, and locks after repeated wrong codes", async () => {
+      await http().post(`/partner-portal/jobs/${bookingId}/start`).set(auth(partnerTokens.c)).send({ code: "123456" }).expect(400);
+      const first = await http().post(`/bookings/${bookingId}/arrival-code`).set(auth(customer)).expect(200);
+      const second = await http().post(`/bookings/${bookingId}/arrival-code`).set(auth(customer)).expect(200);
+      expect(second.body.code).toMatch(/^\d{6}$/);
+      const wrong = second.body.code === "000000" ? "000001" : "000000";
+      if (first.body.code !== second.body.code) {
+        await http().post(`/partner-portal/jobs/${bookingId}/start`).set(auth(partnerTokens.c)).send({ code: first.body.code }).expect(400);
+      }
+      await prisma.booking.update({ where: { id: bookingId }, data: { otpFailures: 4 } });
+      await http().post(`/partner-portal/jobs/${bookingId}/start`).set(auth(partnerTokens.c)).send({ code: wrong }).expect(400);
+      await http().post(`/partner-portal/jobs/${bookingId}/start`).set(auth(partnerTokens.c)).send({ code: second.body.code }).expect(403);
+      const fresh = await http().post(`/bookings/${bookingId}/arrival-code`).set(auth(customer)).expect(200);
+      const started = await http().post(`/partner-portal/jobs/${bookingId}/start`).set(auth(partnerTokens.c)).send({ code: fresh.body.code }).expect(200);
+      expect(started.body.status).toBe("IN_PROGRESS");
+      expect((await prisma.booking.findUniqueOrThrow({ where: { id: bookingId } })).arrivalOtpHash).toBeNull();
+    });
+
+    it("takes job cards within the booking's dates", async () => {
+      await http().post(`/partner-portal/jobs/${bookingId}/job-cards`).set(auth(partnerTokens.c)).send({ workDate: day(30), hoursWorked: 8 }).expect(400);
+      await http().post(`/partner-portal/jobs/${bookingId}/job-cards`).set(auth(partnerTokens.c)).send({ workDate: day(5), startHourMeter: 100, endHourMeter: 90 }).expect(400);
+      const card = await http()
+        .post(`/partner-portal/jobs/${bookingId}/job-cards`)
+        .set(auth(partnerTokens.c))
+        .send({ workDate: day(5), hoursWorked: 8, startHourMeter: 1200.5, endHourMeter: 1208.5, notes: "Trench done. Mail ops@plantc.co.za for invoices" })
+        .expect(201);
+      expect(card.body.jobCards[0].notes).toBe("Trench done. Mail [contact details removed] for invoices");
+      const view = await http().get(`/bookings/${bookingId}`).set(auth(customer)).expect(200);
+      expect(view.body.jobCards).toHaveLength(1);
+    });
+
+    it("holds the payout through a dispute, then staff release it and record the EFT", async () => {
+      await http().post(`/bookings/${bookingId}/sign-off`).set(auth(other)).send({ rating: 5 }).expect(404);
+      const signed = await http().post(`/bookings/${bookingId}/sign-off`).set(auth(customer)).send({ rating: 5 }).expect(201);
+      expect(signed.body.status).toBe("COMPLETED");
+      const held = await prisma.partnerPayout.findUniqueOrThrow({ where: { bookingId } });
+      expect(held.status).toBe("HELD");
+      expect(held.releaseAfter!.getTime() - new Date(signed.body.completedAt).getTime()).toBe(48 * 3_600_000);
+
+      await http().post(`/bookings/${bookingId}/dispute`).set(auth(customer)).send({ reason: "Only two of three days were worked" }).expect(201);
+      await prisma.partnerPayout.update({ where: { bookingId }, data: { releaseAfter: new Date(Date.now() - 1000) } });
+      expect((await http().post("/bookings/admin/sweep").set(auth(admin)).expect(201)).body.released).toBe(0);
+      expect(await prisma.notification.count({ where: { bookingId, event: "BOOKING_DISPUTED", audience: "PARTNER" } })).toBeGreaterThan(0);
+
+      const dispute = await prisma.dispute.findFirstOrThrow({ where: { bookingId } });
+      await http().post(`/bookings/admin/disputes/${dispute.id}/resolve`).set(auth(staff)).send({ outcome: "PAY_PARTNER", resolution: "Job card shows all three days worked" }).expect(201);
+      const payout = await prisma.partnerPayout.findUniqueOrThrow({ where: { bookingId } });
+      expect(payout.status).toBe("DUE");
+
+      await http().post(`/bookings/admin/payouts/${payout.id}/paid`).set(auth(staff)).send({ paidReference: "EFT OUT 77" }).expect(400); // bank letter not on file yet
+      await http().patch(`/bookings/admin/partners/${partnerIds.c}`).set(auth(staff)).send({ name: `${tag} Plant C`, province: "Gauteng", contactEmail: `${tag}-opsc@example.com`, payoutDetailsConfirmed: true }).expect(200);
+      await http().post(`/bookings/admin/payouts/${payout.id}/paid`).set(auth(staff)).send({ paidReference: "EFT OUT 77" }).expect(201);
+      expect((await prisma.booking.findUniqueOrThrow({ where: { id: bookingId } })).status).toBe("CLOSED");
+      const portal = await http().get("/partner-portal").set(auth(partnerTokens.c)).expect(200);
+      expect(portal.body.payouts[0]).toMatchObject({ status: "PAID", paidReference: "EFT OUT 77" });
+    });
+
+    it("releases an undisputed payout after the window, respects partner calendars, and suspends partners", async () => {
+      // A second job for C on new dates runs straight through.
+      const created = await quote({ startDate: day(20), endDate: day(20), quantity: 1, partnerAmount: 5000, preferredPartnerId: partnerIds.c }).expect(201);
+      const id = created.body.id;
+      await http().post(`/bookings/${id}/accept`).set(auth(customer)).expect(201);
+      await http().post(`/bookings/admin/${id}/payment`).set(auth(staff)).send({ paymentReference: "EFT 0043" }).expect(201);
+      const offer = await prisma.dispatchOffer.findFirstOrThrow({ where: { bookingId: id, status: "PENDING" } });
+      expect(offer.partnerId).toBe(partnerIds.c);
+      await http().post(`/partner-portal/offers/${offer.id}/accept`).set(auth(partnerTokens.c)).expect(200);
+      const code = await http().post(`/bookings/${id}/arrival-code`).set(auth(customer)).expect(200);
+      await http().post(`/partner-portal/jobs/${id}/start`).set(auth(partnerTokens.c)).send({ code: code.body.code }).expect(200);
+      await http().post(`/bookings/${id}/sign-off`).set(auth(customer)).send({}).expect(201);
+      await prisma.partnerPayout.update({ where: { bookingId: id }, data: { releaseAfter: new Date(Date.now() - 1000) } });
+      expect((await http().post("/bookings/admin/sweep").set(auth(admin)).expect(201)).body.released).toBe(1);
+      expect((await prisma.partnerPayout.findUniqueOrThrow({ where: { bookingId: id } })).status).toBe("DUE");
+      await http().post(`/bookings/${id}/dispute`).set(auth(customer)).send({ reason: "Too late to dispute now" }).expect(400);
+
+      // Partners block their own dates; those blocks keep them out of dispatch. Booking blocks can't be removed.
+      const portal = await http().get("/partner-portal").set(auth(partnerTokens.a)).expect(200);
+      const unit = portal.body.partner.fleet[0];
+      await http().post(`/partner-portal/fleet/${unit.id}/blocks`).set(auth(partnerTokens.b)).send({ startsOn: day(40), endsOn: day(41) }).expect(404);
+      const block = await http().post(`/partner-portal/fleet/${unit.id}/blocks`).set(auth(partnerTokens.a)).send({ startsOn: day(40), endsOn: day(41), reason: "Service" }).expect(201);
+      const third = await quote({ startDate: day(41), endDate: day(42), preferredPartnerId: partnerIds.a }).expect(201);
+      await http().post(`/bookings/${third.body.id}/accept`).set(auth(customer)).expect(201);
+      await http().post(`/bookings/admin/${third.body.id}/payment`).set(auth(staff)).send({ paymentReference: "EFT 0044" }).expect(201);
+      const firstOffer = await prisma.dispatchOffer.findFirstOrThrow({ where: { bookingId: third.body.id } });
+      expect(firstOffer.partnerId).not.toBe(partnerIds.a);
+      const cBlock = await prisma.partnerAvailabilityBlock.findFirstOrThrow({ where: { bookingId: id } });
+      await http().delete(`/partner-portal/blocks/${cBlock.id}`).set(auth(partnerTokens.c)).expect(400);
+      await http().delete(`/partner-portal/blocks/${block.body.id}`).set(auth(partnerTokens.a)).expect(204);
+
+      await http().post(`/bookings/admin/${third.body.id}/cancel`).set(auth(staff)).send({ reason: "Customer changed plans" }).expect(201);
+      expect(await prisma.dispatchOffer.count({ where: { bookingId: third.body.id, status: "PENDING" } })).toBe(0);
+
+      await http().patch(`/bookings/admin/partners/${partnerIds.a}`).set(auth(staff)).send({ name: `${tag} Plant A`, province: "Gauteng", contactEmail: `${tag}-opsa@example.com`, status: "SUSPENDED" }).expect(200);
+      await http().get("/partner-portal").set(auth(partnerTokens.a)).expect(403);
+    });
+  });
 });

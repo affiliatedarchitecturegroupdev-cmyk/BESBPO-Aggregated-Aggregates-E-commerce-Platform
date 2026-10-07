@@ -48,6 +48,6 @@ export async function sendEnquiry(_prev: FormState, form: FormData): Promise<For
     return { success: `Thank you — your application is logged as ${result.data.reference}. We've emailed you a copy; our partnerships team will contact you about onboarding documents and rate cards.` };
   }
   return {
-    success: `Thank you — your request is logged as ${result.data.reference}. We've emailed you a copy and our team will come back to you with availability and a written quote. Nothing is booked or charged until you accept it.`,
+    success: `Thank you — your request is logged as ${result.data.reference}. We've emailed you a copy and our team will come back to you with availability and a written quote. Nothing is booked or charged until you accept it — you'll do that in your account, so create one with this email if you haven't yet.`,
   };
 }

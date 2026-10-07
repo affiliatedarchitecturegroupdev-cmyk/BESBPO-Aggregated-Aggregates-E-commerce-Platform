@@ -22,6 +22,11 @@ Code: `apps/api/src/notifications/` (message texts live in
 | Quote accepted / declined | — | — | ✓ |
 | Trade application received | ✓ | — | ✓ |
 | Trade application approved / declined | ✓ | — | — |
+| Booking quoted | ✓ total + "Open your booking" | — | — |
+| Booking payment received | ✓ | — | — |
+| Partner assigned | ✓ partner's name, arrival-code instructions | — | — |
+| No partner found | ✓ refund or new dates | — | ✓ |
+| Booking signed off / disputed / payout due | — | — | ✓ |
 | Hire, service or partner enquiry received | ✓ acknowledgement + reference, "nothing booked until you accept" | — | ✓ with the form's answers and a link to Admin → Enquiries |
 
 ¹ Only to buyers who ticked "send updates on WhatsApp" at checkout or on the
@@ -114,3 +119,8 @@ account (no marketing), sent to the contact details they gave for it.
 WhatsApp is strictly opt-in per order or quote. Message bodies are kept in
 the database as the record of what was sent; they contain the order/quote
 details and delivery address, so access is limited to staff.
+
+Partner emails (job offered, signed off, disputed, payout released) go to the
+partner's contact email and its portal logins. They're operational, so they
+aren't switchable in Admin → Notifications, and they never include the
+customer's contact details.

@@ -27,6 +27,7 @@ enum UserRole {
   COMPANY_ADMIN
   STAFF
   ADMIN
+  PARTNER // a plant-hire / site-services partner's portal login (hirePartnerId)
 }
 
 enum OAuthProvider {
@@ -49,6 +50,9 @@ model User {
   quotes            Quote[]
   orders            Order[]
   deliveryAddresses DeliveryAddress[]
+  hirePartnerId     String?
+  hirePartner       HirePartner?      @relation(fields: [hirePartnerId], references: [id], onDelete: SetNull)
+  bookings          Booking[]
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
 }
@@ -835,6 +839,14 @@ enum NotificationEvent {
   TRADE_APPLICATION_APPROVED
   TRADE_APPLICATION_DECLINED
   ENQUIRY_RECEIVED
+  BOOKING_QUOTED
+  BOOKING_PAYMENT_CONFIRMED
+  BOOKING_OFFERED
+  BOOKING_PARTNER_ASSIGNED
+  BOOKING_UNFULFILLED
+  BOOKING_COMPLETED
+  BOOKING_DISPUTED
+  PAYOUT_DUE
 }
 
 enum NotificationChannel {
@@ -845,6 +857,7 @@ enum NotificationChannel {
 enum NotificationAudience {
   CUSTOMER
   STAFF
+  PARTNER
 }
 
 enum NotificationStatus {
@@ -876,6 +889,7 @@ model Notification {
   quoteId           String?
   companyId         String?
   enquiryId         String?
+  bookingId         String?
   createdAt         DateTime             @default(now())
   sentAt            DateTime?
 
@@ -1063,4 +1077,289 @@ model Enquiry {
 
   @@index([status, createdAt])
   @@index([kind])
+}
+
+// ---------------------------------------------------------------------------
+// Phase C: plant-hire & site-service bookings (Agent model)
+// PLANT_HIRE_CATALOGUE.md. A booking is priced only from a partner's written
+// quote (partnerAmount, quoteSource) plus the fixed commission; it is paid by
+// EFT before dispatch, offered to partners (30-minute window, cascade),
+// started with the customer's arrival code, signed off by the customer and
+// paid out to the partner by staff after the 48-hour dispute window.
+// ---------------------------------------------------------------------------
+
+enum HirePartnerStatus {
+  ONBOARDING
+  ACTIVE
+  SUSPENDED
+}
+
+/// A vetted plant-hire / site-services partner. Contact details are staff-only.
+model HirePartner {
+  id                     String             @id @default(cuid())
+  name                   String
+  province               String
+  town                   String?
+  contactName            String?
+  contactEmail           String
+  contactPhone           String?
+  status                 HirePartnerStatus  @default(ONBOARDING)
+  isGroupEntity          Boolean            @default(false) // Besbpo Group company: small tie-break in ranking only
+  latitude               Float? // staff pin from a map, never guessed
+  longitude              Float?
+  payoutDetailsConfirmed Boolean            @default(false) // bank confirmation letter on file
+  notes                  String?
+  createdAt              DateTime           @default(now())
+  updatedAt              DateTime           @updatedAt
+  users                  User[]
+  fleet                  PartnerFleetUnit[]
+  offers                 DispatchOffer[]
+  bookings               Booking[]          @relation("AssignedPartner")
+  preferredOn            Booking[]          @relation("PreferredPartner")
+  payouts                PartnerPayout[]
+}
+
+/// One machine or service capability a partner offers in a province (sku from the plant/services catalogue).
+model PartnerFleetUnit {
+  id           String                     @id @default(cuid())
+  partnerId    String
+  partner      HirePartner                @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  sku          String
+  label        String // e.g. "CAT 320D, reg ND 123-456"
+  province     String
+  isActive     Boolean                    @default(true)
+  createdAt    DateTime                   @default(now())
+  availability PartnerAvailabilityBlock[]
+
+  @@index([sku, province])
+}
+
+/// Dates a fleet unit is unavailable (inclusive). Accepted bookings add their own block.
+model PartnerAvailabilityBlock {
+  id          String           @id @default(cuid())
+  fleetUnitId String
+  fleetUnit   PartnerFleetUnit @relation(fields: [fleetUnitId], references: [id], onDelete: Cascade)
+  startsOn    DateTime         @db.Date
+  endsOn      DateTime         @db.Date
+  reason      String?
+  bookingId   String?
+  createdAt   DateTime         @default(now())
+
+  @@index([fleetUnitId, startsOn])
+}
+
+enum BookingStatus {
+  QUOTED // staff priced it from a partner's written quote; waiting for the customer
+  AWAITING_PAYMENT // customer accepted; waiting for their EFT
+  DISPATCHING // paid; offering to partners
+  ACCEPTED // a partner accepted and is named to the customer
+  IN_PROGRESS // arrival code checked on site
+  COMPLETED // customer signed off; dispute window running
+  CLOSED // partner paid out
+  DISPUTED
+  UNFULFILLED // no partner accepted; staff refund or re-quote
+  DECLINED // customer declined the quote
+  CANCELLED
+}
+
+enum BookingBasis {
+  DAY
+  WEEK
+  LOAD
+  SKIP
+  M2
+  JOB
+}
+
+model Booking {
+  id                 String           @id @default(cuid())
+  reference          String           @unique // BK-YYMMDD-XXXXXX
+  userId             String
+  user               User             @relation(fields: [userId], references: [id])
+  enquiryId          String?
+  sku                String
+  itemName           String
+  basis              BookingBasis
+  quantity           Int
+  startDate          DateTime         @db.Date
+  endDate            DateTime         @db.Date
+  province           String
+  siteAddress        String
+  siteNotes          String?
+  siteLatitude       Float?
+  siteLongitude      Float?
+  partnerAmount      Decimal          @db.Decimal(12, 2) // the partner's written quote for the whole job
+  commissionPercent  Decimal          @db.Decimal(5, 2)
+  customerTotal      Decimal          @db.Decimal(12, 2) // partnerAmount x (1 + commission)
+  quoteSource        String // where the partner's quote is on record (email, PDF, rate card)
+  quoteValidUntil    DateTime?
+  preferredPartnerId String?
+  preferredPartner   HirePartner?     @relation("PreferredPartner", fields: [preferredPartnerId], references: [id], onDelete: SetNull)
+  assignedPartnerId  String?
+  assignedPartner    HirePartner?     @relation("AssignedPartner", fields: [assignedPartnerId], references: [id], onDelete: SetNull)
+  status             BookingStatus    @default(QUOTED)
+  arrivalOtpHash     String? // sha256 of the 6-digit arrival code; the code itself is never stored
+  otpFailures        Int              @default(0)
+  paymentReference   String?
+  customerRating     Int?
+  cancelledReason    String?
+  acceptedAt         DateTime?
+  paidAt             DateTime?
+  assignedAt         DateTime?
+  startedAt          DateTime?
+  completedAt        DateTime?
+  closedAt           DateTime?
+  createdById        String?
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  offers             DispatchOffer[]
+  jobCards           JobCard[]
+  messages           BookingMessage[]
+  disputes           Dispute[]
+  payout             PartnerPayout?
+
+  @@index([status, createdAt])
+  @@index([userId])
+  @@index([assignedPartnerId])
+}
+
+enum OfferStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  EXPIRED
+  WITHDRAWN
+}
+
+model DispatchOffer {
+  id          String      @id @default(cuid())
+  bookingId   String
+  booking     Booking     @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  partnerId   String
+  partner     HirePartner @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  rank        Int
+  status      OfferStatus @default(PENDING)
+  offeredAt   DateTime    @default(now())
+  expiresAt   DateTime
+  respondedAt DateTime?
+
+  @@index([status, expiresAt])
+  @@index([partnerId, status])
+  @@index([bookingId])
+}
+
+/// The partner's daily record of the work: hours, hour meter or loads.
+model JobCard {
+  id             String   @id @default(cuid())
+  bookingId      String
+  booking        Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  workDate       DateTime @db.Date
+  hoursWorked    Decimal? @db.Decimal(5, 2)
+  startHourMeter Decimal? @db.Decimal(10, 1)
+  endHourMeter   Decimal? @db.Decimal(10, 1)
+  loads          Int?
+  notes          String?
+  createdById    String
+  createdAt      DateTime @default(now())
+
+  @@index([bookingId])
+}
+
+enum MessageSender {
+  CUSTOMER
+  PARTNER
+  STAFF
+}
+
+/// In-platform chat; contact details are redacted before storage.
+model BookingMessage {
+  id          String        @id @default(cuid())
+  bookingId   String
+  booking     Booking       @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  sender      MessageSender
+  authorId    String
+  body        String
+  wasRedacted Boolean       @default(false)
+  createdAt   DateTime      @default(now())
+
+  @@index([bookingId, createdAt])
+}
+
+enum DisputeStatus {
+  OPEN
+  RESOLVED
+}
+
+enum DisputeOutcome {
+  PAY_PARTNER
+  REFUND_CUSTOMER
+}
+
+model Dispute {
+  id           String          @id @default(cuid())
+  bookingId    String
+  booking      Booking         @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  raisedBy     MessageSender
+  raisedById   String
+  reason       String
+  status       DisputeStatus   @default(OPEN)
+  outcome      DisputeOutcome?
+  resolution   String?
+  resolvedById String?
+  resolvedAt   DateTime?
+  createdAt    DateTime        @default(now())
+
+  @@index([status])
+}
+
+enum PayoutStatus {
+  PENDING // job not finished
+  HELD // dispute window running
+  DUE // window closed with no open dispute: staff pay by EFT
+  PAID
+  CANCELLED
+}
+
+model PartnerPayout {
+  id            String       @id @default(cuid())
+  bookingId     String       @unique
+  booking       Booking      @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  partnerId     String
+  partner       HirePartner  @relation(fields: [partnerId], references: [id])
+  amount        Decimal      @db.Decimal(12, 2)
+  status        PayoutStatus @default(PENDING)
+  releaseAfter  DateTime?
+  paidAt        DateTime?
+  paidReference String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@index([status, releaseAfter])
+}
+
+enum FlagSignal {
+  REDACTION_HIT
+  REPEAT_PAIR_STOPPED
+}
+
+enum FlagStatus {
+  OPEN
+  DISMISSED
+  ACTIONED
+}
+
+/// Possible attempts to take a job off the platform — a review queue for staff, never an automatic penalty.
+model CircumventionFlag {
+  id         String     @id @default(cuid())
+  signal     FlagSignal
+  detail     String
+  bookingId  String?
+  partnerId  String?
+  userId     String?
+  status     FlagStatus @default(OPEN)
+  reviewNote String?
+  reviewedAt DateTime?
+  createdAt  DateTime   @default(now())
+
+  @@index([status, createdAt])
 }

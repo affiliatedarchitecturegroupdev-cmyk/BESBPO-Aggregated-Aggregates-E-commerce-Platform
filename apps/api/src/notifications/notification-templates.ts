@@ -70,6 +70,24 @@ export type EnquiryData = {
   details: [string, string][];
 };
 
+export type BookingData = {
+  id: string;
+  reference: string;
+  itemName: string;
+  status: string;
+  customerName: string | null;
+  partnerName: string | null;
+  province: string;
+  siteAddress: string;
+  startDate: string; // display form, e.g. "12 Oct 2026"
+  endDate: string;
+  quantityLabel: string; // e.g. "3 days", "4 loads"
+  customerTotal: Money;
+  partnerAmount: Money;
+  quoteValidUntil: string | null;
+  disputeReason: string | null;
+};
+
 export type EmailMessage = { subject: string; text: string; html: string };
 export type WhatsAppMessage = { templateName: string; params: string[]; text: string };
 
@@ -297,6 +315,7 @@ export function customerEnquiryEmail(event: NotificationEvent, e: EnquiryData): 
     { kind: "p", text: greeting(e.contactName) },
     { kind: "p", text: `Thanks — we've logged your ${e.kindLabel.toLowerCase()} request "${e.subject}" as ${e.reference}. Our team will come back to you with availability and a written quote. Nothing is booked or charged until you accept that quote.` },
     ...(e.details.length ? [{ kind: "rows" as const, rows: e.details }] : []),
+    { kind: "p", text: `You'll accept the quote and pay online, so if you don't have an account yet, create one with this email address: ${siteUrl()}/account/register` },
     { kind: "p", text: `Reply to this email quoting ${e.reference} if anything changes.` },
   ]);
 }
@@ -320,6 +339,117 @@ export function staffEnquiryEmail(event: NotificationEvent, e: EnquiryData): Ema
     ...(e.message ? [{ kind: "p" as const, text: `Message: ${e.message}` }] : []),
     { kind: "cta", label: "Open the enquiry", href: `${siteUrl()}/admin/enquiries` },
   ]);
+}
+
+// ---------------------------------------------------------------------------
+// Bookings (plant hire and site services). Partners never see the customer's
+// contact details, and customers never see the partner's — only names.
+// ---------------------------------------------------------------------------
+
+const bookingRows = (b: BookingData): [string, string][] => [
+  ["Booking", b.reference],
+  ["What", `${b.itemName} — ${b.quantityLabel}`],
+  ["When", b.startDate === b.endDate ? b.startDate : `${b.startDate} to ${b.endDate}`],
+  ["Where", `${b.siteAddress}, ${b.province}`],
+];
+
+export function customerBookingEmail(event: NotificationEvent, b: BookingData): EmailMessage | null {
+  const link = { kind: "cta" as const, label: "Open your booking", href: `${siteUrl()}/account/bookings/${b.id}` };
+  switch (event) {
+    case "BOOKING_QUOTED":
+      return email(`Your quote ${b.reference}: ${formatZAR(b.customerTotal)}`, [
+        { kind: "p", text: greeting(b.customerName) },
+        { kind: "p", text: `Here's our quote for ${b.itemName}. It's based on a written quote from a vetted partner near your site.` },
+        { kind: "rows", rows: [...bookingRows(b), ["Total", formatZAR(b.customerTotal)], ...(b.quoteValidUntil ? ([["Valid until", b.quoteValidUntil]] as [string, string][]) : [])] },
+        { kind: "p", text: "Accept it online and we'll send the payment details. Nothing is booked until it's paid." },
+        link,
+      ]);
+    case "BOOKING_PAYMENT_CONFIRMED":
+      return email(`Payment received for ${b.reference}`, [
+        { kind: "p", text: greeting(b.customerName) },
+        { kind: "p", text: `We've received your payment of ${formatZAR(b.customerTotal)}. We're confirming a partner for your dates now and will email you when one is assigned.` },
+        { kind: "rows", rows: bookingRows(b) },
+        link,
+      ]);
+    case "BOOKING_PARTNER_ASSIGNED":
+      return email(`${b.partnerName ?? "A partner"} will do your job ${b.reference}`, [
+        { kind: "p", text: greeting(b.customerName) },
+        { kind: "p", text: `${b.partnerName ?? "Our partner"} has accepted your booking. When the crew arrives, open your booking and give them the arrival code shown there — it starts the job.` },
+        { kind: "rows", rows: bookingRows(b) },
+        { kind: "p", text: "Please keep all messages with the crew in your booking's chat, so we can help if anything goes wrong." },
+        link,
+      ]);
+    case "BOOKING_UNFULFILLED":
+      return email(`We couldn't confirm a partner for ${b.reference}`, [
+        { kind: "p", text: greeting(b.customerName) },
+        { kind: "p", text: "None of our partners could take this job on your dates. Our team will contact you to offer other dates or refund your payment in full." },
+        { kind: "rows", rows: bookingRows(b) },
+        link,
+      ]);
+    default:
+      return null;
+  }
+}
+
+export function staffBookingEmail(event: NotificationEvent, b: BookingData): EmailMessage | null {
+  const cta = { kind: "cta" as const, label: "Open the booking", href: `${siteUrl()}/admin/bookings/${b.id}` };
+  switch (event) {
+    case "BOOKING_UNFULFILLED":
+      return email(`No partner for ${b.reference} — refund or re-quote`, [
+        { kind: "p", text: `Every eligible partner declined or let the offer expire for ${b.reference}. The customer has paid: arrange other dates, add a partner and re-dispatch, or refund.` },
+        { kind: "rows", rows: bookingRows(b) },
+        cta,
+      ]);
+    case "BOOKING_COMPLETED":
+      return email(`${b.reference} signed off`, [
+        { kind: "p", text: `The customer signed off ${b.reference}. The partner payout of ${formatZAR(b.partnerAmount)} becomes due after the 48-hour dispute window.` },
+        cta,
+      ]);
+    case "BOOKING_DISPUTED":
+      return email(`Dispute on ${b.reference}`, [
+        { kind: "p", text: `A dispute was raised on ${b.reference}. The partner payout is on hold until you resolve it.` },
+        ...(b.disputeReason ? [{ kind: "p" as const, text: `Reason: ${b.disputeReason}` }] : []),
+        { kind: "rows", rows: bookingRows(b) },
+        cta,
+      ]);
+    case "PAYOUT_DUE":
+      return email(`Payout due: ${formatZAR(b.partnerAmount)} to ${b.partnerName ?? "partner"} (${b.reference})`, [
+        { kind: "p", text: `The dispute window for ${b.reference} has closed with no open dispute. Pay ${formatZAR(b.partnerAmount)} to ${b.partnerName ?? "the partner"} by EFT and record the payment reference.` },
+        { kind: "cta", label: "Record the payout", href: `${siteUrl()}/admin/bookings?view=payouts` },
+      ]);
+    default:
+      return null;
+  }
+}
+
+/** Partner emails are operational (offers, sign-off, disputes, payouts), so they aren't switchable in the admin settings. */
+export function partnerBookingEmail(event: NotificationEvent, b: BookingData): EmailMessage | null {
+  const portal = { kind: "cta" as const, label: "Open the partner portal", href: `${siteUrl()}/partners/portal` };
+  switch (event) {
+    case "BOOKING_OFFERED":
+      return email(`Job offer: ${b.itemName}, ${b.province} — reply within 30 minutes`, [
+        { kind: "p", text: `You have a paid job offer. Accept or decline it in the partner portal within 30 minutes, or it goes to the next partner.` },
+        { kind: "rows", rows: [...bookingRows(b), ["Your payout", formatZAR(b.partnerAmount)]] },
+        portal,
+      ]);
+    case "BOOKING_COMPLETED":
+      return email(`${b.reference} signed off by the customer`, [
+        { kind: "p", text: `The customer signed off ${b.reference}. Your payout of ${formatZAR(b.partnerAmount)} is released after the 48-hour dispute window.` },
+        portal,
+      ]);
+    case "BOOKING_DISPUTED":
+      return email(`Dispute raised on ${b.reference}`, [
+        { kind: "p", text: `A dispute was raised on ${b.reference}, so the payout is on hold while our team looks into it. We'll be in touch through the portal.` },
+        portal,
+      ]);
+    case "PAYOUT_DUE":
+      return email(`Payout released for ${b.reference}`, [
+        { kind: "p", text: `Your payout of ${formatZAR(b.partnerAmount)} for ${b.reference} is released and will be paid by EFT to your confirmed account.` },
+        portal,
+      ]);
+    default:
+      return null;
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -379,7 +509,18 @@ export const EVENT_CHANNELS: Record<NotificationEvent, { customerEmail: boolean;
   TRADE_APPLICATION_APPROVED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
   TRADE_APPLICATION_DECLINED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
   ENQUIRY_RECEIVED: { customerEmail: true, customerWhatsApp: false, staffEmail: true },
+  BOOKING_QUOTED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
+  BOOKING_PAYMENT_CONFIRMED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
+  BOOKING_OFFERED: { customerEmail: false, customerWhatsApp: false, staffEmail: false }, // partner email only
+  BOOKING_PARTNER_ASSIGNED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
+  BOOKING_UNFULFILLED: { customerEmail: true, customerWhatsApp: false, staffEmail: true },
+  BOOKING_COMPLETED: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
+  BOOKING_DISPUTED: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
+  PAYOUT_DUE: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
 };
+
+/** Events that also email the partner (always on — offers can't wait for a setting). */
+export const PARTNER_EVENTS: NotificationEvent[] = ["BOOKING_OFFERED", "BOOKING_COMPLETED", "BOOKING_DISPUTED", "PAYOUT_DUE"];
 
 export const EVENT_LABEL: Record<NotificationEvent, string> = {
   ORDER_PLACED: "Order placed",
@@ -395,6 +536,14 @@ export const EVENT_LABEL: Record<NotificationEvent, string> = {
   TRADE_APPLICATION_APPROVED: "Trade application approved",
   TRADE_APPLICATION_DECLINED: "Trade application declined",
   ENQUIRY_RECEIVED: "Hire, service or partner enquiry received",
+  BOOKING_QUOTED: "Booking quoted",
+  BOOKING_PAYMENT_CONFIRMED: "Booking payment received",
+  BOOKING_OFFERED: "Job offered to a partner (partner email)",
+  BOOKING_PARTNER_ASSIGNED: "Partner assigned to a booking",
+  BOOKING_UNFULFILLED: "No partner for a booking",
+  BOOKING_COMPLETED: "Booking signed off",
+  BOOKING_DISPUTED: "Booking disputed",
+  PAYOUT_DUE: "Partner payout due",
 };
 
 /** A South African or international number in the digits-only form WhatsApp expects, or null. */

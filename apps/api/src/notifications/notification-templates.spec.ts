@@ -1,6 +1,7 @@
 import { NotificationEvent } from "@aggregates/database";
 import {
   customerCompanyEmail,
+  customerBookingEmail,
   customerEnquiryEmail,
   customerOrderEmail,
   customerOrderWhatsApp,
@@ -9,12 +10,16 @@ import {
   EVENT_CHANNELS,
   formatZAR,
   staffCompanyEmail,
+  partnerBookingEmail,
+  PARTNER_EVENTS,
+  staffBookingEmail,
   staffEnquiryEmail,
   staffOrderEmail,
   staffQuoteEmail,
   whatsappNumber,
   WHATSAPP_TEMPLATES,
   type CompanyData,
+  type BookingData,
   type EnquiryData,
   type OrderData,
   type QuoteData,
@@ -76,6 +81,24 @@ const enquiry: EnquiryData = {
   details: [["Basis", "Daily"], ["Quantity", "3"]],
 };
 
+const booking: BookingData = {
+  id: "b_1",
+  reference: "BK-261009-A1B2C3",
+  itemName: "Excavator 20t",
+  status: "QUOTED",
+  customerName: "Thandi Mokoena",
+  partnerName: "Highveld Plant",
+  province: "Gauteng",
+  siteAddress: "12 Main Rd, Midrand",
+  startDate: "12 Oct 2026",
+  endDate: "14 Oct 2026",
+  quantityLabel: "3 days",
+  customerTotal: 33600 as unknown as BookingData["customerTotal"],
+  partnerAmount: 30000 as unknown as BookingData["partnerAmount"],
+  quoteValidUntil: "20 Oct 2026",
+  disputeReason: null,
+};
+
 describe("notification templates", () => {
   it("formats money like the storefront", () => {
     expect(formatZAR("9133.12")).toBe("R9,133.12");
@@ -122,13 +145,28 @@ describe("notification templates", () => {
   it("has a message for every channel an event is allowed to use", () => {
     for (const event of Object.values(NotificationEvent)) {
       const channels = EVENT_CHANNELS[event];
-      const customerEmail = customerOrderEmail(event, order) ?? customerQuoteEmail(event, quote) ?? customerCompanyEmail(event, company) ?? customerEnquiryEmail(event, enquiry);
+      const customerEmail = customerOrderEmail(event, order) ?? customerQuoteEmail(event, quote) ?? customerCompanyEmail(event, company) ?? customerEnquiryEmail(event, enquiry) ?? customerBookingEmail(event, booking);
       const customerWhatsApp = customerOrderWhatsApp(event, order) ?? customerQuoteWhatsApp(event, quote);
-      const staffEmail = staffOrderEmail(event, order) ?? staffQuoteEmail(event, quote) ?? staffCompanyEmail(event, company) ?? staffEnquiryEmail(event, enquiry);
+      const staffEmail = staffOrderEmail(event, order) ?? staffQuoteEmail(event, quote) ?? staffCompanyEmail(event, company) ?? staffEnquiryEmail(event, enquiry) ?? staffBookingEmail(event, booking);
       expect([event, customerEmail !== null]).toEqual([event, channels.customerEmail]);
       expect([event, customerWhatsApp !== null]).toEqual([event, channels.customerWhatsApp]);
       expect([event, staffEmail !== null]).toEqual([event, channels.staffEmail]);
     }
+  });
+
+  it("emails partners exactly the booking events marked for them, without customer contact details", () => {
+    for (const event of Object.values(NotificationEvent)) {
+      expect([event, partnerBookingEmail(event, booking) !== null]).toEqual([event, PARTNER_EVENTS.includes(event)]);
+    }
+    const offer = partnerBookingEmail("BOOKING_OFFERED", booking)!;
+    expect(offer.subject).toBe("Job offer: Excavator 20t, Gauteng — reply within 30 minutes");
+    expect(offer.text).toContain("Your payout: R30,000.00");
+    expect(offer.text).not.toContain("Thandi");
+    expect(offer.text).not.toContain("33,600");
+    const quoted = customerBookingEmail("BOOKING_QUOTED", booking)!;
+    expect(quoted.subject).toBe("Your quote BK-261009-A1B2C3: R33,600.00");
+    expect(quoted.text).toContain("/account/bookings/b_1");
+    expect(quoted.text).not.toContain("30,000");
   });
 
   it("acknowledges an enquiry without promising a booking or price", () => {

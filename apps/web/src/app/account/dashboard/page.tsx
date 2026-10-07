@@ -49,6 +49,11 @@ export default async function DashboardPage({ searchParams }: { searchParams: { 
           </h1>
         </div>
         <div className="flex gap-3">
+          {user.role === "PARTNER" && (
+            <Link href="/partners/portal" className="rounded-sm bg-seam-blue px-4 py-2 font-body text-sm text-limestone hover:bg-basalt">
+              Partner portal
+            </Link>
+          )}
           {isStaff(user) && (
             <Link href="/admin" className="rounded-sm bg-basalt px-4 py-2 font-body text-sm text-limestone hover:bg-seam-blue">
               Admin

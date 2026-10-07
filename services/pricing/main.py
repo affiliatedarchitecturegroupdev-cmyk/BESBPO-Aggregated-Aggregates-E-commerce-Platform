@@ -69,12 +69,12 @@ def list_ready_mix_pumps():
 @app.get("/products/plant-hire")
 def list_plant_hire():
     """CAT-13 wet-hire machines (Agent model). Rates appear only once loaded from written partner rate cards."""
-    return {"plant": PLANT_SERVICES.raw["plant"], "rates": {k: v for k, v in PLANT_SERVICES.raw["rates"].items() if k in PLANT_SERVICES.plant}}
+    return {"commission_percent": PLANT_SERVICES.raw["commission_percent"], "plant": PLANT_SERVICES.raw["plant"], "rates": {k: v for k, v in PLANT_SERVICES.raw["rates"].items() if k in PLANT_SERVICES.plant}}
 
 
 @app.get("/products/site-services")
 def list_site_services():
-    return {"services": PLANT_SERVICES.raw["services"], "rates": {k: v for k, v in PLANT_SERVICES.raw["rates"].items() if k in PLANT_SERVICES.services}}
+    return {"commission_percent": PLANT_SERVICES.raw["commission_percent"], "services": PLANT_SERVICES.raw["services"], "rates": {k: v for k, v in PLANT_SERVICES.raw["rates"].items() if k in PLANT_SERVICES.services}}
 
 
 @app.get("/customer-tiers")
