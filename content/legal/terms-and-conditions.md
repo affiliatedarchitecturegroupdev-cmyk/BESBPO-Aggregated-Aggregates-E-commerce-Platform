@@ -1,6 +1,6 @@
 # Terms & Conditions
 
-_Last updated: 26 September 2026_
+_Last updated: 7 October 2026_
 
 These Terms & Conditions ("Terms") govern your use of aggregates.store and
 app.aggregates.store (the "Platform") and any purchase made through it.
@@ -17,17 +17,35 @@ bind that company.
 
 ## 2. Products and pricing
 
-- Products are sold by ton, m³, or bag, as displayed on each product page.
-  Bulk and bagged prices are both derived from the same list price and
-  bulk density for that product — see our tonnage/volume calculator on
-  each product page.
+- Products are sold in the units shown on each product page — by the ton or
+  m³ (aggregates and ready-mix concrete), by the bag, bulk bag or tanker
+  load (cement), or by the drum or tote (admixtures). Bulk and bagged
+  aggregate prices are derived from the same list price and bulk density,
+  as shown in the calculator on each product page.
 - Prices are quoted in South African Rand and are subject to change
-  without notice, except where an order has already been confirmed.
-- Trade account holders receive Contractor/Trade (8%) or Volume/Civil Bulk
-  (15%) discounts off list price, per the tier assigned to their account.
+  without notice, except where an order has already been confirmed. A
+  product or unit without a current price is marked "price on request" and
+  is quoted individually.
+- Trade account holders receive a discount off list price that depends on
+  their account tier and the type of product:
+
+  | Product type | Contractor / Trade | Volume / Civil Bulk |
+  |---|---|---|
+  | Aggregates | 8% | up to 15% |
+  | Bagged cement and mortar | 4% | quoted |
+  | Bulk cement (bulk bags, tankers) and admixtures in drums or totes | quoted | quoted |
+  | Ready-mix concrete | 2% | quoted |
+
+- "Quoted" means there is no self-serve price for that tier: we confirm a
+  price with the supplier and quote you individually.
+- So that prices never fall below our minimum margin, the discount on some
+  products is capped below the figure in the table. The price shown for
+  your account at checkout, or in your quote, is the price you pay.
 - Orders that qualify as Volume/Civil Bulk tier (≥10m³) or that require
   delivery beyond 100km are not sold at checkout and are quoted
   individually via our RFQ process.
+- Plant hire and site services are priced and booked separately under our
+  [Plant Hire & Site Services Terms](/legal/hire-terms).
 
 ## 3. Orders and acceptance
 
@@ -38,12 +56,22 @@ technical error.
 
 ## 4. Payment
 
-We accept payment via PayFast (card/EFT), Lulapay (Contractor/Trade
-buy-now-pay-later), PayJustNow (retail instalments), and, for Volume/Civil
-Bulk tier accounts with a standing agreement, EFT against a Purchase
-Order/invoice on net terms. Invoices are issued under Besbpo Group's
-company VAT registration, as Aggregated Aggregates operates as a division
-of the Group rather than a separately VAT-registered entity.
+- The payment methods available for your order are those offered at
+  checkout. They depend on your order value and account tier; see
+  [Ways to Pay](/ways-to-pay) for the methods we support.
+- Online payments, including card, instant EFT and digital wallets, are
+  processed by our third-party payment partners. Buy-now-pay-later and
+  trade-credit options are provided by their providers on their own terms
+  and are subject to the provider's approval.
+- Trade accounts may pay by EFT against a purchase order or invoice, quoting
+  the order reference. Volume/Civil Bulk accounts with a standing agreement
+  may do so on the net terms in that agreement.
+- If no online method is available for your order, our sales team will
+  arrange payment by EFT. An order is confirmed once payment has been
+  received, or accepted against an agreed purchase order.
+- Invoices are issued under Besbpo Group's company VAT registration, as
+  Aggregated Aggregates operates as a division of the Group rather than a
+  separately VAT-registered entity.
 
 ## 5. Delivery
 
