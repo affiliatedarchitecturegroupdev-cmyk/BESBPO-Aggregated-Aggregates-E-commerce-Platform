@@ -4,8 +4,9 @@ import { PromoSlot } from "@/components/merchandising/PromoSlot";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { ProductCard } from "@/components/product/ProductCard";
 import { GRADING_STANDARDS, type Product } from "@/data/catalogue";
-import { getCatalogue, getPackagedCatalogue, type MerchandisedPackagedProduct, type MerchandisedProduct } from "@/lib/cms";
-import { B2B_CATEGORIES, CATEGORIES, CORE_CATEGORIES } from "@/data/categories";
+import { getCatalogue, getPackagedCatalogue, getReadyMixCatalogue, type MerchandisedPackagedProduct, type MerchandisedProduct, type MerchandisedReadyMixProduct } from "@/lib/cms";
+import { B2B_CATEGORIES, CATEGORIES, CORE_CATEGORIES, READY_MIX_CATEGORIES } from "@/data/categories";
+import { PACKAGED_PRODUCTS } from "@/data/packaged";
 import { INDUSTRIES } from "@/data/industries";
 import { getActivePromotions } from "@/lib/promotions";
 
@@ -15,7 +16,18 @@ export const metadata: Metadata = {
     "Sub-base, crushed stone, sand, crusher run, ballast, drainage, decorative, lime and recycled aggregates — plus bulk cement, binders, grout and admixtures.",
 };
 
-type SearchParams = { q?: string; category?: string; grading?: string; sale?: string; sort?: string; industry?: string; group?: string };
+type SearchParams = {
+  q?: string;
+  category?: string;
+  grading?: string;
+  sale?: string;
+  sort?: string;
+  industry?: string;
+  group?: string;
+  /** Cement only: taxonomy family and brand (CEMENT_MASTER_CATALOGUE.md). */
+  family?: string;
+  brand?: string;
+};
 
 const SORTS: Record<string, { label: string; compare?: (a: Product, b: Product) => number }> = {
   relevance: { label: "Relevance" },
@@ -33,7 +45,7 @@ function perTon(product: Product): number {
 }
 
 /** Every word of the query must appear in the name, SKU, category, standard or description. */
-function matchesSearch(product: MerchandisedProduct | MerchandisedPackagedProduct, query: string): boolean {
+function matchesSearch(product: { name: string; sku: string; categorySlug: string; gradingStandard: string | null; description: string | null }, query: string): boolean {
   const category = CATEGORIES.find((c) => c.slug === product.categorySlug)?.name ?? "";
   const haystack = [product.name, product.sku, category, product.gradingStandard, product.description].join(" ").toLowerCase();
   return query
@@ -48,6 +60,7 @@ function inScope(categorySlug: string, { category, industry, group }: SearchPara
   const industryMatch = INDUSTRIES.find((i) => i.slug === industry);
   if (industryMatch) return industryMatch.relevantCategorySlugs.includes(categorySlug);
   if (group === "b2b-bulk") return B2B_CATEGORIES.some((c) => c.slug === categorySlug);
+  if (group === "ready-mix") return categorySlug === "ready-mix-concrete";
   return true;
 }
 
@@ -64,29 +77,48 @@ function filterProducts(catalogue: MerchandisedProduct[], params: SearchParams):
   return compare ? [...filtered].sort(compare) : filtered;
 }
 
+const CEMENT = PACKAGED_PRODUCTS.filter((p) => p.categorySlug === "cement-hydraulic-binders");
+const CEMENT_FAMILIES = [...new Set(CEMENT.flatMap((p) => (p.cementFamily ? [p.cementFamily] : [])))];
+// Named brands only: generic bulk supply is "brand confirmed at quote stage".
+const CEMENT_BRANDS = [...new Set(CEMENT.flatMap((p) => (p.brand && !p.brand.startsWith("Generic") ? [p.brand] : [])))].sort();
+
 const selectClass = "mt-1 w-full rounded-sm border border-basalt/20 bg-white px-2 py-1.5 font-body text-sm";
 
 function filterPackaged(catalogue: MerchandisedPackagedProduct[], params: SearchParams): MerchandisedPackagedProduct[] {
   // Packaged goods have no grading standard filter value or ton/m³/bag units.
   if (params.grading || params.sale === "bulk") return [];
+  const filtered = catalogue.filter(
+    (p) =>
+      (!params.q || matchesSearch(p, params.q)) &&
+      inScope(p.categorySlug, params) &&
+      (!params.family || p.cementFamily === params.family) &&
+      (!params.brand || p.brand === params.brand),
+  );
+  return params.sort === "name" ? [...filtered].sort((a, b) => a.name.localeCompare(b.name)) : filtered;
+}
+
+function filterReadyMix(catalogue: MerchandisedReadyMixProduct[], params: SearchParams): MerchandisedReadyMixProduct[] {
+  if (params.grading || params.sale || params.family || params.brand) return [];
   const filtered = catalogue.filter((p) => (!params.q || matchesSearch(p, params.q)) && inScope(p.categorySlug, params));
   return params.sort === "name" ? [...filtered].sort((a, b) => a.name.localeCompare(b.name)) : filtered;
 }
 
 export default async function ProductListingPage({ searchParams }: { searchParams: SearchParams }) {
-  const [catalogue, packagedCatalogue, promotions] = await Promise.all([
+  const [catalogue, packagedCatalogue, readyMixCatalogue, promotions] = await Promise.all([
     getCatalogue(),
     getPackagedCatalogue(),
+    getReadyMixCatalogue(),
     getActivePromotions({ category: searchParams.category, industry: searchParams.industry }),
   ]);
   const products = filterProducts(catalogue, searchParams);
   const packaged = filterPackaged(packagedCatalogue, searchParams);
-  const total = products.length + packaged.length;
+  const readyMix = filterReadyMix(readyMixCatalogue, searchParams);
+  const total = products.length + packaged.length + readyMix.length;
   const category = CATEGORIES.find((c) => c.slug === searchParams.category);
   const industry = category ? undefined : INDUSTRIES.find((i) => i.slug === searchParams.industry);
   const b2bGroup = !category && !industry && searchParams.group === "b2b-bulk";
   const query = searchParams.q?.trim();
-  const hasFilters = Boolean(query || searchParams.category || searchParams.grading || searchParams.sale || industry || b2bGroup);
+  const hasFilters = Boolean(query || searchParams.category || searchParams.grading || searchParams.sale || searchParams.family || searchParams.brand || industry || b2bGroup);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
@@ -133,8 +165,35 @@ export default async function ProductListingPage({ searchParams }: { searchParam
                     <option key={c.slug} value={c.slug}>{c.name}</option>
                   ))}
                 </optgroup>
+                <optgroup label="Concrete">
+                  {READY_MIX_CATEGORIES.map((c) => (
+                    <option key={c.slug} value={c.slug}>{c.name}</option>
+                  ))}
+                </optgroup>
               </select>
             </label>
+            {searchParams.category === "cement-hydraulic-binders" && (
+              <>
+                <label className="mt-3 block">
+                  <span className="font-mono text-[10px] uppercase text-slate">Cement type</span>
+                  <select name="family" defaultValue={searchParams.family ?? ""} className={selectClass}>
+                    <option value="">Any type</option>
+                    {CEMENT_FAMILIES.map((f) => (
+                      <option key={f} value={f}>{f}</option>
+                    ))}
+                  </select>
+                </label>
+                <label className="mt-3 block">
+                  <span className="font-mono text-[10px] uppercase text-slate">Brand</span>
+                  <select name="brand" defaultValue={searchParams.brand ?? ""} className={selectClass}>
+                    <option value="">Any brand</option>
+                    {CEMENT_BRANDS.map((b) => (
+                      <option key={b} value={b}>{b}</option>
+                    ))}
+                  </select>
+                </label>
+              </>
+            )}
             <label className="mt-3 block">
               <span className="font-mono text-[10px] uppercase text-slate">Grading standard</span>
               <select name="grading" defaultValue={searchParams.grading ?? ""} className={selectClass}>
@@ -202,6 +261,9 @@ export default async function ProductListingPage({ searchParams }: { searchParam
                 <ProductCard key={product.sku} product={product} preferBag={searchParams.sale === "bag"} />
               ))}
               {packaged.map((product) => (
+                <PackagedProductCard key={product.sku} product={product} />
+              ))}
+              {readyMix.map((product) => (
                 <PackagedProductCard key={product.sku} product={product} />
               ))}
             </div>

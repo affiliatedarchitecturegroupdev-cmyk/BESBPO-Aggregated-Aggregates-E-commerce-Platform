@@ -160,25 +160,76 @@ model Category {
 }
 
 model Product {
-  id                  String               @id @default(cuid())
-  sku                 String               @unique
-  slug                String               @unique
-  name                String
-  categoryId          String
-  category            Category             @relation(fields: [categoryId], references: [id])
-  gradingStandard     String? // e.g. "SANS 1200-G", "SANS 1083", "COLTO/TRH14"
-  unitsOfSale         UnitOfSale[] // from the workbook's "Unit of Sale" column; the pricing service refuses any other unit
-  description         String?
-  images              ProductImage[]
-  priceBand           PriceBand?
-  packagedPriceBands  PackagedPriceBand[] // CAT-10/CAT-11 packaged goods only
-  complianceDocuments ComplianceDocument[]
-  quoteLineItems      QuoteLineItem[]
-  orderLineItems      OrderLineItem[]
-  isActive            Boolean              @default(true) // staff can hide a product from the storefront
-  featuredRank        Int? // set = shown in the homepage's featured row, lowest first
-  createdAt           DateTime             @default(now())
-  updatedAt           DateTime             @updatedAt
+  id                        String               @id @default(cuid())
+  sku                       String               @unique
+  slug                      String               @unique
+  name                      String
+  categoryId                String
+  category                  Category             @relation(fields: [categoryId], references: [id])
+  gradingStandard           String? // e.g. "SANS 1200-G", "SANS 1083", "COLTO/TRH14"
+  unitsOfSale               UnitOfSale[] // from the workbook's "Unit of Sale" column; the pricing service refuses any other unit
+  description               String?
+  // Cement taxonomy as product attributes (CEMENT_MASTER_CATALOGUE.md) — cement only.
+  manufacturer              String?
+  brand                     String?
+  cementFamily              String? // General Purpose | High Strength | Masonry | Road Stabilisation | Precast & Concrete Products
+  cementClass               String? // e.g. "32,5N", "52,5R", "22,5X"
+  cementType                String? // SANS 50197-1 CEM designation, where documented
+  regionNote                String? // only for region-dependent SKUs (e.g. AfriSam HSC)
+  specialistCharacteristics String[]             @default([])
+  // Ready-mix concrete (READY_MIX_CATALOGUE.md) — ready-mix only.
+  strengthGradeMPa          Int? // the product IS the strength grade
+  mixType                   String?
+  minimumLoadM3             Decimal?             @db.Decimal(6, 2) // a full mixer-truck load
+  readyMixPriceBand         ReadyMixPriceBand?
+  images                    ProductImage[]
+  priceBand                 PriceBand?
+  packagedPriceBands        PackagedPriceBand[] // CAT-10/CAT-11 packaged goods only
+  complianceDocuments       ComplianceDocument[]
+  quoteLineItems            QuoteLineItem[]
+  orderLineItems            OrderLineItem[]
+  isActive                  Boolean              @default(true) // staff can hide a product from the storefront
+  featuredRank              Int? // set = shown in the homepage's featured row, lowest first
+  createdAt                 DateTime             @default(now())
+  updatedAt                 DateTime             @updatedAt
+}
+
+/// Ready-mix concrete (CAT-12): one per-m³ price per strength grade. Same
+/// discipline as the other price bands: no listPricePerM3 unless
+/// pricingStatus is "Ready — benchmarked" (AGENTIC_RULES.md rule 1).
+model ReadyMixPriceBand {
+  id                   String   @id @default(cuid())
+  productId            String   @unique
+  product              Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  marketBenchmarkPrice Decimal? @db.Decimal(10, 2)
+  costBasisPercent     Decimal  @db.Decimal(5, 2) // cost proxy = the benchmark (100) until supplier terms are known
+  markupPercent        Decimal  @db.Decimal(5, 2)
+  listPricePerM3       Decimal? @db.Decimal(10, 2)
+  pricingStatus        String
+  sourceNote           String?
+  updatedAt            DateTime @updatedAt
+}
+
+enum PumpType {
+  STATIC_LINE
+  BOOM
+}
+
+/// Concrete pump hire — priced separately from the concrete (a service, not
+/// a per-m³ material). Quote-only until a written supplier quote is loaded.
+model ReadyMixPumpOption {
+  id              String   @id @default(cuid())
+  code            String   @unique // e.g. PUMP-BOOM-36M
+  name            String
+  pumpType        PumpType
+  boomLengthM     Int?
+  capacityM3PerHr Int? // supplier-published capacity, not a guarantee
+  callOutFee      Decimal? @db.Decimal(10, 2)
+  ratePerM3       Decimal? @db.Decimal(10, 2)
+  pricingStatus   String
+  sourceNote      String?
+  isActive        Boolean  @default(true)
+  updatedAt       DateTime @updatedAt
 }
 
 /// Product photography uploaded by staff, stored in object storage and
@@ -326,6 +377,7 @@ model SupplierLocation {
   longitude         Float?
   categorySlugs     String[] // storefront category slugs this supplier can supply
   isVerifiedPartner Boolean      @default(true) // false = researched lead, not yet contacted or qualified
+  isGroupEntity     Boolean      @default(false) // a Besbpo Group company (e.g. Precast Direct) — intercompany, not arm's-length
   sourceUrl         String? // where a researched lead came from
   productNotes      String? // e.g. "CAT-01 (G1–G5), CAT-02 (13.2mm, 19mm Andesite)"
   contactName       String?

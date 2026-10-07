@@ -17,7 +17,9 @@ of every phase.
 ## What this is (and isn't)
 
 The repository covers roadmap **Phases 1–4** (see `AGENTIC_RULES.md`): the
-workbook-priced catalogue (48 aggregate SKUs plus 7 B2B packaged goods),
+workbook-priced catalogue (51 aggregate SKUs, 41 cement and other packaged
+goods, and 7 ready-mix concrete grades with pump hire), floor-based tier
+discounts (`PRICING_POLICY.md`),
 bulk/bag, packaged-goods and delivery calculators, a cart and checkout for
 mixed bulk and bagged loads, a customer account area (order history with
 reorder, PDF order confirmations, delivery notes and tax invoices, saved
@@ -80,7 +82,10 @@ aggregates-store-platform/
 │   └── docker/           Local Dockerfiles for api + pricing service
 ├── render.yaml           Render Blueprint (web, api, private pricing service)
 ├── AGENTIC_RULES.md      Human-in-the-loop rules for the build-out, updated per phase
-├── B2B_BULK_CATALOGUE.md CAT-10/11 packaged goods and the dedup against the 48-SKU catalogue
+├── B2B_BULK_CATALOGUE.md CAT-10/11 packaged goods and the dedup against the aggregate catalogue
+├── CEMENT_MASTER_CATALOGUE.md 37 cement SKUs (9 live-priced): taxonomy, benchmarks, dedup
+├── READY_MIX_CATALOGUE.md CAT-12 ready-mix grades, pumps and the producer network
+├── PRICING_POLICY.md     Floor-based tier discounts for every catalogue
 ├── BLOG_CMS.md           Blog/CMS: API, admin, content rules
 ├── PAYMENT_ASSETS.md     Logo/icon provenance (Brandfetch files and remaining placeholders)
 ├── RESPONSIBLE_SOURCING.md Badges on /responsible-sourcing: provenance, rules, claims to avoid

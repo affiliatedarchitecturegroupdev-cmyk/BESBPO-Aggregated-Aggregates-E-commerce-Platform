@@ -14,7 +14,7 @@ import { SupplierTier } from "@aggregates/database";
  * not a qualified partner.
  */
 
-/** CAT-01..CAT-09 map onto the nine core categories; CAT-10/11 onto the B2B packaged-goods ones. */
+/** CAT-01..CAT-09 map onto the nine core categories; CAT-10/11 onto the B2B packaged-goods ones; CAT-12 is ready-mix. */
 export const CATEGORY_CODES: Record<string, string> = {
   "CAT-01": "sub-base-base-course",
   "CAT-02": "crushed-stone",
@@ -27,6 +27,7 @@ export const CATEGORY_CODES: Record<string, string> = {
   "CAT-09": "recycled-sustainable",
   "CAT-10": "cement-hydraulic-binders",
   "CAT-11": "mortars-grouts-admixtures",
+  "CAT-12": "ready-mix-concrete",
 };
 const CODE_BY_SLUG = Object.fromEntries(Object.entries(CATEGORY_CODES).map(([code, slug]) => [slug, code]));
 
@@ -69,6 +70,8 @@ export type ParsedSupplier = {
   contactName?: string | null;
   contactPhone?: string | null;
   isActive?: boolean;
+  /** A Besbpo Group company (e.g. Precast Direct); undefined = column not in the file. */
+  isGroupEntity?: boolean;
   explicitTown: boolean;
 };
 
@@ -162,6 +165,14 @@ export function parseSupplierCsv(text: string): { rows: ParsedSupplier[]; errors
       else problems.push(`active "${record.active}" should be yes or no`);
     }
 
+    let isGroupEntity: boolean | undefined;
+    if ("group_entity" in record && record.group_entity !== "") {
+      const value = record.group_entity.toLowerCase();
+      if (YES.includes(value)) isGroupEntity = true;
+      else if (NO.includes(value)) isGroupEntity = false;
+      else problems.push(`group_entity "${record.group_entity}" should be yes or no`);
+    }
+
     if (problems.length > 0) {
       errors.push({ line, message: `${externalId || "row"}: ${problems.join("; ")}` });
       return;
@@ -184,6 +195,7 @@ export function parseSupplierCsv(text: string): { rows: ParsedSupplier[]; errors
       contactName: optionalText(record.contact_name),
       contactPhone: optionalText(record.contact_phone),
       isActive,
+      isGroupEntity,
     });
   });
   return { rows, errors };

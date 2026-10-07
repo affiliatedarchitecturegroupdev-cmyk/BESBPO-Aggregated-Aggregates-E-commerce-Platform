@@ -2,8 +2,8 @@ export type Category = {
   slug: string;
   name: string;
   description: string;
-  /** core = the 48-SKU aggregate catalogue (pricing framework workbook); b2b-bulk = packaged cement, binders and chemicals. */
-  catalogueGroup: "core" | "b2b-bulk";
+  /** core = the aggregate catalogue (pricing framework workbook); b2b-bulk = packaged cement, binders and chemicals; ready-mix = CAT-12 concrete. */
+  catalogueGroup: "core" | "b2b-bulk" | "ready-mix";
 };
 
 // The nine core categories of the pricing framework workbook (Category Markup
@@ -23,9 +23,12 @@ export const CATEGORIES: Category[] = [
   // B2B Bulk & Infrastructure expansion — sold per packaged unit (bag, bulk
   // bag, tanker, drum), priced from the B2B pricing workbook, not the
   // ton/m³ framework. See B2B_BULK_CATALOGUE.md.
-  { slug: "cement-hydraulic-binders", name: "Cement & Hydraulic Binders", description: "42.5N and 52.5N cement by the bag, bulk bag or tanker, plus fly-ash/slag road-capping binder.", catalogueGroup: "b2b-bulk" },
+  { slug: "cement-hydraulic-binders", name: "Cement & Hydraulic Binders", description: "Cement from PPC, AfriSam, Sephaku, Cemza, NPC, Afrimat and more — 32,5N to 52,5R, masonry and road-stabilising — by the bag, bulk bag or tanker.", catalogueGroup: "b2b-bulk" },
   { slug: "mortars-grouts-admixtures", name: "Mortars, Grouts & Admixtures", description: "Structural non-shrink grout and bulk concrete admixtures — accelerators, plasticisers and retarders.", catalogueGroup: "b2b-bulk" },
+  // CAT-12 — per m³ by strength grade, full mixer-truck loads (READY_MIX_CATALOGUE.md).
+  { slug: "ready-mix-concrete", name: "Ready-Mix Concrete", description: "SANS 878 ready-mixed concrete from 10 to 40 MPa, delivered by mixer truck in full loads — pump hire on request.", catalogueGroup: "ready-mix" },
 ];
 
 export const CORE_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "core");
 export const B2B_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "b2b-bulk");
+export const READY_MIX_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "ready-mix");

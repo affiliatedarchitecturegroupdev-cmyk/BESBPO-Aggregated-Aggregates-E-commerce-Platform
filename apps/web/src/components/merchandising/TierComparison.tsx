@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CUSTOMER_TIERS } from "@/data/catalogue";
+import { tierBreakdown, tierHeadline } from "@/lib/tier-pricing";
 
 const DETAIL: Record<string, string> = {
   RETAIL: "Walk-up and small online orders. No account required.",
@@ -18,9 +19,8 @@ export function TierComparison() {
           {CUSTOMER_TIERS.map((tier) => (
             <div key={tier.name} className="rounded-sm border border-basalt/10 bg-white p-6">
               <h3 className="font-display text-lg font-semibold text-basalt">{tier.label}</h3>
-              <p className="mt-1 font-mono text-sm text-ochre-gold">
-                {tier.discount === 0 ? "List pricing" : `${Math.round(tier.discount * 100)}% off list`}
-              </p>
+              <p className="mt-1 font-mono text-sm text-ochre-gold">{tierHeadline(tier.name)}</p>
+              <p className="mt-1 font-body text-xs text-slate">{tierBreakdown(tier.name)}</p>
               <p className="mt-3 font-body text-sm text-slate">{DETAIL[tier.name] ?? tier.definition}</p>
               <p className="mt-2 font-mono text-[10px] text-slate">{tier.definition}</p>
             </div>

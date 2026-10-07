@@ -37,11 +37,20 @@ def test_tons_m3_roundtrip():
 
 
 def test_line_total_is_quantity_times_tier_unit_price():
-    result = calculate(G5_GRAVEL, D("7"), "ton", FRAMEWORK.tiers["CONTRACTOR_TRADE"].discount)
+    result = calculate(G5_GRAVEL, D("7"), "ton", "CONTRACTOR_TRADE")
     assert result.list_unit_price == D("212.40")
     assert result.unit_price == D("195.41")  # 212.40 x 0.92 = 195.408
     assert result.total == D("1367.87")  # 7 x 195.41
     assert result.subtotal_before_discount == D("1486.80")
+
+
+def test_volume_discount_is_capped_by_the_margin_floor():
+    # Sub-base: 18% markup, so 15% off would sell below cost x 1.03.
+    result = calculate(G5_GRAVEL, D("7"), "ton", "VOLUME_CIVIL_BULK")
+    assert result.unit_price == D("185.40")  # 212.40 / 1.18 x 1.03, not 212.40 x 0.85 = 180.54
+    assert result.discount == (D("212.40") - D("185.40")) / D("212.40")
+    # Decorative stone (55% markup) keeps the full 15%.
+    assert calculate(RIVER_PEBBLE, D("1"), "ton", "VOLUME_CIVIL_BULK").discount == D("0.15")
 
 
 def test_half_cent_rounds_up_like_excel():

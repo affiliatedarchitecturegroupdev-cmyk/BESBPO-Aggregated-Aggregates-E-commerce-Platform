@@ -45,6 +45,7 @@ export class SuppliersService {
           ...(row.contactName !== undefined ? { contactName: row.contactName } : {}),
           ...(row.contactPhone !== undefined ? { contactPhone: row.contactPhone } : {}),
           ...(row.isActive !== undefined ? { isActive: row.isActive } : {}),
+          ...(row.isGroupEntity !== undefined ? { isGroupEntity: row.isGroupEntity } : {}),
         };
         return this.prisma.supplierLocation.upsert({
           where: { externalId: row.externalId },

@@ -3,10 +3,11 @@ import Link from "next/link";
 import { CUSTOMER_TIERS, findProduct } from "@/data/catalogue";
 import { formatZAR } from "@/lib/pricing";
 import { SALES_EMAIL } from "@/lib/site";
+import { tierBreakdown, tierHeadline } from "@/lib/tier-pricing";
 
 export const metadata: Metadata = {
   title: "Trade Accounts",
-  description: "Contractor/Trade (8% off) and Volume/Civil Bulk (15% off) accounts with standing addresses and PO billing.",
+  description: "Contractor/Trade (up to 8% off) and Volume/Civil Bulk (up to 15% off) accounts with standing addresses and PO billing.",
 };
 
 // Payment Strategy section of the platform spec, by tier.
@@ -42,8 +43,9 @@ export default function TradeAccountsPage() {
           >
             <p className="font-display text-lg font-bold text-basalt">{tier.label}</p>
             <p className="mt-1 font-display text-3xl font-bold text-seam-blue">
-              {tier.discount === 0 ? "List price" : `${Math.round(tier.discount * 100)}% off`}
+              {tierHeadline(tier.name)}
             </p>
+            <p className="mt-1 font-body text-xs text-slate">{tierBreakdown(tier.name)}</p>
             <p className="mt-3 font-body text-sm text-slate">{tier.definition}</p>
             <p className="mt-4 font-mono text-[11px] text-slate">
               e.g. {example.name}: {formatZAR(example.prices[tier.name].ton ?? 0)}/ton

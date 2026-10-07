@@ -16,7 +16,7 @@ def test_health_reports_workbook_version():
 
 
 def test_products_lists_full_catalogue():
-    assert len(client.get("/products").json()) == 48
+    assert len(client.get("/products").json()) == 51  # 48 workbook rows + 3 category-band additions
 
 
 def test_tonnage_volume_quote_only_is_tier_specific():

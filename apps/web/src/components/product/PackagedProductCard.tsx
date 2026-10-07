@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { MaterialSwatch } from "@/components/product/MaterialSwatch";
 import { PendingPhotoTag } from "@/components/product/PendingPhotoTag";
-import { headlineUnit, type PackagedProduct } from "@/data/packaged";
+import type { PackagedProduct, TierPrices } from "@/data/packaged";
+import type { ReadyMixProduct } from "@/data/ready-mix";
 import { formatZAR } from "@/lib/pricing";
 
-/** Listing card for CAT-10/11 packaged goods: a real price only where the unit is benchmarked. */
-export function PackagedProductCard({ product }: { product: PackagedProduct & { images?: { src: string; alt: string; pending?: boolean }[] } }) {
-  const headline = headlineUnit(product);
+/** Listing card for packaged goods (CAT-10/11) and ready-mix (CAT-12): a real price only where it is benchmarked. */
+export function PackagedProductCard({ product }: { product: (PackagedProduct | ReadyMixProduct) & { images?: { src: string; alt: string; pending?: boolean }[] } }) {
+  const units: { unit: string; label: string; prices: TierPrices | null }[] = product.units;
+  const headline = units.find((u) => u.prices !== null);
   const photo = product.images?.[0];
   const href = `/products/${product.slug}`;
   return (
@@ -38,10 +40,10 @@ export function PackagedProductCard({ product }: { product: PackagedProduct & { 
       </p>
       <div className="mt-3 flex items-center justify-between gap-2">
         <span className="rounded-sm bg-limestone px-2 py-1 font-mono text-[10px] text-slate">
-          {product.units.map((u) => u.label).join(" · ")}
+          {product.kind === "ready-mix" ? `Min. ${product.minimumLoadM3}m³ load` : units.map((u) => u.label).join(" · ")}
         </span>
         <Link
-          href={`/quote?sku=${product.sku}&unit=${(headline ?? product.units[0]).unit}`}
+          href={`/quote?sku=${product.sku}&unit=${(headline ?? units[0]).unit}`}
           className="shrink-0 rounded-sm bg-seam-blue px-3 py-1.5 font-body text-xs font-semibold text-limestone hover:bg-basalt"
         >
           {headline ? "Add to Quote" : "Request Quote"}

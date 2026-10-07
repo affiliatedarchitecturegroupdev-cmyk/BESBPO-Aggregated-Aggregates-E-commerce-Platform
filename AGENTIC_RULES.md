@@ -64,12 +64,13 @@ unreviewed work.
    buyer's own tier and re-checked on every payment. See
    `PAYMENT_PROVIDER_TERMS.md` and `PAYMENT_ASSETS.md`.
 9. **B2B catalogue dedup is load-bearing.** Before adding any SKU, apply
-   `B2B_BULK_CATALOGUE.md`'s three-bucket rule against the **real** 48-SKU
-   workbook catalogue, not a sample. The delivered B2B build proposed Silica
-   Sand, Gabion Stone and Filter Stone as additions; the workbook already has
-   Silica Sand (AA-SND-07), Gabion Stone (AA-CRR-04) and Filter Media
-   (AA-DRN-02), so they were not added. Only the 7 CAT-10/11 packaged
-   products are new.
+   `B2B_BULK_CATALOGUE.md`'s three-bucket rule against the **real** workbook
+   catalogue, not a sample. Silica Sand and Gabion Stone were already in the
+   workbook and were not added; Dump Rock, Pipe Bedding Sand and Filter Stone
+   were approved as distinct SKUs (Oct 2026) and are priced by their category
+   band only. Cement follows `CEMENT_MASTER_CATALOGUE.md` (one row per named
+   product; bulk is a pack size, specialist traits are attributes, never
+   duplicate SKUs).
 10. **No fabricated prices, ever — including packaged goods.** CAT-10/11
     prices come only from `services/pricing/data/b2b_packaged_catalogue.json`
     (the B2B workbook). Where `pricing_status` isn't "Ready — benchmarked",
@@ -100,6 +101,10 @@ unreviewed work.
     documentation specifies. Contact details and map pins stay staff-only.
     Researched B2B leads (`isVerifiedPartner = false`) are labelled as leads,
     import inactive, and never count as delivery points.
+14. **Discounts never go below the floor.** Every tier price is
+    `max(list × (1 − tier discount), cost × 1.03)`, and cement and ready-mix
+    Volume/Civil Bulk orders are quoted (`PRICING_POLICY.md`). Change the
+    schedule in `discount_floor.py` and `tier-pricing.ts` together.
 
 ## Open items carried into the build-out
 

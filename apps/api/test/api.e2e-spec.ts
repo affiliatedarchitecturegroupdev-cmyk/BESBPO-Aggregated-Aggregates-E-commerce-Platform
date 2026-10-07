@@ -123,7 +123,8 @@ describe("Aggregated Aggregates API (e2e)", () => {
         .send({ label: "Site A", addressLine1: "1 Quarry Road", city: "Pinetown", province: "KwaZulu-Natal", postalCode: "3610" })
         .expect(201);
 
-      // The approved tier prices quotes: 12m3 is quote-only for Volume/Civil Bulk, at 15% off.
+      // The approved tier prices quotes: 12m3 is quote-only for Volume/Civil Bulk, at up to 15% off —
+      // G5's 18% markup caps it at the margin floor (cost x 1.03, PRICING_POLICY.md).
       const quote = await http()
         .post("/quotes")
         .set("Authorization", `Bearer ${buyer}`)
@@ -136,8 +137,8 @@ describe("Aggregated Aggregates API (e2e)", () => {
         })
         .expect(201);
       expect(quote.body).toMatchObject({ reasonCode: "VOLUME_CIVIL_BULK", companyName: `Civil Co ${run}` });
-      expect(Number(quote.body.lineItems[0].estimatedUnitPrice)).toBe(306.92);
-      expect(Number(quote.body.estimatedSubtotal)).toBe(3683.04);
+      expect(Number(quote.body.lineItems[0].estimatedUnitPrice)).toBe(315.18); // floor, not 361.08 x 0.85 = 306.92
+      expect(Number(quote.body.estimatedSubtotal)).toBe(3782.16);
 
       // Staff price it; the customer accepts; another customer can't see it.
       await http()
@@ -336,7 +337,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
       const served = await http().get(`/merchandising/images/${image.body.id}`).expect(200);
       expect(served.headers["content-type"]).toBe("image/png");
       const overlay = await http().get("/merchandising/products").expect(200);
-      expect(overlay.body).toHaveLength(55); // 48 aggregates + 7 B2B packaged goods
+      expect(overlay.body).toHaveLength(99); // 51 aggregates + 41 cement and other packaged goods + 7 ready-mix grades
       expect(overlay.body.find((p: { sku: string }) => p.sku === sku)).toMatchObject({
         featuredRank: 2,
         images: expect.arrayContaining([expect.objectContaining({ id: image.body.id, altText: "Filter media stockpile" })]),
@@ -492,7 +493,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
         })
         .expect(201);
       expect(priced.body.reasonCode).toBe("CUSTOMER_REQUEST");
-      expect(Number(priced.body.lineItems[0].estimatedUnitPrice)).toBe(113.4);
+      expect(Number(priced.body.lineItems[0].estimatedUnitPrice)).toBe(136.08); // lowest regular retail R126.00 x 1.08
       expect(priced.body.lineItems[0].unitOfSale).toBe("BAG_50KG");
 
       const unpriced = await http()
@@ -524,7 +525,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
         .set("Authorization", `Bearer ${token}`)
         .send({ deliveryDistanceKm: 12, lineItems: [{ productId: product.id, unitOfSale: "BAG_50KG", quantity: 10 }] })
         .expect(201);
-      expect(Number(res.body.subtotal)).toBe(1134);
+      expect(Number(res.body.subtotal)).toBe(1360.8);
       expect(Number(res.body.deliveryFee)).toBe(350);
       const drums = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-ADM-PLAST-001" } });
       await http()
@@ -532,6 +533,40 @@ describe("Aggregated Aggregates API (e2e)", () => {
         .set("Authorization", `Bearer ${token}`)
         .send({ deliveryDistanceKm: 12, lineItems: [{ productId: drums.id, unitOfSale: "DRUM_210L", quantity: 1 }] })
         .expect(400);
+      await prisma.order.delete({ where: { id: res.body.id } });
+    });
+  });
+
+  describe("ready-mix concrete (CAT-12)", () => {
+    it("orders a benchmarked grade by the m³, delivered by the plant, and quotes the rest", async () => {
+      const token = await register("readymix");
+      const grade = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-RMX-25MPA-001" }, include: { readyMixPriceBand: true } });
+      expect(Number(grade.readyMixPriceBand!.listPricePerM3)).toBe(1452);
+      const res = await http()
+        .post("/orders")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ deliveryDistanceKm: 35, lineItems: [{ productId: grade.id, unitOfSale: "BULK_M3", quantity: 9 }] })
+        .expect(201);
+      expect(Number(res.body.subtotal)).toBe(13068); // 9m³ x R1,452
+      expect(Number(res.body.deliveryFee)).toBe(0); // the mixer truck, not a tipper
+      // Below a full mixer-truck load isn't an order at all.
+      await http()
+        .post("/orders")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ deliveryDistanceKm: 35, lineItems: [{ productId: grade.id, unitOfSale: "BULK_M3", quantity: 4 }] })
+        .expect((r) => expect(r.status).toBeGreaterThanOrEqual(400));
+      // A grade with no benchmark goes to a human price.
+      const quote = await http()
+        .post("/quotes")
+        .send({
+          contactName: "Slab Pour",
+          contactEmail: `pour-${run}@example.com`,
+          deliveryAddress: "1 Site Road, Durban",
+          lines: [{ sku: "AA-RMX-20MPA-001", unit: "m3", quantity: 8 }],
+        })
+        .expect(201);
+      expect(quote.body.reasonCode).toBe("PRICE_ON_REQUEST");
+      await prisma.quote.delete({ where: { id: quote.body.id } });
       await prisma.order.delete({ where: { id: res.body.id } });
     });
   });

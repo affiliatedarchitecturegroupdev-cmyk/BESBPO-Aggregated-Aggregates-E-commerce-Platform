@@ -6,6 +6,7 @@ import { CUSTOMER_TIERS, type CustomerTierName, type Product, type Unit } from "
 import { AddToCartButton } from "@/components/cart/AddToCartButton";
 import { useNearestDeliveryPoint } from "@/components/suppliers/useNearestDeliveryPoint";
 import { estimateDelivery, estimateLine, formatZAR, UNIT_LABELS } from "@/lib/pricing";
+import { tierOptionLabel } from "@/lib/tier-pricing";
 
 function unitButtonLabel(unit: Unit, product: Product) {
   if (unit === "ton") return "Bulk (ton)";
@@ -114,7 +115,7 @@ export function BulkBagCalculator({ product }: { product: Product }) {
           >
             {CUSTOMER_TIERS.map((t) => (
               <option key={t.name} value={t.name}>
-                {t.label} ({Math.round(t.discount * 100)}% off)
+                {tierOptionLabel("AGGREGATE", t.name, t.label)}
               </option>
             ))}
           </select>

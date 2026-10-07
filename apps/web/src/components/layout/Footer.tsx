@@ -76,6 +76,7 @@ export async function Footer() {
               </li>
             ))}
             <li><Link href="/products?group=b2b-bulk">Cement & Admixtures</Link></li>
+            <li><Link href="/products?category=ready-mix-concrete">Ready-Mix Concrete</Link></li>
             <li><Link href="/products">All products</Link></li>
           </FooterColumn>
           <FooterColumn title="Buy">

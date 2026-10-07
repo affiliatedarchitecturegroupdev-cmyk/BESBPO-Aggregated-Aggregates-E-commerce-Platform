@@ -9,24 +9,39 @@ import { GroupServiceBanner } from "@/components/merchandising/GroupServiceBanne
 import { SocialShareButtons } from "@/components/social/SocialShareButtons";
 import { WhatsAppOrderButton } from "@/components/social/WhatsAppCta";
 import { PackagedProductPage } from "@/components/product/PackagedProductPage";
+import { ReadyMixProductPage } from "@/components/product/ReadyMixProductPage";
 import { pricePoints, PRODUCTS } from "@/data/catalogue";
 import { CATEGORIES } from "@/data/categories";
 import { PACKAGED_PRODUCTS } from "@/data/packaged";
-import { getCatalogue, getPackagedCatalogue, getProduct } from "@/lib/cms";
+import { READY_MIX_PRODUCTS } from "@/data/ready-mix";
+import { getCatalogue, getPackagedCatalogue, getProduct, getReadyMixCatalogue } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
-  return [...PRODUCTS, ...PACKAGED_PRODUCTS].map((p) => ({ slug: p.slug }));
+  return [...PRODUCTS, ...PACKAGED_PRODUCTS, ...READY_MIX_PRODUCTS].map((p) => ({ slug: p.slug }));
 }
 
 async function getPackaged(slug: string) {
   return (await getPackagedCatalogue()).find((p) => p.slug === slug);
 }
 
+async function getReadyMix(slug: string) {
+  return (await getReadyMixCatalogue()).find((p) => p.slug === slug);
+}
+
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const product = await getProduct(params.slug);
   if (!product) {
+    const readyMix = await getReadyMix(params.slug);
+    if (readyMix) {
+      const price = readyMix.units[0].prices?.RETAIL;
+      return {
+        title: readyMix.name,
+        description: `${readyMix.name} (${readyMix.gradingStandard ?? "SANS 878"})${price ? ` from ${formatZAR(price)}/m³` : ""} — full mixer-truck loads from ${readyMix.minimumLoadM3}m³, delivered by the plant nearest your site.`,
+        alternates: { canonical: `/products/${readyMix.slug}` },
+      };
+    }
     const packaged = await getPackaged(params.slug);
     if (!packaged) return {};
     return {
@@ -48,6 +63,8 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
   // Products staff hide in the admin 404 here (and drop out of listings).
   const product = await getProduct(params.slug);
   if (!product) {
+    const readyMix = await getReadyMix(params.slug);
+    if (readyMix) return <ReadyMixProductPage product={readyMix} />;
     const packaged = await getPackaged(params.slug);
     if (!packaged) notFound();
     return <PackagedProductPage product={packaged} />;

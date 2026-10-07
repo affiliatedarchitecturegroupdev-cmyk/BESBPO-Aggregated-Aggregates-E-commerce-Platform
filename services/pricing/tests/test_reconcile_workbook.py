@@ -22,13 +22,15 @@ sys.path.insert(0, str(SERVICE_DIR / "scripts"))
 
 import pricing_framework  # noqa: E402
 from calculators.packaged_goods import load as load_packaged  # noqa: E402
-from calculators.tonnage_volume import unit_price  # noqa: E402
+from calculators.discount_floor import floor_price  # noqa: E402
+from calculators.tonnage_volume import tier_unit_price, unit_price  # noqa: E402
 from import_pricing_framework import OUTPUT_PATHS, WORKBOOK_PATH, import_workbook, render  # noqa: E402
 
 FRAMEWORK = pricing_framework.load()
 WORKBOOK = openpyxl.load_workbook(WORKBOOK_PATH, data_only=True)
 CATALOGUE = WORKBOOK["Sample Priced Catalogue"]
-PRODUCTS_BY_ROW = {row: p for row, p in enumerate(FRAMEWORK.raw["products"], start=2)}
+WORKBOOK_PRODUCTS = [p for p in FRAMEWORK.raw["products"] if p.get("source") != "category-band"]
+PRODUCTS_BY_ROW = {row: p for row, p in enumerate(WORKBOOK_PRODUCTS, start=2)}
 
 
 def cents(value) -> Decimal:
@@ -45,7 +47,7 @@ def test_generated_files_match_workbook():
 
 
 def test_every_catalogue_row_is_priced():
-    assert CATALOGUE.max_row - 1 == len(FRAMEWORK.products) == 48
+    assert CATALOGUE.max_row - 1 == len(WORKBOOK_PRODUCTS) == 48
     for row, product in PRODUCTS_BY_ROW.items():
         assert CATALOGUE[f"B{row}"].value == product["name"]
 
@@ -62,12 +64,27 @@ def test_catalogue_row_reconciles_to_the_cent(row):
     assert unit_price(product, "m3") == cents(CATALOGUE[f"H{row}"].value)
     assert unit_price(product, "ton", trade) == cents(CATALOGUE[f"K{row}"].value)
     assert unit_price(product, "ton", volume) == cents(CATALOGUE[f"L{row}"].value)
+    # What customers pay: the workbook's tier price, unless it would fall below
+    # the margin floor (cost x 1.03, PRICING_POLICY.md) — then the floor.
+    floor = floor_price(product.list_price_per_ton, product.markup)
+    assert tier_unit_price(product, "ton", "CONTRACTOR_TRADE").unit_price == max(cents(CATALOGUE[f"K{row}"].value), floor)
+    assert tier_unit_price(product, "ton", "VOLUME_CIVIL_BULK").unit_price == max(cents(CATALOGUE[f"L{row}"].value), floor)
 
     bag_price = CATALOGUE[f"J{row}"].value
     if bag_price in (None, ""):
         assert not product.is_sold_bagged
     else:
         assert unit_price(product, "bag") == cents(bag_price)
+
+
+def test_additional_aggregates_are_priced_by_their_category_band():
+    # B2B_BULK_CATALOGUE.md additions: no product-specific price, just the category's.
+    extra = [p for p in FRAMEWORK.raw["products"] if p.get("source") == "category-band"]
+    assert [p["sku"] for p in extra] == ["AA-CRS-11", "AA-SND-08", "AA-DRN-05"]
+    categories = {c["slug"]: c for c in FRAMEWORK.raw["categories"]}
+    for p in extra:
+        assert p["list_prices"]["ton"] == categories[p["category_slug"]]["list_price_per_ton"]
+        assert p["list_prices"]["m3"] == categories[p["category_slug"]]["list_price_per_m3"]
 
 
 def test_category_bands_reconcile_to_the_cent():

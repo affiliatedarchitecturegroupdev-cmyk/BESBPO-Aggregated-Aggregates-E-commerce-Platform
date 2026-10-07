@@ -7,6 +7,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from calculators import packaged_goods
+from calculators.discount_floor import TierQuoteOnly
 from calculators.order import OrderLine, price_order
 from main import FRAMEWORK, app
 
@@ -32,7 +33,20 @@ def test_every_published_price_reconciles_with_its_benchmark_and_markup():
             assert cost == Decimal(str(unit["cost_per_unit"]))
             assert cents(cost * (1 + Decimal(str(unit["markup_percent"])) / 100)) == Decimal(str(unit["list_price_per_unit"]))
             priced += 1
-    assert priced == 2  # 42.5N cement 50kg bag and non-shrink grout 25kg bag
+    # Nine bagged cements with >=2 retailer benchmarks (CEMENT_MASTER_CATALOGUE.md) and the non-shrink grout.
+    assert priced == 10
+
+
+def test_the_cement_master_catalogue_is_complete_and_deduplicated():
+    cement = [p for p in RAW["products"] if p["category_slug"] == "cement-hydraulic-binders"]
+    assert len(cement) == 37 and len(RAW["products"]) == 41
+    assert len({p["slug"] for p in RAW["products"]}) == 41
+    # Bagged cement goes live at the lowest regular retail price x 1.08 (PRICING_POLICY.md).
+    for p in cement:
+        for unit in p["units"]:
+            if unit["list_price_per_unit"] is not None:
+                assert unit["unit"] == "BAG_50KG" and unit["markup_percent"] == 8 and unit["cost_basis_percent"] == 100
+    assert PACKAGED["AA-CEM-425N-001"].units["BAG_50KG"].list_price == Decimal("136.08")
 
 
 def test_storefront_copy_matches_the_pricing_service():
@@ -40,11 +54,21 @@ def test_storefront_copy_matches_the_pricing_service():
     assert json.loads(web.read_text(encoding="utf-8")) == RAW
 
 
-def test_tier_discount_applies_to_a_benchmarked_unit():
-    result = packaged_goods.calculate(PACKAGED["AA-CEM-425N-001"], Decimal(20), "BAG_50KG", Decimal("0.08"))
-    assert result.unit_price == Decimal("104.33")  # 113.40 x 0.92 = 104.328
-    assert result.total == Decimal("2086.60")
+def test_bagged_cement_takes_the_4_percent_trade_discount():
+    result = packaged_goods.calculate(PACKAGED["AA-CEM-425N-001"], Decimal(20), "BAG_50KG", "CONTRACTOR_TRADE")
+    assert result.unit_price == Decimal("130.64")  # 136.08 x 0.96 = 130.6368; the 8% markup floor (129.78) isn't reached
+    assert result.total == Decimal("2612.80")
     assert result.bagged_kg == Decimal(1000)
+
+
+def test_volume_cement_and_trade_bulk_cement_are_quoted():
+    with pytest.raises(TierQuoteOnly):
+        packaged_goods.calculate(PACKAGED["AA-CEM-425N-001"], Decimal(20), "BAG_50KG", "VOLUME_CIVIL_BULK")
+    response = client.post("/calculate/packaged-goods", json={"sku": "AA-CEM-425N-001", "unit": "BAG_50KG", "quantity": 20, "customer_tier": "VOLUME_CIVIL_BULK"})
+    assert response.status_code == 422
+    order = price_order(FRAMEWORK, [OrderLine("AA-CEM-425N-001", Decimal(20), "BAG_50KG")], Decimal(10), "VOLUME_CIVIL_BULK", PACKAGED).as_dict()
+    assert order["is_quote_only"] and "TIER_QUOTE_ONLY" in order["reason_codes"]
+    assert order["lines"][0]["pricing_status"] == packaged_goods.TIER_QUOTE_STATUS
 
 
 def test_refuses_to_price_an_unbenchmarked_unit():
@@ -65,9 +89,9 @@ def test_bagged_cement_rides_the_bagged_delivery_rules():
     result = price_order(FRAMEWORK, [OrderLine("AA-CEM-425N-001", Decimal(10), "BAG_50KG")], Decimal(12), "RETAIL", PACKAGED)
     body = result.as_dict()
     assert not result.is_quote_only
-    assert body["subtotal"] == 1134.0
+    assert body["subtotal"] == 1360.8
     assert body["delivery"]["fee"] == 350.0  # 500kg is under the 1-ton free-delivery threshold
-    assert body["total"] == 1484.0
+    assert body["total"] == 1710.8
 
 
 def test_unpriced_or_bulk_format_packaged_lines_make_the_order_quote_only():
@@ -93,5 +117,5 @@ def test_order_endpoint_accepts_packaged_units():
     )
     assert response.status_code == 200
     body = response.json()
-    assert body["lines"][0]["unit_price"] == 246.31  # 267.73 x 0.92 = 246.3116
-    assert body["total"] == 985.24 + 350.0
+    assert body["lines"][0]["unit_price"] == 257.02  # bagged grout takes the 4% trade discount: 267.73 x 0.96 = 257.0208
+    assert body["total"] == 1028.08 + 350.0

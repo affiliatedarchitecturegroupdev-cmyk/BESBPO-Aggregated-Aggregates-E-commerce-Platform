@@ -17,19 +17,21 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 import pricing_framework
-from calculators import packaged_goods
+from calculators import packaged_goods, ready_mix
 from calculators.delivery_bands import calculate_delivery_fee
+from calculators.discount_floor import TierQuoteOnly
 from calculators.order import OrderLine, UnknownSku, price_order
 from calculators.tonnage_volume import UnitNotOffered, calculate
 
 app = FastAPI(
     title="Aggregated Aggregates Pricing Service",
-    description="Tonnage/volume, packaged-goods, distance-banded delivery, and order pricing.",
+    description="Tonnage/volume, packaged-goods, ready-mix, distance-banded delivery, and order pricing.",
     version="0.2.0",
 )
 
 FRAMEWORK = pricing_framework.load()
 PACKAGED_RAW, PACKAGED = packaged_goods.load()
+READY_MIX_RAW, READY_MIX, PUMPS = ready_mix.load()
 
 TierName = Literal["RETAIL", "CONTRACTOR_TRADE", "VOLUME_CIVIL_BULK"]
 UnitName = Literal["ton", "m3", "bag"]
@@ -50,6 +52,17 @@ def list_products():
 def list_packaged_products():
     """CAT-10/CAT-11 packaged goods (B2B pricing workbook)."""
     return PACKAGED_RAW["products"]
+
+
+@app.get("/products/ready-mix")
+def list_ready_mix_products():
+    """CAT-12 ready-mix concrete grades."""
+    return READY_MIX_RAW["products"]
+
+
+@app.get("/products/ready-mix/pumps")
+def list_ready_mix_pumps():
+    return READY_MIX_RAW["pumps"]
 
 
 @app.get("/customer-tiers")
@@ -81,7 +94,7 @@ def calculate_tonnage_volume(req: TonnageVolumeRequest):
     product = _product(req.sku)
     tier = FRAMEWORK.tiers[req.customer_tier]
     try:
-        result = calculate(product, req.quantity, req.unit, tier.discount)
+        result = calculate(product, req.quantity, req.unit, req.customer_tier)
     except (UnitNotOffered, ValueError) as exc:
         raise HTTPException(status_code=422, detail=str(exc))
 
@@ -134,10 +147,43 @@ def calculate_packaged_goods(req: PackagedGoodsRequest):
     product = PACKAGED.get(req.sku)
     if product is None:
         raise HTTPException(status_code=404, detail=f"Unknown packaged-goods SKU: {req.sku}")
-    tier = FRAMEWORK.tiers[req.customer_tier]
     try:
-        return packaged_goods.calculate(product, req.quantity, req.unit, tier.discount).as_dict()
-    except (packaged_goods.PricingNotAvailable, packaged_goods.PackagedUnitNotOffered, ValueError) as exc:
+        return packaged_goods.calculate(product, req.quantity, req.unit, req.customer_tier).as_dict()
+    except (packaged_goods.PricingNotAvailable, packaged_goods.PackagedUnitNotOffered, TierQuoteOnly, ValueError) as exc:
+        raise HTTPException(status_code=422, detail=str(exc))
+
+
+class ReadyMixRequest(BaseModel):
+    sku: str
+    quantity_m3: Decimal = Field(gt=0)
+    customer_tier: TierName = "RETAIL"
+
+
+@app.post("/calculate/ready-mix")
+def calculate_ready_mix(req: ReadyMixRequest):
+    """Prices a ready-mix grade per m³. Unbenchmarked grades, loads below the minimum and quoted tiers return 422."""
+    product = READY_MIX.get(req.sku)
+    if product is None:
+        raise HTTPException(status_code=404, detail=f"Unknown ready-mix SKU: {req.sku}")
+    try:
+        return ready_mix.calculate(product, req.quantity_m3, req.customer_tier).as_dict()
+    except (ready_mix.PricingNotAvailable, ready_mix.BelowMinimumLoad, TierQuoteOnly, ValueError) as exc:
+        raise HTTPException(status_code=422, detail=str(exc))
+
+
+class PumpRequest(BaseModel):
+    code: str
+    quantity_m3: Decimal = Field(gt=0)
+
+
+@app.post("/calculate/ready-mix-pump")
+def calculate_ready_mix_pump(req: PumpRequest):
+    pump = PUMPS.get(req.code)
+    if pump is None:
+        raise HTTPException(status_code=404, detail=f"Unknown pump: {req.code}")
+    try:
+        return ready_mix.price_pump(pump, req.quantity_m3)
+    except ready_mix.PricingNotAvailable as exc:
         raise HTTPException(status_code=422, detail=str(exc))
 
 
@@ -162,6 +208,7 @@ def calculate_order(req: OrderRequest):
             distance_km=req.distance_km,
             customer_tier=req.customer_tier,
             packaged=PACKAGED,
+            ready_mixes=READY_MIX,
         )
     except UnknownSku as exc:
         raise HTTPException(status_code=404, detail=f"Unknown SKU: {exc.args[0]}")
