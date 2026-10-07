@@ -49,6 +49,9 @@ export default function PartnersPage() {
             <Link href="/partners/portal" className="rounded-sm border border-limestone/30 px-5 py-2.5 font-body text-sm font-semibold hover:border-ochre-gold">
               Partner sign-in
             </Link>
+            <Link href="/partners/onboarding" className="rounded-sm border border-limestone/30 px-5 py-2.5 font-body text-sm font-semibold hover:border-ochre-gold">
+              Onboarding guide
+            </Link>
           </div>
         </div>
       </section>

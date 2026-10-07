@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { blockDates, respondToOffer, unblockDates } from "@/app/partners/portal/actions";
+import { acceptPartnerTerms, blockDates, respondToOffer, unblockDates } from "@/app/partners/portal/actions";
 import { ActionForm, inputClass, SubmitButton } from "@/components/account/Forms";
 import { label, panel, StatusPill } from "@/components/bookings/BookingParts";
 import { api } from "@/lib/api";
@@ -19,6 +19,8 @@ type Portal = {
     province: string;
     status: "ONBOARDING" | "ACTIVE" | "SUSPENDED";
     payoutDetailsConfirmed: boolean;
+    termsVersion: string | null;
+    termsAcceptedAt: string | null;
     fleet: { id: string; sku: string; label: string; province: string; isActive: boolean; availability: { id: string; startsOn: string; endsOn: string; reason: string | null; bookingId: string | null }[] }[];
   };
   offers: {
@@ -27,6 +29,8 @@ type Portal = {
     booking: { reference: string; itemName: string; basis: BookingBasis; quantity: number; startDate: string; endDate: string; province: string; siteAddress: string; siteNotes: string | null; partnerAmount: string };
   }[];
   jobs: { id: string; reference: string; itemName: string; status: BookingStatus; startDate: string; endDate: string; province: string; siteAddress: string; partnerAmount: string }[];
+  termsCurrent: boolean;
+  currentTermsVersion: string;
   payouts: { id: string; amount: string; status: PayoutStatus; releaseAfter: string | null; paidAt: string | null; paidReference: string | null; booking: { reference: string; itemName: string } }[];
 };
 
@@ -49,7 +53,7 @@ export default async function PartnerPortalPage() {
       </div>
     );
   }
-  const { partner, offers, jobs, payouts } = result.data;
+  const { partner, offers, jobs, payouts, termsCurrent } = result.data;
   const today = new Date().toISOString().slice(0, 10);
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
@@ -60,6 +64,23 @@ export default async function PartnerPortalPage() {
         </div>
         <p className="font-mono text-xs text-slate">{partner.province} · {partner.status === "ACTIVE" ? "Receiving offers" : partner.status === "ONBOARDING" ? "Onboarding — no offers yet" : "Suspended"}</p>
       </div>
+      {!termsCurrent && (
+        <section className="mt-4 rounded-sm border-2 border-seam-blue/30 bg-seam-blue/5 p-5">
+          <h2 className="font-display text-lg font-semibold text-basalt">{partner.termsVersion ? "Our Partner Terms have been updated" : "Accept the Partner Terms"}</h2>
+          <p className="mt-1 font-body text-sm text-slate">
+            Please read and accept the{" "}
+            <Link href="/legal/partner-terms" target="_blank" className="text-seam-blue underline">Partner Terms</Link> before accepting job offers. Accepting
+            records your agreement on behalf of {partner.name}.
+          </p>
+          <ActionForm action={acceptPartnerTerms} className="mt-3 space-y-3">
+            <label className="flex items-start gap-2 font-body text-sm text-basalt">
+              <input type="checkbox" name="accept" required className="mt-0.5 h-4 w-4 shrink-0" />
+              <span>I have read the Partner Terms and accept them on behalf of {partner.name}, and I&apos;m authorised to do so.</span>
+            </label>
+            <SubmitButton>Accept Partner Terms</SubmitButton>
+          </ActionForm>
+        </section>
+      )}
       {!partner.payoutDetailsConfirmed && (
         <p className="mt-4 rounded-sm border border-ochre-gold/40 bg-ochre-gold/10 p-3 font-body text-sm text-basalt">
           We still need your bank confirmation letter before we can pay you out. Send it to our partnerships team.
@@ -68,7 +89,10 @@ export default async function PartnerPortalPage() {
 
       <section className="mt-8">
         <h2 className="font-display text-xl font-bold text-basalt">Job offers</h2>
-        <p className="mt-1 font-body text-xs text-slate">Every offer is already paid by the customer. Reply within 30 minutes, or it goes to the next partner.</p>
+        <p className="mt-1 font-body text-xs text-slate">
+          Every offer is already paid by the customer. Reply within 30 minutes, or it goes to the next partner. New here? Read the{" "}
+          <Link href="/partners/onboarding" className="text-seam-blue hover:underline">partner onboarding guide</Link>.
+        </p>
         {offers.length === 0 ? (
           <p className="mt-4 font-body text-sm text-slate">No open offers right now. We&apos;ll email you when one comes in.</p>
         ) : (

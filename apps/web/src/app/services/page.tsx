@@ -32,7 +32,7 @@ export default function ServicesPage() {
         ))}
       </div>
 
-      <h2 className="mt-14 font-display text-2xl font-bold text-basalt">How it works</h2>
+      <div className="flex flex-wrap items-end justify-between gap-3"><h2 className="mt-14 font-display text-2xl font-bold text-basalt">How it works</h2><Link href="/plant-hire/how-it-works" className="font-body text-sm font-semibold text-seam-blue hover:underline">The full step-by-step →</Link></div>
       <div className="mt-5">
         <HireHowItWorks />
       </div>

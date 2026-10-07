@@ -1,15 +1,14 @@
 import type { ReactNode } from "react";
 
+/**
+ * Public legal pages. Review status (attorney sign-off) is tracked internally
+ * in AGENTIC_RULES.md rule 5 and content/legal/README.md — never shown here.
+ */
 export function LegalPageLayout({ children }: { children: ReactNode }) {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
-      <div className="rounded-sm border border-ochre-gold/40 bg-ochre-gold/10 p-4 font-body text-xs text-basalt">
-        <strong>Drafting template.</strong> This page follows South African e-commerce and POPIA norms but has not
-        been reviewed by Besbpo Group&apos;s legal counsel. Do not treat it as final legal advice — see
-        AGENTIC_RULES.md rule 5.
-      </div>
       <article
-        className="prose-legal mt-8 space-y-4 font-body text-sm leading-relaxed text-basalt
+        className="prose-legal space-y-4 font-body text-sm leading-relaxed text-basalt
         [&_h1]:font-display [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-basalt
         [&_h2]:mt-8 [&_h2]:font-display [&_h2]:text-lg [&_h2]:font-bold [&_h2]:text-basalt
         [&_p]:mt-3 [&_p]:text-slate

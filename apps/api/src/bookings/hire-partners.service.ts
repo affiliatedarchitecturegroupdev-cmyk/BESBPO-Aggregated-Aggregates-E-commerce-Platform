@@ -71,6 +71,21 @@ export class HirePartnersService {
     return this.list();
   }
 
+  /**
+   * Public: provinces where at least one ACTIVE partner has active fleet, and
+   * which machines/services are covered there. No partner names, counts or
+   * contact details — province pages are published only from this.
+   */
+  async coverage() {
+    const units = await this.prisma.partnerFleetUnit.findMany({
+      where: { isActive: true, partner: { status: "ACTIVE" } },
+      select: { province: true, sku: true },
+    });
+    const byProvince = new Map<string, Set<string>>();
+    for (const u of units) byProvince.set(u.province, (byProvince.get(u.province) ?? new Set()).add(u.sku));
+    return [...byProvince].map(([province, skus]) => ({ province, skus: [...skus].sort() })).sort((a, b) => a.province.localeCompare(b.province));
+  }
+
   private checkPin(dto: HirePartnerDto) {
     const lat = dto.latitude ?? null;
     const lng = dto.longitude ?? null;

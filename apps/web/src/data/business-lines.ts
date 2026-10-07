@@ -26,7 +26,7 @@ export const BUSINESS_LINES: BusinessLine[] = [
     title: "Cement & Ready-Mix Concrete",
     tagline: "Bagged cement and truck-load concrete",
     description: "Bagged cement from the leading SA brands and ready-mix by the m³, with concrete pumps quoted separately.",
-    href: "/products?category=ready-mix-concrete",
+    href: "/cement",
     cta: "See cement & ready-mix",
     imageId: "road-paving",
   },

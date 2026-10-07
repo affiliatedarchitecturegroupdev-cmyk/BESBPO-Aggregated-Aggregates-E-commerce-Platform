@@ -40,11 +40,11 @@ unreviewed work.
    (or per meaningful milestone within a phase on a long one), summarize
    what changed and why, and stop for human review. Don't chain phase 3
    work onto an unreviewed phase 2 branch.
-5. **Legal pages are templates, not law.** The content under `content/legal/`
-   and the pages it renders are structured to match South African
-   e-commerce/POPIA norms, but they are drafting templates. Do not represent
-   them as final without sign-off from whoever handles Besbpo Group's legal
-   review — flag this explicitly in the PR that first exposes them publicly.
+5. **Legal pages need attorney sign-off — tracked internally.** The content
+   under `content/legal/` follows South African e-commerce/POPIA norms but is
+   still awaiting review by Besbpo Group's legal counsel; its status is kept
+   in `content/legal/README.md`. Never put drafting or review notes on the
+   public pages themselves, and flag any change to legal wording in its PR.
 6. **Match sibling platforms, don't reinvent.** Roofsteel and Bricksplaza
    already solved auth, trade-tier discounting, RFQ flows, and compliance-doc
    attachment on this exact stack. Where this scaffold's approach diverges

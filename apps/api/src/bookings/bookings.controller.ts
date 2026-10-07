@@ -1,8 +1,9 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query } from "@nestjs/common";
 import type { AuthUser } from "../common/auth/auth-user";
-import { Roles } from "../common/auth/decorators";
+import { Public, Roles } from "../common/auth/decorators";
 import { CurrentUser } from "../common/decorators/current-user.decorator";
 import {
+  AcceptQuoteDto,
   ArrivalCodeDto,
   AvailabilityBlockDto,
   ConfirmPaymentDto,
@@ -161,8 +162,8 @@ export class BookingsController {
   }
 
   @Post(":id/accept")
-  accept(@Param("id") id: string, @CurrentUser() user: AuthUser) {
-    return this.bookings.acceptQuote(id, user);
+  accept(@Param("id") id: string, @Body() dto: AcceptQuoteDto, @CurrentUser() user: AuthUser) {
+    return this.bookings.acceptQuote(id, user, dto.acceptTerms === true);
   }
 
   @Post(":id/decline")
@@ -201,6 +202,12 @@ export class PartnerPortalController {
   @Get()
   summary(@CurrentUser() user: AuthUser) {
     return this.bookings.portal(user);
+  }
+
+  @Post("terms")
+  @HttpCode(200)
+  acceptTerms(@CurrentUser() user: AuthUser) {
+    return this.bookings.acceptPartnerTerms(user);
   }
 
   @Post("offers/:id/accept")
@@ -250,5 +257,17 @@ export class PartnerPortalController {
   @HttpCode(204)
   unblock(@Param("id") id: string, @CurrentUser() user: AuthUser) {
     return this.bookings.unblockAvailability(id, user);
+  }
+}
+
+/** Public: where plant hire and site services have active partners (provinces and SKUs only). */
+@Public()
+@Controller("hire-coverage")
+export class HireCoverageController {
+  constructor(private readonly partners: HirePartnersService) {}
+
+  @Get()
+  coverage() {
+    return this.partners.coverage();
   }
 }
