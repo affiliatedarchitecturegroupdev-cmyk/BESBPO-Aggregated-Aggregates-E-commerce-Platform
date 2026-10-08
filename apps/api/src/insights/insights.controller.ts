@@ -1,11 +1,13 @@
-import { Controller, Get, Query, Res } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Query, Res } from "@nestjs/common";
 import type { Response } from "express";
 import type { AuthUser } from "../common/auth/auth-user";
 import { Roles } from "../common/auth/decorators";
 import { CurrentUser } from "../common/decorators/current-user.decorator";
 import { toCsv, withoutKeys } from "./csv";
-import { BreakdownQuery, InsightsQuery, PnlQuery } from "./insights.dto";
+import { DigestService } from "./digest.service";
+import { BreakdownQuery, InsightsQuery, PnlQuery, SaveViewDto } from "./insights.dto";
 import { ADMIN_ONLY_KEYS, InsightsService } from "./insights.service";
+import { InsightsViewsService } from "./views.service";
 
 /**
  * Admin → Insights (ANALYTICS.md, Phase 2). Staff see sales, volumes and
@@ -16,7 +18,45 @@ import { ADMIN_ONLY_KEYS, InsightsService } from "./insights.service";
 @Controller("insights")
 @Roles("STAFF", "ADMIN")
 export class InsightsController {
-  constructor(private readonly insights: InsightsService) {}
+  constructor(
+    private readonly insights: InsightsService,
+    private readonly views: InsightsViewsService,
+    private readonly digest: DigestService,
+  ) {}
+
+  // --- Saved views (Phase 4) ------------------------------------------------
+
+  @Get("views")
+  listViews(@CurrentUser() user: AuthUser) {
+    return this.views.list(user);
+  }
+
+  @Post("views")
+  saveView(@Body() dto: SaveViewDto, @CurrentUser() user: AuthUser) {
+    return this.views.create(user, dto);
+  }
+
+  @Delete("views/:id")
+  @HttpCode(204)
+  deleteView(@Param("id") id: string, @CurrentUser() user: AuthUser) {
+    return this.views.remove(user, id);
+  }
+
+  // --- Weekly email (Phase 4, admins) ---------------------------------------
+
+  /** Last week's email as it will be sent, who gets it, and the send history. */
+  @Roles("ADMIN")
+  @Get("digest")
+  previewDigest() {
+    return this.digest.preview();
+  }
+
+  @Roles("ADMIN")
+  @Post("digest/send-to-me")
+  @HttpCode(200)
+  sendDigestToMe(@CurrentUser() user: AuthUser) {
+    return this.digest.sendToMe(user);
+  }
 
   @Get("summary")
   async summary(@Query() q: InsightsQuery, @CurrentUser() user: AuthUser) {

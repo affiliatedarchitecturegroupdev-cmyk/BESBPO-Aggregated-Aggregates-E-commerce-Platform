@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Put, Query } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Put, Query, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
 import type { AuthUser } from "../common/auth/auth-user";
 import { Roles } from "../common/auth/decorators";
 import { CurrentUser } from "../common/decorators/current-user.decorator";
@@ -43,6 +44,16 @@ export class FinanceController {
   @Post("operating-costs")
   createOperatingCost(@Body() dto: OperatingCostDto, @CurrentUser() user: AuthUser) {
     return this.finance.createOperatingCost(dto, user);
+  }
+
+  /** Admins: preview (default) or apply (?apply=true) an operating-cost CSV from the accounting system. */
+  @Roles("ADMIN")
+  @Post("operating-costs/import")
+  @HttpCode(200)
+  @UseInterceptors(FileInterceptor("file", { limits: { fileSize: 1024 * 1024, files: 1 } }))
+  importOperatingCosts(@UploadedFile() file: Express.Multer.File | undefined, @Query("apply") apply: string | undefined, @CurrentUser() user: AuthUser) {
+    if (!file) throw new BadRequestException("Choose a CSV file to import.");
+    return this.finance.importOperatingCosts(file.buffer.toString("utf8"), apply === "true", user);
   }
 
   @Roles("ADMIN")

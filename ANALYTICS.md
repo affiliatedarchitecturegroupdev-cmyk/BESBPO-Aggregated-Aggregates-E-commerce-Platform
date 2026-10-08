@@ -165,8 +165,46 @@ Each view says what it includes: VAT basis, refunds, filtered-out lines
 (delivery, hire, overheads), and for admins any missing costs that would
 overstate profit, with a link to Admin → Finance.
 
+## Phase 4 — weekly email, saved views, accounting import
+
+**Weekly email (admins).** Every Monday from 07:00 SAST each admin gets last
+week's (Monday–Sunday) figures against the week before: net revenue,
+material sales, delivery fees, orders, average order, hire commission,
+gross profit and margin, the week's share of operating costs, net profit,
+best sellers, top provinces, the pipeline, and warnings when costs are
+missing — with a link to that week in Insights. It goes only to users with
+the Admin role, never to the staff notification inboxes, because it carries
+cost and profit. Each week is claimed in `InsightsDigest` before sending, so
+a restart or a second API instance can't send it twice; if Monday is missed
+it goes out later that week. Switch it off on Admin → Notifications
+("Weekly sales & profit summary"); preview it, see the send history and send
+it to yourself on **Admin → Insights → Weekly email**. `INSIGHTS_DIGEST=off`
+disables the schedule. Code: `apps/api/src/insights/digest*.ts`.
+
+**Saved views.** On any Insights tab, *Save this view* stores the tab and its
+filters under a name — private, or shared with all staff. Only known filter
+keys are kept. Views of the P&L are admin-only. Owners delete their own;
+admins can remove shared ones. API: `GET/POST /insights/views`,
+`DELETE /insights/views/:id`.
+
+**Operating costs from the accounting system.** Admin → Finance → *Import
+from your accounting system (CSV)* takes an export from Xero, Sage,
+QuickBooks or a spreadsheet (template: `/downloads/operating-costs-template.csv`).
+Columns are matched loosely (month/date, category/account, description,
+amount ex VAT/net, reference); dates can be `2026-10`, `2026-10-31`,
+`31/10/2026` or `Oct 2026`; categories map from our names or common account
+words, else *Other* (flagged in the preview). Preview first — nothing is
+saved until *Import*. A file with any bad row is rejected whole. Importing
+replaces the rows imported earlier for the months in the file (so a
+corrected re-export is safe) and leaves hand-entered costs alone; imported
+rows show their reference. API: `POST /finance/operating-costs/import`
+(`?apply=true` to save).
+
+A live connection to one accounting package (pulling costs automatically)
+needs a choice of package and its API credentials; the CSV import works with
+any of them in the meantime.
+
 ## Still to come
 
-- **Phase 4:** weekly email summary to admins, saved views, optional
-  accounting-software sync for operating costs.
 - Card/gateway fees once a live gateway is on (they reduce gross profit).
+- A direct accounting-package connection, once the package is chosen.

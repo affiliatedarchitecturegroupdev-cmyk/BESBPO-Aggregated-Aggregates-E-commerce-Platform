@@ -1,5 +1,5 @@
-import { Type } from "class-transformer";
-import { IsEnum, IsIn, IsInt, IsOptional, Matches, Max, Min } from "class-validator";
+import { Transform, Type } from "class-transformer";
+import { IsBoolean, IsEnum, IsIn, IsInt, IsOptional, IsString, Matches, Max, MaxLength, Min, MinLength } from "class-validator";
 import { CustomerTierName, OrderChannel, PaymentMethodKey } from "@aggregates/database";
 import { PROVINCES } from "../careers/careers.dto";
 
@@ -36,4 +36,11 @@ export class BreakdownQuery extends InsightsQuery {
 export class PnlQuery extends InsightsQuery {
   /** Number of months ending with the month of `to` (default 12). */
   @IsOptional() @Type(() => Number) @IsInt() @Min(1) @Max(36) months?: number;
+}
+
+export class SaveViewDto {
+  @Transform(({ value }) => (typeof value === "string" ? value.trim() : value)) @IsString() @MinLength(2) @MaxLength(80) name!: string;
+  @IsString() @MaxLength(20) path!: string;
+  @IsOptional() @IsString() @MaxLength(1000) query?: string;
+  @IsOptional() @IsBoolean() shared?: boolean;
 }

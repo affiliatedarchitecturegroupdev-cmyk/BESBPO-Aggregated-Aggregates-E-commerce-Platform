@@ -1,6 +1,8 @@
 import { Suspense } from "react";
 import { InsightsNav } from "@/components/insights/InsightsNav";
-import { getSession } from "@/lib/session";
+import { SavedViews, type SavedView } from "@/components/insights/SavedViews";
+import { api } from "@/lib/api";
+import { getSession, sessionToken } from "@/lib/session";
 
 export const metadata = { title: { default: "Insights", template: "%s — Insights — Admin" } };
 
@@ -11,6 +13,7 @@ export const metadata = { title: { default: "Insights", template: "%s — Insigh
  */
 export default async function InsightsLayout({ children }: { children: React.ReactNode }) {
   const user = await getSession();
+  const views = await api<SavedView[]>("/insights/views", { token: sessionToken() });
   return (
     <div className="space-y-4">
       <div>
@@ -22,6 +25,7 @@ export default async function InsightsLayout({ children }: { children: React.Rea
       </div>
       <Suspense>
         <InsightsNav isAdmin={user?.role === "ADMIN"} />
+        <SavedViews views={views.ok ? views.data : []} isAdmin={user?.role === "ADMIN"} />
       </Suspense>
       {children}
     </div>

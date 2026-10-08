@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { deleteOperatingCost, saveDeliveryRates, saveOperatingCost } from "@/app/admin/finance/actions";
 import { ActionForm, inputClass, SubmitButton } from "@/components/account/Forms";
+import { OperatingCostImport } from "@/components/finance/OperatingCostImport";
 import { api } from "@/lib/api";
 import { formatZAR } from "@/lib/pricing";
 import { getSession, sessionToken } from "@/lib/session";
@@ -21,7 +22,7 @@ type Quality = {
   monthsWithOperatingCosts: number;
 };
 type Rates = { rates: { carrier: string; bandLabel: string; load: string; costExVat: string }[]; distanceBands: { label: string; minKm: number; maxKm: number | null }[] };
-type OperatingCost = { id: string; month: string; category: string; description: string; amountExVat: string };
+type OperatingCost = { id: string; month: string; category: string; description: string; amountExVat: string; source: "MANUAL" | "IMPORT"; reference: string | null };
 type Refund = { id: string; amount: string; reason: string; reference: string | null; refundedAt: string; order: { orderNumber: string } | null; booking: { reference: string } | null; orderId: string | null; bookingId: string | null };
 
 const CARRIERS = [
@@ -161,6 +162,7 @@ export default async function FinancePage() {
           <label className="block"><span className="font-mono text-[10px] uppercase text-slate">Amount</span><input name="amountExVat" type="number" step="0.01" min="0" required className={inputClass} /></label>
           <SubmitButton>Add</SubmitButton>
         </ActionForm>
+        <OperatingCostImport />
         {byMonth.size === 0 ? (
           <p className="mt-3 font-body text-sm text-slate">No operating costs yet.</p>
         ) : (
@@ -174,7 +176,10 @@ export default async function FinancePage() {
                 <ul className="mt-2 divide-y divide-basalt/10">
                   {rows.map((r) => (
                     <li key={r.id} className="flex flex-wrap items-center justify-between gap-2 py-1.5">
-                      <span className="text-basalt">{CATEGORIES[r.category] ?? r.category} — {r.description}</span>
+                      <span className="text-basalt">
+                        {CATEGORIES[r.category] ?? r.category} — {r.description}
+                        {r.source === "IMPORT" && <span className="ml-2 rounded-sm bg-limestone px-1 py-0.5 font-mono text-[10px] uppercase text-slate">Imported{r.reference ? ` · ${r.reference}` : ""}</span>}
+                      </span>
                       <span className="flex items-center gap-3">
                         <span>{formatZAR(Number(r.amountExVat))}</span>
                         <form action={deleteOperatingCost}>

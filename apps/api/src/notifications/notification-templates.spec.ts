@@ -150,7 +150,8 @@ describe("notification templates", () => {
       const staffEmail = staffOrderEmail(event, order) ?? staffQuoteEmail(event, quote) ?? staffCompanyEmail(event, company) ?? staffEnquiryEmail(event, enquiry) ?? staffBookingEmail(event, booking);
       expect([event, customerEmail !== null]).toEqual([event, channels.customerEmail]);
       expect([event, customerWhatsApp !== null]).toEqual([event, channels.customerWhatsApp]);
-      expect([event, staffEmail !== null]).toEqual([event, channels.staffEmail]);
+      // The weekly insights email is built from report data (insights/digest.ts), not from one record.
+      if (event !== "WEEKLY_INSIGHTS") expect([event, staffEmail !== null]).toEqual([event, channels.staffEmail]);
     }
   });
 

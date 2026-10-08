@@ -27,6 +27,7 @@ Code: `apps/api/src/notifications/` (message texts live in
 | Partner assigned | ✓ partner's name, arrival-code instructions | — | — |
 | No partner found | ✓ refund or new dates | — | ✓ |
 | Booking signed off / disputed / payout due | — | — | ✓ |
+| Weekly sales & profit summary (Mondays 07:00 SAST) | — | — | ✓³ admins only |
 | Hire, service or partner enquiry received | ✓ acknowledgement + reference, "nothing booked until you accept" | — | ✓ with the form's answers and a link to Admin → Enquiries |
 
 ¹ Only to buyers who ticked "send updates on WhatsApp" at checkout or on the
@@ -34,6 +35,9 @@ quote form, and only for events an admin has switched on (off by default —
 see below).
 ² To the staff inboxes listed in Admin → Notifications (or, until any are
 added there, `STAFF_NOTIFICATION_EMAILS`).
+³ Every user with the Admin role — never the staff inbox list, because it
+includes cost and profit. Preview it, see when it was sent, and send it to
+yourself on Admin → Insights → Weekly email (`ANALYTICS.md`).
 
 Order messages go out when staff change the order's status in
 **Admin → Orders**; saving the same status again (e.g. correcting a tracking
