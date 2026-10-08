@@ -2014,4 +2014,221 @@ describe("Aggregated Aggregates API (e2e)", () => {
       await http().delete(`/finance/operating-costs/${rent.body.id}`).set(auth(admin)).expect(204);
     });
   });
+
+  describe("insights: sales, profit and P&L reconcile to the records", () => {
+    // Everything happens in March 2031 (SAST) so no other test's data can land in the period.
+    const tag = `ins-${run}`;
+    let buyer: string, staff: string, admin: string, buyerId: string;
+    const orderIds: string[] = [];
+    const bookingIds: string[] = [];
+    const auth = (t: string) => ({ Authorization: `Bearer ${t}` });
+    const r2 = (n: number) => Math.round(n * 100) / 100;
+    const march = "from=2031-03-01&to=2031-03-31";
+    let expected: { materials: number; cogs: number; fees: number; firstLine: number };
+
+    const placeOrder = async (paidAt: string, extra: Record<string, unknown> = {}) => {
+      const res = await http().post("/orders").set(auth(buyer)).send({ lines: [{ sku: "AA-SND-01", unit: "m3", quantity: 6 }], deliveryDistanceKm: 20 }).expect(201);
+      orderIds.push(res.body.id);
+      return prisma.order.update({
+        where: { id: res.body.id },
+        data: { status: "CONFIRMED", paidAt: new Date(paidAt), paymentMethod: "EFT_PO", ...extra },
+        include: { lineItems: true },
+      });
+    };
+    const booking = async (paidAt: string, status: "COMPLETED" | "CANCELLED") => {
+      const b = await prisma.booking.create({
+        data: {
+          reference: `BK-${tag}-${bookingIds.length}`.toUpperCase(),
+          userId: buyerId,
+          sku: "AA-HIRE-TLB",
+          itemName: "TLB with operator",
+          basis: "DAY",
+          quantity: 1,
+          startDate: new Date("2031-03-14"),
+          endDate: new Date("2031-03-14"),
+          province: "Gauteng",
+          siteAddress: "1 Test Road",
+          partnerAmount: 1000,
+          commissionPercent: 12,
+          customerTotal: 1120,
+          quoteSource: "e2e",
+          status,
+          paidAt: new Date(paidAt),
+        },
+      });
+      bookingIds.push(b.id);
+      return b;
+    };
+
+    beforeAll(async () => {
+      buyer = await register(`${tag}-buyer`);
+      buyerId = (await prisma.user.findUniqueOrThrow({ where: { email: `${tag}-buyer-${run}@example.com` } })).id;
+      staff = await register(`${tag}-staff`);
+      await prisma.user.update({ where: { email: `${tag}-staff-${run}@example.com` }, data: { role: "STAFF" } });
+      admin = await register(`${tag}-admin`);
+      await prisma.user.update({ where: { email: `${tag}-admin-${run}@example.com` }, data: { role: "ADMIN" } });
+      const adminId = (await prisma.user.findUniqueOrThrow({ where: { email: `${tag}-admin-${run}@example.com` } })).id;
+
+      // 00:30 SAST on 1 March counts in March; 00:30 SAST on 1 April doesn't.
+      const a = await placeOrder("2031-02-28T22:30:00Z");
+      const b = await placeOrder("2031-03-20T08:00:00Z", { paymentMethod: "CARD" });
+      await placeOrder("2031-03-31T22:30:00Z"); // April in SAST
+      await placeOrder("2031-03-10T08:00:00Z", { isTest: true }); // test order: never counted
+      await placeOrder("2031-02-15T08:00:00Z"); // comparison period
+      await prisma.shipment.create({ data: { orderId: a.id, carrier: "BESFLEET", deliveryFeeApplied: a.deliveryFee, dispatchedAt: new Date("2031-03-01T06:00:00Z"), deliveryCost: 900 } });
+      await prisma.shipment.create({ data: { orderId: b.id, carrier: "BESFLEET", deliveryFeeApplied: b.deliveryFee, dispatchedAt: new Date("2031-03-20T09:00:00Z") } });
+      await prisma.refund.create({ data: { orderId: b.id, amount: 100, reason: `${tag} short load`, refundedAt: new Date("2031-03-25T08:00:00Z"), createdById: adminId } });
+      await booking("2031-03-12T08:00:00Z", "COMPLETED");
+      const cancelled = await booking("2031-03-13T08:00:00Z", "CANCELLED");
+      await prisma.refund.create({ data: { bookingId: cancelled.id, amount: 1120, reason: `${tag} cancelled`, refundedAt: new Date("2031-03-13T09:00:00Z"), createdById: adminId } });
+      await prisma.operatingCost.create({ data: { month: new Date("2031-03-01"), category: "RENT", description: `${tag} rent`, amountExVat: 31000, createdById: adminId } });
+
+      const lines = [...a.lineItems, ...b.lineItems];
+      expected = {
+        materials: r2(lines.reduce((n, l) => n + Number(l.lineTotal), 0)),
+        cogs: r2(lines.reduce((n, l) => n + Number(l.unitCost) * l.quantity, 0)),
+        fees: r2(Number(a.deliveryFee) + Number(b.deliveryFee)),
+        firstLine: r2(a.lineItems.reduce((n, l) => n + Number(l.lineTotal), 0)),
+      };
+      expect(expected.cogs).toBeGreaterThan(0);
+    });
+
+    afterAll(async () => {
+      await prisma.order.deleteMany({ where: { id: { in: orderIds } } });
+      await prisma.booking.deleteMany({ where: { id: { in: bookingIds } } });
+      await prisma.operatingCost.deleteMany({ where: { description: { startsWith: tag } } });
+    });
+
+    it("reconciles the headline figures and the net P&L", async () => {
+      const res = await http().get(`/insights/summary?${march}`).set(auth(admin)).expect(200);
+      const c = res.body.current;
+      const net = r2(expected.materials + expected.fees + 120 - 100);
+      const gross = r2(net - expected.cogs - 900);
+      expect(res.body.period).toEqual({ from: "2031-03-01", to: "2031-03-31", days: 31 });
+      expect(res.body.comparison).toMatchObject({ from: "2031-01-29", to: "2031-02-28", kind: "previous" });
+      expect(res.body.vatBasis).toBe("AS_CHARGED");
+      expect(c).toMatchObject({
+        materialsRevenue: expected.materials,
+        deliveryRevenue: expected.fees,
+        hireGrossValue: 1120,
+        hireCommission: 120,
+        hireRefunds: 1120, // pass-through: reported, not deducted
+        refunds: 100,
+        netRevenue: net,
+        orders: 2,
+        bookings: 1,
+        cogs: expected.cogs,
+        deliveryCost: 900,
+        grossProfit: gross,
+        deliveriesMissingCost: 1,
+        operatingCosts: 31000,
+        operatingCostsByCategory: { RENT: 31000 },
+        netProfit: r2(gross - 31000),
+        operatingCostMonthsMissing: [],
+      });
+      expect(c.averageOrderValue).toBe(r2((expected.materials + expected.fees) / 2));
+      expect(res.body.previous).toMatchObject({ orders: 1, bookings: 0 });
+      expect(res.body.change.orders).toBe(100);
+    });
+
+    it("prorates operating costs over part months", async () => {
+      const res = await http().get("/insights/summary?from=2031-03-01&to=2031-03-15&compare=none").set(auth(admin)).expect(200);
+      expect(res.body.current.operatingCosts).toBe(15000);
+      expect(res.body.previous).toBeNull();
+      const april = await http().get("/insights/summary?from=2031-04-01&to=2031-04-30&compare=none").set(auth(admin)).expect(200);
+      expect(april.body.current.operatingCostMonthsMissing).toEqual(["2031-04"]);
+      expect(april.body.current.orders).toBe(1); // the 00:30 SAST order
+    });
+
+    it("buckets by South African day, week and month, summing to the total", async () => {
+      const days = await http().get(`/insights/timeseries?${march}&granularity=day`).set(auth(admin)).expect(200);
+      expect(days.body.buckets).toHaveLength(31);
+      expect(days.body.buckets[0]).toMatchObject({ key: "2031-03-01", previousKey: "2031-01-29" });
+      expect(days.body.buckets[0].current.materialsRevenue).toBe(expected.firstLine);
+      const sum = (k: string) => r2(days.body.buckets.reduce((n: number, b: { current: Record<string, number> }) => n + b.current[k], 0));
+      expect(sum("materialsRevenue")).toBe(expected.materials);
+      expect(sum("hireCommission")).toBe(120);
+      expect(sum("refunds")).toBe(100);
+      const weeks = await http().get(`/insights/timeseries?${march}&granularity=week`).set(auth(admin)).expect(200);
+      expect(weeks.body.buckets[0].key).toBe("2031-02-24"); // weeks start on Monday
+      const months = await http().get(`/insights/timeseries?${march}&granularity=month`).set(auth(admin)).expect(200);
+      expect(months.body.buckets).toHaveLength(1);
+      expect(months.body.buckets[0].current.netRevenue).toBe(r2(expected.materials + expected.fees + 120 - 100));
+    });
+
+    it("breaks sales down by product, payment method and customer", async () => {
+      const product = await http().get(`/insights/breakdown?${march}&by=product`).set(auth(admin)).expect(200);
+      expect(product.body.total).toBe(expected.materials);
+      expect(product.body.rows).toHaveLength(1);
+      expect(product.body.rows[0]).toMatchObject({ label: expect.any(String), revenue: expected.materials, share: 100, orders: 2, quantity: 12, cogs: expected.cogs, previousRevenue: expect.any(Number) });
+      expect(product.body.rows[0].growth).toBe(100);
+      const method = await http().get(`/insights/breakdown?${march}&by=paymentMethod`).set(auth(admin)).expect(200);
+      expect(method.body.rows.map((r: { key: string }) => r.key).sort()).toEqual(["CARD", "EFT_PO"]);
+      expect(r2(method.body.rows.reduce((n: number, r: { share: number }) => n + r.share, 0))).toBe(100);
+      const customers = await http().get(`/insights/breakdown?${march}&by=customer`).set(auth(admin)).expect(200);
+      expect(customers.body.rows).toHaveLength(1);
+      await http().get(`/insights/breakdown?${march}&by=password`).set(auth(admin)).expect(400);
+    });
+
+    it("leaves delivery, refunds, hire and overheads out of product-filtered views", async () => {
+      const res = await http().get(`/insights/summary?${march}&sku=AA-SND-01`).set(auth(admin)).expect(200);
+      expect(res.body.includes).toEqual({ materials: true, deliveryAndRefunds: false, hire: false, operatingCosts: false });
+      expect(res.body.current).toMatchObject({ materialsRevenue: expected.materials, deliveryRevenue: 0, refunds: 0, hireCommission: 0, operatingCosts: null, netProfit: null });
+      const hireOnly = await http().get(`/insights/summary?${march}&businessLine=HIRE`).set(auth(admin)).expect(200);
+      expect(hireOnly.body.current).toMatchObject({ materialsRevenue: 0, hireCommission: 120, netRevenue: 120 });
+    });
+
+    it("reports ex VAT once prices are confirmed VAT-inclusive", async () => {
+      const before = process.env.PRICES_INCLUDE_VAT;
+      process.env.PRICES_INCLUDE_VAT = "true";
+      try {
+        const res = await http().get(`/insights/summary?${march}`).set(auth(admin)).expect(200);
+        expect(res.body.vatBasis).toBe("EX_VAT");
+        expect(res.body.current.materialsRevenue).toBe(r2(expected.materials / 1.15));
+        expect(res.body.current.hireCommission).toBe(r2(120 / 1.15));
+        expect(res.body.current.deliveryCost).toBe(900); // entered ex VAT already
+      } finally {
+        if (before === undefined) delete process.env.PRICES_INCLUDE_VAT;
+        else process.env.PRICES_INCLUDE_VAT = before;
+      }
+    });
+
+    it("produces the monthly P&L for admins only", async () => {
+      await http().get("/insights/pnl?to=2031-03-31&months=3").set(auth(staff)).expect(403);
+      const res = await http().get("/insights/pnl?to=2031-03-31&months=3").set(auth(admin)).expect(200);
+      expect(res.body.months.map((m: { month: string }) => m.month)).toEqual(["2031-01", "2031-02", "2031-03"]);
+      const marchRow = res.body.months[2];
+      expect(marchRow).toMatchObject({ materialsRevenue: expected.materials, operatingCosts: 31000, operatingCostsRecorded: true, orders: 2 });
+      expect(marchRow.netProfit).toBe(r2(marchRow.grossProfit - 31000));
+      expect(res.body.months[1]).toMatchObject({ orders: 1, operatingCostsRecorded: false });
+      expect(res.body.totals.operatingCosts).toBe(31000);
+      const csv = await http().get("/insights/pnl?to=2031-03-31&months=3&format=csv").set(auth(admin)).expect(200);
+      expect(csv.headers["content-type"]).toMatch(/text\/csv/);
+      expect(csv.text.split("\r\n")[0]).toMatch(/^month,materialsRevenue,.*opex_RENT/);
+      expect(csv.text.split("\r\n")).toHaveLength(5); // header, 3 months, trailing newline
+    });
+
+    it("hides cost and profit from staff and keeps customers out", async () => {
+      await http().get(`/insights/summary?${march}`).set(auth(buyer)).expect(403);
+      await http().get(`/insights/summary?${march}`).expect(401);
+      const summary = await http().get(`/insights/summary?${march}`).set(auth(staff)).expect(200);
+      expect(summary.body.current.materialsRevenue).toBe(expected.materials);
+      expect(JSON.stringify(summary.body)).not.toMatch(/cogs|grossProfit|grossMargin|deliveryCost"|operatingCosts|netProfit|MissingCost/);
+      const breakdown = await http().get(`/insights/breakdown?${march}&by=product&format=csv`).set(auth(staff)).expect(200);
+      expect(breakdown.text.split("\r\n")[0]).toMatch(/revenue/);
+      expect(breakdown.text).not.toMatch(/cogs|grossProfit/);
+      const hire = await http().get(`/insights/hire?${march}`).set(auth(staff)).expect(200);
+      expect(hire.body.paid).toMatchObject({ bookings: 1, hireCommission: 120 });
+      expect(hire.body).not.toHaveProperty("partnerPayouts");
+    });
+
+    it("reports pipeline and customers, and rejects bad periods", async () => {
+      await http().get(`/insights/pipeline?${march}`).set(auth(staff)).expect(200);
+      const customers = await http().get(`/insights/customers?${march}`).set(auth(admin)).expect(200);
+      expect(customers.body.current).toMatchObject({ customers: 1, newCustomers: 0, returningCustomers: 1, repeatCustomers: 1 });
+      await http().get("/insights/summary?from=2031-13-01").set(auth(admin)).expect(400);
+      await http().get("/insights/summary?from=2031-03-31&to=2031-03-01").set(auth(admin)).expect(400);
+      await http().get("/insights/summary?from=2020-01-01&to=2031-03-01").set(auth(admin)).expect(400);
+    });
+  });
 });
