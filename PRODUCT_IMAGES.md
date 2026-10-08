@@ -29,6 +29,36 @@ Both sets are in `packages/database/prisma/seed-data/product-images/`
 an `openLicence` block (licence, URL, author, credit). Staff uploads (your
 own photography) always go live straight away.
 
+## Cement pack shots (Oct 2026) — live
+
+Manus sourced candidate photos for the 37-product cement master catalogue
+(22 files). Each was checked by eye against the product's name, brand,
+strength class and type; 14 were accepted, one per product, as the
+manufacturers' own pack shots (resized to ≤1200px WebP on white).
+
+AfriSam, Cemza and NPC are established supplier relationships and their
+permission was confirmed in October 2026, so these photos carry
+`"permission": "GRANTED"` and are imported **live** (`CLEARED`), shown first
+on each product. An admin can still withdraw a manufacturer on
+**Admin → Image permissions**, which hides its photos. Photos from any other
+manufacturer stay hidden until their permission is confirmed.
+
+| Source (permission switch) | Products |
+|---|---|
+| AfriSam (afrisam.co.za) | StarBuild 32,5N · All Purpose 42,5N · High Strength (bag shows the 52,5N southern grade) · Rapid Hard 52,5R (bag shown; we sell it in bulk) · Roadstab 32,5N |
+| Cemza (cemza.co) | General Purpose 32,5N · All Purpose 42,5N · Rapid Strength 42,5R · Ultra Strong 52,5N · Masonry 22,5X · RoadPro 32,5N |
+| NPC - Natal Portland Cement (npc.co.za) | Newcastle Portland-fly ash 32,5N · Durban and Simuma Portland-limestone 32,5R (each with its own plant LOA number) |
+
+**Rejected** (listed in the manifest's `rejected`): the three Kwikbuild files
+were one identical plant photo (a forklift loading pallets) with no readable
+product or class; the five Afrimat files were one identical photo of crushed
+limestone on a conveyor — not cement. **Still to source** (23, listed in
+`noImage`): KWIKBUILD 32.5N, 42.5N and Masonry; Afrimat DuraBuild,
+Buildcrete, RoadCem, FastCast and Powercrete Plus; all PPC products; Sephaku
+32/42/52/SepROAD; Dangote Falcon; Dugongo; Mamba; and generic photos for the
+unbranded Bulk Cement 52.5N and the Road-Capping Binder. Sephaku 52 is
+bulk-only per its brochure, so it needs a bulk photo, not a bag.
+
 ## Open-licence photos — live now
 
 To give the store real photos before launch, photos were chosen from

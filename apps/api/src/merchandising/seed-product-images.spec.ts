@@ -5,6 +5,9 @@ import { displayOrder, readManifest, SEED_IMAGE_DIR, seedImagePath } from "./see
 const framework = JSON.parse(readFileSync(join(__dirname, "../../../../services/pricing/data/pricing_framework.json"), "utf8")) as {
   products: { sku: string }[];
 };
+const packaged = JSON.parse(readFileSync(join(__dirname, "../../../../services/pricing/data/b2b_packaged_catalogue.json"), "utf8")) as {
+  products: { sku: string }[];
+};
 
 describe("sourced product image set", () => {
   const manifest = readManifest();
@@ -35,7 +38,7 @@ describe("sourced product image set", () => {
   });
 
   it("assigns photos only to real catalogue SKUs, at most five each, all from the set", () => {
-    const skus = new Set(framework.products.map((p) => p.sku));
+    const skus = new Set([...framework.products, ...packaged.products].map((p) => p.sku));
     for (const [sku, list] of Object.entries(manifest.products)) {
       expect(skus.has(sku)).toBe(true);
       expect(list.length).toBeGreaterThan(0);
@@ -45,6 +48,20 @@ describe("sourced product image set", () => {
     }
     // Every photo in the set is used somewhere.
     expect(new Set(Object.values(manifest.products).flat())).toEqual(files);
+  });
+
+  it("publishes the cement pack shots whose manufacturers have agreed", () => {
+    const cement = Object.entries(manifest.products).filter(([sku]) => sku.startsWith("AA-CEM-"));
+    expect(cement.length).toBe(14);
+    const bySku = new Map(manifest.images.map((i) => [i.file, i]));
+    for (const [, list] of cement) {
+      for (const file of list) {
+        const image = bySku.get(file)!;
+        expect(image.permission).toBe("GRANTED"); // AfriSam, Cemza and NPC agreed in Oct 2026 — imported CLEARED
+        expect(image.openLicence).toBeUndefined();
+        expect(image.source).toMatch(/^(AfriSam|Cemza|NPC)/);
+      }
+    }
   });
 
   it("publishes only photos whose licence allows commercial use, with the credit it requires", () => {
