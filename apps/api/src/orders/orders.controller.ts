@@ -3,6 +3,7 @@ import type { Response } from "express";
 import type { AuthUser } from "../common/auth/auth-user";
 import { Public, Roles } from "../common/auth/decorators";
 import { CurrentUser } from "../common/decorators/current-user.decorator";
+import { forViewer } from "../common/costs";
 import { CreateOrderDto, ListOrdersQuery, PriceCartDto, UpdateOrderStatusDto } from "./dto/create-order.dto";
 import { DOCUMENT_KINDS, OrderDocumentsService, type DocumentKind } from "../documents/order-documents.service";
 import { OrdersService } from "./orders.service";
@@ -23,19 +24,19 @@ export class OrdersController {
   }
 
   @Post()
-  create(@Body() dto: CreateOrderDto, @CurrentUser() user: AuthUser) {
-    return this.ordersService.createOrder(dto, user);
+  async create(@Body() dto: CreateOrderDto, @CurrentUser() user: AuthUser) {
+    return forViewer(await this.ordersService.createOrder(dto, user), user);
   }
 
   @Get("mine")
-  listMine(@CurrentUser() user: AuthUser) {
-    return this.ordersService.listMine(user);
+  async listMine(@CurrentUser() user: AuthUser) {
+    return forViewer(await this.ordersService.listMine(user), user);
   }
 
   @Roles("STAFF", "ADMIN")
   @Get()
-  listAll(@Query() query: ListOrdersQuery) {
-    return this.ordersService.listAll(query.status);
+  async listAll(@Query() query: ListOrdersQuery, @CurrentUser() user: AuthUser) {
+    return forViewer(await this.ordersService.listAll(query.status), user);
   }
 
   /** Staff: whether tax invoices can be issued yet, and what's missing. */
@@ -47,8 +48,8 @@ export class OrdersController {
   }
 
   @Get(":id")
-  getOne(@Param("id") id: string, @CurrentUser() user: AuthUser) {
-    return this.ordersService.getOrder(id, user);
+  async getOne(@Param("id") id: string, @CurrentUser() user: AuthUser) {
+    return forViewer(await this.ordersService.getOrder(id, user), user);
   }
 
   /** GET /orders/:id/documents/confirmation | delivery-note | invoice — a PDF for the buyer, their company, or staff. */
@@ -66,13 +67,13 @@ export class OrdersController {
 
   @Roles("STAFF", "ADMIN")
   @Post(":id/invoice")
-  issueInvoice(@Param("id") id: string) {
-    return this.documents.issueInvoice(id);
+  async issueInvoice(@Param("id") id: string, @CurrentUser() user: AuthUser) {
+    return forViewer(await this.documents.issueInvoice(id), user);
   }
 
   @Roles("STAFF", "ADMIN")
   @Patch(":id/status")
-  updateStatus(@Param("id") id: string, @Body() dto: UpdateOrderStatusDto) {
-    return this.ordersService.updateStatus(id, dto);
+  async updateStatus(@Param("id") id: string, @Body() dto: UpdateOrderStatusDto, @CurrentUser() user: AuthUser) {
+    return forViewer(await this.ordersService.updateStatus(id, dto), user);
   }
 }

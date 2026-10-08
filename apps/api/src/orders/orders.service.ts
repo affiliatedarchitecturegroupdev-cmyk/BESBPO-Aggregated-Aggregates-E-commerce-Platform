@@ -62,10 +62,11 @@ export class OrdersService {
     const delivery = await this.deliveryDistance(dto, lines);
     // One call prices every line and the delivery for the combined load, so
     // the quote-only rules are decided once, by the pricing service.
+    const customerTier = await this.tierOf(user.companyId);
     const priced = await this.pricingService.calculateOrder({
       lines: lines.map((l) => ({ sku: l.sku, unit: l.unit, quantity: l.quantity })),
       distanceKm: delivery.distanceKm,
-      customerTier: await this.tierOf(user.companyId),
+      customerTier,
     });
     if (priced.is_quote_only || priced.total === null || priced.delivery.fee === null) {
       throw new BadRequestException(
@@ -89,15 +90,28 @@ export class OrdersService {
         contactPhone: dto.contactPhone?.trim() || null,
         whatsappUpdates: Boolean(dto.whatsappUpdates && dto.contactPhone?.trim()),
         notes: dto.notes?.trim() || null,
+        // Reporting snapshot (ANALYTICS.md): the tier and load this order was priced at.
+        customerTier,
+        deliveryLoadSize: priced.delivery.load_size ?? null,
+        // Orders placed from staff or admin accounts are tests by default (admins can unflag them).
+        isTest: STAFF_ROLES.includes(user.role),
         lineItems: {
-          create: lines.map((line, index) => ({
-            productId: line.productId,
-            unitOfSale: unitOfSale(line.unit),
-            quantity: line.quantity,
-            // A priced (non-quote-only) order has a price on every line.
-            unitPrice: priced.lines[index].unit_price!,
-            lineTotal: priced.lines[index].total!,
-          })),
+          create: lines.map((line, index) => {
+            const p = priced.lines[index];
+            return {
+              productId: line.productId,
+              unitOfSale: unitOfSale(line.unit),
+              quantity: line.quantity,
+              // A priced (non-quote-only) order has a price on every line.
+              unitPrice: p.unit_price!,
+              lineTotal: p.total!,
+              // Cost snapshot for profit reporting — admin-only, never recalculated.
+              listUnitPrice: p.list_unit_price,
+              unitCost: p.unit_cost ?? null,
+              pricingFamily: p.family ?? null,
+              costSource: p.unit_cost != null ? ("SNAPSHOT" as const) : null,
+            };
+          }),
         },
       },
       include: { lineItems: { include: { product: true } } },
@@ -163,6 +177,10 @@ export class OrdersService {
     if (dto.carrier === "EXTERNAL_PARTNER" && !dto.externalPartnerName?.trim() && !order.shipment?.externalPartnerName) {
       throw new BadRequestException("Name the external delivery partner.");
     }
+    if (dto.fulfilledBySupplierId) {
+      const supplier = await this.prisma.supplierLocation.findUnique({ where: { id: dto.fulfilledBySupplierId }, select: { id: true } });
+      if (!supplier) throw new BadRequestException("That supplier wasn't found.");
+    }
     const now = new Date();
     const shipment =
       dto.carrier || dto.trackingRef || dto.status === "DELIVERED"
@@ -176,11 +194,20 @@ export class OrdersService {
             deliveredAt: dto.status === "DELIVERED" ? now : (order.shipment?.deliveredAt ?? null),
           }
         : null;
+    // What the delivery cost us: the actual amount staff enter, else the admin's standard rate (ANALYTICS.md).
+    const cost = shipment ? await this.deliveryCost(order, (shipment.carrier as Carrier) ?? "BESFLEET", dto) : null;
+    const shipmentData = shipment && cost ? { ...shipment, ...cost } : shipment;
+    const statusChanged = order.status !== dto.status;
     const updated = await this.prisma.order.update({
       where: { id },
       data: {
         status: dto.status,
-        ...(shipment ? { shipment: { upsert: { create: shipment, update: shipment } } } : {}),
+        // A sale counts from the moment payment is confirmed.
+        ...(statusChanged && dto.status === "CONFIRMED" ? { paidAt: order.paidAt ?? now } : {}),
+        ...(statusChanged && dto.status === "CANCELLED" ? { cancelledAt: now } : {}),
+        ...(dto.paymentMethod ? { paymentMethod: dto.paymentMethod } : {}),
+        ...(dto.fulfilledBySupplierId ? { fulfilledBySupplierId: dto.fulfilledBySupplierId } : {}),
+        ...(shipmentData ? { shipment: { upsert: { create: shipmentData, update: shipmentData } } } : {}),
       },
       include: { shipment: true },
     });
@@ -194,6 +221,36 @@ export class OrdersService {
     // Only a real status change is news to the customer (tracking edits aren't).
     if (order.status !== dto.status) await this.notifications.order(STATUS_EVENT[dto.status], id);
     return updated;
+  }
+
+  /**
+   * The delivery's cost to us, ex VAT. Staff's actual figure wins; otherwise
+   * the standard rate for the carrier, distance band and load. Ready-mix-only
+   * orders travel in the plant's mixer (no separate delivery cost), and no
+   * rate means no cost is recorded — it's never guessed.
+   */
+  private async deliveryCost(
+    order: { id: string; deliveryDistanceKm: number | null; deliveryLoadSize: string | null; shipment: { deliveryCost: Prisma.Decimal | null; deliveryCostSource: string | null } | null },
+    carrier: Carrier,
+    dto: UpdateOrderStatusDto,
+  ): Promise<{ deliveryCost: number | Prisma.Decimal | null; deliveryCostSource: "ACTUAL" | "STANDARD_RATE" | null; deliveryCostNote: string | null } | null> {
+    if (dto.deliveryCost !== undefined) {
+      return { deliveryCost: dto.deliveryCost, deliveryCostSource: "ACTUAL", deliveryCostNote: dto.deliveryCostNote?.trim() || null };
+    }
+    if (order.shipment?.deliveryCost != null) return null; // already recorded — keep it
+    const lines = await this.prisma.orderLineItem.findMany({ where: { orderId: order.id }, select: { pricingFamily: true } });
+    if (lines.length > 0 && lines.every((l) => l.pricingFamily === "READY_MIX")) return null;
+    if (order.deliveryDistanceKm === null) return null;
+    const band = await this.prisma.deliveryBand.findFirst({
+      where: { minKm: { lte: order.deliveryDistanceKm }, OR: [{ maxKm: null }, { maxKm: { gt: order.deliveryDistanceKm } }] },
+      orderBy: { minKm: "desc" },
+      select: { label: true },
+    });
+    if (!band) return null;
+    const rate = await this.prisma.deliveryCostRate.findUnique({
+      where: { carrier_bandLabel_load: { carrier, bandLabel: band.label, load: order.deliveryLoadSize ?? "BAGGED" } },
+    });
+    return rate ? { deliveryCost: rate.costExVat, deliveryCostSource: "STANDARD_RATE", deliveryCostNote: null } : null;
   }
 
   private async resolveLines(dto: Pick<CreateOrderDto, "lines" | "lineItems">): Promise<Line[]> {

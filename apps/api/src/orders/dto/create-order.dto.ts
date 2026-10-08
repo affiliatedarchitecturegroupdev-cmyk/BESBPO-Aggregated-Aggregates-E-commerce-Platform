@@ -18,7 +18,7 @@ import {
   ValidateIf,
   ValidateNested,
 } from "class-validator";
-import { OrderStatus, UnitOfSale } from "@aggregates/database";
+import { OrderStatus, PaymentMethodKey, UnitOfSale } from "@aggregates/database";
 import { QuoteLineDto } from "../../quotes/dto/create-quote.dto";
 
 export class OrderLineItemDto {
@@ -84,6 +84,13 @@ export class CreateOrderDto extends DeliveryDto {
 /** Staff: move an order along and record the dispatch. */
 export class UpdateOrderStatusDto {
   @IsEnum(OrderStatus) status!: OrderStatus;
+  /** On confirming payment: how the customer paid (recorded for reporting). */
+  @IsOptional() @IsEnum(PaymentMethodKey) paymentMethod?: PaymentMethodKey;
+  /** On dispatch: the partner supplier the load comes from. */
+  @IsOptional() @IsString() @MaxLength(40) fulfilledBySupplierId?: string;
+  /** On dispatch: what the delivery actually cost us, ex VAT (else the standard rate applies). */
+  @IsOptional() @Type(() => Number) @IsNumber({ maxDecimalPlaces: 2 }) @Min(0) @Max(10_000_000) deliveryCost?: number;
+  @IsOptional() @IsString() @MaxLength(300) deliveryCostNote?: string;
   @IsOptional() @IsIn(["BESFLEET", "EXTERNAL_PARTNER"]) carrier?: "BESFLEET" | "EXTERNAL_PARTNER";
   @IsOptional() @IsString() @MaxLength(120) externalPartnerName?: string;
   @IsOptional() @IsString() @MaxLength(80) trackingRef?: string;

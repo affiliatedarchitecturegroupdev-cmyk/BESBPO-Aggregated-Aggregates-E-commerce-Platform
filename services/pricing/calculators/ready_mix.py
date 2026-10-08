@@ -109,6 +109,9 @@ class ReadyMixLineResult:
     subtotal_before_discount: Optional[Decimal]
     total: Optional[Decimal]
     unit: str = UNIT
+    # Cost per m³ (list / (1 + markup)) — snapshotted on orders for profit reporting; None when unpriced.
+    unit_cost: Optional[Decimal] = None
+    family: str = READY_MIX
 
     @property
     def is_priced(self) -> bool:
@@ -131,6 +134,8 @@ class ReadyMixLineResult:
             "discount_percent": float(round(self.discount * 100, 2)),
             "subtotal_before_discount": money(self.subtotal_before_discount),
             "total": money(self.total),
+            "unit_cost": money(self.unit_cost),
+            "family": self.family,
         }
 
 
@@ -166,6 +171,7 @@ def calculate(product: ReadyMixProduct, quantity_m3: Decimal, tier: str = "RETAI
         sku=product.sku, name=product.name, quantity=quantity_m3, pricing_status=product.pricing_status,
         source_note=product.source_note, list_unit_price=list_price, unit_price=priced.unit_price, discount=priced.discount,
         subtotal_before_discount=to_cents(quantity_m3 * list_price), total=to_cents(quantity_m3 * priced.unit_price),
+        unit_cost=to_cents(product.list_price_per_m3 / (1 + product.markup)),
     )
 
 

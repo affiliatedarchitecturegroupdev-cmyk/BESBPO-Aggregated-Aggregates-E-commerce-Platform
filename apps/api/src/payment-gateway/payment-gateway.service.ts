@@ -57,6 +57,8 @@ export class PaymentGatewayService {
       returnUrl: `${webUrl}/orders/${order.id}/confirmation`,
       notifyUrl: `${apiUrl}/api/v1/payment-methods/notify/${config.activeGateway.toLowerCase()}`,
     };
+    // Record the method chosen, for sales-by-payment-method reporting (staff can correct it on confirmation).
+    await this.prisma.order.update({ where: { id: order.id }, data: { paymentMethod: methodKey } });
     const primary = await this.adapters.get(config.activeGateway).initiate(request);
     // One level of automatic failover while the primary gateway isn't live.
     if (!primary.isLive && config.fallbackGateway) {

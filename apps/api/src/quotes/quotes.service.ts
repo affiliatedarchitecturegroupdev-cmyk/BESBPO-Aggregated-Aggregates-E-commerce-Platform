@@ -146,7 +146,7 @@ export class QuotesService {
     if (!this.isOwner(quote, user)) throw new ForbiddenException("Only the requester can respond to this quote.");
     const updated = await this.prisma.quote.update({
       where: { id },
-      data: { status: dto.decision === "ACCEPT" ? QuoteStatus.ACCEPTED : QuoteStatus.DECLINED },
+      data: { status: dto.decision === "ACCEPT" ? QuoteStatus.ACCEPTED : QuoteStatus.DECLINED, respondedAt: new Date() },
       include: QUOTE_INCLUDE,
     });
     await this.notifications.quote(dto.decision === "ACCEPT" ? "QUOTE_ACCEPTED" : "QUOTE_DECLINED", id);

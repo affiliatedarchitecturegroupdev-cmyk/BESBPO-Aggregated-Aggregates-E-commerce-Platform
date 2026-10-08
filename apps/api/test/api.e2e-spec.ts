@@ -1619,7 +1619,13 @@ describe("Aggregated Aggregates API (e2e)", () => {
     const auth = (t: string) => ({ Authorization: `Bearer ${t}` });
     const day = (offset: number) => new Date(Date.now() + offset * 86_400_000).toISOString().slice(0, 10);
 
+    let setAside: string[] = [];
+
     beforeAll(async () => {
+      // Other partners' active 20t excavators in Gauteng would join this test's dispatch: set them aside, restore after.
+      const others = await prisma.partnerFleetUnit.findMany({ where: { sku: "AA-PLT-EXC-20T", province: "Gauteng", isActive: true }, select: { id: true } });
+      setAside = others.map((u) => u.id);
+      await prisma.partnerFleetUnit.updateMany({ where: { id: { in: setAside } }, data: { isActive: false } });
       staff = await register(`${tag}-staff`);
       await prisma.user.update({ where: { email: `${tag}-staff-${run}@example.com` }, data: { role: "STAFF" } });
       admin = await register(`${tag}-admin`);
@@ -1642,6 +1648,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
     });
 
     afterAll(async () => {
+      await prisma.partnerFleetUnit.updateMany({ where: { id: { in: setAside } }, data: { isActive: true } });
       const bookings = await prisma.booking.findMany({ where: { user: { email: { startsWith: `${tag}-` } } }, select: { id: true } });
       const ids = bookings.map((b) => b.id);
       await prisma.notification.deleteMany({ where: { bookingId: { in: ids } } });
@@ -1867,6 +1874,144 @@ describe("Aggregated Aggregates API (e2e)", () => {
       const gauteng = coverage.body.find((c: { province: string }) => c.province === "Gauteng");
       expect(gauteng.skus).toContain("AA-PLT-EXC-20T");
       expect(JSON.stringify(coverage.body)).not.toMatch(new RegExp(`${tag}|@example|011 555`));
+    });
+  });
+
+  describe("reporting foundations: cost snapshots, payment, delivery cost, refunds, operating costs", () => {
+    const tag = `fin-${run}`;
+    let buyer: string, staff: string, admin: string;
+    const orderIds: string[] = [];
+    const auth = (t: string) => ({ Authorization: `Bearer ${t}` });
+
+    beforeAll(async () => {
+      buyer = await register(`${tag}-buyer`);
+      staff = await register(`${tag}-staff`);
+      await prisma.user.update({ where: { email: `${tag}-staff-${run}@example.com` }, data: { role: "STAFF" } });
+      admin = await register(`${tag}-admin`);
+      await prisma.user.update({ where: { email: `${tag}-admin-${run}@example.com` }, data: { role: "ADMIN" } });
+    });
+
+    afterAll(async () => {
+      await prisma.order.deleteMany({ where: { id: { in: orderIds } } });
+      await prisma.deliveryCostRate.deleteMany({ where: { carrier: "EXTERNAL_PARTNER", bandLabel: "INCLUDED_0_30", load: "M3_6" } });
+      await prisma.operatingCost.deleteMany({ where: { description: { startsWith: tag } } });
+    });
+
+    const placeOrder = async (token = buyer) => {
+      const res = await http().post("/orders").set(auth(token)).send({ lines: [{ sku: "AA-SND-01", unit: "m3", quantity: 6 }], deliveryDistanceKm: 20 }).expect(201);
+      orderIds.push(res.body.id);
+      return res.body;
+    };
+
+    it("snapshots cost, list price, family, tier and load at checkout — and shows cost to admins only", async () => {
+      const order = await placeOrder();
+      expect(order.lineItems[0]).not.toHaveProperty("unitCost");
+      expect(order.lineItems[0]).toHaveProperty("listUnitPrice");
+      const row = await prisma.order.findUniqueOrThrow({ where: { id: order.id }, include: { lineItems: true } });
+      expect(row).toMatchObject({ customerTier: "RETAIL", deliveryLoadSize: "M3_6", isTest: false, paidAt: null });
+      const line = row.lineItems[0];
+      expect(line).toMatchObject({ pricingFamily: "AGGREGATE", costSource: "SNAPSHOT" });
+      expect(Number(line.unitCost)).toBeGreaterThan(0);
+      expect(Number(line.unitCost)).toBeLessThan(Number(line.unitPrice));
+      expect(Number(line.unitPrice)).toBeLessThanOrEqual(Number(line.listUnitPrice));
+
+      const asStaff = await http().get(`/orders/${order.id}`).set(auth(staff)).expect(200);
+      expect(asStaff.body.lineItems[0]).not.toHaveProperty("unitCost");
+      const asBuyer = await http().get("/orders/mine").set(auth(buyer)).expect(200);
+      expect(JSON.stringify(asBuyer.body)).not.toMatch(/unitCost|costSource|deliveryCost/);
+      const asAdmin = await http().get(`/orders/${order.id}`).set(auth(admin)).expect(200);
+      expect(Number(asAdmin.body.lineItems[0].unitCost)).toBe(Number(line.unitCost));
+
+      // Orders placed from staff or admin accounts are tests by default; admins can unflag them.
+      const staffOrder = await placeOrder(staff);
+      expect((await prisma.order.findUniqueOrThrow({ where: { id: staffOrder.id } })).isTest).toBe(true);
+      await http().patch(`/finance/orders/${staffOrder.id}/test`).set(auth(staff)).send({ isTest: false }).expect(403);
+      await http().patch(`/finance/orders/${staffOrder.id}/test`).set(auth(admin)).send({ isTest: false }).expect(200);
+      expect((await prisma.order.findUniqueOrThrow({ where: { id: staffOrder.id } })).isTest).toBe(false);
+    });
+
+    it("records payment, the payment method and the delivery cost (standard rate, or the actual amount)", async () => {
+      await http().put("/finance/delivery-rates").set(auth(staff)).send({ rates: [] }).expect(403);
+      await http()
+        .put("/finance/delivery-rates")
+        .set(auth(admin))
+        .send({ rates: [{ carrier: "EXTERNAL_PARTNER", bandLabel: "INCLUDED_0_30", load: "WHEELBARROW", costExVat: 1 }] })
+        .expect(400);
+      const saved = await http()
+        .put("/finance/delivery-rates")
+        .set(auth(admin))
+        .send({ rates: [{ carrier: "EXTERNAL_PARTNER", bandLabel: "INCLUDED_0_30", load: "M3_6", costExVat: 950 }] })
+        .expect(200);
+      expect(saved.body.rates.some((r: { load: string; costExVat: string }) => r.load === "M3_6" && Number(r.costExVat) === 950)).toBe(true);
+      expect(saved.body.distanceBands.map((b: { label: string }) => b.label)).toContain("INCLUDED_0_30");
+
+      const standard = await placeOrder();
+      const status = (id: string, body: object) => http().patch(`/orders/${id}/status`).set(auth(staff)).send(body);
+      await status(standard.id, { status: "CONFIRMED", paymentMethod: "EFT_PO" }).expect(200);
+      const paid = await prisma.order.findUniqueOrThrow({ where: { id: standard.id } });
+      expect(paid.paidAt).toBeTruthy();
+      expect(paid.paymentMethod).toBe("EFT_PO");
+      const supplier = await prisma.supplierLocation.findFirstOrThrow({ where: { isActive: true } });
+      await status(standard.id, { status: "IN_TRANSIT", carrier: "EXTERNAL_PARTNER", externalPartnerName: "Coastal Tippers", fulfilledBySupplierId: "nope" }).expect(400);
+      const dispatched = await status(standard.id, { status: "IN_TRANSIT", carrier: "EXTERNAL_PARTNER", externalPartnerName: "Coastal Tippers", fulfilledBySupplierId: supplier.id }).expect(200);
+      expect(dispatched.body.shipment).not.toHaveProperty("deliveryCost"); // staff don't see costs
+      const shipment = await prisma.shipment.findUniqueOrThrow({ where: { orderId: standard.id } });
+      expect([Number(shipment.deliveryCost), shipment.deliveryCostSource]).toEqual([950, "STANDARD_RATE"]);
+      expect((await prisma.order.findUniqueOrThrow({ where: { id: standard.id } })).fulfilledBySupplierId).toBe(supplier.id);
+
+      const actual = await placeOrder();
+      await status(actual.id, { status: "CONFIRMED" }).expect(200);
+      await status(actual.id, { status: "IN_TRANSIT", carrier: "BESFLEET", deliveryCost: 1200.5, deliveryCostNote: "Besfleet trip sheet 44" }).expect(200);
+      const actualShipment = await prisma.shipment.findUniqueOrThrow({ where: { orderId: actual.id } });
+      expect([Number(actualShipment.deliveryCost), actualShipment.deliveryCostSource, actualShipment.deliveryCostNote]).toEqual([1200.5, "ACTUAL", "Besfleet trip sheet 44"]);
+
+      // No rate for Besfleet in this band: the cost stays unrecorded rather than guessed.
+      const noRate = await placeOrder();
+      await status(noRate.id, { status: "CONFIRMED" }).expect(200);
+      await status(noRate.id, { status: "IN_TRANSIT", carrier: "BESFLEET" }).expect(200);
+      expect((await prisma.shipment.findUniqueOrThrow({ where: { orderId: noRate.id } })).deliveryCost).toBeNull();
+
+      const cancelled = await placeOrder();
+      await status(cancelled.id, { status: "CANCELLED" }).expect(200);
+      expect((await prisma.order.findUniqueOrThrow({ where: { id: cancelled.id } })).cancelledAt).toBeTruthy();
+    });
+
+    it("records refunds against paid orders only, never more than was paid", async () => {
+      const unpaid = await placeOrder();
+      await http().post("/finance/refunds").set(auth(staff)).send({ orderId: unpaid.id, amount: 10, reason: "Short load" }).expect(400);
+      await http().post("/finance/refunds").set(auth(buyer)).send({ orderId: unpaid.id, amount: 10, reason: "Short load" }).expect(403);
+
+      const order = await placeOrder();
+      await http().patch(`/orders/${order.id}/status`).set(auth(staff)).send({ status: "CONFIRMED" }).expect(200);
+      const total = Number(order.total);
+      await http().post("/finance/refunds").set(auth(staff)).send({ orderId: order.id, bookingId: "x", amount: 10, reason: "Both" }).expect(400);
+      await http().post("/finance/refunds").set(auth(staff)).send({ amount: 10, reason: "Neither" }).expect(400);
+      const first = await http().post("/finance/refunds").set(auth(staff)).send({ orderId: order.id, amount: 100, reason: "One load short", reference: "EFT R-1", refundedOn: "2026-10-08" }).expect(201);
+      expect(Number(first.body.amount)).toBe(100);
+      await http().post("/finance/refunds").set(auth(staff)).send({ orderId: order.id, amount: total, reason: "Too much" }).expect(400);
+      await http().post("/finance/refunds").set(auth(staff)).send({ orderId: order.id, amount: Math.round((total - 100) * 100) / 100, reason: "The rest" }).expect(201);
+      const listed = await http().get(`/finance/refunds?orderId=${order.id}`).set(auth(staff)).expect(200);
+      expect(listed.body).toHaveLength(2);
+      await http().delete(`/finance/refunds/${first.body.id}`).set(auth(staff)).expect(403);
+      await http().delete(`/finance/refunds/${first.body.id}`).set(auth(admin)).expect(204);
+    });
+
+    it("keeps monthly operating costs and data quality admin-only", async () => {
+      await http().get("/finance/operating-costs").set(auth(staff)).expect(403);
+      await http().get("/finance/data-quality").set(auth(staff)).expect(403);
+      await http().post("/finance/operating-costs").set(auth(admin)).send({ month: "2026-13", category: "RENT", description: `${tag} rent`, amountExVat: 1 }).expect(400);
+      const rent = await http().post("/finance/operating-costs").set(auth(admin)).send({ month: "2026-10", category: "RENT", description: `${tag} office rent`, amountExVat: 18500 }).expect(201);
+      await http().patch(`/finance/operating-costs/${rent.body.id}`).set(auth(admin)).send({ month: "2026-10", category: "RENT", description: `${tag} office rent`, amountExVat: 19000 }).expect(200);
+      const listed = await http().get("/finance/operating-costs?from=2026-10&to=2026-10").set(auth(admin)).expect(200);
+      expect(listed.body.find((r: { id: string }) => r.id === rent.body.id)).toMatchObject({ category: "RENT", amountExVat: "19000" });
+
+      const quality = await http().get("/finance/data-quality").set(auth(admin)).expect(200);
+      for (const key of ["paidOrders", "linesMissingCost", "linesEstimated", "dispatchedWithoutDeliveryCost", "testOrders", "deliveryRatesSet", "monthsWithOperatingCosts"]) {
+        expect(typeof quality.body[key]).toBe("number");
+      }
+      expect(quality.body.dispatchedWithoutDeliveryCost).toBeGreaterThanOrEqual(1); // the Besfleet order with no rate
+      expect(quality.body.monthsWithOperatingCosts).toBeGreaterThanOrEqual(1);
+      await http().delete(`/finance/operating-costs/${rent.body.id}`).set(auth(admin)).expect(204);
     });
   });
 });

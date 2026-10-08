@@ -110,6 +110,9 @@ class LineResult:
     discount: Decimal
     subtotal_before_discount: Decimal
     total: Decimal
+    # Cost per unit of sale (list / (1 + markup), the cost the margin floor uses) — snapshotted on orders for profit reporting.
+    unit_cost: Optional[Decimal] = None
+    family: str = AGGREGATE
 
     def as_dict(self) -> dict:
         return {
@@ -124,6 +127,8 @@ class LineResult:
             "discount_percent": float(round(self.discount * 100, 2)),
             "subtotal_before_discount": float(self.subtotal_before_discount),
             "total": float(self.total),
+            "unit_cost": None if self.unit_cost is None else float(self.unit_cost),
+            "family": self.family,
         }
 
 
@@ -177,4 +182,5 @@ def calculate(
         discount=discount,
         subtotal_before_discount=to_cents(quantity * list_price),
         total=to_cents(quantity * priced.unit_price),
+        unit_cost=to_cents(unrounded_list_price(product, unit) / (1 + product.markup)),
     )
