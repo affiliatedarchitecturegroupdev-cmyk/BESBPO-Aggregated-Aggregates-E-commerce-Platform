@@ -7,6 +7,7 @@ export const metadata: Metadata = { title: { default: "Admin", template: "%s —
 
 const NAV = [
   { href: "/admin", label: "Overview" },
+  { href: "/admin/insights", label: "Insights" },
   { href: "/admin/applications", label: "Trade applications" },
   { href: "/admin/orders", label: "Orders" },
   { href: "/admin/quotes", label: "Quote requests" },

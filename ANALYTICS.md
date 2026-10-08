@@ -94,6 +94,7 @@ see sales, volumes and revenue only. Customers get 403.
 | `GET /insights/breakdown?by=` | Material sales by `product`, `category`, `family`, `province`, `tier`, `channel`, `paymentMethod`, `supplier` or `customer`: revenue, share, orders, quantity (per product), growth; admins also get COGS and gross profit. `sort=revenue\|grossProfit\|orders\|growth`, `limit` (≤500), `format=csv` |
 | `GET /insights/hire` | Bookings by status, paid value and commission, fill rate, minutes to assign, offer acceptance, top items, provinces, partner league; admins also see payouts held/due |
 | `GET /insights/pipeline` | Enquiries by kind and status, quote requests → priced → accepted, quote win rate, hours to quote, booking funnel |
+| `GET /insights/marketing` | Promotion views, clicks and click-through (total, per day, per promotion), newsletter sign-ups by page and audience, material sales by channel |
 | `GET /insights/customers` | Customers, new vs returning, repeat rate, revenue per customer, tier mix, sign-ups and trade applications |
 | `GET /insights/pnl` (admin) | Monthly management P&L (`months` 1–36 ending with the month of `to`), operating costs by category, whether costs were entered for each month, totals. `format=csv` |
 
@@ -130,12 +131,42 @@ place orders, bookings, refunds and operating costs in March 2031 and check
 that every endpoint matches the records to the cent — including the SAST
 day boundary, test exclusion, proration, VAT basis, staff stripping and CSV.
 
+## Phase 3 — Admin → Insights pages
+
+Code: `apps/web/src/app/admin/insights/`, `components/insights/`, `lib/insights.ts`.
+Staff and admins reach it from **Admin → Insights**. One filter row sits above
+every view: period presets (7/30/90 days, month/quarter/year to date, last
+month, last 12 months, custom dates), comparison, granularity, business line,
+province, tier, channel, payment method, and on product views family and
+category. Filters live in the URL, so tabs, links and CSV downloads keep the
+same slice and a view can be bookmarked or shared.
+
+| Tab | What it shows |
+| --- | --- |
+| Overview | Headline tiles with change vs the comparison period, net revenue trend against the comparison period, revenue mix (materials / delivery / hire commission), best-selling products, pipeline counts; admins also see gross profit, margin, operating costs, net profit and data-quality warnings |
+| Sales | Material sales trend, paid orders, average order value, sales by channel, payment method and tier |
+| Products & categories | Top 10 (sortable by sales, orders, growth, and for admins gross profit), by category and family (click through to filter), every product with quantity, share and growth; admins see cost, gross profit and margin |
+| Customers | Paying, new and returning customers, repeat rate, revenue per customer, tier mix, sign-ups, top customers |
+| Hire & services | Paid bookings, booking value, commission, fill rate, commission trend, booking funnel, most-booked items, provinces, bookings by status, partner league; admins see payouts |
+| Pipeline | Quote funnel and win rate, hours to price, booking funnel, quote requests by status, enquiries by kind and status |
+| Geography & delivery | Sales and hire by province, sales by fulfilling supplier; admins see delivery cost and delivery margin |
+| Marketing | Promotion views and clicks per day, click-through per promotion, newsletter sign-ups by page and audience, sales by channel (from `GET /insights/marketing`) |
+| Profit & loss (admins) | Monthly management P&L (6/12/24 months) with operating costs by category, gross vs net profit chart, months with no costs flagged |
+
+**Charts** (Recharts) follow one method: one y-axis, 2px lines, ≤24px bars
+with a rounded data end, a 2px gap between stacked segments, hairline grid,
+crosshair tooltips, and the comparison period as a grey line. Series colours
+are a validated colour-blind-safe set in fixed order (blue, orange, aqua,
+yellow). Every chart has a legend (two or more series), a "Show as table"
+view, and most have **Download CSV** (`/api/admin/insights/{timeseries|breakdown|pnl}`,
+which forwards the session — staff downloads have no cost columns).
+
+Each view says what it includes: VAT basis, refunds, filtered-out lines
+(delivery, hire, overheads), and for admins any missing costs that would
+overstate profit, with a link to Admin → Finance.
+
 ## Still to come
 
-- **Phase 3 — Admin → Insights pages:** Overview, Sales, Products &
-  categories, Customers, Hire & services, Pipeline & conversion, Geography &
-  delivery, Marketing, Finance (admins), with charts (Recharts) that each
-  have a table view and CSV export.
 - **Phase 4:** weekly email summary to admins, saved views, optional
   accounting-software sync for operating costs.
 - Card/gateway fees once a live gateway is on (they reduce gross profit).

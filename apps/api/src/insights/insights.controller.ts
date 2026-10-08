@@ -57,6 +57,11 @@ export class InsightsController {
     return this.view(await this.insights.customers(q), user);
   }
 
+  @Get("marketing")
+  async marketing(@Query() q: InsightsQuery, @CurrentUser() user: AuthUser) {
+    return this.view(await this.insights.marketing(q), user);
+  }
+
   @Roles("ADMIN")
   @Get("pnl")
   async pnl(@Query() q: PnlQuery, @Res({ passthrough: true }) res: Response) {
