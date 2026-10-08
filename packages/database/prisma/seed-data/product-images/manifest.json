@@ -1,5 +1,5 @@
 {
-  "about": "Product photography. Two kinds: (1) photos sourced via Kimi (Sep 2026) from supplier, marketplace and editorial sites \u2014 the owners' permission was received in Oct 2026 (\"permission\": \"GRANTED\"), so they're imported live and shown first; (2) open-licence photos from Wikimedia Commons (an \"openLicence\" block), live with the credit their licence requires. A sourced photo without \"permission\": \"GRANTED\" is imported hidden (PERMISSION_PENDING) until staff record permission in Admin -> Image permissions. \"retiredOpenLicence\" lists Commons photos taken down in Oct 2026 (weak matches). See PRODUCT_IMAGES.md.",
+  "about": "Product photography. Two kinds: (1) photos sourced via Kimi (Sep 2026) from supplier, marketplace and editorial sites \u2014 the owners' permission was received in Oct 2026 (\"permission\": \"GRANTED\"), so they're imported live and shown first; (2) manufacturer pack shots for the cement catalogue (Manus, Oct 2026; AfriSam, Cemza and NPC permission confirmed Oct 2026, so live); (3) open-licence photos from Wikimedia Commons (an \"openLicence\" block), live with the credit their licence requires. A sourced photo without \"permission\": \"GRANTED\" is imported hidden (PERMISSION_PENDING) until staff record permission in Admin -> Image permissions. \"retiredOpenLicence\" lists Commons photos taken down in Oct 2026 (weak matches). See PRODUCT_IMAGES.md.",
   "images": [
     {
       "file": "03a76b21fa07.webp",
@@ -1886,11 +1886,12 @@
       "source": "AfriSam (afrisam.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://www.afrisam.co.za",
-      "sourcingNote": "Manufacturer pack shot: AfriSam StarBuild 32,5N, 50 kg bag. Sourced via Manus, Oct 2026 \u2014 awaiting the manufacturer's written permission.",
+      "sourcingNote": "Manufacturer pack shot: AfriSam StarBuild 32,5N, 50 kg bag. Sourced via Manus, Oct 2026 \u2014 permission confirmed Oct 2026 (established supplier relationship).",
       "flags": [],
       "originalPaths": [
         "cement-product-images/05-afrisam-starbuild-cement-32-5n.webp"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "d2b63f17f38a.webp",
@@ -1902,11 +1903,12 @@
       "source": "Cemza (cemza.co)",
       "sourceCountry": "SA",
       "sourcePage": "https://cemza.co",
-      "sourcingNote": "Manufacturer pack shot: Cemza General Purpose 32,5N, 50 kg bag. Sourced via Manus, Oct 2026 \u2014 awaiting the manufacturer's written permission.",
+      "sourcingNote": "Manufacturer pack shot: Cemza General Purpose 32,5N, 50 kg bag. Sourced via Manus, Oct 2026 \u2014 permission confirmed Oct 2026 (established supplier relationship).",
       "flags": [],
       "originalPaths": [
         "cement-product-images/06-cemza-general-purpose-cement-32-5n.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "848cae3c7392.webp",
@@ -1918,11 +1920,12 @@
       "source": "NPC - Natal Portland Cement (npc.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://www.npc.co.za",
-      "sourcingNote": "Manufacturer pack shot: NPC Original Blue, Portland-fly ash CEM II/B-V 32,5N, 50 kg bag (Newcastle plant LOA). Sourced via Manus, Oct 2026 \u2014 awaiting the manufacturer's written permission.",
+      "sourcingNote": "Manufacturer pack shot: NPC Original Blue, Portland-fly ash CEM II/B-V 32,5N, 50 kg bag (Newcastle plant LOA). Sourced via Manus, Oct 2026 \u2014 permission confirmed Oct 2026 (established supplier relationship).",
       "flags": [],
       "originalPaths": [
         "cement-product-images/07-npc-newcastle-portland-fly-ash-cement.jpg"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "c8fa1c21e9c8.webp",
@@ -1934,11 +1937,12 @@
       "source": "NPC - Natal Portland Cement (npc.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://www.npc.co.za",
-      "sourcingNote": "Manufacturer pack shot: NPC Original Blue, Portland-limestone CEM II/B-L 32,5R, 50 kg bag (LOA 0515). Sourced via Manus, Oct 2026 \u2014 awaiting the manufacturer's written permission.",
+      "sourcingNote": "Manufacturer pack shot: NPC Original Blue, Portland-limestone CEM II/B-L 32,5R, 50 kg bag (LOA 0515). Sourced via Manus, Oct 2026 \u2014 permission confirmed Oct 2026 (established supplier relationship).",
       "flags": [],
       "originalPaths": [
         "cement-product-images/08-npc-durban-portland-limestone-cement.jpg"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "0cf53543e109.webp",
@@ -1950,11 +1954,12 @@
       "source": "NPC - Natal Portland Cement (npc.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://www.npc.co.za",
-      "sourcingNote": "Manufacturer pack shot: NPC Original Blue, Portland-limestone CEM II/B-L 32,5R, 50 kg bag (LOA 0111). Sourced via Manus, Oct 2026 \u2014 awaiting the manufacturer's written permission.",
+      "sourcingNote": "Manufacturer pack shot: NPC Original Blue, Portland-limestone CEM II/B-L 32,5R, 50 kg bag (LOA 0111). Sourced via Manus, Oct 2026 \u2014 permission confirmed Oct 2026 (established supplier relationship).",
       "flags": [],
       "originalPaths": [
         "cement-product-images/09-npc-simuma-portland-limestone-cement.jpg"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "e23f2441eb5d.webp",
@@ -1966,11 +1971,12 @@
       "source": "AfriSam (afrisam.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://www.afrisam.co.za",
-      "sourcingNote": "Manufacturer pack shot: AfriSam All Purpose 42,5N, 50 kg bag. Sourced via Manus, Oct 2026 \u2014 awaiting the manufacturer's written permission.",
+      "sourcingNote": "Manufacturer pack shot: AfriSam All Purpose 42,5N, 50 kg bag. Sourced via Manus, Oct 2026 \u2014 permission confirmed Oct 2026 (established supplier relationship).",
       "flags": [],
       "originalPaths": [
         "cement-product-images/14-afrisam-all-purpose-cement-42-5n.webp"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "67b304653873.webp",
@@ -1982,11 +1988,12 @@
       "source": "Cemza (cemza.co)",
       "sourceCountry": "SA",
       "sourcePage": "https://cemza.co",
-      "sourcingNote": "Manufacturer pack shot: Cemza All Purpose Premium 42,5N, 50 kg bag. Sourced via Manus, Oct 2026 \u2014 awaiting the manufacturer's written permission.",
+      "sourcingNote": "Manufacturer pack shot: Cemza All Purpose Premium 42,5N, 50 kg bag. Sourced via Manus, Oct 2026 \u2014 permission confirmed Oct 2026 (established supplier relationship).",
       "flags": [],
       "originalPaths": [
         "cement-product-images/16-cemza-all-purpose-cement-42-5n-range.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "57bb68c41d89.webp",
@@ -1998,11 +2005,12 @@
       "source": "Cemza (cemza.co)",
       "sourceCountry": "SA",
       "sourcePage": "https://cemza.co",
-      "sourcingNote": "Manufacturer pack shot: Cemza Rapid Strength Premium 42,5R, 50 kg bag. Sourced via Manus, Oct 2026 \u2014 awaiting the manufacturer's written permission.",
+      "sourcingNote": "Manufacturer pack shot: Cemza Rapid Strength Premium 42,5R, 50 kg bag. Sourced via Manus, Oct 2026 \u2014 permission confirmed Oct 2026 (established supplier relationship).",
       "flags": [],
       "originalPaths": [
         "cement-product-images/22-cemza-rapid-strength-premium-cement-42-5r.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "d4d46f5a3143.webp",
@@ -2014,11 +2022,12 @@
       "source": "AfriSam (afrisam.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://www.afrisam.co.za",
-      "sourcingNote": "Manufacturer pack shot: AfriSam High Strength 52,5N bag (the southern-region grade; northern regions supply 42,5R). Sourced via Manus, Oct 2026 \u2014 awaiting the manufacturer's written permission.",
+      "sourcingNote": "Manufacturer pack shot: AfriSam High Strength 52,5N bag (the southern-region grade; northern regions supply 42,5R). Sourced via Manus, Oct 2026 \u2014 permission confirmed Oct 2026 (established supplier relationship).",
       "flags": [],
       "originalPaths": [
         "cement-product-images/24-afrisam-high-strength-cement-hsc.webp"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "81efe3f48e0b.webp",
@@ -2030,11 +2039,12 @@
       "source": "Cemza (cemza.co)",
       "sourceCountry": "SA",
       "sourcePage": "https://cemza.co",
-      "sourcingNote": "Manufacturer pack shot: Cemza High-Performance Ultra Strong 52,5N, 50 kg bag. Sourced via Manus, Oct 2026 \u2014 awaiting the manufacturer's written permission.",
+      "sourcingNote": "Manufacturer pack shot: Cemza High-Performance Ultra Strong 52,5N, 50 kg bag. Sourced via Manus, Oct 2026 \u2014 permission confirmed Oct 2026 (established supplier relationship).",
       "flags": [],
       "originalPaths": [
         "cement-product-images/25-cemza-ultra-strong-high-performance-cement.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "4f5327025ad0.webp",
@@ -2046,11 +2056,12 @@
       "source": "AfriSam (afrisam.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://www.afrisam.co.za",
-      "sourcingNote": "Manufacturer pack shot: AfriSam Rapid Hard 52,5R, 50 kg bag. We list it in 1.5-ton bulk bags and by tanker; the photo shows the product's pack design. Sourced via Manus, Oct 2026 \u2014 awaiting the manufacturer's written permission.",
+      "sourcingNote": "Manufacturer pack shot: AfriSam Rapid Hard 52,5R, 50 kg bag. We list it in 1.5-ton bulk bags and by tanker; the photo shows the product's pack design. Sourced via Manus, Oct 2026 \u2014 permission confirmed Oct 2026 (established supplier relationship).",
       "flags": [],
       "originalPaths": [
         "cement-product-images/27-afrisam-rapid-hard-cement-rhc.webp"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "489607ff4d35.webp",
@@ -2062,11 +2073,12 @@
       "source": "Cemza (cemza.co)",
       "sourceCountry": "SA",
       "sourcePage": "https://cemza.co",
-      "sourcingNote": "Manufacturer pack shot: Cemza Blended Masonry Mortar Cement 22,5X, 50 kg bag. Sourced via Manus, Oct 2026 \u2014 awaiting the manufacturer's written permission.",
+      "sourcingNote": "Manufacturer pack shot: Cemza Blended Masonry Mortar Cement 22,5X, 50 kg bag. Sourced via Manus, Oct 2026 \u2014 permission confirmed Oct 2026 (established supplier relationship).",
       "flags": [],
       "originalPaths": [
         "cement-product-images/29-cemza-masonry-cement-22-5x.png"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "2d9b194fb54e.webp",
@@ -2078,11 +2090,12 @@
       "source": "AfriSam (afrisam.co.za)",
       "sourceCountry": "SA",
       "sourcePage": "https://www.afrisam.co.za",
-      "sourcingNote": "Manufacturer pack shot: AfriSam Roadstab 32,5N, 50 kg bag. Sourced via Manus, Oct 2026 \u2014 awaiting the manufacturer's written permission.",
+      "sourcingNote": "Manufacturer pack shot: AfriSam Roadstab 32,5N, 50 kg bag. Sourced via Manus, Oct 2026 \u2014 permission confirmed Oct 2026 (established supplier relationship).",
       "flags": [],
       "originalPaths": [
         "cement-product-images/32-afrisam-roadstab-cement.webp"
-      ]
+      ],
+      "permission": "GRANTED"
     },
     {
       "file": "715f0cb5b32f.webp",
@@ -2094,11 +2107,12 @@
       "source": "Cemza (cemza.co)",
       "sourceCountry": "SA",
       "sourcePage": "https://cemza.co",
-      "sourcingNote": "Manufacturer pack shot: Cemza RoadPro 32,5N Premium, 50 kg bag. Sourced via Manus, Oct 2026 \u2014 awaiting the manufacturer's written permission.",
+      "sourcingNote": "Manufacturer pack shot: Cemza RoadPro 32,5N Premium, 50 kg bag. Sourced via Manus, Oct 2026 \u2014 permission confirmed Oct 2026 (established supplier relationship).",
       "flags": [],
       "originalPaths": [
         "cement-product-images/34-cemza-roadpro-road-stabilising-cement.png"
-      ]
+      ],
+      "permission": "GRANTED"
     }
   ],
   "products": {

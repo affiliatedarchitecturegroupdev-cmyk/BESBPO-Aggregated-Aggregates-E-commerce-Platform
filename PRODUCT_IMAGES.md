@@ -29,18 +29,19 @@ Both sets are in `packages/database/prisma/seed-data/product-images/`
 an `openLicence` block (licence, URL, author, credit). Staff uploads (your
 own photography) always go live straight away.
 
-## Cement pack shots (Oct 2026) — awaiting manufacturer permission
+## Cement pack shots (Oct 2026) — live
 
 Manus sourced candidate photos for the 37-product cement master catalogue
 (22 files). Each was checked by eye against the product's name, brand,
 strength class and type; 14 were accepted, one per product, as the
 manufacturers' own pack shots (resized to ≤1200px WebP on white).
 
-They are imported **hidden** (`PERMISSION_PENDING`, no `"permission"` in
-the manifest): staff see them, customers don't. Being on a public website
-isn't permission to reuse. When a manufacturer agrees in writing, an admin
-records it on **Admin → Image permissions** (one switch per manufacturer)
-and its photos go live.
+AfriSam, Cemza and NPC are established supplier relationships and their
+permission was confirmed in October 2026, so these photos carry
+`"permission": "GRANTED"` and are imported **live** (`CLEARED`), shown first
+on each product. An admin can still withdraw a manufacturer on
+**Admin → Image permissions**, which hides its photos. Photos from any other
+manufacturer stay hidden until their permission is confirmed.
 
 | Source (permission switch) | Products |
 |---|---|
