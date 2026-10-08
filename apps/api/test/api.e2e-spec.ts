@@ -2222,6 +2222,29 @@ describe("Aggregated Aggregates API (e2e)", () => {
       expect(hire.body).not.toHaveProperty("partnerPayouts");
     });
 
+    it("reports promotion views, newsletter sign-ups and sales by channel", async () => {
+      const promo = await prisma.promotion.create({ data: { slot: "FOOTER_STRIP", title: `${tag} promo`, imageUrl: "media:none", isActive: false } });
+      try {
+        await prisma.promotionStat.createMany({
+          data: [
+            { promotionId: promo.id, day: new Date("2031-03-02"), impressions: 200, clicks: 5 },
+            { promotionId: promo.id, day: new Date("2031-03-03"), impressions: 300, clicks: 15 },
+            { promotionId: promo.id, day: new Date("2031-04-01"), impressions: 999, clicks: 99 },
+          ],
+        });
+        await http().get(`/insights/marketing?${march}`).set(auth(buyer)).expect(403);
+        const res = await http().get(`/insights/marketing?${march}`).set(auth(staff)).expect(200);
+        const row = res.body.promotions.rows.find((r: { id: string }) => r.id === promo.id);
+        expect(row).toMatchObject({ impressions: 500, clicks: 20, clickThroughRate: 4 });
+        expect(res.body.promotions.daily).toHaveLength(31);
+        expect(res.body.promotions.daily[1]).toEqual({ day: "2031-03-02", impressions: 200, clicks: 5 });
+        expect(res.body.channels).toEqual([{ key: "WEBSITE", label: "WEBSITE", revenue: expected.materials, orders: 2 }]);
+        expect(res.body.newsletter.signups).toBe(0);
+      } finally {
+        await prisma.promotion.delete({ where: { id: promo.id } });
+      }
+    });
+
     it("reports pipeline and customers, and rejects bad periods", async () => {
       await http().get(`/insights/pipeline?${march}`).set(auth(staff)).expect(200);
       const customers = await http().get(`/insights/customers?${march}`).set(auth(admin)).expect(200);

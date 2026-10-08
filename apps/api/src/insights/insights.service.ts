@@ -377,6 +377,60 @@ export class InsightsService {
     };
   }
 
+  /** Marketing: promotion views and clicks, newsletter sign-ups, and sales by channel. */
+  async marketing(q: InsightsQuery) {
+    const { p, prev, scope } = this.context(q);
+    // PromotionStat.day is a South African calendar day stored as a date.
+    const first = new Date(`${p.from}T00:00:00Z`);
+    const last = new Date(`${p.to}T00:00:00Z`);
+    const [promotions, stats, signups, channels] = await Promise.all([
+      this.prisma.promotion.findMany({ select: { id: true, slot: true, title: true, isActive: true } }),
+      this.prisma.promotionStat.findMany({ where: { day: { gte: first, lte: last } }, select: { promotionId: true, day: true, impressions: true, clicks: true } }),
+      this.prisma.$queryRaw<{ audience: string; source: string | null; n: bigint }[]>`
+        SELECT audience::text AS audience, source, COUNT(*) AS n FROM "NewsletterSubscriber"
+        WHERE "consentAt" >= ${p.start} AND "consentAt" < ${p.end} GROUP BY 1, 2`,
+      scope.materials ? this.groupRows({ ...q, by: "channel" }, p, "channel") : [],
+    ]);
+    const byPromotion = new Map<string, { impressions: number; clicks: number }>();
+    const byDay = new Map<string, { impressions: number; clicks: number }>();
+    for (const s of stats) {
+      const pr = byPromotion.get(s.promotionId) ?? { impressions: 0, clicks: 0 };
+      pr.impressions += s.impressions;
+      pr.clicks += s.clicks;
+      byPromotion.set(s.promotionId, pr);
+      const key = s.day.toISOString().slice(0, 10);
+      const d = byDay.get(key) ?? { impressions: 0, clicks: 0 };
+      d.impressions += s.impressions;
+      d.clicks += s.clicks;
+      byDay.set(key, d);
+    }
+    const ctr = (clicks: number, impressions: number) => (impressions ? round2((clicks / impressions) * 100) : null);
+    const totals = [...byPromotion.values()].reduce((n, r) => ({ impressions: n.impressions + r.impressions, clicks: n.clicks + r.clicks }), { impressions: 0, clicks: 0 });
+    const sources: Record<string, number> = {};
+    const audiences: Record<string, number> = {};
+    for (const r of signups) {
+      sources[r.source ?? "Not recorded"] = (sources[r.source ?? "Not recorded"] ?? 0) + num(r.n);
+      audiences[r.audience] = (audiences[r.audience] ?? 0) + num(r.n);
+    }
+    return {
+      ...this.meta(q, p, prev, scope),
+      promotions: {
+        ...totals,
+        clickThroughRate: ctr(totals.clicks, totals.impressions),
+        daily: bucketKeys(p, "day").map((day) => ({ day, impressions: byDay.get(day)?.impressions ?? 0, clicks: byDay.get(day)?.clicks ?? 0 })),
+        rows: promotions
+          .map((pr) => {
+            const r = byPromotion.get(pr.id) ?? { impressions: 0, clicks: 0 };
+            return { id: pr.id, title: pr.title, slot: pr.slot, isActive: pr.isActive, ...r, clickThroughRate: ctr(r.clicks, r.impressions) };
+          })
+          .filter((r) => r.impressions || r.clicks || r.isActive)
+          .sort((a, b) => b.impressions - a.impressions),
+      },
+      newsletter: { signups: Object.values(sources).reduce((n, v) => n + v, 0), bySource: sources, byAudience: audiences },
+      channels: channels.map(({ key, label, revenue, orders }) => ({ key, label, revenue, orders })),
+    };
+  }
+
   // -------------------------------------------------------------------------
   // Engine
   // -------------------------------------------------------------------------
