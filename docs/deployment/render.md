@@ -257,6 +257,15 @@ in **Admin → Notifications** rather than sent.
   test flags, and backfills earlier orders (marked estimated). After
   deploying, an admin should set the standard delivery costs and this
   month's operating costs on Admin → Finance (`ANALYTICS.md`).
+- **Which branch Render deploys.** The Blueprint deploys the branch chosen
+  when it was created. If that's a working branch rather than `main`, every
+  push goes live before review — and data imports can run twice (once
+  for the work-in-progress commit, once for the final one). Point the
+  Blueprint at `main` (Render → Blueprint → Settings → Branch) so only
+  merged pull requests deploy.
+- **Cement pack shots (Oct 2026).** Migration
+  `20261013090000_publish_cement_pack_shots` publishes the AfriSam, Cemza and
+  NPC photos that an earlier deploy had imported as awaiting permission.
 - **Insights Phase 4 (Oct 2026).** Migration `20261012090000_insights_phase4`
   adds saved Insights views, the weekly-email log and the operating-cost
   import fields. The API emails last week's summary to every admin from
