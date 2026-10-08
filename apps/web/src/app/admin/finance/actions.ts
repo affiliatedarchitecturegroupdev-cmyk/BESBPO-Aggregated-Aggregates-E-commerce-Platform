@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import type { FormState } from "@/app/account/actions";
-import { api } from "@/lib/api";
+import { api, apiUpload } from "@/lib/api";
 import { sessionToken } from "@/lib/session";
 
 const text = (form: FormData, name: string) => {
@@ -72,4 +72,28 @@ export async function saveOperatingCost(_prev: FormState, form: FormData): Promi
 export async function deleteOperatingCost(form: FormData) {
   await api(`/finance/operating-costs/${encodeURIComponent(text(form, "id"))}`, { method: "DELETE", token: sessionToken() });
   refresh();
+}
+
+export type ImportPreview = {
+  columns: Record<string, string | null>;
+  rows: { line: number; month: string; category: string; categoryMatched: boolean; description: string; amountExVat: number; reference: string | null }[];
+  errors: { line: number; message: string }[];
+  months: { month: string; rows: number; total: number }[];
+  replaces: number;
+  manualInMonths: number;
+  applied: boolean;
+};
+export type ImportState = { error?: string; preview?: ImportPreview; fileName?: string } | null;
+
+/** Admins: preview an accounting CSV of operating costs, then import it (apply=1). */
+export async function importOperatingCosts(_prev: ImportState, form: FormData): Promise<ImportState> {
+  const file = form.get("file");
+  if (!(file instanceof File) || file.size === 0) return { error: "Choose a CSV file exported from your accounting system." };
+  if (file.size > 1024 * 1024) return { error: "The file is larger than 1 MB — export one month or quarter at a time." };
+  const upload = new FormData();
+  upload.append("file", file, file.name);
+  const apply = form.get("apply") === "1";
+  const result = await apiUpload<ImportPreview>(`/finance/operating-costs/import${apply ? "?apply=true" : ""}`, upload, sessionToken());
+  if (apply && result.ok) refresh();
+  return result.ok ? { preview: result.data, fileName: file.name } : { error: result.message };
 }

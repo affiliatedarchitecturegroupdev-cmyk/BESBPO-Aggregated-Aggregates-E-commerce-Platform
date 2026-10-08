@@ -257,6 +257,12 @@ in **Admin → Notifications** rather than sent.
   test flags, and backfills earlier orders (marked estimated). After
   deploying, an admin should set the standard delivery costs and this
   month's operating costs on Admin → Finance (`ANALYTICS.md`).
+- **Insights Phase 4 (Oct 2026).** Migration `20261012090000_insights_phase4`
+  adds saved Insights views, the weekly-email log and the operating-cost
+  import fields. The API emails last week's summary to every admin from
+  Monday 07:00 SAST (it claims each week in the database first, so extra
+  instances can't send it twice); set `INSIGHTS_DIGEST=off` to stop the
+  schedule. It needs a working email provider (`docs/notifications.md`).
 - **Hire bookings (Oct 2026).** Migration `20261009090000_bookings` adds
   partners, fleet, bookings, offers, job cards, chat, disputes, payouts and
   review flags, plus the `PARTNER` role. The API runs a once-a-minute sweep

@@ -107,13 +107,15 @@ const carrierName = (s: NonNullable<OrderData["shipment"]>) =>
 
 const greeting = (name: string | null) => (name?.trim() ? `Hi ${name.trim().split(/\s+/)[0]},` : "Hi,");
 
-type Block = { kind: "p"; text: string } | { kind: "list"; items: string[] } | { kind: "rows"; rows: [string, string][] } | { kind: "cta"; label: string; href: string };
+export type Block = { kind: "h"; text: string } | { kind: "p"; text: string } | { kind: "list"; items: string[] } | { kind: "rows"; rows: [string, string][] } | { kind: "cta"; label: string; href: string };
+
+const DEFAULT_FOOTER = "Aggregated Aggregates — a Besbpo Group company. You're receiving this because of an order, quote or account on aggregates.store.";
 
 /** One layout for every email, so the text and HTML bodies always say the same thing. */
-function email(subject: string, blocks: Block[]): EmailMessage {
-  const footer = "Aggregated Aggregates — a Besbpo Group company. You're receiving this because of an order, quote or account on aggregates.store.";
+export function email(subject: string, blocks: Block[], footer = DEFAULT_FOOTER): EmailMessage {
   const text = [
     ...blocks.map((b) => {
+      if (b.kind === "h") return b.text.toUpperCase();
       if (b.kind === "p") return b.text;
       if (b.kind === "list") return b.items.map((i) => `- ${i}`).join("\n");
       if (b.kind === "rows") return b.rows.map(([k, v]) => `${k}: ${v}`).join("\n");
@@ -125,6 +127,7 @@ function email(subject: string, blocks: Block[]): EmailMessage {
 
   const body = blocks
     .map((b) => {
+      if (b.kind === "h") return `<h2 style="margin:24px 0 8px;font-size:16px">${escapeHtml(b.text)}</h2>`;
       if (b.kind === "p") return `<p style="margin:0 0 16px">${escapeHtml(b.text)}</p>`;
       if (b.kind === "list") return `<ul style="margin:0 0 16px;padding-left:20px">${b.items.map((i) => `<li style="margin:0 0 4px">${escapeHtml(i)}</li>`).join("")}</ul>`;
       if (b.kind === "rows") {
@@ -517,6 +520,7 @@ export const EVENT_CHANNELS: Record<NotificationEvent, { customerEmail: boolean;
   BOOKING_COMPLETED: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
   BOOKING_DISPUTED: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
   PAYOUT_DUE: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
+  WEEKLY_INSIGHTS: { customerEmail: false, customerWhatsApp: false, staffEmail: true }, // admins only, never the staff inbox list
 };
 
 /** Events that also email the partner (always on — offers can't wait for a setting). */
@@ -544,6 +548,7 @@ export const EVENT_LABEL: Record<NotificationEvent, string> = {
   BOOKING_COMPLETED: "Booking signed off",
   BOOKING_DISPUTED: "Booking disputed",
   PAYOUT_DUE: "Partner payout due",
+  WEEKLY_INSIGHTS: "Weekly sales & profit summary (admins, Monday 07:00)",
 };
 
 /** A South African or international number in the digits-only form WhatsApp expects, or null. */

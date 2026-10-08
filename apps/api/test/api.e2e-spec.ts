@@ -13,6 +13,7 @@ import { createHmac } from "crypto";
 import request from "supertest";
 import { AppModule } from "../src/app.module";
 import { PrismaService } from "../src/common/prisma.service";
+import { DigestService } from "../src/insights/digest.service";
 import { readManifest, seedProductImages } from "../src/merchandising/seed-product-images";
 
 const run = Date.now().toString(36);
@@ -2243,6 +2244,71 @@ describe("Aggregated Aggregates API (e2e)", () => {
       } finally {
         await prisma.promotion.delete({ where: { id: promo.id } });
       }
+    });
+
+    it("emails last week's summary to admins once, from Monday 07:00 SAST", async () => {
+      const digest = app.get(DigestService);
+      const weekStart = new Date("2031-03-10T00:00:00Z");
+      await prisma.insightsDigest.deleteMany({ where: { weekStart } });
+      try {
+        expect(await digest.sendIfDue(new Date("2031-03-17T04:00:00Z"))).toEqual({ sent: false, reason: "not-due" }); // Mon 06:00 SAST
+        const sent = await digest.sendIfDue(new Date("2031-03-17T06:00:00Z")); // Mon 08:00 SAST → week of 10–16 March
+        expect(sent.sent).toBe(true);
+        const admins = await prisma.user.count({ where: { role: "ADMIN" } });
+        expect(sent.recipients).toBe(admins);
+        const message = await prisma.notification.findFirstOrThrow({ where: { event: "WEEKLY_INSIGHTS", recipient: `${tag}-admin-${run}@example.com` }, orderBy: { createdAt: "desc" } });
+        expect(message.subject).toBe("Last week: R120.00 net revenue, 0 orders (10 Mar 2031 – 16 Mar 2031)");
+        expect(message.body).toContain("Hire commission: R120.00 on 1 paid booking");
+        expect(await prisma.notification.count({ where: { event: "WEEKLY_INSIGHTS", recipient: `${tag}-staff-${run}@example.com` } })).toBe(0);
+        expect(await digest.sendIfDue(new Date("2031-03-18T06:00:00Z"))).toEqual({ sent: false, reason: "already-sent" });
+      } finally {
+        await prisma.insightsDigest.deleteMany({ where: { weekStart } });
+        await prisma.notification.deleteMany({ where: { event: "WEEKLY_INSIGHTS", createdAt: { gte: new Date(Date.now() - 600_000) } } });
+      }
+      await http().get("/insights/digest").set(auth(staff)).expect(403);
+      const preview = await http().get("/insights/digest").set(auth(admin)).expect(200);
+      expect(preview.body).toMatchObject({ week: { from: expect.any(String), to: expect.any(String) }, subject: expect.stringMatching(/^Last week:/), recipients: expect.arrayContaining([`${tag}-admin-${run}@example.com`]) });
+      expect(preview.body.recipients).not.toContain(`${tag}-staff-${run}@example.com`);
+    });
+
+    it("saves views privately or shared with staff, with only known filters", async () => {
+      await http().post("/insights/views").set(auth(buyer)).send({ name: "Mine", path: "sales", query: "range=90d" }).expect(403);
+      await http().post("/insights/views").set(auth(staff)).send({ name: "P&L", path: "finance", query: "" }).expect(403);
+      await http().post("/insights/views").set(auth(staff)).send({ name: "Nope", path: "../orders" }).expect(400);
+      const priv = await http().post("/insights/views").set(auth(staff)).send({ name: `${tag} my KZN`, path: "products", query: "range=90d&province=KwaZulu-Natal&token=abc" }).expect(201);
+      expect(priv.body.query).toBe("range=90d&province=KwaZulu-Natal");
+      const shared = await http().post("/insights/views").set(auth(admin)).send({ name: `${tag} team weekly`, path: "", query: "range=7d", shared: true }).expect(201);
+      const finance = await http().post("/insights/views").set(auth(admin)).send({ name: `${tag} P&L 24m`, path: "finance", query: "months=24", shared: true }).expect(201);
+      const staffList = (await http().get("/insights/views").set(auth(staff)).expect(200)).body as { id: string; mine: boolean; href: string }[];
+      expect(staffList.map((v) => v.id)).toEqual(expect.arrayContaining([priv.body.id, shared.body.id]));
+      expect(staffList.map((v) => v.id)).not.toContain(finance.body.id); // P&L views are for admins
+      expect(staffList.find((v) => v.id === priv.body.id)).toMatchObject({ mine: true, href: "/admin/insights/products?range=90d&province=KwaZulu-Natal" });
+      const adminList = (await http().get("/insights/views").set(auth(admin)).expect(200)).body as { id: string }[];
+      expect(adminList.map((v) => v.id)).not.toContain(priv.body.id); // private to its owner
+      await http().delete(`/insights/views/${shared.body.id}`).set(auth(staff)).expect(403);
+      await http().delete(`/insights/views/${priv.body.id}`).set(auth(admin)).expect(404);
+      for (const [id, who] of [[priv.body.id, staff], [shared.body.id, admin], [finance.body.id, admin]] as const) await http().delete(`/insights/views/${id}`).set(auth(who)).expect(204);
+    });
+
+    it("imports operating costs from an accounting CSV, previewing first and replacing imported months", async () => {
+      const csv = (rows: string[]) => Buffer.from(["Date,Account,Description,Net Amount,Reference", ...rows].join("\n"));
+      const file = csv([`2031-03-31,Rent,${tag} imported rent,20000,INV-7`, `31/03/2031,Payroll,${tag} March salaries,"90,000.00",JNL-3`, `2031-03-15,Sundry,${tag} coffee,350,`]);
+      await http().post("/finance/operating-costs/import").set(auth(staff)).attach("file", file, "costs.csv").expect(403);
+      const preview = await http().post("/finance/operating-costs/import").set(auth(admin)).attach("file", file, "costs.csv").expect(200);
+      expect(preview.body).toMatchObject({ applied: false, errors: [], months: [{ month: "2031-03", rows: 3, total: 110350 }], manualInMonths: 1, replaces: 0 });
+      expect(preview.body.rows.map((r: { category: string; categoryMatched: boolean }) => [r.category, r.categoryMatched])).toEqual([["RENT", true], ["SALARIES", true], ["OTHER", false]]);
+      expect(await prisma.operatingCost.count({ where: { source: "IMPORT", description: { startsWith: tag } } })).toBe(0);
+      await http().post("/finance/operating-costs/import?apply=true").set(auth(admin)).attach("file", file, "costs.csv").expect(200);
+      const corrected = csv([`2031-03-31,Rent,${tag} imported rent,21000,INV-7`]);
+      const again = await http().post("/finance/operating-costs/import?apply=true").set(auth(admin)).attach("file", corrected, "costs.csv").expect(200);
+      expect(again.body.replaces).toBe(3);
+      const imported = await prisma.operatingCost.findMany({ where: { source: "IMPORT", description: { startsWith: tag } } });
+      expect(imported.map((r) => [Number(r.amountExVat), r.reference])).toEqual([[21000, "INV-7"]]);
+      expect(await prisma.operatingCost.count({ where: { source: "MANUAL", description: `${tag} rent` } })).toBe(1); // hand-entered rent untouched
+      const summary = await http().get(`/insights/summary?${march}`).set(auth(admin)).expect(200);
+      expect(summary.body.current.operatingCosts).toBe(31000 + 21000);
+      const bad = await http().post("/finance/operating-costs/import?apply=true").set(auth(admin)).attach("file", csv([`soon,Rent,${tag} x,10,`]), "costs.csv").expect(400);
+      expect(bad.body.message).toMatch(/Fix the rows/);
     });
 
     it("reports pipeline and customers, and rejects bad periods", async () => {

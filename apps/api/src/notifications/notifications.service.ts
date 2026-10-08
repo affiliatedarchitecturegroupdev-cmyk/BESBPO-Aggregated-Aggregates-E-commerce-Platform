@@ -300,6 +300,22 @@ export class NotificationsService implements OnModuleDestroy {
     });
   }
 
+  /**
+   * An admin-only summary (the weekly insights email): one email per address,
+   * logged like every other message. Skipped when switched off on
+   * Admin → Notifications. Returns how many emails were queued.
+   */
+  async adminDigest(event: NotificationEvent, recipients: string[], message: EmailMessage): Promise<number> {
+    if (!(await this.setting(event)).staffEmail) return 0;
+    const to = [...new Set(recipients.map((r) => r.trim().toLowerCase()).filter((r) => EMAIL_PATTERN.test(r)))];
+    await this.enqueue(
+      event,
+      to.map((recipient) => ({ audience: "STAFF", channel: "EMAIL", recipient, email: message })),
+      {},
+    );
+    return to.length;
+  }
+
   /** Staff: try a failed (or merely logged) message again — e.g. once a provider is configured. */
   async resend(id: string) {
     const notification = await this.prisma.notification.findUnique({ where: { id } });

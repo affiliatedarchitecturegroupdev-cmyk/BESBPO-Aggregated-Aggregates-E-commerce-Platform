@@ -13,6 +13,7 @@ const TABS = [
   { href: "/admin/insights/geography", label: "Geography & delivery" },
   { href: "/admin/insights/marketing", label: "Marketing" },
   { href: "/admin/insights/finance", label: "Profit & loss", adminOnly: true },
+  { href: "/admin/insights/email", label: "Weekly email", adminOnly: true },
 ];
 
 /** Insights tabs; each link keeps the current filters. */

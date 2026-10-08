@@ -53,6 +53,7 @@ model User {
   hirePartnerId     String?
   hirePartner       HirePartner?      @relation(fields: [hirePartnerId], references: [id], onDelete: SetNull)
   bookings          Booking[]
+  insightsViews     InsightsView[]
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
 }
@@ -870,6 +871,7 @@ enum NotificationEvent {
   BOOKING_COMPLETED
   BOOKING_DISPUTED
   PAYOUT_DUE
+  WEEKLY_INSIGHTS // Monday summary of last week's sales and profit, to admins only
 }
 
 enum NotificationChannel {
@@ -1459,6 +1461,37 @@ model OperatingCost {
   createdById String
   createdAt   DateTime              @default(now())
   updatedAt   DateTime              @updatedAt
+  source      OperatingCostSource   @default(MANUAL)
+  reference   String? // the accounting system's reference (account code, journal or invoice number) for imported rows
 
   @@index([month])
+}
+
+enum OperatingCostSource {
+  MANUAL // entered on Admin → Finance
+  IMPORT // imported from an accounting CSV export (re-importing a month replaces that month's imported rows)
+}
+
+/// A saved Admin → Insights view: a tab plus its filters. Private to its owner unless shared with all staff.
+model InsightsView {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  path      String // the Insights tab, e.g. "products"
+  query     String // the tab's filters as a query string (validated keys only)
+  shared    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([shared])
+}
+
+/// One row per weekly insights email sent (the week's Monday, SAST) — claimed before sending so two API instances can't both send it.
+model InsightsDigest {
+  weekStart  DateTime  @id @db.Date
+  claimedAt  DateTime  @default(now())
+  sentAt     DateTime?
+  recipients Int       @default(0)
+  error      String?
 }

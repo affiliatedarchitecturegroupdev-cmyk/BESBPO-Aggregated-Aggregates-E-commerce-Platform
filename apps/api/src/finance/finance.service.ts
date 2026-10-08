@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from "@nestjs/comm
 import { Prisma } from "@aggregates/database";
 import type { AuthUser } from "../common/auth/auth-user";
 import { PrismaService } from "../common/prisma.service";
+import { parseOperatingCostCsv } from "./opex-import";
 import type { CreateRefundDto, OperatingCostDto, SaveDeliveryRatesDto } from "./finance.dto";
 
 const monthStart = (ym: string) => new Date(`${ym}-01T00:00:00.000Z`);
@@ -96,6 +97,34 @@ export class FinanceService {
   async deleteOperatingCost(id: string) {
     await this.getOperatingCost(id);
     await this.prisma.operatingCost.delete({ where: { id } });
+  }
+
+  /**
+   * Admins: import operating costs from an accounting CSV export. Without
+   * `apply` it only previews (rows, mapped categories, errors). With `apply`,
+   * a file with no errors replaces the previously imported rows for every
+   * month it covers — so re-importing a month after corrections is safe —
+   * and leaves hand-entered rows alone.
+   */
+  async importOperatingCosts(text: string, apply: boolean, user: AuthUser) {
+    const { rows, errors, columns } = parseOperatingCostCsv(text);
+    const months = [...new Set(rows.map((r) => r.month))].sort();
+    const byMonth = months.map((m) => ({ month: m, rows: rows.filter((r) => r.month === m).length, total: Math.round(rows.filter((r) => r.month === m).reduce((n, r) => n + r.amountExVat, 0) * 100) / 100 }));
+    const existing = months.length
+      ? await this.prisma.operatingCost.groupBy({ by: ["month", "source"], where: { month: { in: months.map(monthStart) } }, _count: { _all: true } })
+      : [];
+    const replaces = existing.filter((e) => e.source === "IMPORT").reduce((n, e) => n + e._count._all, 0);
+    const manualInMonths = existing.filter((e) => e.source === "MANUAL").reduce((n, e) => n + e._count._all, 0);
+    const preview = { columns, rows, errors, months: byMonth, replaces, manualInMonths, applied: false };
+    if (!apply) return preview;
+    if (errors.length || !rows.length) throw new BadRequestException(errors.length ? "Fix the rows with errors, then import again." : "The file has no rows to import.");
+    await this.prisma.$transaction([
+      this.prisma.operatingCost.deleteMany({ where: { source: "IMPORT", month: { in: months.map(monthStart) } } }),
+      this.prisma.operatingCost.createMany({
+        data: rows.map((r) => ({ month: monthStart(r.month), category: r.category, description: r.description, amountExVat: r.amountExVat, reference: r.reference, source: "IMPORT" as const, createdById: user.id })),
+      }),
+    ]);
+    return { ...preview, applied: true };
   }
 
   // --- Standard delivery costs (admins) -----------------------------------
