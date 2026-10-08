@@ -9,7 +9,7 @@ published — only the files named in `apps/web/src/app/legal/*/page.tsx` are.
 |---|---|---|
 | Privacy Policy | `privacy-policy.md` | Draft — **awaiting attorney review** (updated 7 Oct 2026, see below) |
 | POPIA Notice | `popia-notice.md` | Draft — **awaiting attorney review** (updated 7 Oct 2026) |
-| Terms & Conditions | `terms-and-conditions.md` | Draft — awaiting attorney review |
+| Terms & Conditions | `terms-and-conditions.md` | Draft — **awaiting attorney review** (§2 pricing and §4 payment updated 7 Oct 2026) |
 | Plant Hire & Site Services Terms | `hire-terms.md` | **New draft, 7 Oct 2026 — awaiting attorney review before final** |
 | Partner Terms | `partner-terms.md` | **New draft, 7 Oct 2026 — awaiting attorney review before final** |
 | Cookie Policy | `cookie-policy.md` | Draft — awaiting attorney review |
@@ -83,9 +83,18 @@ Instagram; retention wording for enquiries and bookings. Cross-border
 transfers: the API and database are hosted in Frankfurt (Render) —
 confirm §6 of the POPIA Notice covers this.
 
-## Known gaps elsewhere
+## Points for counsel — Terms & Conditions (7 Oct 2026 update)
 
-- `terms-and-conditions.md` §2 still describes the original tier discounts
-  (8% / 15%); cement and ready-mix tiers now follow the floor-based
-  schedule in `PRICING_POLICY.md`, and §4 lists payment methods that are not
-  all live yet.
+- **§2 Products and pricing** now states the floor-based discount schedule
+  from `PRICING_POLICY.md` (aggregates 8% / up to 15%; bagged cement and
+  mortar 4% / quoted; bulk cement and admixture drums/totes quoted; ready-mix
+  2% / quoted) and that some discounts are capped by a minimum margin. The
+  table is checked against the pricing code by
+  `services/pricing/tests/test_terms_schedule.py`, so a schedule change
+  fails the tests until this page is updated.
+- **§4 Payment** no longer names providers that aren't live (PayFast,
+  Lulapay, PayJustNow). It describes methods generically, points to Ways to
+  Pay, and says sales arrange EFT where no online method is available — which
+  is what checkout does today while gateway credentials are pending. The
+  Privacy Policy's payment-processor wording was made generic to match.
+  When gateways go live, consider naming them again (with their terms).

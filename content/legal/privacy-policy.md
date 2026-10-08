@@ -90,8 +90,9 @@ We share personal information with:
 - **Delivery partners**, including Besfleet (Besbpo Group's own trucking
   division) and our external tipper-truck delivery partners, to the extent
   necessary to complete delivery.
-- **Payment processors** (PayFast, Lulapay, PayJustNow), to process
-  payment — see Section 6.
+- **Payment processors**, such as payment gateways and buy-now-pay-later
+  or trade-credit providers, when you choose to pay with them — see
+  Section 6.
 - **Besbpo Group** entities, for group VAT invoicing and administrative
   purposes.
 - Service providers who host, maintain, or support the Platform (e.g. our
@@ -115,9 +116,8 @@ decisions about you.
 
 ## 6. Payments
 
-Card and payment details are processed directly by our payment partners
-(PayFast, Lulapay, PayJustNow) under their own security and privacy
-practices. We do not store full card numbers on our systems.
+Card and payment details are processed directly by our third-party payment
+partners under their own security and privacy practices. We do not store full card numbers on our systems.
 
 ## 7. Data retention
 
