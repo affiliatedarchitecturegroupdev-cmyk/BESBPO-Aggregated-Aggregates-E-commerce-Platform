@@ -529,6 +529,11 @@ export async function updateOrderStatus(_prev: FormState, form: FormData): Promi
       carrier: optional(form, "carrier"),
       externalPartnerName: optional(form, "externalPartnerName"),
       trackingRef: optional(form, "trackingRef"),
+      // Reporting (ANALYTICS.md): how it was paid, which supplier loaded it, what the delivery actually cost.
+      paymentMethod: optional(form, "paymentMethod"),
+      fulfilledBySupplierId: optional(form, "fulfilledBySupplierId"),
+      deliveryCost: optional(form, "deliveryCost") === undefined ? undefined : Number(optional(form, "deliveryCost")),
+      deliveryCostNote: optional(form, "deliveryCostNote"),
     },
   });
   if (!result.ok) return { error: result.message };

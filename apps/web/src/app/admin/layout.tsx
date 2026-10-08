@@ -25,6 +25,7 @@ const NAV = [
   { href: "/admin/notifications", label: "Notifications" },
   { href: "/admin/careers", label: "Careers" },
   { href: "/admin/newsletter", label: "Newsletter" },
+  { href: "/admin/finance", label: "Finance", adminOnly: true },
   { href: "/admin/team", label: "Team", adminOnly: true },
 ];
 

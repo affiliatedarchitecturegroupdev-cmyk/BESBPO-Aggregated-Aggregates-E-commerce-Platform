@@ -52,6 +52,8 @@ export type AdminBooking = Omit<AdminBookingRow, "assignedPartner" | "payout" | 
   customerRating: number | null;
   otpFailures: number;
   hasArrivalCode: boolean;
+  isTest: boolean;
+  refunds: { id: string; orderId: string | null; bookingId: string | null; amount: string; reason: string; reference: string | null; refundedAt: string }[];
   assignedPartner: { id: string; name: string; contactEmail: string; contactPhone: string | null } | null;
   preferredPartner: { id: string; name: string } | null;
   offers: { id: string; rank: number; status: "PENDING" | "ACCEPTED" | "DECLINED" | "EXPIRED" | "WITHDRAWN"; offeredAt: string; expiresAt: string; respondedAt: string | null; partner: { name: string } }[];

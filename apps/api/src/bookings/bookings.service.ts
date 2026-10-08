@@ -99,6 +99,8 @@ export class BookingsService {
         quoteValidUntil: dto.quoteValidUntil ? day(dto.quoteValidUntil) : null,
         preferredPartnerId: dto.preferredPartnerId ?? null,
         createdById: staff.id,
+        // Bookings for staff or admin accounts are tests by default (admins can unflag them).
+        isTest: customer.role === "STAFF" || customer.role === "ADMIN",
       },
     });
     if (dto.enquiryId) {
@@ -134,6 +136,7 @@ export class BookingsService {
         messages: { orderBy: { createdAt: "asc" } },
         disputes: { orderBy: { createdAt: "desc" } },
         payout: true,
+        refunds: { orderBy: { refundedAt: "desc" } },
       },
     });
     if (!booking) throw new NotFoundException("Booking not found.");

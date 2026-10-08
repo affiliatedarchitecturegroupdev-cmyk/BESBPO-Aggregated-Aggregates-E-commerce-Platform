@@ -7,7 +7,9 @@ import { api } from "@/lib/api";
 import type { AdminBooking } from "@/lib/admin-bookings";
 import { bookingDate, dateRange, dateTime, PAYOUT_STATUS_LABEL, quantityLabel } from "@/lib/bookings";
 import { formatZAR } from "@/lib/pricing";
-import { sessionToken } from "@/lib/session";
+import { getSession, sessionToken } from "@/lib/session";
+import { setTestFlag } from "@/app/admin/finance/actions";
+import { RefundPanel } from "@/components/finance/RefundPanel";
 
 export const metadata = { title: "Booking" };
 
@@ -15,9 +17,10 @@ const CANCELLABLE = ["QUOTED", "AWAITING_PAYMENT", "DISPATCHING", "ACCEPTED", "U
 const OFFER_LABEL = { PENDING: "Waiting", ACCEPTED: "Accepted", DECLINED: "Declined", EXPIRED: "Expired", WITHDRAWN: "Withdrawn" } as const;
 
 export default async function AdminBookingPage({ params }: { params: { id: string } }) {
-  const result = await api<AdminBooking>(`/bookings/admin/${encodeURIComponent(params.id)}`, { token: sessionToken() });
+  const [result, user] = await Promise.all([api<AdminBooking>(`/bookings/admin/${encodeURIComponent(params.id)}`, { token: sessionToken() }), getSession()]);
   if (!result.ok) notFound();
   const b = result.data;
+  const isAdmin = user?.role === "ADMIN";
   const openDisputes = b.disputes.filter((d) => d.status === "OPEN");
   return (
     <div className="space-y-5">
@@ -27,7 +30,18 @@ export default async function AdminBookingPage({ params }: { params: { id: strin
           <p className="font-mono text-xs text-slate">{b.reference}{b.enquiryId ? " · from an enquiry" : ""}</p>
           <h2 className="font-display text-xl font-bold text-basalt">{b.itemName}</h2>
         </div>
-        <StatusPill status={b.status} />
+        <div className="flex items-center gap-3">
+          {b.isTest && <span className="rounded-sm bg-ochre-gold/20 px-1.5 py-0.5 font-mono text-[10px] uppercase text-basalt">Test — not reported</span>}
+          {isAdmin && (
+            <form action={setTestFlag}>
+              <input type="hidden" name="kind" value="booking" />
+              <input type="hidden" name="id" value={b.id} />
+              <input type="hidden" name="isTest" value={String(!b.isTest)} />
+              <button className="font-body text-xs text-seam-blue hover:underline">{b.isTest ? "Include in reporting" : "Mark as test"}</button>
+            </form>
+          )}
+          <StatusPill status={b.status} />
+        </div>
       </div>
       <div className="grid gap-5 lg:grid-cols-[1.15fr_1fr]">
         <div className="min-w-0 space-y-5">
@@ -124,6 +138,8 @@ export default async function AdminBookingPage({ params }: { params: { id: strin
               {b.payout.status === "DUE" && <Link href="/admin/bookings?view=payouts" className="mt-2 inline-block font-body text-xs text-seam-blue hover:underline">Record the EFT on Partner payouts →</Link>}
             </section>
           )}
+
+          {b.paidAt && <RefundPanel target={{ bookingId: b.id }} paidTotal={Number(b.customerTotal)} refunds={b.refunds} isAdmin={isAdmin} />}
 
           <JobCards cards={b.jobCards} />
 

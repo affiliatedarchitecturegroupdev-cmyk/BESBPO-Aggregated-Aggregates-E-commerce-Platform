@@ -251,6 +251,12 @@ in **Admin → Notifications** rather than sent.
 
 ## Notes
 
+- **Sales reporting foundations (Oct 2026).** Migration
+  `20261011090000_reporting_foundations` adds cost snapshots, payment and
+  cancellation dates, refunds, operating costs, standard delivery costs and
+  test flags, and backfills earlier orders (marked estimated). After
+  deploying, an admin should set the standard delivery costs and this
+  month's operating costs on Admin → Finance (`ANALYTICS.md`).
 - **Hire bookings (Oct 2026).** Migration `20261009090000_bookings` adds
   partners, fleet, bookings, offers, job cards, chat, disputes, payouts and
   review flags, plus the `PARTNER` role. The API runs a once-a-minute sweep

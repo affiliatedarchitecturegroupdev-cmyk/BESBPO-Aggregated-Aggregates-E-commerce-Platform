@@ -47,6 +47,9 @@ export type PricedLine = {
   total: number | null;
   unit_label?: string;
   pricing_status?: string;
+  /** Cost per unit (list / (1 + markup)) and pricing family — snapshotted on orders, admin-only. */
+  unit_cost?: number | null;
+  family?: string;
 };
 
 export type DeliveryQuote = {

@@ -1,14 +1,16 @@
 import Link from "next/link";
 import { issueInvoice, updateOrderStatus } from "@/app/account/actions";
+import { setTestFlag } from "@/app/admin/finance/actions";
+import { RefundPanel, type RefundRecord } from "@/components/finance/RefundPanel";
 import { ActionForm, inputClass, SubmitButton } from "@/components/account/Forms";
 import { api } from "@/lib/api";
 import { formatDate, UNIT_LABEL, type InvoiceSummary, type OrderRecord } from "@/lib/account-types";
 import { formatZAR } from "@/lib/pricing";
-import { sessionToken } from "@/lib/session";
+import { getSession, sessionToken } from "@/lib/session";
 
 export const metadata = { title: "Orders" };
 
-type StaffOrder = OrderRecord & {
+type StaffOrder = Omit<OrderRecord, "lineItems" | "shipment"> & {
   deliveryAddress: string | null;
   deliveryProvince: string | null;
   deliveryDistanceKm: number | null;
@@ -18,7 +20,29 @@ type StaffOrder = OrderRecord & {
   user: { email: string; name: string | null } | null;
   company: { name: string } | null;
   invoice: InvoiceSummary | null;
+  paidAt: string | null;
+  paymentMethod: string | null;
+  isTest: boolean;
+  timestampsEstimated: boolean;
+  fulfilledBySupplierId: string | null;
+  // Admin-only (the API strips these for everyone else).
+  lineItems: (OrderRecord["lineItems"][number] & { unitCost?: string | null; costSource?: "SNAPSHOT" | "ESTIMATED" | null })[];
+  shipment: (NonNullable<OrderRecord["shipment"]> & { deliveryCost?: string | null; deliveryCostSource?: "ACTUAL" | "STANDARD_RATE" | null }) | null;
 };
+
+type PaymentMethod = { methodKey: string; displayName: string };
+type SupplierOption = { id: string; name: string; town: string | null; province: string | null };
+
+/** Admin-only: the order's gross profit from its cost snapshot, or null when any cost is missing. */
+function margin(order: StaffOrder) {
+  const lines = order.lineItems;
+  if (lines.some((l) => l.unitCost == null)) return null;
+  const cost = lines.reduce((n, l) => n + Number(l.unitCost) * Number(l.quantity), 0);
+  const sales = lines.reduce((n, l) => n + Number(l.lineTotal ?? 0), 0);
+  const delivery = order.shipment?.deliveryCost != null ? Number(order.shipment.deliveryCost) : null;
+  const gross = sales - cost + Number(order.deliveryFee ?? 0) - (delivery ?? 0);
+  return { cost, sales, delivery, gross, estimated: lines.some((l) => l.costSource === "ESTIMATED") };
+}
 
 const STATUSES = ["PENDING", "CONFIRMED", "IN_TRANSIT", "DELIVERED", "CANCELLED"] as const;
 const STATUS_LABEL: Record<(typeof STATUSES)[number], string> = {
@@ -44,10 +68,16 @@ const NEXT: Record<(typeof STATUSES)[number], (typeof STATUSES)[number][]> = {
 export default async function AdminOrdersPage({ searchParams }: { searchParams: { status?: string } }) {
   const status = STATUSES.find((s) => s === searchParams.status) ?? "PENDING";
   const token = sessionToken();
-  const [result, invoicing] = await Promise.all([
+  const [result, invoicing, user, methods, suppliers, refunds] = await Promise.all([
     api<StaffOrder[]>(`/orders?status=${status}`, { token }),
     api<{ ready: boolean; problems: string[] }>("/orders/invoicing-status", { token }),
+    getSession(),
+    api<PaymentMethod[]>("/payment-methods", { token }),
+    api<SupplierOption[]>("/suppliers?filter=active", { token }),
+    api<RefundRecord[]>("/finance/refunds", { token }),
   ]);
+  const isAdmin = user?.role === "ADMIN";
+  const refundsFor = (orderId: string) => (refunds.ok ? refunds.data.filter((r) => r.orderId === orderId) : []);
   const invoicingReady = invoicing.ok && invoicing.data.ready;
   return (
     <section>
@@ -77,7 +107,10 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
                   <span className="font-semibold text-basalt">{order.company?.name ?? order.user?.name ?? order.user?.email}</span>
                 </p>
                 <p className="font-mono text-[11px] text-slate">
+                  {order.isTest && <span className="mr-2 rounded-sm bg-ochre-gold/20 px-1.5 py-0.5 uppercase text-basalt">Test — not reported</span>}
                   {formatDate(order.createdAt)} · {formatZAR(Number(order.total))} · {STATUS_LABEL[order.status]}
+                  {order.paidAt && ` · paid ${formatDate(order.paidAt)}${order.timestampsEstimated ? " (est.)" : ""}`}
+                  {order.paymentMethod && ` · ${methods.ok ? (methods.data.find((m) => m.methodKey === order.paymentMethod)?.displayName ?? order.paymentMethod) : order.paymentMethod}`}
                 </p>
               </div>
               <p className="mt-1 text-slate">
@@ -124,6 +157,25 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
                   )
                 )}
               </div>
+              {isAdmin && (() => {
+                const m = margin(order);
+                return (
+                  <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-sm border border-seam-blue/20 bg-seam-blue/5 px-3 py-2 font-mono text-[11px] text-basalt">
+                    <span>
+                      {m
+                        ? `Cost ${formatZAR(m.cost)}${m.estimated ? " (estimated)" : ""} · delivery cost ${m.delivery === null ? "not recorded" : formatZAR(m.delivery)} · gross profit ${formatZAR(m.gross)}`
+                        : "Cost not recorded for every line"}
+                    </span>
+                    <form action={setTestFlag}>
+                      <input type="hidden" name="kind" value="order" />
+                      <input type="hidden" name="id" value={order.id} />
+                      <input type="hidden" name="isTest" value={String(!order.isTest)} />
+                      <button className="text-seam-blue hover:underline">{order.isTest ? "Include in reporting" : "Mark as test"}</button>
+                    </form>
+                  </div>
+                );
+              })()}
+              {order.paidAt && <RefundPanel target={{ orderId: order.id }} paidTotal={Number(order.total)} refunds={refundsFor(order.id)} isAdmin={isAdmin} />}
               {NEXT[order.status].length > 0 && (
                 <ActionForm action={updateOrderStatus} className="mt-4 grid gap-3 sm:grid-cols-[1fr_1fr_1.2fr_1fr_auto] sm:items-end">
                   <input type="hidden" name="id" value={order.id} />
@@ -152,7 +204,40 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
                     <input name="trackingRef" defaultValue={order.shipment?.trackingRef ?? ""} className={inputClass} />
                   </label>
                   <SubmitButton>Update</SubmitButton>
-                  <p className="font-mono text-[10px] text-slate sm:col-span-full">A status change emails the buyer (and WhatsApps them, if they opted in).</p>
+                  {order.status === "PENDING" && (
+                    <label className="block sm:col-span-2">
+                      <span className="font-mono text-[10px] uppercase text-slate">Paid with (on confirming)</span>
+                      <select name="paymentMethod" defaultValue={order.paymentMethod ?? ""} className={inputClass}>
+                        <option value="">—</option>
+                        {(methods.ok ? methods.data : []).map((m) => <option key={m.methodKey} value={m.methodKey}>{m.displayName}</option>)}
+                      </select>
+                    </label>
+                  )}
+                  {order.status === "CONFIRMED" && (
+                    <>
+                      <label className="block sm:col-span-2">
+                        <span className="font-mono text-[10px] uppercase text-slate">Loaded at (supplier)</span>
+                        <select name="fulfilledBySupplierId" defaultValue={order.fulfilledBySupplierId ?? ""} className={inputClass}>
+                          <option value="">—</option>
+                          {(suppliers.ok ? suppliers.data : []).map((sup) => (
+                            <option key={sup.id} value={sup.id}>{sup.name}{sup.town ? ` — ${sup.town}` : ""}</option>
+                          ))}
+                        </select>
+                      </label>
+                      <label className="block">
+                        <span className="font-mono text-[10px] uppercase text-slate">Actual delivery cost (R, ex VAT)</span>
+                        <input name="deliveryCost" type="number" step="0.01" min="0" className={inputClass} />
+                      </label>
+                      <label className="block sm:col-span-2">
+                        <span className="font-mono text-[10px] uppercase text-slate">Cost note (e.g. haulier invoice no.)</span>
+                        <input name="deliveryCostNote" maxLength={300} className={inputClass} />
+                      </label>
+                    </>
+                  )}
+                  <p className="font-mono text-[10px] text-slate sm:col-span-full">
+                    A status change emails the buyer (and WhatsApps them, if they opted in).
+                    {order.status === "CONFIRMED" && " Leave the delivery cost blank to use the standard rate for the band and load."}
+                  </p>
                 </ActionForm>
               )}
             </li>

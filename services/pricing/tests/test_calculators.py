@@ -167,3 +167,27 @@ def test_volume_threshold_counts_the_whole_order():
     assert volume.is_quote_only is True
     trade = price_order(FRAMEWORK, lines, distance_km=D("10"), customer_tier="CONTRACTOR_TRADE")
     assert trade.is_quote_only is False
+
+
+def test_order_lines_carry_cost_and_family_for_profit_reporting():
+    """Each priced line reports its cost per unit (list / (1 + markup)) and pricing family, which checkout snapshots."""
+    from main import FRAMEWORK, PACKAGED, READY_MIX as READY_MIXES
+    from calculators.order import OrderLine, price_order
+
+    product = next(p for p in FRAMEWORK.products.values() if "ton" in p.units)
+    cement = next(p for p in PACKAGED.values() if any(u.is_priced and u.unit == "BAG_50KG" for u in p.units.values()))
+    mix = next(p for p in READY_MIXES.values() if p.is_priced)
+    result = price_order(
+        FRAMEWORK,
+        [OrderLine(product.sku, Decimal("2"), "ton"), OrderLine(cement.sku, Decimal("4"), "BAG_50KG"), OrderLine(mix.sku, mix.minimum_load_m3, "m3")],
+        Decimal("10"),
+        "CONTRACTOR_TRADE",
+        packaged=PACKAGED,
+        ready_mixes=READY_MIXES,
+    ).as_dict()
+    agg, bag, rmx = result["lines"]
+    assert agg["family"] == "AGGREGATE" and bag["family"] == "CEMENT_BAGGED" and rmx["family"] == "READY_MIX"
+    assert agg["unit_cost"] == pytest.approx(float(product.list_price_per_ton / (1 + product.markup)), abs=0.01)
+    for line in (agg, bag, rmx):
+        # The tier price never goes below cost x 1.03 (the floor), so cost is always under the price paid.
+        assert 0 < line["unit_cost"] < line["unit_price"] <= line["list_unit_price"]

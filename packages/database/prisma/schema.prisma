@@ -391,6 +391,8 @@ model SupplierLocation {
   createdAt         DateTime     @default(now())
   updatedAt         DateTime     @default(now()) @updatedAt
 
+  fulfilledOrders Order[]
+
   @@index([province])
 }
 
@@ -460,6 +462,7 @@ model Quote {
   quotedAt           DateTime?
   createdAt          DateTime        @default(now())
   updatedAt          DateTime        @updatedAt
+  respondedAt        DateTime? // when the customer accepted or declined
 }
 
 model QuoteLineItem {
@@ -501,62 +504,82 @@ enum OrderChannel {
 }
 
 model Order {
-  id                   String                @id @default(cuid())
-  orderNumber          String                @unique
-  channel              OrderChannel          @default(WEBSITE)
+  id                    String                @id @default(cuid())
+  orderNumber           String                @unique
+  channel               OrderChannel          @default(WEBSITE)
   // Delivery details captured at checkout.
-  deliveryAddress      String?
-  deliveryProvince     String?
-  deliveryDistanceKm   Float?
-  distanceSource       String? // "LOCATION" (buyer's pin to the nearest supplier) or "CUSTOMER" (entered)
-  contactPhone         String?
-  whatsappUpdates      Boolean               @default(false) // buyer opted in to order updates on WhatsApp
-  notes                String?
-  whatsappConversation WhatsAppConversation?
-  userId               String?
-  user                 User?                 @relation(fields: [userId], references: [id])
-  companyId            String?
-  company              Company?              @relation(fields: [companyId], references: [id])
-  status               OrderStatus           @default(PENDING)
-  lineItems            OrderLineItem[]
-  shipment             Shipment?
-  invoice              Invoice?
-  documents            ComplianceDocument[]
-  subtotal             Decimal               @db.Decimal(12, 2)
-  deliveryFee          Decimal               @db.Decimal(10, 2)
-  total                Decimal               @db.Decimal(12, 2)
-  createdAt            DateTime              @default(now())
-  updatedAt            DateTime              @updatedAt
+  deliveryAddress       String?
+  deliveryProvince      String?
+  deliveryDistanceKm    Float?
+  distanceSource        String? // "LOCATION" (buyer's pin to the nearest supplier) or "CUSTOMER" (entered)
+  contactPhone          String?
+  whatsappUpdates       Boolean               @default(false) // buyer opted in to order updates on WhatsApp
+  notes                 String?
+  whatsappConversation  WhatsAppConversation?
+  userId                String?
+  user                  User?                 @relation(fields: [userId], references: [id])
+  companyId             String?
+  company               Company?              @relation(fields: [companyId], references: [id])
+  status                OrderStatus           @default(PENDING)
+  lineItems             OrderLineItem[]
+  shipment              Shipment?
+  invoice               Invoice?
+  documents             ComplianceDocument[]
+  subtotal              Decimal               @db.Decimal(12, 2)
+  deliveryFee           Decimal               @db.Decimal(10, 2)
+  total                 Decimal               @db.Decimal(12, 2)
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+  // Reporting fields (ANALYTICS.md). A sale counts from paidAt (payment confirmed).
+  customerTier          CustomerTierName? // tier the order was priced at
+  deliveryLoadSize      LoadSize? // load size the delivery fee was priced for (null = bagged/no tipper)
+  paidAt                DateTime?
+  cancelledAt           DateTime?
+  paymentMethod         PaymentMethodKey? // method chosen at payment (or confirmed by staff)
+  fulfilledBySupplierId String?
+  fulfilledBySupplier   SupplierLocation?     @relation(fields: [fulfilledBySupplierId], references: [id], onDelete: SetNull)
+  isTest                Boolean               @default(false) // excluded from reporting
+  timestampsEstimated   Boolean               @default(false) // paidAt/cancelledAt backfilled for orders placed before they were recorded
+  refunds               Refund[]
 }
 
 /// Confirmed orders — unit-of-sale (bulk/bag) and quantity recorded per line.
 model OrderLineItem {
-  id         String     @id @default(cuid())
-  orderId    String
-  order      Order      @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  productId  String
-  product    Product    @relation(fields: [productId], references: [id])
-  unitOfSale UnitOfSale
-  quantity   Float
-  unitPrice  Decimal    @db.Decimal(10, 2)
-  lineTotal  Decimal    @db.Decimal(12, 2)
+  id            String      @id @default(cuid())
+  orderId       String
+  order         Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId     String
+  product       Product     @relation(fields: [productId], references: [id])
+  unitOfSale    UnitOfSale
+  quantity      Float
+  unitPrice     Decimal     @db.Decimal(10, 2)
+  lineTotal     Decimal     @db.Decimal(12, 2)
+  // Profit snapshot taken when the order is placed (ANALYTICS.md) — never recalculated.
+  listUnitPrice Decimal?    @db.Decimal(10, 2) // list price before the tier discount
+  unitCost      Decimal?    @db.Decimal(10, 2) // list / (1 + markup), from the pricing service
+  pricingFamily String? // AGGREGATE | CEMENT_BAGGED | CEMENT_BULK | READY_MIX
+  costSource    CostSource? // SNAPSHOT at checkout; ESTIMATED when backfilled from price bands
 }
 
 /// Delivery tracking — carrier (Besfleet or one of the 15+ external tipper
 /// partners), distance band, and delivery fee applied.
 model Shipment {
-  id                  String        @id @default(cuid())
-  orderId             String        @unique
-  order               Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  id                  String              @id @default(cuid())
+  orderId             String              @unique
+  order               Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
   carrier             Carrier
   externalPartnerName String? // populated when carrier = EXTERNAL_PARTNER
   distanceBandId      String?
-  distanceBand        DeliveryBand? @relation(fields: [distanceBandId], references: [id])
+  distanceBand        DeliveryBand?       @relation(fields: [distanceBandId], references: [id])
   distanceKm          Float?
-  deliveryFeeApplied  Decimal       @db.Decimal(10, 2)
+  deliveryFeeApplied  Decimal             @db.Decimal(10, 2)
   dispatchedAt        DateTime?
   deliveredAt         DateTime?
   trackingRef         String?
+  // What the delivery cost us, ex VAT (ANALYTICS.md): the actual haulier amount, else the standard rate.
+  deliveryCost        Decimal?            @db.Decimal(10, 2)
+  deliveryCostSource  DeliveryCostSource?
+  deliveryCostNote    String?
 }
 
 enum ComplianceDocType {
@@ -1222,6 +1245,9 @@ model Booking {
   disputes           Dispute[]
   payout             PartnerPayout?
 
+  isTest  Boolean  @default(false) // excluded from reporting
+  refunds Refund[]
+
   @@index([status, createdAt])
   @@index([userId])
   @@index([assignedPartnerId])
@@ -1366,4 +1392,73 @@ model CircumventionFlag {
   createdAt  DateTime   @default(now())
 
   @@index([status, createdAt])
+}
+
+// ---------------------------------------------------------------------------
+// Reporting & finance foundations (ANALYTICS.md, Phase 1)
+// ---------------------------------------------------------------------------
+
+enum CostSource {
+  SNAPSHOT // captured from the pricing service at checkout
+  ESTIMATED // backfilled from the price bands current when reporting started
+}
+
+enum DeliveryCostSource {
+  ACTUAL // the haulier's amount, entered by staff
+  STANDARD_RATE // the admin-set standard cost for the band and load
+}
+
+/// Admin-set standard cost of a delivery, ex VAT, by carrier, distance band and load ("BAGGED" for bagged/small deliveries).
+model DeliveryCostRate {
+  id        String            @id @default(cuid())
+  carrier   Carrier
+  bandLabel DeliveryBandLabel
+  load      String // M3_6 | M3_10 | M3_14_PLUS | BAGGED
+  costExVat Decimal           @db.Decimal(10, 2)
+  updatedAt DateTime          @updatedAt
+
+  @@unique([carrier, bandLabel, load])
+}
+
+/// Money returned to a customer for an order or booking (paid outside the platform by EFT).
+model Refund {
+  id          String   @id @default(cuid())
+  orderId     String?
+  order       Order?   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  bookingId   String?
+  booking     Booking? @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  amount      Decimal  @db.Decimal(12, 2) // as paid back, VAT included where the sale included it
+  reason      String
+  reference   String? // bank / EFT reference
+  refundedAt  DateTime
+  createdById String
+  createdAt   DateTime @default(now())
+
+  @@index([refundedAt])
+}
+
+enum OperatingCostCategory {
+  SALARIES
+  RENT
+  MARKETING
+  SOFTWARE
+  VEHICLES
+  PROFESSIONAL_FEES
+  BANK_CHARGES
+  INSURANCE
+  OTHER
+}
+
+/// Monthly operating costs entered by admins, ex VAT — for the management net P&L (not statutory accounts).
+model OperatingCost {
+  id          String                @id @default(cuid())
+  month       DateTime              @db.Date // first day of the month
+  category    OperatingCostCategory
+  description String
+  amountExVat Decimal               @db.Decimal(12, 2)
+  createdById String
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+
+  @@index([month])
 }
