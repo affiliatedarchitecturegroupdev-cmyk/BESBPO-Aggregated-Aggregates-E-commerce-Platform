@@ -27,7 +27,7 @@ export const RANGES = [
 
 export const LABELS = {
   businessLine: { ALL: "Materials & hire", MATERIALS: "Materials", HIRE: "Hire & services" },
-  family: { AGGREGATE: "Aggregates", CEMENT_BAGGED: "Cement (bagged)", CEMENT_BULK: "Cement (bulk)", READY_MIX: "Ready-mix concrete", UNKNOWN: "Not recorded" },
+  family: { AGGREGATE: "Aggregates", CEMENT_BAGGED: "Cement (bagged)", CEMENT_BULK: "Cement (bulk)", READY_MIX: "Ready-mix concrete", STEEL: "Steel", UNKNOWN: "Not recorded" },
   tier: { RETAIL: "Retail", CONTRACTOR_TRADE: "Contractor / Trade", VOLUME_CIVIL_BULK: "Volume / Civil / Bulk", UNKNOWN: "Not recorded" },
   channel: { WEBSITE: "Website", WHATSAPP: "WhatsApp", INSTAGRAM_REFERRAL: "Instagram referral", FACEBOOK_REFERRAL: "Facebook referral" },
   paymentMethod: {

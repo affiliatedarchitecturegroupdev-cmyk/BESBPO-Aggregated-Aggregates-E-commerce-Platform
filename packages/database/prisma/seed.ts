@@ -12,7 +12,9 @@
  * The B2B Bulk & Infrastructure packaged goods (CAT-10/11) come from
  * services/pricing/data/b2b_packaged_catalogue.json, transcribed from the
  * B2B pricing workbook — including its gaps (null prices where there is no
- * benchmark).
+ * benchmark). Reinforcing and structural steel (CAT-15..18) come from
+ * services/pricing/data/steel_catalogue.json (STEEL_CATALOGUE.md) and use
+ * the same price-band shape.
  *
  * Payment routing, promotions and the starter blog posts are created once
  * and then left alone, so admin edits survive every deploy. Partner
@@ -104,6 +106,28 @@ type PackagedCatalogue = {
 const PACKAGED: PackagedCatalogue = JSON.parse(
   readFileSync(join(__dirname, "../../../services/pricing/data/b2b_packaged_catalogue.json"), "utf8"),
 );
+
+type SteelCatalogue = {
+  categories: { slug: string; name: string; code: string }[];
+  products: {
+    sku: string;
+    slug: string;
+    name: string;
+    category_slug: string;
+    grading_standard: string | null;
+    description: string;
+    manufacturer: string | null;
+    steel_family: string;
+    steel_grade: string | null;
+    diameter_mm: number | null;
+    mass_kg_per_m: number | null;
+    section_size: string | null;
+    specialist_characteristics: string[];
+    units: (PackagedCatalogue["products"][number]["units"][number] & { weight_kg: number | null })[];
+  }[];
+};
+
+const STEEL: SteelCatalogue = JSON.parse(readFileSync(join(__dirname, "../../../services/pricing/data/steel_catalogue.json"), "utf8"));
 
 type ReadyMixCatalogue = {
   category: { slug: string; name: string; code: string };
@@ -276,6 +300,53 @@ async function seedReadyMix() {
       sourceNote: pump.source_note,
     };
     await prisma.readyMixPumpOption.upsert({ where: { code: pump.code }, update: data, create: { code: pump.code, ...data } });
+  }
+}
+
+/** CAT-15..18 steel: categories after ready-mix, products, and a price band per unit (the packaged-goods shape). */
+async function seedSteelCatalogue() {
+  const categoryIds: Record<string, string> = {};
+  const after = FRAMEWORK.categories.length + PACKAGED.categories.length + 1;
+  for (const [index, category] of STEEL.categories.entries()) {
+    const data = { name: category.name, sortOrder: after + index + 1, catalogueGroup: "steel" };
+    const record = await prisma.category.upsert({ where: { slug: category.slug }, update: data, create: { slug: category.slug, ...data } });
+    categoryIds[category.slug] = record.id;
+  }
+  for (const p of STEEL.products) {
+    const productData = {
+      slug: p.slug,
+      name: p.name,
+      categoryId: categoryIds[p.category_slug],
+      gradingStandard: p.grading_standard,
+      description: p.description,
+      unitsOfSale: p.units.map((u) => u.unit),
+      manufacturer: p.manufacturer,
+      steelFamily: p.steel_family,
+      steelGrade: p.steel_grade,
+      diameterMm: p.diameter_mm,
+      massKgPerM: p.mass_kg_per_m,
+      sectionSize: p.section_size,
+      specialistCharacteristics: p.specialist_characteristics,
+    };
+    const product = await prisma.product.upsert({ where: { sku: p.sku }, update: productData, create: { sku: p.sku, ...productData } });
+    for (const u of p.units) {
+      const band = {
+        marketBenchmarkPrice: u.market_benchmark_price,
+        costBasisPercent: u.cost_basis_percent,
+        costPerUnit: u.cost_per_unit,
+        markupPercent: u.markup_percent,
+        listPricePerUnit: u.list_price_per_unit,
+        pricingStatus: u.pricing_status,
+        sourceNote: u.source_note,
+        weightKg: u.weight_kg,
+      };
+      await prisma.packagedPriceBand.upsert({
+        where: { productId_unit: { productId: product.id, unit: u.unit } },
+        update: band,
+        create: { productId: product.id, unit: u.unit, ...band },
+      });
+    }
+    await prisma.packagedPriceBand.deleteMany({ where: { productId: product.id, unit: { notIn: p.units.map((u) => u.unit) } } });
   }
 }
 
@@ -468,6 +539,7 @@ async function main() {
   await seedCatalogue();
   await seedPackagedCatalogue();
   await seedReadyMix();
+  await seedSteelCatalogue();
   await seedCustomerTiers();
   await seedDeliveryBands();
   await seedPaymentMethods();
@@ -475,7 +547,7 @@ async function main() {
   await seedBlog();
   console.log(
     `Seed complete: ${FRAMEWORK.products.length} products across ${FRAMEWORK.categories.length} categories, ` +
-      `plus ${PACKAGED.products.length} B2B packaged products and ${READY_MIX.products.length} ready-mix grades.`,
+      `plus ${PACKAGED.products.length} B2B packaged products, ${READY_MIX.products.length} ready-mix grades and ${STEEL.products.length} steel products.`,
   );
 }
 

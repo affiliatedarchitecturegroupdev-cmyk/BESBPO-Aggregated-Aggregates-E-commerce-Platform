@@ -1,0 +1,1946 @@
+{
+ "_source": "Reinforcing & structural steel catalogue (Oct 2026, STEEL_CATALOGUE.md). A unit is live only where at least 2 SA retailers' regular (non-promo) VAT-inclusive prices were found — list = lowest x 1.08. Everything else is quote-only with the merchant; never fill a price in without a supplier quote (AGENTIC_RULES.md rules 1 and 10).",
+ "categories": [
+  {
+   "slug": "reinforcing-bar",
+   "name": "Reinforcing Bar (Rebar)",
+   "code": "CAT-15"
+  },
+  {
+   "slug": "mesh-brickforce",
+   "name": "Mesh & Brickforce",
+   "code": "CAT-16"
+  },
+  {
+   "slug": "steel-fixing-accessories",
+   "name": "Steel Fixing Accessories",
+   "code": "CAT-17"
+  },
+  {
+   "slug": "structural-steel",
+   "name": "Structural Steel",
+   "code": "CAT-18"
+  }
+ ],
+ "mass_kg_per_m": {
+  "8": 0.395,
+  "10": 0.617,
+  "12": 0.888,
+  "16": 1.578,
+  "20": 2.466,
+  "25": 3.853,
+  "32": 6.313,
+  "40": 9.865
+ },
+ "products": [
+  {
+   "manufacturer": null,
+   "steel_grade": "450 MPa (Y)",
+   "diameter_mm": 8,
+   "mass_kg_per_m": 0.395,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-Y08",
+   "slug": "y8-high-tensile-rebar",
+   "name": "Y8 High-Tensile Rebar (8 mm)",
+   "category_slug": "reinforcing-bar",
+   "grading_standard": "SANS 920, 450 MPa high-yield deformed bar (Y)",
+   "steel_family": "Rebar — high-tensile (Y)",
+   "description": "Ribbed (deformed) high-tensile reinforcing bar, 8 mm, to SANS 920. Nominal mass 0.395 kg/m — 2.37 kg per 6 m length.",
+   "typical_uses": [
+    "Stirrups and links in beams and columns",
+    "Light slabs and lintels",
+    "Distribution bars"
+   ],
+   "handling_notes": "Store off the ground on bearers, by diameter. Keep mill certificates with the delivery note for the engineer.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": 2.37,
+     "market_benchmark_price": 52.5,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 52.5,
+     "markup_percent": 8,
+     "list_price_per_unit": 56.7,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Buco R52.50 (from) is lowest; Build Africa R60.49. Y8 450 MPa x 6 m, web listings checked 2026-10-09 (pages undated). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "LENGTH_12M",
+     "unit_label": "12 m length",
+     "weight_kg": 4.74,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": "450 MPa (Y)",
+   "diameter_mm": 10,
+   "mass_kg_per_m": 0.617,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-Y10",
+   "slug": "y10-high-tensile-rebar",
+   "name": "Y10 High-Tensile Rebar (10 mm)",
+   "category_slug": "reinforcing-bar",
+   "grading_standard": "SANS 920, 450 MPa high-yield deformed bar (Y)",
+   "steel_family": "Rebar — high-tensile (Y)",
+   "description": "Ribbed (deformed) high-tensile reinforcing bar, 10 mm, to SANS 920. Nominal mass 0.617 kg/m — 3.7 kg per 6 m length.",
+   "typical_uses": [
+    "Strip footings and ground beams",
+    "Lintels and light slabs",
+    "Stirrups in larger members"
+   ],
+   "handling_notes": "Store off the ground on bearers, by diameter. Keep mill certificates with the delivery note for the engineer.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": 3.7,
+     "market_benchmark_price": 76.95,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 76.95,
+     "markup_percent": 8,
+     "list_price_per_unit": 83.11,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Cashbuild R76.95 is lowest; Buco R79.50 (from), Chamberlains R88.90. Y10 450 MPa x 6 m, web listings checked 2026-10-09 (pages undated). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "LENGTH_12M",
+     "unit_label": "12 m length",
+     "weight_kg": 7.4,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": "450 MPa (Y)",
+   "diameter_mm": 12,
+   "mass_kg_per_m": 0.888,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-Y12",
+   "slug": "y12-high-tensile-rebar",
+   "name": "Y12 High-Tensile Rebar (12 mm)",
+   "category_slug": "reinforcing-bar",
+   "grading_standard": "SANS 920, 450 MPa high-yield deformed bar (Y)",
+   "steel_family": "Rebar — high-tensile (Y)",
+   "description": "Ribbed (deformed) high-tensile reinforcing bar, 12 mm, to SANS 920. Nominal mass 0.888 kg/m — 5.33 kg per 6 m length.",
+   "typical_uses": [
+    "Foundations and ground beams",
+    "Suspended slabs",
+    "Columns and walls"
+   ],
+   "handling_notes": "Store off the ground on bearers, by diameter. Keep mill certificates with the delivery note for the engineer.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": 5.33,
+     "market_benchmark_price": 109.69,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 109.69,
+     "markup_percent": 8,
+     "list_price_per_unit": 118.47,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Hinterland R109.69 is lowest; Cashbuild R109.95, Buco R114.11 (from), Chamberlains R119.00. Y12 450 MPa x 6 m, web listings checked 2026-10-09 (pages undated). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "LENGTH_12M",
+     "unit_label": "12 m length",
+     "weight_kg": 10.66,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": "450 MPa (Y)",
+   "diameter_mm": 16,
+   "mass_kg_per_m": 1.578,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-Y16",
+   "slug": "y16-high-tensile-rebar",
+   "name": "Y16 High-Tensile Rebar (16 mm)",
+   "category_slug": "reinforcing-bar",
+   "grading_standard": "SANS 920, 450 MPa high-yield deformed bar (Y)",
+   "steel_family": "Rebar — high-tensile (Y)",
+   "description": "Ribbed (deformed) high-tensile reinforcing bar, 16 mm, to SANS 920. Nominal mass 1.578 kg/m — 9.47 kg per 6 m length.",
+   "typical_uses": [
+    "Beams and columns",
+    "Suspended slabs",
+    "Retaining walls"
+   ],
+   "handling_notes": "Store off the ground on bearers, by diameter. Keep mill certificates with the delivery note for the engineer.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": 9.47,
+     "market_benchmark_price": 194.95,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 194.95,
+     "markup_percent": 8,
+     "list_price_per_unit": 210.55,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Cashbuild R194.95 is lowest; Buco R205.82 (from), Build Africa R208.99, Hinterland R210.90, Chamberlains R225.00. Y16 450 MPa x 6 m, web listings checked 2026-10-09 (pages undated). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "LENGTH_12M",
+     "unit_label": "12 m length",
+     "weight_kg": 18.94,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": "450 MPa (Y)",
+   "diameter_mm": 20,
+   "mass_kg_per_m": 2.466,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-Y20",
+   "slug": "y20-high-tensile-rebar",
+   "name": "Y20 High-Tensile Rebar (20 mm)",
+   "category_slug": "reinforcing-bar",
+   "grading_standard": "SANS 920, 450 MPa high-yield deformed bar (Y)",
+   "steel_family": "Rebar — high-tensile (Y)",
+   "description": "Ribbed (deformed) high-tensile reinforcing bar, 20 mm, to SANS 920. Nominal mass 2.466 kg/m — 14.8 kg per 6 m length.",
+   "typical_uses": [
+    "Heavily loaded beams and columns",
+    "Raft and pad foundations",
+    "Retaining walls"
+   ],
+   "handling_notes": "Store off the ground on bearers, by diameter. Keep mill certificates with the delivery note for the engineer.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": 14.8,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Fewer than two SA retailers list a regular price for this unit (Oct 2026) — quoted with the merchant."
+    },
+    {
+     "unit": "LENGTH_12M",
+     "unit_label": "12 m length",
+     "weight_kg": 29.59,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": "450 MPa (Y)",
+   "diameter_mm": 25,
+   "mass_kg_per_m": 3.853,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-Y25",
+   "slug": "y25-high-tensile-rebar",
+   "name": "Y25 High-Tensile Rebar (25 mm)",
+   "category_slug": "reinforcing-bar",
+   "grading_standard": "SANS 920, 450 MPa high-yield deformed bar (Y)",
+   "steel_family": "Rebar — high-tensile (Y)",
+   "description": "Ribbed (deformed) high-tensile reinforcing bar, 25 mm, to SANS 920. Nominal mass 3.853 kg/m — 23.12 kg per 6 m length.",
+   "typical_uses": [
+    "Main bars in large beams and columns",
+    "Pile caps and rafts",
+    "Civil structures"
+   ],
+   "handling_notes": "Store off the ground on bearers, by diameter. Keep mill certificates with the delivery note for the engineer.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": 23.12,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Fewer than two SA retailers list a regular price for this unit (Oct 2026) — quoted with the merchant."
+    },
+    {
+     "unit": "LENGTH_12M",
+     "unit_label": "12 m length",
+     "weight_kg": 46.24,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": "450 MPa (Y)",
+   "diameter_mm": 32,
+   "mass_kg_per_m": 6.313,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-Y32",
+   "slug": "y32-high-tensile-rebar",
+   "name": "Y32 High-Tensile Rebar (32 mm)",
+   "category_slug": "reinforcing-bar",
+   "grading_standard": "SANS 920, 450 MPa high-yield deformed bar (Y)",
+   "steel_family": "Rebar — high-tensile (Y)",
+   "description": "Ribbed (deformed) high-tensile reinforcing bar, 32 mm, to SANS 920. Nominal mass 6.313 kg/m — 37.88 kg per 6 m length.",
+   "typical_uses": [
+    "Heavy civil and industrial structures",
+    "Bridges and culverts",
+    "Large pile caps"
+   ],
+   "handling_notes": "Store off the ground on bearers, by diameter. Keep mill certificates with the delivery note for the engineer.",
+   "units": [
+    {
+     "unit": "LENGTH_12M",
+     "unit_label": "12 m length",
+     "weight_kg": 75.76,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": "450 MPa (Y)",
+   "diameter_mm": 40,
+   "mass_kg_per_m": 9.865,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-Y40",
+   "slug": "y40-high-tensile-rebar",
+   "name": "Y40 High-Tensile Rebar (40 mm)",
+   "category_slug": "reinforcing-bar",
+   "grading_standard": "SANS 920, 450 MPa high-yield deformed bar (Y)",
+   "steel_family": "Rebar — high-tensile (Y)",
+   "description": "Ribbed (deformed) high-tensile reinforcing bar, 40 mm, to SANS 920. Nominal mass 9.865 kg/m — 59.19 kg per 6 m length.",
+   "typical_uses": [
+    "Heavy civil works",
+    "Bridge decks and piers",
+    "Large foundations"
+   ],
+   "handling_notes": "Store off the ground on bearers, by diameter. Keep mill certificates with the delivery note for the engineer.",
+   "units": [
+    {
+     "unit": "LENGTH_12M",
+     "unit_label": "12 m length",
+     "weight_kg": 118.38,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": "250 MPa (R)",
+   "diameter_mm": 8,
+   "mass_kg_per_m": 0.395,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-R08",
+   "slug": "r8-mild-steel-round-bar",
+   "name": "R8 Mild-Steel Round Bar (8 mm)",
+   "category_slug": "reinforcing-bar",
+   "grading_standard": "SANS 920, 250 MPa mild-steel plain round bar (R)",
+   "steel_family": "Rebar — mild steel (R)",
+   "description": "Plain (smooth) mild-steel reinforcing bar, 8 mm, to SANS 920. Nominal mass 0.395 kg/m — 2.37 kg per 6 m length. Bends easily on site.",
+   "typical_uses": [
+    "Stirrups and links",
+    "Light non-structural work",
+    "Fencing and burglar bars (with a plain finish)"
+   ],
+   "handling_notes": "Store off the ground on bearers, by diameter. Keep mill certificates with the delivery note for the engineer.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": 2.37,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Fewer than two SA retailers list a regular price for this unit (Oct 2026) — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": "250 MPa (R)",
+   "diameter_mm": 10,
+   "mass_kg_per_m": 0.617,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-R10",
+   "slug": "r10-mild-steel-round-bar",
+   "name": "R10 Mild-Steel Round Bar (10 mm)",
+   "category_slug": "reinforcing-bar",
+   "grading_standard": "SANS 920, 250 MPa mild-steel plain round bar (R)",
+   "steel_family": "Rebar — mild steel (R)",
+   "description": "Plain (smooth) mild-steel reinforcing bar, 10 mm, to SANS 920. Nominal mass 0.617 kg/m — 3.7 kg per 6 m length. Bends easily on site.",
+   "typical_uses": [
+    "Stirrups and links",
+    "Dowels and anchors",
+    "Light reinforcement where specified"
+   ],
+   "handling_notes": "Store off the ground on bearers, by diameter. Keep mill certificates with the delivery note for the engineer.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": 3.7,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Fewer than two SA retailers list a regular price for this unit (Oct 2026) — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": "250 MPa (R)",
+   "diameter_mm": 12,
+   "mass_kg_per_m": 0.888,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-R12",
+   "slug": "r12-mild-steel-round-bar",
+   "name": "R12 Mild-Steel Round Bar (12 mm)",
+   "category_slug": "reinforcing-bar",
+   "grading_standard": "SANS 920, 250 MPa mild-steel plain round bar (R)",
+   "steel_family": "Rebar — mild steel (R)",
+   "description": "Plain (smooth) mild-steel reinforcing bar, 12 mm, to SANS 920. Nominal mass 0.888 kg/m — 5.33 kg per 6 m length. Bends easily on site.",
+   "typical_uses": [
+    "Dowels across joints",
+    "Anchors and hooks",
+    "Light reinforcement where specified"
+   ],
+   "handling_notes": "Store off the ground on bearers, by diameter. Keep mill certificates with the delivery note for the engineer.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": 5.33,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Fewer than two SA retailers list a regular price for this unit (Oct 2026) — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": "250 MPa (R)",
+   "diameter_mm": 16,
+   "mass_kg_per_m": 1.578,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-R16",
+   "slug": "r16-mild-steel-round-bar",
+   "name": "R16 Mild-Steel Round Bar (16 mm)",
+   "category_slug": "reinforcing-bar",
+   "grading_standard": "SANS 920, 250 MPa mild-steel plain round bar (R)",
+   "steel_family": "Rebar — mild steel (R)",
+   "description": "Plain (smooth) mild-steel reinforcing bar, 16 mm, to SANS 920. Nominal mass 1.578 kg/m — 9.47 kg per 6 m length. Bends easily on site.",
+   "typical_uses": [
+    "Dowel bars in slab joints",
+    "Anchors",
+    "General fabrication"
+   ],
+   "handling_notes": "Store off the ground on bearers, by diameter. Keep mill certificates with the delivery note for the engineer.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": 9.47,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Fewer than two SA retailers list a regular price for this unit (Oct 2026) — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "6.0 x 2.4 m sheet",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-MESH-100",
+   "slug": "ref-100-reinforcing-mesh",
+   "name": "Ref 100 Welded Reinforcing Mesh",
+   "category_slug": "mesh-brickforce",
+   "grading_standard": "SANS 1024 welded steel fabric",
+   "steel_family": "Welded mesh",
+   "description": "Welded steel fabric to SANS 1024. The reference number is the steel area in mm² per metre width (Ref 100 ≈ 100 mm²/m); 4.0 mm wire. Standard 6.0 x 2.4 m sheets; lap sheets as the engineer specifies.",
+   "typical_uses": [
+    "Surface beds and garage floors",
+    "Paving slabs and walkways",
+    "Crack control in screeds"
+   ],
+   "handling_notes": "Lift sheets with care — edges are sharp. Support on spacers or chairs for the specified cover before casting.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet (6.0 x 2.4 m)",
+     "weight_kg": null,
+     "market_benchmark_price": 315.0,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 315.0,
+     "markup_percent": 8,
+     "list_price_per_unit": 340.2,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Leroy Merlin R315.00 is lowest; Chamberlains R319.00, Cashbuild R384.95. Ref 100 welded mesh 2.4 x 6 m, web listings checked 2026-10-09 (pages undated). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "6.0 x 2.4 m sheet",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-MESH-193",
+   "slug": "ref-193-reinforcing-mesh",
+   "name": "Ref 193 Welded Reinforcing Mesh",
+   "category_slug": "mesh-brickforce",
+   "grading_standard": "SANS 1024 welded steel fabric",
+   "steel_family": "Welded mesh",
+   "description": "Welded steel fabric to SANS 1024. The reference number is the steel area in mm² per metre width (Ref 193 ≈ 193 mm²/m); 5.6 mm wire. Standard 6.0 x 2.4 m sheets; lap sheets as the engineer specifies.",
+   "typical_uses": [
+    "House surface beds",
+    "Driveways",
+    "Light suspended slabs where specified"
+   ],
+   "handling_notes": "Lift sheets with care — edges are sharp. Support on spacers or chairs for the specified cover before casting.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet (6.0 x 2.4 m)",
+     "weight_kg": null,
+     "market_benchmark_price": 519.9,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 519.9,
+     "markup_percent": 8,
+     "list_price_per_unit": 561.49,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Build it DTM R519.90 is lowest; Leroy Merlin R559.00 (K.Carrim's R399.00 is a sale price, so excluded). Ref 193 welded mesh 2.4 x 6 m, web listings checked 2026-10-09 (pages undated). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "6.0 x 2.4 m sheet",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-MESH-245",
+   "slug": "ref-245-reinforcing-mesh",
+   "name": "Ref 245 Welded Reinforcing Mesh",
+   "category_slug": "mesh-brickforce",
+   "grading_standard": "SANS 1024 welded steel fabric",
+   "steel_family": "Welded mesh",
+   "description": "Welded steel fabric to SANS 1024. The reference number is the steel area in mm² per metre width (Ref 245 ≈ 245 mm²/m). Standard 6.0 x 2.4 m sheets; lap sheets as the engineer specifies.",
+   "typical_uses": [
+    "Heavier surface beds",
+    "Industrial floors",
+    "Water-retaining slabs"
+   ],
+   "handling_notes": "Lift sheets with care — edges are sharp. Support on spacers or chairs for the specified cover before casting.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet (6.0 x 2.4 m)",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Fewer than two SA retailers list a regular price for this unit (Oct 2026) — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "6.0 x 2.4 m sheet",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-MESH-311",
+   "slug": "ref-311-reinforcing-mesh",
+   "name": "Ref 311 Welded Reinforcing Mesh",
+   "category_slug": "mesh-brickforce",
+   "grading_standard": "SANS 1024 welded steel fabric",
+   "steel_family": "Welded mesh",
+   "description": "Welded steel fabric to SANS 1024. The reference number is the steel area in mm² per metre width (Ref 311 ≈ 311 mm²/m). Standard 6.0 x 2.4 m sheets; lap sheets as the engineer specifies.",
+   "typical_uses": [
+    "Industrial floors",
+    "Hard-standings",
+    "Suspended slabs where specified"
+   ],
+   "handling_notes": "Lift sheets with care — edges are sharp. Support on spacers or chairs for the specified cover before casting.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet (6.0 x 2.4 m)",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "6.0 x 2.4 m sheet",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-MESH-395",
+   "slug": "ref-395-reinforcing-mesh",
+   "name": "Ref 395 Welded Reinforcing Mesh",
+   "category_slug": "mesh-brickforce",
+   "grading_standard": "SANS 1024 welded steel fabric",
+   "steel_family": "Welded mesh",
+   "description": "Welded steel fabric to SANS 1024. The reference number is the steel area in mm² per metre width (Ref 395 ≈ 395 mm²/m). Standard 6.0 x 2.4 m sheets; lap sheets as the engineer specifies.",
+   "typical_uses": [
+    "Heavy-duty floors and hard-standings",
+    "Roads and aprons",
+    "Suspended slabs"
+   ],
+   "handling_notes": "Lift sheets with care — edges are sharp. Support on spacers or chairs for the specified cover before casting.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet (6.0 x 2.4 m)",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "6.0 x 2.4 m sheet",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-MESH-617",
+   "slug": "ref-617-reinforcing-mesh",
+   "name": "Ref 617 Welded Reinforcing Mesh",
+   "category_slug": "mesh-brickforce",
+   "grading_standard": "SANS 1024 welded steel fabric",
+   "steel_family": "Welded mesh",
+   "description": "Welded steel fabric to SANS 1024. The reference number is the steel area in mm² per metre width (Ref 617 ≈ 617 mm²/m). Standard 6.0 x 2.4 m sheets; lap sheets as the engineer specifies.",
+   "typical_uses": [
+    "Heavy industrial slabs",
+    "Civil structures",
+    "Roads"
+   ],
+   "handling_notes": "Lift sheets with care — edges are sharp. Support on spacers or chairs for the specified cover before casting.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet (6.0 x 2.4 m)",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "6.0 x 2.4 m sheet",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-MESH-888",
+   "slug": "ref-888-reinforcing-mesh",
+   "name": "Ref 888 Welded Reinforcing Mesh",
+   "category_slug": "mesh-brickforce",
+   "grading_standard": "SANS 1024 welded steel fabric",
+   "steel_family": "Welded mesh",
+   "description": "Welded steel fabric to SANS 1024. The reference number is the steel area in mm² per metre width (Ref 888 ≈ 888 mm²/m). Standard 6.0 x 2.4 m sheets; lap sheets as the engineer specifies.",
+   "typical_uses": [
+    "Very heavy industrial and civil slabs",
+    "Bridge decks where specified",
+    "Bases for heavy plant"
+   ],
+   "handling_notes": "Lift sheets with care — edges are sharp. Support on spacers or chairs for the specified cover before casting.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet (6.0 x 2.4 m)",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "75 mm wide x 20 m roll",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-BRICKFORCE-75",
+   "slug": "brickforce-75mm",
+   "name": "Brickforce 75 mm (2.8 mm, 20 m roll)",
+   "category_slug": "mesh-brickforce",
+   "grading_standard": "NHBRC-compliant 2.8 mm brickforce",
+   "steel_family": "Brickforce",
+   "description": "Ladder-type brickforce, 75 mm wide, 2.8 mm wire, 20 m roll — laid in the mortar bed joints of brick and block walls. Choose a width about 25 mm narrower than the wall.",
+   "typical_uses": [
+    "Brick and block walls (every few courses, as the NHBRC requires)",
+    "Above and below openings",
+    "Long or free-standing walls"
+   ],
+   "handling_notes": "Store dry. Lap rolls by at least 150 mm and keep the wire fully embedded in mortar.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "20 m roll",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Fewer than two SA retailers list a regular price for this unit (Oct 2026) — quoted with the merchant."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "150 mm wide x 20 m roll",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-BRICKFORCE-150",
+   "slug": "brickforce-150mm",
+   "name": "Brickforce 150 mm (2.8 mm, 20 m roll)",
+   "category_slug": "mesh-brickforce",
+   "grading_standard": "NHBRC-compliant 2.8 mm brickforce",
+   "steel_family": "Brickforce",
+   "description": "Ladder-type brickforce, 150 mm wide, 2.8 mm wire, 20 m roll — laid in the mortar bed joints of brick and block walls. Choose a width about 25 mm narrower than the wall.",
+   "typical_uses": [
+    "Brick and block walls (every few courses, as the NHBRC requires)",
+    "Above and below openings",
+    "Long or free-standing walls"
+   ],
+   "handling_notes": "Store dry. Lap rolls by at least 150 mm and keep the wire fully embedded in mortar.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "20 m roll",
+     "weight_kg": null,
+     "market_benchmark_price": 52.9,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 52.9,
+     "markup_percent": 8,
+     "list_price_per_unit": 57.13,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Chamberlains R52.90 and Leroy Merlin R52.90 (regular; Leroy's R49.00 is a sale) are lowest; Cashbuild R54.95. Brickforce 150 mm x 2.8 mm x 20 m NHBRC, web listings checked 2026-10-09 (pages undated). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "230 mm wide x 20 m roll",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-BRICKFORCE-230",
+   "slug": "brickforce-230mm",
+   "name": "Brickforce 230 mm (2.8 mm, 20 m roll)",
+   "category_slug": "mesh-brickforce",
+   "grading_standard": "NHBRC-compliant 2.8 mm brickforce",
+   "steel_family": "Brickforce",
+   "description": "Ladder-type brickforce, 230 mm wide, 2.8 mm wire, 20 m roll — laid in the mortar bed joints of brick and block walls. Choose a width about 25 mm narrower than the wall.",
+   "typical_uses": [
+    "Brick and block walls (every few courses, as the NHBRC requires)",
+    "Above and below openings",
+    "Long or free-standing walls"
+   ],
+   "handling_notes": "Store dry. Lap rolls by at least 150 mm and keep the wire fully embedded in mortar.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "20 m roll",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Fewer than two SA retailers list a regular price for this unit (Oct 2026) — quoted with the merchant."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-ACC-TIE-WIRE",
+   "slug": "binding-tie-wire-1-6mm",
+   "name": "Binding (Tie) Wire 1.6 mm",
+   "category_slug": "steel-fixing-accessories",
+   "grading_standard": null,
+   "steel_family": "Fixing accessory",
+   "description": "Annealed black binding wire, 1.6 mm, for tying rebar intersections and mesh laps.",
+   "typical_uses": [
+    "Tying rebar intersections",
+    "Fixing mesh laps and chairs",
+    "General site binding"
+   ],
+   "handling_notes": "Confirm sizes against the engineer's drawings before ordering.",
+   "units": [
+    {
+     "unit": "COIL",
+     "unit_label": "5 kg coil (about 317 m)",
+     "weight_kg": 5,
+     "market_benchmark_price": 179.9,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 179.9,
+     "markup_percent": 8,
+     "list_price_per_unit": 194.29,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Build it DTM R179.90 is lowest; K.Carrim R179.99. Black binding wire 1.6 mm, 5 kg coil, web listings checked 2026-10-09 (pages undated). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-ACC-BAR-CHAIRS",
+   "slug": "plastic-bar-chairs-spacers",
+   "name": "Plastic Bar Chairs & Spacers",
+   "category_slug": "steel-fixing-accessories",
+   "grading_standard": null,
+   "steel_family": "Fixing accessory",
+   "description": "Plastic chairs and spacers that hold rebar and mesh at the specified concrete cover (25, 40 and 50 mm cover sizes).",
+   "typical_uses": [
+    "Keeping cover to slabs and beds",
+    "Supporting top mats",
+    "Wall and column spacers"
+   ],
+   "handling_notes": "Confirm sizes against the engineer's drawings before ordering.",
+   "units": [
+    {
+     "unit": "PACK",
+     "unit_label": "Pack (size confirmed on quote)",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-ACC-COVER-BLOCKS",
+   "slug": "concrete-cover-blocks",
+   "name": "Concrete Cover Blocks",
+   "category_slug": "steel-fixing-accessories",
+   "grading_standard": null,
+   "steel_family": "Fixing accessory",
+   "description": "Cementitious spacer blocks with tie wire, for cover where plastic spacers aren't allowed.",
+   "typical_uses": [
+    "Foundations and ground beams",
+    "Exposed or fire-rated elements",
+    "Heavy cages"
+   ],
+   "handling_notes": "Confirm sizes against the engineer's drawings before ordering.",
+   "units": [
+    {
+     "unit": "PACK",
+     "unit_label": "Pack (size confirmed on quote)",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-ACC-SAFETY-CAPS",
+   "slug": "rebar-safety-caps",
+   "name": "Rebar Safety Caps",
+   "category_slug": "steel-fixing-accessories",
+   "grading_standard": null,
+   "steel_family": "Fixing accessory",
+   "description": "High-visibility mushroom caps for exposed bar ends (8–16 mm and 16–32 mm sizes).",
+   "typical_uses": [
+    "Starter bars and projecting ends",
+    "Site health and safety compliance"
+   ],
+   "handling_notes": "Confirm sizes against the engineer's drawings before ordering.",
+   "units": [
+    {
+     "unit": "PACK",
+     "unit_label": "Bag of 200",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one SA supplier lists a price (Oct 2026) — quoted with the merchant."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-ACC-COUPLERS",
+   "slug": "rebar-couplers",
+   "name": "Rebar Couplers",
+   "category_slug": "steel-fixing-accessories",
+   "grading_standard": null,
+   "steel_family": "Fixing accessory",
+   "description": "Mechanical (threaded) couplers that join bars end to end instead of lapping — size matched to the bar.",
+   "typical_uses": [
+    "Congested joints",
+    "Construction joints and future extensions",
+    "Large-diameter bars"
+   ],
+   "handling_notes": "Confirm sizes against the engineer's drawings before ordering.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-ACC-DOWELS",
+   "slug": "dowel-bars-sleeves",
+   "name": "Dowel Bars with Sleeves",
+   "category_slug": "steel-fixing-accessories",
+   "grading_standard": null,
+   "steel_family": "Fixing accessory",
+   "description": "Plain round dowel bars with debonding sleeves for load transfer across slab joints (R16–R25, cut to length).",
+   "typical_uses": [
+    "Industrial floor and road joints",
+    "Slab-on-grade construction joints"
+   ],
+   "handling_notes": "Confirm sizes against the engineer's drawings before ordering.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-ACC-STARTER-BARS",
+   "slug": "starter-bars",
+   "name": "Starter Bars & Continuity Strips",
+   "category_slug": "steel-fixing-accessories",
+   "grading_standard": null,
+   "steel_family": "Fixing accessory",
+   "description": "Bent starter bars and continuity strips that tie new concrete to existing — cut and bent to schedule.",
+   "typical_uses": [
+    "Wall-to-slab connections",
+    "Staged pours",
+    "Column starters"
+   ],
+   "handling_notes": "Confirm sizes against the engineer's drawings before ordering.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-ACC-WALL-TIES",
+   "slug": "wall-ties",
+   "name": "Wall Ties",
+   "category_slug": "steel-fixing-accessories",
+   "grading_standard": null,
+   "steel_family": "Fixing accessory",
+   "description": "Galvanised or stainless wall ties for cavity and collar-jointed masonry.",
+   "typical_uses": [
+    "Cavity walls",
+    "Veneer brickwork",
+    "Collar-jointed walls"
+   ],
+   "handling_notes": "Confirm sizes against the engineer's drawings before ordering.",
+   "units": [
+    {
+     "unit": "PACK",
+     "unit_label": "Pack (size confirmed on quote)",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-ACC-HOOP-IRON",
+   "slug": "galvanised-hoop-iron",
+   "name": "Galvanised Hoop Iron",
+   "category_slug": "steel-fixing-accessories",
+   "grading_standard": null,
+   "steel_family": "Fixing accessory",
+   "description": "Galvanised hoop-iron strap for tying roof timbers down to masonry walls.",
+   "typical_uses": [
+    "Roof truss tie-downs",
+    "Wall plates"
+   ],
+   "handling_notes": "Confirm sizes against the engineer's drawings before ordering.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (length confirmed on quote)",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-ACC-BENDER-CUTTER",
+   "slug": "rebar-bender-cutter",
+   "name": "Manual Rebar Bender & Cutter",
+   "category_slug": "steel-fixing-accessories",
+   "grading_standard": null,
+   "steel_family": "Fixing accessory",
+   "description": "Hand-operated rebar bender and bar cutter for site bending of small diameters (up to about 16 mm).",
+   "typical_uses": [
+    "Site bending of links and hooks",
+    "Cutting bar to length"
+   ],
+   "handling_notes": "Confirm sizes against the engineer's drawings before ordering.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "40 x 40 x 3 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-ANGLE-40X40X3",
+   "slug": "equal-angle-40x40x3",
+   "name": "Equal Angle 40 x 40 x 3 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel equal angle, 40 x 40 x 3 mm, 6 m length. Lengths, grades and mill certificates confirmed on the quote.",
+   "typical_uses": [
+    "Frames and brackets",
+    "Lintels for light openings",
+    "Gates and fabrication"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting and drilling are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": 239.0,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 239.0,
+     "markup_percent": 8,
+     "list_price_per_unit": 258.12,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Leroy Merlin R239.00 is lowest; Cashbuild R239.95, Buco R255.19 (from). Equal angle 40 x 40 x 3 mm x 6 m, web listings checked 2026-10-09 (pages undated). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "25 x 25 mm to 200 x 200 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-ANGLES",
+   "slug": "equal-unequal-angles",
+   "name": "Equal & Unequal Angles (other sizes)",
+   "category_slug": "structural-steel",
+   "grading_standard": "SANS 50025 structural steel (S275JR or S355JR, as ordered)",
+   "steel_family": "Structural steel",
+   "description": "Hot-rolled angles in all standard sizes, equal and unequal leg. Lengths, grades and mill certificates confirmed on the quote.",
+   "typical_uses": [
+    "Steel frames and bracing",
+    "Lintels",
+    "Supports and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting and drilling are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "50 x 50 x 2 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-SQ-TUBE-50X50X2",
+   "slug": "square-tube-50x50x2",
+   "name": "Square Tube 50 x 50 x 2 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild-steel hollow section",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel square tube, 50 x 50 x 2.0 mm, 6 m length. Lengths, grades and mill certificates confirmed on the quote.",
+   "typical_uses": [
+    "Carports and pergolas",
+    "Gates and frames",
+    "Light columns"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting and drilling are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": 460.1,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 460.1,
+     "markup_percent": 8,
+     "list_price_per_unit": 496.91,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Buco R460.10 (from) is lowest; Chamberlains R499.00. Square tube 50 x 50 x 2.0 mm x 6 m, web listings checked 2026-10-09 (pages undated). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "Hollow sections, all standard sizes",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-TUBES",
+   "slug": "square-rectangular-round-tube",
+   "name": "Square, Rectangular & Round Tube (other sizes)",
+   "category_slug": "structural-steel",
+   "grading_standard": "SANS 657 hollow sections (structural and light-gauge)",
+   "steel_family": "Structural steel",
+   "description": "Square, rectangular and round hollow sections (structural and light-gauge). Lengths, grades and mill certificates confirmed on the quote.",
+   "typical_uses": [
+    "Frames and trusses",
+    "Carports and canopies",
+    "Handrails and balustrades"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting and drilling are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "All standard widths and thicknesses",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-FLAT-BAR",
+   "slug": "flat-bar",
+   "name": "Flat Bar",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Hot-rolled mild-steel flat bar. Lengths, grades and mill certificates confirmed on the quote.",
+   "typical_uses": [
+    "Brackets and base plates",
+    "Fabrication",
+    "Gates and railings"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting and drilling are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "All standard sizes",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-ROUND-SQUARE-BAR",
+   "slug": "round-square-bar",
+   "name": "Round & Square Bar",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Hot-rolled mild-steel round and square bar for fabrication. Lengths, grades and mill certificates confirmed on the quote.",
+   "typical_uses": [
+    "Fabrication",
+    "Burglar bars and gates",
+    "Pins and anchors"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting and drilling are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "IPE 80 to IPE 600",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-IPE",
+   "slug": "ipe-i-beams",
+   "name": "IPE I-Beams",
+   "category_slug": "structural-steel",
+   "grading_standard": "SANS 50025 structural steel (S275JR or S355JR, as ordered)",
+   "steel_family": "Structural steel",
+   "description": "Parallel-flange I-sections (IPE) for beams and lintels. Lengths, grades and mill certificates confirmed on the quote.",
+   "typical_uses": [
+    "Beams and lintels",
+    "Mezzanines",
+    "Steel frames"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting and drilling are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "Universal columns and beams",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-H-SECTIONS",
+   "slug": "h-sections-uc-ub",
+   "name": "H-Sections (UC / UB)",
+   "category_slug": "structural-steel",
+   "grading_standard": "SANS 50025 structural steel (S275JR or S355JR, as ordered)",
+   "steel_family": "Structural steel",
+   "description": "Universal column (UC) and universal beam (UB) sections. Lengths, grades and mill certificates confirmed on the quote.",
+   "typical_uses": [
+    "Columns and portal frames",
+    "Heavy beams",
+    "Industrial structures"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting and drilling are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "Parallel-flange channels, all sizes",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-CHANNELS",
+   "slug": "channels-pfc",
+   "name": "Channels (PFC)",
+   "category_slug": "structural-steel",
+   "grading_standard": "SANS 50025 structural steel (S275JR or S355JR, as ordered)",
+   "steel_family": "Structural steel",
+   "description": "Parallel-flange channels for beams, purlins and frames. Lengths, grades and mill certificates confirmed on the quote.",
+   "typical_uses": [
+    "Purlins and girts",
+    "Frames and trimmers",
+    "Bracing"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting and drilling are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "Cold-formed, all sizes",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-LIPPED-CHANNEL",
+   "slug": "lipped-channel",
+   "name": "Lipped Channel",
+   "category_slug": "structural-steel",
+   "grading_standard": "Cold-formed steel section",
+   "steel_family": "Structural steel",
+   "description": "Cold-formed lipped channel for purlins and light framing. Lengths, grades and mill certificates confirmed on the quote.",
+   "typical_uses": [
+    "Roof purlins",
+    "Wall girts",
+    "Light framing"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting and drilling are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant."
+    }
+   ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "3 mm to 50 mm, cut to size",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-PLATE",
+   "slug": "steel-plate",
+   "name": "Steel Plate",
+   "category_slug": "structural-steel",
+   "grading_standard": "SANS 50025 structural steel (S275JR or S355JR, as ordered)",
+   "steel_family": "Structural steel",
+   "description": "Hot-rolled steel plate, supplied full sheet or cut to size. Lengths, grades and mill certificates confirmed on the quote.",
+   "typical_uses": [
+    "Base and cap plates",
+    "Gussets",
+    "Fabrication"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting and drilling are quoted separately.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet or cut to size",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+    },
+    {
+     "unit": "TONNE",
+     "unit_label": "Per tonne",
+     "weight_kg": 1000,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant."
+    }
+   ]
+  }
+ ]
+}

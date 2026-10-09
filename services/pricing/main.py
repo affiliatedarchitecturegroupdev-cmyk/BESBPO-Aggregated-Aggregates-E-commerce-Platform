@@ -30,13 +30,19 @@ app = FastAPI(
 )
 
 FRAMEWORK = pricing_framework.load()
-PACKAGED_RAW, PACKAGED = packaged_goods.load()
+PACKAGED_RAW, CEMENT_PACKAGED = packaged_goods.load()
+STEEL_RAW, STEEL = packaged_goods.load_steel()
+# Steel is priced like packaged goods (its own STEEL family), so one lookup serves both.
+PACKAGED = {**CEMENT_PACKAGED, **STEEL}
 READY_MIX_RAW, READY_MIX, PUMPS = ready_mix.load()
 PLANT_SERVICES = rental.load()
 
 TierName = Literal["RETAIL", "CONTRACTOR_TRADE", "VOLUME_CIVIL_BULK"]
 UnitName = Literal["ton", "m3", "bag"]
-PackagedUnitName = Literal["BAG_25KG", "BAG_50KG", "BULK_BAG_1_5T", "BULK_TANKER_PER_TON", "DRUM_210L", "IBC_TOTE_1000L"]
+PackagedUnitName = Literal[
+    "BAG_25KG", "BAG_50KG", "BULK_BAG_1_5T", "BULK_TANKER_PER_TON", "DRUM_210L", "IBC_TOTE_1000L",
+    "LENGTH_6M", "LENGTH_12M", "TONNE", "SHEET", "ROLL", "COIL", "PACK", "EACH",
+]
 
 
 @app.get("/health")
@@ -53,6 +59,12 @@ def list_products():
 def list_packaged_products():
     """CAT-10/CAT-11 packaged goods (B2B pricing workbook)."""
     return PACKAGED_RAW["products"]
+
+
+@app.get("/products/steel")
+def list_steel_products():
+    """CAT-15..18 rebar, mesh & brickforce, fixing accessories and structural steel."""
+    return STEEL_RAW["products"]
 
 
 @app.get("/products/ready-mix")
@@ -152,7 +164,7 @@ class PackagedGoodsRequest(BaseModel):
 @app.post("/calculate/packaged-goods")
 def calculate_packaged_goods(req: PackagedGoodsRequest):
     """
-    Prices a CAT-10/CAT-11 packaged unit. A unit without a confirmed
+    Prices a CAT-10/CAT-11 packaged unit or a CAT-15..18 steel unit. A unit without a confirmed
     benchmark returns 422 — never a made-up price — so the caller routes it
     to a quote.
     """

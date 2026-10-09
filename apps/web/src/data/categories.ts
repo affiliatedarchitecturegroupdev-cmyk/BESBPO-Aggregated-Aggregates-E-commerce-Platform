@@ -3,7 +3,7 @@ export type Category = {
   name: string;
   description: string;
   /** core = the aggregate catalogue (pricing framework workbook); b2b-bulk = packaged cement, binders and chemicals; ready-mix = CAT-12 concrete. */
-  catalogueGroup: "core" | "b2b-bulk" | "ready-mix";
+  catalogueGroup: "core" | "b2b-bulk" | "ready-mix" | "steel";
 };
 
 // The nine core categories of the pricing framework workbook (Category Markup
@@ -27,8 +27,14 @@ export const CATEGORIES: Category[] = [
   { slug: "mortars-grouts-admixtures", name: "Mortars, Grouts & Admixtures", description: "Structural non-shrink grout and bulk concrete admixtures — accelerators, plasticisers and retarders.", catalogueGroup: "b2b-bulk" },
   // CAT-12 — per m³ by strength grade, full mixer-truck loads (READY_MIX_CATALOGUE.md).
   { slug: "ready-mix-concrete", name: "Ready-Mix Concrete", description: "SANS 878 ready-mixed concrete from 10 to 40 MPa, delivered by mixer truck in full loads — pump hire on request.", catalogueGroup: "ready-mix" },
+  // CAT-15..18 — reinforcing and structural steel (STEEL_CATALOGUE.md).
+  { slug: "reinforcing-bar", name: "Reinforcing Bar (Rebar)", description: "SANS 920 high-tensile Y-bar and mild-steel R-bar, 8 to 40 mm — by the 6 m or 12 m length or by the tonne.", catalogueGroup: "steel" },
+  { slug: "mesh-brickforce", name: "Mesh & Brickforce", description: "SANS 1024 welded mesh from Ref 100 to Ref 888 in 6.0 x 2.4 m sheets, and brickforce rolls for masonry.", catalogueGroup: "steel" },
+  { slug: "steel-fixing-accessories", name: "Steel Fixing Accessories", description: "Tie wire, bar chairs and spacers, cover blocks, safety caps, couplers, dowels, starter bars, wall ties and hoop iron.", catalogueGroup: "steel" },
+  { slug: "structural-steel", name: "Structural Steel", description: "Angles, tubes, flat and round bar, IPE beams, H-sections, channels and plate — by the length or tonne.", catalogueGroup: "steel" },
 ];
 
 export const CORE_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "core");
 export const B2B_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "b2b-bulk");
 export const READY_MIX_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "ready-mix");
+export const STEEL_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "steel");

@@ -28,6 +28,11 @@ READY_MIX_DELIVERY_NOTE = (
     "Ready-mix is delivered by the batching plant's mixer truck: we confirm your pour slot "
     "(and any distance surcharge) with the plant before dispatch."
 )
+# Steel travels on the merchant's flatbed or crane truck, not a tipper.
+STEEL_DELIVERY_NOTE = (
+    "Steel is delivered by the merchant's flatbed or crane truck: we confirm the delivery slot "
+    "and any delivery charge with you before dispatch, and send the mill certificates with the load."
+)
 
 
 @dataclass(frozen=True)
@@ -114,11 +119,18 @@ def price_order(
             if result.pricing_status == packaged_goods.TIER_QUOTE_STATUS:
                 if TIER_QUOTE_ONLY not in extra_codes:
                     extra_codes.append(TIER_QUOTE_ONLY)
-                    extra_reasons.append("Trade and volume pricing for cement in bulk, and volume pricing for all cement, is quoted individually.")
+                    extra_reasons.append(
+                        "Volume / Civil Bulk steel is quoted per project."
+                        if packaged_product.is_steel
+                        else "Trade and volume pricing for cement in bulk, and volume pricing for all cement, is quoted individually."
+                    )
             elif not result.is_priced and PRICE_ON_REQUEST not in extra_codes:
                 extra_codes.append(PRICE_ON_REQUEST)
                 extra_reasons.append("Some items have no confirmed price yet — our team confirms them with the supplier.")
-            if line.unit in BAG_UNITS:
+            if packaged_product.is_steel:
+                if STEEL_DELIVERY_NOTE not in notes:
+                    notes.append(STEEL_DELIVERY_NOTE)
+            elif line.unit in BAG_UNITS:
                 bagged_kg += result.bagged_kg
             elif PACKAGED_BULK_DELIVERY not in extra_codes:
                 extra_codes.append(PACKAGED_BULK_DELIVERY)
@@ -138,9 +150,10 @@ def price_order(
 
     subtotal = sum((l.total for l in priced if l.total is not None), Decimal(0))
     if bulk_m3 <= 0 and bagged_kg <= 0:
-        only_ready_mix = all(isinstance(l, ReadyMixLineResult) for l in priced)
-        if only_ready_mix:
-            # Nothing travels by tipper: the plant's mixer truck delivers.
+        steel_skus = {sku for sku, p in packaged.items() if p.is_steel}
+        own_transport = all(isinstance(l, ReadyMixLineResult) or l.sku in steel_skus for l in priced)
+        if own_transport:
+            # Nothing travels by tipper: the plant's mixer truck or the steel merchant's truck delivers.
             delivery = DeliveryQuoteResult(is_quote_only=False, reasons=[], reason_codes=[], distance_km=distance_km, load_size=None, fee=Decimal(0))
         else:
             # Bulk-format packaged goods (drums, totes, tankers, bulk bags):

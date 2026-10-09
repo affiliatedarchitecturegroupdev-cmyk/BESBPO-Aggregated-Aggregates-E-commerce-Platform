@@ -15,6 +15,11 @@ const PALETTES: Record<string, { base: string; grains: string[] }> = {
   "recycled-sustainable": { base: "#A08A78", grains: ["#7E6A5A", "#BCA797", "#8F8F8B"] },
   "cement-hydraulic-binders": { base: "#B7B5B0", grains: ["#9E9C97", "#CFCDC8", "#8A8883"] },
   "mortars-grouts-admixtures": { base: "#C9C4BA", grains: ["#B0AA9F", "#DEDAD2", "#2C4A5E"] },
+  // Steel: mill-scale greys with a hint of rust.
+  "reinforcing-bar": { base: "#5B5550", grains: ["#3F3A36", "#7A716A", "#8A5A3C"] },
+  "mesh-brickforce": { base: "#6B6762", grains: ["#4C4844", "#8C8781", "#7E5638"] },
+  "steel-fixing-accessories": { base: "#77736E", grains: ["#55514D", "#99948E", "#2C4A5E"] },
+  "structural-steel": { base: "#4E5357", grains: ["#383C3F", "#6D7276", "#7A5236"] },
 };
 
 function seededRandom(seed: string) {

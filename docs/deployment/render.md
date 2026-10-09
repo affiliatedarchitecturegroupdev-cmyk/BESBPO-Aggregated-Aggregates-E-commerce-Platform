@@ -263,6 +263,13 @@ in **Admin → Notifications** rather than sent.
   for the work-in-progress commit, once for the final one). Point the
   Blueprint at `main` (Render → Blueprint → Settings → Branch) so only
   merged pull requests deploy.
+- **Reinforcing & structural steel (Oct 2026).** Migration
+  `20261014090000_steel_catalogue` adds the steel units of sale (6 m and
+  12 m lengths, tonne, sheet, roll, coil, pack, item), steel attributes on
+  `Product` and a per-unit mass on `PackagedPriceBand`. The pre-deploy seed
+  then loads the 43 steel products from
+  `services/pricing/data/steel_catalogue.json`. No new environment
+  variables.
 - **Cement pack shots (Oct 2026).** Migration
   `20261013090000_publish_cement_pack_shots` publishes the AfriSam, Cemza and
   NPC photos that an earlier deploy had imported as awaiting permission.

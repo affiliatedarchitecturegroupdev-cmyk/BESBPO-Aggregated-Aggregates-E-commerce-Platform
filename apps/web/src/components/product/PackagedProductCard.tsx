@@ -3,10 +3,11 @@ import { MaterialSwatch } from "@/components/product/MaterialSwatch";
 import { PendingPhotoTag } from "@/components/product/PendingPhotoTag";
 import type { PackagedProduct, TierPrices } from "@/data/packaged";
 import type { ReadyMixProduct } from "@/data/ready-mix";
+import type { SteelProduct } from "@/data/steel";
 import { formatZAR } from "@/lib/pricing";
 
-/** Listing card for packaged goods (CAT-10/11) and ready-mix (CAT-12): a real price only where it is benchmarked. */
-export function PackagedProductCard({ product }: { product: (PackagedProduct | ReadyMixProduct) & { images?: { src: string; alt: string; pending?: boolean }[] } }) {
+/** Listing card for packaged goods (CAT-10/11), ready-mix (CAT-12) and steel (CAT-15..18): a real price only where it is benchmarked. */
+export function PackagedProductCard({ product }: { product: (PackagedProduct | ReadyMixProduct | SteelProduct) & { images?: { src: string; alt: string; pending?: boolean }[] } }) {
   const units: { unit: string; label: string; prices: TierPrices | null }[] = product.units;
   const headline = units.find((u) => u.prices !== null);
   const photo = product.images?.[0];

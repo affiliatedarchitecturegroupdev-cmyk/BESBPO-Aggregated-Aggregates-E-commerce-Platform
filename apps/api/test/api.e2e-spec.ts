@@ -338,7 +338,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
       const served = await http().get(`/merchandising/images/${image.body.id}`).expect(200);
       expect(served.headers["content-type"]).toBe("image/png");
       const overlay = await http().get("/merchandising/products").expect(200);
-      expect(overlay.body).toHaveLength(99); // 51 aggregates + 41 cement and other packaged goods + 7 ready-mix grades
+      expect(overlay.body).toHaveLength(143); // 51 aggregates + 42 cement and other packaged goods + 7 ready-mix grades + 43 steel
       expect(overlay.body.find((p: { sku: string }) => p.sku === sku)).toMatchObject({
         featuredRank: 2,
         images: expect.arrayContaining([expect.objectContaining({ id: image.body.id, altText: "Filter media stockpile" })]),
@@ -564,6 +564,41 @@ describe("Aggregated Aggregates API (e2e)", () => {
           contactEmail: `pour-${run}@example.com`,
           deliveryAddress: "1 Site Road, Durban",
           lines: [{ sku: "AA-RMX-20MPA-001", unit: "m3", quantity: 8 }],
+        })
+        .expect(201);
+      expect(quote.body.reasonCode).toBe("PRICE_ON_REQUEST");
+      await prisma.quote.delete({ where: { id: quote.body.id } });
+      await prisma.order.delete({ where: { id: res.body.id } });
+    });
+  });
+
+  describe("reinforcing & structural steel (CAT-15..18)", () => {
+    it("orders benchmarked stock lengths and mesh on the flatbed, and quotes per-tonne steel", async () => {
+      const token = await register("steel");
+      const y12 = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-STL-Y12" }, include: { packagedPriceBands: true } });
+      expect(y12.diameterMm).toBe(12);
+      expect(Number(y12.massKgPerM)).toBe(0.888);
+      const length = y12.packagedPriceBands.find((b) => b.unit === "LENGTH_6M")!;
+      expect(Number(length.listPricePerUnit)).toBe(118.47);
+      expect(Number(length.weightKg)).toBe(5.33);
+      const res = await http()
+        .post("/orders")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ deliveryDistanceKm: 20, lineItems: [{ productId: y12.id, unitOfSale: "LENGTH_6M", quantity: 30 }] })
+        .expect(201);
+      expect(Number(res.body.subtotal)).toBe(3554.1); // 30 x R118.47
+      expect(Number(res.body.deliveryFee)).toBe(0); // the merchant's flatbed, not a tipper
+      const line = await prisma.orderLineItem.findFirstOrThrow({ where: { orderId: res.body.id } });
+      expect(line.pricingFamily).toBe("STEEL");
+      expect(line.unitOfSale).toBe("LENGTH_6M");
+      // Per-tonne steel has no published benchmark, so it's quoted with the merchant.
+      const quote = await http()
+        .post("/quotes")
+        .send({
+          contactName: "Slab Fixer",
+          contactEmail: `rebar-${run}@example.com`,
+          deliveryAddress: "1 Site Road, Pretoria",
+          lines: [{ sku: "AA-STL-Y16", unit: "TONNE", quantity: 2 }],
         })
         .expect(201);
       expect(quote.body.reasonCode).toBe("PRICE_ON_REQUEST");
