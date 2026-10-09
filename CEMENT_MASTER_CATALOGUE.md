@@ -173,6 +173,9 @@ parent/child instead of a flat sheet.
   `DATASHEETS` in `apps/web/src/data/packaged.ts`), and those five products'
   standard, CEM designation, uses and storage notes now follow them.
   AA-CEM-425N-001 is PPC SUREBUILD 42,5N and is now named that way.
+  Kwikbuild's 2020 material safety data sheets are linked on KWIKBUILD 32.5N
+  and 42.5N; they give the CEM designations (32,5 N: CEM V/B (S-V);
+  42,5 N: CEM II/B-M — previously listed in error as CEM V/A).
 - **Ready-Mix Concrete** — a separate idea raised in the same conversation,
   intentionally not folded into this cement work. See the discussion in
   that thread — it's a different sourcing model (producers, not

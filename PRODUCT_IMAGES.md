@@ -49,13 +49,14 @@ manufacturer stay hidden until their permission is confirmed.
 | Cemza (cemza.co) | General Purpose 32,5N · All Purpose 42,5N · Rapid Strength 42,5R · Ultra Strong 52,5N · Masonry 22,5X · RoadPro 32,5N |
 | NPC - Natal Portland Cement (npc.co.za) | Newcastle Portland-fly ash 32,5N · Durban and Simuma Portland-limestone 32,5R (each with its own plant LOA number) |
 | PPC Ltd (ppc.co.za) | Official images supplied by the owner: SURECEM 32,5N · SUREBUILD 42,5N (AA-CEM-425N-001) · SURECAST 42,5R · SURETECH 52,5N · SUREROAD 32,5N. Small (339×420) — flagged low-res; replace with larger PPC files when available |
+| Kwikbuild Cement (kwikbuildcement.co.za) | Official images supplied by the owner: KWIKBUILD 32,5 and 42,5 bags |
 | Sephaku Cement (Dangote Cement South Africa) | Official images supplied by the owner: Sephaku 32 (32,5R bag) · Sephaku 42 (42,5N and 42,5R bags) · Sephaku 52 (52,5N bag) · SepROAD 32,5N |
 
 **Rejected** (listed in the manifest's `rejected`): the three Kwikbuild files
 were one identical plant photo (a forklift loading pallets) with no readable
 product or class; the five Afrimat files were one identical photo of crushed
-limestone on a conveyor — not cement. **Still to source** (14, listed in
-`noImage`): KWIKBUILD 32.5N, 42.5N and Masonry; Afrimat DuraBuild,
+limestone on a conveyor — not cement. **Still to source** (12, listed in
+`noImage`): Kwikbuild Masonry 22,5X; Afrimat DuraBuild,
 Buildcrete, RoadCem, FastCast and Powercrete Plus; PPC SUREWALL; Dangote Falcon; Dugongo; Mamba; and generic photos for the
 unbranded Bulk Cement 52.5N and the Road-Capping Binder.
 

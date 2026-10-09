@@ -2293,6 +2293,40 @@
         "owner-upload/5849e464-image.png"
       ],
       "permission": "GRANTED"
+    },
+    {
+      "file": "53f09cf1fe16.webp",
+      "width": 698,
+      "height": 1134,
+      "bytes": 60704,
+      "originalWidth": 698,
+      "originalHeight": 1134,
+      "source": "Kwikbuild Cement (kwikbuildcement.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Official pack shot: KWIKBUILD 42,5 high strength composite cement, 50 kg bag. Official product image supplied by the owner, Oct 2026 \u2014 permission confirmed (established supplier relationship).",
+      "flags": [],
+      "originalPaths": [
+        "owner-upload/47b3ef23-image.png"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "3b31c899f39d.webp",
+      "width": 745,
+      "height": 1183,
+      "bytes": 59230,
+      "originalWidth": 745,
+      "originalHeight": 1183,
+      "source": "Kwikbuild Cement (kwikbuildcement.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Official pack shot: KWIKBUILD 32,5 composite cement for general purpose applications, 50 kg bag. Official product image supplied by the owner, Oct 2026 \u2014 permission confirmed (established supplier relationship).",
+      "flags": [],
+      "originalPaths": [
+        "owner-upload/5497debf-image.png"
+      ],
+      "permission": "GRANTED"
     }
   ],
   "products": {
@@ -2622,6 +2656,12 @@
     ],
     "AA-CEM-PPC-SURECAST-425R": [
       "1a5ab991a1cb.webp"
+    ],
+    "AA-CEM-KWIKBUILD-425N": [
+      "53f09cf1fe16.webp"
+    ],
+    "AA-CEM-KWIKBUILD-325N": [
+      "3b31c899f39d.webp"
     ]
   },
   "noImage": {
@@ -2633,10 +2673,8 @@
     "AA-CEM-525N-001": "Unbranded bulk supply \u2014 needs a generic (no-brand) bulk tanker or bag photo",
     "AA-BND-ROADCAP-001": "Blended binder from more than one supplier \u2014 needs a generic photo",
     "AA-CEM-DANGOTE-FALCON": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
-    "AA-CEM-KWIKBUILD-325N": "Only a generic plant photo was found \u2014 needs a KWIKBUILD 32.5N pack shot",
     "AA-CEM-AFRIMAT-DURABUILD": "Only an unrelated limestone photo was found",
     "AA-CEM-AFRIMAT-BUILDCRETE": "Only an unrelated limestone photo was found",
-    "AA-CEM-KWIKBUILD-425N": "Only a generic plant photo was found \u2014 needs a KWIKBUILD 42.5N pack shot",
     "AA-CEM-DUGONGO-425N": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
     "AA-CEM-MAMBA-425N": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
     "AA-CEM-PPC-SUREWALL-225X": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",

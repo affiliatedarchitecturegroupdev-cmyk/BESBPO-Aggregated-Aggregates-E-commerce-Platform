@@ -738,12 +738,12 @@
    "slug": "kwikbuild-32-5n",
    "name": "KWIKBUILD 32.5N",
    "category_slug": "cement-hydraulic-binders",
-   "grading_standard": "SANS 50197-1 (CEM II 32,5N)",
+   "grading_standard": "SANS 50197-1, 32,5 N (composite cement CEM V/B (S-V))",
    "manufacturer": "Kwikbuild Cement (Pty) Ltd",
    "brand": "Kwikbuild Cement",
    "cement_family": "General Purpose Cement",
    "cement_class": "32,5N",
-   "cement_type": null,
+   "cement_type": "CEM V/B (S-V) 32,5 N (composite)",
    "region_note": null,
    "specialist_characteristics": [],
    "typical_uses": [
@@ -751,7 +751,7 @@
     "Brickwork and blockwork",
     "Small-contractor and DIY builds"
    ],
-   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "handling_notes": "Keep bags under cover and away from moisture, stacked on wooden planks about 150–200 mm off the floor with an impermeable plastic sheet underneath. Avoid raising dust, and never enter a silo, bin or bulk vessel holding cement (engulfment hazard). See the safety data sheet for first aid and protective equipment.",
    "units": [
     {
      "unit": "BAG_50KG",
@@ -1072,20 +1072,20 @@
    "slug": "kwikbuild-42-5n",
    "name": "KWIKBUILD 42.5N",
    "category_slug": "cement-hydraulic-binders",
-   "grading_standard": "SANS 50197-1 (CEM V/A 42,5N)",
+   "grading_standard": "SANS 50197-1, 42,5 N (Portland-composite cement CEM II/B-M)",
    "manufacturer": "Kwikbuild Cement (Pty) Ltd",
    "brand": "Kwikbuild Cement",
    "cement_family": "General Purpose Cement",
    "cement_class": "42,5N",
-   "cement_type": "CEM V/A (high-strength composite)",
+   "cement_type": "CEM II/B-M 42,5 N (Portland-composite)",
    "region_note": null,
    "specialist_characteristics": [],
    "typical_uses": [
-    "High-strength composite structural concrete",
+    "General-purpose concrete where higher strength is needed",
     "Brickwork and blockwork mortar",
     "General building work"
    ],
-   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "handling_notes": "Keep bags under cover and away from moisture, stacked on wooden planks about 150–200 mm off the floor with an impermeable plastic sheet underneath. Avoid raising dust, and never enter a silo, bin or bulk vessel holding cement (engulfment hazard). See the safety data sheet for first aid and protective equipment.",
    "units": [
     {
      "unit": "BAG_50KG",
