@@ -52,14 +52,14 @@ describe("sourced product image set", () => {
 
   it("publishes the cement pack shots whose manufacturers have agreed", () => {
     const cement = Object.entries(manifest.products).filter(([sku]) => sku.startsWith("AA-CEM-"));
-    expect(cement.length).toBe(14);
+    expect(cement.length).toBe(18);
     const bySku = new Map(manifest.images.map((i) => [i.file, i]));
     for (const [, list] of cement) {
       for (const file of list) {
         const image = bySku.get(file)!;
-        expect(image.permission).toBe("GRANTED"); // AfriSam, Cemza and NPC agreed in Oct 2026 — imported CLEARED
+        expect(image.permission).toBe("GRANTED"); // AfriSam, Cemza, NPC and Sephaku agreed in Oct 2026 — imported CLEARED
         expect(image.openLicence).toBeUndefined();
-        expect(image.source).toMatch(/^(AfriSam|Cemza|NPC)/);
+        expect(image.source).toMatch(/^(AfriSam|Cemza|NPC|Sephaku)/);
       }
     }
   });
