@@ -2198,6 +2198,101 @@
         "owner-upload/cce41ce7-image.png"
       ],
       "permission": "GRANTED"
+    },
+    {
+      "file": "d7a741a3dbfe.webp",
+      "width": 339,
+      "height": 420,
+      "bytes": 43312,
+      "originalWidth": 339,
+      "originalHeight": 420,
+      "source": "PPC Ltd (ppc.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Official pack shot: PPC SURECEM \u2014 cement for concrete, mortar, plaster and bricks. Official product image supplied by the owner, Oct 2026 \u2014 permission confirmed (established supplier relationship).",
+      "flags": [
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "owner-upload/7dfad791-image.png"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "f78eb07146ef.webp",
+      "width": 339,
+      "height": 420,
+      "bytes": 41806,
+      "originalWidth": 339,
+      "originalHeight": 420,
+      "source": "PPC Ltd (ppc.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Official pack shot: PPC SUREBUILD \u2014 premium cement for general building and civil (the 42,5N product this listing supplies). Official product image supplied by the owner, Oct 2026 \u2014 permission confirmed (established supplier relationship).",
+      "flags": [
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "owner-upload/eb01ce24-image.png"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "772d84b5a0d1.webp",
+      "width": 339,
+      "height": 420,
+      "bytes": 43644,
+      "originalWidth": 339,
+      "originalHeight": 420,
+      "source": "PPC Ltd (ppc.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Official pack shot: PPC SURETECH \u2014 premium specialist cement. Official product image supplied by the owner, Oct 2026 \u2014 permission confirmed (established supplier relationship).",
+      "flags": [
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "owner-upload/f5f977c3-image.png"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "91136a077c8a.webp",
+      "width": 339,
+      "height": 420,
+      "bytes": 38244,
+      "originalWidth": 339,
+      "originalHeight": 420,
+      "source": "PPC Ltd (ppc.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Official pack shot: PPC SUREROAD \u2014 cement for road stabilisation. Official product image supplied by the owner, Oct 2026 \u2014 permission confirmed (established supplier relationship).",
+      "flags": [
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "owner-upload/d49b76f1-image.png"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "1a5ab991a1cb.webp",
+      "width": 339,
+      "height": 420,
+      "bytes": 44420,
+      "originalWidth": 339,
+      "originalHeight": 420,
+      "source": "PPC Ltd (ppc.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Official pack shot: PPC SURECAST \u2014 premium cement for precast products. Official product image supplied by the owner, Oct 2026 \u2014 permission confirmed (established supplier relationship).",
+      "flags": [
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "owner-upload/5849e464-image.png"
+      ],
+      "permission": "GRANTED"
     }
   ],
   "products": {
@@ -2512,6 +2607,21 @@
     ],
     "AA-CEM-SEPHAKU-SEPROAD-325N": [
       "c3812ed5b794.webp"
+    ],
+    "AA-CEM-PPC-SURECEM-325N": [
+      "d7a741a3dbfe.webp"
+    ],
+    "AA-CEM-425N-001": [
+      "f78eb07146ef.webp"
+    ],
+    "AA-CEM-PPC-SURETECH-525N": [
+      "772d84b5a0d1.webp"
+    ],
+    "AA-CEM-PPC-SUREROAD-325N": [
+      "91136a077c8a.webp"
+    ],
+    "AA-CEM-PPC-SURECAST-425R": [
+      "1a5ab991a1cb.webp"
     ]
   },
   "noImage": {
@@ -2520,10 +2630,8 @@
     "AA-SBC-07": "One file damaged, the other 259px",
     "AA-SBC-10": "Diagram and a 262px photo only",
     "AA-SND-07": "Only foreign/retail branded bags",
-    "AA-CEM-425N-001": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
     "AA-CEM-525N-001": "Unbranded bulk supply \u2014 needs a generic (no-brand) bulk tanker or bag photo",
     "AA-BND-ROADCAP-001": "Blended binder from more than one supplier \u2014 needs a generic photo",
-    "AA-CEM-PPC-SURECEM-325N": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
     "AA-CEM-DANGOTE-FALCON": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
     "AA-CEM-KWIKBUILD-325N": "Only a generic plant photo was found \u2014 needs a KWIKBUILD 32.5N pack shot",
     "AA-CEM-AFRIMAT-DURABUILD": "Only an unrelated limestone photo was found",
@@ -2531,11 +2639,8 @@
     "AA-CEM-KWIKBUILD-425N": "Only a generic plant photo was found \u2014 needs a KWIKBUILD 42.5N pack shot",
     "AA-CEM-DUGONGO-425N": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
     "AA-CEM-MAMBA-425N": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
-    "AA-CEM-PPC-SURECAST-425R": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
-    "AA-CEM-PPC-SURETECH-525N": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
     "AA-CEM-PPC-SUREWALL-225X": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
     "AA-CEM-KWIKBUILD-MASONRY-225X": "Only a generic plant photo was found \u2014 needs a masonry 22,5X pack shot",
-    "AA-CEM-PPC-SUREROAD-325N": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
     "AA-CEM-AFRIMAT-ROADCEM-325N": "Only an unrelated limestone photo was found",
     "AA-CEM-AFRIMAT-FASTCAST": "Only an unrelated limestone photo was found",
     "AA-CEM-AFRIMAT-POWERCRETE-PLUS": "Only an unrelated limestone photo was found"
