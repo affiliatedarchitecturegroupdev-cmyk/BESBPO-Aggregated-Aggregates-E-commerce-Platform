@@ -7,6 +7,7 @@ import {
   customerOrderWhatsApp,
   customerQuoteEmail,
   customerQuoteWhatsApp,
+  customerScheduleEmail,
   EVENT_CHANNELS,
   formatZAR,
   staffCompanyEmail,
@@ -16,6 +17,7 @@ import {
   staffEnquiryEmail,
   staffOrderEmail,
   staffQuoteEmail,
+  staffScheduleEmail,
   whatsappNumber,
   WHATSAPP_TEMPLATES,
   type CompanyData,
@@ -23,6 +25,7 @@ import {
   type EnquiryData,
   type OrderData,
   type QuoteData,
+  type ScheduleData,
 } from "./notification-templates";
 
 const order: OrderData = {
@@ -99,7 +102,43 @@ const booking: BookingData = {
   disputeReason: null,
 };
 
+const schedule: ScheduleData = {
+  id: "s_1",
+  reference: "BBS-261015-ABC123",
+  contactName: "Sipho Dlamini",
+  contactEmail: "sipho@example.com",
+  contactPhone: null,
+  companyName: "Dlamini Builders",
+  projectName: "House 14 slab",
+  province: "Gauteng",
+  siteAddress: "14 Oak St, Benoni",
+  requiredBy: "30 Oct 2026",
+  message: null,
+  lineCount: 3,
+  totalMassKg: 412.6,
+  bySize: [["Y16", "300.2 kg"], ["Y10", "112.4 kg"]],
+  fileName: "slab-bbs.pdf",
+  quotedAmount: 9850 as unknown as ScheduleData["quotedAmount"],
+  quoteValidUntil: "25 Oct 2026",
+  quoteNotes: "Includes cutting, bending, tagging and delivery to Benoni.",
+  hasAccount: true,
+};
+
 describe("notification templates", () => {
+  it("emails cut & bend schedules and quotes, linking accounts to accept online", () => {
+    const received = customerScheduleEmail("BENDING_SCHEDULE_RECEIVED", schedule)!;
+    expect(received.subject).toBe("We've received your bar bending schedule BBS-261015-ABC123");
+    expect(received.text).toContain("Rows entered: 3 (412.6 kg by SANS 920 nominal mass)");
+    expect(received.text).toContain("Y16: 300.2 kg");
+    const quoted = customerScheduleEmail("BENDING_SCHEDULE_QUOTED", schedule)!;
+    expect(quoted.subject).toBe("Your cut & bend quote BBS-261015-ABC123: R9,850.00");
+    expect(quoted.text).toContain("/account/cut-and-bend/s_1");
+    const guest = customerScheduleEmail("BENDING_SCHEDULE_QUOTED", { ...schedule, hasAccount: false })!;
+    expect(guest.text).toContain("reply to this email quoting BBS-261015-ABC123");
+    expect(guest.text).not.toContain("/account/cut-and-bend/");
+    expect(staffScheduleEmail("BENDING_SCHEDULE_ACCEPTED", schedule)!.subject).toBe("Cut & bend quote accepted — BBS-261015-ABC123 (Dlamini Builders)");
+  });
+
   it("formats money like the storefront", () => {
     expect(formatZAR("9133.12")).toBe("R9,133.12");
     expect(formatZAR(0)).toBe("R0.00");
@@ -145,9 +184,9 @@ describe("notification templates", () => {
   it("has a message for every channel an event is allowed to use", () => {
     for (const event of Object.values(NotificationEvent)) {
       const channels = EVENT_CHANNELS[event];
-      const customerEmail = customerOrderEmail(event, order) ?? customerQuoteEmail(event, quote) ?? customerCompanyEmail(event, company) ?? customerEnquiryEmail(event, enquiry) ?? customerBookingEmail(event, booking);
+      const customerEmail = customerOrderEmail(event, order) ?? customerQuoteEmail(event, quote) ?? customerCompanyEmail(event, company) ?? customerEnquiryEmail(event, enquiry) ?? customerBookingEmail(event, booking) ?? customerScheduleEmail(event, schedule);
       const customerWhatsApp = customerOrderWhatsApp(event, order) ?? customerQuoteWhatsApp(event, quote);
-      const staffEmail = staffOrderEmail(event, order) ?? staffQuoteEmail(event, quote) ?? staffCompanyEmail(event, company) ?? staffEnquiryEmail(event, enquiry) ?? staffBookingEmail(event, booking);
+      const staffEmail = staffOrderEmail(event, order) ?? staffQuoteEmail(event, quote) ?? staffCompanyEmail(event, company) ?? staffEnquiryEmail(event, enquiry) ?? staffBookingEmail(event, booking) ?? staffScheduleEmail(event, schedule);
       expect([event, customerEmail !== null]).toEqual([event, channels.customerEmail]);
       expect([event, customerWhatsApp !== null]).toEqual([event, channels.customerWhatsApp]);
       // The weekly insights email is built from report data (insights/digest.ts), not from one record.

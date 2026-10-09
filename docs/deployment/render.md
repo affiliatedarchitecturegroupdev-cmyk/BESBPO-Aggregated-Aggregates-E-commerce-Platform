@@ -263,6 +263,11 @@ in **Admin → Notifications** rather than sent.
   for the work-in-progress commit, once for the final one). Point the
   Blueprint at `main` (Render → Blueprint → Settings → Branch) so only
   merged pull requests deploy.
+- **Cut & bend (Oct 2026).** Migration `20261015090000_cut_and_bend` adds
+  bar bending schedules (`BendingSchedule`, `BendingScheduleLine`), four
+  notification events and the notification link. Uploaded schedule files go
+  to the same storage as compliance documents (`cut-and-bend/` keys). No
+  new environment variables.
 - **Reinforcing & structural steel (Oct 2026).** Migration
   `20261014090000_steel_catalogue` adds the steel units of sale (6 m and
   12 m lengths, tonne, sheet, roll, coil, pack, item), steel attributes on

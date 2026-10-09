@@ -1,0 +1,4 @@
+Bar mark,Member,Type,Size (mm),Shape code,No. of members,Bars per member,Cut length (mm)
+A1,Strip footing,Y,12,00,4,6,5000
+A2,Strip footing,Y,10,00,4,8,1200
+B1,Ground beam,Y,16,00,2,4,6000

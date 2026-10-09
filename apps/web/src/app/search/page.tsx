@@ -13,6 +13,7 @@ const PAGES = [
   { href: "/ways-to-pay", title: "Ways to Pay", keywords: "payment card eft capitec payflex payjustnow float lulapay credit bnpl invoice" },
   { href: "/trade-accounts", title: "Trade Accounts", keywords: "trade account contractor volume civil bulk discount" },
   { href: "/reinforcing-steel", title: "Reinforcing & Structural Steel", keywords: "steel rebar reinforcing y-bar r-bar mesh brickforce tie wire cut bend structural angle tube beam" },
+  { href: "/reinforcing-steel/cut-and-bend", title: "Cut & Bend to Your Bar Bending Schedule", keywords: "cut bend bbs bar bending schedule rebar fabrication shape code sans 282 steel fixing" },
   { href: "/quote", title: "Request a Quote", keywords: "quote rfq bulk civil price" },
   { href: "/faq", title: "FAQ", keywords: "questions help faq whatsapp compliance" },
   { href: "/contact", title: "Contact & Sales", keywords: "contact phone email address sales" },

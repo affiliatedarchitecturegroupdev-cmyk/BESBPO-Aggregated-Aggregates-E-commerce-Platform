@@ -32,7 +32,7 @@
 | Phase | Scope | Status |
 |---|---|---|
 | S1 | Catalogue (43 products), units, pricing, storefront, mass calculator, flatbed delivery | **This build** |
-| S2 | Cut & bend: bar bending schedule upload or entered lines (bar mark, SANS 282 shape code, diameter, number, length) → mass totals → staff quote | Next |
+| S2 | Cut & bend: bar bending schedule upload or entered lines (bar mark, SANS 282 shape code, diameter, number, length) → mass totals → staff quote | **Built** (see below) |
 | S3 | Steel merchant/mill network (seeded unverified, owner verifies), supplier categories CAT-15..18, steel-fixing labour via partners | After S2 |
 
 ## The catalogue
@@ -95,6 +95,35 @@ safety caps and chairs (one supplier, ex-VAT, pack size unclear).
 - **Quote-only stays quote-only:** per-tonne, 12 m, merchant-only items
   and every Volume/Civil Bulk steel order go to a person.
 
+## Cut & bend (Phase S2)
+
+**Customer:** `/reinforcing-steel/cut-and-bend`. A schedule is rows (typed,
+or imported from `/downloads/bar-bending-schedule-template.csv` — columns in
+any order, "Y12"-style sizes understood), an attached file (PDF, Excel
+.xlsx, CSV, or a PNG/JPEG photo, up to 10 MB, identified by content), or
+both. Each row is bar mark, member, Y/R, size, two-digit SANS 282 shape
+code, number of members, bars per member and the cut length of one bar
+(100–13,000 mm). Mass = bars × cut length × SANS 920 nominal kg/m — the
+schedule's own cut length is used as given, so no bend allowances are
+guessed. The form shows live totals by size; the API re-validates and
+re-totals (`apps/api/src/cut-and-bend/bar-schedule.ts`, which a unit test
+holds to the catalogue's mass table). Guests can send a schedule; signed-in
+customers see it under **Account → Cut & bend** and accept or decline the
+quote there (only the owner can, only while it's valid, once).
+
+**Staff:** **Admin → Cut & bend** lists schedules by status. Each schedule
+shows the rows and totals by size, downloads the rows as CSV (formulas
+neutralised) and the customer's file for the merchant, and has the quote
+form: total, valid-until date and what's included (shown to the customer).
+Send only a price the merchant has confirmed in writing. Re-quoting replaces
+the quote. Guests accept by replying to the email — staff mark those
+Accepted. Admins can erase a schedule, its file and its email log (POPIA).
+
+**Statuses:** Received → Being priced → Quoted → Accepted / Declined →
+Closed. Nothing is cut or charged until the customer accepts; payment and
+the delivery slot are confirmed by staff after acceptance (the same
+broker model as quotes — no online payment for cut & bend yet).
+
 ## Open items
 
 - Owner to set the steel trade discount (4% placeholder) and confirm the
@@ -102,4 +131,6 @@ safety caps and chairs (one supplier, ex-VAT, pack size unclear).
 - Merchant price lists for per-tonne rebar, 12 m lengths and the
   structural range — loaded only from written quotes.
 - Product photos for the steel line (none yet; texture swatches show).
-- S2 (cut & bend) and S3 (merchant network, steel-fixing labour) as above.
+- S3 (merchant network, steel-fixing labour) as above.
+- Cut & bend: online payment after acceptance (today staff confirm payment
+  by EFT), and turning an accepted schedule into an order for Insights.

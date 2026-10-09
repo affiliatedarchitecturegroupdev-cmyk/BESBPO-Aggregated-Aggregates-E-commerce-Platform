@@ -34,7 +34,7 @@ export default function ReinforcingSteelPage() {
             <Link href="/products?group=steel" className="rounded-sm bg-ochre-gold px-5 py-2.5 font-body text-sm font-semibold text-basalt hover:bg-limestone">
               Shop all steel
             </Link>
-            <Link href="/quote" className="rounded-sm border border-limestone/30 px-5 py-2.5 font-body text-sm font-semibold hover:border-ochre-gold">
+            <Link href="/reinforcing-steel/cut-and-bend" className="rounded-sm border border-limestone/30 px-5 py-2.5 font-body text-sm font-semibold hover:border-ochre-gold">
               Send a bar bending schedule
             </Link>
           </div>
@@ -125,15 +125,21 @@ export default function ReinforcingSteelPage() {
             {
               title: "Cut & bend to schedule",
               text: "Send your bar bending schedule (SANS 282 shape codes) and we price the cutting and bending with the merchant — bars arrive tagged by bar mark, ready to fix.",
+              href: "/reinforcing-steel/cut-and-bend",
             },
             {
               title: "Delivered by flatbed",
               text: "Steel travels on the merchant's flatbed or crane truck, not a tipper. We confirm the slot and any delivery charge before dispatch, and the mill certificates come with the load.",
             },
-          ].map((b) => (
+          ].map((b: { title: string; text: string; href?: string }) => (
             <div key={b.title} className="rounded-sm border border-basalt/10 bg-white p-5">
               <h3 className="font-display text-base font-semibold text-basalt">{b.title}</h3>
               <p className="mt-2 font-body text-sm text-slate">{b.text}</p>
+              {b.href && (
+                <Link href={b.href} className="mt-3 inline-block font-body text-sm font-semibold text-seam-blue hover:underline">
+                  Send a schedule →
+                </Link>
+              )}
             </div>
           ))}
         </section>
