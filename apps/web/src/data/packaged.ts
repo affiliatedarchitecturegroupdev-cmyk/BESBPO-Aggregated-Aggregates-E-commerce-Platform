@@ -50,6 +50,18 @@ export type PackagedProduct = {
   kind: "packaged";
 } & CementAttributes;
 
+/**
+ * Manufacturers' product datasheets, supplied by the owner (Oct 2026), served
+ * from public/downloads/datasheets. Keyed by SKU.
+ */
+export const DATASHEETS: Record<string, { href: string; title: string }> = {
+  "AA-CEM-PPC-SURECEM-325N": { href: "/downloads/datasheets/ppc-surecem-32-5n.pdf", title: "PPC SURECEM 32,5 N datasheet (2026)" },
+  "AA-CEM-425N-001": { href: "/downloads/datasheets/ppc-surebuild-42-5n.pdf", title: "PPC SUREBUILD 42,5 N datasheet" },
+  "AA-CEM-PPC-SURECAST-425R": { href: "/downloads/datasheets/ppc-surecast-42-5r.pdf", title: "PPC SURECAST 42,5 R datasheet" },
+  "AA-CEM-PPC-SURETECH-525N": { href: "/downloads/datasheets/ppc-suretech-52-5n.pdf", title: "PPC SURETECH 52,5 N datasheet" },
+  "AA-CEM-PPC-SUREROAD-325N": { href: "/downloads/datasheets/ppc-sureroad-32-5n.pdf", title: "PPC SUREROAD 32,5 N datasheet" },
+};
+
 export const PACKAGED_PRODUCTS: PackagedProduct[] = catalogue.products.map((p) => ({
   sku: p.sku,
   slug: p.slug,

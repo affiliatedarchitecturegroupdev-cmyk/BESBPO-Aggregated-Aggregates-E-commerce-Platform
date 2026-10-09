@@ -6,7 +6,7 @@ import { ProductGallery } from "@/components/product/ProductGallery";
 import { SocialShareButtons } from "@/components/social/SocialShareButtons";
 import { WhatsAppOrderButton } from "@/components/social/WhatsAppCta";
 import { CATEGORIES } from "@/data/categories";
-import { PACKAGED_PRODUCTS } from "@/data/packaged";
+import { DATASHEETS, PACKAGED_PRODUCTS } from "@/data/packaged";
 import type { MerchandisedPackagedProduct } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
@@ -122,6 +122,14 @@ export function PackagedProductPage({ product }: { product: MerchandisedPackaged
               ))}
             </tbody>
           </table>
+          {DATASHEETS[product.sku] && (
+            <p className="mt-4 font-body text-sm">
+              <a href={DATASHEETS[product.sku].href} download className="inline-flex items-center gap-2 rounded-sm border border-seam-blue px-3 py-1.5 font-semibold text-seam-blue hover:bg-seam-blue hover:text-limestone">
+                Download the manufacturer&apos;s datasheet (PDF)
+              </a>
+              <span className="ml-2 text-xs text-slate">{DATASHEETS[product.sku].title} — typical properties, specification, storage and safety.</span>
+            </p>
+          )}
         </section>
         <section className="rounded-sm border border-basalt/10 bg-white p-6">
           <h2 className="font-mono text-[10px] uppercase tracking-widest text-seam-blue">Typical Uses</h2>

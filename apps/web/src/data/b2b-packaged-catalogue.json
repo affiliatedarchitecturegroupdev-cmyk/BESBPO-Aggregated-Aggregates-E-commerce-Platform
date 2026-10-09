@@ -20,22 +20,23 @@
   {
    "sku": "AA-CEM-425N-001",
    "slug": "bulk-cement-42-5n",
-   "name": "Bulk Cement 42.5N",
+   "name": "PPC SUREBUILD 42,5N",
    "category_slug": "cement-hydraulic-binders",
-   "grading_standard": "SANS 50197-1 (CEM II 42.5N)",
+   "grading_standard": "SANS 50197-1, 42,5 N (CEM II/A-L, CEM II/B-L, CEM IV/B-V or CEM V/A, depending on the factory)",
    "manufacturer": "PPC Ltd",
    "brand": "PPC",
    "cement_family": "General Purpose Cement",
    "cement_class": "42,5N",
-   "cement_type": null,
+   "cement_type": "CEM II/A-L or CEM II/B-L 42,5 N; CEM IV/B-V or CEM V/A at some factories",
    "region_note": null,
    "specialist_characteristics": [],
    "typical_uses": [
-    "General structural concrete",
-    "Brickwork and blockwork mortar",
-    "Precast concrete products"
+    "Structural and general concrete",
+    "Mortar, plaster and masonry products",
+    "Paving, precast products, grouts and shotcrete",
+    "General home and DIY work"
    ],
-   "handling_notes": "Store off the ground on pallets, under cover, away from moisture. Best used within 3 months of the manufacture date stamped on the bag.",
+   "handling_notes": "Bags aren't weatherproof: store under cover, off the ground on a raised timber platform or plastic sheeting, stacked no more than 12 bags (or two pallets) high, and use first in, first out. Bulk silos: check the hatch seal is watertight and filters are clean.",
    "units": [
     {
      "unit": "BAG_50KG",
@@ -297,20 +298,20 @@
    "slug": "ppc-surecem-32-5n",
    "name": "PPC SURECEM 32,5N",
    "category_slug": "cement-hydraulic-binders",
-   "grading_standard": "SANS 50197-1 (CEM II 32,5N)",
+   "grading_standard": "SANS 50197-1, 32,5 N (CEM II/B-L, CEM II/B-M, CEM IV/B-V or CEM V/A, depending on the factory)",
    "manufacturer": "PPC Ltd",
    "brand": "PPC",
    "cement_family": "General Purpose Cement",
    "cement_class": "32,5N",
-   "cement_type": null,
+   "cement_type": "CEM II/B-L 32,5 N (most factories); CEM IV/B-V, CEM V/A or CEM II/B-M at some",
    "region_note": null,
    "specialist_characteristics": [],
    "typical_uses": [
-    "General-purpose concrete and mortar",
-    "Everyday brickwork and plastering",
-    "Value-tier structural work"
+    "Concrete",
+    "Mortar and plaster",
+    "Brick manufacturing"
    ],
-   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "handling_notes": "Bags aren't weatherproof: store under cover, off the ground on a raised timber platform or plastic sheeting, stacked no more than 12 bags (or two pallets) high, and use first in, first out. Don't blend with fly ash or GGBS without PPC's advice.",
    "units": [
     {
      "unit": "BAG_50KG",
@@ -1236,22 +1237,23 @@
    "slug": "ppc-surecast-42-5r",
    "name": "PPC SURECAST 42,5R",
    "category_slug": "cement-hydraulic-binders",
-   "grading_standard": "SANS 50197-1 (CEM II 42,5R)",
+   "grading_standard": "SANS 50197-1, 42,5 R (CEM II/A-L or CEM II/A-M (S-V), depending on the factory)",
    "manufacturer": "PPC Ltd",
    "brand": "PPC",
-   "cement_family": "General Purpose Cement",
+   "cement_family": "High Early Strength Cement",
    "cement_class": "42,5R",
-   "cement_type": null,
+   "cement_type": "CEM II/A-L 42,5 R or CEM II/A-M (S-V) 42,5 R",
    "region_note": null,
    "specialist_characteristics": [
     "High early strength"
    ],
    "typical_uses": [
-    "Fast-track construction requiring early strength gain",
-    "Precast and prestressed concrete",
-    "Cold-weather concreting"
+    "Precast concrete products",
+    "Structural reinforced and prestressed concrete",
+    "Masonry products and paving",
+    "Grouts and shotcrete"
    ],
-   "handling_notes": "Higher early-strength gain generates more heat of hydration -- take care with large pours.",
+   "handling_notes": "Bags aren't weatherproof: store under cover, off the ground on a raised timber platform or plastic sheeting, stacked no more than 12 bags (or two pallets) high, and use first in, first out. High early strength means more early heat — take care with large pours.",
    "units": [
     {
      "unit": "BAG_50KG",
@@ -1326,22 +1328,23 @@
    "slug": "ppc-suretech-52-5n",
    "name": "PPC SURETECH 52,5N",
    "category_slug": "cement-hydraulic-binders",
-   "grading_standard": "SANS 50197-1 (CEM I 52,5N)",
+   "grading_standard": "SANS 50197-1, 52,5 N (CEM I or CEM II/A-L, depending on the factory)",
    "manufacturer": "PPC Ltd",
    "brand": "PPC",
    "cement_family": "High Strength Cement",
    "cement_class": "52,5N",
-   "cement_type": null,
+   "cement_type": "CEM I 52,5 N or CEM II/A-L 52,5 N",
    "region_note": null,
    "specialist_characteristics": [
     "High-performance / specialist"
    ],
    "typical_uses": [
-    "Precast concrete",
-    "Ready-mix concrete",
-    "Civil, specialist and proprietary concrete products"
+    "Concrete and ready-mix concrete",
+    "Precast and masonry products",
+    "Grouts and shotcrete",
+    "Specialist applications; suits blending with fly ash or GGBS"
    ],
-   "handling_notes": "Higher heat of hydration than 42,5-class cement -- take care with large pours; store cool, dry and off the ground.",
+   "handling_notes": "Bags aren't weatherproof: store under cover, off the ground on a raised timber platform or plastic sheeting, stacked no more than 12 bags (or two pallets) high, and use first in, first out. Higher heat of hydration than 42,5-class cement — take care with large pours.",
    "units": [
     {
      "unit": "BAG_50KG",
@@ -1682,20 +1685,20 @@
    "slug": "ppc-sureroad-32-5n",
    "name": "PPC SUREROAD 32,5N",
    "category_slug": "cement-hydraulic-binders",
-   "grading_standard": "SANS 50197-1 (CEM II 32,5N, road-stabilisation grade)",
+   "grading_standard": "SANS 50197-1, 32,5 N road-stabilisation cement (CEM II/B-L, CEM II/B-V or CEM IV/B-V)",
    "manufacturer": "PPC Ltd",
    "brand": "PPC",
    "cement_family": "Road Stabilisation Cement",
    "cement_class": "32,5N",
-   "cement_type": null,
+   "cement_type": "CEM II/B-L, CEM II/B-V or CEM IV/B-V 32,5 N",
    "region_note": null,
    "specialist_characteristics": [],
    "typical_uses": [
-    "Road-base and sub-base stabilisation",
-    "Soil stabilisation for pavement works",
-    "Bulk civil earthworks"
+    "Cement-stabilised road layers (base and sub-base)",
+    "Lowering the plasticity index of soils",
+    "Raising UCS and ITS of host materials — tested on G5/G6 soils for C3/C4 road strength classes"
    ],
-   "handling_notes": "Mixing ratios are project- and soil-specific -- confirm with supplier/engineer before use.",
+   "handling_notes": "Bags aren't weatherproof: store under cover, off the ground on a raised timber platform or plastic sheeting, stacked no more than 12 bags (or two pallets) high, and use first in, first out. Addition rates are soil-specific: test UCS and ITS over a range of cement contents for the site's material.",
    "units": [
     {
      "unit": "BAG_50KG",
