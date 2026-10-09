@@ -13,6 +13,14 @@ export const UNIT_LABEL: Record<UnitOfSale, string> = {
   BULK_TANKER_PER_TON: "ton (tanker)",
   DRUM_210L: "× 210L drum",
   IBC_TOTE_1000L: "× 1,000L tote",
+  LENGTH_6M: "× 6 m length",
+  LENGTH_12M: "× 12 m length",
+  TONNE: "tonne",
+  SHEET: "× sheet",
+  ROLL: "× roll",
+  COIL: "× coil",
+  PACK: "× pack",
+  EACH: "× item",
 };
 
 const ZAR = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });

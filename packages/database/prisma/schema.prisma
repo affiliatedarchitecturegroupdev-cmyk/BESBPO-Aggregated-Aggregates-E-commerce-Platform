@@ -186,10 +186,16 @@ model Product {
   strengthGradeMPa          Int? // the product IS the strength grade
   mixType                   String?
   minimumLoadM3             Decimal?             @db.Decimal(6, 2) // a full mixer-truck load
+  // Steel (STEEL_CATALOGUE.md) — steel only.
+  steelFamily               String? // e.g. "Rebar — high-tensile (Y)", "Welded mesh", "Structural steel"
+  steelGrade                String? // e.g. "450 MPa (Y)"
+  diameterMm                Int? // bar diameter
+  massKgPerM                Decimal?             @db.Decimal(7, 3) // SANS 920 nominal mass
+  sectionSize               String? // e.g. "6.0 x 2.4 m sheet", "40 x 40 x 3 mm"
   readyMixPriceBand         ReadyMixPriceBand?
   images                    ProductImage[]
   priceBand                 PriceBand?
-  packagedPriceBands        PackagedPriceBand[] // CAT-10/CAT-11 packaged goods only
+  packagedPriceBands        PackagedPriceBand[] // CAT-10/CAT-11 packaged goods and CAT-15..18 steel
   complianceDocuments       ComplianceDocument[]
   quoteLineItems            QuoteLineItem[]
   orderLineItems            OrderLineItem[]
@@ -319,7 +325,8 @@ model PackagedPriceBand {
   id                   String     @id @default(cuid())
   productId            String
   product              Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
-  unit                 UnitOfSale // one of the packaged units
+  unit                 UnitOfSale // one of the packaged (or steel) units
+  weightKg             Decimal?   @db.Decimal(10, 3) // mass of one unit, where known (steel lengths, coils)
   marketBenchmarkPrice Decimal?   @db.Decimal(10, 2)
   costBasisPercent     Decimal    @db.Decimal(5, 2) // assumption — % of benchmark, confirm with supplier
   costPerUnit          Decimal?   @db.Decimal(10, 2)
@@ -430,6 +437,15 @@ enum UnitOfSale {
   BULK_TANKER_PER_TON
   DRUM_210L
   IBC_TOTE_1000L
+  // Steel (CAT-15..18, STEEL_CATALOGUE.md) — also priced through PackagedPriceBand
+  LENGTH_6M
+  LENGTH_12M
+  TONNE
+  SHEET
+  ROLL
+  COIL
+  PACK
+  EACH
 }
 
 /// Captures quote-only orders before they become a priced Order — the RFQ

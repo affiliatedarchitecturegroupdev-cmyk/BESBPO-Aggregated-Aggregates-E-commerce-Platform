@@ -1,6 +1,8 @@
 """
-Packaged-goods calculator for CAT-10 (Cement & Hydraulic Binders) and
-CAT-11 (Mortars, Grouts & Admixtures).
+Packaged-goods calculator for CAT-10 (Cement & Hydraulic Binders),
+CAT-11 (Mortars, Grouts & Admixtures) and the steel line, CAT-15 to CAT-18
+(rebar, mesh & brickforce, fixing accessories, structural steel —
+data/steel_catalogue.json, STEEL_CATALOGUE.md).
 
 These are sold as discrete packaged units — a 50kg bag, a 210L drum, a
 tanker load per ton — each with its own list price, so there is no ton/m3
@@ -15,7 +17,8 @@ a quote.
 
 Bagged cement and mortar (25/50kg) take a 4% trade discount; bulk formats
 (bulk bag, tanker, drum, tote) have no self-serve trade price, and every
-Volume/Civil Bulk order of these goods is quoted (PRICING_POLICY.md).
+Volume/Civil Bulk order of these goods is quoted (PRICING_POLICY.md). Steel
+is its own family (STEEL) whatever the unit.
 """
 from __future__ import annotations
 
@@ -25,18 +28,24 @@ from decimal import Decimal
 from pathlib import Path
 from typing import Optional
 
-from calculators.discount_floor import CEMENT_BAGGED, CEMENT_BULK, STOREFRONT_MARKUP, TierQuoteOnly, tier_price
+from calculators.discount_floor import CEMENT_BAGGED, CEMENT_BULK, STEEL, STOREFRONT_MARKUP, TierQuoteOnly, tier_price
 from calculators.tonnage_volume import to_cents
 
 DATA_PATH = Path(__file__).parent.parent / "data" / "b2b_packaged_catalogue.json"
+STEEL_DATA_PATH = Path(__file__).parent.parent / "data" / "steel_catalogue.json"
 READY_STATUS = "Ready — benchmarked"
-PACKAGED_UNITS = ("BAG_25KG", "BAG_50KG", "BULK_BAG_1_5T", "BULK_TANKER_PER_TON", "DRUM_210L", "IBC_TOTE_1000L")
+CEMENT_UNITS = ("BAG_25KG", "BAG_50KG", "BULK_BAG_1_5T", "BULK_TANKER_PER_TON", "DRUM_210L", "IBC_TOTE_1000L")
+# Steel: stock lengths, tonnes, mesh sheets, brickforce rolls, wire coils, packs and single items.
+STEEL_UNITS = ("LENGTH_6M", "LENGTH_12M", "TONNE", "SHEET", "ROLL", "COIL", "PACK", "EACH")
+PACKAGED_UNITS = CEMENT_UNITS + STEEL_UNITS
 BAGGED_UNITS = ("BAG_25KG", "BAG_50KG")
 TIER_QUOTE_STATUS = "Quoted for your tier"
 
 
 def family_for_unit(unit: str) -> str:
-    """Bags take the bagged-cement trade discount; bulk formats are quoted for trade and volume."""
+    """Bags take the bagged-cement trade discount; bulk formats are quoted for trade and volume; steel units are steel."""
+    if unit in STEEL_UNITS:
+        return STEEL
     return CEMENT_BAGGED if unit in BAGGED_UNITS else CEMENT_BULK
 
 
@@ -55,7 +64,7 @@ class PackagedUnit:
     list_price: Optional[Decimal]
     pricing_status: str
     source_note: str
-    weight_kg: Optional[Decimal]  # known for bags only
+    weight_kg: Optional[Decimal]  # bags, and steel units with a known mass
     markup: Decimal = STOREFRONT_MARKUP  # fraction; sets the margin floor
 
     @property
@@ -70,26 +79,44 @@ class PackagedProduct:
     category_slug: str
     units: dict[str, PackagedUnit]
 
+    @property
+    def is_steel(self) -> bool:
+        return any(u in STEEL_UNITS for u in self.units)
 
-def load(path: Path = DATA_PATH) -> tuple[dict, dict[str, PackagedProduct]]:
-    raw = json.loads(path.read_text(encoding="utf-8"))
-    weights = {k: Decimal(str(v)) for k, v in raw["unit_weights_kg"].items()}
+
+def _products(raw: dict, allowed_units: tuple[str, ...]) -> dict[str, PackagedProduct]:
+    weights = {k: Decimal(str(v)) for k, v in raw.get("unit_weights_kg", {}).items()}
     products = {}
     for p in raw["products"]:
         units = {}
         for u in p["units"]:
+            if u["unit"] not in allowed_units:
+                raise ValueError(f"{p['sku']}: unit {u['unit']} is not one of {allowed_units}")
             price = u["list_price_per_unit"]
+            weight = u.get("weight_kg")
             units[u["unit"]] = PackagedUnit(
                 unit=u["unit"],
                 label=u["unit_label"],
                 list_price=None if price is None else Decimal(str(price)),
                 pricing_status=u["pricing_status"],
                 source_note=u["source_note"],
-                weight_kg=weights.get(u["unit"]),
+                weight_kg=Decimal(str(weight)) if weight is not None else weights.get(u["unit"]),
                 markup=STOREFRONT_MARKUP if u.get("markup_percent") is None else Decimal(str(u["markup_percent"])) / 100,
             )
         products[p["sku"]] = PackagedProduct(sku=p["sku"], name=p["name"], category_slug=p["category_slug"], units=units)
-    return raw, products
+    return products
+
+
+def load(path: Path = DATA_PATH) -> tuple[dict, dict[str, PackagedProduct]]:
+    """The CAT-10/11 packaged-goods catalogue."""
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    return raw, _products(raw, CEMENT_UNITS)
+
+
+def load_steel(path: Path = STEEL_DATA_PATH) -> tuple[dict, dict[str, PackagedProduct]]:
+    """The CAT-15..18 steel catalogue — priced exactly like packaged goods, in the STEEL family."""
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    return raw, _products(raw, STEEL_UNITS)
 
 
 @dataclass

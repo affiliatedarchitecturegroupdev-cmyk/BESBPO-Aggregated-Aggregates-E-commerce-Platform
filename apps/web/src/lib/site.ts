@@ -12,6 +12,7 @@ export const SITE_URL = (
 /** Industries, About and Where We Deliver moved to the footer when plant hire and services joined (Oct 2026). */
 export const NAV_LINKS = [
   { href: "/products", label: "Materials" },
+  { href: "/reinforcing-steel", label: "Steel" },
   { href: "/plant-hire", label: "Plant Hire" },
   { href: "/services", label: "Services" },
   { href: "/job-packs", label: "Job Packs" },

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { CUSTOMER_TIERS, type CustomerTierName } from "@/data/catalogue";
 import type { PackagedProduct } from "@/data/packaged";
+import type { SteelProduct } from "@/data/steel";
 import { formatZAR } from "@/lib/pricing";
 import { packagedFamily, tierOptionLabel } from "@/lib/tier-pricing";
 import { AddToCartButton } from "@/components/cart/AddToCartButton";
@@ -12,13 +13,16 @@ import { AddToCartButton } from "@/components/cart/AddToCartButton";
  * Unit-of-sale selector for packaged goods — the counterpart of the
  * bulk/bag calculator. A benchmarked unit prices live at the chosen tier; a
  * unit without a confirmed price explains why and goes to the quote flow,
- * exactly as the pricing service does.
+ * exactly as the pricing service does. Steel (CAT-15..18) uses the same
+ * selector, with its mass per unit and flatbed delivery.
  */
-export function PackagedUnitSelector({ product }: { product: PackagedProduct }) {
+export function PackagedUnitSelector({ product }: { product: PackagedProduct | SteelProduct }) {
+  const steel = product.kind === "steel";
   const [index, setIndex] = useState(Math.max(0, product.units.findIndex((u) => u.prices !== null)));
   const [quantity, setQuantity] = useState(10);
   const [tierName, setTierName] = useState<CustomerTierName>("RETAIL");
   const unit = product.units[index];
+  const weightKg = "weightKg" in unit ? unit.weightKg : null;
   const unitPrice = unit.prices?.[tierName] ?? undefined;
   // A benchmarked unit whose price for this tier is quoted (bulk cement for trade, all cement for volume).
   const tierQuoted = unit.prices !== null && unitPrice === undefined;
@@ -44,7 +48,7 @@ export function PackagedUnitSelector({ product }: { product: PackagedProduct }) 
 
       <div className="mt-4 grid grid-cols-2 gap-3">
         <label className="block">
-          <span className="font-mono text-[10px] uppercase text-slate">Quantity ({unit.label}s)</span>
+          <span className="font-mono text-[10px] uppercase text-slate">{steel ? `Quantity (${unit.label.toLowerCase()})` : `Quantity (${unit.label}s)`}</span>
           <input
             type="number"
             min={1}
@@ -77,10 +81,20 @@ export function PackagedUnitSelector({ product }: { product: PackagedProduct }) 
               <dt className="text-slate">Unit price</dt>
               <dd>{formatZAR(unitPrice)} / {unit.label}</dd>
             </div>
+            {steel && weightKg !== null && (
+              <div className="flex justify-between">
+                <dt className="text-slate">Approximate mass</dt>
+                <dd>{(Math.round(quantity * weightKg * 10) / 10).toLocaleString("en-US")} kg</dd>
+              </div>
+            )}
           </dl>
           <div className="mt-4 rounded-sm bg-basalt px-4 py-3 font-body text-sm text-limestone">
             Materials: <strong>{formatZAR(total)}</strong>
-            <span className="block text-xs text-limestone/70">Delivery is added at checkout, per our bagged-goods rates.</span>
+            <span className="block text-xs text-limestone/70">
+              {steel
+                ? "Delivered on the merchant's flatbed or crane truck — we confirm the slot and any delivery charge with you before dispatch."
+                : "Delivery is added at checkout, per our bagged-goods rates."}
+            </span>
           </div>
           <p className="mt-2 font-mono text-[10px] text-slate">Benchmark: {unit.sourceNote}</p>
         </>
@@ -88,9 +102,11 @@ export function PackagedUnitSelector({ product }: { product: PackagedProduct }) 
         <div className="mt-4 rounded-sm border border-ochre-gold/50 bg-ochre-gold/10 p-3 font-body text-sm text-basalt">
           <p className="font-semibold">Quoted for your tier</p>
           <p className="mt-1 text-xs text-slate">
-            {tierName === "VOLUME_CIVIL_BULK"
-              ? "Volume / Civil Bulk cement is priced per project — request a quote and we confirm your price with the supplier."
-              : "Trade pricing on bulk-bag and tanker cement is quoted with the supplier."}
+            {steel
+              ? "Volume / Civil Bulk steel is priced per project — request a quote and we confirm your price with the merchant."
+              : tierName === "VOLUME_CIVIL_BULK"
+                ? "Volume / Civil Bulk cement is priced per project — request a quote and we confirm your price with the supplier."
+                : "Trade pricing on bulk-bag and tanker cement is quoted with the supplier."}
           </p>
         </div>
       ) : (

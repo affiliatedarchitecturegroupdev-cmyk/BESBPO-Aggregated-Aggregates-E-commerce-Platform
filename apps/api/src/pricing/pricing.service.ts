@@ -1,7 +1,23 @@
 import { BadGatewayException, HttpException, Injectable } from "@nestjs/common";
 
 export type CustomerTierName = "RETAIL" | "CONTRACTOR_TRADE" | "VOLUME_CIVIL_BULK";
-export const PACKAGED_UNITS = ["BAG_25KG", "BAG_50KG", "BULK_BAG_1_5T", "BULK_TANKER_PER_TON", "DRUM_210L", "IBC_TOTE_1000L"] as const;
+export const PACKAGED_UNITS = [
+  "BAG_25KG",
+  "BAG_50KG",
+  "BULK_BAG_1_5T",
+  "BULK_TANKER_PER_TON",
+  "DRUM_210L",
+  "IBC_TOTE_1000L",
+  // Steel (CAT-15..18) is priced through the same packaged-goods path.
+  "LENGTH_6M",
+  "LENGTH_12M",
+  "TONNE",
+  "SHEET",
+  "ROLL",
+  "COIL",
+  "PACK",
+  "EACH",
+] as const;
 export type PackagedUnit = (typeof PACKAGED_UNITS)[number];
 export type PricingUnit = "ton" | "m3" | "bag" | PackagedUnit;
 

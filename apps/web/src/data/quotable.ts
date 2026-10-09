@@ -1,12 +1,13 @@
 /**
  * Everything a customer can put in a cart or a quote: the 48 aggregate SKUs
  * (ton / m³ / bag), the CAT-10/11 packaged goods (bag, drum, tanker…) and
- * CAT-12 ready-mix (per m³),
+ * CAT-12 ready-mix (per m³) and CAT-15..18 steel (length, tonne, sheet…),
  * with the retail list price of each unit where one exists.
  */
 import { PRODUCTS } from "./catalogue";
 import { PACKAGED_PRODUCTS } from "./packaged";
 import { READY_MIX_PRODUCTS } from "./ready-mix";
+import { STEEL_PRODUCTS } from "./steel";
 
 export type QuotableUnit = { code: string; label: string; retailPrice: number | null };
 export type Quotable = {
@@ -50,6 +51,14 @@ export const QUOTABLE: Quotable[] = [
     categorySlug: p.categorySlug,
     gradingStandard: p.gradingStandard,
     minimumQuantity: p.minimumLoadM3,
+    units: p.units.map((u) => ({ code: u.unit, label: u.label, retailPrice: u.prices?.RETAIL ?? null })),
+  })),
+  ...STEEL_PRODUCTS.map((p) => ({
+    sku: p.sku,
+    slug: p.slug,
+    name: p.name,
+    categorySlug: p.categorySlug,
+    gradingStandard: p.gradingStandard,
     units: p.units.map((u) => ({ code: u.unit, label: u.label, retailPrice: u.prices?.RETAIL ?? null })),
   })),
 ];

@@ -10,20 +10,26 @@ import { SocialShareButtons } from "@/components/social/SocialShareButtons";
 import { WhatsAppOrderButton } from "@/components/social/WhatsAppCta";
 import { PackagedProductPage } from "@/components/product/PackagedProductPage";
 import { ReadyMixProductPage } from "@/components/product/ReadyMixProductPage";
+import { SteelProductPage } from "@/components/product/SteelProductPage";
 import { pricePoints, PRODUCTS } from "@/data/catalogue";
 import { CATEGORIES } from "@/data/categories";
 import { PACKAGED_PRODUCTS } from "@/data/packaged";
 import { READY_MIX_PRODUCTS } from "@/data/ready-mix";
-import { getCatalogue, getPackagedCatalogue, getProduct, getReadyMixCatalogue } from "@/lib/cms";
+import { STEEL_PRODUCTS } from "@/data/steel";
+import { getCatalogue, getPackagedCatalogue, getProduct, getReadyMixCatalogue, getSteelCatalogue } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
-  return [...PRODUCTS, ...PACKAGED_PRODUCTS, ...READY_MIX_PRODUCTS].map((p) => ({ slug: p.slug }));
+  return [...PRODUCTS, ...PACKAGED_PRODUCTS, ...READY_MIX_PRODUCTS, ...STEEL_PRODUCTS].map((p) => ({ slug: p.slug }));
 }
 
 async function getPackaged(slug: string) {
   return (await getPackagedCatalogue()).find((p) => p.slug === slug);
+}
+
+async function getSteel(slug: string) {
+  return (await getSteelCatalogue()).find((p) => p.slug === slug);
 }
 
 async function getReadyMix(slug: string) {
@@ -40,6 +46,16 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         title: readyMix.name,
         description: `${readyMix.name} (${readyMix.gradingStandard ?? "SANS 878"})${price ? ` from ${formatZAR(price)}/m³` : ""} — full mixer-truck loads from ${readyMix.minimumLoadM3}m³, delivered by the plant nearest your site.`,
         alternates: { canonical: `/products/${readyMix.slug}` },
+      };
+    }
+    const steel = await getSteel(params.slug);
+    if (steel) {
+      const price = steel.units.find((u) => u.prices)?.prices?.RETAIL;
+      const unit = steel.units.find((u) => u.prices)?.label;
+      return {
+        title: steel.name,
+        description: `${steel.name}${steel.gradingStandard ? ` (${steel.gradingStandard})` : ""}${price ? ` from ${formatZAR(price)} per ${unit?.toLowerCase()}` : ""} — sold by ${steel.units.map((u) => u.label.toLowerCase()).join(", ")}, delivered by flatbed.`,
+        alternates: { canonical: `/products/${steel.slug}` },
       };
     }
     const packaged = await getPackaged(params.slug);
@@ -65,6 +81,8 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
   if (!product) {
     const readyMix = await getReadyMix(params.slug);
     if (readyMix) return <ReadyMixProductPage product={readyMix} />;
+    const steel = await getSteel(params.slug);
+    if (steel) return <SteelProductPage product={steel} />;
     const packaged = await getPackaged(params.slug);
     if (!packaged) notFound();
     return <PackagedProductPage product={packaged} />;

@@ -16,7 +16,11 @@ and quotes are always re-priced by the pricing service.
   retailers × 1.08 (the 8% AA storefront markup). One retailer only → stays
   "Provisional — confirm w/ supplier" and goes to a quote.
 - **Ready-mix:** a dated retail benchmark per strength grade × 1.08.
-- **Cost proxy:** for cement and ready-mix the cost is assumed to be the
+- **Steel (Oct 2026):** the cement rule — lowest regular VAT-inclusive
+  retail price across at least two retailers × 1.08, per stock length,
+  sheet, roll or coil. Per-tonne, 12 m and merchant-only items are quoted
+  (`STEEL_CATALOGUE.md`).
+- **Cost proxy:** for cement, ready-mix and steel the cost is assumed to be the
   benchmark itself (`costBasisPercent` 100) until real supplier
   cost/commission terms are known — the biggest open commercial item.
 
@@ -28,6 +32,7 @@ and quotes are always re-priced by the pricing service.
 | Cement & mortar — bagged (25/50kg) | list | 4% (approved range 3–5%) | quoted |
 | Cement — bulk bag, tanker; admixture drums/totes | list | quoted | quoted |
 | Ready-mix | list | 2% | quoted |
+| Steel (rebar, mesh, brickforce, accessories, sections) | list | 4% (placeholder — owner to set) | quoted |
 
 "Quoted" means the tier has no self-serve price for that family: the cart
 or quote goes to a person, who confirms it with the supplier.
@@ -46,7 +51,7 @@ self-serves a loss. In practice:
 - Sub-base and crusher run (18% markup) get at most ~12.7% at the Volume
   tier, recycled aggregates (15%) ~10.4%; everything else keeps the full 15%.
 - At the 8% storefront markup the floor sits ~4.6% under list, so cement's
-  4% and ready-mix's 2% always pass.
+  4%, steel's 4% and ready-mix's 2% always pass.
 
 The workbook's own flat tier prices are still reconciled to the cent
 (`tests/test_reconcile_workbook.py`); the test also checks that the price a

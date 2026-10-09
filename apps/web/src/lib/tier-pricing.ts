@@ -9,7 +9,7 @@
  */
 import type { CustomerTierName } from "@/data/catalogue";
 
-export type PricingFamily = "AGGREGATE" | "CEMENT_BAGGED" | "CEMENT_BULK" | "READY_MIX";
+export type PricingFamily = "AGGREGATE" | "CEMENT_BAGGED" | "CEMENT_BULK" | "READY_MIX" | "STEEL";
 
 export const MIN_MARGIN = 0.03;
 export const STOREFRONT_MARKUP = 0.08;
@@ -20,6 +20,7 @@ export const SCHEDULE: Record<PricingFamily, Record<CustomerTierName, number | n
   CEMENT_BAGGED: { RETAIL: 0, CONTRACTOR_TRADE: 0.04, VOLUME_CIVIL_BULK: null },
   CEMENT_BULK: { RETAIL: 0, CONTRACTOR_TRADE: null, VOLUME_CIVIL_BULK: null },
   READY_MIX: { RETAIL: 0, CONTRACTOR_TRADE: 0.02, VOLUME_CIVIL_BULK: null },
+  STEEL: { RETAIL: 0, CONTRACTOR_TRADE: 0.04, VOLUME_CIVIL_BULK: null },
 };
 
 const cents = (value: number) => Math.round(value * 100 + 1e-9) / 100;
@@ -44,8 +45,11 @@ export function tierOptionLabel(family: PricingFamily, tier: CustomerTierName, l
   return `${label} (up to ${Math.round(discount * 100)}% off)`;
 }
 
-/** Bagged cement and mortar take the bagged discount; bulk formats are quoted for trade and volume. */
+const STEEL_UNITS = ["LENGTH_6M", "LENGTH_12M", "TONNE", "SHEET", "ROLL", "COIL", "PACK", "EACH"];
+
+/** Bagged cement and mortar take the bagged discount; bulk formats are quoted for trade and volume; steel units are steel. */
 export function packagedFamily(unit: string): PricingFamily {
+  if (STEEL_UNITS.includes(unit)) return "STEEL";
   return unit === "BAG_25KG" || unit === "BAG_50KG" ? "CEMENT_BAGGED" : "CEMENT_BULK";
 }
 
@@ -63,5 +67,5 @@ export function tierBreakdown(tier: CustomerTierName): string {
     const d = pct(family);
     return d === null ? `${name} quoted` : `${Math.round(d * 100)}% off ${name}`;
   };
-  return `${part("AGGREGATE", "aggregates")} · ${part("CEMENT_BAGGED", "bagged cement")} · ${part("READY_MIX", "ready-mix")}. Never below our margin floor.`;
+  return `${part("AGGREGATE", "aggregates")} · ${part("CEMENT_BAGGED", "bagged cement")} · ${part("READY_MIX", "ready-mix")} · ${part("STEEL", "steel")}. Never below our margin floor.`;
 }
