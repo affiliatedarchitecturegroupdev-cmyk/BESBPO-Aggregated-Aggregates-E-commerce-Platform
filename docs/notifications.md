@@ -29,6 +29,9 @@ Code: `apps/api/src/notifications/` (message texts live in
 | Booking signed off / disputed / payout due | — | — | ✓ |
 | Weekly sales & profit summary (Mondays 07:00 SAST) | — | — | ✓³ admins only |
 | Hire, service or partner enquiry received | ✓ acknowledgement + reference, "nothing booked until you accept" | — | ✓ with the form's answers and a link to Admin → Enquiries |
+| Cut & bend schedule received | ✓ reference, rows and mass by size | — | ✓ with contact details and a link to Admin → Cut & bend |
+| Cut & bend schedule quoted | ✓ quoted total, validity, what's included; account holders get an accept link, guests reply | — | — |
+| Cut & bend quote accepted / declined | — | — | ✓ |
 
 ¹ Only to buyers who ticked "send updates on WhatsApp" at checkout or on the
 quote form, and only for events an admin has switched on (off by default —

@@ -88,6 +88,28 @@ export type BookingData = {
   disputeReason: string | null;
 };
 
+export type ScheduleData = {
+  id: string;
+  reference: string;
+  contactName: string;
+  contactEmail: string;
+  contactPhone: string | null;
+  companyName: string | null;
+  projectName: string | null;
+  province: string | null;
+  siteAddress: string | null;
+  requiredBy: string | null; // display form, e.g. "12 Oct 2026"
+  message: string | null;
+  lineCount: number;
+  totalMassKg: number;
+  bySize: [string, string][]; // e.g. ["Y12", "1,234.5 kg"]
+  fileName: string | null;
+  quotedAmount: Money | null;
+  quoteValidUntil: string | null;
+  quoteNotes: string | null;
+  hasAccount: boolean; // guests accept by replying to the email
+};
+
 export type EmailMessage = { subject: string; text: string; html: string };
 export type WhatsAppMessage = { templateName: string; params: string[]; text: string };
 
@@ -345,6 +367,94 @@ export function staffEnquiryEmail(event: NotificationEvent, e: EnquiryData): Ema
 }
 
 // ---------------------------------------------------------------------------
+// Cut & bend (bar bending schedules). Priced by staff with the merchant.
+// ---------------------------------------------------------------------------
+
+const kg = (n: number) => `${n.toLocaleString("en-US", { maximumFractionDigits: 1 })} kg`;
+
+const scheduleRows = (s: ScheduleData): [string, string][] => [
+  ["Schedule", s.reference],
+  ...(s.projectName ? ([["Project", s.projectName]] as [string, string][]) : []),
+  ["Rows entered", s.lineCount ? `${s.lineCount} (${kg(s.totalMassKg)} by SANS 920 nominal mass)` : "None — schedule file attached"],
+  ...(s.fileName ? ([["File", s.fileName]] as [string, string][]) : []),
+  ...(s.requiredBy ? ([["Required by", s.requiredBy]] as [string, string][]) : []),
+];
+
+export function customerScheduleEmail(event: NotificationEvent, s: ScheduleData): EmailMessage | null {
+  switch (event) {
+    case "BENDING_SCHEDULE_RECEIVED":
+      return email(`We've received your bar bending schedule ${s.reference}`, [
+        { kind: "p", text: greeting(s.contactName) },
+        { kind: "p", text: `Thanks — we've logged your cut & bend schedule as ${s.reference}. We'll price the steel, cutting and bending with a merchant and send you a written quote. Nothing is made or charged until you accept it.` },
+        { kind: "rows", rows: scheduleRows(s) },
+        ...(s.bySize.length ? [{ kind: "h" as const, text: "Mass by size" }, { kind: "rows" as const, rows: s.bySize }] : []),
+        s.hasAccount
+          ? { kind: "cta" as const, label: "Open your schedule", href: `${siteUrl()}/account/cut-and-bend/${s.id}` }
+          : { kind: "p" as const, text: `To accept the quote online, create an account with this email address before you send your next schedule: ${siteUrl()}/account/register — or simply reply to our quote email.` },
+        { kind: "p", text: `Reply to this email quoting ${s.reference} if anything on the schedule changes.` },
+      ]);
+    case "BENDING_SCHEDULE_QUOTED":
+      if (s.quotedAmount === null) return null;
+      return email(`Your cut & bend quote ${s.reference}: ${formatZAR(s.quotedAmount)}`, [
+        { kind: "p", text: greeting(s.contactName) },
+        { kind: "p", text: `Here's our quote for schedule ${s.reference}${s.projectName ? ` (${s.projectName})` : ""}.` },
+        {
+          kind: "rows",
+          rows: [
+            ["Quoted total", formatZAR(s.quotedAmount)],
+            ...(s.quoteValidUntil ? ([["Valid until", s.quoteValidUntil]] as [string, string][]) : []),
+            ...(s.lineCount ? ([["Steel by nominal mass", kg(s.totalMassKg)]] as [string, string][]) : []),
+          ],
+        },
+        ...(s.quoteNotes ? [{ kind: "p" as const, text: s.quoteNotes }] : []),
+        s.hasAccount
+          ? { kind: "cta" as const, label: "Accept or decline the quote", href: `${siteUrl()}/account/cut-and-bend/${s.id}` }
+          : { kind: "p" as const, text: `To go ahead, reply to this email quoting ${s.reference} and we'll confirm payment and the delivery slot.` },
+        { kind: "p", text: "Bars are cut and bent to your schedule once you accept, so please check the bar marks, sizes and lengths before you do." },
+      ]);
+    default:
+      return null;
+  }
+}
+
+export function staffScheduleEmail(event: NotificationEvent, s: ScheduleData): EmailMessage | null {
+  const who = s.companyName ?? s.contactName;
+  const link = { kind: "cta" as const, label: "Open the schedule", href: `${siteUrl()}/admin/cut-and-bend/${s.id}` };
+  switch (event) {
+    case "BENDING_SCHEDULE_RECEIVED":
+      return email(`New cut & bend schedule ${s.reference} — ${who}`, [
+        { kind: "p", text: `${who} sent a bar bending schedule to price.` },
+        {
+          kind: "rows",
+          rows: [
+            ...scheduleRows(s),
+            ["Contact", s.contactName],
+            ["Email", s.contactEmail],
+            ...(s.contactPhone ? ([["Phone", s.contactPhone]] as [string, string][]) : []),
+            ...(s.province ? ([["Province", s.province]] as [string, string][]) : []),
+            ...(s.siteAddress ? ([["Site", s.siteAddress]] as [string, string][]) : []),
+          ],
+        },
+        ...(s.bySize.length ? [{ kind: "h" as const, text: "Mass by size" }, { kind: "rows" as const, rows: s.bySize }] : []),
+        ...(s.message ? [{ kind: "p" as const, text: `Message: ${s.message}` }] : []),
+        link,
+      ]);
+    case "BENDING_SCHEDULE_ACCEPTED":
+      return email(`Cut & bend quote accepted — ${s.reference} (${who})`, [
+        { kind: "p", text: `${who} accepted the quote${s.quotedAmount !== null ? ` of ${formatZAR(s.quotedAmount)}` : ""} for ${s.reference}. Confirm payment and the delivery slot, then release the schedule to the merchant.` },
+        link,
+      ]);
+    case "BENDING_SCHEDULE_DECLINED":
+      return email(`Cut & bend quote declined — ${s.reference} (${who})`, [
+        { kind: "p", text: `${who} declined the quote for ${s.reference}. Follow up if a revised quote would help.` },
+        link,
+      ]);
+    default:
+      return null;
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Bookings (plant hire and site services). Partners never see the customer's
 // contact details, and customers never see the partner's — only names.
 // ---------------------------------------------------------------------------
@@ -521,6 +631,10 @@ export const EVENT_CHANNELS: Record<NotificationEvent, { customerEmail: boolean;
   BOOKING_DISPUTED: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
   PAYOUT_DUE: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
   WEEKLY_INSIGHTS: { customerEmail: false, customerWhatsApp: false, staffEmail: true }, // admins only, never the staff inbox list
+  BENDING_SCHEDULE_RECEIVED: { customerEmail: true, customerWhatsApp: false, staffEmail: true },
+  BENDING_SCHEDULE_QUOTED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
+  BENDING_SCHEDULE_ACCEPTED: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
+  BENDING_SCHEDULE_DECLINED: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
 };
 
 /** Events that also email the partner (always on — offers can't wait for a setting). */
@@ -549,6 +663,10 @@ export const EVENT_LABEL: Record<NotificationEvent, string> = {
   BOOKING_DISPUTED: "Booking disputed",
   PAYOUT_DUE: "Partner payout due",
   WEEKLY_INSIGHTS: "Weekly sales & profit summary (admins, Monday 07:00)",
+  BENDING_SCHEDULE_RECEIVED: "Cut & bend schedule received",
+  BENDING_SCHEDULE_QUOTED: "Cut & bend schedule quoted",
+  BENDING_SCHEDULE_ACCEPTED: "Cut & bend quote accepted",
+  BENDING_SCHEDULE_DECLINED: "Cut & bend quote declined",
 };
 
 /** A South African or international number in the digits-only form WhatsApp expects, or null. */

@@ -89,9 +89,9 @@ export function SteelProductPage({ product }: { product: MerchandisedSteelProduc
           </div>
           {product.categorySlug === "reinforcing-bar" && (
             <p className="mt-4 rounded-sm border border-basalt/10 bg-limestone/60 p-3 font-body text-xs text-basalt">
-              <strong>Need it cut and bent?</strong> Send us your bar bending schedule (SANS 282 shape codes) with a{" "}
-              <Link href={`/quote?sku=${product.sku}&unit=TONNE`} className="text-seam-blue underline">quote request</Link> and we price the
-              fabrication with the merchant.
+              <strong>Need it cut and bent?</strong>{" "}
+              <Link href="/reinforcing-steel/cut-and-bend" className="text-seam-blue underline">Send us your bar bending schedule</Link> (SANS 282 shape
+              codes) and we price the steel, cutting and bending with the merchant.
             </p>
           )}
           <div className="mt-6 flex flex-wrap items-center justify-end gap-4 border-t border-basalt/10 pt-5">

@@ -607,6 +607,76 @@ describe("Aggregated Aggregates API (e2e)", () => {
     });
   });
 
+  describe("cut & bend (bar bending schedules)", () => {
+    it("totals a schedule by SANS 920 mass, quotes it, and lets only the owner accept", async () => {
+      const customer = await register("bbs");
+      const other = await register("bbsother");
+      const staff = await register("bbsstaff");
+      await prisma.user.update({ where: { email: `bbsstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      const rows = [
+        { barMark: "A1", member: "Footing", barType: "Y", diameterMm: 12, shapeCode: "00", members: 4, barsPerMember: 6, lengthMm: 5000 },
+        { barMark: "B1", member: "Footing", barType: "R", diameterMm: 8, shapeCode: "51", members: 4, barsPerMember: 20, lengthMm: 1200 },
+      ];
+      const contact = { contactName: "Sipho Dlamini", contactEmail: `bbs-${run}@example.com`, projectName: "House 14" };
+
+      // A stock size check, an empty schedule, and a disguised file are all refused.
+      await http().post("/cut-and-bend").field({ ...contact, lines: JSON.stringify([{ ...rows[0], diameterMm: 14 }]) }).expect(400);
+      await http().post("/cut-and-bend").field({ ...contact, lines: "[]" }).expect(400);
+      await http().post("/cut-and-bend").field({ ...contact, lines: "[]" }).attach("file", Buffer.from("<html></html>"), "bbs.pdf").expect(400);
+
+      const created = await http()
+        .post("/cut-and-bend")
+        .set("Authorization", `Bearer ${customer}`)
+        .field({ ...contact, lines: JSON.stringify(rows) })
+        .attach("file", Buffer.from("%PDF-1.7\n%%EOF\n"), "slab bbs.pdf")
+        .expect(201);
+      expect(created.body.reference).toMatch(/^BBS-\d{6}-[0-9A-F]{6}$/);
+      expect(created.body.totalMassKg).toBe(144.48); // 24 x 5 m x 0.888 + 80 x 1.2 m x 0.395
+      const id = created.body.id as string;
+
+      // Customers can't see each other's schedules; staff can, with totals by size.
+      await http().get(`/cut-and-bend/mine/${id}`).set("Authorization", `Bearer ${other}`).expect(404);
+      await http().get(`/cut-and-bend/admin/${id}`).set("Authorization", `Bearer ${customer}`).expect(403);
+      const detail = await http().get(`/cut-and-bend/admin/${id}`).set("Authorization", `Bearer ${staff}`).expect(200);
+      expect(detail.body.bySize).toEqual([
+        { barType: "Y", diameterMm: 12, bars: 24, metres: 120, massKg: 106.56 },
+        { barType: "R", diameterMm: 8, bars: 80, metres: 96, massKg: 37.92 },
+      ]);
+      expect(detail.body.fileName).toBe("slab-bbs.pdf");
+      expect(detail.body.fileStorageKey).toBeUndefined();
+      const file = await http().get(`/cut-and-bend/admin/${id}/file`).set("Authorization", `Bearer ${staff}`).expect(200);
+      expect(file.headers["content-type"]).toBe("application/pdf");
+      const csv = await http().get(`/cut-and-bend/admin/${id}/csv`).set("Authorization", `Bearer ${staff}`).expect(200);
+      expect(csv.text).toContain("A1,Footing,Y,12,00,4,6,24,5000,106.56");
+
+      // Nothing to accept until staff quote; then only the owner can, once.
+      await http().post(`/cut-and-bend/mine/${id}/accept`).set("Authorization", `Bearer ${customer}`).expect(409);
+      const validUntil = new Date(Date.now() + 7 * 86_400_000).toISOString().slice(0, 10);
+      await http().post(`/cut-and-bend/admin/${id}/quote`).set("Authorization", `Bearer ${staff}`).send({ amount: 4850.5, validUntil, notes: "Cut, bent, tagged by bar mark; delivered to site." }).expect(201);
+      await http().post(`/cut-and-bend/mine/${id}/accept`).set("Authorization", `Bearer ${other}`).expect(404);
+      const accepted = await http().post(`/cut-and-bend/mine/${id}/accept`).set("Authorization", `Bearer ${customer}`).expect(201);
+      expect(accepted.body).toMatchObject({ status: "ACCEPTED", quotedAmount: 4850.5, quoteValidUntil: validUntil });
+      await http().post(`/cut-and-bend/mine/${id}/decline`).set("Authorization", `Bearer ${customer}`).expect(409);
+      const mine = await http().get("/cut-and-bend/mine").set("Authorization", `Bearer ${customer}`).expect(200);
+      expect(mine.body.map((s: { id: string }) => s.id)).toEqual([id]);
+
+      const events = await prisma.notification.findMany({ where: { bendingScheduleId: id }, select: { event: true, audience: true } });
+      expect(events).toEqual(
+        expect.arrayContaining([
+          { event: "BENDING_SCHEDULE_RECEIVED", audience: "CUSTOMER" },
+          { event: "BENDING_SCHEDULE_QUOTED", audience: "CUSTOMER" },
+        ]),
+      );
+
+      // POPIA erasure removes the schedule, its file and its email log.
+      await http().delete(`/cut-and-bend/admin/${id}`).set("Authorization", `Bearer ${staff}`).expect(403);
+      await prisma.user.update({ where: { email: `bbsstaff-${run}@example.com` }, data: { role: "ADMIN" } });
+      await http().delete(`/cut-and-bend/admin/${id}`).set("Authorization", `Bearer ${staff}`).expect(204);
+      expect(await prisma.notification.count({ where: { bendingScheduleId: id } })).toBe(0);
+      expect(await prisma.bendingScheduleLine.count({ where: { scheduleId: id } })).toBe(0);
+    });
+  });
+
   describe("promotions (ad system)", () => {
     let staff: string;
     let customer: string;

@@ -9,6 +9,7 @@ import {
   customerOrderWhatsApp,
   customerQuoteEmail,
   customerQuoteWhatsApp,
+  customerScheduleEmail,
   EVENT_CHANNELS,
   EVENT_LABEL,
   staffCompanyEmail,
@@ -18,6 +19,7 @@ import {
   staffEnquiryEmail,
   staffOrderEmail,
   staffQuoteEmail,
+  staffScheduleEmail,
   whatsappNumber,
   type CompanyData,
   type EmailMessage,
@@ -25,6 +27,7 @@ import {
   type EnquiryData,
   type OrderData,
   type QuoteData,
+  type ScheduleData,
   type WhatsAppMessage,
 } from "./notification-templates";
 import { EmailSender, WhatsAppTemplateSender, type SendResult } from "./providers";
@@ -37,7 +40,7 @@ type Outgoing = {
   email?: EmailMessage;
   whatsapp?: WhatsAppMessage;
 };
-type Links = { orderId?: string; quoteId?: string; companyId?: string; enquiryId?: string; bookingId?: string };
+type Links = { orderId?: string; quoteId?: string; companyId?: string; enquiryId?: string; bookingId?: string; bendingScheduleId?: string };
 
 const BASIS_UNITS: Record<string, [string, string]> = {
   DAY: ["day", "days"],
@@ -222,6 +225,46 @@ export class NotificationsService implements OnModuleDestroy {
       const staff = setting.staffEmail ? staffEnquiryEmail(event, data) : null;
       if (staff) out.push(...(await this.staffRecipients()).map((recipient) => ({ audience: "STAFF" as const, channel: "EMAIL" as const, recipient, email: staff })));
       await this.enqueue(event, out, { enquiryId: e.id });
+    });
+  }
+
+  async bendingSchedule(event: NotificationEvent, scheduleId: string) {
+    await this.safely(event, async () => {
+      const s = await this.prisma.bendingSchedule.findUnique({ where: { id: scheduleId }, include: { lines: { select: { barType: true, diameterMm: true, massKg: true } } } });
+      if (!s) return;
+      const sizes = new Map<string, number>();
+      for (const l of s.lines) sizes.set(`${l.barType}${l.diameterMm}`, (sizes.get(`${l.barType}${l.diameterMm}`) ?? 0) + Number(l.massKg));
+      const date = (d: Date | null) => (d ? `${d.getUTCDate()} ${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][d.getUTCMonth()]} ${d.getUTCFullYear()}` : null);
+      const data: ScheduleData = {
+        id: s.id,
+        reference: s.reference,
+        contactName: s.contactName,
+        contactEmail: s.contactEmail,
+        contactPhone: s.contactPhone,
+        companyName: s.companyName,
+        projectName: s.projectName,
+        province: s.province,
+        siteAddress: s.siteAddress,
+        requiredBy: date(s.requiredBy),
+        message: s.message,
+        lineCount: s.lineCount,
+        totalMassKg: Number(s.totalMassKg),
+        bySize: [...sizes.entries()]
+          .sort((a, b) => Number(b[0].slice(1)) - Number(a[0].slice(1)))
+          .map(([size, mass]) => [size, `${mass.toLocaleString("en-US", { maximumFractionDigits: 1 })} kg`]),
+        fileName: s.fileName,
+        quotedAmount: s.quotedAmount,
+        quoteValidUntil: date(s.quoteValidUntil),
+        quoteNotes: s.quoteNotes,
+        hasAccount: s.userId !== null,
+      };
+      const setting = await this.setting(event);
+      const out: Outgoing[] = [];
+      const customer = setting.customerEmail ? customerScheduleEmail(event, data) : null;
+      if (customer && EMAIL_PATTERN.test(s.contactEmail)) out.push({ audience: "CUSTOMER", channel: "EMAIL", recipient: s.contactEmail, email: customer });
+      const staff = setting.staffEmail ? staffScheduleEmail(event, data) : null;
+      if (staff) out.push(...(await this.staffRecipients()).map((recipient) => ({ audience: "STAFF" as const, channel: "EMAIL" as const, recipient, email: staff })));
+      await this.enqueue(event, out, { bendingScheduleId: s.id });
     });
   }
 

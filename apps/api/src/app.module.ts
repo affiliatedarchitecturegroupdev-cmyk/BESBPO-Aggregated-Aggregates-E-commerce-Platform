@@ -29,6 +29,7 @@ import { EnquiriesModule } from "./enquiries/enquiries.module";
 import { BookingsModule } from "./bookings/bookings.module";
 import { FinanceModule } from "./finance/finance.module";
 import { InsightsModule } from "./insights/insights.module";
+import { CutAndBendModule } from "./cut-and-bend/cut-and-bend.module";
 
 @Module({
   imports: [
@@ -61,6 +62,7 @@ import { InsightsModule } from "./insights/insights.module";
     BookingsModule,
     FinanceModule,
     InsightsModule,
+    CutAndBendModule,
   ],
 })
 export class AppModule {}
