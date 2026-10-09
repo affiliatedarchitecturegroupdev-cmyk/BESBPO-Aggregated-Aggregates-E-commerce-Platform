@@ -2412,6 +2412,40 @@
         "owner-upload/dc34bd31-image.png"
       ],
       "permission": "GRANTED"
+    },
+    {
+      "file": "22c7d625667b.webp",
+      "width": 905,
+      "height": 1200,
+      "bytes": 46358,
+      "originalWidth": 1333,
+      "originalHeight": 1767,
+      "source": "Mamba Cement (mambacement.com)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Official pack shot: Mamba Cement 42,5R CEM II early strength, 50 kg bag. Official product image supplied by the owner, Oct 2026 \u2014 permission confirmed (established supplier relationship).",
+      "flags": [],
+      "originalPaths": [
+        "owner-upload/0264b3b4-image.png"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "ff047ed3b374.webp",
+      "width": 461,
+      "height": 554,
+      "bytes": 29504,
+      "originalWidth": 461,
+      "originalHeight": 554,
+      "source": "Mamba Cement (mambacement.com)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Official pack shot: Mamba masonry cement MC 22,5X, 50 kg bag. Official product image supplied by the owner, Oct 2026 \u2014 permission confirmed (established supplier relationship).",
+      "flags": [],
+      "originalPaths": [
+        "owner-upload/fcb963a5-image.jpg"
+      ],
+      "permission": "GRANTED"
     }
   ],
   "products": {
@@ -2762,6 +2796,12 @@
     ],
     "AA-CEM-AFRIMAT-BUILDCRETE": [
       "42dccb1b15a9.webp"
+    ],
+    "AA-CEM-MAMBA-425N": [
+      "22c7d625667b.webp"
+    ],
+    "AA-CEM-MAMBA-MASONRY-225X": [
+      "ff047ed3b374.webp"
     ]
   },
   "noImage": {
@@ -2774,7 +2814,6 @@
     "AA-BND-ROADCAP-001": "Blended binder from more than one supplier \u2014 needs a generic photo",
     "AA-CEM-DANGOTE-FALCON": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
     "AA-CEM-DUGONGO-425N": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
-    "AA-CEM-MAMBA-425N": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
     "AA-CEM-PPC-SUREWALL-225X": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
     "AA-CEM-KWIKBUILD-MASONRY-225X": "Only a generic plant photo was found \u2014 needs a masonry 22,5X pack shot"
   },

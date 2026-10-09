@@ -39,8 +39,8 @@ def test_every_published_price_reconciles_with_its_benchmark_and_markup():
 
 def test_the_cement_master_catalogue_is_complete_and_deduplicated():
     cement = [p for p in RAW["products"] if p["category_slug"] == "cement-hydraulic-binders"]
-    assert len(cement) == 37 and len(RAW["products"]) == 41
-    assert len({p["slug"] for p in RAW["products"]}) == 41
+    assert len(cement) == 38 and len(RAW["products"]) == 42
+    assert len({p["slug"] for p in RAW["products"]}) == 42
     # Bagged cement goes live at the lowest regular retail price x 1.08 (PRICING_POLICY.md).
     for p in cement:
         for unit in p["units"]:

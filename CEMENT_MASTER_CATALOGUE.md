@@ -2,7 +2,7 @@
 
 > **Where it lives in this repo:** `services/pricing/data/b2b_packaged_catalogue.json`
 > (copied to `apps/web/src/data/b2b-packaged-catalogue.json`; a test fails if
-> they drift) — 37 cement products with 92 pack-size bands, plus the 4
+> they drift) — 38 cement products with 92 pack-size bands, plus the 4
 > mortar/grout/admixture records. The taxonomy attributes (`manufacturer`,
 > `brand`, `cement_family`, `cement_class`, `cement_type`, `region_note`,
 > `specialist_characteristics`) are columns on `Product` (migration
@@ -182,6 +182,11 @@ parent/child instead of a flat sheet.
   "Specialist"); pack sizes now follow the sheets — FastCast and DuraBuild
   50 kg bags only, Powercrete Plus adds 25 kg and 50 kg bags (quote-only
   until benchmarked).
+  Mamba's material safety data sheet (Jan 2024) lists CEM I 52,5N, CEM II/A-M
+  42,5R and MC 22,5X — no 42,5N — so AA-CEM-MAMBA-425N is now "Mamba Cement
+  42,5R" (CEM II/A-M; slug mamba-cement-42-5r; SKU unchanged), and Mamba
+  Masonry Cement MC 22,5X (AA-CEM-MAMBA-MASONRY-225X, 50 kg, quote-only) was
+  added: 38 cement products. CEM I 52,5N isn't listed yet (no pack shot).
 - **Ready-Mix Concrete** — a separate idea raised in the same conversation,
   intentionally not folded into this cement work. See the discussion in
   that thread — it's a different sourcing model (producers, not

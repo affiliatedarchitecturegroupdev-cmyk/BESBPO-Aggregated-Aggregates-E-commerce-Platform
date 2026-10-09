@@ -66,6 +66,8 @@ export const DATASHEETS: Record<string, { href: string; title: string; kind?: "d
   "AA-CEM-AFRIMAT-ROADCEM-325N": { href: "/downloads/datasheets/afrimat-roadcem-32-5n.pdf", title: "Afrimat RoadCem 32,5N technical data sheet" },
   "AA-CEM-AFRIMAT-BUILDCRETE": { href: "/downloads/datasheets/afrimat-buildcrete-42-5n.pdf", title: "Afrimat BuildCrete 42,5N technical data sheet" },
   "AA-CEM-AFRIMAT-DURABUILD": { href: "/downloads/datasheets/afrimat-durabuild-32-5n.pdf", title: "Afrimat DuraBuild 32,5N technical data sheet" },
+  "AA-CEM-MAMBA-425N": { href: "/downloads/datasheets/mamba-cement-safety-data-sheet-2024.pdf", title: "Mamba Cement material safety data sheet (Jan 2024) — covers CEM I 52,5N, CEM II/A-M 42,5R and MC 22,5X", kind: "safety data sheet" },
+  "AA-CEM-MAMBA-MASONRY-225X": { href: "/downloads/datasheets/mamba-cement-safety-data-sheet-2024.pdf", title: "Mamba Cement material safety data sheet (Jan 2024) — covers CEM I 52,5N, CEM II/A-M 42,5R and MC 22,5X", kind: "safety data sheet" },
   "AA-CEM-KWIKBUILD-325N": { href: "/downloads/datasheets/kwikbuild-32-5n-safety-data-sheet.pdf", title: "Kwikbuild 32,5 N material safety data sheet (2020)", kind: "safety data sheet" },
 };
 
