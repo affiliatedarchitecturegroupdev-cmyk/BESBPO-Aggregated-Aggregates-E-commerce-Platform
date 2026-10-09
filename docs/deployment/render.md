@@ -263,6 +263,10 @@ in **Admin → Notifications** rather than sent.
   for the work-in-progress commit, once for the final one). Point the
   Blueprint at `main` (Render → Blueprint → Settings → Branch) so only
   merged pull requests deploy.
+- **Steel suppliers and steel fixing (Oct 2026).** No migration. The
+  pre-deploy supplier seed adds 41 researched steel merchant and mill leads
+  from `suppliers-steel.csv` as unverified and inactive (existing suppliers
+  are never touched). Steel fixing is a new quoted site service.
 - **Cut & bend (Oct 2026).** Migration `20261015090000_cut_and_bend` adds
   bar bending schedules (`BendingSchedule`, `BendingScheduleLine`), four
   notification events and the notification link. Uploaded schedule files go

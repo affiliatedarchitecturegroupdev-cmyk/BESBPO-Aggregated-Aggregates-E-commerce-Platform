@@ -10,8 +10,8 @@ import catalogue from "./plant-services-catalogue.json";
  * trace to a partner's written rate (AGENTIC_RULES.md rule 1).
  */
 export type PlantClass = "TLB" | "EXCAVATOR" | "TIPPER" | "ROLLER" | "SKID_STEER" | "WHEEL_LOADER" | "SITE_DUMPER" | "WATER_TRUCK";
-export type ServiceType = "HAULAGE" | "RUBBLE_REMOVAL" | "SKIP_BIN" | "SITE_CLEARING" | "DEMOLITION" | "WASTE_MANAGEMENT";
-export type ServiceUnit = "PER_LOAD" | "PER_DAY" | "PER_SKIP" | "PER_M2" | "QUOTE";
+export type ServiceType = "HAULAGE" | "RUBBLE_REMOVAL" | "SKIP_BIN" | "SITE_CLEARING" | "DEMOLITION" | "WASTE_MANAGEMENT" | "STEEL_FIXING";
+export type ServiceUnit = "PER_LOAD" | "PER_DAY" | "PER_SKIP" | "PER_M2" | "PER_TONNE" | "QUOTE";
 
 export type PlantItem = {
   sku: string;
@@ -78,6 +78,7 @@ export const SERVICE_TYPE_LABEL: Record<ServiceType, string> = {
   SITE_CLEARING: "Site clearing",
   DEMOLITION: "Demolition",
   WASTE_MANAGEMENT: "Waste management",
+  STEEL_FIXING: "Steel fixing",
 };
 
 export const SERVICE_UNIT_LABEL: Record<ServiceUnit, string> = {
@@ -85,6 +86,7 @@ export const SERVICE_UNIT_LABEL: Record<ServiceUnit, string> = {
   PER_DAY: "Per day",
   PER_SKIP: "Per skip",
   PER_M2: "Per m²",
+  PER_TONNE: "Per tonne fixed",
   QUOTE: "Always quoted",
 };
 

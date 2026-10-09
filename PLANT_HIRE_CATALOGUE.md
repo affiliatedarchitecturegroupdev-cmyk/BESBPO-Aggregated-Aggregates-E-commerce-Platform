@@ -27,9 +27,10 @@ started with an arrival code and paid out after sign-off (Phase C).
 - 18 plant SKUs (`AA-PLT-*`): TLB 4x4; excavators 1.7t, 3t, 5t, 8t, 14t, 20t,
   30t; tippers 6m³, 10m³, 34t; rollers 1–3t, 8–12t, padfoot; skid steer,
   wheel loader, site dumper, water truck.
-- 10 services (`AA-SVC-*`): tipper haulage 6m³ / 10m³ per load and per day;
+- 11 services (`AA-SVC-*`): tipper haulage 6m³ / 10m³ per load and per day;
   rubble removal 6m³ / 10m³; skip bins 6m³ / 12m³; site clearing per m²;
-  demolition and scheduled waste (always quoted).
+  steel fixing per tonne fixed (Oct 2026, `STEEL_CATALOGUE.md`); demolition
+  and scheduled waste (always quoted).
 - The same JSON is mirrored at `apps/web/src/data/plant-services-catalogue.json`;
   the loader below writes both.
 - Pricing service: `GET /products/plant-hire`, `GET /products/site-services`,

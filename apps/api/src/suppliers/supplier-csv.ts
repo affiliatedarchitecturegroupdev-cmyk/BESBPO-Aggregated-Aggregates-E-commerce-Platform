@@ -14,7 +14,7 @@ import { SupplierTier } from "@aggregates/database";
  * not a qualified partner.
  */
 
-/** CAT-01..CAT-09 map onto the nine core categories; CAT-10/11 onto the B2B packaged-goods ones; CAT-12 is ready-mix. */
+/** CAT-01..CAT-09 map onto the nine core categories; CAT-10/11 onto the B2B packaged-goods ones; CAT-12 is ready-mix; CAT-15..18 are steel. */
 export const CATEGORY_CODES: Record<string, string> = {
   "CAT-01": "sub-base-base-course",
   "CAT-02": "crushed-stone",
@@ -28,6 +28,11 @@ export const CATEGORY_CODES: Record<string, string> = {
   "CAT-10": "cement-hydraulic-binders",
   "CAT-11": "mortars-grouts-admixtures",
   "CAT-12": "ready-mix-concrete",
+  // Steel (STEEL_CATALOGUE.md)
+  "CAT-15": "reinforcing-bar",
+  "CAT-16": "mesh-brickforce",
+  "CAT-17": "steel-fixing-accessories",
+  "CAT-18": "structural-steel",
 };
 const CODE_BY_SLUG = Object.fromEntries(Object.entries(CATEGORY_CODES).map(([code, slug]) => [slug, code]));
 
