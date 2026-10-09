@@ -48,16 +48,15 @@ manufacturer stay hidden until their permission is confirmed.
 | AfriSam (afrisam.co.za) | StarBuild 32,5N · All Purpose 42,5N · High Strength (bag shows the 52,5N southern grade) · Rapid Hard 52,5R (bag shown; we sell it in bulk) · Roadstab 32,5N |
 | Cemza (cemza.co) | General Purpose 32,5N · All Purpose 42,5N · Rapid Strength 42,5R · Ultra Strong 52,5N · Masonry 22,5X · RoadPro 32,5N |
 | NPC - Natal Portland Cement (npc.co.za) | Newcastle Portland-fly ash 32,5N · Durban and Simuma Portland-limestone 32,5R (each with its own plant LOA number) |
+| Sephaku Cement (Dangote Cement South Africa) | Official images supplied by the owner: Sephaku 32 (32,5R bag) · Sephaku 42 (42,5N and 42,5R bags) · Sephaku 52 (52,5N bag) · SepROAD 32,5N |
 
 **Rejected** (listed in the manifest's `rejected`): the three Kwikbuild files
 were one identical plant photo (a forklift loading pallets) with no readable
 product or class; the five Afrimat files were one identical photo of crushed
 limestone on a conveyor — not cement. **Still to source** (23, listed in
 `noImage`): KWIKBUILD 32.5N, 42.5N and Masonry; Afrimat DuraBuild,
-Buildcrete, RoadCem, FastCast and Powercrete Plus; all PPC products; Sephaku
-32/42/52/SepROAD; Dangote Falcon; Dugongo; Mamba; and generic photos for the
-unbranded Bulk Cement 52.5N and the Road-Capping Binder. Sephaku 52 is
-bulk-only per its brochure, so it needs a bulk photo, not a bag.
+Buildcrete, RoadCem, FastCast and Powercrete Plus; all PPC products; Dangote Falcon; Dugongo; Mamba; and generic photos for the
+unbranded Bulk Cement 52.5N and the Road-Capping Binder.
 
 ## Open-licence photos — live now
 
