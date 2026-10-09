@@ -176,6 +176,12 @@ parent/child instead of a flat sheet.
   Kwikbuild's 2020 material safety data sheets are linked on KWIKBUILD 32.5N
   and 42.5N; they give the CEM designations (32,5 N: CEM V/B (S-V);
   42,5 N: CEM II/B-M — previously listed in error as CEM V/A).
+  Afrimat's technical data sheets (FastCast, Powercrete Plus, RoadCem,
+  BuildCrete, DuraBuild) are linked on those products. From them: FastCast
+  is CEM I 52,5R and Powercrete Plus CEM II/A-V 52,5N (previously only
+  "Specialist"); pack sizes now follow the sheets — FastCast and DuraBuild
+  50 kg bags only, Powercrete Plus adds 25 kg and 50 kg bags (quote-only
+  until benchmarked).
 - **Ready-Mix Concrete** — a separate idea raised in the same conversation,
   intentionally not folded into this cement work. See the discussion in
   that thread — it's a different sourcing model (producers, not

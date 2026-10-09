@@ -2327,6 +2327,91 @@
         "owner-upload/5497debf-image.png"
       ],
       "permission": "GRANTED"
+    },
+    {
+      "file": "10f7e92bf819.webp",
+      "width": 597,
+      "height": 939,
+      "bytes": 76884,
+      "originalWidth": 597,
+      "originalHeight": 939,
+      "source": "Afrimat (afrimat.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Official pack shot: Afrimat FastCast premium high early strength cement 52,5R, 50 kg bag. Official product image supplied by the owner, Oct 2026 \u2014 permission confirmed (established supplier relationship).",
+      "flags": [],
+      "originalPaths": [
+        "owner-upload/55a8f8f8-image.png"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "ee007e1a24ec.webp",
+      "width": 597,
+      "height": 939,
+      "bytes": 67068,
+      "originalWidth": 597,
+      "originalHeight": 939,
+      "source": "Afrimat (afrimat.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Official pack shot: Afrimat Powercrete Plus 52,5N, 50 kg bag. Official product image supplied by the owner, Oct 2026 \u2014 permission confirmed (established supplier relationship).",
+      "flags": [],
+      "originalPaths": [
+        "owner-upload/943a65b0-image.png"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "17d0a009f5f2.webp",
+      "width": 597,
+      "height": 939,
+      "bytes": 70102,
+      "originalWidth": 597,
+      "originalHeight": 939,
+      "source": "Afrimat (afrimat.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Official pack shot: Afrimat RoadCem road binder 32,5N, 50 kg bag. Official product image supplied by the owner, Oct 2026 \u2014 permission confirmed (established supplier relationship).",
+      "flags": [],
+      "originalPaths": [
+        "owner-upload/4ab59351-image.png"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "5e5145cf0b2c.webp",
+      "width": 597,
+      "height": 939,
+      "bytes": 81212,
+      "originalWidth": 597,
+      "originalHeight": 939,
+      "source": "Afrimat (afrimat.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Official pack shot: Afrimat DuraBuild general purpose cement 32,5N, 50 kg bag. Official product image supplied by the owner, Oct 2026 \u2014 permission confirmed (established supplier relationship).",
+      "flags": [],
+      "originalPaths": [
+        "owner-upload/f727d7eb-image.png"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "42dccb1b15a9.webp",
+      "width": 597,
+      "height": 939,
+      "bytes": 80842,
+      "originalWidth": 597,
+      "originalHeight": 939,
+      "source": "Afrimat (afrimat.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Official pack shot: Afrimat BuildCrete 42,5N, 50 kg bag. Official product image supplied by the owner, Oct 2026 \u2014 permission confirmed (established supplier relationship).",
+      "flags": [],
+      "originalPaths": [
+        "owner-upload/dc34bd31-image.png"
+      ],
+      "permission": "GRANTED"
     }
   ],
   "products": {
@@ -2662,6 +2747,21 @@
     ],
     "AA-CEM-KWIKBUILD-325N": [
       "3b31c899f39d.webp"
+    ],
+    "AA-CEM-AFRIMAT-FASTCAST": [
+      "10f7e92bf819.webp"
+    ],
+    "AA-CEM-AFRIMAT-POWERCRETE-PLUS": [
+      "ee007e1a24ec.webp"
+    ],
+    "AA-CEM-AFRIMAT-ROADCEM-325N": [
+      "17d0a009f5f2.webp"
+    ],
+    "AA-CEM-AFRIMAT-DURABUILD": [
+      "5e5145cf0b2c.webp"
+    ],
+    "AA-CEM-AFRIMAT-BUILDCRETE": [
+      "42dccb1b15a9.webp"
     ]
   },
   "noImage": {
@@ -2673,15 +2773,10 @@
     "AA-CEM-525N-001": "Unbranded bulk supply \u2014 needs a generic (no-brand) bulk tanker or bag photo",
     "AA-BND-ROADCAP-001": "Blended binder from more than one supplier \u2014 needs a generic photo",
     "AA-CEM-DANGOTE-FALCON": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
-    "AA-CEM-AFRIMAT-DURABUILD": "Only an unrelated limestone photo was found",
-    "AA-CEM-AFRIMAT-BUILDCRETE": "Only an unrelated limestone photo was found",
     "AA-CEM-DUGONGO-425N": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
     "AA-CEM-MAMBA-425N": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
     "AA-CEM-PPC-SUREWALL-225X": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
-    "AA-CEM-KWIKBUILD-MASONRY-225X": "Only a generic plant photo was found \u2014 needs a masonry 22,5X pack shot",
-    "AA-CEM-AFRIMAT-ROADCEM-325N": "Only an unrelated limestone photo was found",
-    "AA-CEM-AFRIMAT-FASTCAST": "Only an unrelated limestone photo was found",
-    "AA-CEM-AFRIMAT-POWERCRETE-PLUS": "Only an unrelated limestone photo was found"
+    "AA-CEM-KWIKBUILD-MASONRY-225X": "Only a generic plant photo was found \u2014 needs a masonry 22,5X pack shot"
   },
   "rejected": {
     "01-sub-base-base-course/G1 Crushed Stone/01.png": "Shows large boulders, not G1 crusher-run base course",

@@ -793,20 +793,21 @@
    "slug": "afrimat-durabuild",
    "name": "Afrimat DuraBuild",
    "category_slug": "cement-hydraulic-binders",
-   "grading_standard": "SANS 50197-1 (CEM II 32,5N)",
+   "grading_standard": "SANS 50197-1, 32,5 N (CEM II/B-L at Lichtenburg or CEM V/B (S-V) at Randfontein)",
    "manufacturer": "Afrimat Ltd",
    "brand": "Afrimat",
    "cement_family": "General Purpose Cement",
    "cement_class": "32,5N",
-   "cement_type": null,
+   "cement_type": "CEM II/B-L 32,5 N or CEM V/B (S-V) 32,5 N",
    "region_note": null,
    "specialist_characteristics": [],
    "typical_uses": [
-    "General-purpose concrete and mortar",
-    "Brickwork and blockwork",
-    "Everyday structural work"
+    "Concrete block and brick making",
+    "Foundations, driveways, paths and parking slabs",
+    "Unreinforced light industrial floors",
+    "Mortar and plaster; concrete columns and slabs"
    ],
-   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "handling_notes": "Keep cement away from moisture: store bags in a shed on plastic sheeting or pallets, stack pallets no more than two high, keep doors and windows closed, and use first in, first out. Outside, stack on pallets or timber slats under plastic sheeting ridged so rain runs off.",
    "units": [
     {
      "unit": "BAG_50KG",
@@ -817,29 +818,7 @@
      "markup_percent": 8,
      "list_price_per_unit": null,
      "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "Only one retail source found (Oct 2026) — below the 2-retailer threshold for a live price. Confirm current price with supplier before publishing."
-    },
-    {
-     "unit": "BULK_BAG_1_5T",
-     "unit_label": "1.5-ton bulk bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
-     "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
-    },
-    {
-     "unit": "BULK_TANKER_PER_TON",
-     "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
-     "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+     "source_note": "Only one retail source found (Oct 2026) — below the 2-retailer threshold for a live price. Confirm current price with supplier before publishing. Afrimat's datasheet lists DuraBuild in 50 kg bags only."
     }
    ]
   },
@@ -1017,20 +996,20 @@
    "slug": "afrimat-buildcrete",
    "name": "Afrimat Buildcrete",
    "category_slug": "cement-hydraulic-binders",
-   "grading_standard": "SANS 50197-1 (CEM II 42,5N)",
+   "grading_standard": "SANS 50197-1 and 50197-5, 42,5 N (CEM II/B-M (V-L), CEM IV/B-V or CEM VI (S-V), depending on the factory)",
    "manufacturer": "Afrimat Ltd",
    "brand": "Afrimat",
    "cement_family": "General Purpose Cement",
    "cement_class": "42,5N",
-   "cement_type": null,
+   "cement_type": "CEM II/B-M (V-L) 42,5 N at Lichtenburg; CEM IV/B-V or CEM VI (S-V) 42,5 N at Randfontein and Kaalfontein",
    "region_note": null,
    "specialist_characteristics": [],
    "typical_uses": [
-    "General-purpose structural concrete",
-    "Brickwork and blockwork mortar",
-    "Everyday building work"
+    "Concrete and mortar work, from major projects to small contractors and DIY",
+    "Floor slabs and off-shutter concrete",
+    "Mortar and plaster"
    ],
-   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "handling_notes": "Keep cement away from moisture: store bags in a shed on plastic sheeting or pallets, stack pallets no more than two high, keep doors and windows closed, and use first in, first out. Outside, stack on pallets or timber slats under plastic sheeting ridged so rain runs off.",
    "units": [
     {
      "unit": "BAG_50KG",
@@ -1773,20 +1752,20 @@
    "slug": "afrimat-roadcem-32-5n",
    "name": "Afrimat RoadCem",
    "category_slug": "cement-hydraulic-binders",
-   "grading_standard": "SANS 50197-1 (CEM II 32,5N, road-stabilisation grade)",
+   "grading_standard": "SANS 50197-1, 32,5 N road-binding cement (CEM V/B (S-V) at Randfontein or CEM II/B-L at Lichtenburg)",
    "manufacturer": "Afrimat Ltd",
    "brand": "Afrimat",
    "cement_family": "Road Stabilisation Cement",
    "cement_class": "32,5N",
-   "cement_type": null,
+   "cement_type": "CEM V/B (S-V) 32,5 or CEM II/B-L 32,5 N",
    "region_note": null,
    "specialist_characteristics": [],
    "typical_uses": [
-    "Road-base, sub-base and subgrade stabilisation",
-    "Civil earthworks",
-    "Pavement rehabilitation"
+    "Stabilising road base, sub-base and sub-grade materials (and ash dumps)",
+    "Soils of low or moderate plasticity",
+    "In-situ (including deep-lift) stabilisation or pugmill blending"
    ],
-   "handling_notes": "Mixing ratios are project- and soil-specific -- confirm with supplier/engineer before use.",
+   "handling_notes": "Keep cement away from moisture: store bags in a shed on plastic sheeting or pallets, stack pallets no more than two high, keep doors and windows closed, and use first in, first out. Outside, stack on pallets or timber slats under plastic sheeting ridged so rain runs off. Application rates depend on the soil — a laboratory soil evaluation sets the right RoadCem and rate.",
    "units": [
     {
      "unit": "BAG_50KG",
@@ -1905,42 +1884,33 @@
    "slug": "afrimat-fastcast",
    "name": "Afrimat FastCast",
    "category_slug": "cement-hydraulic-binders",
-   "grading_standard": "Manufacturer technical data sheet (precast-grade)",
+   "grading_standard": "SANS 50197-1, 52,5 R (Portland cement CEM I, made at Lichtenburg)",
    "manufacturer": "Afrimat Ltd",
    "brand": "Afrimat",
-   "cement_family": "Precast & Concrete Products Cement",
-   "cement_class": "Specialist / high early strength",
-   "cement_type": null,
+   "cement_family": "High Early Strength Cement",
+   "cement_class": "52,5R",
+   "cement_type": "CEM I 52,5 R (Portland cement with a strength enhancer)",
    "region_note": null,
-   "specialist_characteristics": [],
-   "typical_uses": [
-    "Precast blocks, pipes and poles",
-    "Spun concrete pipe manufacture",
-    "Roof tile and brick/block manufacture"
+   "specialist_characteristics": [
+    "High early strength"
    ],
-   "handling_notes": "Formulated for rapid demoulding in precast production -- follow the manufacturer's technical data sheet for mix design and cure schedule.",
+   "typical_uses": [
+    "Precast concrete, and brick and block making (quicker mould turnaround)",
+    "Unreinforced light industrial floors",
+    "Foundations, garden paths and driveways"
+   ],
+   "handling_notes": "Keep cement away from moisture: store bags in a shed on plastic sheeting or pallets, stack pallets no more than two high, keep doors and windows closed, and use first in, first out. Outside, stack on pallets or timber slats under plastic sheeting ridged so rain runs off.",
    "units": [
     {
-     "unit": "BULK_BAG_1_5T",
-     "unit_label": "1.5-ton bulk bag",
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
      "market_benchmark_price": null,
      "cost_basis_percent": 100,
      "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
      "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold in bulk to precast/specialist producers, not bagged retail — request a direct supplier quote."
-    },
-    {
-     "unit": "BULK_TANKER_PER_TON",
-     "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
-     "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold in bulk to precast/specialist producers, not bagged retail — request a direct supplier quote."
+     "source_note": "Afrimat's FastCast datasheet lists 50 kg bags only (Oct 2026) — request a supplier quote."
     }
    ]
   },
@@ -1949,23 +1919,47 @@
    "slug": "afrimat-powercrete-plus",
    "name": "Afrimat Powercrete Plus",
    "category_slug": "cement-hydraulic-binders",
-   "grading_standard": "Manufacturer technical data sheet (prestressed/precast-grade)",
+   "grading_standard": "SANS 50197-1, 52,5 N (Portland-fly ash cement CEM II/A-V, made at Lichtenburg)",
    "manufacturer": "Afrimat Ltd",
    "brand": "Afrimat",
-   "cement_family": "Precast & Concrete Products Cement",
-   "cement_class": "Specialist",
-   "cement_type": null,
+   "cement_family": "Premium Technical Cement",
+   "cement_class": "52,5N",
+   "cement_type": "CEM II/A-V 52,5 N (Portland-fly ash)",
    "region_note": null,
    "specialist_characteristics": [
+    "High ultimate strength",
+    "Good early strength",
     "Lower heat of hydration"
    ],
    "typical_uses": [
-    "Post-tensioned / prestressed slabs and beams",
-    "Spun concrete pipes",
-    "Dams, reservoirs and mass structural concrete"
+    "Post-tensioned and prestressed beams",
+    "Ready-mixed concrete for large construction projects",
+    "Site blends extended with fly ash or slag"
    ],
-   "handling_notes": "Lower heat of hydration suits large pours and prestressed elements -- follow the manufacturer's technical data sheet for mix design.",
+   "handling_notes": "Keep cement away from moisture: store bags in a shed on plastic sheeting or pallets, stack pallets no more than two high, keep doors and windows closed, and use first in, first out. Outside, stack on pallets or timber slats under plastic sheeting ridged so rain runs off. Designed to be extended with fly ash or slag; typically 2–5% lower water demand than a CEM I cement.",
    "units": [
+    {
+     "unit": "BAG_25KG",
+     "unit_label": "25kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Afrimat's datasheet lists 25 kg and 50 kg bags (Oct 2026) — request a supplier quote."
+    },
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Afrimat's datasheet lists 25 kg and 50 kg bags (Oct 2026) — request a supplier quote."
+    },
     {
      "unit": "BULK_BAG_1_5T",
      "unit_label": "1.5-ton bulk bag",

@@ -51,13 +51,13 @@ manufacturer stay hidden until their permission is confirmed.
 | PPC Ltd (ppc.co.za) | Official images supplied by the owner: SURECEM 32,5N · SUREBUILD 42,5N (AA-CEM-425N-001) · SURECAST 42,5R · SURETECH 52,5N · SUREROAD 32,5N. Small (339×420) — flagged low-res; replace with larger PPC files when available |
 | Kwikbuild Cement (kwikbuildcement.co.za) | Official images supplied by the owner: KWIKBUILD 32,5 and 42,5 bags |
 | Sephaku Cement (Dangote Cement South Africa) | Official images supplied by the owner: Sephaku 32 (32,5R bag) · Sephaku 42 (42,5N and 42,5R bags) · Sephaku 52 (52,5N bag) · SepROAD 32,5N |
+| Afrimat (afrimat.co.za) | Official images supplied by the owner (Oct 2026): FastCast 52,5R · Powercrete Plus 52,5N · RoadCem 32,5N · DuraBuild 32,5N · BuildCrete 42,5N |
 
 **Rejected** (listed in the manifest's `rejected`): the three Kwikbuild files
 were one identical plant photo (a forklift loading pallets) with no readable
 product or class; the five Afrimat files were one identical photo of crushed
-limestone on a conveyor — not cement. **Still to source** (12, listed in
-`noImage`): Kwikbuild Masonry 22,5X; Afrimat DuraBuild,
-Buildcrete, RoadCem, FastCast and Powercrete Plus; PPC SUREWALL; Dangote Falcon; Dugongo; Mamba; and generic photos for the
+limestone on a conveyor — not cement. **Still to source** (7, listed in
+`noImage`): Kwikbuild Masonry 22,5X; PPC SUREWALL; Dangote Falcon; Dugongo; Mamba; and generic photos for the
 unbranded Bulk Cement 52.5N and the Road-Capping Binder.
 
 ## Open-licence photos — live now
