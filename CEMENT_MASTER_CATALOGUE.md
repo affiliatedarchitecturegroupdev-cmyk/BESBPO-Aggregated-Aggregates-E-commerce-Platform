@@ -187,6 +187,12 @@ parent/child instead of a flat sheet.
   42,5R" (CEM II/A-M; slug mamba-cement-42-5r; SKU unchanged), and Mamba
   Masonry Cement MC 22,5X (AA-CEM-MAMBA-MASONRY-225X, 50 kg, quote-only) was
   added: 38 cement products. CEM I 52,5N isn't listed yet (no pack shot).
+  Dugongo and Dangote Falcon pack shots (Oct 2026) — no datasheets yet, so
+  the bag text is the source: Dugongo is Portland-limestone cement
+  CEM II/A-L 42,5N (SANS 50197-1 / NM NP EN 197-1), made by Moçambique
+  Dugongo Cimentos S.A. in Maputo province; Dangote Falcon is a pozzolanic
+  cement 32,5R, SABS approved, now named "Dangote Falcon 32,5R" (slug
+  unchanged). Both were previously listed only as "variants".
 - **Ready-Mix Concrete** — a separate idea raised in the same conversation,
   intentionally not folded into this cement work. See the discussion in
   that thread — it's a different sourcing model (producers, not

@@ -2446,6 +2446,40 @@
         "owner-upload/fcb963a5-image.jpg"
       ],
       "permission": "GRANTED"
+    },
+    {
+      "file": "e1fd63f89cb6.webp",
+      "width": 440,
+      "height": 580,
+      "bytes": 22140,
+      "originalWidth": 1000,
+      "originalHeight": 1000,
+      "source": "Dugongo Cimentos (Mo\u00e7ambique Dugongo Cimentos S.A.)",
+      "sourceCountry": "MZ",
+      "sourcePage": null,
+      "sourcingNote": "Official pack shot: Dugongo Cimento, Portland-limestone cement CEM II/A-L 42,5N, 50 kg bag (Mo\u00e7ambique Dugongo Cimentos S.A., Maputo). Official product image supplied by the owner, Oct 2026 \u2014 permission confirmed (established supplier relationship).",
+      "flags": [],
+      "originalPaths": [
+        "owner-upload/53ff80a5-image.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "725d3400bc2b.webp",
+      "width": 483,
+      "height": 636,
+      "bytes": 26022,
+      "originalWidth": 710,
+      "originalHeight": 636,
+      "source": "Dangote Cement South Africa (Falcon)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Official pack shot: Dangote Falcon pozzolanic cement 32.5R, SABS-approved bag. Official product image supplied by the owner, Oct 2026 \u2014 permission confirmed (established supplier relationship).",
+      "flags": [],
+      "originalPaths": [
+        "owner-upload/c75f28f3-image.jpg"
+      ],
+      "permission": "GRANTED"
     }
   ],
   "products": {
@@ -2802,6 +2836,12 @@
     ],
     "AA-CEM-MAMBA-MASONRY-225X": [
       "ff047ed3b374.webp"
+    ],
+    "AA-CEM-DUGONGO-425N": [
+      "e1fd63f89cb6.webp"
+    ],
+    "AA-CEM-DANGOTE-FALCON": [
+      "725d3400bc2b.webp"
     ]
   },
   "noImage": {
@@ -2812,8 +2852,6 @@
     "AA-SND-07": "Only foreign/retail branded bags",
     "AA-CEM-525N-001": "Unbranded bulk supply \u2014 needs a generic (no-brand) bulk tanker or bag photo",
     "AA-BND-ROADCAP-001": "Blended binder from more than one supplier \u2014 needs a generic photo",
-    "AA-CEM-DANGOTE-FALCON": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
-    "AA-CEM-DUGONGO-425N": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
     "AA-CEM-PPC-SUREWALL-225X": "No pack shot found yet (Manus, Oct 2026) \u2014 to source",
     "AA-CEM-KWIKBUILD-MASONRY-225X": "Only a generic plant photo was found \u2014 needs a masonry 22,5X pack shot"
   },

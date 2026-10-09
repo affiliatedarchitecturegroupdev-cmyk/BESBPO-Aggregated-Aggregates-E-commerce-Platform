@@ -53,12 +53,14 @@ manufacturer stay hidden until their permission is confirmed.
 | Sephaku Cement (Dangote Cement South Africa) | Official images supplied by the owner: Sephaku 32 (32,5R bag) · Sephaku 42 (42,5N and 42,5R bags) · Sephaku 52 (52,5N bag) · SepROAD 32,5N |
 | Afrimat (afrimat.co.za) | Official images supplied by the owner (Oct 2026): FastCast 52,5R · Powercrete Plus 52,5N · RoadCem 32,5N · DuraBuild 32,5N · BuildCrete 42,5N |
 | Mamba Cement (mambacement.com) | Official images supplied by the owner (Oct 2026): Mamba Cement 42,5R (CEM II) · Mamba Masonry Cement MC 22,5X |
+| Dugongo Cimentos (Moçambique Dugongo Cimentos S.A.) | Official image supplied by the owner (Oct 2026): Dugongo Cimento CEM II/A-L 42,5N |
+| Dangote Cement South Africa (Falcon) | Official image supplied by the owner (Oct 2026): Dangote Falcon pozzolanic cement 32,5R |
 
 **Rejected** (listed in the manifest's `rejected`): the three Kwikbuild files
 were one identical plant photo (a forklift loading pallets) with no readable
 product or class; the five Afrimat files were one identical photo of crushed
-limestone on a conveyor — not cement. **Still to source** (6, listed in
-`noImage`): Kwikbuild Masonry 22,5X; PPC SUREWALL; Dangote Falcon; Dugongo; and generic photos for the
+limestone on a conveyor — not cement. **Still to source** (4, listed in
+`noImage`): Kwikbuild Masonry 22,5X; PPC SUREWALL; and generic photos for the
 unbranded Bulk Cement 52.5N and the Road-Capping Binder.
 
 ## Open-licence photos — live now
