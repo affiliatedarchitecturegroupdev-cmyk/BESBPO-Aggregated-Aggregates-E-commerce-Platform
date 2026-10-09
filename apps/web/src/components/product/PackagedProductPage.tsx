@@ -125,9 +125,12 @@ export function PackagedProductPage({ product }: { product: MerchandisedPackaged
           {DATASHEETS[product.sku] && (
             <p className="mt-4 font-body text-sm">
               <a href={DATASHEETS[product.sku].href} download className="inline-flex items-center gap-2 rounded-sm border border-seam-blue px-3 py-1.5 font-semibold text-seam-blue hover:bg-seam-blue hover:text-limestone">
-                Download the manufacturer&apos;s datasheet (PDF)
+                Download the manufacturer&apos;s {DATASHEETS[product.sku].kind ?? "datasheet"} (PDF)
               </a>
-              <span className="ml-2 text-xs text-slate">{DATASHEETS[product.sku].title} — typical properties, specification, storage and safety.</span>
+              <span className="ml-2 text-xs text-slate">
+                {DATASHEETS[product.sku].title} —{" "}
+                {DATASHEETS[product.sku].kind === "safety data sheet" ? "composition, hazards, first aid, handling and storage." : "typical properties, specification, storage and safety."}
+              </span>
             </p>
           )}
         </section>
