@@ -166,6 +166,13 @@ parent/child instead of a flat sheet.
   the source material's SKU Master template has a "Technical Datasheet"
   and "Image Required" column; no datasheet URL was fabricated for any
   product, consistent with not inventing provenance that isn't verified.
+  **Update (Oct 2026):** the owner supplied official pack shots for AfriSam,
+  Cemza, NPC, Sephaku and PPC (see `PRODUCT_IMAGES.md`) and PPC's datasheets
+  for SURECEM, SUREBUILD, SURECAST, SURETECH and SUREROAD. The datasheets are
+  downloadable on those product pages (`apps/web/public/downloads/datasheets`,
+  `DATASHEETS` in `apps/web/src/data/packaged.ts`), and those five products'
+  standard, CEM designation, uses and storage notes now follow them.
+  AA-CEM-425N-001 is PPC SUREBUILD 42,5N and is now named that way.
 - **Ready-Mix Concrete** — a separate idea raised in the same conversation,
   intentionally not folded into this cement work. See the discussion in
   that thread — it's a different sourcing model (producers, not

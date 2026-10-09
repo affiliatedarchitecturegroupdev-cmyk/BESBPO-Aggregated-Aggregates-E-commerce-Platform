@@ -28,7 +28,7 @@ categories with their own pricing (`PackagedPriceBand`):
 
 | SKU | Product | Units |
 |---|---|---|
-| AA-CEM-425N-001 | Bulk Cement 42.5N | 50kg bag, 1.5-ton bulk bag, tanker per ton |
+| AA-CEM-425N-001 | PPC SUREBUILD 42,5N (listed as "Bulk Cement 42.5N" until Oct 2026) | 50kg bag, 1.5-ton bulk bag, tanker per ton |
 | AA-CEM-525N-001 | Bulk Cement 52.5N (Rapid Hardening) | 50kg bag, tanker per ton |
 | AA-BND-ROADCAP-001 | Road-Capping Binder (Fly Ash / Slag Blend) | 50kg bag, tanker per ton |
 | AA-GRT-NSHRINK-001 | Structural Non-Shrink Grout | 25kg bag |
