@@ -1158,23 +1158,25 @@
   },
   {
    "sku": "AA-CEM-MAMBA-425N",
-   "slug": "mamba-cement-42-5n",
-   "name": "Mamba Cement 42,5N",
+   "slug": "mamba-cement-42-5r",
+   "name": "Mamba Cement 42,5R",
    "category_slug": "cement-hydraulic-binders",
-   "grading_standard": "SANS 50197-1 (CEM II 42,5)",
+   "grading_standard": "SANS 50197-1, 42,5 R (composite cement CEM II/A-M)",
    "manufacturer": "Mamba Cement",
    "brand": "Mamba Cement",
    "cement_family": "General Purpose Cement",
-   "cement_class": "42,5N / 42,5R variants",
-   "cement_type": null,
+   "cement_class": "42,5R",
+   "cement_type": "CEM II/A-M 42,5 R (about 85% clinker)",
    "region_note": null,
-   "specialist_characteristics": [],
+   "specialist_characteristics": [
+    "Early strength"
+   ],
    "typical_uses": [
     "General and structural concrete",
-    "High-early-strength applications (42,5R variant)",
+    "Work that needs early strength",
     "Brickwork and blockwork mortar"
    ],
-   "handling_notes": "Store off the ground, under cover, away from moisture; use within 3 months of the manufacture date.",
+   "handling_notes": "Keep cement dry until used — store bags under cover, off the ground. Avoid raising dust; wet cement can cause chemical burns, so wear gloves and eye protection and wash skin promptly (see the safety data sheet).",
    "units": [
     {
      "unit": "BAG_50KG",
@@ -1208,6 +1210,39 @@
      "list_price_per_unit": null,
      "pricing_status": "Provisional — confirm w/ supplier",
      "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+    }
+   ]
+  },
+  {
+   "sku": "AA-CEM-MAMBA-MASONRY-225X",
+   "slug": "mamba-masonry-cement-22-5x",
+   "name": "Mamba Masonry Cement 22,5X",
+   "category_slug": "cement-hydraulic-binders",
+   "grading_standard": "SANS 50413-1 (MC 22,5X)",
+   "manufacturer": "Mamba Cement",
+   "brand": "Mamba Cement",
+   "cement_family": "Masonry Cement",
+   "cement_class": "22,5X",
+   "cement_type": "MC 22,5X masonry cement (about 55–60% clinker)",
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Mortar for brickwork and blockwork",
+    "Plastering",
+    "NOT for structural concrete"
+   ],
+   "handling_notes": "Masonry cement is for mortar and plaster only — don't substitute it for structural cement in concrete. Keep cement dry until used — store bags under cover, off the ground. Avoid raising dust; wet cement can cause chemical burns, so wear gloves and eye protection and wash skin promptly (see the safety data sheet).",
+   "units": [
+    {
+     "unit": "BAG_50KG",
+     "unit_label": "50kg bag",
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Added from Mamba's own product range (Oct 2026); no retail benchmark yet — request a supplier quote."
     }
    ]
   },
