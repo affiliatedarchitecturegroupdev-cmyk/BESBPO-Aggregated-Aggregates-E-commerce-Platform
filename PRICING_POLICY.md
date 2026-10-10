@@ -32,7 +32,7 @@ and quotes are always re-priced by the pricing service.
 | Cement & mortar — bagged (25/50kg) | list | 4% (approved range 3–5%) | quoted |
 | Cement — bulk bag, tanker; admixture drums/totes | list | quoted | quoted |
 | Ready-mix | list | 2% | quoted |
-| Steel (rebar, mesh, brickforce, accessories, sections) | list | 4% (placeholder — owner to set) | quoted |
+| Steel (rebar, mesh, brickforce, accessories, sections) | list | 4% (approved Oct 2026) | quoted |
 
 "Quoted" means the tier has no self-serve price for that family: the cart
 or quote goes to a person, who confirms it with the supplier.

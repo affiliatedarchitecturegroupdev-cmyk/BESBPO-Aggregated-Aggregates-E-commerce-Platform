@@ -43,7 +43,7 @@ SCHEDULE: dict[str, dict[str, Optional[Decimal]]] = {
     CEMENT_BAGGED: {"RETAIL": Decimal(0), "CONTRACTOR_TRADE": Decimal("0.04"), "VOLUME_CIVIL_BULK": None},
     CEMENT_BULK: {"RETAIL": Decimal(0), "CONTRACTOR_TRADE": None, "VOLUME_CIVIL_BULK": None},
     READY_MIX: {"RETAIL": Decimal(0), "CONTRACTOR_TRADE": Decimal("0.02"), "VOLUME_CIVIL_BULK": None},
-    # Steel (Oct 2026): same shape as bagged cement until the owner sets a steel schedule.
+    # Steel: 4% trade, volume quoted — approved by the owner, 10 Oct 2026.
     STEEL: {"RETAIL": Decimal(0), "CONTRACTOR_TRADE": Decimal("0.04"), "VOLUME_CIVIL_BULK": None},
 }
 

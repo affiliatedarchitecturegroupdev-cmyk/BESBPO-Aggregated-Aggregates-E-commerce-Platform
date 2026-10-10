@@ -9,6 +9,10 @@ const packaged = JSON.parse(readFileSync(join(__dirname, "../../../../services/p
   products: { sku: string }[];
 };
 
+const readyMix = JSON.parse(readFileSync(join(__dirname, "../../../../services/pricing/data/ready_mix_catalogue.json"), "utf8")) as {
+  products: { sku: string }[];
+};
+
 describe("sourced product image set", () => {
   const manifest = readManifest();
   const files = new Set(manifest.images.map((i) => i.file));
@@ -34,11 +38,11 @@ describe("sourced product image set", () => {
     }
     const onDisk = readdirSync(SEED_IMAGE_DIR).filter((f) => f.endsWith(".webp"));
     expect(new Set(onDisk)).toEqual(files);
-    expect(onDisk.reduce((n, f) => n + statSync(join(SEED_IMAGE_DIR, f)).size, 0)).toBeLessThan(15 * 1024 * 1024);
+    expect(onDisk.reduce((n, f) => n + statSync(join(SEED_IMAGE_DIR, f)).size, 0)).toBeLessThan(20 * 1024 * 1024); // raised from 15 MB when the ready-mix photos were added (Oct 2026)
   });
 
   it("assigns photos only to real catalogue SKUs, at most five each, all from the set", () => {
-    const skus = new Set([...framework.products, ...packaged.products].map((p) => p.sku));
+    const skus = new Set([...framework.products, ...packaged.products, ...readyMix.products].map((p) => p.sku));
     for (const [sku, list] of Object.entries(manifest.products)) {
       expect(skus.has(sku)).toBe(true);
       expect(list.length).toBeGreaterThan(0);
@@ -61,6 +65,18 @@ describe("sourced product image set", () => {
         expect(image.openLicence).toBeUndefined();
         expect(image.source).toMatch(/^(AfriSam|Cemza|NPC|Sephaku|PPC|Kwikbuild|Afrimat|Mamba|Dugongo|Dangote)/);
       }
+    }
+  });
+
+  it("publishes the owner's ready-mix photos (Unsplash / Pexels licence) on every grade", () => {
+    const grades = Object.entries(manifest.products).filter(([sku]) => sku.startsWith("AA-RMX-"));
+    expect(grades.length).toBe(7);
+    const bySku = new Map(manifest.images.map((i) => [i.file, i]));
+    for (const [, list] of grades) {
+      expect(list.length).toBe(5);
+      // Card images are landscape, so every grade leads with a landscape photo.
+      expect(bySku.get(list[0])!.width).toBeGreaterThan(bySku.get(list[0])!.height);
+      for (const file of list) expect(bySku.get(file)).toMatchObject({ permission: "GRANTED", source: "Owner-supplied stock photo (Unsplash / Pexels)" });
     }
   });
 
