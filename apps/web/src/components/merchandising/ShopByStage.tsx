@@ -3,7 +3,7 @@ import { StageShop } from "@/components/merchandising/StageShop";
 import { buildStageShop } from "@/data/build-stages";
 
 /** Shop by Build Stage (BUILD_STAGES.md): the range arranged the way a job is built. */
-export function ShopByStage({ hiddenSkus = [], heading = true }: { hiddenSkus?: string[]; heading?: boolean }) {
+export function ShopByStage({ hiddenSkus = [], heading = true, initialStage }: { hiddenSkus?: string[]; heading?: boolean; initialStage?: string }) {
   const stages = buildStageShop(hiddenSkus);
   return (
     <section aria-labelledby={heading ? "shop-by-stage" : undefined} className="border-y border-basalt/10 bg-limestone/60">
@@ -20,7 +20,7 @@ export function ShopByStage({ hiddenSkus = [], heading = true }: { hiddenSkus?: 
             </p>
           </div>
         )}
-        <StageShop stages={stages} />
+        <StageShop stages={stages} initialStage={initialStage} />
       </div>
     </section>
   );

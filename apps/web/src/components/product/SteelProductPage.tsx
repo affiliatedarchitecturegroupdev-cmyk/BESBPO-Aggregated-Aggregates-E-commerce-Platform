@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
 import { BarMassCalculator } from "@/components/product/BarMassCalculator";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { PackagedUnitSelector } from "@/components/product/PackagedUnitSelector";
@@ -158,6 +159,8 @@ export function SteelProductPage({ product }: { product: MerchandisedSteelProduc
           </p>
         </section>
       </div>
+
+      <CompleteTheJob sku={product.sku} categorySlug={product.categorySlug} />
 
       {related.length > 0 && (
         <section className="mt-16">

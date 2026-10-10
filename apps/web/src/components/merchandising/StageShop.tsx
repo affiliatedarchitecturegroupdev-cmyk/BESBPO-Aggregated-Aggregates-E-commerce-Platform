@@ -10,8 +10,8 @@ import { formatZAR } from "@/lib/pricing";
 const chip = "rounded-sm border border-basalt/15 bg-white px-2.5 py-1 font-body text-xs text-basalt hover:border-seam-blue hover:text-seam-blue";
 
 /** The build-stage tabs and, for the chosen stage, its picks, categories, hire and tools. */
-export function StageShop({ stages }: { stages: StageView[] }) {
-  const [index, setIndex] = useState(0);
+export function StageShop({ stages, initialStage }: { stages: StageView[]; initialStage?: string }) {
+  const [index, setIndex] = useState(() => Math.max(0, stages.findIndex((s) => s.stage === initialStage)));
   const tabs = useRef<HTMLDivElement>(null);
   const s = stages[index];
   // On narrow screens the tabs scroll sideways; keep the chosen one in view.

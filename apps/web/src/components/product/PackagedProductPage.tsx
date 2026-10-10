@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { PackagedUnitSelector } from "@/components/product/PackagedUnitSelector";
 import { GroupServiceBanner } from "@/components/merchandising/GroupServiceBanner";
@@ -164,6 +165,8 @@ export function PackagedProductPage({ product }: { product: MerchandisedPackaged
       <div className="mt-10">
         <GroupServiceBanner categorySlug={product.categorySlug} placement={`product_${product.categorySlug}`} />
       </div>
+
+      <CompleteTheJob sku={product.sku} categorySlug={product.categorySlug} />
 
       {related.length > 0 && (
         <section className="mt-16">

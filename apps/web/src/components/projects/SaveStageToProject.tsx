@@ -10,7 +10,19 @@ import { inputClass, SubmitButton } from "@/components/account/Forms";
 const label = "font-mono text-[10px] uppercase text-slate";
 
 /** Save every pick in a build stage to a project list in one go (quantities are added on the list). */
-export function SaveStageToProject({ stage, stageLabel, lines }: { stage: string; stageLabel: string; lines: { sku: string; unit: string }[] }) {
+export function SaveStageToProject({
+  stage,
+  stageLabel,
+  lines,
+  buttonLabel = "Save this stage to a project",
+  variant = "solid",
+}: {
+  stage: string;
+  stageLabel: string;
+  lines: { sku: string; unit: string }[];
+  buttonLabel?: string;
+  variant?: "solid" | "outline";
+}) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [data, setData] = useState<Awaited<ReturnType<typeof myProjectLists>> | null>(null);
@@ -35,9 +47,13 @@ export function SaveStageToProject({ stage, stageLabel, lines }: { stage: string
         type="button"
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
-        className="rounded-sm bg-seam-blue px-4 py-2 font-body text-sm font-semibold text-limestone hover:bg-basalt"
+        className={
+          variant === "solid"
+            ? "rounded-sm bg-seam-blue px-4 py-2 font-body text-sm font-semibold text-limestone hover:bg-basalt"
+            : "rounded-sm border border-seam-blue bg-white px-4 py-2 font-body text-sm font-semibold text-seam-blue hover:bg-seam-blue/5"
+        }
       >
-        Save this stage to a project
+        {buttonLabel}
       </button>
       {open && (
         <div role="dialog" aria-label={`Save ${stageLabel} to a project`} className="absolute left-0 z-30 mt-2 w-[min(22rem,calc(100vw-2rem))] rounded-sm border border-basalt/15 bg-white p-4 shadow-lg">

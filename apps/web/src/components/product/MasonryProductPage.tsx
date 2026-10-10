@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { PackagedUnitSelector } from "@/components/product/PackagedUnitSelector";
 import { ProductGallery } from "@/components/product/ProductGallery";
@@ -174,6 +175,8 @@ export function MasonryProductPage({ product }: { product: MerchandisedMasonryPr
           </p>
         </section>
       </div>
+
+      <CompleteTheJob sku={product.sku} categorySlug={product.categorySlug} />
 
       {related.length > 0 && (
         <section className="mt-16">
