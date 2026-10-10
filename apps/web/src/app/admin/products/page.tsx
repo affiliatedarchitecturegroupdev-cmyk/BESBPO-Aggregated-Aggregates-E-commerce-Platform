@@ -13,8 +13,9 @@ export default async function AdminProductsPage() {
   return (
     <div>
       <p className="font-body text-sm text-slate">
-        Names, units and prices come from the pricing workbooks (aggregates, and B2B packaged goods) and can only change there. Here you manage
-        descriptions, photography, visibility and the homepage&apos;s featured row.
+        Names, units and prices come from the pricing catalogues (aggregates, cement, ready-mix, steel, and masonry &amp; precast) and can only
+        change there. Here you manage descriptions, photography, visibility and the homepage&apos;s Featured Materials: give a product a featured
+        position and it shows in its line&apos;s tab (up to four a tab, lowest number first); a tab with none featured shows our default picks.
       </p>
       {CATEGORIES.map((category) => (
         <section key={category.slug} className="mt-6">
