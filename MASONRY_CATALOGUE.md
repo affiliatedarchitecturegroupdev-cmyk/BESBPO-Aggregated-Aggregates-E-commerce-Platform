@@ -19,10 +19,9 @@
 2. **Supply model: broker network** — brickyards, block makers and
    merchants behind the storefront, no owned stock.
 3. **Pricing: researched benchmarks** — the cement and steel rule.
-4. **Trade discount:** the `MASONRY` family is set to the steel shape —
-   retail list, Contractor/Trade 4%, Volume/Civil Bulk quoted — as a
-   **proposal awaiting the owner's approval**. Never below the 3% margin
-   floor.
+4. **Trade discount:** the `MASONRY` family — retail list, Contractor/Trade
+   **4% (approved by the owner, 10 Oct 2026)**, Volume/Civil Bulk quoted.
+   Never below the 3% margin floor.
 
 ## The catalogue (21 products, 7 priced units)
 
@@ -102,7 +101,6 @@ a Phase P (paving) lead rather than a walling one.
 
 ## Open items
 
-- Approve (or change) the 4% Contractor/Trade discount on masonry.
 - Verify and activate the brickyard leads; add map pins; find Free State and
   Limpopo yards.
 - Brickyard price lists for face bricks, maxis, 190 mm blocks and lintels —

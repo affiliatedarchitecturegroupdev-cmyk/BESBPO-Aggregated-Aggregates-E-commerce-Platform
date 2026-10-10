@@ -15,7 +15,7 @@ What each tier may self-serve depends on the product family:
     CEMENT_BULK     list     quote only         quote only
     READY_MIX       list     2%                 quote only
     STEEL           list     4%                 quote only
-    MASONRY         list     4% (proposed)      quote only
+    MASONRY         list     4%                 quote only
 
 "Quote only" means the tier has no self-serve price for that family: the
 order goes to a quote. Card/gateway fees (~3%) are not netted off yet.
@@ -47,7 +47,7 @@ SCHEDULE: dict[str, dict[str, Optional[Decimal]]] = {
     READY_MIX: {"RETAIL": Decimal(0), "CONTRACTOR_TRADE": Decimal("0.02"), "VOLUME_CIVIL_BULK": None},
     # Steel: 4% trade, volume quoted — approved by the owner, 10 Oct 2026.
     STEEL: {"RETAIL": Decimal(0), "CONTRACTOR_TRADE": Decimal("0.04"), "VOLUME_CIVIL_BULK": None},
-    # Masonry (Oct 2026): the steel shape, proposed to the owner — trade 4% until a masonry schedule is approved.
+    # Masonry: trade 4%, approved by the owner, 10 Oct 2026.
     MASONRY: {"RETAIL": Decimal(0), "CONTRACTOR_TRADE": Decimal("0.04"), "VOLUME_CIVIL_BULK": None},
 }
 

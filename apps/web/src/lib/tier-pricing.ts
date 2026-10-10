@@ -21,7 +21,7 @@ export const SCHEDULE: Record<PricingFamily, Record<CustomerTierName, number | n
   CEMENT_BULK: { RETAIL: 0, CONTRACTOR_TRADE: null, VOLUME_CIVIL_BULK: null },
   READY_MIX: { RETAIL: 0, CONTRACTOR_TRADE: 0.02, VOLUME_CIVIL_BULK: null },
   STEEL: { RETAIL: 0, CONTRACTOR_TRADE: 0.04, VOLUME_CIVIL_BULK: null },
-  // Proposed to the owner (Oct 2026): the steel shape until a masonry schedule is approved.
+  // Trade 4% approved by the owner, 10 Oct 2026.
   MASONRY: { RETAIL: 0, CONTRACTOR_TRADE: 0.04, VOLUME_CIVIL_BULK: null },
 };
 

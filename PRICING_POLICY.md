@@ -36,7 +36,7 @@ and quotes are always re-priced by the pricing service.
 | Cement — bulk bag, tanker; admixture drums/totes | list | quoted | quoted |
 | Ready-mix | list | 2% | quoted |
 | Steel (rebar, mesh, brickforce, accessories, sections) | list | 4% (approved Oct 2026) | quoted |
-| Masonry (bricks, blocks, lintels, DPC, air bricks) | list | 4% (proposed — awaiting owner approval) | quoted |
+| Masonry (bricks, blocks, lintels, DPC, air bricks) | list | 4% (approved Oct 2026) | quoted |
 
 "Quoted" means the tier has no self-serve price for that family: the cart
 or quote goes to a person, who confirms it with the supplier.
