@@ -338,7 +338,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
       const served = await http().get(`/merchandising/images/${image.body.id}`).expect(200);
       expect(served.headers["content-type"]).toBe("image/png");
       const overlay = await http().get("/merchandising/products").expect(200);
-      expect(overlay.body).toHaveLength(143); // 51 aggregates + 42 cement and other packaged goods + 7 ready-mix grades + 43 steel
+      expect(overlay.body).toHaveLength(164); // 51 aggregates + 42 cement and other packaged goods + 7 ready-mix grades + 43 steel + 21 masonry
       expect(overlay.body.find((p: { sku: string }) => p.sku === sku)).toMatchObject({
         featuredRank: 2,
         images: expect.arrayContaining([expect.objectContaining({ id: image.body.id, altText: "Filter media stockpile" })]),
@@ -599,6 +599,49 @@ describe("Aggregated Aggregates API (e2e)", () => {
           contactEmail: `rebar-${run}@example.com`,
           deliveryAddress: "1 Site Road, Pretoria",
           lines: [{ sku: "AA-STL-Y16", unit: "TONNE", quantity: 2 }],
+        })
+        .expect(201);
+      expect(quote.body.reasonCode).toBe("PRICE_ON_REQUEST");
+      await prisma.quote.delete({ where: { id: quote.body.id } });
+      await prisma.order.delete({ where: { id: res.body.id } });
+    });
+
+    it("orders bricks per 1,000 and blocks on the flatbed in the masonry family, and quotes lintels", async () => {
+      const token = await register("masonry");
+      const bricks = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-MAS-CLAY-STOCK" }, include: { packagedPriceBands: true } });
+      expect(bricks.unitSize).toBe("222 × 106 × 73 mm");
+      expect(Number(bricks.unitsPerM2)).toBe(52);
+      expect(Number(bricks.packagedPriceBands.find((b) => b.unit === "THOUSAND")!.listPricePerUnit)).toBe(2559.6);
+      const blocks = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-MAS-BLOCK-140" } });
+      const res = await http()
+        .post("/orders")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          deliveryDistanceKm: 20,
+          lineItems: [
+            { productId: bricks.id, unitOfSale: "THOUSAND", quantity: 3 },
+            { productId: blocks.id, unitOfSale: "EACH", quantity: 100 },
+          ],
+        })
+        .expect(201);
+      expect(Number(res.body.subtotal)).toBe(8850.8); // 3 x R2,559.60 + 100 x R11.72
+      expect(Number(res.body.deliveryFee)).toBe(0); // the supplier's flatbed, not a tipper
+      const lines = await prisma.orderLineItem.findMany({ where: { orderId: res.body.id } });
+      expect(lines.map((l) => l.pricingFamily)).toEqual(["MASONRY", "MASONRY"]);
+      // A brick isn't sold by the roll.
+      await http()
+        .post("/orders")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ deliveryDistanceKm: 20, lineItems: [{ productId: bricks.id, unitOfSale: "ROLL", quantity: 1 }] })
+        .expect((r) => expect([400, 422]).toContain(r.status));
+      // Lintels have no like-for-like retail benchmark, so they're quoted with the supplier.
+      const quote = await http()
+        .post("/quotes")
+        .send({
+          contactName: "Wall Builder",
+          contactEmail: `lintel-${run}@example.com`,
+          deliveryAddress: "1 Site Road, Pretoria",
+          lines: [{ sku: "AA-MAS-LINTEL-1800", unit: "EACH", quantity: 6 }],
         })
         .expect(201);
       expect(quote.body.reasonCode).toBe("PRICE_ON_REQUEST");

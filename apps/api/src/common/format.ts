@@ -21,6 +21,7 @@ export const UNIT_LABEL: Record<UnitOfSale, string> = {
   COIL: "× coil",
   PACK: "× pack",
   EACH: "× item",
+  THOUSAND: "× 1,000",
 };
 
 const ZAR = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });

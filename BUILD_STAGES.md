@@ -17,7 +17,7 @@ the same stages as project lists (`PROJECT_LISTS.md`):
 | Site prep & earthworks | G10 selected fill, G7 sub-base, G5, dump rock pioneer layer, recycled concrete, filling sand | Site clearing, TLB, padfoot roller, water truck, skip |
 | Foundations | 25 MPa ready-mix, 19 mm stone, concrete sand, 42,5N cement, Y12, tie wire | Mini excavator, TLB, steel fixing, rubble removal |
 | Surface beds & slabs | 25 and 30 MPa ready-mix, Ref 193 mesh, bar chairs, screed sand, plasticiser | 1–3 t roller, steel fixing, site dumper |
-| Walls & superstructure | Building sand, plaster sand, 32,5N cement, hydrated lime, brickforce, wall ties | Site dumper, skip |
+| Walls & superstructure | Clay stock bricks, 140 mm blocks, building sand, 32,5N cement, 110 mm DPC, brickforce | Site dumper, skip |
 | Paving, driveways & roads | G7 sub-base, crusher run base, G5, bedding sand, RAP, road-stabilising cement | Smooth-drum roller, water truck, tipper, haulage |
 | Drainage & services | French drain stone, washed filter stone, subsoil stone, pipe bedding sand, weeping-tile bedding, rip rap | Mini excavator, TLB, rubble removal |
 | Landscaping | River pebble, pea gravel, decorative chips, stone mulch, crusher dust, garden lime | Skid steer, site dumper, skip |
@@ -38,7 +38,7 @@ Stages are data. When a new category lands, add its slug to the stage's
 
 | Phase | Categories | Stage |
 |---|---|---|
-| W | CAT-19 Bricks & Blocks, CAT-20 Lintels, DPC & Wall Accessories | Walls |
+| W | CAT-19 Bricks & Blocks, CAT-20 Lintels, DPC & Wall Accessories | Walls — **built** (`MASONRY_CATALOGUE.md`) |
 | P | CAT-21 Paving, Kerbs & Edging, CAT-22 Retaining & Erosion Control | Paving |
 | D | CAT-23 Pipes & Fittings, CAT-24 Precast Drainage, CAT-25 Geosynthetics & Membranes | Drainage (and Slabs for DPM) |
 

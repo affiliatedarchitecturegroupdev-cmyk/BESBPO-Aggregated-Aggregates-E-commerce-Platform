@@ -15,6 +15,7 @@ What each tier may self-serve depends on the product family:
     CEMENT_BULK     list     quote only         quote only
     READY_MIX       list     2%                 quote only
     STEEL           list     4%                 quote only
+    MASONRY         list     4%                 quote only
 
 "Quote only" means the tier has no self-serve price for that family: the
 order goes to a quote. Card/gateway fees (~3%) are not netted off yet.
@@ -35,7 +36,8 @@ CEMENT_BAGGED = "CEMENT_BAGGED"
 CEMENT_BULK = "CEMENT_BULK"
 READY_MIX = "READY_MIX"
 STEEL = "STEEL"
-FAMILIES = (AGGREGATE, CEMENT_BAGGED, CEMENT_BULK, READY_MIX, STEEL)
+MASONRY = "MASONRY"
+FAMILIES = (AGGREGATE, CEMENT_BAGGED, CEMENT_BULK, READY_MIX, STEEL, MASONRY)
 
 # Discount per tier as a fraction; None = no self-serve price (quote it).
 SCHEDULE: dict[str, dict[str, Optional[Decimal]]] = {
@@ -45,6 +47,8 @@ SCHEDULE: dict[str, dict[str, Optional[Decimal]]] = {
     READY_MIX: {"RETAIL": Decimal(0), "CONTRACTOR_TRADE": Decimal("0.02"), "VOLUME_CIVIL_BULK": None},
     # Steel: 4% trade, volume quoted — approved by the owner, 10 Oct 2026.
     STEEL: {"RETAIL": Decimal(0), "CONTRACTOR_TRADE": Decimal("0.04"), "VOLUME_CIVIL_BULK": None},
+    # Masonry: trade 4%, approved by the owner, 10 Oct 2026.
+    MASONRY: {"RETAIL": Decimal(0), "CONTRACTOR_TRADE": Decimal("0.04"), "VOLUME_CIVIL_BULK": None},
 }
 
 CENT = Decimal("0.01")

@@ -276,6 +276,13 @@ in **Admin → Notifications** rather than sent.
   notification events and the notification link. Uploaded schedule files go
   to the same storage as compliance documents (`cut-and-bend/` keys). No
   new environment variables.
+- **Masonry (Oct 2026).** Migration `20261017090000_masonry_catalogue` adds
+  the `THOUSAND` unit of sale (bricks per 1,000) and `masonryClass`,
+  `unitSize` and `unitsPerM2` on `Product`. The pre-deploy seed loads the
+  21 products from `services/pricing/data/masonry_catalogue.json`, and the
+  supplier seed adds 14 brickyard and block-maker leads from
+  `suppliers-masonry.csv` as unverified and inactive. No new environment
+  variables.
 - **Reinforcing & structural steel (Oct 2026).** Migration
   `20261014090000_steel_catalogue` adds the steel units of sale (6 m and
   12 m lengths, tonne, sheet, roll, coil, pack, item), steel attributes on

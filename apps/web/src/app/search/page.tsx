@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CATEGORIES } from "@/data/categories";
 import { INDUSTRIES } from "@/data/industries";
 import { getPublishedPosts } from "@/lib/blog";
-import { getCatalogue, getPackagedCatalogue, getSteelCatalogue } from "@/lib/cms";
+import { getCatalogue, getMasonryCatalogue, getPackagedCatalogue, getSteelCatalogue } from "@/lib/cms";
 
 export const metadata: Metadata = { title: "Search", robots: { index: false } };
 
@@ -14,6 +14,8 @@ const PAGES = [
   { href: "/trade-accounts", title: "Trade Accounts", keywords: "trade account contractor volume civil bulk discount" },
   { href: "/reinforcing-steel", title: "Reinforcing & Structural Steel", keywords: "steel rebar reinforcing y-bar r-bar mesh brickforce tie wire cut bend structural angle tube beam" },
   { href: "/reinforcing-steel/cut-and-bend", title: "Cut & Bend to Your Bar Bending Schedule", keywords: "cut bend bbs bar bending schedule rebar fabrication shape code sans 282 steel fixing" },
+  { href: "/bricks-blocks", title: "Bricks, Blocks & Walling", keywords: "bricks blocks clay cement stock face maxi nfp fbs lintel dpc damp proof air brick wall calculator masonry" },
+  { href: "/shop-by-stage", title: "Shop by Build Stage", keywords: "build stage foundations slab walls paving drainage landscaping site prep" },
   { href: "/quote", title: "Request a Quote", keywords: "quote rfq bulk civil price" },
   { href: "/faq", title: "FAQ", keywords: "questions help faq whatsapp compliance" },
   { href: "/contact", title: "Contact & Sales", keywords: "contact phone email address sales" },
@@ -25,10 +27,12 @@ const matches = (haystack: string, words: string[]) => words.every((w) => haysta
 export default async function SearchPage({ searchParams }: { searchParams: { q?: string } }) {
   const raw = (searchParams.q ?? "").trim().slice(0, 100);
   const words = raw.toLowerCase().split(/\s+/).filter(Boolean);
-  const [catalogue, packaged, steel, posts] = words.length ? await Promise.all([getCatalogue(), getPackagedCatalogue(), getSteelCatalogue(), getPublishedPosts()]) : [[], [], [], []];
+  const [catalogue, packaged, steel, masonry, posts] = words.length
+    ? await Promise.all([getCatalogue(), getPackagedCatalogue(), getSteelCatalogue(), getMasonryCatalogue(), getPublishedPosts()])
+    : [[], [], [], [], []];
   const categoryName = (slug: string) => CATEGORIES.find((c) => c.slug === slug)?.name ?? "";
 
-  const products = [...catalogue, ...packaged, ...steel.map((p) => ({ ...p, description: p.description ?? p.summary }))].filter((p) =>
+  const products = [...catalogue, ...packaged, ...[...steel, ...masonry].map((p) => ({ ...p, description: p.description ?? p.summary }))].filter((p) =>
     matches([p.name, p.sku, categoryName(p.categorySlug), p.gradingStandard ?? "", p.description ?? ""].join(" "), words),
   );
   const categories = words.length ? CATEGORIES.filter((c) => matches(`${c.name} ${c.description}`, words)) : [];

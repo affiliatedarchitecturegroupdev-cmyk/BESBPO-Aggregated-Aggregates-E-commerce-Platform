@@ -14,6 +14,7 @@ import {
 } from "@/lib/account-types";
 import { PRODUCTS } from "@/data/catalogue";
 import { PACKAGED_PRODUCTS } from "@/data/packaged";
+import { MASONRY_PRODUCTS } from "@/data/masonry";
 import { STEEL_PRODUCTS } from "@/data/steel";
 import { CATEGORIES } from "@/data/categories";
 import { formatZAR } from "@/lib/pricing";
@@ -174,7 +175,7 @@ export async function Documents() {
             <select name="productSku" required className={inputClass}>
               {CATEGORIES.map((category) => (
                 <optgroup key={category.slug} label={category.name}>
-                  {[...PRODUCTS, ...PACKAGED_PRODUCTS, ...STEEL_PRODUCTS].filter((p) => p.categorySlug === category.slug).map((p) => (
+                  {[...PRODUCTS, ...PACKAGED_PRODUCTS, ...STEEL_PRODUCTS, ...MASONRY_PRODUCTS].filter((p) => p.categorySlug === category.slug).map((p) => (
                     <option key={p.sku} value={p.sku}>
                       {p.name} ({p.sku})
                     </option>

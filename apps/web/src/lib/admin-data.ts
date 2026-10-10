@@ -1,6 +1,7 @@
 import "server-only";
 import { PRODUCTS } from "@/data/catalogue";
 import { PACKAGED_PRODUCTS } from "@/data/packaged";
+import { MASONRY_PRODUCTS } from "@/data/masonry";
 import { STEEL_PRODUCTS } from "@/data/steel";
 import { formatZAR, UNIT_LABELS } from "@/lib/pricing";
 import { api } from "./api";
@@ -73,6 +74,16 @@ export async function adminCatalogue(): Promise<AdminProduct[] | null> {
       ...overlay(p.sku),
     })),
     ...STEEL_PRODUCTS.map((p) => ({
+      sku: p.sku,
+      slug: p.slug,
+      name: p.name,
+      categorySlug: p.categorySlug,
+      gradingStandard: p.gradingStandard,
+      priceSummary: p.units.map((u) => (u.prices ? `${formatZAR(u.prices.RETAIL)}/${u.label}` : `${u.label}: on request`)).join(" · "),
+      packaged: true,
+      ...overlay(p.sku),
+    })),
+    ...MASONRY_PRODUCTS.map((p) => ({
       sku: p.sku,
       slug: p.slug,
       name: p.name,

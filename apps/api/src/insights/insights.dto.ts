@@ -5,7 +5,7 @@ import { PROVINCES } from "../careers/careers.dto";
 
 const DATE = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 
-export const FAMILIES = ["AGGREGATE", "CEMENT_BAGGED", "CEMENT_BULK", "READY_MIX", "STEEL"] as const;
+export const FAMILIES = ["AGGREGATE", "CEMENT_BAGGED", "CEMENT_BULK", "READY_MIX", "STEEL", "MASONRY"] as const;
 export const BREAKDOWN_BY = ["product", "category", "family", "province", "tier", "channel", "paymentMethod", "supplier", "customer"] as const;
 export type BreakdownBy = (typeof BREAKDOWN_BY)[number];
 

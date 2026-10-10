@@ -4,6 +4,7 @@ import { CATEGORIES } from "@/data/categories";
 import { INDUSTRIES } from "@/data/industries";
 import { EXTRA_LINES } from "@/data/extra-lines";
 import { PACKAGED_PRODUCTS } from "@/data/packaged";
+import { MASONRY_PRODUCTS } from "@/data/masonry";
 import { STEEL_PRODUCTS } from "@/data/steel";
 import { PLANT, SERVICES } from "@/data/plant-services";
 import { READY_MIX_PRODUCTS } from "@/data/ready-mix";
@@ -18,6 +19,7 @@ const STATIC_PATHS = [
   "/cement",
   "/ready-mix",
   "/reinforcing-steel",
+  "/bricks-blocks",
   "/reinforcing-steel/cut-and-bend",
   "/plant-hire",
   "/services",
@@ -66,7 +68,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...(coverage.length ? [{ url: `${SITE_URL}/plant-hire/areas` }] : []),
     ...coverage.map((c) => ({ url: `${SITE_URL}/plant-hire/areas/${provinceSlug(c.province)}` })),
     ...SERVICES.map((s) => ({ url: `${SITE_URL}/services/${s.slug}` })),
-    ...[...PRODUCTS, ...PACKAGED_PRODUCTS, ...READY_MIX_PRODUCTS, ...STEEL_PRODUCTS].map((p) => ({ url: `${SITE_URL}/products/${p.slug}` })),
+    ...[...PRODUCTS, ...PACKAGED_PRODUCTS, ...READY_MIX_PRODUCTS, ...STEEL_PRODUCTS, ...MASONRY_PRODUCTS].map((p) => ({ url: `${SITE_URL}/products/${p.slug}` })),
     ...posts.map((p) => ({ url: `${SITE_URL}/blog/${p.slug}`, lastModified: p.updatedAt })),
     ...vacancies.map((v) => ({ url: `${SITE_URL}/careers/${v.slug}`, lastModified: v.publishedAt ?? undefined })),
   ];

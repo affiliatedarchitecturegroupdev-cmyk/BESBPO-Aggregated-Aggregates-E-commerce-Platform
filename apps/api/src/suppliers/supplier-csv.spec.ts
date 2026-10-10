@@ -118,4 +118,18 @@ describe("seed supplier files", () => {
     // ArcelorMittal SA's long-steel works are under care and maintenance (2025), so it isn't a lead.
     expect(rows.some((r) => /arcelormittal/i.test(r.name))).toBe(false);
   });
+
+  it("lists brickyards and block makers as unverified, sourced leads coded to the masonry categories", () => {
+    const { readFileSync } = jest.requireActual<typeof import("node:fs")>("node:fs");
+    const { join } = jest.requireActual<typeof import("node:path")>("node:path");
+    const text = readFileSync(join(__dirname, "../../../../packages/database/prisma/seed-data/suppliers-masonry.csv"), "utf8");
+    const { rows, errors } = parseSupplierCsv(text);
+    expect(errors).toEqual([]);
+    expect(rows.length).toBe(14);
+    expect(rows.every((r) => !r.isVerifiedPartner && r.sourceUrl?.startsWith("https://"))).toBe(true);
+    expect(new Set(rows.map((r) => r.province)).size).toBe(7);
+    expect(rows.every((r) => r.categorySlugs.length > 0 && r.categorySlugs.every((c) => ["bricks-blocks", "lintels-dpc-wall-accessories"].includes(c)))).toBe(true);
+    // No coordinates are guessed: map pins are added by staff after verifying.
+    expect(rows.every((r) => r.latitude == null && r.longitude == null)).toBe(true);
+  });
 });
