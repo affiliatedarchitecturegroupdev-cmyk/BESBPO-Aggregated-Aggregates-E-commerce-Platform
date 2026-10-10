@@ -91,6 +91,7 @@ export async function Footer() {
             <li><Link href="/services">Site Services</Link></li>
             <li><Link href="/job-packs">Job Packs</Link></li>
             <li><Link href="/plant-hire/how-it-works">How Hire Bookings Work</Link></li>
+            <li><Link href="/calculators">Calculators</Link></li>
             <li><Link href="/estimator">Project Estimator</Link></li>
             <li><Link href="/recycled">Recycled Aggregate Loop</Link></li>
             <li><Link href="/testing">Cube & Compaction Testing</Link></li>
