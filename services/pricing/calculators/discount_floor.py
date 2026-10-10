@@ -47,7 +47,7 @@ SCHEDULE: dict[str, dict[str, Optional[Decimal]]] = {
     READY_MIX: {"RETAIL": Decimal(0), "CONTRACTOR_TRADE": Decimal("0.02"), "VOLUME_CIVIL_BULK": None},
     # Steel: 4% trade, volume quoted — approved by the owner, 10 Oct 2026.
     STEEL: {"RETAIL": Decimal(0), "CONTRACTOR_TRADE": Decimal("0.04"), "VOLUME_CIVIL_BULK": None},
-    # Masonry: trade 4%, approved by the owner, 10 Oct 2026.
+    # Masonry & precast (bricks, blocks, paving, retaining): trade 4%, approved by the owner, 10 Oct 2026.
     MASONRY: {"RETAIL": Decimal(0), "CONTRACTOR_TRADE": Decimal("0.04"), "VOLUME_CIVIL_BULK": None},
 }
 

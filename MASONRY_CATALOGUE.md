@@ -75,8 +75,8 @@ clear enough); PVC air brick (one retailer).
 
 Paving and retaining products are precast concrete from the same yards as
 blocks, so they join this line: same catalogue file, product page, flatbed
-delivery and **`MASONRY` pricing family (trade 4%)** — the owner to confirm
-that the approved masonry discount also covers paving and retaining.
+delivery and **`MASONRY` pricing family — trade 4%, confirmed by the owner
+for paving and retaining on 10 Oct 2026**.
 
 | Code | Category | Products | Live-priced units |
 |---|---|---|---|
@@ -149,7 +149,6 @@ a Phase P (paving) lead rather than a walling one.
 - Brickyard price lists for face bricks, maxis, 190 mm blocks and lintels —
   loaded only from written quotes.
 - Unit masses (for delivery tonnage) once suppliers confirm them.
-- Confirm the 4% trade discount applies to paving and retaining too.
 - Kerb, gabion and retaining-block prices from written supplier quotes;
   paver coverage per m² for the interlocking ranges.
 - Product photos for the line (texture swatches show until licensed photos
