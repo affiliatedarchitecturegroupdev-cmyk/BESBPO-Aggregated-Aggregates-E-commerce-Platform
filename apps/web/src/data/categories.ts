@@ -35,6 +35,9 @@ export const CATEGORIES: Category[] = [
   // CAT-19/20 — masonry (MASONRY_CATALOGUE.md).
   { slug: "bricks-blocks", name: "Bricks & Blocks", description: "SANS 227 clay stock and face bricks and SANS 1215 cement bricks by the 1,000, and concrete blocks from 90 to 190 mm.", catalogueGroup: "masonry" },
   { slug: "lintels-dpc-wall-accessories", name: "Lintels, DPC & Wall Accessories", description: "Prestressed concrete lintels from 1.2 to 3.6 m, SANS 952 damp-proof course by the roll, and air bricks.", catalogueGroup: "masonry" },
+  // CAT-21/22 — paving and retaining, in the same masonry & precast line (MASONRY_CATALOGUE.md).
+  { slug: "paving-kerbs-edging", name: "Paving, Kerbs & Edging", description: "SANS 1058 concrete pavers, paving slabs, grass blocks, clay pavers, garden edging and SANS 927 road kerbs.", catalogueGroup: "masonry" },
+  { slug: "retaining-erosion-control", name: "Retaining & Erosion Control", description: "Terraforce and segmental retaining blocks, gabion baskets and mattresses for walls, slopes and channels.", catalogueGroup: "masonry" },
 ];
 
 export const CORE_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "core");

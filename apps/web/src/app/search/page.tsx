@@ -15,6 +15,7 @@ const PAGES = [
   { href: "/reinforcing-steel", title: "Reinforcing & Structural Steel", keywords: "steel rebar reinforcing y-bar r-bar mesh brickforce tie wire cut bend structural angle tube beam" },
   { href: "/reinforcing-steel/cut-and-bend", title: "Cut & Bend to Your Bar Bending Schedule", keywords: "cut bend bbs bar bending schedule rebar fabrication shape code sans 282 steel fixing" },
   { href: "/bricks-blocks", title: "Bricks, Blocks & Walling", keywords: "bricks blocks clay cement stock face maxi nfp fbs lintel dpc damp proof air brick wall calculator masonry" },
+  { href: "/paving", title: "Paving & Retaining", keywords: "paving pavers paver interlocking bevel slab kerb kerbs edging grass block driveway patio retaining terraforce gabion erosion calculator" },
   { href: "/shop-by-stage", title: "Shop by Build Stage", keywords: "build stage foundations slab walls paving drainage landscaping site prep" },
   { href: "/quote", title: "Request a Quote", keywords: "quote rfq bulk civil price" },
   { href: "/faq", title: "FAQ", keywords: "questions help faq whatsapp compliance" },

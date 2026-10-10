@@ -110,7 +110,7 @@ export function PackagedUnitSelector({ product, initialQuantity }: { product: Pa
             {steel
               ? "Volume / Civil Bulk steel is priced per project — request a quote and we confirm your price with the merchant."
               : masonry
-                ? "Volume / Civil Bulk bricks and blocks are priced per project — request a quote and we confirm your price with the supplier."
+                ? "Volume / Civil Bulk masonry, paving and precast is priced per project — request a quote and we confirm your price with the supplier."
               : tierName === "VOLUME_CIVIL_BULK"
                 ? "Volume / Civil Bulk cement is priced per project — request a quote and we confirm your price with the supplier."
                 : "Trade pricing on bulk-bag and tanker cement is quoted with the supplier."}

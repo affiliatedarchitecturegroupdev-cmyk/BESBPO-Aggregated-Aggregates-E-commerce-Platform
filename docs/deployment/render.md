@@ -276,6 +276,10 @@ in **Admin → Notifications** rather than sent.
   notification events and the notification link. Uploaded schedule files go
   to the same storage as compliance documents (`cut-and-bend/` keys). No
   new environment variables.
+- **Paving & retaining (Oct 2026).** No migration: the pre-deploy seed adds
+  the CAT-21/22 categories and 14 products from `masonry_catalogue.json`,
+  and the supplier seed adds 16 leads from `suppliers-paving.csv` as
+  unverified and inactive. No new environment variables.
 - **Masonry (Oct 2026).** Migration `20261017090000_masonry_catalogue` adds
   the `THOUSAND` unit of sale (bricks per 1,000) and `masonryClass`,
   `unitSize` and `unitsPerM2` on `Product`. The pre-deploy seed loads the

@@ -1,4 +1,4 @@
-"""CAT-19/20 masonry: priced like packaged goods in its own family, live only where two retailers back a benchmark."""
+"""CAT-19..22 masonry & precast (walls, paving, retaining): priced like packaged goods in its own family, live only where two retailers back a benchmark."""
 import json
 from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
@@ -22,9 +22,9 @@ def test_catalogue_shape_and_counts():
     by_cat = {}
     for p in RAW["products"]:
         by_cat[p["category_slug"]] = by_cat.get(p["category_slug"], 0) + 1
-    assert by_cat == {"bricks-blocks": 9, "lintels-dpc-wall-accessories": 12}
-    assert [c["code"] for c in RAW["categories"]] == ["CAT-19", "CAT-20"]
-    assert len({p["slug"] for p in RAW["products"]}) == len({p["sku"] for p in RAW["products"]}) == 21
+    assert by_cat == {"bricks-blocks": 9, "lintels-dpc-wall-accessories": 12, "paving-kerbs-edging": 9, "retaining-erosion-control": 5}
+    assert [c["code"] for c in RAW["categories"]] == ["CAT-19", "CAT-20", "CAT-21", "CAT-22"]
+    assert len({p["slug"] for p in RAW["products"]}) == len({p["sku"] for p in RAW["products"]}) == 35
     # SKUs never collide with another line's.
     assert not set(MASONRY) & (set(PACKAGED) - set(MASONRY))
 
@@ -41,7 +41,7 @@ def test_every_live_price_is_lowest_retail_benchmark_times_1_08():
             assert cents(benchmark * Decimal("1.08")) == Decimal(str(u["list_price_per_unit"]))
             assert "lowest" in u["source_note"], p["sku"]
             priced += 1
-    assert priced == 7
+    assert priced == 10
 
 
 def test_bricks_are_sold_per_thousand_and_counts_per_m2_follow_the_joint_geometry():
@@ -93,7 +93,9 @@ def test_masonry_and_steel_travel_by_flatbed_with_no_tipper_fee():
 
 
 def test_whole_units_only_and_endpoints():
-    assert len(client.get("/products/masonry").json()) == 21
+    assert len(client.get("/products/masonry").json()) == 35
+    body = client.post("/calculate/packaged-goods", json={"sku": "AA-PAV-BEVEL-50", "quantity": 500, "unit": "EACH", "customer_tier": "CONTRACTOR_TRADE"}).json()
+    assert body["family"] == "MASONRY" and body["total"] == 1445.0  # 500 x (3.01 x 0.96 = 2.89)
     body = client.post("/calculate/packaged-goods", json={"sku": "AA-MAS-CEM-IMPERIAL", "quantity": 3, "unit": "THOUSAND"}).json()
     assert body["total"] == 10432.8
     assert client.post("/calculate/packaged-goods", json={"sku": "AA-MAS-CEM-IMPERIAL", "quantity": 1.5, "unit": "THOUSAND"}).status_code == 422

@@ -338,7 +338,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
       const served = await http().get(`/merchandising/images/${image.body.id}`).expect(200);
       expect(served.headers["content-type"]).toBe("image/png");
       const overlay = await http().get("/merchandising/products").expect(200);
-      expect(overlay.body).toHaveLength(164); // 51 aggregates + 42 cement and other packaged goods + 7 ready-mix grades + 43 steel + 21 masonry
+      expect(overlay.body).toHaveLength(178); // 51 aggregates + 42 cement and other packaged goods + 7 ready-mix grades + 43 steel + 35 masonry & precast
       expect(overlay.body.find((p: { sku: string }) => p.sku === sku)).toMatchObject({
         featuredRank: 2,
         images: expect.arrayContaining([expect.objectContaining({ id: image.body.id, altText: "Filter media stockpile" })]),
@@ -642,6 +642,44 @@ describe("Aggregated Aggregates API (e2e)", () => {
           contactEmail: `lintel-${run}@example.com`,
           deliveryAddress: "1 Site Road, Pretoria",
           lines: [{ sku: "AA-MAS-LINTEL-1800", unit: "EACH", quantity: 6 }],
+        })
+        .expect(201);
+      expect(quote.body.reasonCode).toBe("PRICE_ON_REQUEST");
+      await prisma.quote.delete({ where: { id: quote.body.id } });
+      await prisma.order.delete({ where: { id: res.body.id } });
+    });
+
+    it("orders pavers and slabs in the masonry family on the flatbed, and quotes kerbs and gabions", async () => {
+      const token = await register("paving");
+      const pavers = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-PAV-BEVEL-50" }, include: { category: true } });
+      expect(pavers.category.slug).toBe("paving-kerbs-edging");
+      expect(Number(pavers.unitsPerM2)).toBe(50);
+      const slabs = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-PAV-SLAB-450" } });
+      const res = await http()
+        .post("/orders")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          deliveryDistanceKm: 15,
+          lineItems: [
+            { productId: pavers.id, unitOfSale: "EACH", quantity: 1050 },
+            { productId: slabs.id, unitOfSale: "EACH", quantity: 20 },
+          ],
+        })
+        .expect(201);
+      expect(Number(res.body.subtotal)).toBe(4151.9); // 1,050 x R3.01 + 20 x R49.57
+      expect(Number(res.body.deliveryFee)).toBe(0);
+      const lines = await prisma.orderLineItem.findMany({ where: { orderId: res.body.id } });
+      expect(lines.map((l) => l.pricingFamily)).toEqual(["MASONRY", "MASONRY"]);
+      const quote = await http()
+        .post("/quotes")
+        .send({
+          contactName: "Driveway Owner",
+          contactEmail: `kerbs-${run}@example.com`,
+          deliveryAddress: "2 Site Road, Pretoria",
+          lines: [
+            { sku: "AA-PAV-ROAD-KERB", unit: "EACH", quantity: 40 },
+            { sku: "AA-RET-GABION-BASKET", unit: "EACH", quantity: 6 },
+          ],
         })
         .expect(201);
       expect(quote.body.reasonCode).toBe("PRICE_ON_REQUEST");

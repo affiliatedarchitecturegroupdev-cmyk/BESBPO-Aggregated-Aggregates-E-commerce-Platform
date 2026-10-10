@@ -1,7 +1,8 @@
 /**
- * Masonry, CAT-19 Bricks & Blocks and CAT-20 Lintels, DPC & Wall
- * Accessories (MASONRY_CATALOGUE.md): bricks per 1,000; blocks, lintels and
- * air bricks per item; damp-proof course per roll.
+ * The masonry & precast line (MASONRY_CATALOGUE.md): CAT-19 Bricks & Blocks,
+ * CAT-20 Lintels, DPC & Wall Accessories, CAT-21 Paving, Kerbs & Edging and
+ * CAT-22 Retaining & Erosion Control. Bricks per 1,000; blocks, pavers,
+ * slabs, kerbs, lintels, gabions and air bricks per item; DPC per roll.
  *
  * masonry-catalogue.json is an exact copy of
  * services/pricing/data/masonry_catalogue.json — a pricing-service test fails
@@ -34,7 +35,7 @@ export type MasonryProduct = {
   summary: string;
   masonryClass: string;
   unitSize: string | null;
-  /** Units per m² of single-leaf wall with 10 mm joints (bricks and blocks only). */
+  /** Units per m² — of single-leaf wall with 10 mm joints (bricks, blocks), of paved area (pavers, slabs) or of wall face (retaining blocks). */
   unitsPerM2: number | null;
   typicalUses: string[];
   handlingNotes: string;
@@ -75,9 +76,15 @@ export function findMasonryProduct(slug: string) {
 }
 
 /** Bricks and blocks that a wall is built from — the wall calculator's choices. */
-export const WALLING = MASONRY_PRODUCTS.filter((p) => p.unitsPerM2 !== null);
+export const WALLING = MASONRY_PRODUCTS.filter((p) => p.categorySlug === "bricks-blocks" && p.unitsPerM2 !== null);
 
-/** Allowance for breakage and cutting, added on top of the wall's count. */
+/** Pavers and slabs with a known coverage — the paving calculator's choices. */
+export const PAVING = MASONRY_PRODUCTS.filter((p) => p.categorySlug === "paving-kerbs-edging" && p.unitsPerM2 !== null);
+
+export const PAVING_CATEGORIES = ["paving-kerbs-edging", "retaining-erosion-control"];
+export const isPavingLine = (categorySlug: string) => PAVING_CATEGORIES.includes(categorySlug);
+
+/** Allowance for breakage and cutting, added on top of the count. */
 export const BREAKAGE = 0.05;
 
 /**
