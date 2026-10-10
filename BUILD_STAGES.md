@@ -1,0 +1,46 @@
+# Shop by Build Stage (Oct 2026)
+
+> **Where it lives in this repo:** `apps/web/src/data/build-stages.ts` (the
+> stages, picks, categories, hire and tools), `components/merchandising/`
+> `ShopByStage.tsx` (server) and `StageShop.tsx` (tabs), on the homepage under
+> Shop by Category and at `/shop-by-stage`. "Save this stage to a project"
+> is `components/projects/SaveStageToProject.tsx` with the
+> `saveStageToProject` action (`app/account/projects/actions.ts`).
+
+## What it is
+
+The range arranged the way a job is built. Seven stages, in build order —
+the same stages as project lists (`PROJECT_LISTS.md`):
+
+| Stage | Picks today | Hire & services |
+|---|---|---|
+| Site prep & earthworks | G10 selected fill, G7 sub-base, G5, dump rock pioneer layer, recycled concrete, filling sand | Site clearing, TLB, padfoot roller, water truck, skip |
+| Foundations | 25 MPa ready-mix, 19 mm stone, concrete sand, 42,5N cement, Y12, tie wire | Mini excavator, TLB, steel fixing, rubble removal |
+| Surface beds & slabs | 25 and 30 MPa ready-mix, Ref 193 mesh, bar chairs, screed sand, plasticiser | Plate/roller compactor, steel fixing, site dumper |
+| Walls & superstructure | Building sand, plaster sand, 32,5N cement, hydrated lime, brickforce, wall ties | Site dumper, skip |
+| Paving, driveways & roads | G7 sub-base, crusher run base, G5, bedding sand, RAP, road-stabilising cement | Smooth-drum roller, water truck, tipper, haulage |
+| Drainage & services | French drain stone, washed filter stone, subsoil stone, pipe bedding sand, weeping-tile bedding, rip rap | Mini excavator, TLB, rubble removal |
+| Landscaping | River pebble, pea gravel, decorative chips, stone mulch, crusher dust, garden lime | Skid steer, site dumper, skip |
+
+Each pick is labelled with its job on site ("Concrete stone", "Main bars")
+and shows today's retail list price for its unit, or "Price on quote" —
+never a guessed price. Each stage also links its categories, the plant and
+services it needs, and the calculator that sizes it.
+
+**Save this stage to a project** adds the stage's picks (no quantities) to
+an existing project list or a new one, under that stage. Saving again keeps
+any quantities already entered.
+
+## Adding to it
+
+Stages are data. When a new category lands, add its slug to the stage's
+`categories` and swap in picks. Planned (owner, Oct 2026):
+
+| Phase | Categories | Stage |
+|---|---|---|
+| W | CAT-19 Bricks & Blocks, CAT-20 Lintels, DPC & Wall Accessories | Walls |
+| P | CAT-21 Paving, Kerbs & Edging, CAT-22 Retaining & Erosion Control | Paving |
+| D | CAT-23 Pipes & Fittings, CAT-24 Precast Drainage, CAT-25 Geosynthetics & Membranes | Drainage (and Slabs for DPM) |
+
+A pick whose product is hidden by staff (Admin → Merchandising) drops out of
+its stage automatically.

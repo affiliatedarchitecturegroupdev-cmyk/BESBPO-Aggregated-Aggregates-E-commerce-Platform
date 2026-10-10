@@ -111,3 +111,31 @@ export async function copySharedList(form: FormData) {
   refresh();
   if (result.ok) redirect(`/account/projects/${result.data.id}`);
 }
+
+/** Shop by Build Stage: save a stage's picks (no quantities yet) to a list, or to a new one. */
+export async function saveStageToProject(_prev: FormState, form: FormData): Promise<FormState & { listId?: string }> {
+  const token = sessionToken();
+  let listId = text(form, "listId");
+  if (listId === "new" || !listId) {
+    const created = await api<ProjectList>("/project-lists", { method: "POST", token, body: { name: text(form, "newName") } });
+    if (!created.ok) return { error: created.message };
+    listId = created.data.id;
+  }
+  const lines = text(form, "lines")
+    .split(",")
+    .map((l) => l.split("~"))
+    .filter((l) => l.length === 2)
+    .slice(0, 12);
+  const stage = text(form, "stage") || undefined;
+  let name = "";
+  for (const [sku, unit] of lines) {
+    const result = await api<ProjectList>(`/project-lists/${encodeURIComponent(listId)}/items`, { method: "POST", token, body: { sku, unit, stage } });
+    if (!result.ok) {
+      refresh(listId);
+      return { error: result.message, listId };
+    }
+    name = result.data.name;
+  }
+  refresh(listId);
+  return { success: `${lines.length} materials saved to "${name}" — add quantities on the list.`, listId };
+}

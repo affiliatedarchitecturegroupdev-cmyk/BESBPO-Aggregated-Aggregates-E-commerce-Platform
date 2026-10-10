@@ -15,6 +15,7 @@ import { IndustriesWeServe } from "@/components/merchandising/IndustriesWeServe"
 import { PromoSlot } from "@/components/merchandising/PromoSlot";
 import { PromoStrip } from "@/components/merchandising/PromoStrip";
 import { QuarryToSite } from "@/components/merchandising/QuarryToSite";
+import { ShopByStage } from "@/components/merchandising/ShopByStage";
 import { QuickTonnageCalculator } from "@/components/merchandising/QuickTonnageCalculator";
 import { TierComparison } from "@/components/merchandising/TierComparison";
 import { TrustBadges } from "@/components/merchandising/TrustBadges";
@@ -43,6 +44,7 @@ export default async function HomePage() {
       <BadgeCarouselCompact />
       <QuickTonnageCalculator hiddenSkus={hiddenSkus} />
       <CategoryGrid />
+      <ShopByStage hiddenSkus={hiddenSkus} />
       <BulkVsBagged />
       <FeaturedProducts />
       <BusinessLinesCarousel />
