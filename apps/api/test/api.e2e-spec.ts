@@ -338,7 +338,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
       const served = await http().get(`/merchandising/images/${image.body.id}`).expect(200);
       expect(served.headers["content-type"]).toBe("image/png");
       const overlay = await http().get("/merchandising/products").expect(200);
-      expect(overlay.body).toHaveLength(178); // 51 aggregates + 42 cement and other packaged goods + 7 ready-mix grades + 43 steel + 35 masonry & precast
+      expect(overlay.body).toHaveLength(197); // 51 aggregates + 42 cement and other packaged goods + 7 ready-mix grades + 43 steel + 54 masonry & precast
       expect(overlay.body.find((p: { sku: string }) => p.sku === sku)).toMatchObject({
         featuredRank: 2,
         images: expect.arrayContaining([expect.objectContaining({ id: image.body.id, altText: "Filter media stockpile" })]),
@@ -642,6 +642,44 @@ describe("Aggregated Aggregates API (e2e)", () => {
           contactEmail: `lintel-${run}@example.com`,
           deliveryAddress: "1 Site Road, Pretoria",
           lines: [{ sku: "AA-MAS-LINTEL-1800", unit: "EACH", quantity: 6 }],
+        })
+        .expect(201);
+      expect(quote.body.reasonCode).toBe("PRICE_ON_REQUEST");
+      await prisma.quote.delete({ where: { id: quote.body.id } });
+      await prisma.order.delete({ where: { id: res.body.id } });
+    });
+
+    it("orders pipe by the 6 m length and DPM by the roll, and quotes precast drainage", async () => {
+      const token = await register("drainage");
+      const pipe = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-DRN-PIPE-UG-110" }, include: { category: true } });
+      expect(pipe.category.slug).toBe("pipes-fittings");
+      expect(pipe.unitsOfSale).toEqual(["LENGTH_6M"]);
+      const dpm = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-GEO-DPM-250" } });
+      const res = await http()
+        .post("/orders")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          deliveryDistanceKm: 12,
+          lineItems: [
+            { productId: pipe.id, unitOfSale: "LENGTH_6M", quantity: 5 },
+            { productId: dpm.id, unitOfSale: "ROLL", quantity: 2 },
+          ],
+        })
+        .expect(201);
+      expect(Number(res.body.subtotal)).toBe(3189.25); // 5 x R280.75 + 2 x R892.75
+      expect(Number(res.body.deliveryFee)).toBe(0);
+      const lines = await prisma.orderLineItem.findMany({ where: { orderId: res.body.id } });
+      expect(lines.map((l) => l.pricingFamily)).toEqual(["MASONRY", "MASONRY"]);
+      const quote = await http()
+        .post("/quotes")
+        .send({
+          contactName: "Site Engineer",
+          contactEmail: `culvert-${run}@example.com`,
+          deliveryAddress: "3 Site Road, Pretoria",
+          lines: [
+            { sku: "AA-PRC-CONC-PIPE-450", unit: "EACH", quantity: 8 },
+            { sku: "AA-PRC-MANHOLE-RING-1000", unit: "EACH", quantity: 3 },
+          ],
         })
         .expect(201);
       expect(quote.body.reasonCode).toBe("PRICE_ON_REQUEST");

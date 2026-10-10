@@ -6,19 +6,21 @@ import { WallCalculator } from "@/components/product/WallCalculator";
 import { SaveToProject } from "@/components/projects/SaveToProject";
 import { SocialShareButtons } from "@/components/social/SocialShareButtons";
 import { CATEGORIES } from "@/data/categories";
-import { isPavingLine, MASONRY_CATEGORY_CODES, MASONRY_PRODUCTS } from "@/data/masonry";
+import { LINE_PAGE, lineOf, MASONRY_CATEGORY_CODES, MASONRY_PRODUCTS } from "@/data/masonry";
 import type { MerchandisedMasonryProduct } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
-/** Product page for the masonry & precast line, CAT-19..22: bricks, blocks, lintels, DPC, pavers, kerbs, retaining blocks and gabions. */
+/** Product page for the masonry & precast line, CAT-19..25: walling, paving & retaining, and drainage & membranes. */
 export function MasonryProductPage({ product }: { product: MerchandisedMasonryProduct }) {
   const category = CATEGORIES.find((c) => c.slug === product.categorySlug)!;
   const priced = product.units.filter((u) => u.prices !== null);
   const related = MASONRY_PRODUCTS.filter((p) => p.categorySlug === product.categorySlug && p.sku !== product.sku).slice(0, 4);
   const url = `${SITE_URL}/products/${product.slug}`;
   const walling = product.unitsPerM2 !== null;
-  const paving = isPavingLine(product.categorySlug);
+  const line = lineOf(product.categorySlug);
+  const paving = line === "paving";
+  const drainage = line === "drainage";
   const perM2Label = paving ? (product.categorySlug === "paving-kerbs-edging" ? "Per m² of paving" : "Per m² of wall face") : "Per m² of wall";
 
   // Offers only for benchmarked units — an unpriced product never implies a price.
@@ -61,11 +63,7 @@ export function MasonryProductPage({ product }: { product: MerchandisedMasonryPr
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
       <nav className="font-mono text-xs text-slate" aria-label="Breadcrumb">
         <Link href="/" className="hover:text-seam-blue">Home</Link> /{" "}
-        {paving ? (
-          <Link href="/paving" className="hover:text-seam-blue">Paving &amp; Retaining</Link>
-        ) : (
-          <Link href="/bricks-blocks" className="hover:text-seam-blue">Bricks, Blocks &amp; Walling</Link>
-        )}{" "}
+        <Link href={LINE_PAGE[line].href} className="hover:text-seam-blue">{LINE_PAGE[line].label}</Link>{" "}
         /{" "}
         <Link href={`/products?category=${category.slug}`} className="hover:text-seam-blue">{category.name}</Link> / {product.name}
       </nav>
@@ -155,7 +153,9 @@ export function MasonryProductPage({ product }: { product: MerchandisedMasonryPr
             ))}
           </ul>
           <p className="mt-3 font-body text-xs text-slate">
-            {paving
+            {drainage
+              ? "Falls, bedding and connections to the municipal system follow the drawings, SANS 10400-P and the local authority's requirements."
+              : paving
               ? "The base, bedding and wall design (height, drainage, backfill) decide how it performs — follow the maker's tables or an engineer."
               : "Your drawings and the NHBRC requirements decide the unit, strength and wall build-up."}
           </p>
@@ -167,7 +167,7 @@ export function MasonryProductPage({ product }: { product: MerchandisedMasonryPr
         <section className="rounded-sm border border-basalt/10 bg-white p-6">
           <h2 className="font-mono text-[10px] uppercase tracking-widest text-seam-blue">Delivery &amp; Returns</h2>
           <p className="mt-3 font-body text-sm text-basalt">
-            {paving ? "Pavers, kerbs, retaining blocks and gabions" : "Bricks, blocks and lintels"} come palletised on the supplier&apos;s flatbed or crane truck: we confirm the delivery slot, any
+            {drainage ? "Pipes, precast units and rolls" : paving ? "Pavers, kerbs, retaining blocks and gabions" : "Bricks, blocks and lintels"} come palletised on the supplier&apos;s flatbed or crane truck: we confirm the delivery slot, any
             delivery charge and the yard&apos;s minimum load with you before dispatch. See the{" "}
             <Link href="/legal/shipping-delivery" className="text-seam-blue underline">Shipping &amp; Delivery</Link> and{" "}
             <Link href="/legal/returns-refunds" className="text-seam-blue underline">Returns &amp; Refunds</Link> policies.

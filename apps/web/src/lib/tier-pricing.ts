@@ -74,5 +74,5 @@ export function tierBreakdown(tier: CustomerTierName): string {
     const d = pct(family);
     return d === null ? `${name} quoted` : `${Math.round(d * 100)}% off ${name}`;
   };
-  return `${part("AGGREGATE", "aggregates")} · ${part("CEMENT_BAGGED", "bagged cement")} · ${part("READY_MIX", "ready-mix")} · ${part("STEEL", "steel")} · ${part("MASONRY", "bricks & blocks")}. Never below our margin floor.`;
+  return `${part("AGGREGATE", "aggregates")} · ${part("CEMENT_BAGGED", "bagged cement")} · ${part("READY_MIX", "ready-mix")} · ${part("STEEL", "steel")} · ${part("MASONRY", "bricks, paving & drainage")}. Never below our margin floor.`;
 }

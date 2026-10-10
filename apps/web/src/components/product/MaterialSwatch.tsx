@@ -19,6 +19,9 @@ const PALETTES: Record<string, { base: string; grains: string[] }> = {
   "bricks-blocks": { base: "#A4553A", grains: ["#8A4230", "#C06A4B", "#9C9890"] },
   "paving-kerbs-edging": { base: "#8D8780", grains: ["#6E6862", "#A9A39B", "#9A5A40"] },
   "retaining-erosion-control": { base: "#8A8172", grains: ["#6B6355", "#A89F8F", "#5F6B4E"] },
+  "pipes-fittings": { base: "#8C7A62", grains: ["#E07A1F", "#6E5F4C", "#A8977F"] },
+  "precast-drainage": { base: "#94918B", grains: ["#76736E", "#B0ADA7", "#5E6A70"] },
+  "geosynthetics-membranes": { base: "#3B3D3F", grains: ["#55585B", "#2A2B2C", "#7B7F82"] },
   "lintels-dpc-wall-accessories": { base: "#8E8B85", grains: ["#6F6C67", "#ABA8A2", "#2B2B2B"] },
   "ready-mix-concrete": { base: "#A7A49E", grains: ["#8D8A84", "#C2BFB9", "#75726C"] },
   // Plant hire and site services: machine yellow and safety orange on site soil.

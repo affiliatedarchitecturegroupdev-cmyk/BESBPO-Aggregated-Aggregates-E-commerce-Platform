@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { WallCalculator } from "@/components/product/WallCalculator";
 import { MASONRY_CATEGORIES } from "@/data/categories";
-import { isPavingLine, MASONRY_CATEGORY_CODES, MASONRY_PRODUCTS, WALLING } from "@/data/masonry";
+import { lineOf, MASONRY_CATEGORY_CODES, MASONRY_PRODUCTS, WALLING } from "@/data/masonry";
 import { getMasonryCatalogue } from "@/lib/cms";
 
 export const metadata: Metadata = {
@@ -14,13 +14,13 @@ export const metadata: Metadata = {
 };
 
 const count = (slug: string) => MASONRY_PRODUCTS.filter((p) => p.categorySlug === slug).length;
-/** The walling half of the masonry & precast line — paving and retaining have their own page (/paving). */
-const WALL_CATEGORIES = MASONRY_CATEGORIES.filter((c) => !isPavingLine(c.slug));
+/** The walling part of the masonry & precast line — paving (/paving) and drainage (/drainage) have their own pages. */
+const WALL_CATEGORIES = MASONRY_CATEGORIES.filter((c) => lineOf(c.slug) === "walling");
 
 /** Landing page for the masonry line, CAT-19/20 (MASONRY_CATALOGUE.md); prices only where benchmarked, everything else on request. */
 export default async function BricksBlocksPage() {
   const visible = await getMasonryCatalogue();
-  const live = visible.filter((p) => !isPavingLine(p.categorySlug) && p.units.some((u) => u.prices !== null));
+  const live = visible.filter((p) => lineOf(p.categorySlug) === "walling" && p.units.some((u) => u.prices !== null));
   const options = WALLING.filter((p) => visible.some((v) => v.sku === p.sku)).map((p) => ({
     sku: p.sku,
     slug: p.slug,
