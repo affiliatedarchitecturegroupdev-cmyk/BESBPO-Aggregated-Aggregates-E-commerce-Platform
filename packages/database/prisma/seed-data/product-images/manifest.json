@@ -2480,6 +2480,91 @@
         "owner-upload/c75f28f3-image.jpg"
       ],
       "permission": "GRANTED"
+    },
+    {
+      "file": "b3770cc590c8.webp",
+      "width": 1000,
+      "height": 667,
+      "bytes": 188044,
+      "originalWidth": 2560,
+      "originalHeight": 1707,
+      "source": "Owner-supplied stock photo (Unsplash / Pexels)",
+      "sourceCountry": null,
+      "sourcePage": null,
+      "sourcingNote": "Ready-mix discharged from a mixer-truck chute onto a reinforced slab. Supplied by the owner from Unsplash/Pexels (Oct 2026); both licences allow free commercial use without attribution.",
+      "flags": [],
+      "originalPaths": [
+        "owner-upload/c30ef08b-image.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "2239438dc356.webp",
+      "width": 1000,
+      "height": 667,
+      "bytes": 151236,
+      "originalWidth": 6000,
+      "originalHeight": 4000,
+      "source": "Owner-supplied stock photo (Unsplash / Pexels)",
+      "sourceCountry": null,
+      "sourcePage": null,
+      "sourcingNote": "Pumped ready-mix placed over a reinforcing mat. Supplied by the owner from Unsplash/Pexels (Oct 2026); both licences allow free commercial use without attribution.",
+      "flags": [],
+      "originalPaths": [
+        "owner-upload/ff21f1e6-image.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "eaafc85554c5.webp",
+      "width": 1000,
+      "height": 667,
+      "bytes": 85952,
+      "originalWidth": 4548,
+      "originalHeight": 3032,
+      "source": "Owner-supplied stock photo (Unsplash / Pexels)",
+      "sourceCountry": null,
+      "sourcePage": null,
+      "sourcingNote": "Ready-mix being placed and screeded inside formwork. Supplied by the owner from Unsplash/Pexels (Oct 2026); both licences allow free commercial use without attribution.",
+      "flags": [],
+      "originalPaths": [
+        "owner-upload/491f86fa-image.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "2a3d2d030c75.webp",
+      "width": 667,
+      "height": 1000,
+      "bytes": 150132,
+      "originalWidth": 3330,
+      "originalHeight": 4995,
+      "source": "Owner-supplied stock photo (Unsplash / Pexels)",
+      "sourceCountry": null,
+      "sourcePage": null,
+      "sourcingNote": "Pump hose placing concrete over mesh. Supplied by the owner from Unsplash/Pexels (Oct 2026); both licences allow free commercial use without attribution.",
+      "flags": [],
+      "originalPaths": [
+        "owner-upload/e9bbdb15-image.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "1cba154394e5.webp",
+      "width": 667,
+      "height": 1000,
+      "bytes": 120374,
+      "originalWidth": 4000,
+      "originalHeight": 6000,
+      "source": "Owner-supplied stock photo (Unsplash / Pexels)",
+      "sourceCountry": null,
+      "sourcePage": null,
+      "sourcingNote": "Pump hose placing concrete along an edge beam. Supplied by the owner from Unsplash/Pexels (Oct 2026); both licences allow free commercial use without attribution.",
+      "flags": [],
+      "originalPaths": [
+        "owner-upload/1fb2398e-image.jpg"
+      ],
+      "permission": "GRANTED"
     }
   ],
   "products": {
@@ -2842,6 +2927,55 @@
     ],
     "AA-CEM-DANGOTE-FALCON": [
       "725d3400bc2b.webp"
+    ],
+    "AA-RMX-10MPA-001": [
+      "b3770cc590c8.webp",
+      "2239438dc356.webp",
+      "eaafc85554c5.webp",
+      "2a3d2d030c75.webp",
+      "1cba154394e5.webp"
+    ],
+    "AA-RMX-15MPA-001": [
+      "2239438dc356.webp",
+      "b3770cc590c8.webp",
+      "2a3d2d030c75.webp",
+      "eaafc85554c5.webp",
+      "1cba154394e5.webp"
+    ],
+    "AA-RMX-20MPA-001": [
+      "eaafc85554c5.webp",
+      "2239438dc356.webp",
+      "b3770cc590c8.webp",
+      "1cba154394e5.webp",
+      "2a3d2d030c75.webp"
+    ],
+    "AA-RMX-25MPA-001": [
+      "b3770cc590c8.webp",
+      "eaafc85554c5.webp",
+      "2239438dc356.webp",
+      "2a3d2d030c75.webp",
+      "1cba154394e5.webp"
+    ],
+    "AA-RMX-30MPA-001": [
+      "2239438dc356.webp",
+      "eaafc85554c5.webp",
+      "b3770cc590c8.webp",
+      "1cba154394e5.webp",
+      "2a3d2d030c75.webp"
+    ],
+    "AA-RMX-35MPA-001": [
+      "eaafc85554c5.webp",
+      "b3770cc590c8.webp",
+      "2239438dc356.webp",
+      "2a3d2d030c75.webp",
+      "1cba154394e5.webp"
+    ],
+    "AA-RMX-40MPA-001": [
+      "b3770cc590c8.webp",
+      "2239438dc356.webp",
+      "eaafc85554c5.webp",
+      "1cba154394e5.webp",
+      "2a3d2d030c75.webp"
     ]
   },
   "noImage": {

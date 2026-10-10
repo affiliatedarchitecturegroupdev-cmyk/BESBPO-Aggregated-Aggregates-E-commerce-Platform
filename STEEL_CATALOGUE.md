@@ -82,9 +82,8 @@ safety caps and chairs (one supplier, ex-VAT, pack size unclear).
 
 ## Pricing and delivery rules
 
-- **Discount family `STEEL`:** retail list; Contractor/Trade 4% (a
-  placeholder that mirrors bagged cement — the owner to set the steel
-  schedule); Volume/Civil Bulk quoted. Never below the 3% margin floor
+- **Discount family `STEEL`:** retail list; Contractor/Trade 4%
+  (approved by the owner, 10 Oct 2026); Volume/Civil Bulk quoted. Never below the 3% margin floor
   (`PRICING_POLICY.md`). Mirrored in `apps/web/src/lib/tier-pricing.ts`.
 - **Delivery:** steel travels on the merchant's flatbed or crane truck,
   never in the tipper bands. A steel-only order has no tipper fee and
@@ -168,8 +167,8 @@ African per-tonne benchmark was found publicly, so no rate is published.
 
 ## Open items
 
-- Owner to set the steel trade discount (4% placeholder) and confirm the
-  cost proxy (benchmark = cost until merchant terms are known).
+- Confirm the cost proxy (benchmark = cost until merchant terms are known).
+  The 4% trade discount was approved on 10 Oct 2026.
 - Merchant price lists for per-tonne rebar, 12 m lengths and the
   structural range — loaded only from written quotes.
 - Product photos for the steel line (none yet; texture swatches show).

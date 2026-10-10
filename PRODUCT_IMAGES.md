@@ -63,6 +63,23 @@ limestone on a conveyor — not cement. **Still to source** (4, listed in
 `noImage`): Kwikbuild Masonry 22,5X; PPC SUREWALL; and generic photos for the
 unbranded Bulk Cement 52.5N and the Road-Capping Binder.
 
+## Ready-mix concrete photos (Oct 2026)
+
+Five photos supplied by the owner from Unsplash and Pexels, whose licences
+allow free commercial use without attribution, so they're imported live
+(`"permission": "GRANTED"`, source "Owner-supplied stock photo (Unsplash /
+Pexels)"). Every ready-mix grade (AA-RMX-10MPA to 40MPA) uses all five,
+each leading with a different landscape shot so the listing cards vary:
+a mixer-truck chute onto a reinforced slab, a pump hose over a reinforcing
+mat, placing and screeding inside formwork, and two pump-hose close-ups
+over mesh and along an edge beam. Resized to 1,000 px.
+
+Not used from the same batch: a power-screed close-up (finishing equipment,
+not the product), two low-resolution images (768 px and 720 px), and a
+darkened wheelbarrow shot and a shovel banner whose source isn't
+Unsplash/Pexels as far as we can tell — those stay out until their licence
+is confirmed. The seed set's size budget is now 20 MB (it was 15 MB).
+
 ## Open-licence photos — live now
 
 To give the store real photos before launch, photos were chosen from
