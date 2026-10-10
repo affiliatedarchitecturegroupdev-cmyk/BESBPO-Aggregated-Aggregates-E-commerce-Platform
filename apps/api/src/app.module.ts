@@ -30,6 +30,7 @@ import { BookingsModule } from "./bookings/bookings.module";
 import { FinanceModule } from "./finance/finance.module";
 import { InsightsModule } from "./insights/insights.module";
 import { CutAndBendModule } from "./cut-and-bend/cut-and-bend.module";
+import { ProjectListsModule } from "./project-lists/project-lists.module";
 
 @Module({
   imports: [
@@ -63,6 +64,7 @@ import { CutAndBendModule } from "./cut-and-bend/cut-and-bend.module";
     FinanceModule,
     InsightsModule,
     CutAndBendModule,
+    ProjectListsModule,
   ],
 })
 export class AppModule {}
