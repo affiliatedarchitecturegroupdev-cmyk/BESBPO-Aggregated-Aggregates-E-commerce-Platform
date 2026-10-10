@@ -1,18 +1,35 @@
 import Link from "next/link";
 import { CategoryCarousel, type CategoryCard, type CategoryPage } from "@/components/merchandising/CategoryCarousel";
-import { CORE_CATEGORIES, CATEGORIES } from "@/data/categories";
+import { CORE_CATEGORIES, CATEGORIES, MASONRY_CATEGORIES, type Category } from "@/data/categories";
 import { PLANT, SERVICES } from "@/data/plant-services";
 import { QUOTABLE } from "@/data/quotable";
 import { getCatalogue } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
 
-/** Everything sold by the product rather than by the ton: cement, ready-mix and steel, in the order of the menu. */
-const MORE_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup !== "core");
+/** Cement, ready-mix and steel, in the order of the menu. */
+const MORE_CATEGORIES = CATEGORIES.filter((c) => ["b2b-bulk", "ready-mix", "steel"].includes(c.catalogueGroup));
+
+/** A product category's card: its product count and the cheapest live price with its unit. */
+function categoryCard(category: Category): CategoryCard {
+  const products = QUOTABLE.filter((p) => p.categorySlug === category.slug);
+  const cheapest = products
+    .flatMap((p) => p.units)
+    .filter((u) => u.retailPrice !== null)
+    .sort((a, b) => a.retailPrice! - b.retailPrice!)[0];
+  return {
+    key: category.slug,
+    href: `/products?category=${category.slug}`,
+    name: category.name,
+    description: category.description,
+    meta: `${products.length} products${cheapest ? ` · from ${formatZAR(cheapest.retailPrice!)}/${cheapest.label.replace(/\s*\(.*\)$/, "").toLowerCase().replace(/^per /, "")}` : " · on quote"}`,
+  };
+}
 
 /**
- * Shop by Category: nine cards a page. Page one is the nine aggregate
- * categories; page two the rest of the range — cement, ready-mix, steel,
- * plant hire and site services.
+ * Shop by Category: up to nine cards a page. Page one is the nine aggregate
+ * categories; page two cement, ready-mix, steel, plant hire and site
+ * services; page three walls and beyond — bricks & blocks and lintels & DPC
+ * now, with paving and drainage to come (BUILD_STAGES.md).
  */
 export async function CategoryGrid() {
   const catalogue = await getCatalogue();
@@ -31,21 +48,7 @@ export async function CategoryGrid() {
   });
 
   const more: CategoryCard[] = [
-    ...MORE_CATEGORIES.map((category) => {
-      const products = QUOTABLE.filter((p) => p.categorySlug === category.slug);
-      // The cheapest live-priced unit in the category, with its unit — a bag, a length or a cubic metre.
-      const cheapest = products
-        .flatMap((p) => p.units)
-        .filter((u) => u.retailPrice !== null)
-        .sort((a, b) => a.retailPrice! - b.retailPrice!)[0];
-      return {
-        key: category.slug,
-        href: `/products?category=${category.slug}`,
-        name: category.name,
-        description: category.description,
-        meta: `${products.length} products${cheapest ? ` · from ${formatZAR(cheapest.retailPrice!)}/${cheapest.label.replace(/\s*\(.*\)$/, "")}` : " · on quote"}`,
-      };
-    }),
+    ...MORE_CATEGORIES.map(categoryCard),
     {
       key: "plant-hire",
       href: "/plant-hire",
@@ -62,9 +65,12 @@ export async function CategoryGrid() {
     },
   ];
 
+  const walling = MASONRY_CATEGORIES.map(categoryCard);
+
   const pages: CategoryPage[] = [
     { label: "Aggregates", summary: "Nine aggregate categories, from sub-base to decorative — every price straight from our published pricing framework.", cards: aggregates },
     { label: "Cement, concrete, steel & hire", summary: "Cement, ready-mix, reinforcing and structural steel, plus plant hire and site services for the same job.", cards: more },
+    { label: "Bricks, blocks & walling", summary: "Clay and cement bricks, concrete blocks, lintels, damp-proof course and air bricks for the walls.", cards: walling },
   ];
 
   return (
@@ -75,7 +81,7 @@ export async function CategoryGrid() {
           All products →
         </Link>
       </div>
-      <CategoryCarousel pages={pages} total={aggregates.length + more.length} />
+      <CategoryCarousel pages={pages} total={aggregates.length + more.length + walling.length} />
     </section>
   );
 }

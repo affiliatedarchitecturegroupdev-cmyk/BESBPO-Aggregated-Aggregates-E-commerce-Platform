@@ -11,18 +11,20 @@ import { SocialShareButtons } from "@/components/social/SocialShareButtons";
 import { WhatsAppOrderButton } from "@/components/social/WhatsAppCta";
 import { PackagedProductPage } from "@/components/product/PackagedProductPage";
 import { ReadyMixProductPage } from "@/components/product/ReadyMixProductPage";
+import { MasonryProductPage } from "@/components/product/MasonryProductPage";
 import { SteelProductPage } from "@/components/product/SteelProductPage";
 import { pricePoints, PRODUCTS } from "@/data/catalogue";
 import { CATEGORIES } from "@/data/categories";
 import { PACKAGED_PRODUCTS } from "@/data/packaged";
 import { READY_MIX_PRODUCTS } from "@/data/ready-mix";
+import { MASONRY_PRODUCTS } from "@/data/masonry";
 import { STEEL_PRODUCTS } from "@/data/steel";
-import { getCatalogue, getPackagedCatalogue, getProduct, getReadyMixCatalogue, getSteelCatalogue } from "@/lib/cms";
+import { getCatalogue, getPackagedCatalogue, getProduct, getReadyMixCatalogue, getSteelCatalogue, getMasonryCatalogue } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
-  return [...PRODUCTS, ...PACKAGED_PRODUCTS, ...READY_MIX_PRODUCTS, ...STEEL_PRODUCTS].map((p) => ({ slug: p.slug }));
+  return [...PRODUCTS, ...PACKAGED_PRODUCTS, ...READY_MIX_PRODUCTS, ...STEEL_PRODUCTS, ...MASONRY_PRODUCTS].map((p) => ({ slug: p.slug }));
 }
 
 async function getPackaged(slug: string) {
@@ -31,6 +33,10 @@ async function getPackaged(slug: string) {
 
 async function getSteel(slug: string) {
   return (await getSteelCatalogue()).find((p) => p.slug === slug);
+}
+
+async function getMasonry(slug: string) {
+  return (await getMasonryCatalogue()).find((p) => p.slug === slug);
 }
 
 async function getReadyMix(slug: string) {
@@ -59,6 +65,15 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         alternates: { canonical: `/products/${steel.slug}` },
       };
     }
+    const masonry = await getMasonry(params.slug);
+    if (masonry) {
+      const unit = masonry.units.find((u) => u.prices);
+      return {
+        title: masonry.name,
+        description: `${masonry.name}${masonry.gradingStandard ? ` (${masonry.gradingStandard})` : ""}${unit ? ` from ${formatZAR(unit.prices!.RETAIL)} ${unit.label.toLowerCase()}` : ""} — delivered palletised by flatbed across South Africa.`,
+        alternates: { canonical: `/products/${masonry.slug}` },
+      };
+    }
     const packaged = await getPackaged(params.slug);
     if (!packaged) return {};
     return {
@@ -84,6 +99,8 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
     if (readyMix) return <ReadyMixProductPage product={readyMix} />;
     const steel = await getSteel(params.slug);
     if (steel) return <SteelProductPage product={steel} />;
+    const masonry = await getMasonry(params.slug);
+    if (masonry) return <MasonryProductPage product={masonry} />;
     const packaged = await getPackaged(params.slug);
     if (!packaged) notFound();
     return <PackagedProductPage product={packaged} />;

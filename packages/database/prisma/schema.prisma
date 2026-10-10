@@ -193,10 +193,14 @@ model Product {
   diameterMm                Int? // bar diameter
   massKgPerM                Decimal?             @db.Decimal(7, 3) // SANS 920 nominal mass
   sectionSize               String? // e.g. "6.0 x 2.4 m sheet", "40 x 40 x 3 mm"
+  // Masonry (MASONRY_CATALOGUE.md) — CAT-19/20 only.
+  masonryClass              String? // e.g. "Clay stock (NFP)", "Hollow concrete block", "Prestressed lintel"
+  unitSize                  String? // e.g. "222 × 106 × 73 mm", "1.8 m long", "110 mm × 40 m roll"
+  unitsPerM2                Decimal?             @db.Decimal(6, 2) // per m² of single-leaf wall, 10 mm joints
   readyMixPriceBand         ReadyMixPriceBand?
   images                    ProductImage[]
   priceBand                 PriceBand?
-  packagedPriceBands        PackagedPriceBand[] // CAT-10/CAT-11 packaged goods and CAT-15..18 steel
+  packagedPriceBands        PackagedPriceBand[] // CAT-10/CAT-11 packaged goods, CAT-15..18 steel and CAT-19/20 masonry
   complianceDocuments       ComplianceDocument[]
   quoteLineItems            QuoteLineItem[]
   orderLineItems            OrderLineItem[]
@@ -447,6 +451,8 @@ enum UnitOfSale {
   COIL
   PACK
   EACH
+  // Masonry (CAT-19/20, MASONRY_CATALOGUE.md) — bricks are sold per 1,000; blocks, lintels and DPC use EACH / ROLL
+  THOUSAND
 }
 
 /// Captures quote-only orders before they become a priced Order — the RFQ

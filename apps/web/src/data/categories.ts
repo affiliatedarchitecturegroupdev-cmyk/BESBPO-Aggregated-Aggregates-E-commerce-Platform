@@ -3,7 +3,7 @@ export type Category = {
   name: string;
   description: string;
   /** core = the aggregate catalogue (pricing framework workbook); b2b-bulk = packaged cement, binders and chemicals; ready-mix = CAT-12 concrete. */
-  catalogueGroup: "core" | "b2b-bulk" | "ready-mix" | "steel";
+  catalogueGroup: "core" | "b2b-bulk" | "ready-mix" | "steel" | "masonry";
 };
 
 // The nine core categories of the pricing framework workbook (Category Markup
@@ -32,9 +32,13 @@ export const CATEGORIES: Category[] = [
   { slug: "mesh-brickforce", name: "Mesh & Brickforce", description: "SANS 1024 welded mesh from Ref 100 to Ref 888 in 6.0 x 2.4 m sheets, and brickforce rolls for masonry.", catalogueGroup: "steel" },
   { slug: "steel-fixing-accessories", name: "Steel Fixing Accessories", description: "Tie wire, bar chairs and spacers, cover blocks, safety caps, couplers, dowels, starter bars, wall ties and hoop iron.", catalogueGroup: "steel" },
   { slug: "structural-steel", name: "Structural Steel", description: "Angles, tubes, flat and round bar, IPE beams, H-sections, channels and plate — by the length or tonne.", catalogueGroup: "steel" },
+  // CAT-19/20 — masonry (MASONRY_CATALOGUE.md).
+  { slug: "bricks-blocks", name: "Bricks & Blocks", description: "SANS 227 clay stock and face bricks and SANS 1215 cement bricks by the 1,000, and concrete blocks from 90 to 190 mm.", catalogueGroup: "masonry" },
+  { slug: "lintels-dpc-wall-accessories", name: "Lintels, DPC & Wall Accessories", description: "Prestressed concrete lintels from 1.2 to 3.6 m, SANS 952 damp-proof course by the roll, and air bricks.", catalogueGroup: "masonry" },
 ];
 
 export const CORE_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "core");
 export const B2B_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "b2b-bulk");
 export const READY_MIX_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "ready-mix");
 export const STEEL_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "steel");
+export const MASONRY_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "masonry");

@@ -1,0 +1,689 @@
+{
+ "_source": "Masonry line, CAT-19 Bricks & Blocks and CAT-20 Lintels, DPC & Wall Accessories (MASONRY_CATALOGUE.md). A unit is live only where at least two SA retailers show a regular price for the same product; list = lowest x 1.08. Everything else is quoted with the supplier. Bricks are sold per 1,000; units_per_m2 is the count per m² of single-leaf wall with 10 mm joints.",
+ "categories": [
+  {
+   "slug": "bricks-blocks",
+   "name": "Bricks & Blocks",
+   "code": "CAT-19"
+  },
+  {
+   "slug": "lintels-dpc-wall-accessories",
+   "name": "Lintels, DPC & Wall Accessories",
+   "code": "CAT-20"
+  }
+ ],
+ "products": [
+  {
+   "sku": "AA-MAS-CLAY-STOCK",
+   "slug": "clay-stock-brick-nfp",
+   "name": "Clay Stock Brick (NFP) 222 × 106 × 73 mm",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 227 burnt clay masonry units — NFP (non-facing plaster)",
+   "masonry_class": "Clay stock (NFP)",
+   "unit_size": "222 × 106 × 73 mm",
+   "units_per_m2": 52,
+   "description": "Burnt clay stock brick for walls that will be plastered — the everyday South African building brick. Imperial size, about 52 to the square metre of half-brick wall.",
+   "typical_uses": [
+    "Plastered walls — foundations, superstructure and boundary walls",
+    "Half-brick (110 mm) and one-brick (220 mm) walls"
+   ],
+   "handling_notes": "Stack on a level, firm base close to where they'll be laid; keep cement bricks and blocks off wet ground and cover them in rain. Check the delivery against the order before the truck leaves.",
+   "units": [
+    {
+     "unit": "THOUSAND",
+     "unit_label": "Per 1,000",
+     "weight_kg": null,
+     "market_benchmark_price": 2370.0,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 2370.0,
+     "markup_percent": 8,
+     "list_price_per_unit": 2559.6,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Cashbuild 'Brick Clay Stock' R2.37 each (lowest; a R0.15 handling fee is excluded); Buco NFP clay stock brick from R2.68 each. Per-brick benchmark x 1,000. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-CLAY-FBS",
+   "slug": "clay-face-brick-fbs",
+   "name": "Clay Face Brick (FBS) 222 × 106 × 73 mm",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 227 — FBS (face brick standard)",
+   "masonry_class": "Clay face (FBS)",
+   "unit_size": "222 × 106 × 73 mm",
+   "units_per_m2": 52,
+   "description": "Burnt clay face brick for walls left unplastered. Colour, texture and price depend on the range and the brickyard — tell us the range you want, or ask for samples.",
+   "typical_uses": [
+    "Face-brick houses and boundary walls",
+    "Feature walls and planters"
+   ],
+   "handling_notes": "Stack on a level, firm base close to where they'll be laid; keep cement bricks and blocks off wet ground and cover them in rain. Check the delivery against the order before the truck leaves. Order a whole wall's face bricks from one batch so the colour matches.",
+   "units": [
+    {
+     "unit": "THOUSAND",
+     "unit_label": "Per 1,000",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Face brick prices depend on the range and brickyard — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-CLAY-FBX",
+   "slug": "clay-face-brick-fbx",
+   "name": "Clay Face Brick (FBX) 222 × 106 × 73 mm",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 227 — FBX (face brick extra, tighter tolerances)",
+   "masonry_class": "Clay face (FBX)",
+   "unit_size": "222 × 106 × 73 mm",
+   "units_per_m2": 52,
+   "description": "Premium clay face brick with tighter limits on size, chips and colour variation — for fine-jointed face work.",
+   "typical_uses": [
+    "Architectural face brickwork",
+    "Fine-jointed feature walls"
+   ],
+   "handling_notes": "Stack on a level, firm base close to where they'll be laid; keep cement bricks and blocks off wet ground and cover them in rain. Check the delivery against the order before the truck leaves.",
+   "units": [
+    {
+     "unit": "THOUSAND",
+     "unit_label": "Per 1,000",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Face brick prices depend on the range and brickyard — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-CLAY-MAXI",
+   "slug": "clay-maxi-brick",
+   "name": "Clay Maxi Brick 290 × 140 × 90 mm",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 227 burnt clay masonry units",
+   "masonry_class": "Clay maxi",
+   "unit_size": "290 × 140 × 90 mm",
+   "units_per_m2": 33,
+   "description": "Large-format clay brick that builds a 140 mm wall in a single leaf — fewer bricks and less mortar per square metre (about 33).",
+   "typical_uses": [
+    "Single-leaf 140 mm walls",
+    "Outbuildings and boundary walls"
+   ],
+   "handling_notes": "Stack on a level, firm base close to where they'll be laid; keep cement bricks and blocks off wet ground and cover them in rain. Check the delivery against the order before the truck leaves.",
+   "units": [
+    {
+     "unit": "THOUSAND",
+     "unit_label": "Per 1,000",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Clay maxi bricks are made by fewer yards — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-CEM-IMPERIAL",
+   "slug": "cement-stock-brick-imperial",
+   "name": "Cement Stock Brick (Imperial) 222 × 106 × 73 mm",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 1215 concrete masonry units",
+   "masonry_class": "Cement stock (imperial)",
+   "unit_size": "222 × 106 × 73 mm",
+   "units_per_m2": 52,
+   "description": "Concrete (cement) stock brick in the imperial size, for plastered walls — about 52 to the square metre of half-brick wall. Load-bearing strength (7 or 14 MPa) depends on the maker.",
+   "typical_uses": [
+    "Plastered walls — foundations, superstructure and boundary walls",
+    "Half-brick (110 mm) and one-brick (220 mm) walls"
+   ],
+   "handling_notes": "Stack on a level, firm base close to where they'll be laid; keep cement bricks and blocks off wet ground and cover them in rain. Check the delivery against the order before the truck leaves.",
+   "units": [
+    {
+     "unit": "THOUSAND",
+     "unit_label": "Per 1,000",
+     "weight_kg": null,
+     "market_benchmark_price": 3220.0,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 3220.0,
+     "markup_percent": 8,
+     "list_price_per_unit": 3477.6,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Buco Cape Brick cement stock brick 14 MPa from R3.22 each; Cashbuild 'Brick Imperial Stock 7MPa' R3.22 each (Cashbuild cement stock R3.55). Per-brick benchmark x 1,000. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-CEM-MAXI",
+   "slug": "cement-maxi-brick",
+   "name": "Cement Maxi Brick 290 × 140 × 90 mm",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 1215 concrete masonry units",
+   "masonry_class": "Cement maxi",
+   "unit_size": "290 × 140 × 90 mm",
+   "units_per_m2": 33,
+   "description": "Large-format concrete brick for single-leaf 140 mm walls — about 33 to the square metre.",
+   "typical_uses": [
+    "Single-leaf 140 mm walls",
+    "Low-cost housing and outbuildings"
+   ],
+   "handling_notes": "Stack on a level, firm base close to where they'll be laid; keep cement bricks and blocks off wet ground and cover them in rain. Check the delivery against the order before the truck leaves.",
+   "units": [
+    {
+     "unit": "THOUSAND",
+     "unit_label": "Per 1,000",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Retail listings conflict (Builders R3.85 to Cashbuild R6.65–R9.95 each for the same size) — quoted with the supplier until a consistent benchmark exists."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-BLOCK-90",
+   "slug": "concrete-block-90mm",
+   "name": "Concrete Block 90 mm (390 × 90 × 190 mm)",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 1215 concrete masonry units",
+   "masonry_class": "Concrete block",
+   "unit_size": "390 × 90 × 190 mm",
+   "units_per_m2": 12.5,
+   "description": "Narrow concrete block for partition and boundary walls — 12.5 to the square metre.",
+   "typical_uses": [
+    "Internal partitions",
+    "Boundary and garden walls"
+   ],
+   "handling_notes": "Stack on a level, firm base close to where they'll be laid; keep cement bricks and blocks off wet ground and cover them in rain. Check the delivery against the order before the truck leaves.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": 10.12,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 10.12,
+     "markup_percent": 8,
+     "list_price_per_unit": 10.93,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Buco cement block 7 MPa 390x90x190 from R10.12 each (lowest); Cashbuild 'Block Concrete M4 390x190x90' R15.32. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-BLOCK-140",
+   "slug": "hollow-concrete-block-140mm",
+   "name": "Hollow Concrete Block 140 mm (390 × 140 × 190 mm)",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 1215 concrete masonry units",
+   "masonry_class": "Hollow concrete block",
+   "unit_size": "390 × 140 × 190 mm",
+   "units_per_m2": 12.5,
+   "description": "The standard hollow block for single-leaf walls — 12.5 to the square metre. Strength (4 or 7 MPa) depends on the maker; load-bearing walls need what the engineer specifies.",
+   "typical_uses": [
+    "Single-leaf external and internal walls",
+    "Boundary walls",
+    "Reinforced and grouted block walls"
+   ],
+   "handling_notes": "Stack on a level, firm base close to where they'll be laid; keep cement bricks and blocks off wet ground and cover them in rain. Check the delivery against the order before the truck leaves.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": 10.85,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 10.85,
+     "markup_percent": 8,
+     "list_price_per_unit": 11.72,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Builders Magnum M140 390x140x190 R10.85 (lowest; Cape Brick MA140 7 MPa R11.00); Buco R14.42; Cashbuild MB140 R15.60. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-BLOCK-190",
+   "slug": "hollow-concrete-block-190mm",
+   "name": "Hollow Concrete Block 190 mm (390 × 190 × 190 mm)",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 1215 concrete masonry units",
+   "masonry_class": "Hollow concrete block",
+   "unit_size": "390 × 190 × 190 mm",
+   "units_per_m2": 12.5,
+   "description": "Wide hollow block for heavier and retaining walls — 12.5 to the square metre; cores can be reinforced and grouted.",
+   "typical_uses": [
+    "Load-bearing and retaining walls",
+    "Reinforced, grouted block walls"
+   ],
+   "handling_notes": "Stack on a level, firm base close to where they'll be laid; keep cement bricks and blocks off wet ground and cover them in rain. Check the delivery against the order before the truck leaves.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's listings found (Buco, R17.19–R18.55) — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-LINTEL-1200",
+   "slug": "prestressed-concrete-lintel-1-2m",
+   "name": "Prestressed Concrete Lintel 1.2 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "1.2 m long",
+   "units_per_m2": null,
+   "description": "Precast prestressed concrete lintel, 1.2 m long, built into the brickwork over a door or window opening — one per brick leaf, with the bearing at each end and the opening span the maker's span table allows.",
+   "typical_uses": [
+    "Over door and window openings",
+    "One lintel per 110 mm leaf"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Retail lintel sections and prices differ too much to compare like for like — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-LINTEL-1500",
+   "slug": "prestressed-concrete-lintel-1-5m",
+   "name": "Prestressed Concrete Lintel 1.5 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "1.5 m long",
+   "units_per_m2": null,
+   "description": "Precast prestressed concrete lintel, 1.5 m long, built into the brickwork over a door or window opening — one per brick leaf, with the bearing at each end and the opening span the maker's span table allows.",
+   "typical_uses": [
+    "Over door and window openings",
+    "One lintel per 110 mm leaf"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Retail lintel sections and prices differ too much to compare like for like — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-LINTEL-1800",
+   "slug": "prestressed-concrete-lintel-1-8m",
+   "name": "Prestressed Concrete Lintel 1.8 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "1.8 m long",
+   "units_per_m2": null,
+   "description": "Precast prestressed concrete lintel, 1.8 m long, built into the brickwork over a door or window opening — one per brick leaf, with the bearing at each end and the opening span the maker's span table allows.",
+   "typical_uses": [
+    "Over door and window openings",
+    "One lintel per 110 mm leaf"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Retail lintel sections and prices differ too much to compare like for like — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-LINTEL-2400",
+   "slug": "prestressed-concrete-lintel-2-4m",
+   "name": "Prestressed Concrete Lintel 2.4 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "2.4 m long",
+   "units_per_m2": null,
+   "description": "Precast prestressed concrete lintel, 2.4 m long, built into the brickwork over a door or window opening — one per brick leaf, with the bearing at each end and the opening span the maker's span table allows.",
+   "typical_uses": [
+    "Over door and window openings",
+    "One lintel per 110 mm leaf"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Retail lintel sections and prices differ too much to compare like for like — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-LINTEL-3000",
+   "slug": "prestressed-concrete-lintel-3-0m",
+   "name": "Prestressed Concrete Lintel 3.0 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "3.0 m long",
+   "units_per_m2": null,
+   "description": "Precast prestressed concrete lintel, 3.0 m long, built into the brickwork over a door or window opening — one per brick leaf, with the bearing at each end and the opening span the maker's span table allows.",
+   "typical_uses": [
+    "Over door and window openings",
+    "One lintel per 110 mm leaf"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Retail lintel sections and prices differ too much to compare like for like — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-LINTEL-3600",
+   "slug": "prestressed-concrete-lintel-3-6m",
+   "name": "Prestressed Concrete Lintel 3.6 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "3.6 m long",
+   "units_per_m2": null,
+   "description": "Precast prestressed concrete lintel, 3.6 m long, built into the brickwork over a door or window opening — one per brick leaf, with the bearing at each end and the opening span the maker's span table allows.",
+   "typical_uses": [
+    "Over door and window openings",
+    "One lintel per 110 mm leaf"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Retail lintel sections and prices differ too much to compare like for like — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-DPC-110",
+   "slug": "dpc-375-micron-110mm-x-40m",
+   "name": "Damp-Proof Course 375 µm, 110 mm × 40 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "SANS 952 polyolefin damp-proof course (375 µm)",
+   "masonry_class": "Damp-proof course",
+   "unit_size": "110 mm × 40 m roll",
+   "units_per_m2": null,
+   "description": "Black polyolefin damp-proof course, 110 mm wide, laid in the mortar bed at floor level and under sills to stop rising damp. Suits a half-brick (110 mm) wall.",
+   "typical_uses": [
+    "Damp-proof course at floor level",
+    "Under window sills and over cavity trays"
+   ],
+   "handling_notes": "Lap joints at least 150 mm and keep the DPC continuous through the wall; don't puncture it.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (40 m)",
+     "weight_kg": null,
+     "market_benchmark_price": 76.9,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 76.9,
+     "markup_percent": 8,
+     "list_price_per_unit": 83.05,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Chamberlains Brickgrip DPC 110mm x 40m 375mic regular R76.90 (R64.90 special excluded); Cashbuild R119.95. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-DPC-150",
+   "slug": "dpc-375-micron-150mm-x-40m",
+   "name": "Damp-Proof Course 375 µm, 150 mm × 40 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "SANS 952 polyolefin damp-proof course (375 µm)",
+   "masonry_class": "Damp-proof course",
+   "unit_size": "150 mm × 40 m roll",
+   "units_per_m2": null,
+   "description": "Black polyolefin damp-proof course, 150 mm wide, laid in the mortar bed at floor level and under sills to stop rising damp.",
+   "typical_uses": [
+    "Damp-proof course at floor level",
+    "Under window sills and over cavity trays"
+   ],
+   "handling_notes": "Lap joints at least 150 mm and keep the DPC continuous through the wall; don't puncture it.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (40 m)",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Listings for this width were not clear enough to benchmark — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-DPC-225",
+   "slug": "dpc-375-micron-225mm-x-40m",
+   "name": "Damp-Proof Course 375 µm, 225 mm × 40 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "SANS 952 polyolefin damp-proof course (375 µm)",
+   "masonry_class": "Damp-proof course",
+   "unit_size": "225 mm × 40 m roll",
+   "units_per_m2": null,
+   "description": "Black polyolefin damp-proof course, 225 mm wide, laid in the mortar bed at floor level and under sills to stop rising damp. Suits a one-brick (220 mm) wall.",
+   "typical_uses": [
+    "Damp-proof course at floor level",
+    "Under window sills and over cavity trays"
+   ],
+   "handling_notes": "Lap joints at least 150 mm and keep the DPC continuous through the wall; don't puncture it.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (40 m)",
+     "weight_kg": null,
+     "market_benchmark_price": 159.0,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 159.0,
+     "markup_percent": 8,
+     "list_price_per_unit": 171.72,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Leroy Merlin DPC 375 micron 225mm x 40m R159.00 (lowest regular); Chamberlains R160.00 regular (R139 special excluded); Buco from R164.97; Cashbuild R239.95. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-DPC-300",
+   "slug": "dpc-375-micron-300mm-x-40m",
+   "name": "Damp-Proof Course 375 µm, 300 mm × 40 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "SANS 952 polyolefin damp-proof course (375 µm)",
+   "masonry_class": "Damp-proof course",
+   "unit_size": "300 mm × 40 m roll",
+   "units_per_m2": null,
+   "description": "Black polyolefin damp-proof course, 300 mm wide, laid in the mortar bed at floor level and under sills to stop rising damp.",
+   "typical_uses": [
+    "Damp-proof course at floor level",
+    "Under window sills and over cavity trays"
+   ],
+   "handling_notes": "Lap joints at least 150 mm and keep the DPC continuous through the wall; don't puncture it.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (40 m)",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Listings for this width were not clear enough to benchmark — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-AIRBRICK-CONC",
+   "slug": "air-brick-concrete-grey",
+   "name": "Air Brick — Concrete, Grey",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": null,
+   "masonry_class": "Air brick",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Grey concrete air brick built into the wall to ventilate roof spaces, sub-floors and rooms.",
+   "typical_uses": [
+    "Ventilating roof spaces and sub-floor voids",
+    "Kitchens, bathrooms and garages"
+   ],
+   "handling_notes": "Build in with the louvres sloping down and outward so rain runs off.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": 29.59,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 29.59,
+     "markup_percent": 8,
+     "list_price_per_unit": 31.96,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Chamberlains grey concrete air brick R29.59 (lowest); Leroy Merlin R29.60; Buco from R31.65. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-AIRBRICK-PVC",
+   "slug": "air-brick-pvc-terracotta",
+   "name": "Air Brick — PVC, Terracotta",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": null,
+   "masonry_class": "Air brick",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Lightweight PVC air brick in a terracotta colour to sit with clay face brickwork.",
+   "typical_uses": [
+    "Ventilating roof spaces and rooms in face-brick walls"
+   ],
+   "handling_notes": "Build in with the louvres sloping down and outward so rain runs off.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's listing found — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  }
+ ]
+}

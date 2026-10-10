@@ -17,6 +17,8 @@ export const PACKAGED_UNITS = [
   "COIL",
   "PACK",
   "EACH",
+  // Masonry (CAT-19/20): bricks per 1,000 — blocks, lintels and DPC reuse EACH and ROLL.
+  "THOUSAND",
 ] as const;
 export type PackagedUnit = (typeof PACKAGED_UNITS)[number];
 export type PricingUnit = "ton" | "m3" | "bag" | PackagedUnit;

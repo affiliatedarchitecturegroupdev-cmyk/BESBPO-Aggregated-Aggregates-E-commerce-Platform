@@ -42,6 +42,8 @@ const CATEGORY_STAGE: Record<string, BuildStage> = {
   "mesh-brickforce": "SLABS",
   "steel-fixing-accessories": "FOUNDATIONS",
   "structural-steel": "WALLS",
+  "bricks-blocks": "WALLS",
+  "lintels-dpc-wall-accessories": "WALLS",
   "drainage-filter": "DRAINAGE",
   "decorative-landscaping": "LANDSCAPING",
   "agricultural-industrial": "OTHER",
