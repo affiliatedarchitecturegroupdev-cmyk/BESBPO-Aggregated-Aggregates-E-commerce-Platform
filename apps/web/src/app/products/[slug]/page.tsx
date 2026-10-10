@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BulkBagCalculator } from "@/components/product/BulkBagCalculator";
@@ -182,6 +183,8 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
       <div className="mt-10">
         <GroupServiceBanner categorySlug={product.categorySlug} placement={`product_${product.categorySlug}`} />
       </div>
+
+      <CompleteTheJob sku={product.sku} categorySlug={product.categorySlug} />
 
       {related.length > 0 && (
         <section className="mt-16">

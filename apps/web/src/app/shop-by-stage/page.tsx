@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/shop-by-stage" },
 };
 
-export default async function ShopByStagePage() {
+export default async function ShopByStagePage({ searchParams }: { searchParams: { stage?: string } }) {
   const hiddenSkus = await getHiddenSkus();
   return (
     <div>
@@ -27,7 +27,7 @@ export default async function ShopByStagePage() {
         </p>
       </div>
       <div className="mt-8">
-        <ShopByStage hiddenSkus={hiddenSkus} heading={false} />
+        <ShopByStage hiddenSkus={hiddenSkus} heading={false} initialStage={searchParams.stage} />
       </div>
     </div>
   );

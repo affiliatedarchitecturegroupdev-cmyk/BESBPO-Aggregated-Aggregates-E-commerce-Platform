@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
 import { GroupServiceBanner } from "@/components/merchandising/GroupServiceBanner";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { ProductGallery } from "@/components/product/ProductGallery";
@@ -134,6 +135,8 @@ export function ReadyMixProductPage({ product }: { product: MerchandisedReadyMix
       <div className="mt-10">
         <GroupServiceBanner categorySlug={product.categorySlug} placement={`product_${product.categorySlug}`} />
       </div>
+
+      <CompleteTheJob sku={product.sku} categorySlug={product.categorySlug} />
 
       <section className="mt-16">
         <h2 className="font-display text-xl font-bold text-basalt">Other strength grades</h2>

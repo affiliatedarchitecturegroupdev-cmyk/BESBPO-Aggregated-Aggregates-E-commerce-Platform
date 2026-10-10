@@ -88,6 +88,7 @@ aggregates-store-platform/
 ├── MASONRY_CATALOGUE.md   CAT-19..25 walls, paving & retaining, pipes, precast drainage & membranes; calculators
 ├── STEEL_CATALOGUE.md     CAT-15..18 rebar, mesh & brickforce, fixing accessories, structural steel
 ├── BUILD_STAGES.md       Shop by Build Stage: stages, picks, hire, save-a-stage; planned CAT-19..25
+├── COMPLETE_THE_JOB.md   Product-page cross-sell: jobs, pairings by category and SKU, add-to-cart
 ├── PROJECT_LISTS.md      Wishlist by job: project lists, build stages, estimate, share, cart/quote
 ├── ANALYTICS.md          Sales & profit reporting: decisions, what's recorded, how profit is calculated
 ├── PLANT_HIRE_CATALOGUE.md CAT-13/14 plant hire and site services: Agent model, rate cards, enquiries
