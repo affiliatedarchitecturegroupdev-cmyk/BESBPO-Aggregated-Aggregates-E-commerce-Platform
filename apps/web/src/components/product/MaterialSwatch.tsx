@@ -15,6 +15,10 @@ const PALETTES: Record<string, { base: string; grains: string[] }> = {
   "recycled-sustainable": { base: "#A08A78", grains: ["#7E6A5A", "#BCA797", "#8F8F8B"] },
   "cement-hydraulic-binders": { base: "#B7B5B0", grains: ["#9E9C97", "#CFCDC8", "#8A8883"] },
   "mortars-grouts-admixtures": { base: "#C9C4BA", grains: ["#B0AA9F", "#DEDAD2", "#2C4A5E"] },
+  "ready-mix-concrete": { base: "#A7A49E", grains: ["#8D8A84", "#C2BFB9", "#75726C"] },
+  // Plant hire and site services: machine yellow and safety orange on site soil.
+  "plant-hire": { base: "#8A7458", grains: ["#D9A521", "#6E5B44", "#E8B931"] },
+  "site-services": { base: "#7E7468", grains: ["#E07A1F", "#5F574D", "#A0968A"] },
   // Steel: mill-scale greys with a hint of rust.
   "reinforcing-bar": { base: "#5B5550", grains: ["#3F3A36", "#7A716A", "#8A5A3C"] },
   "mesh-brickforce": { base: "#6B6762", grains: ["#4C4844", "#8C8781", "#7E5638"] },
