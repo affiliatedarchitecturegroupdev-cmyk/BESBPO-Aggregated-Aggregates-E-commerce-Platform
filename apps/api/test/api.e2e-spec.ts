@@ -677,6 +677,57 @@ describe("Aggregated Aggregates API (e2e)", () => {
     });
   });
 
+  describe("project lists (wishlist by job)", () => {
+    it("saves products by build stage, keeps lists private, and shares them read-only by link", async () => {
+      const owner = await register("plist");
+      const other = await register("plistother");
+      await http().get("/project-lists").expect(401);
+      const created = await http().post("/project-lists").set("Authorization", `Bearer ${owner}`).send({ name: "House 14 — foundations", province: "Gauteng" }).expect(201);
+      const id = created.body.id as string;
+
+      // Units must be ones the product is sold in; packaged units are whole numbers.
+      await http().post(`/project-lists/${id}/items`).set("Authorization", `Bearer ${owner}`).send({ sku: "AA-STL-Y12", unit: "ton", quantity: 1 }).expect(400);
+      await http().post(`/project-lists/${id}/items`).set("Authorization", `Bearer ${owner}`).send({ sku: "AA-STL-Y12", unit: "LENGTH_6M", quantity: 2.5 }).expect(400);
+      await http().post(`/project-lists/${id}/items`).set("Authorization", `Bearer ${owner}`).send({ sku: "AA-NOPE-1", unit: "ton" }).expect(400);
+      await http().post(`/project-lists/${id}/items`).set("Authorization", `Bearer ${owner}`).send({ sku: "AA-STL-Y12", unit: "LENGTH_6M", quantity: 40, stage: "FOUNDATIONS" }).expect(201);
+      await http().post(`/project-lists/${id}/items`).set("Authorization", `Bearer ${owner}`).send({ sku: "AA-RMX-25MPA-001", unit: "m3", quantity: 9, stage: "FOUNDATIONS" }).expect(201);
+      // Saving without a quantity is fine; saving the same product again updates it.
+      await http().post(`/project-lists/${id}/items`).set("Authorization", `Bearer ${owner}`).send({ sku: "AA-STL-Y12", unit: "LENGTH_6M", quantity: 44, note: "raft + ground beams" }).expect(201);
+      const withBag = await http().post(`/project-lists/${id}/items`).set("Authorization", `Bearer ${owner}`).send({ sku: "AA-CEM-425N-001", unit: "BAG_50KG", stage: "WALLS" }).expect(201);
+      expect(withBag.body.items).toEqual([
+        expect.objectContaining({ sku: "AA-STL-Y12", unit: "LENGTH_6M", quantity: 44, stage: "FOUNDATIONS", note: "raft + ground beams" }),
+        expect.objectContaining({ sku: "AA-RMX-25MPA-001", unit: "m3", quantity: 9 }),
+        expect.objectContaining({ sku: "AA-CEM-425N-001", quantity: null, stage: "WALLS" }),
+      ]);
+
+      // Private to the owner.
+      await http().get(`/project-lists/${id}`).set("Authorization", `Bearer ${other}`).expect(404);
+      await http().post(`/project-lists/${id}/items`).set("Authorization", `Bearer ${other}`).send({ sku: "AA-STL-Y10", unit: "LENGTH_6M" }).expect(404);
+
+      // Shared read-only by link: no owner details, and the link can be turned off.
+      const shared = await http().post(`/project-lists/${id}/share`).set("Authorization", `Bearer ${owner}`).send({ enabled: true }).expect(201);
+      const token = shared.body.shareToken as string;
+      expect(token).toMatch(/^[A-Za-z0-9_-]{24}$/);
+      const view = await http().get(`/project-lists/shared/${token}`).expect(200);
+      expect(view.body).toMatchObject({ name: "House 14 — foundations", items: expect.any(Array) });
+      expect(view.body.userId).toBeUndefined();
+      expect(view.body.shareToken).toBeUndefined();
+      const copy = await http().post(`/project-lists/shared/${token}/copy`).set("Authorization", `Bearer ${other}`).expect(201);
+      expect(copy.body.items).toHaveLength(3);
+      expect(copy.body.shareToken).toBeNull();
+      await http().post(`/project-lists/${id}/share`).set("Authorization", `Bearer ${owner}`).send({ enabled: false }).expect(201);
+      await http().get(`/project-lists/shared/${token}`).expect(404);
+
+      // Duplicate for the next house; delete removes the items too.
+      const dup = await http().post(`/project-lists/${id}/duplicate`).set("Authorization", `Bearer ${owner}`).expect(201);
+      expect(dup.body.name).toBe("House 14 — foundations (copy)");
+      const mine = await http().get("/project-lists").set("Authorization", `Bearer ${owner}`).expect(200);
+      expect(mine.body).toHaveLength(2);
+      await http().delete(`/project-lists/${id}`).set("Authorization", `Bearer ${owner}`).expect(204);
+      expect(await prisma.projectListItem.count({ where: { listId: id } })).toBe(0);
+    });
+  });
+
   describe("promotions (ad system)", () => {
     let staff: string;
     let customer: string;

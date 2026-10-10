@@ -3,6 +3,7 @@ import { BarMassCalculator } from "@/components/product/BarMassCalculator";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { PackagedUnitSelector } from "@/components/product/PackagedUnitSelector";
 import { ProductGallery } from "@/components/product/ProductGallery";
+import { SaveToProject } from "@/components/projects/SaveToProject";
 import { SocialShareButtons } from "@/components/social/SocialShareButtons";
 import { CATEGORIES } from "@/data/categories";
 import { STEEL_CATEGORY_CODES, STEEL_PRODUCTS } from "@/data/steel";
@@ -95,7 +96,10 @@ export function SteelProductPage({ product }: { product: MerchandisedSteelProduc
             </p>
           )}
           <div className="mt-6 flex flex-wrap items-center justify-end gap-4 border-t border-basalt/10 pt-5">
-            <SocialShareButtons productName={product.name} productUrl={url} />
+            <div className="flex flex-wrap items-center gap-3">
+              <SaveToProject sku={product.sku} />
+              <SocialShareButtons productName={product.name} productUrl={url} />
+            </div>
           </div>
         </div>
       </div>

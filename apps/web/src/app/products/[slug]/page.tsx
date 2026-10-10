@@ -6,6 +6,7 @@ import { ProductCard } from "@/components/product/ProductCard";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductTabs } from "@/components/product/ProductTabs";
 import { GroupServiceBanner } from "@/components/merchandising/GroupServiceBanner";
+import { SaveToProject } from "@/components/projects/SaveToProject";
 import { SocialShareButtons } from "@/components/social/SocialShareButtons";
 import { WhatsAppOrderButton } from "@/components/social/WhatsAppCta";
 import { PackagedProductPage } from "@/components/product/PackagedProductPage";
@@ -149,7 +150,10 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
           <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-basalt/10 pt-5">
             {/* WhatsApp ordering is for bagged, Retail-scale orders; bulk goes through the quote flow. */}
             {product.units.includes("bag") ? <WhatsAppOrderButton productName={`${product.name} (${product.sku})`} /> : <span />}
-            <SocialShareButtons productName={product.name} productUrl={`${SITE_URL}/products/${product.slug}`} />
+            <div className="flex flex-wrap items-center gap-3">
+              <SaveToProject sku={product.sku} />
+              <SocialShareButtons productName={product.name} productUrl={`${SITE_URL}/products/${product.slug}`} />
+            </div>
           </div>
         </div>
       </div>

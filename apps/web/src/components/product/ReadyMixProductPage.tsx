@@ -3,6 +3,7 @@ import { GroupServiceBanner } from "@/components/merchandising/GroupServiceBanne
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { ReadyMixCalculator } from "@/components/product/ReadyMixCalculator";
+import { SaveToProject } from "@/components/projects/SaveToProject";
 import { SocialShareButtons } from "@/components/social/SocialShareButtons";
 import { CATEGORIES } from "@/data/categories";
 import { READY_MIX_PRODUCTS } from "@/data/ready-mix";
@@ -86,7 +87,10 @@ export function ReadyMixProductPage({ product }: { product: MerchandisedReadyMix
             <ReadyMixCalculator product={product} />
           </div>
           <div className="mt-6 flex justify-end border-t border-basalt/10 pt-5">
-            <SocialShareButtons productName={product.name} productUrl={url} />
+            <div className="flex flex-wrap items-center gap-3">
+              <SaveToProject sku={product.sku} />
+              <SocialShareButtons productName={product.name} productUrl={url} />
+            </div>
           </div>
         </div>
       </div>

@@ -267,6 +267,10 @@ in **Admin → Notifications** rather than sent.
   pre-deploy supplier seed adds 41 researched steel merchant and mill leads
   from `suppliers-steel.csv` as unverified and inactive (existing suppliers
   are never touched). Steel fixing is a new quoted site service.
+- **Project lists (Oct 2026).** Migration `20261016090000_project_lists`
+  adds `ProjectList` and `ProjectListItem` (and the `BuildStage` enum) —
+  the customer wishlist, by job and build stage. Additive only; no seed
+  data and no new environment variables.
 - **Cut & bend (Oct 2026).** Migration `20261015090000_cut_and_bend` adds
   bar bending schedules (`BendingSchedule`, `BendingScheduleLine`), four
   notification events and the notification link. Uploaded schedule files go
