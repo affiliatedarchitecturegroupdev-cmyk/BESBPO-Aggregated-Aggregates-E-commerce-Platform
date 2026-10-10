@@ -34,6 +34,13 @@ function fieldsFor(item: ServiceItem): DetailField[] {
         when,
         { name: "Waste type", label: "What goes in it?", placeholder: "Builder's rubble, garden waste…" },
       ];
+    case "PER_TONNE":
+      return [
+        { name: "Tonnes", label: "Approximate tonnes of steel to fix", type: "number", min: 1, required: true },
+        when,
+        { name: "Elements", label: "What's being fixed?", placeholder: "Raft, ground beams, slab, columns…" },
+        { name: "Steel supply", label: "Who supplies the steel?", placeholder: "Ordering through you / already on site" },
+      ];
     case "PER_M2":
       return [{ name: "Area m2", label: "Approximate area (m²)", type: "number", min: 1, required: true }, when, { name: "Vegetation", label: "What's on the site?", placeholder: "Grass, bush, trees, old slab…" }];
     default:

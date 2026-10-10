@@ -428,6 +428,19 @@
     "Commercial and industrial collections",
     "Recycling streams"
    ]
+  },
+  {
+   "sku": "AA-SVC-STEEL-FIX",
+   "slug": "steel-fixing",
+   "name": "Steel Fixing (Labour)",
+   "service_type": "STEEL_FIXING",
+   "unit": "PER_TONNE",
+   "description": "Fixing reinforcement on site to the engineer's drawings and bar bending schedule: placing and tying rebar and mesh, chairs and spacers for cover, laps and starter bars, ready for the engineer's inspection before the pour. Labour by vetted steel-fixing partners, priced per tonne fixed; the steel itself is ordered separately (stock lengths, mesh, or cut & bend).",
+   "typical_uses": [
+    "Foundations, ground beams and surface beds",
+    "Slabs, beams and columns",
+    "Retaining and basement walls"
+   ]
   }
  ],
  "rates": {}

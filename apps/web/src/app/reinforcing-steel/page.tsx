@@ -116,7 +116,7 @@ export default function ReinforcingSteelPage() {
           </div>
         </section>
 
-        <section className="mt-14 grid gap-6 md:grid-cols-3">
+        <section className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {[
             {
               title: "Stock lengths",
@@ -128,16 +128,22 @@ export default function ReinforcingSteelPage() {
               href: "/reinforcing-steel/cut-and-bend",
             },
             {
+              title: "Fixed on site",
+              text: "Need the steel placed and tied too? Vetted steel-fixing partners fix to your drawings and bar schedule, priced per tonne fixed and quoted per job.",
+              href: "/services/steel-fixing",
+              cta: "Request steel fixing →",
+            },
+            {
               title: "Delivered by flatbed",
               text: "Steel travels on the merchant's flatbed or crane truck, not a tipper. We confirm the slot and any delivery charge before dispatch, and the mill certificates come with the load.",
             },
-          ].map((b: { title: string; text: string; href?: string }) => (
+          ].map((b: { title: string; text: string; href?: string; cta?: string }) => (
             <div key={b.title} className="rounded-sm border border-basalt/10 bg-white p-5">
               <h3 className="font-display text-base font-semibold text-basalt">{b.title}</h3>
               <p className="mt-2 font-body text-sm text-slate">{b.text}</p>
               {b.href && (
                 <Link href={b.href} className="mt-3 inline-block font-body text-sm font-semibold text-seam-blue hover:underline">
-                  Send a schedule →
+                  {b.cta ?? "Send a schedule →"}
                 </Link>
               )}
             </div>

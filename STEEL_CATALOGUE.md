@@ -33,7 +33,7 @@
 |---|---|---|
 | S1 | Catalogue (43 products), units, pricing, storefront, mass calculator, flatbed delivery | **This build** |
 | S2 | Cut & bend: bar bending schedule upload or entered lines (bar mark, SANS 282 shape code, diameter, number, length) → mass totals → staff quote | **Built** (see below) |
-| S3 | Steel merchant/mill network (seeded unverified, owner verifies), supplier categories CAT-15..18, steel-fixing labour via partners | After S2 |
+| S3 | Steel merchant/mill network (seeded unverified, owner verifies), supplier categories CAT-15..18, steel-fixing labour via partners | **Built** (see below) |
 
 ## The catalogue
 
@@ -124,6 +124,48 @@ Closed. Nothing is cut or charged until the customer accepts; payment and
 the delivery slot are confirmed by staff after acceptance (the same
 broker model as quotes — no online payment for cut & bend yet).
 
+## Merchant network and steel fixing (Phase S3)
+
+**Supplier leads.** `packages/database/prisma/seed-data/suppliers-steel.csv`
+holds 41 researched leads (Oct 2026), seeded on deploy as **unverified and
+inactive** — they appear under Admin → Suppliers for staff to contact,
+verify and activate, and are never shown publicly or used for delivery
+points until then. Every row cites its source page; no coordinates or
+contact numbers were added (staff add map pins after verifying). Supplier
+CSVs now accept CAT-15 (rebar), CAT-16 (mesh & brickforce), CAT-17 (fixing
+accessories) and CAT-18 (structural steel). All nine provinces are covered:
+
+| Lead | What | Rows |
+|---|---|---|
+| Kamal CISCO (Cape Town Iron and Steel Works), Kuils River | Scrap-based mini-mill: Y-bar, R-bar, billet — rebar and wire mill working per a Mar 2026 notice | 1 |
+| SA Steelworks (SA Metal Group) | Rebar, round and square bar from recycled scrap | 1 |
+| Unica Iron and Steel, Babelegi | Light/medium structural sections (no rebar) | 1 |
+| Reinforcing & Mesh Solutions (RMS) | Rebar, mesh, accessories; cut & bend to SANS 282 — 9 branches with addresses | 9 |
+| Reinforcing Steel Contractors (RSC) | Supply, cut, bend, deliver **and fix** — 14 branches (6 with addresses) | 14 |
+| Thekweni Reinforcing (KZN), D&E Reinforcing (WC), Vuka Steel (EC) | Regional rebar merchants with cut & bend (Thekweni also installs) | 3 |
+| Staalbeer | Rebar and mesh, cut & bend — Potchefstroom, Vereeniging, Bothaville | 3 |
+| Macsteel | National merchant: sections, tube, plate, welded mesh — 7 branches | 7 |
+| Steel and Pipes for Africa | Steel, tube and hardware merchant (19 branches; head office row) | 1 |
+| RMCS, Midrand | Fixing accessories and rebar cutters/benders | 1 |
+
+**Not a lead:** ArcelorMittal South Africa's long-steel business (Newcastle
+and Vereeniging) was wound down from September 2025 and placed under care
+and maintenance, so it isn't listed as a rebar source. Many merchant
+branch addresses and services came from company sites and directories that
+disagree in places — each row says "to confirm" where the address wasn't
+stated by the company.
+
+**Steel fixing (labour).** A site service, `AA-SVC-STEEL-FIX`
+(`/services/steel-fixing`), in the plant & services catalogue: placing and
+tying rebar and mesh to the drawings and schedule, priced **per tonne
+fixed**. Like every site service it's quoted until two partners' written
+rate cards exist for a province (`PLANT_HIRE_CATALOGUE.md`), then the
+customer price is the median partner rate × 1.12. The request form asks
+for tonnes, the elements, the date and who supplies the steel; requests
+arrive in Admin → Enquiries. The partner rate-card template has a steel
+fixing row. RSC and Thekweni are the first steel-fixing leads; no South
+African per-tonne benchmark was found publicly, so no rate is published.
+
 ## Open items
 
 - Owner to set the steel trade discount (4% placeholder) and confirm the
@@ -131,6 +173,7 @@ broker model as quotes — no online payment for cut & bend yet).
 - Merchant price lists for per-tonne rebar, 12 m lengths and the
   structural range — loaded only from written quotes.
 - Product photos for the steel line (none yet; texture swatches show).
-- S3 (merchant network, steel-fixing labour) as above.
+- Verify and activate the steel supplier leads (Admin → Suppliers), add map
+  pins, and collect written steel-fixing rate cards (two per province).
 - Cut & bend: online payment after acceptance (today staff confirm payment
   by EFT), and turning an accepted schedule into an order for Insights.

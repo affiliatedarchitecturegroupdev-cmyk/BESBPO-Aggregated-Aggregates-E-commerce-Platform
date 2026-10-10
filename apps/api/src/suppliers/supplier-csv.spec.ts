@@ -102,3 +102,20 @@ describe("geography helpers", () => {
     expect(errors).toEqual([{ line: 4, message: expect.stringContaining("source_url must be a web address") }]);
   });
 });
+
+describe("seed supplier files", () => {
+  it("lists steel merchants and mills as unverified leads in every province, coded to the steel categories", () => {
+    const { readFileSync } = jest.requireActual<typeof import("node:fs")>("node:fs");
+    const { join } = jest.requireActual<typeof import("node:path")>("node:path");
+    const text = readFileSync(join(__dirname, "../../../../packages/database/prisma/seed-data/suppliers-steel.csv"), "utf8");
+    const { rows, errors } = parseSupplierCsv(text);
+    expect(errors).toEqual([]);
+    expect(rows.length).toBe(41);
+    expect(rows.every((r) => !r.isVerifiedPartner && r.sourceUrl?.startsWith("https://"))).toBe(true);
+    expect(new Set(rows.map((r) => r.province)).size).toBe(9);
+    const steel = ["reinforcing-bar", "mesh-brickforce", "steel-fixing-accessories", "structural-steel"];
+    expect(rows.every((r) => r.categorySlugs.length > 0 && r.categorySlugs.every((c) => steel.includes(c)))).toBe(true);
+    // ArcelorMittal SA's long-steel works are under care and maintenance (2025), so it isn't a lead.
+    expect(rows.some((r) => /arcelormittal/i.test(r.name))).toBe(false);
+  });
+});

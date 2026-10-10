@@ -23,7 +23,7 @@ from load_rate_cards import build_rates  # noqa: E402
 def test_storefront_copy_matches_and_nothing_is_priced_yet():
     web = Path(__file__).parents[3] / "apps" / "web" / "src" / "data" / "plant-services-catalogue.json"
     assert json.loads(web.read_text(encoding="utf-8")) == CATALOGUE.raw
-    assert len(CATALOGUE.plant) == 18 and len(CATALOGUE.services) == 10
+    assert len(CATALOGUE.plant) == 18 and len(CATALOGUE.services) == 11
     assert CATALOGUE.raw["rates"] == {}  # no written partner rate card yet — everything is quoted
     assert len(CATALOGUE.regions) == 9
     assert client.post("/calculate/rental", json={"sku": "AA-PLT-TLB-4X4", "region": "Gauteng", "basis": "DAY", "quantity": 2}).status_code == 422
@@ -75,3 +75,18 @@ def test_the_loader_refuses_undocumented_or_always_quoted_rates():
     assert "province" in errors[0]
     with pytest.raises(rental.QuoteOnly):
         rental.price_service(CATALOGUE, "AA-SVC-DEMOLITION", "Gauteng", Decimal(1))
+
+
+def test_steel_fixing_is_quoted_per_tonne_until_two_partner_cards_exist():
+    service = CATALOGUE.services["AA-SVC-STEEL-FIX"]
+    assert service["unit"] == "PER_TONNE" and service["service_type"] == "STEEL_FIXING"
+    with pytest.raises(rental.PricingNotAvailable):
+        rental.price_service(CATALOGUE, "AA-SVC-STEEL-FIX", "Gauteng", Decimal("2.5"))
+    cat = loaded(
+        "RSC,Gauteng,AA-SVC-STEEL-FIX,,,,3000,no,2026-10-01,RSC-RC-01.pdf\n"
+        "Thekweni,Gauteng,AA-SVC-STEEL-FIX,,,,3400,no,2026-10-01,TK-RC-01.pdf\n"
+    )
+    priced = rental.price_service(cat, "AA-SVC-STEEL-FIX", "Gauteng", Decimal("2.5"))
+    assert priced["unit"] == "PER_TONNE"
+    assert priced["partner_payout"] == 8000.0  # 2.5 t x median R3,200
+    assert priced["total"] == 8960.0  # x 1.12

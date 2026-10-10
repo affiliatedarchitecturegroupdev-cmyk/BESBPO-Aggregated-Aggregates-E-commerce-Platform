@@ -1,4 +1,4 @@
-import { Construction, Droplets, Forklift, Hammer, Layers, Recycle, Shovel, Tractor, Trash2, Truck, type LucideIcon } from "lucide-react";
+import { Construction, Droplets, Forklift, Grid3x3, Hammer, Layers, Recycle, Shovel, Tractor, Trash2, Truck, type LucideIcon } from "lucide-react";
 import type { PlantClass, ServiceType } from "@/data/plant-services";
 
 export const PLANT_ICON: Record<PlantClass, LucideIcon> = {
@@ -19,4 +19,5 @@ export const SERVICE_ICON: Record<ServiceType, LucideIcon> = {
   SITE_CLEARING: Shovel,
   DEMOLITION: Hammer,
   WASTE_MANAGEMENT: Recycle,
+  STEEL_FIXING: Grid3x3,
 };

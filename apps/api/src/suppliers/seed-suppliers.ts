@@ -1,5 +1,5 @@
 /**
- * Deploy-time supplier seed: imports the two supplier CSVs in
+ * Deploy-time supplier seed: imports the supplier CSVs in
  * packages/database/prisma/seed-data — the verified partner network and
  * the B2B Bulk & Infrastructure research leads — creating only suppliers
  * whose supplier_id isn't in the database yet. Existing suppliers (and every
@@ -13,7 +13,7 @@ import { join } from "path";
 import { PrismaClient } from "@aggregates/database";
 import { parseSupplierCsv, SERVICE_PROVINCES } from "./supplier-csv";
 
-const FILES = ["suppliers-aggregates.csv", "suppliers-b2b-bulk.csv", "suppliers-ready-mix.csv"];
+const FILES = ["suppliers-aggregates.csv", "suppliers-b2b-bulk.csv", "suppliers-ready-mix.csv", "suppliers-steel.csv"];
 
 export async function seedSuppliers(prisma: PrismaClient, dir = join(__dirname, "../../../../packages/database/prisma/seed-data")) {
   let created = 0;
