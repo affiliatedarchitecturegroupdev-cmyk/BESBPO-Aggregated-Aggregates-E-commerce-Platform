@@ -20,9 +20,10 @@ and quotes are always re-priced by the pricing service.
   retail price across at least two retailers × 1.08, per stock length,
   sheet, roll or coil. Per-tonne, 12 m and merchant-only items are quoted
   (`STEEL_CATALOGUE.md`).
-- **Masonry (Oct 2026):** the same rule for bricks (per 1,000, from the
-  per-brick price), blocks, DPC rolls and air bricks. Face bricks, maxis,
-  190 mm blocks and lintels are quoted (`MASONRY_CATALOGUE.md`).
+- **Masonry & precast (Oct 2026):** the same rule for bricks (per 1,000,
+  from the per-brick price), blocks, DPC rolls, air bricks, pavers and
+  paving slabs. Face bricks, maxis, 190 mm blocks, lintels, kerbs,
+  retaining blocks and gabions are quoted (`MASONRY_CATALOGUE.md`).
 - **Cost proxy:** for cement, ready-mix, steel and masonry the cost is assumed to be the
   benchmark itself (`costBasisPercent` 100) until real supplier
   cost/commission terms are known — the biggest open commercial item.
@@ -36,7 +37,7 @@ and quotes are always re-priced by the pricing service.
 | Cement — bulk bag, tanker; admixture drums/totes | list | quoted | quoted |
 | Ready-mix | list | 2% | quoted |
 | Steel (rebar, mesh, brickforce, accessories, sections) | list | 4% (approved Oct 2026) | quoted |
-| Masonry (bricks, blocks, lintels, DPC, air bricks) | list | 4% (approved Oct 2026) | quoted |
+| Masonry & precast (bricks, blocks, lintels, DPC, air bricks; pavers, kerbs, retaining, gabions) | list | 4% (approved Oct 2026 for masonry; paving & retaining to confirm) | quoted |
 
 "Quoted" means the tier has no self-serve price for that family: the cart
 or quote goes to a person, who confirms it with the supplier.

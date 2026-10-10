@@ -149,10 +149,10 @@ export default async function ProductListingPage({ searchParams }: { searchParam
         {industry && <> / {industry.name}</>}
         {b2bGroup && <> / Bulk &amp; Infrastructure</>}
         {steelGroup && <> / Reinforcing &amp; Structural Steel</>}
-        {masonryGroup && <> / Bricks, Blocks &amp; Walling</>}
+        {masonryGroup && <> / Masonry, Paving &amp; Retaining</>}
       </nav>
       <h1 className="mt-3 font-display text-3xl font-bold text-basalt">
-        {query ? `Results for “${query}”` : (category?.name ?? industry?.name ?? (b2bGroup ? "Bulk & Infrastructure" : steelGroup ? "Reinforcing & Structural Steel" : masonryGroup ? "Bricks, Blocks & Walling" : "All Products"))}
+        {query ? `Results for “${query}”` : (category?.name ?? industry?.name ?? (b2bGroup ? "Bulk & Infrastructure" : steelGroup ? "Reinforcing & Structural Steel" : masonryGroup ? "Masonry, Paving & Retaining" : "All Products"))}
       </h1>
       {category && <p className="mt-1 font-body text-sm text-slate">{category.description}</p>}
       {industry && (
@@ -199,7 +199,7 @@ export default async function ProductListingPage({ searchParams }: { searchParam
                     <option key={c.slug} value={c.slug}>{c.name}</option>
                   ))}
                 </optgroup>
-                <optgroup label="Masonry">
+                <optgroup label="Masonry, paving & retaining">
                   {MASONRY_CATEGORIES.map((c) => (
                     <option key={c.slug} value={c.slug}>{c.name}</option>
                   ))}

@@ -1,4 +1,4 @@
-# Bricks, Blocks & Walling (CAT-19, CAT-20) — Phase W, Oct 2026
+# Masonry & Precast — Walls (CAT-19/20, Phase W) and Paving & Retaining (CAT-21/22, Phase P), Oct 2026
 
 > **Where it lives in this repo:** `services/pricing/data/masonry_catalogue.json`
 > (copied to `apps/web/src/data/masonry-catalogue.json`; a pricing test fails
@@ -7,10 +7,11 @@
 > `POST /calculate/packaged-goods` and `POST /calculate/order`, and listed at
 > `GET /products/masonry`. Database: the `THOUSAND` unit of sale and
 > `masonryClass` / `unitSize` / `unitsPerM2` on `Product` (migration
-> `20261017090000_masonry_catalogue`). Storefront: `/bricks-blocks` (with the
-> wall calculator), `/products?group=masonry`, a product page per item
-> (`MasonryProductPage`), page three of Shop by Category, and the Walls stage
-> of Shop by Build Stage.
+> `20261017090000_masonry_catalogue`; Phase P needed no migration).
+> Storefront: `/bricks-blocks` (wall calculator) and `/paving` (paving
+> calculator), `/products?group=masonry`, a product page per item
+> (`MasonryProductPage`), page three of Shop by Category, and the Walls,
+> Paving, Drainage and Landscaping stages of Shop by Build Stage.
 
 ## Decisions (owner, Oct 2026)
 
@@ -70,9 +71,51 @@ and 190 mm blocks (one retailer only); lintels (retail sections and prices
 differ too much to compare like for like); DPC 150 and 300 mm (listings not
 clear enough); PVC air brick (one retailer).
 
+## Phase P — Paving, Kerbs & Edging (CAT-21) and Retaining & Erosion Control (CAT-22)
+
+Paving and retaining products are precast concrete from the same yards as
+blocks, so they join this line: same catalogue file, product page, flatbed
+delivery and **`MASONRY` pricing family (trade 4%)** — the owner to confirm
+that the approved masonry discount also covers paving and retaining.
+
+| Code | Category | Products | Live-priced units |
+|---|---|---|---|
+| CAT-21 | Paving, Kerbs & Edging | Bevel paver 50 mm, Bosun interlocking 60 mm, interlocking 80 mm, clay paver, paving slabs 450 and 600 mm, grass block, garden kerb, barrier kerb — 9 | Bevel paver, Bosun interlocking 60 mm, 450 mm slab |
+| CAT-22 | Retaining & Erosion Control | Terraforce L22, rock-face retaining block, garden retaining block, gabion basket 2 × 1 × 1 m, gabion mattress 3 × 2 × 0.3 m — 5 | — (all quoted) |
+
+All units are per item. Coverage (`unitsPerM2`) is stated only where the
+size is known: bevel paver 50 (200 × 100, laid tight), 450 mm slab 4.94,
+600 mm slab 2.78, grass block 12.5, garden retaining block about 18 per m²
+of wall face (as the maker lists). The **paving calculator** is the wall
+calculator in area mode: length × width × per m², plus 5% for cuts and
+breakage; edge restraints are extra.
+
+**Benchmarks (checked 2026-10-10, retailer search listings as for Phase W):**
+
+| Item | Retailer prices | Benchmark | List |
+|---|---|---|---|
+| Bevel paver, grey, 50 mm | Builders R2.79, Buco R3.45, Cashbuild R4.80 | R2.79 | **R3.01** |
+| Bosun interlocking 60 mm, standard grey | Leroy Merlin R2.85 (listed out of stock), Buco R3.16 | R2.85 | **R3.08** |
+| Paving slab, smooth grey, 450 × 450 × 50 | Chamberlains R45.90 (page ~500 days old), Buco R65.91 | R45.90 | **R49.57** |
+
+**Quoted, and why:** 80 mm interlocking (retailers list different shapes);
+clay pavers (by range); 600 mm slabs, grass blocks, retaining blocks (one
+retailer each); kerbs and gabions (no comparable retail price).
+
+**Supplier leads:** `suppliers-paving.csv` — 16 leads in 7 provinces,
+unverified and inactive: Bosun (Midrand, Brits, Gqeberha), Technicrete
+(Olifantsfontein; Polokwane kerb plant), Corobrik concrete paving (KZN),
+Infraset (Johannesburg region, dated source), Terraforce and three
+licensees (Ecocrete — Free State; Klapmuts Concrete and Cape Retaining
+Systems — Western Cape), Lascocrete (Philippi), and Gabion Baskets
+(Johannesburg, Bloemfontein, New Germany, Polokwane — third-party
+directory). This closes the Phase W gaps in the **Free State** and
+**Limpopo** for paving and retaining (brickyards there are still to find).
+Supplier CSVs accept CAT-21 and CAT-22.
+
 ## Delivery
 
-Bricks, blocks and lintels travel palletised on the supplier's flatbed or
+Bricks, blocks, lintels, pavers, kerbs and retaining blocks travel palletised on the supplier's flatbed or
 crane truck — never in the tipper bands. A masonry-only order (or masonry
 with steel) has no tipper fee and carries a note that the slot, any delivery
 charge and the yard's minimum load are confirmed before dispatch; staff
@@ -106,5 +149,8 @@ a Phase P (paving) lead rather than a walling one.
 - Brickyard price lists for face bricks, maxis, 190 mm blocks and lintels —
   loaded only from written quotes.
 - Unit masses (for delivery tonnage) once suppliers confirm them.
+- Confirm the 4% trade discount applies to paving and retaining too.
+- Kerb, gabion and retaining-block prices from written supplier quotes;
+  paver coverage per m² for the interlocking ranges.
 - Product photos for the line (texture swatches show until licensed photos
   exist).

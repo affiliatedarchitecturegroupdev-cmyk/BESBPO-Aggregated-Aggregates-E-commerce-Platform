@@ -1,5 +1,5 @@
 {
- "_source": "Masonry line, CAT-19 Bricks & Blocks and CAT-20 Lintels, DPC & Wall Accessories (MASONRY_CATALOGUE.md). A unit is live only where at least two SA retailers show a regular price for the same product; list = lowest x 1.08. Everything else is quoted with the supplier. Bricks are sold per 1,000; units_per_m2 is the count per m² of single-leaf wall with 10 mm joints.",
+ "_source": "Masonry & precast line: CAT-19 Bricks & Blocks, CAT-20 Lintels, DPC & Wall Accessories, CAT-21 Paving, Kerbs & Edging and CAT-22 Retaining & Erosion Control (MASONRY_CATALOGUE.md). A unit is live only where at least two SA retailers show a regular price for the same product; list = lowest x 1.08. Everything else is quoted with the supplier. Bricks are sold per 1,000; units_per_m2 is the count per m² of single-leaf wall with 10 mm joints (bricks and blocks), of paved area (pavers and slabs, laid tight) or of wall face (retaining blocks, as the maker lists).",
  "categories": [
   {
    "slug": "bricks-blocks",
@@ -10,6 +10,16 @@
    "slug": "lintels-dpc-wall-accessories",
    "name": "Lintels, DPC & Wall Accessories",
    "code": "CAT-20"
+  },
+  {
+   "slug": "paving-kerbs-edging",
+   "name": "Paving, Kerbs & Edging",
+   "code": "CAT-21"
+  },
+  {
+   "slug": "retaining-erosion-control",
+   "name": "Retaining & Erosion Control",
+   "code": "CAT-22"
   }
  ],
  "products": [
@@ -680,6 +690,456 @@
      "list_price_per_unit": null,
      "pricing_status": "Quote-only — no retail benchmark",
      "source_note": "Only one retailer's listing found — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-PAV-BEVEL-50",
+   "slug": "bevel-paver-grey-50mm",
+   "name": "Bevel Paver, Grey, 50 mm (200 × 100 mm)",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": "SANS 1058 concrete paving blocks",
+   "masonry_class": "Concrete paver — bevel",
+   "unit_size": "200 × 100 × 50 mm",
+   "units_per_m2": 50,
+   "description": "Rectangular concrete paver with bevelled edges for patios, paths and light driveways — about 50 to the square metre, laid on a sand bedding over a compacted base.",
+   "typical_uses": [
+    "Patios, paths and pool surrounds",
+    "Light-traffic driveways"
+   ],
+   "handling_notes": "Stack pallets on firm, level ground near the work; keep one batch per area so the colour matches, and mix from several pallets as you lay.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": 2.79,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 2.79,
+     "markup_percent": 8,
+     "list_price_per_unit": 3.01,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Builders 50 mm bevelled grey paver R2.79 (lowest); Buco bevelled paver grey 50 mm from R3.45; Cashbuild cement bevel grey R4.80. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-PAV-INTERLOCK-60",
+   "slug": "interlocking-paver-grey-60mm-bosun",
+   "name": "Interlocking Paver, Standard Grey, 60 mm (Bosun)",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": "SANS 1058 concrete paving blocks",
+   "masonry_class": "Concrete paver — interlocking",
+   "unit_size": "60 mm thick",
+   "units_per_m2": null,
+   "manufacturer": "Bosun",
+   "description": "Bosun's standard interlocking (zig-zag) concrete paver, 60 mm thick — the shape locks the pavers together for driveways and parking. Ask for the coverage per m² of the current range.",
+   "typical_uses": [
+    "Driveways and parking areas",
+    "Yards and walkways"
+   ],
+   "handling_notes": "Stack pallets on firm, level ground near the work; keep one batch per area so the colour matches, and mix from several pallets as you lay.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": 2.85,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 2.85,
+     "markup_percent": 8,
+     "list_price_per_unit": 3.08,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Leroy Merlin 'Bosun Interlocking Paving Bricks 60mm Standard Grey' R2.85 (lowest; listed out of stock); Buco 'Bosun Interlocking Standard Paver 60mm Grey' from R3.16. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ],
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-PAV-INTERLOCK-80",
+   "slug": "interlocking-paver-grey-80mm",
+   "name": "Interlocking Paver, Grey, 80 mm (heavy duty)",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": "SANS 1058 concrete paving blocks",
+   "masonry_class": "Concrete paver — interlocking",
+   "unit_size": "80 mm thick",
+   "units_per_m2": null,
+   "description": "Heavy-duty 80 mm interlocking paver for roads, loading areas and constant heavy traffic.",
+   "typical_uses": [
+    "Roads and parking for heavy vehicles",
+    "Loading yards"
+   ],
+   "handling_notes": "Stack pallets on firm, level ground near the work; keep one batch per area so the colour matches, and mix from several pallets as you lay.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Retail listings are for different shapes and sizes (Cashbuild 200x100x80 R5.35; Buco Bosun premium 80 mm from R3.17) — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-PAV-CLAY",
+   "slug": "clay-paver",
+   "name": "Clay Paver (range on request)",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": "SANS 1058 / clay paver range",
+   "masonry_class": "Clay paver",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Burnt clay pavers in natural colours that don't fade — tell us the range and colour, or ask for samples.",
+   "typical_uses": [
+    "Driveways, patios and courtyards",
+    "Heritage and feature paving"
+   ],
+   "handling_notes": "Stack pallets on firm, level ground near the work; keep one batch per area so the colour matches, and mix from several pallets as you lay.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Clay paver prices depend on the range and maker — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-PAV-SLAB-450",
+   "slug": "paving-slab-grey-450x450x50",
+   "name": "Paving Slab, Smooth Grey, 450 × 450 × 50 mm",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": null,
+   "masonry_class": "Precast paving slab",
+   "unit_size": "450 × 450 × 50 mm",
+   "units_per_m2": 4.94,
+   "description": "Precast concrete paving slab for garden paths, patios and stepping stones — about 5 to the square metre.",
+   "typical_uses": [
+    "Garden paths and stepping stones",
+    "Patios"
+   ],
+   "handling_notes": "Carry slabs on edge; lay on a sand or mortar bed over a compacted base.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": 45.9,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 45.9,
+     "markup_percent": 8,
+     "list_price_per_unit": 49.57,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Chamberlains precast paving slab smooth 450x450 mm (50 mm) R45.90 (lowest; page about 500 days old); Buco Algoa Cement paving slab grey 450x450x50 from R65.91. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-PAV-SLAB-600",
+   "slug": "paving-slab-grey-600x600x50",
+   "name": "Paving Slab, Grey, 600 × 600 × 50 mm",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": null,
+   "masonry_class": "Precast paving slab",
+   "unit_size": "600 × 600 × 50 mm",
+   "units_per_m2": 2.78,
+   "description": "Large-format precast paving slab — under 3 to the square metre.",
+   "typical_uses": [
+    "Patios and terraces",
+    "Walkways"
+   ],
+   "handling_notes": "Carry slabs on edge; lay on a sand or mortar bed over a compacted base.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's price found (Buco) — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-PAV-GRASSBLOCK",
+   "slug": "grass-block-paver-400x200",
+   "name": "Grass Block Paver 400 × 200 mm",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": null,
+   "masonry_class": "Permeable paver",
+   "unit_size": "400 × 200 mm",
+   "units_per_m2": 12.5,
+   "description": "Open concrete grass block that lets grass grow through — a firm, permeable surface for overflow parking and fire lanes.",
+   "typical_uses": [
+    "Overflow parking",
+    "Fire lanes and verges",
+    "Slope protection"
+   ],
+   "handling_notes": "Stack pallets on firm, level ground near the work; keep one batch per area so the colour matches, and mix from several pallets as you lay.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's price found (Chamberlains, Culterra R49.90) — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-PAV-GARDEN-KERB",
+   "slug": "garden-kerb-concrete",
+   "name": "Garden Kerb / Edging, Concrete",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": null,
+   "masonry_class": "Garden kerb",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Concrete garden kerb to edge beds, lawns and paving and stop pavers creeping.",
+   "typical_uses": [
+    "Edging paving and paths",
+    "Lawn and bed borders"
+   ],
+   "handling_notes": "Set on a concrete haunch so the edge holds the paving in.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Retail kerbs differ in length and profile (e.g. Chamberlains slate-look 500 mm R57.90) — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-PAV-ROAD-KERB",
+   "slug": "concrete-kerb-barrier-1000mm",
+   "name": "Concrete Kerb, Barrier, 1,000 mm",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": "SANS 927 precast concrete kerbs",
+   "masonry_class": "Road kerb",
+   "unit_size": "1,000 mm long",
+   "units_per_m2": null,
+   "description": "Precast barrier kerb for roads, parking areas and estates — the profile (barrier, semi-mountable, mountable) and strength are confirmed with the maker.",
+   "typical_uses": [
+    "Roads and parking areas",
+    "Estate and complex roads"
+   ],
+   "handling_notes": "Set on a concrete bed and haunch; check line and level as you go.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "No retail price for a road kerb — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-RET-TERRAFORCE-L22",
+   "slug": "terraforce-l22-retaining-block",
+   "name": "Terraforce L22 Retaining Block",
+   "category_slug": "retaining-erosion-control",
+   "grading_standard": "Terraforce licensed design — made by licensed manufacturers",
+   "masonry_class": "Plantable retaining block",
+   "unit_size": null,
+   "units_per_m2": null,
+   "manufacturer": "Terraforce licensee",
+   "description": "Open-face, plantable concrete retaining block for gravity walls and embankments — the wall's height, batter and drainage follow the Terraforce design tables or an engineer.",
+   "typical_uses": [
+    "Garden and embankment retaining walls",
+    "Planted slopes"
+   ],
+   "handling_notes": "Build on a compacted, drained foundation; backfill with free-draining material as you go.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's listings found (Cashbuild, conflicting R20.78 and R38.95) — quoted with the licensed maker."
+    }
+   ],
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-RET-ROCKFACE",
+   "slug": "rock-face-retaining-block",
+   "name": "Rock-Face Retaining Block",
+   "category_slug": "retaining-erosion-control",
+   "grading_standard": null,
+   "masonry_class": "Segmental retaining block",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Solid concrete retaining block with a split rock face for neat, closed-face garden and boundary retaining walls.",
+   "typical_uses": [
+    "Garden terraces and raised beds",
+    "Low boundary retaining walls"
+   ],
+   "handling_notes": "Build on a compacted, drained foundation; backfill with free-draining material as you go.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's price found (Buco, Cape Brick R12 from R60.57) — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-RET-GARDEN-BLOCK",
+   "slug": "garden-retaining-block-290x190x190",
+   "name": "Garden Retaining Block 290 × 190 × 190 mm",
+   "category_slug": "retaining-erosion-control",
+   "grading_standard": null,
+   "masonry_class": "Segmental retaining block",
+   "unit_size": "290 × 190 × 190 mm",
+   "units_per_m2": 18,
+   "description": "Smooth-face concrete garden block for low retaining walls and planters — about 18 to the square metre of wall face.",
+   "typical_uses": [
+    "Low garden retaining walls",
+    "Planters and seating walls"
+   ],
+   "handling_notes": "Build on a compacted, drained foundation; backfill with free-draining material as you go.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Listed by one retailer without a price (Builders, Cape Brick VR18) — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-RET-GABION-BASKET",
+   "slug": "gabion-basket-2x1x1m",
+   "name": "Gabion Basket 2 × 1 × 1 m",
+   "category_slug": "retaining-erosion-control",
+   "grading_standard": "Galvanised (or PVC-coated) steel mesh gabion",
+   "masonry_class": "Gabion",
+   "unit_size": "2 × 1 × 1 m",
+   "units_per_m2": null,
+   "description": "Galvanised wire-mesh basket filled on site with gabion stone to build retaining walls, channel linings and erosion protection — order the gabion stone with it (about 1 m³ per basket).",
+   "typical_uses": [
+    "Retaining walls",
+    "River banks and channel protection",
+    "Erosion control on slopes"
+   ],
+   "handling_notes": "Lace baskets together before filling; fill in layers with internal bracing wires.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "No retail price found — gabions are quoted with the supplier by size, wire gauge and coating."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-RET-GABION-MATTRESS",
+   "slug": "gabion-mattress-reno-3x2x0-3m",
+   "name": "Gabion Mattress (Reno) 3 × 2 × 0.3 m",
+   "category_slug": "retaining-erosion-control",
+   "grading_standard": "Galvanised (or PVC-coated) steel mesh gabion",
+   "masonry_class": "Gabion",
+   "unit_size": "3 × 2 × 0.3 m",
+   "units_per_m2": null,
+   "description": "Shallow wire-mesh mattress filled with stone to line channels and protect banks and slopes from scour.",
+   "typical_uses": [
+    "Channel and canal linings",
+    "Bank and slope scour protection"
+   ],
+   "handling_notes": "Lace mattresses together before filling; overfill slightly and close the lids tight.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "No retail price found — gabions are quoted with the supplier by size, wire gauge and coating."
     }
    ],
    "manufacturer": null,

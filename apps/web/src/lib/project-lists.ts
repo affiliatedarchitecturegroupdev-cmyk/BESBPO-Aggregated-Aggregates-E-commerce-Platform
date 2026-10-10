@@ -44,6 +44,8 @@ const CATEGORY_STAGE: Record<string, BuildStage> = {
   "structural-steel": "WALLS",
   "bricks-blocks": "WALLS",
   "lintels-dpc-wall-accessories": "WALLS",
+  "paving-kerbs-edging": "PAVING_ROADS",
+  "retaining-erosion-control": "LANDSCAPING",
   "drainage-filter": "DRAINAGE",
   "decorative-landscaping": "LANDSCAPING",
   "agricultural-industrial": "OTHER",

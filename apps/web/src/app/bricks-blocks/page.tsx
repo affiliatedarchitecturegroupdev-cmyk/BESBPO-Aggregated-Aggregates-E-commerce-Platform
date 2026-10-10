@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { WallCalculator } from "@/components/product/WallCalculator";
 import { MASONRY_CATEGORIES } from "@/data/categories";
-import { MASONRY_CATEGORY_CODES, MASONRY_PRODUCTS, WALLING } from "@/data/masonry";
+import { isPavingLine, MASONRY_CATEGORY_CODES, MASONRY_PRODUCTS, WALLING } from "@/data/masonry";
 import { getMasonryCatalogue } from "@/lib/cms";
 
 export const metadata: Metadata = {
@@ -14,11 +14,13 @@ export const metadata: Metadata = {
 };
 
 const count = (slug: string) => MASONRY_PRODUCTS.filter((p) => p.categorySlug === slug).length;
+/** The walling half of the masonry & precast line — paving and retaining have their own page (/paving). */
+const WALL_CATEGORIES = MASONRY_CATEGORIES.filter((c) => !isPavingLine(c.slug));
 
 /** Landing page for the masonry line, CAT-19/20 (MASONRY_CATALOGUE.md); prices only where benchmarked, everything else on request. */
 export default async function BricksBlocksPage() {
   const visible = await getMasonryCatalogue();
-  const live = visible.filter((p) => p.units.some((u) => u.prices !== null));
+  const live = visible.filter((p) => !isPavingLine(p.categorySlug) && p.units.some((u) => u.prices !== null));
   const options = WALLING.filter((p) => visible.some((v) => v.sku === p.sku)).map((p) => ({
     sku: p.sku,
     slug: p.slug,
@@ -55,7 +57,7 @@ export default async function BricksBlocksPage() {
       <div className="mx-auto max-w-6xl px-4 py-12">
         <h2 className="font-display text-2xl font-bold text-basalt">Shop the line</h2>
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
-          {MASONRY_CATEGORIES.map((c) => (
+          {WALL_CATEGORIES.map((c) => (
             <Link key={c.slug} href={`/products?category=${c.slug}`} className="rounded-sm border border-basalt/10 bg-white p-5 transition-colors hover:border-seam-blue">
               <p className="font-mono text-[10px] text-slate">{MASONRY_CATEGORY_CODES[c.slug]}</p>
               <h3 className="mt-1 font-display text-base font-semibold text-basalt">{c.name}</h3>

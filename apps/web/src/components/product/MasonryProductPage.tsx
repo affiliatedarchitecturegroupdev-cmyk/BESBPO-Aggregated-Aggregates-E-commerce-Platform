@@ -6,18 +6,20 @@ import { WallCalculator } from "@/components/product/WallCalculator";
 import { SaveToProject } from "@/components/projects/SaveToProject";
 import { SocialShareButtons } from "@/components/social/SocialShareButtons";
 import { CATEGORIES } from "@/data/categories";
-import { MASONRY_CATEGORY_CODES, MASONRY_PRODUCTS } from "@/data/masonry";
+import { isPavingLine, MASONRY_CATEGORY_CODES, MASONRY_PRODUCTS } from "@/data/masonry";
 import type { MerchandisedMasonryProduct } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
-/** Product page for CAT-19/20 masonry: bricks, blocks, lintels, DPC and air bricks. */
+/** Product page for the masonry & precast line, CAT-19..22: bricks, blocks, lintels, DPC, pavers, kerbs, retaining blocks and gabions. */
 export function MasonryProductPage({ product }: { product: MerchandisedMasonryProduct }) {
   const category = CATEGORIES.find((c) => c.slug === product.categorySlug)!;
   const priced = product.units.filter((u) => u.prices !== null);
   const related = MASONRY_PRODUCTS.filter((p) => p.categorySlug === product.categorySlug && p.sku !== product.sku).slice(0, 4);
   const url = `${SITE_URL}/products/${product.slug}`;
   const walling = product.unitsPerM2 !== null;
+  const paving = isPavingLine(product.categorySlug);
+  const perM2Label = paving ? (product.categorySlug === "paving-kerbs-edging" ? "Per m² of paving" : "Per m² of wall face") : "Per m² of wall";
 
   // Offers only for benchmarked units — an unpriced product never implies a price.
   const structuredData = {
@@ -49,7 +51,7 @@ export function MasonryProductPage({ product }: { product: MerchandisedMasonryPr
       ["Standard", product.gradingStandard],
       ["Type", product.masonryClass],
       ["Size", product.unitSize],
-      ["Per m² of wall", walling ? `About ${product.unitsPerM2} (single leaf, 10 mm joints)` : null],
+      [perM2Label, walling ? `About ${product.unitsPerM2}${paving ? "" : " (single leaf, 10 mm joints)"}` : null],
       ["Category code", MASONRY_CATEGORY_CODES[product.categorySlug] ?? null],
     ] as [string, string | null][]
   ).filter(([, value]) => value);
@@ -59,14 +61,20 @@ export function MasonryProductPage({ product }: { product: MerchandisedMasonryPr
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
       <nav className="font-mono text-xs text-slate" aria-label="Breadcrumb">
         <Link href="/" className="hover:text-seam-blue">Home</Link> /{" "}
-        <Link href="/bricks-blocks" className="hover:text-seam-blue">Bricks, Blocks &amp; Walling</Link> /{" "}
+        {paving ? (
+          <Link href="/paving" className="hover:text-seam-blue">Paving &amp; Retaining</Link>
+        ) : (
+          <Link href="/bricks-blocks" className="hover:text-seam-blue">Bricks, Blocks &amp; Walling</Link>
+        )}{" "}
+        /{" "}
         <Link href={`/products?category=${category.slug}`} className="hover:text-seam-blue">{category.name}</Link> / {product.name}
       </nav>
       <div className="mt-6 grid gap-10 md:grid-cols-2">
         <div className="min-w-0 space-y-6">
           <ProductGallery sku={product.sku} categorySlug={product.categorySlug} images={product.images} />
-          {walling && (
+          {walling && product.categorySlug !== "retaining-erosion-control" && (
             <WallCalculator
+              mode={product.categorySlug === "paving-kerbs-edging" ? "area" : "wall"}
               options={[
                 {
                   sku: product.sku,
@@ -146,7 +154,11 @@ export function MasonryProductPage({ product }: { product: MerchandisedMasonryPr
               <li key={use}>{use}</li>
             ))}
           </ul>
-          <p className="mt-3 font-body text-xs text-slate">Your drawings and the NHBRC requirements decide the unit, strength and wall build-up.</p>
+          <p className="mt-3 font-body text-xs text-slate">
+            {paving
+              ? "The base, bedding and wall design (height, drainage, backfill) decide how it performs — follow the maker's tables or an engineer."
+              : "Your drawings and the NHBRC requirements decide the unit, strength and wall build-up."}
+          </p>
         </section>
         <section className="rounded-sm border border-basalt/10 bg-white p-6">
           <h2 className="font-mono text-[10px] uppercase tracking-widest text-seam-blue">Handling &amp; Storage</h2>
@@ -155,7 +167,7 @@ export function MasonryProductPage({ product }: { product: MerchandisedMasonryPr
         <section className="rounded-sm border border-basalt/10 bg-white p-6">
           <h2 className="font-mono text-[10px] uppercase tracking-widest text-seam-blue">Delivery &amp; Returns</h2>
           <p className="mt-3 font-body text-sm text-basalt">
-            Bricks, blocks and lintels come palletised on the supplier&apos;s flatbed or crane truck: we confirm the delivery slot, any
+            {paving ? "Pavers, kerbs, retaining blocks and gabions" : "Bricks, blocks and lintels"} come palletised on the supplier&apos;s flatbed or crane truck: we confirm the delivery slot, any
             delivery charge and the yard&apos;s minimum load with you before dispatch. See the{" "}
             <Link href="/legal/shipping-delivery" className="text-seam-blue underline">Shipping &amp; Delivery</Link> and{" "}
             <Link href="/legal/returns-refunds" className="text-seam-blue underline">Returns &amp; Refunds</Link> policies.

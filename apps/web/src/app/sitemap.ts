@@ -20,6 +20,7 @@ const STATIC_PATHS = [
   "/ready-mix",
   "/reinforcing-steel",
   "/bricks-blocks",
+  "/paving",
   "/reinforcing-steel/cut-and-bend",
   "/plant-hire",
   "/services",
