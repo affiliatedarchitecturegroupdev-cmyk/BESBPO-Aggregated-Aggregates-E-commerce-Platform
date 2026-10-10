@@ -85,7 +85,7 @@ aggregates-store-platform/
 ├── B2B_BULK_CATALOGUE.md CAT-10/11 packaged goods and the dedup against the aggregate catalogue
 ├── CEMENT_MASTER_CATALOGUE.md 37 cement SKUs (9 live-priced): taxonomy, benchmarks, dedup
 ├── READY_MIX_CATALOGUE.md CAT-12 ready-mix grades, pumps and the producer network
-├── MASONRY_CATALOGUE.md   CAT-19..22 bricks & blocks, lintels & DPC, paving & kerbs, retaining & gabions; calculators
+├── MASONRY_CATALOGUE.md   CAT-19..25 walls, paving & retaining, pipes, precast drainage & membranes; calculators
 ├── STEEL_CATALOGUE.md     CAT-15..18 rebar, mesh & brickforce, fixing accessories, structural steel
 ├── BUILD_STAGES.md       Shop by Build Stage: stages, picks, hire, save-a-stage; planned CAT-19..25
 ├── PROJECT_LISTS.md      Wishlist by job: project lists, build stages, estimate, share, cart/quote

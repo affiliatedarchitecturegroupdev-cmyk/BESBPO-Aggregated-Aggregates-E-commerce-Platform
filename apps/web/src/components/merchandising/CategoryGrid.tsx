@@ -28,8 +28,8 @@ function categoryCard(category: Category): CategoryCard {
 /**
  * Shop by Category: up to nine cards a page. Page one is the nine aggregate
  * categories; page two cement, ready-mix, steel, plant hire and site
- * services; page three walls and the outside — bricks & blocks, lintels & DPC,
- * paving and retaining, with drainage to come (BUILD_STAGES.md).
+ * services; page three walls, paving and drainage — the seven masonry & precast
+ * categories, CAT-19..25 (BUILD_STAGES.md).
  */
 export async function CategoryGrid() {
   const catalogue = await getCatalogue();
@@ -70,7 +70,7 @@ export async function CategoryGrid() {
   const pages: CategoryPage[] = [
     { label: "Aggregates", summary: "Nine aggregate categories, from sub-base to decorative — every price straight from our published pricing framework.", cards: aggregates },
     { label: "Cement, concrete, steel & hire", summary: "Cement, ready-mix, reinforcing and structural steel, plus plant hire and site services for the same job.", cards: more },
-    { label: "Walls, paving & retaining", summary: "Bricks, blocks, lintels and DPC for the walls; pavers, kerbs, retaining blocks and gabions for the outside.", cards: walling },
+    { label: "Walls, paving & drainage", summary: "Bricks, blocks, lintels and DPC; pavers, kerbs and retaining; pipes, precast drainage and membranes.", cards: walling },
   ];
 
   return (

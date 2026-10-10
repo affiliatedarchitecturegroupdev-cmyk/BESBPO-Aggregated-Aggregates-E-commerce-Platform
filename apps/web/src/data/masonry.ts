@@ -1,8 +1,9 @@
 /**
  * The masonry & precast line (MASONRY_CATALOGUE.md): CAT-19 Bricks & Blocks,
  * CAT-20 Lintels, DPC & Wall Accessories, CAT-21 Paving, Kerbs & Edging and
- * CAT-22 Retaining & Erosion Control. Bricks per 1,000; blocks, pavers,
- * slabs, kerbs, lintels, gabions and air bricks per item; DPC per roll.
+ * CAT-22 Retaining & Erosion Control, CAT-23 Pipes & Fittings, CAT-24 Precast
+ * Drainage and CAT-25 Geosynthetics & Membranes. Bricks per 1,000; pipes per
+ * 6 m length; DPC, DPM and fabrics per roll; everything else per item.
  *
  * masonry-catalogue.json is an exact copy of
  * services/pricing/data/masonry_catalogue.json — a pricing-service test fails
@@ -15,7 +16,7 @@ import { CUSTOMER_TIERS } from "./catalogue";
 import { READY, type TierPrices } from "./packaged";
 import { tierPrice } from "@/lib/tier-pricing";
 
-export type MasonryUnitCode = "THOUSAND" | "EACH" | "ROLL";
+export type MasonryUnitCode = "THOUSAND" | "EACH" | "ROLL" | "LENGTH_6M";
 
 export type MasonryUnit = {
   unit: MasonryUnitCode;
@@ -82,7 +83,21 @@ export const WALLING = MASONRY_PRODUCTS.filter((p) => p.categorySlug === "bricks
 export const PAVING = MASONRY_PRODUCTS.filter((p) => p.categorySlug === "paving-kerbs-edging" && p.unitsPerM2 !== null);
 
 export const PAVING_CATEGORIES = ["paving-kerbs-edging", "retaining-erosion-control"];
+export const DRAINAGE_CATEGORIES = ["pipes-fittings", "precast-drainage", "geosynthetics-membranes"];
 export const isPavingLine = (categorySlug: string) => PAVING_CATEGORIES.includes(categorySlug);
+
+/** Which part of the line a category belongs to — each has its own landing page. */
+export type MasonryLine = "walling" | "paving" | "drainage";
+export function lineOf(categorySlug: string): MasonryLine {
+  if (PAVING_CATEGORIES.includes(categorySlug)) return "paving";
+  if (DRAINAGE_CATEGORIES.includes(categorySlug)) return "drainage";
+  return "walling";
+}
+export const LINE_PAGE: Record<MasonryLine, { href: string; label: string }> = {
+  walling: { href: "/bricks-blocks", label: "Bricks, Blocks & Walling" },
+  paving: { href: "/paving", label: "Paving & Retaining" },
+  drainage: { href: "/drainage", label: "Drainage & Membranes" },
+};
 
 /** Allowance for breakage and cutting, added on top of the count. */
 export const BREAKAGE = 0.05;

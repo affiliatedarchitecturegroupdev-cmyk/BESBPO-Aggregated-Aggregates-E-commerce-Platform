@@ -33,9 +33,9 @@ STEEL_DELIVERY_NOTE = (
     "Steel is delivered by the merchant's flatbed or crane truck: we confirm the delivery slot "
     "and any delivery charge with you before dispatch, and send the mill certificates with the load."
 )
-# Bricks, blocks, pavers and other precast come palletised on the supplier's flatbed or crane truck.
+# Bricks, blocks, pavers, precast and pipes come on the supplier's flatbed or crane truck.
 MASONRY_DELIVERY_NOTE = (
-    "Bricks, blocks, pavers and other precast are delivered palletised by the supplier's flatbed or crane truck: we confirm "
+    "Bricks, blocks, pavers, precast and pipes are delivered by the supplier's flatbed or crane truck: we confirm "
     "the delivery slot, any delivery charge and the yard's minimum load with you before dispatch."
 )
 
@@ -127,7 +127,7 @@ def price_order(
                     extra_reasons.append(
                         "Volume / Civil Bulk steel is quoted per project."
                         if packaged_product.line == "steel"
-                        else "Volume / Civil Bulk bricks, blocks, paving and other precast are quoted per project."
+                        else "Volume / Civil Bulk bricks, blocks, paving, precast and pipes are quoted per project."
                         if packaged_product.line == "masonry"
                         else "Trade and volume pricing for cement in bulk, and volume pricing for all cement, is quoted individually."
                     )

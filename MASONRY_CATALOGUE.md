@@ -1,4 +1,4 @@
-# Masonry & Precast — Walls (CAT-19/20, Phase W) and Paving & Retaining (CAT-21/22, Phase P), Oct 2026
+# Masonry & Precast — Walls (CAT-19/20, W), Paving & Retaining (CAT-21/22, P), Drainage & Membranes (CAT-23..25, D), Oct 2026
 
 > **Where it lives in this repo:** `services/pricing/data/masonry_catalogue.json`
 > (copied to `apps/web/src/data/masonry-catalogue.json`; a pricing test fails
@@ -8,8 +8,8 @@
 > `GET /products/masonry`. Database: the `THOUSAND` unit of sale and
 > `masonryClass` / `unitSize` / `unitsPerM2` on `Product` (migration
 > `20261017090000_masonry_catalogue`; Phase P needed no migration).
-> Storefront: `/bricks-blocks` (wall calculator) and `/paving` (paving
-> calculator), `/products?group=masonry`, a product page per item
+> Storefront: `/bricks-blocks` (wall calculator), `/paving` (paving
+> calculator) and `/drainage` (French drain calculator), `/products?group=masonry`, a product page per item
 > (`MasonryProductPage`), page three of Shop by Category, and the Walls,
 > Paving, Drainage and Landscaping stages of Shop by Build Stage.
 
@@ -113,9 +113,52 @@ directory). This closes the Phase W gaps in the **Free State** and
 **Limpopo** for paving and retaining (brickyards there are still to find).
 Supplier CSVs accept CAT-21 and CAT-22.
 
+## Phase D — Pipes & Fittings (CAT-23), Precast Drainage (CAT-24), Geosynthetics & Membranes (CAT-25)
+
+The last three categories join the same line: catalogue file, product page,
+flatbed delivery and `MASONRY` family (trade 4% — the owner to confirm it
+covers drainage and membranes too). Pipes are sold per 6 m length
+(`LENGTH_6M`, already a unit of sale), rolls per roll, everything else per
+item. No migration.
+
+| Code | Category | Products | Live-priced units |
+|---|---|---|---|
+| CAT-23 | Pipes & Fittings | uPVC underground pipe 110 mm and 160 mm × 6 m, 45° and 87.5° bends, 45° junction, rodding eye, perforated subsoil pipe — 7 | 110 mm pipe, 160 mm pipe, 45° bend |
+| CAT-24 | Precast Drainage | Concrete pipes 300/450/600 mm, manhole ring 1,000 mm, manhole cover & frame, channel drain 1 m, V-drain, portal culvert — 8 | — (all quoted) |
+| CAT-25 | Geosynthetics & Membranes | DPM 250 µm 3 × 30 m, nonwoven geotextile 1.76 × 100 m, weed-control membrane 1 × 10 m, geogrid — 4 | DPM, weed-control membrane |
+
+**Benchmarks (checked 2026-10-10, retailer search listings):**
+
+| Item | Retailer prices | Benchmark | List |
+|---|---|---|---|
+| uPVC UG pipe 110 mm × 6 m, 100 kPa, SABS (Marley) | Cashbuild R259.95, Buco R359.72 (non-SABS R179.95 excluded) | R259.95 | **R280.75** |
+| uPVC UG pipe 160 mm × 6 m, Class 51 (Marley UL620) | Chamberlains R1,299.00, Buco R1,723.19 (a Buco search page shows R1,152.55 — confirm) | R1,299.00 | **R1,402.92** |
+| UG bend 110 mm × 45°, plain, SABS | Buco Proflo R58.79, Leroy Merlin R69.00, Chamberlains R89.90, Cashbuild R97.95 | R58.79 | **R63.49** |
+| DPM 250 µm, 3 × 30 m, SABS | Buco R826.62 (a catalogue page shows R629 — confirm), Cashbuild R899.95 (green), Chamberlains R919.00 | R826.62 | **R892.75** |
+| Weed Gard membrane 1 × 10 m | Chamberlains R185.00, Builders R229.00 | R185.00 | **R199.80** |
+
+General-purpose black plastic (Cashbuild, "not for damp-proofing") is not
+a DPM and was excluded. **Quoted:** 87.5° bends, junctions (hand and type
+differ), rodding eyes, subsoil pipe (PVC vs HDPE listings), all precast,
+geotextile and geogrid.
+
+**French drain calculator** (`/drainage`): trench length × width × depth →
+110 mm × 6 m perforated pipe lengths, stone volume less the pipe and
+tonnes at the chosen drainage stone's bulk density, and geotextile to line
+the trench and lap over the top (rolls of 1.76 × 100 m); "Quote the lot"
+prefills the quote form with all three.
+
+**Supplier leads:** `suppliers-drainage.csv` — 9 leads, unverified and
+inactive: Marley Pipe Systems (Nigel), DPI Plastics (Roodekop; Bellville),
+Rocla (Cape Town), VNH Precasting (Marburg, KZN), Vula Concrete (Benoni),
+Jade Precast (Polokwane), Kaytech (Atlantis factory; Pinetown). Four
+provinces so far — Eastern Cape, Free State, Mpumalanga, North West and
+Northern Cape still need pipe and precast suppliers. Supplier CSVs accept
+CAT-23..25.
+
 ## Delivery
 
-Bricks, blocks, lintels, pavers, kerbs and retaining blocks travel palletised on the supplier's flatbed or
+Bricks, blocks, lintels, pavers, kerbs, retaining blocks, pipes and precast travel on the supplier's flatbed or
 crane truck — never in the tipper bands. A masonry-only order (or masonry
 with steel) has no tipper fee and carries a note that the slot, any delivery
 charge and the yard's minimum load are confirmed before dispatch; staff
@@ -149,6 +192,8 @@ a Phase P (paving) lead rather than a walling one.
 - Brickyard price lists for face bricks, maxis, 190 mm blocks and lintels —
   loaded only from written quotes.
 - Unit masses (for delivery tonnage) once suppliers confirm them.
+- Confirm the 4% trade discount covers pipes, precast drainage and membranes.
+- Precast drainage, geotextile and fitting prices from written quotes.
 - Kerb, gabion and retaining-block prices from written supplier quotes;
   paver coverage per m² for the interlocking ranges.
 - Product photos for the line (texture swatches show until licensed photos

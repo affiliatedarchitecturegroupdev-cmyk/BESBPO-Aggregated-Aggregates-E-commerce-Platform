@@ -38,6 +38,10 @@ export const CATEGORIES: Category[] = [
   // CAT-21/22 — paving and retaining, in the same masonry & precast line (MASONRY_CATALOGUE.md).
   { slug: "paving-kerbs-edging", name: "Paving, Kerbs & Edging", description: "SANS 1058 concrete pavers, paving slabs, grass blocks, clay pavers, garden edging and SANS 927 road kerbs.", catalogueGroup: "masonry" },
   { slug: "retaining-erosion-control", name: "Retaining & Erosion Control", description: "Terraforce and segmental retaining blocks, gabion baskets and mattresses for walls, slopes and channels.", catalogueGroup: "masonry" },
+  // CAT-23..25 — drainage and membranes, same line (MASONRY_CATALOGUE.md).
+  { slug: "pipes-fittings", name: "Pipes & Fittings", description: "uPVC underground sewer and drain pipe in 6 m lengths, bends, junctions, rodding eyes and perforated subsoil drain pipe.", catalogueGroup: "masonry" },
+  { slug: "precast-drainage", name: "Precast Drainage", description: "SANS 677 concrete pipes, manhole rings and covers, channel drains, V-drains and portal culverts.", catalogueGroup: "masonry" },
+  { slug: "geosynthetics-membranes", name: "Geosynthetics & Membranes", description: "SABS damp-proof membrane for surface beds, nonwoven geotextile, weed-control fabric and geogrid.", catalogueGroup: "masonry" },
 ];
 
 export const CORE_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "core");

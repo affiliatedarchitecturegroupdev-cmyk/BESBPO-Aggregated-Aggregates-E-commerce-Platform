@@ -1,5 +1,5 @@
 {
- "_source": "Masonry & precast line: CAT-19 Bricks & Blocks, CAT-20 Lintels, DPC & Wall Accessories, CAT-21 Paving, Kerbs & Edging and CAT-22 Retaining & Erosion Control (MASONRY_CATALOGUE.md). A unit is live only where at least two SA retailers show a regular price for the same product; list = lowest x 1.08. Everything else is quoted with the supplier. Bricks are sold per 1,000; units_per_m2 is the count per m² of single-leaf wall with 10 mm joints (bricks and blocks), of paved area (pavers and slabs, laid tight) or of wall face (retaining blocks, as the maker lists).",
+ "_source": "Masonry & precast line: CAT-19 Bricks & Blocks, CAT-20 Lintels, DPC & Wall Accessories, CAT-21 Paving, Kerbs & Edging, CAT-22 Retaining & Erosion Control, CAT-23 Pipes & Fittings, CAT-24 Precast Drainage and CAT-25 Geosynthetics & Membranes (MASONRY_CATALOGUE.md). A unit is live only where at least two SA retailers show a regular price for the same product; list = lowest x 1.08. Everything else is quoted with the supplier. Bricks are sold per 1,000; units_per_m2 is the count per m² of single-leaf wall with 10 mm joints (bricks and blocks), of paved area (pavers and slabs, laid tight) or of wall face (retaining blocks, as the maker lists).",
  "categories": [
   {
    "slug": "bricks-blocks",
@@ -20,6 +20,21 @@
    "slug": "retaining-erosion-control",
    "name": "Retaining & Erosion Control",
    "code": "CAT-22"
+  },
+  {
+   "slug": "pipes-fittings",
+   "name": "Pipes & Fittings",
+   "code": "CAT-23"
+  },
+  {
+   "slug": "precast-drainage",
+   "name": "Precast Drainage",
+   "code": "CAT-24"
+  },
+  {
+   "slug": "geosynthetics-membranes",
+   "name": "Geosynthetics & Membranes",
+   "code": "CAT-25"
   }
  ],
  "products": [
@@ -1140,6 +1155,609 @@
      "list_price_per_unit": null,
      "pricing_status": "Quote-only — no retail benchmark",
      "source_note": "No retail price found — gabions are quoted with the supplier by size, wire gauge and coating."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-DRN-PIPE-UG-110",
+   "slug": "upvc-underground-pipe-110mm-x-6m",
+   "name": "uPVC Underground Pipe 110 mm × 6 m (100 kPa, SABS)",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground sewer & drain pipe (100 kPa)",
+   "masonry_class": "uPVC underground pipe",
+   "unit_size": "110 mm × 6 m",
+   "units_per_m2": null,
+   "description": "The standard house-drain pipe: 110 mm uPVC underground pipe in 6 m lengths for sewer and stormwater connections from the house to the municipal connection or septic tank.",
+   "typical_uses": [
+    "House sewer and drain runs",
+    "Stormwater connections"
+   ],
+   "handling_notes": "Store pipes flat and supported along their length, out of direct sun; keep spigots and sockets clean. Bed and surround with the specified bedding sand or stone.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": 259.95,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 259.95,
+     "markup_percent": 8,
+     "list_price_per_unit": 280.75,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Cashbuild Marley underground pipe SABS 110mm x 6m 100 kPa R259.95 (lowest; non-SABS R179.95 excluded); Buco Marley UG pipe 110mm x 6m 100kPa SABS (ULE420) from R359.72. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-DRN-PIPE-UG-160",
+   "slug": "upvc-underground-pipe-160mm-x-6m-class-51",
+   "name": "uPVC Underground Pipe 160 mm × 6 m (Class 51)",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SANS 791 uPVC sewer & drain pipe, Class 51",
+   "masonry_class": "uPVC underground pipe",
+   "unit_size": "160 mm × 6 m",
+   "units_per_m2": null,
+   "description": "Larger 160 mm uPVC underground pipe for main sewer runs, complexes and site stormwater.",
+   "typical_uses": [
+    "Main sewer runs and complexes",
+    "Site stormwater"
+   ],
+   "handling_notes": "Store pipes flat and supported along their length, out of direct sun; keep spigots and sockets clean. Bed and surround with the specified bedding sand or stone.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": 1299.0,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 1299.0,
+     "markup_percent": 8,
+     "list_price_per_unit": 1402.92,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Chamberlains Marley PVC underground Class 51 pipe 160mm x 6m (UL620) R1,299.00 (lowest product-page price); Buco Marley UG 160mm x 6m SABS 791 (UL620) from R1,723.19 (a Buco search page shows R1,152.55 — confirm). checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-DRN-BEND-110-45",
+   "slug": "underground-bend-110mm-45-degree",
+   "name": "Underground Bend 110 mm × 45° (plain, SABS)",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": "110 mm, 45°",
+   "units_per_m2": null,
+   "description": "45° plain bend for changing direction on a 110 mm underground drain — two 45° bends make a gentler turn than one 90°, and keep the drain rodable.",
+   "typical_uses": [
+    "Changes of direction on house drains"
+   ],
+   "handling_notes": "Store pipes flat and supported along their length, out of direct sun; keep spigots and sockets clean. Bed and surround with the specified bedding sand or stone.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": 58.79,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 58.79,
+     "markup_percent": 8,
+     "list_price_per_unit": 63.49,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Buco Proflo UG 110mm bend 45deg plain long radius SABS from R58.79 (lowest); Leroy Merlin underground plain bend 45 deg 110mm R69.00; Chamberlains Marley R89.90; Cashbuild Marley R97.95. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-DRN-BEND-110-87",
+   "slug": "underground-bend-110mm-87-5-degree",
+   "name": "Underground Bend 110 mm × 87.5°",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": "110 mm, 87.5°",
+   "units_per_m2": null,
+   "description": "Near-right-angle bend for 110 mm underground drains — where the drain meets a vertical stack or gully.",
+   "typical_uses": [
+    "Connections to stacks and gullies"
+   ],
+   "handling_notes": "Store pipes flat and supported along their length, out of direct sun; keep spigots and sockets clean. Bed and surround with the specified bedding sand or stone.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Not benchmarked yet — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-DRN-JUNCTION-110",
+   "slug": "underground-junction-110mm-45-degree",
+   "name": "Underground Junction 110 mm × 45°",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": "110 mm, 45°",
+   "units_per_m2": null,
+   "description": "45° junction to join a branch drain into a 110 mm main run — tell us plain, left- or right-hand, or with an inspection eye.",
+   "typical_uses": [
+    "Joining branch drains"
+   ],
+   "handling_notes": "Store pipes flat and supported along their length, out of direct sun; keep spigots and sockets clean. Bed and surround with the specified bedding sand or stone.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Retail junctions differ by hand and type (Buco Proflo plain R59.58; Cashbuild Marley right-hand R142.95) — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-DRN-RODDING-EYE-110",
+   "slug": "rodding-eye-110mm",
+   "name": "Rodding Eye 110 mm",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": "110 mm",
+   "units_per_m2": null,
+   "description": "Access point at the head of a drain run and at changes of direction, so the drain can be cleared with rods.",
+   "typical_uses": [
+    "Drain access for clearing blockages"
+   ],
+   "handling_notes": "Store pipes flat and supported along their length, out of direct sun; keep spigots and sockets clean. Bed and surround with the specified bedding sand or stone.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Not benchmarked yet — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-DRN-SUBSOIL-110",
+   "slug": "perforated-subsoil-drain-pipe-110mm-x-6m",
+   "name": "Perforated Subsoil Drain Pipe 110 mm × 6 m",
+   "category_slug": "pipes-fittings",
+   "grading_standard": null,
+   "masonry_class": "Subsoil drain pipe",
+   "unit_size": "110 mm × 6 m",
+   "units_per_m2": null,
+   "description": "Perforated (slotted) drain pipe for French drains and subsoil drainage behind retaining walls — laid in single-size stone wrapped in geotextile.",
+   "typical_uses": [
+    "French drains",
+    "Drainage behind retaining walls and basements"
+   ],
+   "handling_notes": "Store pipes flat and supported along their length, out of direct sun; keep spigots and sockets clean. Bed and surround with the specified bedding sand or stone.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Retail listings are different materials (Leroy Merlin PVC perforated R355; Chamberlains Marley HDPE slotted R509) — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-PRC-CONC-PIPE-300",
+   "slug": "concrete-pipe-300mm",
+   "name": "Concrete Pipe 300 mm",
+   "category_slug": "precast-drainage",
+   "grading_standard": "SANS 677 concrete non-pressure pipes",
+   "masonry_class": "Precast concrete pipe",
+   "unit_size": "300 mm diameter",
+   "units_per_m2": null,
+   "description": "Precast concrete stormwater and culvert pipe, 300 mm — the class (strength) and joint type follow the engineer's design and the cover over the pipe.",
+   "typical_uses": [
+    "Stormwater culverts under roads and driveways",
+    "Site stormwater mains"
+   ],
+   "handling_notes": "Offload with a crane truck or TLB and slings — never drop or roll precast units; set on a prepared, levelled bed.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Precast pipes are priced by class, joint and length with the maker — quoted."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-PRC-CONC-PIPE-450",
+   "slug": "concrete-pipe-450mm",
+   "name": "Concrete Pipe 450 mm",
+   "category_slug": "precast-drainage",
+   "grading_standard": "SANS 677 concrete non-pressure pipes",
+   "masonry_class": "Precast concrete pipe",
+   "unit_size": "450 mm diameter",
+   "units_per_m2": null,
+   "description": "Precast concrete stormwater and culvert pipe, 450 mm — the class (strength) and joint type follow the engineer's design and the cover over the pipe.",
+   "typical_uses": [
+    "Stormwater culverts under roads and driveways",
+    "Site stormwater mains"
+   ],
+   "handling_notes": "Offload with a crane truck or TLB and slings — never drop or roll precast units; set on a prepared, levelled bed.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Precast pipes are priced by class, joint and length with the maker — quoted."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-PRC-CONC-PIPE-600",
+   "slug": "concrete-pipe-600mm",
+   "name": "Concrete Pipe 600 mm",
+   "category_slug": "precast-drainage",
+   "grading_standard": "SANS 677 concrete non-pressure pipes",
+   "masonry_class": "Precast concrete pipe",
+   "unit_size": "600 mm diameter",
+   "units_per_m2": null,
+   "description": "Precast concrete stormwater and culvert pipe, 600 mm — the class (strength) and joint type follow the engineer's design and the cover over the pipe.",
+   "typical_uses": [
+    "Stormwater culverts under roads and driveways",
+    "Site stormwater mains"
+   ],
+   "handling_notes": "Offload with a crane truck or TLB and slings — never drop or roll precast units; set on a prepared, levelled bed.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Precast pipes are priced by class, joint and length with the maker — quoted."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-PRC-MANHOLE-RING-1000",
+   "slug": "manhole-ring-1000mm",
+   "name": "Manhole Ring 1,000 mm",
+   "category_slug": "precast-drainage",
+   "grading_standard": "Precast concrete manhole chamber section",
+   "masonry_class": "Manhole",
+   "unit_size": "1,000 mm diameter",
+   "units_per_m2": null,
+   "description": "Precast concrete manhole chamber ring for sewer and stormwater manholes — stacked on a base to the depth required, with a cover slab on top.",
+   "typical_uses": [
+    "Sewer and stormwater manholes",
+    "Inspection chambers"
+   ],
+   "handling_notes": "Offload with a crane truck or TLB and slings — never drop or roll precast units; set on a prepared, levelled bed.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Quoted with the maker by height and diameter."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-PRC-MANHOLE-COVER",
+   "slug": "manhole-cover-and-frame",
+   "name": "Manhole Cover & Frame",
+   "category_slug": "precast-drainage",
+   "grading_standard": null,
+   "masonry_class": "Manhole",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Cover and frame for a manhole — concrete, cast iron or composite, rated for the traffic over it (pedestrian to heavy vehicle).",
+   "typical_uses": [
+    "Manholes in driveways, roads and gardens"
+   ],
+   "handling_notes": "Offload with a crane truck or TLB and slings — never drop or roll precast units; set on a prepared, levelled bed.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Quoted by material and load rating."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-PRC-CHANNEL-DRAIN-1M",
+   "slug": "channel-drain-with-grate-1m",
+   "name": "Channel Drain with Grate, 1 m",
+   "category_slug": "precast-drainage",
+   "grading_standard": null,
+   "masonry_class": "Channel drain",
+   "unit_size": "1 m length",
+   "units_per_m2": null,
+   "description": "Surface channel drain with a grate for driveways, patios and garage entrances — catches sheet water before it reaches the house.",
+   "typical_uses": [
+    "Driveway and garage entrances",
+    "Patios and paved areas"
+   ],
+   "handling_notes": "Bed and haunch the channel in concrete, level with the paving; fit the end caps and outlet before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Retail channels differ by make, depth and grate (ACO, Waterform, R149–R359) — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-PRC-V-DRAIN",
+   "slug": "precast-v-drain-section",
+   "name": "Precast V-Drain Section",
+   "category_slug": "precast-drainage",
+   "grading_standard": null,
+   "masonry_class": "Open channel",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Precast concrete open-channel section to carry stormwater along roads, embankments and site boundaries.",
+   "typical_uses": [
+    "Stormwater along roads and embankments",
+    "Site boundary channels"
+   ],
+   "handling_notes": "Offload with a crane truck or TLB and slings — never drop or roll precast units; set on a prepared, levelled bed.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Quoted with the maker by profile and length."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-PRC-PORTAL-CULVERT",
+   "slug": "precast-portal-culvert",
+   "name": "Precast Portal Culvert",
+   "category_slug": "precast-drainage",
+   "grading_standard": "Precast concrete culvert (SANS 986)",
+   "masonry_class": "Culvert",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Rectangular precast culvert for stream and stormwater crossings under farm roads and access roads — sized by the engineer.",
+   "typical_uses": [
+    "Stream and stormwater crossings",
+    "Farm and access roads"
+   ],
+   "handling_notes": "Offload with a crane truck or TLB and slings — never drop or roll precast units; set on a prepared, levelled bed.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Engineered item — quoted with the maker."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-GEO-DPM-250",
+   "slug": "damp-proof-membrane-250-micron-3x30m",
+   "name": "Damp-Proof Membrane 250 µm, 3 × 30 m (SABS)",
+   "category_slug": "geosynthetics-membranes",
+   "grading_standard": "SANS 952 polyolefin film — under-surface-bed damp-proof membrane (250 µm)",
+   "masonry_class": "Damp-proof membrane",
+   "unit_size": "3 × 30 m roll (90 m²)",
+   "units_per_m2": null,
+   "description": "SABS-approved 250 µm membrane laid under the surface bed (floor slab) to keep ground moisture out — one roll covers 90 m² before laps. General-purpose black plastic is not a DPM.",
+   "typical_uses": [
+    "Under surface beds and floor slabs",
+    "Under screeds on the ground"
+   ],
+   "handling_notes": "Keep rolls dry and out of the sun until laid; lap joints as the maker specifies. Tape the laps and don't puncture it when placing mesh and chairs.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (3 × 30 m)",
+     "weight_kg": null,
+     "market_benchmark_price": 826.62,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 826.62,
+     "markup_percent": 8,
+     "list_price_per_unit": 892.75,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Buco plastic sheet 3.0 x 30m 250mic SABS from R826.62 (lowest product-page price; a Buco catalogue page shows R629 — confirm); Cashbuild SABS green under-surface-bed membrane 3m x 30m x 250mic R899.95; Chamberlains SABS Type-F black 3 x 30m x 250mic R919.00. Cashbuild general-purpose black sheet excluded (not for damp-proofing). checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-GEO-NONWOVEN-A2",
+   "slug": "nonwoven-geotextile-a2-1-76m-x-100m",
+   "name": "Nonwoven Geotextile (bidim A2-type), 1.76 × 100 m",
+   "category_slug": "geosynthetics-membranes",
+   "grading_standard": "Needle-punched nonwoven polyester geotextile",
+   "masonry_class": "Geotextile",
+   "unit_size": "1.76 × 100 m roll",
+   "units_per_m2": null,
+   "description": "Filter and separation fabric: wraps French drains and subsoil pipes so fines don't clog the stone, and separates base layers from soft ground under roads and paving.",
+   "typical_uses": [
+    "Wrapping French drains and subsoil drains",
+    "Separation under roads, paving and gabions"
+   ],
+   "handling_notes": "Keep rolls dry and out of the sun until laid; lap joints as the maker specifies.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (1.76 × 100 m)",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's price for this roll (Buco) — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-GEO-WEED-MAT",
+   "slug": "weed-control-membrane-1x10m",
+   "name": "Weed Control Membrane 1 × 10 m (Weed Gard)",
+   "category_slug": "geosynthetics-membranes",
+   "grading_standard": null,
+   "masonry_class": "Landscape fabric",
+   "unit_size": "1 × 10 m roll",
+   "units_per_m2": null,
+   "manufacturer": "Weed Gard",
+   "description": "Permeable landscape fabric under decorative stone and mulch — stops weeds coming through while letting water drain.",
+   "typical_uses": [
+    "Under decorative stone and pebbles",
+    "Garden beds and paths"
+   ],
+   "handling_notes": "Keep rolls dry and out of the sun until laid; lap joints as the maker specifies.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (1 × 10 m)",
+     "weight_kg": null,
+     "market_benchmark_price": 185.0,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 185.0,
+     "markup_percent": 8,
+     "list_price_per_unit": 199.8,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Chamberlains Weed Gard membrane 1 x 10m (80 gsm) R185.00 (lowest); Builders Topline Weed Gard 1 x 10m R229. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ],
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-GEO-GEOGRID",
+   "slug": "geogrid-reinforcement",
+   "name": "Geogrid (soil reinforcement)",
+   "category_slug": "geosynthetics-membranes",
+   "grading_standard": null,
+   "masonry_class": "Geogrid",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Polymer grid that reinforces fill behind retaining walls and stabilises base layers over soft ground — the grade and spacing come from the engineer.",
+   "typical_uses": [
+    "Reinforced retaining walls",
+    "Base stabilisation over soft ground"
+   ],
+   "handling_notes": "Keep rolls dry and out of the sun until laid; lap joints as the maker specifies.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Engineered product — quoted with the supplier by grade."
     }
    ],
    "manufacturer": null,

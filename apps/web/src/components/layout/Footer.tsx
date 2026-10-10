@@ -82,6 +82,7 @@ export async function Footer() {
             <li><Link href="/reinforcing-steel">Reinforcing &amp; Structural Steel</Link></li>
             <li><Link href="/bricks-blocks">Bricks, Blocks &amp; Walling</Link></li>
             <li><Link href="/paving">Paving &amp; Retaining</Link></li>
+            <li><Link href="/drainage">Drainage &amp; Membranes</Link></li>
             <li><Link href="/shop-by-stage">Shop by Build Stage</Link></li>
             <li><Link href="/products">All products</Link></li>
           </FooterColumn>

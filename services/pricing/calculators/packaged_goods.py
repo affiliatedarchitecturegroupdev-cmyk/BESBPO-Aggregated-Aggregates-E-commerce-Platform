@@ -41,8 +41,8 @@ READY_STATUS = "Ready — benchmarked"
 CEMENT_UNITS = ("BAG_25KG", "BAG_50KG", "BULK_BAG_1_5T", "BULK_TANKER_PER_TON", "DRUM_210L", "IBC_TOTE_1000L")
 # Steel: stock lengths, tonnes, mesh sheets, brickforce rolls, wire coils, packs and single items.
 STEEL_UNITS = ("LENGTH_6M", "LENGTH_12M", "TONNE", "SHEET", "ROLL", "COIL", "PACK", "EACH")
-# Masonry: bricks per 1,000, blocks, lintels and air bricks per item, DPC per roll.
-MASONRY_UNITS = ("THOUSAND", "EACH", "ROLL")
+# Masonry & precast: bricks per 1,000; blocks, pavers, precast and fittings per item; DPC, DPM and fabrics per roll; pipes per 6 m length.
+MASONRY_UNITS = ("THOUSAND", "EACH", "ROLL", "LENGTH_6M")
 PACKAGED_UNITS = CEMENT_UNITS + STEEL_UNITS + ("THOUSAND",)
 # Lines that travel on the supplier's own flatbed or crane truck, never in the tipper bands.
 OWN_TRANSPORT_LINES = ("steel", "masonry")
@@ -88,7 +88,7 @@ class PackagedProduct:
     name: str
     category_slug: str
     units: dict[str, PackagedUnit]
-    line: str = "cement"  # "cement" (CAT-10/11), "steel" (CAT-15..18) or "masonry" (CAT-19/20)
+    line: str = "cement"  # "cement" (CAT-10/11), "steel" (CAT-15..18) or "masonry" (masonry & precast, CAT-19..25)
 
     @property
     def is_steel(self) -> bool:

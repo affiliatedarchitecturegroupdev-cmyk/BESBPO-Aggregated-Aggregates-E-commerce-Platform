@@ -16,6 +16,7 @@ const PAGES = [
   { href: "/reinforcing-steel/cut-and-bend", title: "Cut & Bend to Your Bar Bending Schedule", keywords: "cut bend bbs bar bending schedule rebar fabrication shape code sans 282 steel fixing" },
   { href: "/bricks-blocks", title: "Bricks, Blocks & Walling", keywords: "bricks blocks clay cement stock face maxi nfp fbs lintel dpc damp proof air brick wall calculator masonry" },
   { href: "/paving", title: "Paving & Retaining", keywords: "paving pavers paver interlocking bevel slab kerb kerbs edging grass block driveway patio retaining terraforce gabion erosion calculator" },
+  { href: "/drainage", title: "Drainage & Membranes", keywords: "drainage pipe pipes sewer upvc underground bend junction rodding subsoil french drain concrete pipe manhole culvert channel drain dpm damp proof membrane geotextile bidim weed geogrid calculator" },
   { href: "/shop-by-stage", title: "Shop by Build Stage", keywords: "build stage foundations slab walls paving drainage landscaping site prep" },
   { href: "/quote", title: "Request a Quote", keywords: "quote rfq bulk civil price" },
   { href: "/faq", title: "FAQ", keywords: "questions help faq whatsapp compliance" },
