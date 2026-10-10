@@ -116,8 +116,8 @@ Supplier CSVs accept CAT-21 and CAT-22.
 ## Phase D — Pipes & Fittings (CAT-23), Precast Drainage (CAT-24), Geosynthetics & Membranes (CAT-25)
 
 The last three categories join the same line: catalogue file, product page,
-flatbed delivery and `MASONRY` family (trade 4% — the owner to confirm it
-covers drainage and membranes too). Pipes are sold per 6 m length
+flatbed delivery and `MASONRY` family (trade 4%, confirmed by the owner for
+drainage and membranes on 10 Oct 2026). Pipes are sold per 6 m length
 (`LENGTH_6M`, already a unit of sale), rolls per roll, everything else per
 item. No migration.
 
@@ -192,7 +192,6 @@ a Phase P (paving) lead rather than a walling one.
 - Brickyard price lists for face bricks, maxis, 190 mm blocks and lintels —
   loaded only from written quotes.
 - Unit masses (for delivery tonnage) once suppliers confirm them.
-- Confirm the 4% trade discount covers pipes, precast drainage and membranes.
 - Precast drainage, geotextile and fitting prices from written quotes.
 - Kerb, gabion and retaining-block prices from written supplier quotes;
   paver coverage per m² for the interlocking ranges.
