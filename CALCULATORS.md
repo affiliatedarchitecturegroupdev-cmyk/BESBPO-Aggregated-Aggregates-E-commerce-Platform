@@ -20,7 +20,7 @@ An entry tied to a product page (`sku`) drops out if staff hide that product.
 
 On the homepage the strip sits after the featured products: four across on
 desktop, two on tablets, and a sideways-scrolling row on phones so it doesn't
-lengthen the page. The page is in the footer (Services) and the sitemap.
+lengthen the page. The page is in the footer (Hire & Services) and the sitemap.
 
 When adding a calculator, give its wrapper an `id` and `scroll-mt-24` so the link
 lands on it below the sticky header, and describe only what it actually outputs.
