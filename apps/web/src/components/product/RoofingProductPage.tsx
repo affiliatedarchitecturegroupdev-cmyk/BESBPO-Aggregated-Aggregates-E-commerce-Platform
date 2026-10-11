@@ -164,7 +164,7 @@ export function RoofingProductPage({ product }: { product: MerchandisedRoofingPr
           <h2 className="font-mono text-[10px] uppercase tracking-widest text-seam-blue">Delivery &amp; Returns</h2>
           <p className="mt-3 font-body text-sm text-basalt">
             {sheet ? "Roof sheets" : "Roofing accessories"} come on the merchant&apos;s flatbed: we confirm the delivery slot, any delivery charge and any cut-to-length lead time with you
-            before dispatch. Cut-to-length sheets are made for your order, so check every length on your quote before you accept it. See the{" "}
+            before dispatch. Cut-to-length sheets are made for your order and can&apos;t be returned or refunded once cut, so check every length on your quote before you accept it. See the{" "}
             <Link href="/legal/shipping-delivery" className="text-seam-blue underline">Shipping &amp; Delivery</Link> and{" "}
             <Link href="/legal/returns-refunds" className="text-seam-blue underline">Returns &amp; Refunds</Link> policies.
           </p>

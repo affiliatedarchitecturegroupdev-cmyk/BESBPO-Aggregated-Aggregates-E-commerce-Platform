@@ -1896,6 +1896,17 @@ describe("Aggregated Aggregates API (e2e)", () => {
       expect(sent.some((n) => n.audience === "CUSTOMER" && n.recipient === email && n.subject === `We've received your request ${row.reference}`)).toBe(true);
     });
 
+    it("takes a BAE design brief and answers it with a fee proposal, not a supply quote", async () => {
+      const res = await http()
+        .post("/enquiries")
+        .send({ ...body, kind: "DESIGN", subject: "Design: House plans & council submission", sku: "BAE-house-plans", details: { "Project type": "New house", "Floor area m2": "180", Brief: "3-bed house" } })
+        .expect(201);
+      const row = await prisma.enquiry.findUniqueOrThrow({ where: { id: res.body.id } });
+      expect(row).toMatchObject({ kind: "DESIGN", sku: "BAE-house-plans" });
+      const sent = await prisma.notification.findMany({ where: { enquiryId: row.id } });
+      expect(sent.some((n) => n.audience === "CUSTOMER" && n.subject === `We've received your design brief ${row.reference}`)).toBe(true);
+    });
+
     it("rejects bad input and bots", async () => {
       await http().post("/enquiries").send({ ...body, kind: "BOOKING" }).expect(400);
       await http().post("/enquiries").send({ ...body, province: "Gautengg" }).expect(400);

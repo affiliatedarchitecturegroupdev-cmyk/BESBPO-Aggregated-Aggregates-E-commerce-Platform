@@ -59,6 +59,8 @@ export type EnquiryData = {
   id: string;
   reference: string;
   kindLabel: string;
+  /** A BAE design brief: answered with a fee proposal, not a supply quote. */
+  design?: boolean;
   subject: string;
   contactName: string;
   contactEmail: string;
@@ -336,6 +338,17 @@ export function staffCompanyEmail(event: NotificationEvent, c: CompanyData): Ema
 
 export function customerEnquiryEmail(event: NotificationEvent, e: EnquiryData): EmailMessage | null {
   if (event !== "ENQUIRY_RECEIVED") return null;
+  if (e.design) {
+    return email(`We've received your design brief ${e.reference}`, [
+      { kind: "p", text: greeting(e.contactName) },
+      {
+        kind: "p",
+        text: `Thanks — we've logged your brief "${e.subject}" as ${e.reference}. Bellwether Architecture & Engineering will review it and send you a fee proposal and terms of engagement. Nothing is charged until you accept the proposal.`,
+      },
+      ...(e.details.length ? [{ kind: "rows" as const, rows: e.details }] : []),
+      { kind: "p", text: `Reply to this email quoting ${e.reference} with any drawings, title deed or site photos you have, or if anything changes.` },
+    ]);
+  }
   return email(`We've received your request ${e.reference}`, [
     { kind: "p", text: greeting(e.contactName) },
     { kind: "p", text: `Thanks — we've logged your ${e.kindLabel.toLowerCase()} request "${e.subject}" as ${e.reference}. Our team will come back to you with availability and a written quote. Nothing is booked or charged until you accept that quote.` },

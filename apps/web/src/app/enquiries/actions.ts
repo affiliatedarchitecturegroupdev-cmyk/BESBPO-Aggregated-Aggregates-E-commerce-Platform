@@ -4,7 +4,7 @@ import type { FormState } from "@/app/account/actions";
 import { api } from "@/lib/api";
 import { sessionToken } from "@/lib/session";
 
-const KINDS = ["PLANT_HIRE", "SITE_SERVICE", "BUSINESS_LINE", "JOB_PACK", "ESTIMATE", "PARTNER_APPLICATION"] as const;
+const KINDS = ["PLANT_HIRE", "SITE_SERVICE", "BUSINESS_LINE", "JOB_PACK", "ESTIMATE", "PARTNER_APPLICATION", "DESIGN"] as const;
 const DETAIL_PREFIX = "d:";
 
 const text = (form: FormData, name: string) => {
@@ -46,6 +46,11 @@ export async function sendEnquiry(_prev: FormState, form: FormData): Promise<For
   if (!result.ok) return { error: result.message };
   if (kind === "PARTNER_APPLICATION") {
     return { success: `Thank you — your application is logged as ${result.data.reference}. We've emailed you a copy; our partnerships team will contact you about onboarding documents and rate cards.` };
+  }
+  if (kind === "DESIGN") {
+    return {
+      success: `Thank you — your brief is logged as ${result.data.reference}. We've emailed you a copy. Bellwether Architecture & Engineering will review it and come back to you with a fee proposal and terms of engagement. Nothing is charged until you accept the proposal.`,
+    };
   }
   return {
     success: `Thank you — your request is logged as ${result.data.reference}. We've emailed you a copy and our team will come back to you with availability and a written quote. Nothing is booked or charged until you accept it — you'll do that in your account, so create one with this email if you haven't yet.`,

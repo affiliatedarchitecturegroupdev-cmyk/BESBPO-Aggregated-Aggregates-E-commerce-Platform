@@ -49,7 +49,7 @@ export default async function CutAndBendSchedulePage({ params }: { params: { id:
                 <input type="hidden" name="id" value={s.id} />
                 <label className="flex items-start gap-2 font-body text-sm text-basalt">
                   <input type="checkbox" name="checked" required className="mt-0.5 h-4 w-4 shrink-0" />
-                  <span>I&apos;ve checked the bar marks, sizes, shape codes and lengths against the drawings — bars are made to this schedule.</span>
+                  <span>I&apos;ve checked the bar marks, sizes, shape codes and lengths against the drawings — bars are made to this schedule and can&apos;t be returned or refunded once cut.</span>
                 </label>
                 <SubmitButton>Accept the quote</SubmitButton>
               </ActionForm>

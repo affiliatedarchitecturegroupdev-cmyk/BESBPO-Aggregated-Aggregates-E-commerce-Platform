@@ -62,6 +62,7 @@ const ENQUIRY_KIND_LABEL: Record<string, string> = {
   JOB_PACK: "Job pack",
   ESTIMATE: "Project estimate",
   PARTNER_APPLICATION: "Partner application",
+  DESIGN: "Design brief",
 };
 
 const TIER_LABEL: Record<string, string> = { RETAIL: "Retail", CONTRACTOR_TRADE: "Contractor/Trade", VOLUME_CIVIL_BULK: "Volume/Civil Bulk" };
@@ -208,6 +209,7 @@ export class NotificationsService implements OnModuleDestroy {
         id: e.id,
         reference: e.reference,
         kindLabel: ENQUIRY_KIND_LABEL[e.kind] ?? "General",
+        design: e.kind === "DESIGN",
         subject: e.subject,
         contactName: e.contactName,
         contactEmail: e.contactEmail,

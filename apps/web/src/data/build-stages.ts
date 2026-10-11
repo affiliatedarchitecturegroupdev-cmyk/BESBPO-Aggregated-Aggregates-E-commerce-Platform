@@ -38,7 +38,10 @@ const SHOP: StageShop[] = [
     ],
     categories: ["sub-base-base-course", "recycled-sustainable", "crusher-run-road-building"],
     hire: ["AA-SVC-CLEAR", "AA-PLT-TLB-4X4", "AA-PLT-ROL-PAD", "AA-PLT-WATER-TRUCK", "AA-SVC-SKIP-6M3"],
-    tools: [{ label: "Project estimator", href: "/estimator" }],
+    tools: [
+      { label: "Project estimator", href: "/estimator" },
+      { label: "House plans & council submission (BAE)", href: "/design/house-plans" },
+    ],
   },
   {
     stage: "FOUNDATIONS",
@@ -56,6 +59,7 @@ const SHOP: StageShop[] = [
     tools: [
       { label: "Bar mass calculator", href: "/reinforcing-steel" },
       { label: "Send a bar bending schedule", href: "/reinforcing-steel/cut-and-bend" },
+      { label: "Engineer's foundation inspections (BAE)", href: "/design/foundation-inspections" },
     ],
   },
   {
@@ -71,7 +75,10 @@ const SHOP: StageShop[] = [
     ],
     categories: ["ready-mix-concrete", "mesh-brickforce", "steel-fixing-accessories", "geosynthetics-membranes", "mortars-grouts-admixtures"],
     hire: ["AA-PLT-ROL-1-3T", "AA-SVC-STEEL-FIX", "AA-PLT-SITE-DUMPER"],
-    tools: [{ label: "Ready-mix volume calculator", href: "/products/ready-mix-concrete-25mpa" }],
+    tools: [
+      { label: "Ready-mix volume calculator", href: "/products/ready-mix-concrete-25mpa" },
+      { label: "Structural design (BAE)", href: "/design/structural-design" },
+    ],
   },
   {
     stage: "WALLS",
@@ -101,7 +108,10 @@ const SHOP: StageShop[] = [
     ],
     categories: ["roof-sheeting", "concrete-roof-tiles", "roof-flashings-fixings", "roof-insulation-rainwater", "structural-steel"],
     hire: ["AA-SVC-SKIP-6M3"],
-    tools: [{ label: "Roof calculator", href: "/roofing#roof-calculator" }],
+    tools: [
+      { label: "Roof calculator", href: "/roofing#roof-calculator" },
+      { label: "Steel & roof structure design (BAE)", href: "/design/steel-structure-design" },
+    ],
   },
   {
     stage: "PAVING_ROADS",
@@ -131,7 +141,10 @@ const SHOP: StageShop[] = [
     ],
     categories: ["pipes-fittings", "drainage-filter", "precast-drainage", "geosynthetics-membranes", "retaining-erosion-control"],
     hire: ["AA-PLT-EXC-1-7T", "AA-PLT-TLB-4X4", "AA-SVC-RUBBLE-6M3"],
-    tools: [{ label: "French drain calculator", href: "/drainage" }],
+    tools: [
+      { label: "French drain calculator", href: "/drainage" },
+      { label: "Stormwater design (BAE)", href: "/design/stormwater-drainage-design" },
+    ],
   },
   {
     stage: "LANDSCAPING",
@@ -146,7 +159,10 @@ const SHOP: StageShop[] = [
     ],
     categories: ["retaining-erosion-control", "decorative-landscaping", "agricultural-industrial", "crushed-stone"],
     hire: ["AA-PLT-SKID-STEER", "AA-PLT-SITE-DUMPER", "AA-SVC-SKIP-6M3"],
-    tools: [{ label: "Project estimator", href: "/estimator" }],
+    tools: [
+      { label: "Project estimator", href: "/estimator" },
+      { label: "Retaining wall design (BAE)", href: "/design/retaining-wall-design" },
+    ],
   },
 ];
 

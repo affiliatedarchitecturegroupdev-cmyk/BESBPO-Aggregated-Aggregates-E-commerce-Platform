@@ -220,6 +220,14 @@ describe("notification templates", () => {
     expect(staff.text).toContain("Basis: Daily");
   });
 
+  it("answers a BAE design brief with a fee proposal, not a supply quote", () => {
+    const customer = customerEnquiryEmail("ENQUIRY_RECEIVED", { ...enquiry, kindLabel: "Design brief", design: true, subject: "House plans and council submission" })!;
+    expect(customer.subject).toBe("We've received your design brief ENQ-261008-A1B2C3");
+    expect(customer.text).toContain("fee proposal and terms of engagement");
+    expect(customer.text).not.toContain("pay online");
+    expect(customer.text).not.toMatch(/R\d/);
+  });
+
   it("gives staff the quote-only reason and a link to the admin", () => {
     const email = staffQuoteEmail("QUOTE_RECEIVED", quote)!;
     expect(email.subject).toBe("New quote request Q-7K2M — Coastal Civils");

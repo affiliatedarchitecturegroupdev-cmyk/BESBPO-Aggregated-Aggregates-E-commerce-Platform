@@ -1106,6 +1106,7 @@ enum EnquiryKind {
   JOB_PACK // a bundle of materials, hire and services
   ESTIMATE // a sized job from the project estimator
   PARTNER_APPLICATION // a plant or haulage operator applying to join
+  DESIGN // a BAE design brief: architectural, structural, civil, compliance or quantities (DESIGN_SERVICES.md)
 }
 
 enum EnquiryStatus {

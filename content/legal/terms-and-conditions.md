@@ -1,6 +1,6 @@
 # Terms & Conditions
 
-_Last updated: 7 October 2026_
+_Last updated: 11 October 2026_
 
 These Terms & Conditions ("Terms") govern your use of aggregates.store and
 app.aggregates.store (the "Platform") and any purchase made through it.
@@ -88,8 +88,11 @@ technical error.
 
 ## 6. Returns and cancellations
 
-Aggregate materials are, in most cases, non-returnable once dispatched, as
-set out in our [Returns & Refunds Policy](/legal/returns-refunds). This
+Aggregate materials are, in most cases, non-returnable once dispatched, and
+materials cut or made to your specification — such as roof sheeting cut to
+length and reinforcing steel cut and bent to a schedule — cannot be
+returned or refunded once cut, as set out in our
+[Returns & Refunds Policy](/legal/returns-refunds). This
 does not affect your statutory rights under the Consumer Protection Act 68
 of 2008, where applicable.
 

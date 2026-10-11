@@ -5,7 +5,7 @@ import { useFormState, useFormStatus } from "react-dom";
 import { sendEnquiry } from "@/app/enquiries/actions";
 import { FormMessage, inputClass } from "@/components/account/Forms";
 
-export type EnquiryKind = "PLANT_HIRE" | "SITE_SERVICE" | "BUSINESS_LINE" | "JOB_PACK" | "ESTIMATE" | "PARTNER_APPLICATION";
+export type EnquiryKind = "PLANT_HIRE" | "SITE_SERVICE" | "BUSINESS_LINE" | "JOB_PACK" | "ESTIMATE" | "PARTNER_APPLICATION" | "DESIGN";
 
 /** A form-specific question. Its answer is sent in the enquiry's details under `name`. */
 export type DetailField = {
@@ -180,7 +180,9 @@ export function EnquiryForm({
         <span>
           {kind === "PARTNER_APPLICATION"
             ? "Besbpo Group (Pty) Ltd may use these details to assess my application and contact me about onboarding, as set out in the "
-            : "Besbpo Group (Pty) Ltd may use these details to reply to this request, and share the job details (not my contact details, unless I agree) with the partners who would do the work, as set out in the "}
+            : kind === "DESIGN"
+              ? "Besbpo Group (Pty) Ltd and Bellwether Architecture & Engineering may use these details to reply to this brief and prepare a design proposal, as set out in the "
+              : "Besbpo Group (Pty) Ltd may use these details to reply to this request, and share the job details (not my contact details, unless I agree) with the partners who would do the work, as set out in the "}
           <Link href="/legal/privacy-policy" className="text-seam-blue hover:underline">
             Privacy Policy
           </Link>

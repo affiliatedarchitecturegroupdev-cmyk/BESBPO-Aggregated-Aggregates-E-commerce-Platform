@@ -11,6 +11,7 @@ const KIND: Record<string, string> = {
   JOB_PACK: "Job packs",
   ESTIMATE: "Project estimator",
   PARTNER_APPLICATION: "Partner applications",
+  DESIGN: "BAE design",
 };
 const ENQUIRY_STATUS = ["NEW", "IN_PROGRESS", "QUOTED", "WON", "LOST", "CLOSED"] as const;
 const QUOTE_STATUS: Record<string, string> = { SUBMITTED: "Awaiting a price", QUOTED: "Priced", ACCEPTED: "Accepted", DECLINED: "Declined", EXPIRED: "Expired" };
