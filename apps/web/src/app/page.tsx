@@ -19,6 +19,7 @@ import { PromoStrip } from "@/components/merchandising/PromoStrip";
 import { QuarryToSite } from "@/components/merchandising/QuarryToSite";
 import { ShopByStage } from "@/components/merchandising/ShopByStage";
 import { QuickTonnageCalculator } from "@/components/merchandising/QuickTonnageCalculator";
+import { SteelSpotlight } from "@/components/merchandising/SteelSpotlight";
 import { TierComparison } from "@/components/merchandising/TierComparison";
 import { TrustBadges } from "@/components/merchandising/TrustBadges";
 import { WhatsAppCta } from "@/components/social/WhatsAppCta";
@@ -51,6 +52,7 @@ export default async function HomePage() {
       <BulkVsBagged />
       <FeaturedProducts />
       <CalculatorsStrip hiddenSkus={hiddenSkus} />
+      <SteelSpotlight hiddenSkus={hiddenSkus} />
       <BusinessLinesCarousel />
       <PlantAndServicesSection />
       <JobPacksSection />
