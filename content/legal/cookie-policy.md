@@ -1,6 +1,6 @@
 # Cookie Policy
 
-_Last updated: 26 September 2026_
+_Last updated: 11 October 2026_
 
 This Cookie Policy explains how Aggregated Aggregates uses cookies and
 similar technologies on aggregates.store and app.aggregates.store.
@@ -17,8 +17,12 @@ information about your visit.
   keeping you signed in to your trade account and remembering items in
   your quote request. These cannot be disabled without affecting the
   Platform's operation.
-- **Functional cookies**: remember preferences such as your last-viewed
-  category or unit-of-sale toggle (ton/m³/bag).
+- **Functional cookies and browser storage**: remember preferences such as
+  your last-viewed category or unit-of-sale toggle (ton/m³/bag), and the
+  products you viewed recently, which we show back to you as "Recently
+  viewed". This list is kept only in your browser's local storage and is
+  not sent to us; use **Clear** on the list, or clear this site's data in
+  your browser, to remove it.
 - **Analytics cookies**: help us understand how the Platform is used, so
   we can improve it. These are only set with your consent, where required
   by law.

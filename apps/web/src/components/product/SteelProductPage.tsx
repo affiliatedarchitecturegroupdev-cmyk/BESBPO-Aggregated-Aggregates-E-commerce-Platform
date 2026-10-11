@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
+import { RecentlyViewedRow } from "@/components/merchandising/RecentlyViewedRow";
 import { BarMassCalculator } from "@/components/product/BarMassCalculator";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { PackagedUnitSelector } from "@/components/product/PackagedUnitSelector";
@@ -172,6 +173,7 @@ export function SteelProductPage({ product }: { product: MerchandisedSteelProduc
           </div>
         </section>
       )}
+      <RecentlyViewedRow current={product.sku} />
     </div>
   );
 }

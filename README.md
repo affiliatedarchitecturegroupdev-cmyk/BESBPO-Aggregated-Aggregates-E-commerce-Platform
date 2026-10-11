@@ -90,6 +90,7 @@ aggregates-store-platform/
 ├── BUILD_STAGES.md       Shop by Build Stage: stages, picks, hire, save-a-stage; planned CAT-19..25
 ├── COMPLETE_THE_JOB.md   Product-page cross-sell: jobs, pairings by category and SKU, add-to-cart
 ├── CALCULATORS.md        Calculators strip and /calculators page: what each calculator works out and where
+├── RECENTLY_VIEWED.md    Recently viewed row: browser-only storage, privacy, where it shows
 ├── PROJECT_LISTS.md      Wishlist by job: project lists, build stages, estimate, share, cart/quote
 ├── ANALYTICS.md          Sales & profit reporting: decisions, what's recorded, how profit is calculated
 ├── PLANT_HIRE_CATALOGUE.md CAT-13/14 plant hire and site services: Agent model, rate cards, enquiries

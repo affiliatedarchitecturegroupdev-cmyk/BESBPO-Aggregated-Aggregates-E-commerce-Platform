@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
+import { RecentlyViewedRow } from "@/components/merchandising/RecentlyViewedRow";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { PackagedUnitSelector } from "@/components/product/PackagedUnitSelector";
 import { GroupServiceBanner } from "@/components/merchandising/GroupServiceBanner";
@@ -178,6 +179,7 @@ export function PackagedProductPage({ product }: { product: MerchandisedPackaged
           </div>
         </section>
       )}
+      <RecentlyViewedRow current={product.sku} />
     </div>
   );
 }
