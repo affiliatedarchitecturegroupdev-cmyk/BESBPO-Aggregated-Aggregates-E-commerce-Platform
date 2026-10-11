@@ -15,6 +15,7 @@ export const NAV_LINKS = [
   { href: "/reinforcing-steel", label: "Steel" },
   { href: "/plant-hire", label: "Plant Hire" },
   { href: "/services", label: "Services" },
+  { href: "/design", label: "Design" },
   { href: "/job-packs", label: "Job Packs" },
   { href: "/trade-accounts", label: "Trade Accounts" },
   { href: "/contact", label: "Contact" },

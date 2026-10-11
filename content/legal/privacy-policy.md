@@ -1,6 +1,6 @@
 # Privacy Policy
 
-_Last updated: 7 October 2026_
+_Last updated: 11 October 2026_
 
 This Privacy Policy explains how Aggregated Aggregates ("we", "us", "our"),
 a division of Besbpo Group (Pty) Ltd, collects, uses, discloses, and
@@ -31,8 +31,8 @@ POPIA.
 - **Communications**: messages sent through our contact form, RFQ/quote
   requests, and related correspondence.
 - **Enquiries and bookings**: what you ask for through our plant hire,
-  site services, job pack, estimator and other request forms (including the
-  site address, province and dates), and, for bookings, the quote you
+  site services, job pack, estimator, design brief and other request forms
+  (including the site address, province, dates and any erf number), and, for bookings, the quote you
   accepted, payment reference, job cards recorded by the partner, your
   sign-off, rating, and any dispute.
 - **Booking messages**: messages exchanged in a booking between you, the
@@ -87,6 +87,11 @@ We share personal information with:
   site address and site notes, and your first name. We don't give partners
   your surname, email address or phone number. Once a partner accepts your
   job, you see the partner's business name — not its contact details.
+- **Bellwether Architecture & Engineering (BAE)**, Besbpo Group's
+  architecture and engineering practice, for a design brief: the brief and
+  your contact details, so BAE can reply, prepare a proposal and do the
+  work you appoint it for. When BAE submits plans to a municipality for
+  you, the application carries the owner details the municipality requires.
 - **Delivery partners**, including Besfleet (Besbpo Group's own trucking
   division) and our external tipper-truck delivery partners, to the extent
   necessary to complete delivery.

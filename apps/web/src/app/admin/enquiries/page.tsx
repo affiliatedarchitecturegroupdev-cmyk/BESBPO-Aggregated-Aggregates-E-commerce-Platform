@@ -6,7 +6,7 @@ import { getSession, sessionToken } from "@/lib/session";
 export const metadata = { title: "Enquiries" };
 
 type EnquiryStatus = "NEW" | "IN_PROGRESS" | "QUOTED" | "WON" | "LOST" | "CLOSED";
-type EnquiryKind = "PLANT_HIRE" | "SITE_SERVICE" | "BUSINESS_LINE" | "JOB_PACK" | "ESTIMATE" | "PARTNER_APPLICATION";
+type EnquiryKind = "PLANT_HIRE" | "SITE_SERVICE" | "BUSINESS_LINE" | "JOB_PACK" | "ESTIMATE" | "PARTNER_APPLICATION" | "DESIGN";
 
 type Enquiry = {
   id: string;
@@ -43,6 +43,7 @@ const KIND_LABELS: Record<EnquiryKind, string> = {
   JOB_PACK: "Job pack",
   ESTIMATE: "Estimator",
   PARTNER_APPLICATION: "Partner application",
+  DESIGN: "BAE design",
 };
 
 const select = "rounded-sm border border-basalt/20 bg-white px-2 py-1 font-body text-xs";
@@ -141,6 +142,11 @@ export default async function EnquiriesPage({ searchParams }: { searchParams: { 
               <Link href={`/admin/bookings/new?enquiry=${e.id}`} className="mt-3 inline-block font-body text-xs font-semibold text-seam-blue hover:underline">
                 Price as a booking from a partner&apos;s quote →
               </Link>
+            )}
+            {e.kind === "DESIGN" && (
+              <p className="mt-3 font-body text-xs text-slate">
+                BAE brief — send a fee proposal and terms of engagement; the fee guide on <Link href="/design" className="font-semibold text-seam-blue hover:underline">/design</Link> is indicative only.
+              </p>
             )}
             {e.kind === "PARTNER_APPLICATION" && (
               <Link href="/admin/hire-partners" className="mt-3 inline-block font-body text-xs font-semibold text-seam-blue hover:underline">

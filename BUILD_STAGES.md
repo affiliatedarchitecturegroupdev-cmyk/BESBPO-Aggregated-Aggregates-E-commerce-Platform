@@ -27,6 +27,10 @@ Each pick is labelled with its job on site ("Concrete stone", "Main bars")
 and shows today's retail list price for its unit, or "Price on quote" —
 never a guessed price. Each stage also links its categories, the plant and
 services it needs, and the calculator that sizes it.
+Where a stage needs design or sign-off, it also links the matching BAE
+design service (`DESIGN_SERVICES.md`): plans at site prep, the engineer's
+foundation inspections, structural design for slabs, roof structure design,
+stormwater design and retaining wall design.
 
 **Save this stage to a project** adds the stage's picks (no quantities) to
 an existing project list or a new one, under that stage. Saving again keeps
