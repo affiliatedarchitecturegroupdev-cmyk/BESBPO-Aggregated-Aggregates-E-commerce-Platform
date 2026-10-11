@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CartView } from "@/components/cart/CartView";
 import { GroupServiceBanner } from "@/components/merchandising/GroupServiceBanner";
+import { RecentlyViewedRow } from "@/components/merchandising/RecentlyViewedRow";
 import { getSession } from "@/lib/session";
 
 export const metadata: Metadata = { title: "Cart", robots: { index: false } };
@@ -17,6 +18,7 @@ export default async function CartPage() {
       <div className="mt-6">
         <CartView signedIn={Boolean(user)} />
       </div>
+      <RecentlyViewedRow className="mt-12" />
       <div className="mt-10">
         <GroupServiceBanner categorySlug="sub-base-base-course" placement="cart" />
       </div>

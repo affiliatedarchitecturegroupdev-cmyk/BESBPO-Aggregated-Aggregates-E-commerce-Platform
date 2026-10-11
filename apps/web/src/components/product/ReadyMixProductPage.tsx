@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
+import { RecentlyViewedRow } from "@/components/merchandising/RecentlyViewedRow";
 import { GroupServiceBanner } from "@/components/merchandising/GroupServiceBanner";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { ProductGallery } from "@/components/product/ProductGallery";
@@ -146,6 +147,7 @@ export function ReadyMixProductPage({ product }: { product: MerchandisedReadyMix
           ))}
         </div>
       </section>
+      <RecentlyViewedRow current={product.sku} />
     </div>
   );
 }

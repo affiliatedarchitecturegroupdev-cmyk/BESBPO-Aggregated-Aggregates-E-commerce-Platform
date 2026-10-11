@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
+import { RecentlyViewedRow } from "@/components/merchandising/RecentlyViewedRow";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BulkBagCalculator } from "@/components/product/BulkBagCalculator";
@@ -196,6 +197,7 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
           </div>
         </section>
       )}
+      <RecentlyViewedRow current={product.sku} />
     </div>
   );
 }
