@@ -5,6 +5,7 @@ import { CorporateBar } from "@/components/layout/CorporateBar";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { CookieConsentBanner } from "@/components/layout/CookieConsentBanner";
 import { Header } from "@/components/layout/Header";
+import { ShoppingAssistant } from "@/components/assistant/ShoppingAssistant";
 import { PhotoPreviewBanner } from "@/components/layout/PhotoPreviewBanner";
 import { CORPORATE_EMAILS, PHONE_LINES, REGISTERED_ADDRESS } from "@/data/corporate-contact";
 import { SOCIAL_LINKS } from "@/data/social";
@@ -62,6 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main>{children}</main>
         <Footer />
+        <ShoppingAssistant />
         <CookieConsentBanner />
       </body>
     </html>

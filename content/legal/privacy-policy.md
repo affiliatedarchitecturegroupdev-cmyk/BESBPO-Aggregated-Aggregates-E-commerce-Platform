@@ -69,6 +69,17 @@ We process personal information to:
 7. Improve the Platform and prevent fraud or abuse, including keeping
    bookings on the Platform (see Section 5A).
 
+## 3A. Shopping assistant
+
+The shopping assistant on the Platform is automated: it answers from our
+own catalogue, prices and published policies, and does not use any outside
+artificial-intelligence service. To answer, it receives your question, the
+page you are on and the items in your cart. We do not store or log your
+questions, and the conversation is kept only in your browser tab (see the
+[Cookie Policy](/legal/cookie-policy)). Please don't enter personal
+details in the chat — use the quote, contact or account pages for anything
+that needs them.
+
 ## 4. Legal basis for processing
 
 We process your personal information where necessary to perform a contract

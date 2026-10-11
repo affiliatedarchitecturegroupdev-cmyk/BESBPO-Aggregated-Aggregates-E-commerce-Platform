@@ -22,7 +22,9 @@ information about your visit.
   products you viewed recently, which we show back to you as "Recently
   viewed". This list is kept only in your browser's local storage and is
   not sent to us; use **Clear** on the list, or clear this site's data in
-  your browser, to remove it.
+  your browser, to remove it. The shopping assistant keeps your chat in
+  this browser tab's session storage so it survives moving between pages;
+  it is deleted when you close the tab or choose **Clear chat**.
 - **Analytics cookies**: help us understand how the Platform is used, so
   we can improve it. These are only set with your consent, where required
   by law.
