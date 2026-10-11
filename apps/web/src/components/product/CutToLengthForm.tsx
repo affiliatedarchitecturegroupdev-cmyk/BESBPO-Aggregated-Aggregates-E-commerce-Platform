@@ -27,7 +27,7 @@ export function CutToLengthForm({ sku, name, ratePerMetre, initial }: { sku: str
   const list = valid.map((r) => `${r.qty} x ${num(r.length)} m`).join(", ");
   const href = `/quote?${new URLSearchParams({
     lines: `${sku}~METRE~${Math.ceil(metres)}`,
-    notes: `Cut to length — ${name}: ${list} (${sheets} sheets, ${num(metres)} m).`.slice(0, 500),
+    notes: `Cut to length — ${name}: ${list} (${sheets} sheets, ${num(metres)} m). Cut-to-length sheets are non-refundable once cut.`.slice(0, 500),
   }).toString()}`;
 
   const update = (i: number, patch: Partial<Row>) => setRows((rs) => rs.map((r, j) => (j === i ? { ...r, ...patch } : r)));
@@ -37,6 +37,7 @@ export function CutToLengthForm({ sku, name, ratePerMetre, initial }: { sku: str
       <p className="font-mono text-[10px] uppercase tracking-wide text-seam-blue">Cut to length</p>
       <p className="mt-1 font-body text-sm text-slate">
         Any length from {CUT_TO_LENGTH.min_m} m to {CUT_TO_LENGTH.max_m} m, cut by the merchant. List the lengths you need — we send the cutting list with your quote.
+        Sheets cut to length are made for your order and can&apos;t be returned or refunded once cut.
       </p>
       <table className="mt-3 w-full">
         <thead>

@@ -26,7 +26,7 @@ export default async function CutAndBendPage() {
           <h1 className="mt-3 max-w-3xl font-display text-4xl font-bold leading-tight">Rebar cut and bent to your schedule</h1>
           <p className="mt-4 max-w-2xl font-body text-base text-limestone/80">
             Send your engineer&apos;s bar bending schedule. We total the steel by size, price the cutting, bending and delivery with a merchant
-            in our network, and send you a written quote. Nothing is cut or charged until you accept it.
+            in our network, and send you a written quote. Nothing is cut or charged until you accept it — and once cut and bent, the steel can&apos;t be returned or refunded.
           </p>
         </div>
       </section>

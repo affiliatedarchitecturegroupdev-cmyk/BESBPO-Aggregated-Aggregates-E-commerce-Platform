@@ -28,6 +28,9 @@ The owner's guidelines: thicknesses from **0.30 to 0.80 mm**; standard cuts of
   cutting list (lengths × quantities) on the sheet's page; the quote line is the
   total metres (rounded up) and the exact cutting list travels in the quote
   notes. It never goes to the cart, and the cart's unit list leaves it out.
+- **Cut-to-length is non-refundable once cut** (owner's decision, 11 Oct 2026;
+  Returns & Refunds Policy section 2) — said on the sheet page, the cutting-list
+  form and in the quote notes. The same applies to cut & bend rebar.
 - **Price per sheet = per-metre benchmark × length**, then × 1.08. Retailers sell
   these sheets both by the metre and by length, so the lowest regular per-metre
   price across the matching listings is the benchmark. The per-metre list rate
