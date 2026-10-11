@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import type { FormState } from "@/app/account/actions";
 import { api } from "@/lib/api";
-import type { ProjectList } from "@/lib/project-lists";
+import { STAGES, summarise, type ProjectList } from "@/lib/project-lists";
 import { getSession, sessionToken } from "@/lib/session";
 
 const text = (form: FormData, name: string) => {
@@ -25,6 +25,45 @@ export async function myProjectLists(): Promise<{ signedIn: boolean; lists: { id
   if (!(await getSession())) return { signedIn: false, lists: [] };
   const result = await api<ProjectList[]>("/project-lists", { token: sessionToken() });
   return { signedIn: true, lists: result.ok ? result.data.map((l) => ({ id: l.id, name: l.name, count: l.items.length })) : [] };
+}
+
+export type LatestProject = {
+  id: string;
+  name: string;
+  siteName: string | null;
+  updatedAt: string;
+  items: number;
+  stages: string[];
+  estimate: number;
+  pricedLines: number;
+  quotedLines: number;
+  missingQuantity: number;
+};
+
+/** For the homepage "Plan your build" band: the signed-in customer's most recently changed project, summarised. */
+export async function latestProject(): Promise<{ signedIn: boolean; total: number; latest: LatestProject | null }> {
+  if (!(await getSession())) return { signedIn: false, total: 0, latest: null };
+  const result = await api<ProjectList[]>("/project-lists", { token: sessionToken() });
+  if (!result.ok || result.data.length === 0) return { signedIn: true, total: 0, latest: null };
+  const list = [...result.data].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))[0];
+  const s = summarise(list.items);
+  const used = new Set(list.items.map((i) => i.stage));
+  return {
+    signedIn: true,
+    total: result.data.length,
+    latest: {
+      id: list.id,
+      name: list.name,
+      siteName: list.siteName,
+      updatedAt: list.updatedAt,
+      items: list.items.length,
+      stages: STAGES.filter((st) => used.has(st.value)).map((st) => st.label),
+      estimate: s.estimate,
+      pricedLines: s.pricedLines,
+      quotedLines: s.quotedLines,
+      missingQuantity: s.missingQuantity,
+    },
+  };
 }
 
 /** Save a product to a list — or to a new list named in the same form. */

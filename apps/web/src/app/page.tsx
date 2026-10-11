@@ -13,6 +13,7 @@ import { GroupCrossSell } from "@/components/merchandising/GroupCrossSell";
 import { HeroBanner } from "@/components/merchandising/HeroBanner";
 import { HeroSlideshow } from "@/components/merchandising/HeroSlideshow";
 import { IndustriesWeServe } from "@/components/merchandising/IndustriesWeServe";
+import { PlanYourBuild } from "@/components/merchandising/PlanYourBuild";
 import { PromoSlot } from "@/components/merchandising/PromoSlot";
 import { PromoStrip } from "@/components/merchandising/PromoStrip";
 import { QuarryToSite } from "@/components/merchandising/QuarryToSite";
@@ -46,6 +47,7 @@ export default async function HomePage() {
       <QuickTonnageCalculator hiddenSkus={hiddenSkus} />
       <CategoryGrid />
       <ShopByStage hiddenSkus={hiddenSkus} />
+      <PlanYourBuild />
       <BulkVsBagged />
       <FeaturedProducts />
       <CalculatorsStrip hiddenSkus={hiddenSkus} />
