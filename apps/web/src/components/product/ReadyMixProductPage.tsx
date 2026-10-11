@@ -84,7 +84,7 @@ export function ReadyMixProductPage({ product }: { product: MerchandisedReadyMix
             )}
           </p>
           <p className="mt-4 whitespace-pre-line font-body text-sm text-slate">{product.description ?? category.description}</p>
-          <div className="mt-6">
+          <div id="calculator" className="mt-6 scroll-mt-24">
             <ReadyMixCalculator product={product} />
           </div>
           <div className="mt-6 flex justify-end border-t border-basalt/10 pt-5">

@@ -162,7 +162,7 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
             </p>
           )}
           <p className="mt-4 whitespace-pre-line font-body text-sm text-slate">{product.description ?? category.description}</p>
-          <div className="mt-6">
+          <div id="calculator" className="mt-6 scroll-mt-24">
             <BulkBagCalculator product={product} />
           </div>
           <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-basalt/10 pt-5">

@@ -107,7 +107,7 @@ export default function ReinforcingSteelPage() {
               </table>
             </div>
           </div>
-          <div className="min-w-0">
+          <div id="bar-mass-calculator" className="min-w-0 scroll-mt-24">
             <h2 className="font-display text-xl font-bold text-basalt">Work out what you need</h2>
             <p className="mt-2 font-body text-sm text-slate">Number of bars and length each, to kilograms, tonnes and 6 m stock lengths.</p>
             <div className="mt-3">

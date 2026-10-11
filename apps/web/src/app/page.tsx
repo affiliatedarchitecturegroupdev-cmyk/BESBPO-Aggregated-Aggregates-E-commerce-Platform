@@ -2,6 +2,7 @@ import { BusinessLinesCarousel } from "@/components/merchandising/BusinessLinesC
 import { JobPacksSection, PartnerCta, PlantAndServicesSection } from "@/components/merchandising/BusinessSections";
 import { BulkVsBagged } from "@/components/merchandising/BulkVsBagged";
 import { B2BBulkSection } from "@/components/merchandising/B2BBulkSection";
+import { CalculatorsStrip } from "@/components/merchandising/CalculatorsStrip";
 import { CategoryGrid } from "@/components/merchandising/CategoryGrid";
 import { ComplianceBar } from "@/components/merchandising/ComplianceBar";
 import { BadgeCarouselCompact } from "@/components/sourcing/BadgeCarouselCompact";
@@ -47,6 +48,7 @@ export default async function HomePage() {
       <ShopByStage hiddenSkus={hiddenSkus} />
       <BulkVsBagged />
       <FeaturedProducts />
+      <CalculatorsStrip hiddenSkus={hiddenSkus} />
       <BusinessLinesCarousel />
       <PlantAndServicesSection />
       <JobPacksSection />
