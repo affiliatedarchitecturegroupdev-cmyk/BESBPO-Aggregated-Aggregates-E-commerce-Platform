@@ -51,8 +51,7 @@ SCHEDULE: dict[str, dict[str, Optional[Decimal]]] = {
     STEEL: {"RETAIL": Decimal(0), "CONTRACTOR_TRADE": Decimal("0.04"), "VOLUME_CIVIL_BULK": None},
     # Masonry & precast (bricks, blocks, paving, retaining, drainage, membranes): trade 4%, approved by the owner, 10 Oct 2026.
     MASONRY: {"RETAIL": Decimal(0), "CONTRACTOR_TRADE": Decimal("0.04"), "VOLUME_CIVIL_BULK": None},
-    # Roofing (sheeting, flashings, fixings, insulation, rainwater goods): trade 4% proposed to match steel
-    # and masonry — awaiting the owner's approval (PRICING_POLICY.md).
+    # Roofing (sheeting, flashings, fixings, insulation, rainwater goods): trade 4%, approved by the owner, 11 Oct 2026.
     ROOFING: {"RETAIL": Decimal(0), "CONTRACTOR_TRADE": Decimal("0.04"), "VOLUME_CIVIL_BULK": None},
 }
 

@@ -60,8 +60,8 @@ flashings, hook bolts, flat and through-colour tiles, ridge tiles).
 
 ## Pricing family
 
-Roofing is its own family, **ROOFING**: retail at list, **trade 4% proposed** (to
-match steel and masonry — awaiting the owner's approval), volume quoted. Tiles
+Roofing is its own family, **ROOFING**: retail at list, **trade 4%** (approved by
+the owner, 11 Oct 2026), volume quoted. Tiles
 stay in **MASONRY** (4% approved). Roofing travels on the merchant's flatbed —
 no tipper fee — with its own delivery note.
 
@@ -105,7 +105,6 @@ CAT-26..29.
 
 ## Open items
 
-- **Owner approval of the 4% trade discount on roofing.**
 - Verify and activate the supplier leads; find North West and Northern Cape
   roll-formers.
 - Written merchant prices for the quoted sheets (especially Zincalume®, 0.30 mm

@@ -23,7 +23,7 @@ export const SCHEDULE: Record<PricingFamily, Record<CustomerTierName, number | n
   STEEL: { RETAIL: 0, CONTRACTOR_TRADE: 0.04, VOLUME_CIVIL_BULK: null },
   // Trade 4% approved by the owner, 10 Oct 2026.
   MASONRY: { RETAIL: 0, CONTRACTOR_TRADE: 0.04, VOLUME_CIVIL_BULK: null },
-  // Trade 4% proposed to match steel and masonry — awaiting the owner's approval.
+  // Trade 4% approved by the owner, 11 Oct 2026.
   ROOFING: { RETAIL: 0, CONTRACTOR_TRADE: 0.04, VOLUME_CIVIL_BULK: null },
 };
 
