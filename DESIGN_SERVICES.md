@@ -37,7 +37,7 @@ Three kinds of fee:
   the fee.
 - **Quoted** — priced from the brief.
 
-| Service | Discipline | Fee |
+| Service | Discipline | Fee (excl. VAT) |
 |---|---|---|
 | House plans & council submission | Architectural | R120/m², minimum R18,000 |
 | Additions & alterations | Architectural | R120/m² of new area, minimum R12,000 |
@@ -59,10 +59,9 @@ Not included anywhere, paid at cost and shown separately on the proposal:
 municipal plan fees and penalties, NHBRC enrolment, land surveys and
 specialist reports (geotechnical, fire, traffic).
 
-**Status: proposed.** The owner said BAE normally quotes per project and
-asked for derived rates with some fixed packages. These figures are derived
-from the benchmarks below and need the owner's sign-off; change them in
-`design-services.ts` (one place) and this table.
+**Status: approved.** The owner approved these fees on 11 October 2026. All
+fees **exclude VAT**, and every priced fee on the site says so. Change them
+in `design-services.ts` (one place) and this table.
 
 ### Where the rates come from
 
@@ -113,14 +112,14 @@ R5m and above). Excludes VAT. The home builder pays it at enrolment and the
 NHBRC confirms the amount; the site says so. `nhbrcEnrolmentFee()` in
 `design-services.ts`.
 
-## What the site does not claim
+## Registrations and VAT
 
-- No SACAP or ECSA registration numbers or categories are shown until the
-  owner supplies them. The site says only that work the law requires a
-  registered professional to sign is signed by one.
-- Fixed fees are firm for the scope stated; everything else is a budget
-  figure confirmed on the proposal.
-- No VAT statement on the fees until the owner confirms BAE's VAT treatment.
+- SACAP and ECSA registrations are per project: BAE allocates a registered
+  professional architect or engineer to each project, and the proposal names
+  them with their registration. The site shows no registration numbers; it
+  says the allocated professional signs what the law requires.
+- Fees exclude VAT (owner, 11 October 2026). Fixed fees are firm for the
+  scope stated; everything else is a budget figure confirmed on the proposal.
 
 ## Links into the store
 

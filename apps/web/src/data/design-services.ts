@@ -8,7 +8,8 @@
  * submission fees, NHBRC enrolment and specialist reports are paid at cost.
  *
  * Rates were derived from published South African benchmarks (see
- * DESIGN_SERVICES.md, "Where the rates come from") and set by the owner.
+ * DESIGN_SERVICES.md, "Where the rates come from"); approved by the owner on
+ * 11 October 2026. All fees exclude VAT.
  */
 export type Discipline = "architectural" | "structural" | "civil" | "compliance" | "quantities";
 
@@ -218,15 +219,15 @@ export function findDesignService(slug: string) {
 
 const zar = (n: number) => `R${Math.round(n).toLocaleString("en-US")}`;
 
-/** One line describing a fee: "R6,500 fixed", "R120/m², minimum R18,000", "1.5–2% of building cost", "Quoted". */
+/** One line describing a fee: "R6,500 fixed, excl. VAT", "R120/m², minimum R18,000, excl. VAT", "1.5–2% of building cost, excl. VAT", "Quoted per project". */
 export function feeLabel(fee: DesignFee): string {
   switch (fee.kind) {
     case "fixed":
-      return `${zar(fee.amount)} fixed`;
+      return `${zar(fee.amount)} fixed, excl. VAT`;
     case "perM2":
-      return `${zar(fee.rate)}/m², minimum ${zar(fee.minimum)}`;
+      return `${zar(fee.rate)}/m², minimum ${zar(fee.minimum)}, excl. VAT`;
     case "percent":
-      return `${fee.low}–${fee.high}% of building cost${fee.minimum ? `, minimum ${zar(fee.minimum)}` : ""}`;
+      return `${fee.low}–${fee.high}% of building cost${fee.minimum ? `, minimum ${zar(fee.minimum)}` : ""}, excl. VAT`;
     default:
       return "Quoted per project";
   }

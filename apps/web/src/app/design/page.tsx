@@ -104,7 +104,8 @@ export default function DesignPage() {
             ))}
           </ol>
           <p className="mt-4 font-body text-xs text-slate">
-            Drawings, designs and certificates that the law requires a registered professional to sign are signed by one. Municipal plan fees, NHBRC enrolment and
+            Each project is allocated a registered professional architect or engineer, named with their SACAP or ECSA registration on your proposal, who signs the
+            drawings, designs and certificates the law requires. All fees exclude VAT. Municipal plan fees, NHBRC enrolment and
             specialist reports (surveys, geotechnical) are paid at cost and shown separately on the proposal.
           </p>
         </section>

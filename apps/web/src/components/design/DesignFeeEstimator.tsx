@@ -129,7 +129,7 @@ export function DesignFeeEstimator() {
                 </tr>
               ))}
               <tr>
-                <th className="py-2 pr-3 text-left font-semibold text-basalt">Indicative design fees</th>
+                <th className="py-2 pr-3 text-left font-semibold text-basalt">Indicative design fees, excl. VAT</th>
                 <td className="whitespace-nowrap py-2 text-right font-display text-lg font-bold text-seam-blue">{range(total)}</td>
               </tr>
             </tbody>

@@ -55,6 +55,7 @@ export default function DesignServicePage({ params, searchParams }: { params: { 
               ["Basis", basis],
               ...(s.excludes ? [["Not included", s.excludes]] : []),
               ["Confirmed", "On BAE's written proposal and terms of engagement — nothing is charged until you accept."],
+              ["Signed by", "The registered architect or engineer allocated to your project, named with their SACAP or ECSA registration on the proposal."],
             ].map(([k, v]) => (
               <div key={k} className="grid grid-cols-[7rem_1fr] gap-3 px-4 py-3">
                 <dt className="font-mono text-[11px] uppercase text-slate">{k}</dt>
