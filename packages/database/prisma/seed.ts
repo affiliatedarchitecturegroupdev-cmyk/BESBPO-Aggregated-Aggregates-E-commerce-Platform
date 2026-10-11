@@ -15,7 +15,8 @@
  * benchmark). Reinforcing and structural steel (CAT-15..18) come from
  * services/pricing/data/steel_catalogue.json (STEEL_CATALOGUE.md) and use
  * the same price-band shape, as do bricks, blocks, lintels and DPC (CAT-19/20)
- * from services/pricing/data/masonry_catalogue.json (MASONRY_CATALOGUE.md).
+ * from services/pricing/data/masonry_catalogue.json (MASONRY_CATALOGUE.md), and roofing
+ * from services/pricing/data/roofing_catalogue.json (ROOFING_CATALOGUE.md).
  *
  * Payment routing, promotions and the starter blog posts are created once
  * and then left alone, so admin edits survive every deploy. Partner
@@ -149,6 +150,28 @@ type MasonryCatalogue = {
 };
 
 const MASONRY: MasonryCatalogue = JSON.parse(readFileSync(join(__dirname, "../../../services/pricing/data/masonry_catalogue.json"), "utf8"));
+
+type RoofingCatalogue = {
+  categories: { slug: string; name: string; code: string }[];
+  products: {
+    sku: string;
+    slug: string;
+    name: string;
+    category_slug: string;
+    grading_standard: string | null;
+    description: string;
+    manufacturer: string | null;
+    unit_size: string | null;
+    roof_profile: string | null;
+    thickness_mm: number | null;
+    coating: string | null;
+    cover_width_mm: number | null;
+    specialist_characteristics: string[];
+    units: SteelCatalogue["products"][number]["units"];
+  }[];
+};
+
+const ROOFING: RoofingCatalogue = JSON.parse(readFileSync(join(__dirname, "../../../services/pricing/data/roofing_catalogue.json"), "utf8"));
 
 type ReadyMixCatalogue = {
   category: { slug: string; name: string; code: string };
@@ -416,6 +439,53 @@ async function seedMasonryCatalogue() {
   }
 }
 
+/** CAT-26..28 roofing: categories after masonry, products, and a price band per unit (the packaged-goods shape). */
+async function seedRoofingCatalogue() {
+  const categoryIds: Record<string, string> = {};
+  const after = FRAMEWORK.categories.length + PACKAGED.categories.length + 1 + STEEL.categories.length + MASONRY.categories.length;
+  for (const [index, category] of ROOFING.categories.entries()) {
+    const data = { name: category.name, sortOrder: after + index + 1, catalogueGroup: "roofing" };
+    const record = await prisma.category.upsert({ where: { slug: category.slug }, update: data, create: { slug: category.slug, ...data } });
+    categoryIds[category.slug] = record.id;
+  }
+  for (const p of ROOFING.products) {
+    const productData = {
+      slug: p.slug,
+      name: p.name,
+      categoryId: categoryIds[p.category_slug],
+      gradingStandard: p.grading_standard,
+      description: p.description,
+      unitsOfSale: p.units.map((u) => u.unit),
+      manufacturer: p.manufacturer,
+      unitSize: p.unit_size,
+      roofProfile: p.roof_profile,
+      sheetThicknessMm: p.thickness_mm,
+      coating: p.coating,
+      coverWidthMm: p.cover_width_mm,
+      specialistCharacteristics: p.specialist_characteristics,
+    };
+    const product = await prisma.product.upsert({ where: { sku: p.sku }, update: productData, create: { sku: p.sku, ...productData } });
+    for (const u of p.units) {
+      const band = {
+        marketBenchmarkPrice: u.market_benchmark_price,
+        costBasisPercent: u.cost_basis_percent,
+        costPerUnit: u.cost_per_unit,
+        markupPercent: u.markup_percent,
+        listPricePerUnit: u.list_price_per_unit,
+        pricingStatus: u.pricing_status,
+        sourceNote: u.source_note,
+        weightKg: u.weight_kg,
+      };
+      await prisma.packagedPriceBand.upsert({
+        where: { productId_unit: { productId: product.id, unit: u.unit } },
+        update: band,
+        create: { productId: product.id, unit: u.unit, ...band },
+      });
+    }
+    await prisma.packagedPriceBand.deleteMany({ where: { productId: product.id, unit: { notIn: p.units.map((u) => u.unit) } } });
+  }
+}
+
 async function seedCustomerTiers() {
   for (const tier of FRAMEWORK.customer_tiers) {
     const data = {
@@ -607,6 +677,7 @@ async function main() {
   await seedReadyMix();
   await seedSteelCatalogue();
   await seedMasonryCatalogue();
+  await seedRoofingCatalogue();
   await seedCustomerTiers();
   await seedDeliveryBands();
   await seedPaymentMethods();
@@ -614,7 +685,7 @@ async function main() {
   await seedBlog();
   console.log(
     `Seed complete: ${FRAMEWORK.products.length} products across ${FRAMEWORK.categories.length} categories, ` +
-      `plus ${PACKAGED.products.length} B2B packaged products, ${READY_MIX.products.length} ready-mix grades, ${STEEL.products.length} steel products and ${MASONRY.products.length} masonry products.`,
+      `plus ${PACKAGED.products.length} B2B packaged products, ${READY_MIX.products.length} ready-mix grades, ${STEEL.products.length} steel products, ${MASONRY.products.length} masonry products and ${ROOFING.products.length} roofing products.`,
   );
 }
 

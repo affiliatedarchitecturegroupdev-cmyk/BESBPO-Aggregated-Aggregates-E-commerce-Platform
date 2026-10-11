@@ -23,6 +23,11 @@ const PALETTES: Record<string, { base: string; grains: string[] }> = {
   "precast-drainage": { base: "#94918B", grains: ["#76736E", "#B0ADA7", "#5E6A70"] },
   "geosynthetics-membranes": { base: "#3B3D3F", grains: ["#55585B", "#2A2B2C", "#7B7F82"] },
   "lintels-dpc-wall-accessories": { base: "#8E8B85", grains: ["#6F6C67", "#ABA8A2", "#2B2B2B"] },
+  // Roofing: galvanised and Zincalume silver, colour-coated brown and green, terracotta tiles.
+  "roof-sheeting": { base: "#A9AEB1", grains: ["#C7CCCF", "#8C9295", "#6B4A3A"] },
+  "roof-flashings-fixings": { base: "#9DA3A6", grains: ["#7E8487", "#BEC3C5", "#3E5E4A"] },
+  "roof-insulation-rainwater": { base: "#E5D9A8", grains: ["#D3C48C", "#F1E9C6", "#F2F2F0"] },
+  "concrete-roof-tiles": { base: "#9C4A32", grains: ["#7F3A26", "#B65E43", "#5C5A57"] },
   "ready-mix-concrete": { base: "#A7A49E", grains: ["#8D8A84", "#C2BFB9", "#75726C"] },
   // Plant hire and site services: machine yellow and safety orange on site soil.
   "plant-hire": { base: "#8A7458", grains: ["#D9A521", "#6E5B44", "#E8B931"] },

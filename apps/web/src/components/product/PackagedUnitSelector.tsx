@@ -5,6 +5,7 @@ import { useState } from "react";
 import { CUSTOMER_TIERS, type CustomerTierName } from "@/data/catalogue";
 import type { PackagedProduct } from "@/data/packaged";
 import type { MasonryProduct } from "@/data/masonry";
+import type { RoofingProduct } from "@/data/roofing";
 import type { SteelProduct } from "@/data/steel";
 import { formatZAR } from "@/lib/pricing";
 import { packagedFamily, tierOptionLabel } from "@/lib/tier-pricing";
@@ -15,12 +16,13 @@ import { AddToCartButton } from "@/components/cart/AddToCartButton";
  * bulk/bag calculator. A benchmarked unit prices live at the chosen tier; a
  * unit without a confirmed price explains why and goes to the quote flow,
  * exactly as the pricing service does. Steel (CAT-15..18) and masonry
- * (CAT-19/20) use the same selector, with flatbed delivery (and, for steel,
- * the mass per unit).
+ * (CAT-19..25, 29) and roofing (CAT-26..28) use the same selector, with
+ * flatbed delivery (and, for steel, the mass per unit).
  */
-export function PackagedUnitSelector({ product, initialQuantity }: { product: PackagedProduct | SteelProduct | MasonryProduct; initialQuantity?: number }) {
+export function PackagedUnitSelector({ product, initialQuantity }: { product: PackagedProduct | SteelProduct | MasonryProduct | RoofingProduct; initialQuantity?: number }) {
   const steel = product.kind === "steel";
   const masonry = product.kind === "masonry";
+  const roofing = product.kind === "roofing";
   const [index, setIndex] = useState(Math.max(0, product.units.findIndex((u) => u.prices !== null)));
   const [quantity, setQuantity] = useState(initialQuantity ?? (product.units[0]?.unit === "THOUSAND" ? 1 : 10));
   const [tierName, setTierName] = useState<CustomerTierName>("RETAIL");
@@ -51,7 +53,7 @@ export function PackagedUnitSelector({ product, initialQuantity }: { product: Pa
 
       <div className="mt-4 grid grid-cols-2 gap-3">
         <label className="block">
-          <span className="font-mono text-[10px] uppercase text-slate">{unit.unit === "THOUSAND" ? "Quantity (× 1,000 bricks)" : steel || masonry ? `Quantity (${unit.label.toLowerCase()})` : `Quantity (${unit.label}s)`}</span>
+          <span className="font-mono text-[10px] uppercase text-slate">{unit.unit === "THOUSAND" ? "Quantity (× 1,000 bricks)" : steel || masonry || roofing ? `Quantity (${unit.label.toLowerCase()})` : `Quantity (${unit.label}s)`}</span>
           <input
             type="number"
             min={1}
@@ -98,6 +100,8 @@ export function PackagedUnitSelector({ product, initialQuantity }: { product: Pa
                 ? "Delivered on the merchant's flatbed or crane truck — we confirm the slot and any delivery charge with you before dispatch."
                 : masonry
                   ? "Delivered palletised on the supplier's flatbed or crane truck — we confirm the slot, any delivery charge and the yard's minimum load before dispatch."
+                  : roofing
+                    ? "Delivered on the merchant's flatbed — we confirm the slot and any delivery charge with you before dispatch."
                   : "Delivery is added at checkout, per our bagged-goods rates."}
             </span>
           </div>
@@ -111,6 +115,8 @@ export function PackagedUnitSelector({ product, initialQuantity }: { product: Pa
               ? "Volume / Civil Bulk steel is priced per project — request a quote and we confirm your price with the merchant."
               : masonry
                 ? "Volume / Civil Bulk masonry, paving and precast is priced per project — request a quote and we confirm your price with the supplier."
+              : roofing
+                ? "Volume / Civil Bulk roofing is priced per project — request a quote and we confirm your price with the merchant."
               : tierName === "VOLUME_CIVIL_BULK"
                 ? "Volume / Civil Bulk cement is priced per project — request a quote and we confirm your price with the supplier."
                 : "Trade pricing on bulk-bag and tanker cement is quoted with the supplier."}

@@ -14,19 +14,21 @@ import { WhatsAppOrderButton } from "@/components/social/WhatsAppCta";
 import { PackagedProductPage } from "@/components/product/PackagedProductPage";
 import { ReadyMixProductPage } from "@/components/product/ReadyMixProductPage";
 import { MasonryProductPage } from "@/components/product/MasonryProductPage";
+import { RoofingProductPage } from "@/components/product/RoofingProductPage";
 import { SteelProductPage } from "@/components/product/SteelProductPage";
 import { pricePoints, PRODUCTS } from "@/data/catalogue";
 import { CATEGORIES } from "@/data/categories";
 import { PACKAGED_PRODUCTS } from "@/data/packaged";
 import { READY_MIX_PRODUCTS } from "@/data/ready-mix";
 import { MASONRY_PRODUCTS } from "@/data/masonry";
+import { ROOFING_PRODUCTS } from "@/data/roofing";
 import { STEEL_PRODUCTS } from "@/data/steel";
-import { getCatalogue, getPackagedCatalogue, getProduct, getReadyMixCatalogue, getSteelCatalogue, getMasonryCatalogue } from "@/lib/cms";
+import { getCatalogue, getPackagedCatalogue, getProduct, getReadyMixCatalogue, getSteelCatalogue, getMasonryCatalogue, getRoofingCatalogue } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
-  return [...PRODUCTS, ...PACKAGED_PRODUCTS, ...READY_MIX_PRODUCTS, ...STEEL_PRODUCTS, ...MASONRY_PRODUCTS].map((p) => ({ slug: p.slug }));
+  return [...PRODUCTS, ...PACKAGED_PRODUCTS, ...READY_MIX_PRODUCTS, ...STEEL_PRODUCTS, ...MASONRY_PRODUCTS, ...ROOFING_PRODUCTS].map((p) => ({ slug: p.slug }));
 }
 
 async function getPackaged(slug: string) {
@@ -39,6 +41,10 @@ async function getSteel(slug: string) {
 
 async function getMasonry(slug: string) {
   return (await getMasonryCatalogue()).find((p) => p.slug === slug);
+}
+
+async function getRoofing(slug: string) {
+  return (await getRoofingCatalogue()).find((p) => p.slug === slug);
 }
 
 async function getReadyMix(slug: string) {
@@ -76,6 +82,15 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         alternates: { canonical: `/products/${masonry.slug}` },
       };
     }
+    const roofing = await getRoofing(params.slug);
+    if (roofing) {
+      const unit = roofing.units.find((u) => u.prices);
+      return {
+        title: roofing.name,
+        description: `${roofing.name}${unit ? ` from ${formatZAR(unit.prices!.RETAIL)} per ${unit.label.toLowerCase()}` : ""}${roofing.roofProfile ? " — standard lengths or cut to length from 1 to 14 m" : ""}, delivered by flatbed across South Africa.`,
+        alternates: { canonical: `/products/${roofing.slug}` },
+      };
+    }
     const packaged = await getPackaged(params.slug);
     if (!packaged) return {};
     return {
@@ -103,6 +118,8 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
     if (steel) return <SteelProductPage product={steel} />;
     const masonry = await getMasonry(params.slug);
     if (masonry) return <MasonryProductPage product={masonry} />;
+    const roofing = await getRoofing(params.slug);
+    if (roofing) return <RoofingProductPage product={roofing} />;
     const packaged = await getPackaged(params.slug);
     if (!packaged) notFound();
     return <PackagedProductPage product={packaged} />;

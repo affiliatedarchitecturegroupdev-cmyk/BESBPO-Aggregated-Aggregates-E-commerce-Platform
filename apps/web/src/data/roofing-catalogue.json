@@ -1,0 +1,2243 @@
+{
+ "_source": "Roofing line: CAT-26 Roof Sheeting, CAT-27 Flashings, Ridges & Fixings and CAT-28 Insulation, Underlay & Rainwater (ROOFING_CATALOGUE.md). Sheets come in standard lengths of 3.0, 3.6, 4.2, 4.8, 6.0 and 6.6 m (one unit each) and are cut to any length from 1 m to 14 m on a quote (unit METRE, always quoted: the cutting list travels with the quote). A sheet is live only where at least two SA retailers show a regular price for the same profile, thickness and coating: the benchmark is the lowest price per metre, a standard length is that rate x the length, and list = benchmark x 1.08. Everything else is quoted with the supplier. Concrete roof tiles are in the masonry line (CAT-29).",
+ "categories": [
+  {
+   "slug": "roof-sheeting",
+   "name": "Roof Sheeting",
+   "code": "CAT-26"
+  },
+  {
+   "slug": "roof-flashings-fixings",
+   "name": "Flashings, Ridges & Fixings",
+   "code": "CAT-27"
+  },
+  {
+   "slug": "roof-insulation-rainwater",
+   "name": "Insulation, Underlay & Rainwater",
+   "code": "CAT-28"
+  }
+ ],
+ "standard_lengths_m": [
+  3.0,
+  3.6,
+  4.2,
+  4.8,
+  6.0,
+  6.6
+ ],
+ "cut_to_length": {
+  "min_m": 1.0,
+  "max_m": 14.0
+ },
+ "products": [
+  {
+   "sku": "AA-ROF-IBR-030-GALV",
+   "slug": "ibr-roof-sheet-0-30mm-galvanised-z100",
+   "name": "IBR Roof Sheet 0.30 mm Galvanised (Z100)",
+   "category_slug": "roof-sheeting",
+   "grading_standard": "Steel roof sheeting, Z100 galvanised coating, IBR profile (686 mm cover)",
+   "roof_profile": "IBR",
+   "thickness_mm": 0.3,
+   "coating": "Z100 galvanised",
+   "cover_width_mm": 686,
+   "list_price_per_metre": null,
+   "cut_to_length": {
+    "min_m": 1.0,
+    "max_m": 14.0
+   },
+   "description": "IBR (inverted box rib) roof sheet, 0.30 mm galvanised steel with a Z100 zinc coating. Each sheet covers 686 mm of roof width. Sold in standard lengths from 3.0 m to 6.6 m, or cut to any length from 1 m to 14 m on a quote. The economy gauge — fine for sheds, carports and outbuildings; use 0.47 mm or heavier for a house roof.",
+   "typical_uses": [
+    "Pitched and low-pitch roofs on timber or steel purlins",
+    "Carports, outbuildings, sheds and warehouses",
+    "Wall cladding"
+   ],
+   "handling_notes": "Off-load sheets onto level bearers so they don't sag, keep them dry and covered (wet stacked sheets stain), and lift them — never drag one across another. Walk only on the purlin lines once they're up.",
+   "units": [
+    {
+     "unit": "SHEET_3_0M",
+     "unit_label": "3.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Buco lists 0.30 mm Z100 IBR from about R66/m; Cashbuild's 0.30 mm Z100 sheets show no legible price — quoted with the supplier until a second price is confirmed."
+    },
+    {
+     "unit": "SHEET_3_6M",
+     "unit_label": "3.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Buco lists 0.30 mm Z100 IBR from about R66/m; Cashbuild's 0.30 mm Z100 sheets show no legible price — quoted with the supplier until a second price is confirmed."
+    },
+    {
+     "unit": "SHEET_4_2M",
+     "unit_label": "4.2 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Buco lists 0.30 mm Z100 IBR from about R66/m; Cashbuild's 0.30 mm Z100 sheets show no legible price — quoted with the supplier until a second price is confirmed."
+    },
+    {
+     "unit": "SHEET_4_8M",
+     "unit_label": "4.8 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Buco lists 0.30 mm Z100 IBR from about R66/m; Cashbuild's 0.30 mm Z100 sheets show no legible price — quoted with the supplier until a second price is confirmed."
+    },
+    {
+     "unit": "SHEET_6_0M",
+     "unit_label": "6.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Buco lists 0.30 mm Z100 IBR from about R66/m; Cashbuild's 0.30 mm Z100 sheets show no legible price — quoted with the supplier until a second price is confirmed."
+    },
+    {
+     "unit": "SHEET_6_6M",
+     "unit_label": "6.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Buco lists 0.30 mm Z100 IBR from about R66/m; Cashbuild's 0.30 mm Z100 sheets show no legible price — quoted with the supplier until a second price is confirmed."
+    },
+    {
+     "unit": "METRE",
+     "unit_label": "Per metre, cut to length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "unit_size": null
+  },
+  {
+   "sku": "AA-ROF-IBR-040-GALV",
+   "slug": "ibr-roof-sheet-0-40mm-galvanised-z150",
+   "name": "IBR Roof Sheet 0.40 mm Galvanised (Z150)",
+   "category_slug": "roof-sheeting",
+   "grading_standard": "Steel roof sheeting, Z150 galvanised coating, IBR profile (686 mm cover)",
+   "roof_profile": "IBR",
+   "thickness_mm": 0.4,
+   "coating": "Z150 galvanised",
+   "cover_width_mm": 686,
+   "list_price_per_metre": 98.32,
+   "cut_to_length": {
+    "min_m": 1.0,
+    "max_m": 14.0
+   },
+   "description": "IBR (inverted box rib) roof sheet, 0.40 mm galvanised steel with a Z150 zinc coating. Each sheet covers 686 mm of roof width. Sold in standard lengths from 3.0 m to 6.6 m, or cut to any length from 1 m to 14 m on a quote.",
+   "typical_uses": [
+    "Pitched and low-pitch roofs on timber or steel purlins",
+    "Carports, outbuildings, sheds and warehouses",
+    "Wall cladding"
+   ],
+   "handling_notes": "Off-load sheets onto level bearers so they don't sag, keep them dry and covered (wet stacked sheets stain), and lift them — never drag one across another. Walk only on the purlin lines once they're up.",
+   "units": [
+    {
+     "unit": "SHEET_3_0M",
+     "unit_label": "3.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": 273.12,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 273.12,
+     "markup_percent": 8,
+     "list_price_per_unit": 294.97,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Per-metre benchmark R91.04/m x 3.0 m. Buco IBR 0.40mm Galv Z150 (686 cover) 6.0m from R546.22 (R91.04/m, lowest; 4.2m R408.30, 4.8m R438.54, 6.6m R604.59); Builders Macsteel IBR Galvanised Z150 0.4mm 3.3m R419.00 and 6.0m R699.00 (R116.50/m). Cashbuild 0.4mm Z100 sheets excluded (different coating class). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "SHEET_3_6M",
+     "unit_label": "3.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": 327.74,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 327.74,
+     "markup_percent": 8,
+     "list_price_per_unit": 353.96,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Per-metre benchmark R91.04/m x 3.6 m. Buco IBR 0.40mm Galv Z150 (686 cover) 6.0m from R546.22 (R91.04/m, lowest; 4.2m R408.30, 4.8m R438.54, 6.6m R604.59); Builders Macsteel IBR Galvanised Z150 0.4mm 3.3m R419.00 and 6.0m R699.00 (R116.50/m). Cashbuild 0.4mm Z100 sheets excluded (different coating class). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "SHEET_4_2M",
+     "unit_label": "4.2 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": 382.37,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 382.37,
+     "markup_percent": 8,
+     "list_price_per_unit": 412.96,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Per-metre benchmark R91.04/m x 4.2 m. Buco IBR 0.40mm Galv Z150 (686 cover) 6.0m from R546.22 (R91.04/m, lowest; 4.2m R408.30, 4.8m R438.54, 6.6m R604.59); Builders Macsteel IBR Galvanised Z150 0.4mm 3.3m R419.00 and 6.0m R699.00 (R116.50/m). Cashbuild 0.4mm Z100 sheets excluded (different coating class). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "SHEET_4_8M",
+     "unit_label": "4.8 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": 436.99,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 436.99,
+     "markup_percent": 8,
+     "list_price_per_unit": 471.95,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Per-metre benchmark R91.04/m x 4.8 m. Buco IBR 0.40mm Galv Z150 (686 cover) 6.0m from R546.22 (R91.04/m, lowest; 4.2m R408.30, 4.8m R438.54, 6.6m R604.59); Builders Macsteel IBR Galvanised Z150 0.4mm 3.3m R419.00 and 6.0m R699.00 (R116.50/m). Cashbuild 0.4mm Z100 sheets excluded (different coating class). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "SHEET_6_0M",
+     "unit_label": "6.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": 546.24,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 546.24,
+     "markup_percent": 8,
+     "list_price_per_unit": 589.94,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Per-metre benchmark R91.04/m x 6.0 m. Buco IBR 0.40mm Galv Z150 (686 cover) 6.0m from R546.22 (R91.04/m, lowest; 4.2m R408.30, 4.8m R438.54, 6.6m R604.59); Builders Macsteel IBR Galvanised Z150 0.4mm 3.3m R419.00 and 6.0m R699.00 (R116.50/m). Cashbuild 0.4mm Z100 sheets excluded (different coating class). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "SHEET_6_6M",
+     "unit_label": "6.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": 600.86,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 600.86,
+     "markup_percent": 8,
+     "list_price_per_unit": 648.93,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Per-metre benchmark R91.04/m x 6.6 m. Buco IBR 0.40mm Galv Z150 (686 cover) 6.0m from R546.22 (R91.04/m, lowest; 4.2m R408.30, 4.8m R438.54, 6.6m R604.59); Builders Macsteel IBR Galvanised Z150 0.4mm 3.3m R419.00 and 6.0m R699.00 (R116.50/m). Cashbuild 0.4mm Z100 sheets excluded (different coating class). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "METRE",
+     "unit_label": "Per metre, cut to length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up. Estimate at the benchmarked rate: R98.32/m."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "unit_size": null
+  },
+  {
+   "sku": "AA-ROF-IBR-047-GALV",
+   "slug": "ibr-roof-sheet-0-47mm-galvanised-z150",
+   "name": "IBR Roof Sheet 0.47 mm Galvanised (Z150)",
+   "category_slug": "roof-sheeting",
+   "grading_standard": "Steel roof sheeting, Z150 galvanised coating, IBR profile (686 mm cover)",
+   "roof_profile": "IBR",
+   "thickness_mm": 0.47,
+   "coating": "Z150 galvanised",
+   "cover_width_mm": 686,
+   "list_price_per_metre": 109.38,
+   "cut_to_length": {
+    "min_m": 1.0,
+    "max_m": 14.0
+   },
+   "description": "IBR (inverted box rib) roof sheet, 0.47 mm galvanised steel with a Z150 zinc coating. Each sheet covers 686 mm of roof width. Sold in standard lengths from 3.0 m to 6.6 m, or cut to any length from 1 m to 14 m on a quote. The usual gauge for house roofs.",
+   "typical_uses": [
+    "Pitched and low-pitch roofs on timber or steel purlins",
+    "Carports, outbuildings, sheds and warehouses",
+    "Wall cladding"
+   ],
+   "handling_notes": "Off-load sheets onto level bearers so they don't sag, keep them dry and covered (wet stacked sheets stain), and lift them — never drag one across another. Walk only on the purlin lines once they're up.",
+   "units": [
+    {
+     "unit": "SHEET_3_0M",
+     "unit_label": "3.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": 303.84,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 303.84,
+     "markup_percent": 8,
+     "list_price_per_unit": 328.15,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Per-metre benchmark R101.28/m x 3.0 m. Buco 0.47mm Z150 IBR 3.9m from R394.99 (R101.28/m, lowest; Buco 3.6m R427.19); Leroy Merlin Metal Roof Sheet IBR Galvanized Steel Z150 0.47mm 1.8m R202.00, 4.8m R559.00, 6m R699.00 (R112–R117/m). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "SHEET_3_6M",
+     "unit_label": "3.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": 364.61,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 364.61,
+     "markup_percent": 8,
+     "list_price_per_unit": 393.78,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Per-metre benchmark R101.28/m x 3.6 m. Buco 0.47mm Z150 IBR 3.9m from R394.99 (R101.28/m, lowest; Buco 3.6m R427.19); Leroy Merlin Metal Roof Sheet IBR Galvanized Steel Z150 0.47mm 1.8m R202.00, 4.8m R559.00, 6m R699.00 (R112–R117/m). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "SHEET_4_2M",
+     "unit_label": "4.2 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": 425.38,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 425.38,
+     "markup_percent": 8,
+     "list_price_per_unit": 459.41,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Per-metre benchmark R101.28/m x 4.2 m. Buco 0.47mm Z150 IBR 3.9m from R394.99 (R101.28/m, lowest; Buco 3.6m R427.19); Leroy Merlin Metal Roof Sheet IBR Galvanized Steel Z150 0.47mm 1.8m R202.00, 4.8m R559.00, 6m R699.00 (R112–R117/m). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "SHEET_4_8M",
+     "unit_label": "4.8 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": 486.14,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 486.14,
+     "markup_percent": 8,
+     "list_price_per_unit": 525.03,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Per-metre benchmark R101.28/m x 4.8 m. Buco 0.47mm Z150 IBR 3.9m from R394.99 (R101.28/m, lowest; Buco 3.6m R427.19); Leroy Merlin Metal Roof Sheet IBR Galvanized Steel Z150 0.47mm 1.8m R202.00, 4.8m R559.00, 6m R699.00 (R112–R117/m). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "SHEET_6_0M",
+     "unit_label": "6.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": 607.68,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 607.68,
+     "markup_percent": 8,
+     "list_price_per_unit": 656.29,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Per-metre benchmark R101.28/m x 6.0 m. Buco 0.47mm Z150 IBR 3.9m from R394.99 (R101.28/m, lowest; Buco 3.6m R427.19); Leroy Merlin Metal Roof Sheet IBR Galvanized Steel Z150 0.47mm 1.8m R202.00, 4.8m R559.00, 6m R699.00 (R112–R117/m). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "SHEET_6_6M",
+     "unit_label": "6.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": 668.45,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 668.45,
+     "markup_percent": 8,
+     "list_price_per_unit": 721.93,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Per-metre benchmark R101.28/m x 6.6 m. Buco 0.47mm Z150 IBR 3.9m from R394.99 (R101.28/m, lowest; Buco 3.6m R427.19); Leroy Merlin Metal Roof Sheet IBR Galvanized Steel Z150 0.47mm 1.8m R202.00, 4.8m R559.00, 6m R699.00 (R112–R117/m). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "METRE",
+     "unit_label": "Per metre, cut to length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up. Estimate at the benchmarked rate: R109.38/m."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "unit_size": null
+  },
+  {
+   "sku": "AA-ROF-IBR-050-GALV-FH",
+   "slug": "ibr-roof-sheet-0-50mm-galvanised-full-hard-z275",
+   "name": "IBR Roof Sheet 0.50 mm Galvanised Full-Hard (Z275)",
+   "category_slug": "roof-sheeting",
+   "grading_standard": "Steel roof sheeting, Z275 galvanised coating, IBR profile (686 mm cover)",
+   "roof_profile": "IBR",
+   "thickness_mm": 0.5,
+   "coating": "Z275 galvanised",
+   "cover_width_mm": 686,
+   "list_price_per_metre": null,
+   "cut_to_length": {
+    "min_m": 1.0,
+    "max_m": 14.0
+   },
+   "description": "IBR (inverted box rib) roof sheet, 0.50 mm full-hard galvanised steel with a heavy Z275 zinc coating. Each sheet covers 686 mm of roof width. Sold in standard lengths from 3.0 m to 6.6 m, or cut to any length from 1 m to 14 m on a quote. The heavier zinc coat lasts longer in coastal and industrial air.",
+   "typical_uses": [
+    "Pitched and low-pitch roofs on timber or steel purlins",
+    "Carports, outbuildings, sheds and warehouses",
+    "Wall cladding"
+   ],
+   "handling_notes": "Off-load sheets onto level bearers so they don't sag, keep them dry and covered (wet stacked sheets stain), and lift them — never drag one across another. Walk only on the purlin lines once they're up.",
+   "units": [
+    {
+     "unit": "SHEET_3_0M",
+     "unit_label": "3.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Buco's prices found (4.2m R540.63 to 6.6m R859.14, about R127–R130/m) — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_3_6M",
+     "unit_label": "3.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Buco's prices found (4.2m R540.63 to 6.6m R859.14, about R127–R130/m) — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_4_2M",
+     "unit_label": "4.2 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Buco's prices found (4.2m R540.63 to 6.6m R859.14, about R127–R130/m) — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_4_8M",
+     "unit_label": "4.8 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Buco's prices found (4.2m R540.63 to 6.6m R859.14, about R127–R130/m) — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_6_0M",
+     "unit_label": "6.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Buco's prices found (4.2m R540.63 to 6.6m R859.14, about R127–R130/m) — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_6_6M",
+     "unit_label": "6.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Buco's prices found (4.2m R540.63 to 6.6m R859.14, about R127–R130/m) — quoted with the supplier."
+    },
+    {
+     "unit": "METRE",
+     "unit_label": "Per metre, cut to length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "unit_size": null
+  },
+  {
+   "sku": "AA-ROF-IBR-058-GALV",
+   "slug": "ibr-roof-sheet-0-58mm-galvanised-z275",
+   "name": "IBR Roof Sheet 0.58 mm Galvanised (Z275)",
+   "category_slug": "roof-sheeting",
+   "grading_standard": "Steel roof sheeting, Z275 galvanised coating, IBR profile (686 mm cover)",
+   "roof_profile": "IBR",
+   "thickness_mm": 0.58,
+   "coating": "Z275 galvanised",
+   "cover_width_mm": 686,
+   "list_price_per_metre": null,
+   "cut_to_length": {
+    "min_m": 1.0,
+    "max_m": 14.0
+   },
+   "description": "IBR (inverted box rib) roof sheet, 0.58 mm galvanised steel with a Z275 zinc coating. Each sheet covers 686 mm of roof width. Sold in standard lengths from 3.0 m to 6.6 m, or cut to any length from 1 m to 14 m on a quote. Heavy gauge for wider purlin spacings, industrial roofs and cladding.",
+   "typical_uses": [
+    "Pitched and low-pitch roofs on timber or steel purlins",
+    "Carports, outbuildings, sheds and warehouses",
+    "Wall cladding"
+   ],
+   "handling_notes": "Off-load sheets onto level bearers so they don't sag, keep them dry and covered (wet stacked sheets stain), and lift them — never drag one across another. Walk only on the purlin lines once they're up.",
+   "units": [
+    {
+     "unit": "SHEET_3_0M",
+     "unit_label": "3.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Heavy gauge rolled to order by the steel merchant — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_3_6M",
+     "unit_label": "3.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Heavy gauge rolled to order by the steel merchant — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_4_2M",
+     "unit_label": "4.2 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Heavy gauge rolled to order by the steel merchant — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_4_8M",
+     "unit_label": "4.8 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Heavy gauge rolled to order by the steel merchant — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_6_0M",
+     "unit_label": "6.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Heavy gauge rolled to order by the steel merchant — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_6_6M",
+     "unit_label": "6.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Heavy gauge rolled to order by the steel merchant — quoted with the supplier."
+    },
+    {
+     "unit": "METRE",
+     "unit_label": "Per metre, cut to length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "unit_size": null
+  },
+  {
+   "sku": "AA-ROF-IBR-080-GALV",
+   "slug": "ibr-roof-sheet-0-80mm-galvanised-z275",
+   "name": "IBR Roof Sheet 0.80 mm Galvanised (Z275)",
+   "category_slug": "roof-sheeting",
+   "grading_standard": "Steel roof sheeting, Z275 galvanised coating, IBR profile (686 mm cover)",
+   "roof_profile": "IBR",
+   "thickness_mm": 0.8,
+   "coating": "Z275 galvanised",
+   "cover_width_mm": 686,
+   "list_price_per_metre": null,
+   "cut_to_length": {
+    "min_m": 1.0,
+    "max_m": 14.0
+   },
+   "description": "IBR (inverted box rib) roof sheet, 0.80 mm galvanised steel with a Z275 zinc coating. Each sheet covers 686 mm of roof width. Sold in standard lengths from 3.0 m to 6.6 m, or cut to any length from 1 m to 14 m on a quote. The heaviest gauge, for industrial roofs, long spans and high-traffic cladding.",
+   "typical_uses": [
+    "Pitched and low-pitch roofs on timber or steel purlins",
+    "Carports, outbuildings, sheds and warehouses",
+    "Wall cladding"
+   ],
+   "handling_notes": "Off-load sheets onto level bearers so they don't sag, keep them dry and covered (wet stacked sheets stain), and lift them — never drag one across another. Walk only on the purlin lines once they're up.",
+   "units": [
+    {
+     "unit": "SHEET_3_0M",
+     "unit_label": "3.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Heaviest gauge, rolled to order by the steel merchant — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_3_6M",
+     "unit_label": "3.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Heaviest gauge, rolled to order by the steel merchant — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_4_2M",
+     "unit_label": "4.2 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Heaviest gauge, rolled to order by the steel merchant — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_4_8M",
+     "unit_label": "4.8 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Heaviest gauge, rolled to order by the steel merchant — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_6_0M",
+     "unit_label": "6.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Heaviest gauge, rolled to order by the steel merchant — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_6_6M",
+     "unit_label": "6.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Heaviest gauge, rolled to order by the steel merchant — quoted with the supplier."
+    },
+    {
+     "unit": "METRE",
+     "unit_label": "Per metre, cut to length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "unit_size": null
+  },
+  {
+   "sku": "AA-ROF-IBR-047-AZ150",
+   "slug": "ibr-roof-sheet-0-47mm-zincalume-az150",
+   "name": "IBR Roof Sheet 0.47 mm Zincalume® (AZ150)",
+   "category_slug": "roof-sheeting",
+   "grading_standard": "Steel roof sheeting, AZ150 aluminium-zinc coating, IBR profile (686 mm cover)",
+   "roof_profile": "IBR",
+   "thickness_mm": 0.47,
+   "coating": "AZ150 aluminium-zinc",
+   "cover_width_mm": 686,
+   "list_price_per_metre": null,
+   "cut_to_length": {
+    "min_m": 1.0,
+    "max_m": 14.0
+   },
+   "description": "IBR (inverted box rib) roof sheet, 0.47 mm steel with an AZ150 aluminium-zinc (Zincalume®) coating. Each sheet covers 686 mm of roof width. Sold in standard lengths from 3.0 m to 6.6 m, or cut to any length from 1 m to 14 m on a quote. Aluminium-zinc outlasts plain galvanising and keeps a bright silver finish.",
+   "typical_uses": [
+    "Pitched and low-pitch roofs on timber or steel purlins",
+    "Carports, outbuildings, sheds and warehouses",
+    "Wall cladding"
+   ],
+   "handling_notes": "Off-load sheets onto level bearers so they don't sag, keep them dry and covered (wet stacked sheets stain), and lift them — never drag one across another. Walk only on the purlin lines once they're up.",
+   "units": [
+    {
+     "unit": "SHEET_3_0M",
+     "unit_label": "3.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Buco's prices found (3.6m R439.00, 4.2m R538.99) — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_3_6M",
+     "unit_label": "3.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Buco's prices found (3.6m R439.00, 4.2m R538.99) — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_4_2M",
+     "unit_label": "4.2 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Buco's prices found (3.6m R439.00, 4.2m R538.99) — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_4_8M",
+     "unit_label": "4.8 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Buco's prices found (3.6m R439.00, 4.2m R538.99) — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_6_0M",
+     "unit_label": "6.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Buco's prices found (3.6m R439.00, 4.2m R538.99) — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_6_6M",
+     "unit_label": "6.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Buco's prices found (3.6m R439.00, 4.2m R538.99) — quoted with the supplier."
+    },
+    {
+     "unit": "METRE",
+     "unit_label": "Per metre, cut to length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "unit_size": null
+  },
+  {
+   "sku": "AA-ROF-IBR-047-PREPAINTED",
+   "slug": "ibr-roof-sheet-0-47mm-pre-painted",
+   "name": "IBR Roof Sheet 0.47 mm Pre-Painted (colour-coated)",
+   "category_slug": "roof-sheeting",
+   "grading_standard": "Steel roof sheeting, colour-coated coating, IBR profile (686 mm cover)",
+   "roof_profile": "IBR",
+   "thickness_mm": 0.47,
+   "coating": "colour-coated",
+   "cover_width_mm": 686,
+   "list_price_per_metre": null,
+   "cut_to_length": {
+    "min_m": 1.0,
+    "max_m": 14.0
+   },
+   "description": "IBR (inverted box rib) roof sheet, 0.47 mm colour-coated (pre-painted) steel. Each sheet covers 686 mm of roof width. Sold in standard lengths from 3.0 m to 6.6 m, or cut to any length from 1 m to 14 m on a quote. Factory colour-coated in a range of colours — tell us the colour when you order.",
+   "typical_uses": [
+    "Pitched and low-pitch roofs on timber or steel purlins",
+    "Carports, outbuildings, sheds and warehouses",
+    "Wall cladding"
+   ],
+   "handling_notes": "Off-load sheets onto level bearers so they don't sag, keep them dry and covered (wet stacked sheets stain), and lift them — never drag one across another. Walk only on the purlin lines once they're up.",
+   "units": [
+    {
+     "unit": "SHEET_3_0M",
+     "unit_label": "3.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Leroy Merlin's prices found (charcoal, about R182/m) — quoted with the supplier by colour."
+    },
+    {
+     "unit": "SHEET_3_6M",
+     "unit_label": "3.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Leroy Merlin's prices found (charcoal, about R182/m) — quoted with the supplier by colour."
+    },
+    {
+     "unit": "SHEET_4_2M",
+     "unit_label": "4.2 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Leroy Merlin's prices found (charcoal, about R182/m) — quoted with the supplier by colour."
+    },
+    {
+     "unit": "SHEET_4_8M",
+     "unit_label": "4.8 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Leroy Merlin's prices found (charcoal, about R182/m) — quoted with the supplier by colour."
+    },
+    {
+     "unit": "SHEET_6_0M",
+     "unit_label": "6.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Leroy Merlin's prices found (charcoal, about R182/m) — quoted with the supplier by colour."
+    },
+    {
+     "unit": "SHEET_6_6M",
+     "unit_label": "6.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Leroy Merlin's prices found (charcoal, about R182/m) — quoted with the supplier by colour."
+    },
+    {
+     "unit": "METRE",
+     "unit_label": "Per metre, cut to length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "unit_size": null
+  },
+  {
+   "sku": "AA-ROF-IBR-050-PREPAINTED",
+   "slug": "ibr-roof-sheet-0-50mm-pre-painted",
+   "name": "IBR Roof Sheet 0.50 mm Pre-Painted (Chromadek®-type, standard colours)",
+   "category_slug": "roof-sheeting",
+   "grading_standard": "Steel roof sheeting, colour-coated coating, IBR profile (686 mm cover)",
+   "roof_profile": "IBR",
+   "thickness_mm": 0.5,
+   "coating": "colour-coated",
+   "cover_width_mm": 686,
+   "list_price_per_metre": 193.49,
+   "cut_to_length": {
+    "min_m": 1.0,
+    "max_m": 14.0
+   },
+   "description": "IBR (inverted box rib) roof sheet, 0.50 mm colour-coated (pre-painted) steel such as Chromadek®. Each sheet covers 686 mm of roof width. Sold in standard lengths from 3.0 m to 6.6 m, or cut to any length from 1 m to 14 m on a quote. Factory colour-coated in standard colours such as Buffalo Brown, Charcoal and Traffic Green — tell us the colour when you order.",
+   "typical_uses": [
+    "Pitched and low-pitch roofs on timber or steel purlins",
+    "Carports, outbuildings, sheds and warehouses",
+    "Wall cladding"
+   ],
+   "handling_notes": "Off-load sheets onto level bearers so they don't sag, keep them dry and covered (wet stacked sheets stain), and lift them — never drag one across another. Walk only on the purlin lines once they're up.",
+   "units": [
+    {
+     "unit": "SHEET_3_0M",
+     "unit_label": "3.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": 537.48,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 537.48,
+     "markup_percent": 8,
+     "list_price_per_unit": 580.48,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Per-metre benchmark R179.16/m x 3.0 m. Cashbuild IBR Chromadeck 0.5mm x 6.0m Buffalo Brown R1,074.95 (R179.16/m, lowest; 4.2m Buffalo Brown R769.95, Traffic Green R859.95); Leroy Merlin IBR 686 Chromadek Traffic Green 0.5mm per linear metre R191.00. Some colours cost more — the colour is confirmed on the order. checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "SHEET_3_6M",
+     "unit_label": "3.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": 644.98,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 644.98,
+     "markup_percent": 8,
+     "list_price_per_unit": 696.58,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Per-metre benchmark R179.16/m x 3.6 m. Cashbuild IBR Chromadeck 0.5mm x 6.0m Buffalo Brown R1,074.95 (R179.16/m, lowest; 4.2m Buffalo Brown R769.95, Traffic Green R859.95); Leroy Merlin IBR 686 Chromadek Traffic Green 0.5mm per linear metre R191.00. Some colours cost more — the colour is confirmed on the order. checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "SHEET_4_2M",
+     "unit_label": "4.2 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": 752.47,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 752.47,
+     "markup_percent": 8,
+     "list_price_per_unit": 812.67,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Per-metre benchmark R179.16/m x 4.2 m. Cashbuild IBR Chromadeck 0.5mm x 6.0m Buffalo Brown R1,074.95 (R179.16/m, lowest; 4.2m Buffalo Brown R769.95, Traffic Green R859.95); Leroy Merlin IBR 686 Chromadek Traffic Green 0.5mm per linear metre R191.00. Some colours cost more — the colour is confirmed on the order. checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "SHEET_4_8M",
+     "unit_label": "4.8 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": 859.97,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 859.97,
+     "markup_percent": 8,
+     "list_price_per_unit": 928.77,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Per-metre benchmark R179.16/m x 4.8 m. Cashbuild IBR Chromadeck 0.5mm x 6.0m Buffalo Brown R1,074.95 (R179.16/m, lowest; 4.2m Buffalo Brown R769.95, Traffic Green R859.95); Leroy Merlin IBR 686 Chromadek Traffic Green 0.5mm per linear metre R191.00. Some colours cost more — the colour is confirmed on the order. checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "SHEET_6_0M",
+     "unit_label": "6.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": 1074.96,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 1074.96,
+     "markup_percent": 8,
+     "list_price_per_unit": 1160.96,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Per-metre benchmark R179.16/m x 6.0 m. Cashbuild IBR Chromadeck 0.5mm x 6.0m Buffalo Brown R1,074.95 (R179.16/m, lowest; 4.2m Buffalo Brown R769.95, Traffic Green R859.95); Leroy Merlin IBR 686 Chromadek Traffic Green 0.5mm per linear metre R191.00. Some colours cost more — the colour is confirmed on the order. checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "SHEET_6_6M",
+     "unit_label": "6.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": 1182.46,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 1182.46,
+     "markup_percent": 8,
+     "list_price_per_unit": 1277.06,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Per-metre benchmark R179.16/m x 6.6 m. Cashbuild IBR Chromadeck 0.5mm x 6.0m Buffalo Brown R1,074.95 (R179.16/m, lowest; 4.2m Buffalo Brown R769.95, Traffic Green R859.95); Leroy Merlin IBR 686 Chromadek Traffic Green 0.5mm per linear metre R191.00. Some colours cost more — the colour is confirmed on the order. checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    },
+    {
+     "unit": "METRE",
+     "unit_label": "Per metre, cut to length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up. Estimate at the benchmarked rate: R193.49/m."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "unit_size": null
+  },
+  {
+   "sku": "AA-ROF-CORR-030-GALV",
+   "slug": "corrugated-roof-sheet-0-30mm-galvanised-z100",
+   "name": "Corrugated Roof Sheet 0.30 mm Galvanised (Z100)",
+   "category_slug": "roof-sheeting",
+   "grading_standard": "Steel roof sheeting, Z100 galvanised coating, corrugated profile (610 mm cover)",
+   "roof_profile": "Corrugated",
+   "thickness_mm": 0.3,
+   "coating": "Z100 galvanised",
+   "cover_width_mm": 610,
+   "list_price_per_metre": null,
+   "cut_to_length": {
+    "min_m": 1.0,
+    "max_m": 14.0
+   },
+   "description": "Corrugated roof sheet, 0.30 mm galvanised steel with a Z100 zinc coating. Each sheet covers 610 mm of roof width. Sold in standard lengths from 3.0 m to 6.6 m, or cut to any length from 1 m to 14 m on a quote. Economy gauge for sheds, fencing and outbuildings.",
+   "typical_uses": [
+    "Traditional roofs, verandas and lean-tos",
+    "Outbuildings, sheds and fencing",
+    "Re-roofing to match existing corrugated sheeting"
+   ],
+   "handling_notes": "Off-load sheets onto level bearers so they don't sag, keep them dry and covered (wet stacked sheets stain), and lift them — never drag one across another. Walk only on the purlin lines once they're up.",
+   "units": [
+    {
+     "unit": "SHEET_3_0M",
+     "unit_label": "3.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Buco's prices legible (3.0m R208.87, 3.3m R234.99) — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_3_6M",
+     "unit_label": "3.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Buco's prices legible (3.0m R208.87, 3.3m R234.99) — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_4_2M",
+     "unit_label": "4.2 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Buco's prices legible (3.0m R208.87, 3.3m R234.99) — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_4_8M",
+     "unit_label": "4.8 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Buco's prices legible (3.0m R208.87, 3.3m R234.99) — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_6_0M",
+     "unit_label": "6.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Buco's prices legible (3.0m R208.87, 3.3m R234.99) — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_6_6M",
+     "unit_label": "6.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Buco's prices legible (3.0m R208.87, 3.3m R234.99) — quoted with the supplier."
+    },
+    {
+     "unit": "METRE",
+     "unit_label": "Per metre, cut to length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "unit_size": null
+  },
+  {
+   "sku": "AA-ROF-CORR-040-GALV",
+   "slug": "corrugated-roof-sheet-0-40mm-galvanised",
+   "name": "Corrugated Roof Sheet 0.40 mm Galvanised",
+   "category_slug": "roof-sheeting",
+   "grading_standard": "Steel roof sheeting, Z150 galvanised coating, corrugated profile (762 mm cover)",
+   "roof_profile": "Corrugated",
+   "thickness_mm": 0.4,
+   "coating": "Z150 galvanised",
+   "cover_width_mm": 762,
+   "list_price_per_metre": null,
+   "cut_to_length": {
+    "min_m": 1.0,
+    "max_m": 14.0
+   },
+   "description": "Corrugated roof sheet, 0.40 mm galvanised steel. Each sheet covers 762 mm of roof width. Sold in standard lengths from 3.0 m to 6.6 m, or cut to any length from 1 m to 14 m on a quote.",
+   "typical_uses": [
+    "Traditional roofs, verandas and lean-tos",
+    "Outbuildings, sheds and fencing",
+    "Re-roofing to match existing corrugated sheeting"
+   ],
+   "handling_notes": "Off-load sheets onto level bearers so they don't sag, keep them dry and covered (wet stacked sheets stain), and lift them — never drag one across another. Walk only on the purlin lines once they're up.",
+   "units": [
+    {
+     "unit": "SHEET_3_0M",
+     "unit_label": "3.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Buco 0.40mm Z150 (R290.75 for 3.0m) and Cashbuild 0.4mm (R284.95 for 3.0m, coating class not stated) — quoted with the supplier until the coating class is confirmed to match."
+    },
+    {
+     "unit": "SHEET_3_6M",
+     "unit_label": "3.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Buco 0.40mm Z150 (R290.75 for 3.0m) and Cashbuild 0.4mm (R284.95 for 3.0m, coating class not stated) — quoted with the supplier until the coating class is confirmed to match."
+    },
+    {
+     "unit": "SHEET_4_2M",
+     "unit_label": "4.2 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Buco 0.40mm Z150 (R290.75 for 3.0m) and Cashbuild 0.4mm (R284.95 for 3.0m, coating class not stated) — quoted with the supplier until the coating class is confirmed to match."
+    },
+    {
+     "unit": "SHEET_4_8M",
+     "unit_label": "4.8 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Buco 0.40mm Z150 (R290.75 for 3.0m) and Cashbuild 0.4mm (R284.95 for 3.0m, coating class not stated) — quoted with the supplier until the coating class is confirmed to match."
+    },
+    {
+     "unit": "SHEET_6_0M",
+     "unit_label": "6.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Buco 0.40mm Z150 (R290.75 for 3.0m) and Cashbuild 0.4mm (R284.95 for 3.0m, coating class not stated) — quoted with the supplier until the coating class is confirmed to match."
+    },
+    {
+     "unit": "SHEET_6_6M",
+     "unit_label": "6.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Buco 0.40mm Z150 (R290.75 for 3.0m) and Cashbuild 0.4mm (R284.95 for 3.0m, coating class not stated) — quoted with the supplier until the coating class is confirmed to match."
+    },
+    {
+     "unit": "METRE",
+     "unit_label": "Per metre, cut to length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "unit_size": null
+  },
+  {
+   "sku": "AA-ROF-CORR-047-GALV",
+   "slug": "corrugated-roof-sheet-0-47mm-galvanised-z150",
+   "name": "Corrugated Roof Sheet 0.47 mm Galvanised (Z150)",
+   "category_slug": "roof-sheeting",
+   "grading_standard": "Steel roof sheeting, Z150 galvanised coating, corrugated profile (762 mm cover)",
+   "roof_profile": "Corrugated",
+   "thickness_mm": 0.47,
+   "coating": "Z150 galvanised",
+   "cover_width_mm": 762,
+   "list_price_per_metre": null,
+   "cut_to_length": {
+    "min_m": 1.0,
+    "max_m": 14.0
+   },
+   "description": "Corrugated roof sheet, 0.47 mm galvanised steel with a Z150 zinc coating. Each sheet covers 762 mm of roof width. Sold in standard lengths from 3.0 m to 6.6 m, or cut to any length from 1 m to 14 m on a quote. The usual gauge for corrugated house roofs.",
+   "typical_uses": [
+    "Traditional roofs, verandas and lean-tos",
+    "Outbuildings, sheds and fencing",
+    "Re-roofing to match existing corrugated sheeting"
+   ],
+   "handling_notes": "Off-load sheets onto level bearers so they don't sag, keep them dry and covered (wet stacked sheets stain), and lift them — never drag one across another. Walk only on the purlin lines once they're up.",
+   "units": [
+    {
+     "unit": "SHEET_3_0M",
+     "unit_label": "3.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Leroy Merlin 3.6m R438.00)."
+    },
+    {
+     "unit": "SHEET_3_6M",
+     "unit_label": "3.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Leroy Merlin 3.6m R438.00)."
+    },
+    {
+     "unit": "SHEET_4_2M",
+     "unit_label": "4.2 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Leroy Merlin 3.6m R438.00)."
+    },
+    {
+     "unit": "SHEET_4_8M",
+     "unit_label": "4.8 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Leroy Merlin 3.6m R438.00)."
+    },
+    {
+     "unit": "SHEET_6_0M",
+     "unit_label": "6.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Leroy Merlin 3.6m R438.00)."
+    },
+    {
+     "unit": "SHEET_6_6M",
+     "unit_label": "6.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Leroy Merlin 3.6m R438.00)."
+    },
+    {
+     "unit": "METRE",
+     "unit_label": "Per metre, cut to length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "unit_size": null
+  },
+  {
+   "sku": "AA-ROF-CORR-047-AZ150",
+   "slug": "corrugated-roof-sheet-0-47mm-zincalume-az150",
+   "name": "Corrugated Roof Sheet 0.47 mm Zincalume® (AZ150)",
+   "category_slug": "roof-sheeting",
+   "grading_standard": "Steel roof sheeting, AZ150 aluminium-zinc coating, corrugated profile (762 mm cover)",
+   "roof_profile": "Corrugated",
+   "thickness_mm": 0.47,
+   "coating": "AZ150 aluminium-zinc",
+   "cover_width_mm": 762,
+   "list_price_per_metre": null,
+   "cut_to_length": {
+    "min_m": 1.0,
+    "max_m": 14.0
+   },
+   "description": "Corrugated roof sheet, 0.47 mm steel with an AZ150 aluminium-zinc (Zincalume®) coating. Each sheet covers 762 mm of roof width. Sold in standard lengths from 3.0 m to 6.6 m, or cut to any length from 1 m to 14 m on a quote.",
+   "typical_uses": [
+    "Traditional roofs, verandas and lean-tos",
+    "Outbuildings, sheds and fencing",
+    "Re-roofing to match existing corrugated sheeting"
+   ],
+   "handling_notes": "Off-load sheets onto level bearers so they don't sag, keep them dry and covered (wet stacked sheets stain), and lift them — never drag one across another. Walk only on the purlin lines once they're up.",
+   "units": [
+    {
+     "unit": "SHEET_3_0M",
+     "unit_label": "3.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Buco)."
+    },
+    {
+     "unit": "SHEET_3_6M",
+     "unit_label": "3.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Buco)."
+    },
+    {
+     "unit": "SHEET_4_2M",
+     "unit_label": "4.2 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Buco)."
+    },
+    {
+     "unit": "SHEET_4_8M",
+     "unit_label": "4.8 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Buco)."
+    },
+    {
+     "unit": "SHEET_6_0M",
+     "unit_label": "6.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Buco)."
+    },
+    {
+     "unit": "SHEET_6_6M",
+     "unit_label": "6.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Buco)."
+    },
+    {
+     "unit": "METRE",
+     "unit_label": "Per metre, cut to length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "unit_size": null
+  },
+  {
+   "sku": "AA-ROF-CORR-050-PREPAINTED",
+   "slug": "corrugated-roof-sheet-0-50mm-pre-painted",
+   "name": "Corrugated Roof Sheet 0.50 mm Pre-Painted (colour-coated)",
+   "category_slug": "roof-sheeting",
+   "grading_standard": "Steel roof sheeting, colour-coated coating, corrugated profile (762 mm cover)",
+   "roof_profile": "Corrugated",
+   "thickness_mm": 0.5,
+   "coating": "colour-coated",
+   "cover_width_mm": 762,
+   "list_price_per_metre": null,
+   "cut_to_length": {
+    "min_m": 1.0,
+    "max_m": 14.0
+   },
+   "description": "Corrugated roof sheet, 0.50 mm colour-coated (pre-painted) steel. Each sheet covers 762 mm of roof width. Sold in standard lengths from 3.0 m to 6.6 m, or cut to any length from 1 m to 14 m on a quote. Tell us the colour when you order.",
+   "typical_uses": [
+    "Traditional roofs, verandas and lean-tos",
+    "Outbuildings, sheds and fencing",
+    "Re-roofing to match existing corrugated sheeting"
+   ],
+   "handling_notes": "Off-load sheets onto level bearers so they don't sag, keep them dry and covered (wet stacked sheets stain), and lift them — never drag one across another. Walk only on the purlin lines once they're up.",
+   "units": [
+    {
+     "unit": "SHEET_3_0M",
+     "unit_label": "3.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Colour-coated corrugated is priced by colour and length — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_3_6M",
+     "unit_label": "3.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Colour-coated corrugated is priced by colour and length — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_4_2M",
+     "unit_label": "4.2 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Colour-coated corrugated is priced by colour and length — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_4_8M",
+     "unit_label": "4.8 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Colour-coated corrugated is priced by colour and length — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_6_0M",
+     "unit_label": "6.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Colour-coated corrugated is priced by colour and length — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_6_6M",
+     "unit_label": "6.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Colour-coated corrugated is priced by colour and length — quoted with the supplier."
+    },
+    {
+     "unit": "METRE",
+     "unit_label": "Per metre, cut to length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "unit_size": null
+  },
+  {
+   "sku": "AA-ROF-CONCEALED-053-AZ150",
+   "slug": "concealed-fix-roof-sheet-0-53mm-zincalume",
+   "name": "Concealed-Fix (Clip-Lock) Roof Sheet 0.53 mm Zincalume® (AZ150)",
+   "category_slug": "roof-sheeting",
+   "grading_standard": "Steel roof sheeting, AZ150 aluminium-zinc coating, concealed-fix clip profile",
+   "roof_profile": "Concealed-fix",
+   "thickness_mm": 0.53,
+   "coating": "AZ150 aluminium-zinc",
+   "cover_width_mm": 700,
+   "list_price_per_metre": null,
+   "cut_to_length": {
+    "min_m": 1.0,
+    "max_m": 14.0
+   },
+   "description": "Concealed-fix (clip-lock) roof sheet: clipped to the purlins with no exposed screws through the sheet, for low-pitch roofs that must stay watertight. Cover width is typically about 700 mm and depends on the maker's system. Rolled to length on a quote.",
+   "typical_uses": [
+    "Low-pitch house and commercial roofs",
+    "Roofs where exposed fixings aren't wanted"
+   ],
+   "handling_notes": "Off-load sheets onto level bearers so they don't sag, keep them dry and covered (wet stacked sheets stain), and lift them — never drag one across another. Walk only on the purlin lines once they're up. Use the maker's own clips for its profile.",
+   "units": [
+    {
+     "unit": "SHEET_3_0M",
+     "unit_label": "3.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "System product rolled to length by the maker — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_3_6M",
+     "unit_label": "3.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "System product rolled to length by the maker — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_4_2M",
+     "unit_label": "4.2 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "System product rolled to length by the maker — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_4_8M",
+     "unit_label": "4.8 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "System product rolled to length by the maker — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_6_0M",
+     "unit_label": "6.0 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "System product rolled to length by the maker — quoted with the supplier."
+    },
+    {
+     "unit": "SHEET_6_6M",
+     "unit_label": "6.6 m sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "System product rolled to length by the maker — quoted with the supplier."
+    },
+    {
+     "unit": "METRE",
+     "unit_label": "Per metre, cut to length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "unit_size": null
+  },
+  {
+   "sku": "AA-ROF-RIDGE-IBR",
+   "slug": "ibr-ridge-capping-galvanised",
+   "name": "IBR Ridge Capping, Galvanised 0.40 mm",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Galvanised steel flashing",
+   "unit_size": "About 3.6 m length",
+   "description": "Pressed ridge capping that closes the top of an IBR roof where the two slopes meet; laps about 150 mm at each joint.",
+   "typical_uses": [
+    "Ridges of IBR roofs"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each (length)",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only Cashbuild's price matched (3.6m x 400mm 0.4mm R282.95); other retailers list different lengths and coatings — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null
+  },
+  {
+   "sku": "AA-ROF-RIDGE-ROLLTOP",
+   "slug": "roll-top-ridge-corrugated-galvanised",
+   "name": "Roll-Top Ridge for Corrugated, Galvanised",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Galvanised steel flashing",
+   "unit_size": "About 3.6 m length",
+   "description": "Rounded roll-top ridge for corrugated roofs.",
+   "typical_uses": [
+    "Ridges of corrugated roofs"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each (length)",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null
+  },
+  {
+   "sku": "AA-ROF-FLASHING-BARGE",
+   "slug": "barge-and-side-flashing",
+   "name": "Barge & Side Flashing (to match the sheeting)",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Pressed steel flashing",
+   "unit_size": null,
+   "description": "Pressed flashings for the gable edges (barge) and where the roof meets a wall — made to the sheeting's coating and colour.",
+   "typical_uses": [
+    "Gable edges",
+    "Roof-to-wall junctions"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each (length)",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Pressed to size and colour by the merchant — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null
+  },
+  {
+   "sku": "AA-ROF-FLASHING-OVERTILE",
+   "slug": "over-tile-flashing-galvanised",
+   "name": "Over-Tile Flashing, Galvanised",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Galvanised steel flashing",
+   "unit_size": "About 1.8 m length",
+   "description": "Flashing dressed over the tiles or sheeting where the roof abuts a parapet or wall.",
+   "typical_uses": [
+    "Parapet and wall abutments on tiled or sheeted roofs"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each (1.8 m)",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Retail listings show the item without a legible price — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null
+  },
+  {
+   "sku": "AA-ROF-CLOSURES-IBR",
+   "slug": "ibr-ridge-and-eaves-closures",
+   "name": "IBR Ridge & Eaves Closures",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": null,
+   "unit_size": null,
+   "description": "Profiled closures that seal the ribs of IBR sheeting at the ridge and eaves against wind-driven rain, birds and insects.",
+   "typical_uses": [
+    "Ridges and eaves of IBR roofs"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Buco broad closure R19.99–R21.60)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null
+  },
+  {
+   "sku": "AA-ROF-SCREWS-TIMBER",
+   "slug": "roof-tek-screws-timber-5-5x70",
+   "name": "Roof Tek Screws for Timber 5.5 × 70 mm (box of 100)",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Class 4 self-drilling roofing screw",
+   "unit_size": "Box of 100",
+   "description": "Self-drilling roofing screws that fix IBR and corrugated sheeting to timber purlins — one through every second rib at each purlin is typical. Use with a sealing washer.",
+   "typical_uses": [
+    "Fixing sheeting to timber purlins and battens"
+   ],
+   "handling_notes": "Keep boxes dry; use stainless or Class 4 coated screws on the coast.",
+   "units": [
+    {
+     "unit": "PACK",
+     "unit_label": "Box of 100",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Cashbuild Eureka T17 5.5x70 R209.95)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null
+  },
+  {
+   "sku": "AA-ROF-SCREWS-STEEL",
+   "slug": "roof-tek-screws-steel-5-5x65",
+   "name": "Roof Tek Screws for Steel Purlins 5.5 × 65 mm (box of 100)",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Class 4 self-drilling roofing screw",
+   "unit_size": "Box of 100",
+   "description": "Self-drilling roofing screws for fixing sheeting to steel (lipped-channel) purlins.",
+   "typical_uses": [
+    "Fixing sheeting to steel purlins"
+   ],
+   "handling_notes": "Keep boxes dry; use stainless or Class 4 coated screws on the coast.",
+   "units": [
+    {
+     "unit": "PACK",
+     "unit_label": "Box of 100",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Cashbuild 5.5x65 R179.95 and Leroy Merlin 5.5x70 R199.00 are different lengths — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null
+  },
+  {
+   "sku": "AA-ROF-HOOK-BOLTS",
+   "slug": "roof-hook-bolts-with-washers",
+   "name": "Roof Hook Bolts with Washers",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Galvanised hook bolt",
+   "unit_size": null,
+   "description": "Galvanised hook bolts that fix sheeting to steel angle or round purlins.",
+   "typical_uses": [
+    "Sheeting on steel angle and tube purlins"
+   ],
+   "handling_notes": "Match the bolt length to the purlin size.",
+   "units": [
+    {
+     "unit": "PACK",
+     "unit_label": "Pack",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Sold in various lengths and pack sizes — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null
+  },
+  {
+   "sku": "AA-ROF-INSUL-GLASSWOOL-135",
+   "slug": "glass-wool-ceiling-insulation-135mm",
+   "name": "Glass-Wool Ceiling Insulation 135 mm (1.2 × 5 m roll)",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "SANS 10400-XA — thermal insulation (glass wool)",
+   "unit_size": "1.2 × 5 m roll (6 m²)",
+   "description": "135 mm glass-wool blanket laid over the ceiling between the trusses — one roll covers 6 m². The usual thickness for a new house to meet the energy-efficiency regulations in most of the country; your plans or energy calculation give the R-value your area needs.",
+   "typical_uses": [
+    "Ceiling insulation in new houses",
+    "Topping up existing ceilings"
+   ],
+   "handling_notes": "Keep rolls dry and off the ground until they're laid; wear gloves, long sleeves and a dust mask when handling glass wool.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (1.2 × 5 m, 6 m²)",
+     "weight_kg": null,
+     "market_benchmark_price": 759.89,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 759.89,
+     "markup_percent": 8,
+     "list_price_per_unit": 820.68,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Buco Aerolite 135mm 1.2 x 5.0m from R759.89 (lowest; another Buco listing R790.84); Cashbuild Isover Aerolite 135mm 6m² roll R774.95. checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null
+  },
+  {
+   "sku": "AA-ROF-INSUL-POLYESTER-135",
+   "slug": "polyester-ceiling-insulation-135mm",
+   "name": "Polyester Ceiling Insulation 135 mm (1.2 × 5 m roll)",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "SANS 10400-XA — thermal insulation (polyester)",
+   "unit_size": "1.2 × 5 m roll (6 m²)",
+   "description": "135 mm polyester blanket — no itch, no dust — laid over the ceiling between the trusses; one roll covers 6 m².",
+   "typical_uses": [
+    "Ceiling insulation in new houses",
+    "DIY installation"
+   ],
+   "handling_notes": "Keep rolls dry and off the ground until they're laid.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (1.2 × 5 m, 6 m²)",
+     "weight_kg": null,
+     "market_benchmark_price": 735.0,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 735.0,
+     "markup_percent": 8,
+     "list_price_per_unit": 793.8,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Leroy Merlin Polyester Ceiling Insulation Isotherm 135mm x 6m² R735.00 (lowest); Buco Isotherm 1200 x 5m 135mm from R737.90. checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null
+  },
+  {
+   "sku": "AA-ROF-UNDERLAY-FOIL",
+   "slug": "reflective-foil-roof-underlay",
+   "name": "Reflective Foil Roof Underlay (1.25 × 40 m)",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "Reinforced reflective foil laminate (sisalation-type)",
+   "unit_size": "1.25 × 40 m roll",
+   "description": "Reinforced foil laminate draped under the sheeting or tiles: reflects radiant heat, stops condensation dripping and keeps out dust and driven rain.",
+   "typical_uses": [
+    "Under metal roof sheeting",
+    "Under tiles in hot or dusty areas"
+   ],
+   "handling_notes": "Lap and tape the joints; keep the foil face towards the air gap.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (1.25 × 40 m)",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Buco Sisalation 405/FR405 R1,919–R2,579)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null
+  },
+  {
+   "sku": "AA-ROF-UNDERLAY-MEMBRANE",
+   "slug": "under-tile-membrane-1-5x30m",
+   "name": "Under-Tile Membrane (1.5 × 30 m)",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "Breathable / polyolefin under-tile membrane",
+   "unit_size": "1.5 × 30 m roll",
+   "description": "Membrane laid over the trusses under the battens of a tiled roof — a second line of defence against driven rain and dust.",
+   "typical_uses": [
+    "Under concrete and clay roof tiles"
+   ],
+   "handling_notes": "Lap 150 mm and run it down into the gutter at the eaves.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (1.5 × 30 m)",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Buco Coverland 250mic 1.5x30m R517.78)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null
+  },
+  {
+   "sku": "AA-ROF-GUTTER-PVC-6M",
+   "slug": "pvc-gutter-6m",
+   "name": "PVC Gutter, 6 m length",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "uPVC rainwater gutter",
+   "unit_size": "6 m length",
+   "description": "uPVC eaves gutter that carries roof water to the downpipes — fall it about 1:500 towards each outlet. Brackets, outlets and corners are sold separately.",
+   "typical_uses": [
+    "Eaves of tiled and sheeted roofs"
+   ],
+   "handling_notes": "Store flat and supported along its length, out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each (6 m)",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Leroy Merlin Vynadeep 6m R279.00)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null
+  },
+  {
+   "sku": "AA-ROF-DOWNPIPE-PVC-3M",
+   "slug": "pvc-downpipe-3m",
+   "name": "PVC Downpipe, 3 m length",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "uPVC rainwater downpipe",
+   "unit_size": "3 m length",
+   "description": "Round uPVC downpipe that takes water from the gutter outlet to the ground or a drain — about one for every 10–12 m of gutter.",
+   "typical_uses": [
+    "Rainwater downpipes from eaves gutters",
+    "Into gulleys, soakaways or rainwater tanks"
+   ],
+   "handling_notes": "Store flat and supported along its length, out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each (3 m)",
+     "weight_kg": null,
+     "market_benchmark_price": 153.95,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 153.95,
+     "markup_percent": 8,
+     "list_price_per_unit": 166.27,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Cashbuild Macneil downpipe 3m R153.95 (lowest); Buco Macneil Umac downpipe plain 3.0m from R163.76. checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null
+  },
+  {
+   "sku": "AA-ROF-GUTTER-FITTINGS",
+   "slug": "gutter-brackets-and-fittings",
+   "name": "Gutter Brackets, Outlets & Fittings",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "uPVC rainwater fittings",
+   "unit_size": null,
+   "description": "Fascia brackets, running outlets, stop ends, corners and downpipe brackets to finish the gutter system — matched to the gutter range.",
+   "typical_uses": [
+    "Completing a gutter and downpipe system"
+   ],
+   "handling_notes": "Order from the same range as the gutter so the fittings match.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Fittings differ by range — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null
+  }
+ ]
+}

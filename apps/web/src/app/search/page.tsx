@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CATEGORIES } from "@/data/categories";
 import { INDUSTRIES } from "@/data/industries";
 import { getPublishedPosts } from "@/lib/blog";
-import { getCatalogue, getMasonryCatalogue, getPackagedCatalogue, getSteelCatalogue } from "@/lib/cms";
+import { getCatalogue, getMasonryCatalogue, getPackagedCatalogue, getRoofingCatalogue, getSteelCatalogue } from "@/lib/cms";
 
 export const metadata: Metadata = { title: "Search", robots: { index: false } };
 
@@ -17,6 +17,7 @@ const PAGES = [
   { href: "/bricks-blocks", title: "Bricks, Blocks & Walling", keywords: "bricks blocks clay cement stock face maxi nfp fbs lintel dpc damp proof air brick wall calculator masonry" },
   { href: "/paving", title: "Paving & Retaining", keywords: "paving pavers paver interlocking bevel slab kerb kerbs edging grass block driveway patio retaining terraforce gabion erosion calculator" },
   { href: "/drainage", title: "Drainage & Membranes", keywords: "drainage pipe pipes sewer upvc underground bend junction rodding subsoil french drain concrete pipe manhole culvert channel drain dpm damp proof membrane geotextile bidim weed geogrid calculator" },
+  { href: "/roofing", title: "Roofing", keywords: "roofing roof sheet sheets sheeting ibr corrugated corrugated iron zinc zincalume chromadek galvanised clip lock concealed cut to length tiles roof tile double roman ridge capping flashing screws insulation aerolite isotherm sisalation underlay gutter downpipe calculator" },
   { href: "/shop-by-stage", title: "Shop by Build Stage", keywords: "build stage foundations slab walls paving drainage landscaping site prep" },
   { href: "/quote", title: "Request a Quote", keywords: "quote rfq bulk civil price" },
   { href: "/faq", title: "FAQ", keywords: "questions help faq whatsapp compliance" },
@@ -29,12 +30,12 @@ const matches = (haystack: string, words: string[]) => words.every((w) => haysta
 export default async function SearchPage({ searchParams }: { searchParams: { q?: string } }) {
   const raw = (searchParams.q ?? "").trim().slice(0, 100);
   const words = raw.toLowerCase().split(/\s+/).filter(Boolean);
-  const [catalogue, packaged, steel, masonry, posts] = words.length
-    ? await Promise.all([getCatalogue(), getPackagedCatalogue(), getSteelCatalogue(), getMasonryCatalogue(), getPublishedPosts()])
-    : [[], [], [], [], []];
+  const [catalogue, packaged, steel, masonry, roofing, posts] = words.length
+    ? await Promise.all([getCatalogue(), getPackagedCatalogue(), getSteelCatalogue(), getMasonryCatalogue(), getRoofingCatalogue(), getPublishedPosts()])
+    : [[], [], [], [], [], []];
   const categoryName = (slug: string) => CATEGORIES.find((c) => c.slug === slug)?.name ?? "";
 
-  const products = [...catalogue, ...packaged, ...[...steel, ...masonry].map((p) => ({ ...p, description: p.description ?? p.summary }))].filter((p) =>
+  const products = [...catalogue, ...packaged, ...[...steel, ...masonry, ...roofing].map((p) => ({ ...p, description: p.description ?? p.summary }))].filter((p) =>
     matches([p.name, p.sku, categoryName(p.categorySlug), p.gradingStandard ?? "", p.description ?? ""].join(" "), words),
   );
   const categories = words.length ? CATEGORIES.filter((c) => matches(`${c.name} ${c.description}`, words)) : [];

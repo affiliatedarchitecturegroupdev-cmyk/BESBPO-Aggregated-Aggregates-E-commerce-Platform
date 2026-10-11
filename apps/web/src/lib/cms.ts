@@ -5,6 +5,7 @@ import { PRODUCTS, type Product } from "@/data/catalogue";
 import { DEFAULT_SLIDES, MEDIA_BY_ID } from "@/data/media";
 import { PACKAGED_PRODUCTS, type PackagedProduct } from "@/data/packaged";
 import { MASONRY_PRODUCTS, type MasonryProduct } from "@/data/masonry";
+import { ROOFING_PRODUCTS, type RoofingProduct } from "@/data/roofing";
 import { STEEL_PRODUCTS, type SteelProduct } from "@/data/steel";
 import { READY_MIX_PRODUCTS, type ReadyMixProduct } from "@/data/ready-mix";
 import { api, apiCached } from "./api";
@@ -167,6 +168,21 @@ export const getMasonryCatalogue = cache(async (): Promise<MerchandisedMasonryPr
   });
 });
 
+export type MerchandisedRoofingProduct = RoofingProduct & {
+  description: string | null;
+  featuredRank: number | null;
+  images: ProductPhoto[];
+};
+
+/** The visible CAT-26..28 roofing products, with staff descriptions and photography. */
+export const getRoofingCatalogue = cache(async (): Promise<MerchandisedRoofingProduct[]> => {
+  const bySku = await getOverlay();
+  return ROOFING_PRODUCTS.filter((p) => bySku.get(p.sku)?.isActive ?? true).map((p) => {
+    const o = bySku.get(p.sku);
+    return { ...p, description: o?.description ?? null, featuredRank: o?.featuredRank ?? null, images: photos(o, p.name) };
+  });
+});
+
 /** The visible catalogue: workbook products minus hidden ones, with descriptions and photography. */
 export const getCatalogue = cache(async (): Promise<MerchandisedProduct[]> => {
   const bySku = await getOverlay();
@@ -187,8 +203,8 @@ export async function getProduct(slug: string) {
 
 /** SKUs staff have hidden — for client components that list products (calculators, quote form). */
 export async function getHiddenSkus(): Promise<string[]> {
-  const visible = new Set([...(await getCatalogue()), ...(await getPackagedCatalogue()), ...(await getReadyMixCatalogue()), ...(await getSteelCatalogue()), ...(await getMasonryCatalogue())].map((p) => p.sku));
-  return [...PRODUCTS, ...PACKAGED_PRODUCTS, ...READY_MIX_PRODUCTS, ...STEEL_PRODUCTS, ...MASONRY_PRODUCTS].filter((p) => !visible.has(p.sku)).map((p) => p.sku);
+  const visible = new Set([...(await getCatalogue()), ...(await getPackagedCatalogue()), ...(await getReadyMixCatalogue()), ...(await getSteelCatalogue()), ...(await getMasonryCatalogue()), ...(await getRoofingCatalogue())].map((p) => p.sku));
+  return [...PRODUCTS, ...PACKAGED_PRODUCTS, ...READY_MIX_PRODUCTS, ...STEEL_PRODUCTS, ...MASONRY_PRODUCTS, ...ROOFING_PRODUCTS].filter((p) => !visible.has(p.sku)).map((p) => p.sku);
 }
 
 /** The live slides: enabled ones whose photo is in the media library, in the saved order. */

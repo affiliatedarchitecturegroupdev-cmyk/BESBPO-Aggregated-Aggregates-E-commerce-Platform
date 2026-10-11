@@ -208,6 +208,56 @@ const JOBS = {
       { sku: "AA-GEO-NONWOVEN-A2", why: "Geotextile behind and under the gabions", unit: "ROLL" },
     ],
   },
+  sheetRoofFixings: {
+    title: "Finish the sheeted roof",
+    stage: "ROOFING",
+    companions: [
+      { sku: "AA-ROF-RIDGE-IBR", why: "Ridge capping along the top" },
+      { sku: "AA-ROF-CLOSURES-IBR", why: "Closures to seal the ribs at ridge and eaves" },
+      { sku: "AA-ROF-SCREWS-TIMBER", why: "Roofing screws into the purlins", unit: "PACK" },
+      { sku: "AA-ROF-UNDERLAY-FOIL", why: "Foil underlay against heat and condensation", unit: "ROLL" },
+      { sku: "AA-ROF-INSUL-GLASSWOOL-135", why: "Ceiling insulation (SANS 10400-XA)", unit: "ROLL" },
+      { sku: "AA-ROF-GUTTER-PVC-6M", why: "Gutters along the eaves" },
+      { sku: "AA-ROF-DOWNPIPE-PVC-3M", why: "Downpipes from the gutters" },
+    ],
+  },
+  sheetRoof: {
+    title: "Roof it with sheeting",
+    stage: "ROOFING",
+    companions: [
+      { sku: "AA-ROF-IBR-047-GALV", why: "IBR roof sheets — or choose the profile and finish", unit: "SHEET_6_0M" },
+      { sku: "AA-ROF-RIDGE-IBR", why: "Ridge capping along the top" },
+      { sku: "AA-ROF-SCREWS-TIMBER", why: "Roofing screws into the purlins", unit: "PACK" },
+      { sku: "AA-ROF-UNDERLAY-FOIL", why: "Foil underlay against heat and condensation", unit: "ROLL" },
+      { sku: "AA-ROF-INSUL-GLASSWOOL-135", why: "Ceiling insulation (SANS 10400-XA)", unit: "ROLL" },
+      { sku: "AA-ROF-GUTTER-PVC-6M", why: "Gutters along the eaves" },
+      { sku: "AA-ROF-DOWNPIPE-PVC-3M", why: "Downpipes from the gutters" },
+    ],
+  },
+  tiledRoof: {
+    title: "Roof it with tiles",
+    stage: "ROOFING",
+    companions: [
+      { sku: "AA-TIL-DOUBLE-ROMAN", why: "Concrete roof tiles, about 10 per m²" },
+      { sku: "AA-TIL-RIDGE", why: "Ridge tiles to match" },
+      { sku: "AA-ROF-UNDERLAY-MEMBRANE", why: "Under-tile membrane below the battens", unit: "ROLL" },
+      { sku: "AA-ROF-INSUL-GLASSWOOL-135", why: "Ceiling insulation (SANS 10400-XA)", unit: "ROLL" },
+      { sku: "AA-ROF-GUTTER-PVC-6M", why: "Gutters along the eaves" },
+      { sku: "AA-ROF-DOWNPIPE-PVC-3M", why: "Downpipes from the gutters" },
+    ],
+  },
+  rainwater: {
+    title: "Take the rainwater away",
+    stage: "ROOFING",
+    companions: [
+      { sku: "AA-ROF-GUTTER-PVC-6M", why: "Gutters along the eaves" },
+      { sku: "AA-ROF-DOWNPIPE-PVC-3M", why: "Downpipes, about one per 10–12 m of gutter" },
+      { sku: "AA-ROF-GUTTER-FITTINGS", why: "Brackets, outlets and corners" },
+      { sku: "AA-DRN-PIPE-UG-110", why: "Underground pipe from the downpipe to the drain", unit: "LENGTH_6M" },
+      { sku: "AA-DRN-01", why: "Stone for a soakaway" },
+      { sku: "AA-GEO-NONWOVEN-A2", why: "Geotextile to wrap the soakaway", unit: "ROLL" },
+    ],
+  },
 } satisfies Record<string, Job>;
 
 type JobKey = keyof typeof JOBS;
@@ -235,6 +285,10 @@ const BY_CATEGORY: Record<string, JobKey> = {
   "pipes-fittings": "drains",
   "precast-drainage": "precast",
   "geosynthetics-membranes": "slab",
+  "roof-sheeting": "sheetRoofFixings",
+  "roof-flashings-fixings": "sheetRoof",
+  "roof-insulation-rainwater": "sheetRoof",
+  "concrete-roof-tiles": "tiledRoof",
 };
 
 /** Products whose job differs from the rest of their category. */
@@ -275,6 +329,11 @@ const BY_SKU: Record<string, JobKey> = {
   "AA-CEM-CMZ-MASONRY-225X": "walls",
   "AA-CEM-KWIKBUILD-MASONRY-225X": "walls",
   "AA-CEM-MAMBA-MASONRY-225X": "walls",
+  "AA-ROF-GUTTER-PVC-6M": "rainwater",
+  "AA-ROF-DOWNPIPE-PVC-3M": "rainwater",
+  "AA-ROF-GUTTER-FITTINGS": "rainwater",
+  "AA-ROF-UNDERLAY-MEMBRANE": "tiledRoof",
+  "AA-STL-STR-LIPPED-CHANNEL": "sheetRoof",
 };
 
 /** Not building materials — silica sand goes to blasting and filtration — so no job is suggested. */

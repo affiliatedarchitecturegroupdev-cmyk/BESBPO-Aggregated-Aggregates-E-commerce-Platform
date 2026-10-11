@@ -22,6 +22,13 @@ export const UNIT_LABEL: Record<UnitOfSale, string> = {
   PACK: "× pack",
   EACH: "× item",
   THOUSAND: "× 1,000",
+  SHEET_3_0M: "× 3.0 m sheet",
+  SHEET_3_6M: "× 3.6 m sheet",
+  SHEET_4_2M: "× 4.2 m sheet",
+  SHEET_4_8M: "× 4.8 m sheet",
+  SHEET_6_0M: "× 6.0 m sheet",
+  SHEET_6_6M: "× 6.6 m sheet",
+  METRE: "m, cut to length",
 };
 
 const ZAR = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });

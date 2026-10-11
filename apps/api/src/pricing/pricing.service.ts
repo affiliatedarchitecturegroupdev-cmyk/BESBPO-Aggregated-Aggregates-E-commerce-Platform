@@ -19,6 +19,14 @@ export const PACKAGED_UNITS = [
   "EACH",
   // Masonry (CAT-19/20): bricks per 1,000 — blocks, lintels and DPC reuse EACH and ROLL.
   "THOUSAND",
+  // Roofing (CAT-26..28): roof sheets in the six standard lengths; flashings, screws and rolls reuse EACH, PACK and ROLL.
+  "SHEET_3_0M",
+  "SHEET_3_6M",
+  "SHEET_4_2M",
+  "SHEET_4_8M",
+  "SHEET_6_0M",
+  "SHEET_6_6M",
+  "METRE",
 ] as const;
 export type PackagedUnit = (typeof PACKAGED_UNITS)[number];
 export type PricingUnit = "ton" | "m3" | "bag" | PackagedUnit;

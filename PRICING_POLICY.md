@@ -25,7 +25,13 @@ and quotes are always re-priced by the pricing service.
   slabs, uPVC pipe (per 6 m length), fittings, DPM and landscape fabric.
   Face bricks, maxis, 190 mm blocks, lintels, kerbs, retaining blocks,
   gabions and all precast drainage are quoted (`MASONRY_CATALOGUE.md`).
-- **Cost proxy:** for cement, ready-mix, steel and masonry the cost is assumed to be the
+  Concrete roof tiles (CAT-29) follow the same rule, per tile.
+- **Roofing (Oct 2026):** the same rule, compared per metre for roof sheets
+  of the same profile, thickness and coating class: a stock length is the
+  lowest per-metre price × its length, × 1.08. Cut-to-length is always
+  quoted; so are single-retailer items, flashings and fixings
+  (`ROOFING_CATALOGUE.md`).
+- **Cost proxy:** for cement, ready-mix, steel, masonry and roofing the cost is assumed to be the
   benchmark itself (`costBasisPercent` 100) until real supplier
   cost/commission terms are known — the biggest open commercial item.
 
@@ -38,7 +44,8 @@ and quotes are always re-priced by the pricing service.
 | Cement — bulk bag, tanker; admixture drums/totes | list | quoted | quoted |
 | Ready-mix | list | 2% | quoted |
 | Steel (rebar, mesh, brickforce, accessories, sections) | list | 4% (approved Oct 2026) | quoted |
-| Masonry & precast (bricks, blocks, lintels, DPC, air bricks; pavers, kerbs, retaining, gabions; pipes, precast drainage, membranes) | list | 4% (approved Oct 2026) | quoted |
+| Masonry & precast (bricks, blocks, lintels, DPC, air bricks; pavers, kerbs, retaining, gabions; pipes, precast drainage, membranes; concrete roof tiles) | list | 4% (approved Oct 2026) | quoted |
+| Roofing (sheeting, flashings, fixings, insulation, underlay, rainwater goods) | list | 4% (approved Oct 2026) | quoted |
 
 "Quoted" means the tier has no self-serve price for that family: the cart
 or quote goes to a person, who confirms it with the supplier.

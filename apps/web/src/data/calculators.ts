@@ -3,7 +3,7 @@
  * strip and the /calculators page. Each one lives where its material is
  * sold; these entries only describe what it works out and link to it.
  */
-export type CalculatorIcon = "tonnage" | "readyMix" | "wall" | "paving" | "drain" | "steel" | "estimator";
+export type CalculatorIcon = "tonnage" | "readyMix" | "wall" | "paving" | "drain" | "steel" | "roof" | "estimator";
 
 export type CalculatorLink = {
   key: string;
@@ -78,6 +78,16 @@ export const CALCULATORS: CalculatorLink[] = [
     href: "/reinforcing-steel#bar-mass-calculator",
     cta: "Work out the steel",
     icon: "steel",
+  },
+  {
+    key: "roof",
+    name: "Roof",
+    works: "Plan size and pitch to sheets or tiles, ridge, insulation and gutters",
+    detail:
+      "For a gable or lean-to roof: sheets per slope at the profile's cover width — in a stock length where one fits, otherwise cut to length on a quote — or tiles with 5% for breakage, plus ridge, underlay, ceiling insulation, gutters and downpipes. Hipped roofs go to a quote with the plan.",
+    href: "/roofing#roof-calculator",
+    cta: "Size a roof",
+    icon: "roof",
   },
   {
     key: "estimator",

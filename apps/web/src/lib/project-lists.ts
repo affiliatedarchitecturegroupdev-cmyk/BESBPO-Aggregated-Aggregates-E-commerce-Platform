@@ -12,7 +12,7 @@ import { PRODUCTS } from "@/data/catalogue";
 import { findQuotable, isWholeUnit } from "@/data/quotable";
 import { STEEL_PRODUCTS } from "@/data/steel";
 
-export type BuildStage = "SITE_PREP" | "FOUNDATIONS" | "SLABS" | "WALLS" | "PAVING_ROADS" | "DRAINAGE" | "LANDSCAPING" | "OTHER";
+export type BuildStage = "SITE_PREP" | "FOUNDATIONS" | "SLABS" | "WALLS" | "ROOFING" | "PAVING_ROADS" | "DRAINAGE" | "LANDSCAPING" | "OTHER";
 
 /** In build order, so a list reads like the job. */
 export const STAGES: { value: BuildStage; label: string; hint: string }[] = [
@@ -20,6 +20,7 @@ export const STAGES: { value: BuildStage; label: string; hint: string }[] = [
   { value: "FOUNDATIONS", label: "Foundations", hint: "Footings, rafts, ground beams" },
   { value: "SLABS", label: "Surface beds & slabs", hint: "Floors, suspended slabs, screeds" },
   { value: "WALLS", label: "Walls & superstructure", hint: "Brickwork, columns, lintels" },
+  { value: "ROOFING", label: "Roofing", hint: "Sheeting or tiles, flashings, insulation, gutters" },
   { value: "PAVING_ROADS", label: "Paving, driveways & roads", hint: "Base course, bedding, kerbs" },
   { value: "DRAINAGE", label: "Drainage & services", hint: "Pipe bedding, French drains" },
   { value: "LANDSCAPING", label: "Landscaping", hint: "Decorative stone, garden beds" },
@@ -49,6 +50,10 @@ const CATEGORY_STAGE: Record<string, BuildStage> = {
   "pipes-fittings": "DRAINAGE",
   "precast-drainage": "DRAINAGE",
   "geosynthetics-membranes": "DRAINAGE",
+  "roof-sheeting": "ROOFING",
+  "roof-flashings-fixings": "ROOFING",
+  "roof-insulation-rainwater": "ROOFING",
+  "concrete-roof-tiles": "ROOFING",
   "drainage-filter": "DRAINAGE",
   "decorative-landscaping": "LANDSCAPING",
   "agricultural-industrial": "OTHER",

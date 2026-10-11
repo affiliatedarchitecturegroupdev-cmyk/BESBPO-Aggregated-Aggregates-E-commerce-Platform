@@ -4,8 +4,9 @@ import { PromoSlot } from "@/components/merchandising/PromoSlot";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { ProductCard } from "@/components/product/ProductCard";
 import { GRADING_STANDARDS, type Product } from "@/data/catalogue";
-import { getCatalogue, getPackagedCatalogue, getReadyMixCatalogue, getSteelCatalogue, getMasonryCatalogue, type MerchandisedMasonryProduct, type MerchandisedPackagedProduct, type MerchandisedProduct, type MerchandisedReadyMixProduct, type MerchandisedSteelProduct } from "@/lib/cms";
-import { B2B_CATEGORIES, CATEGORIES, CORE_CATEGORIES, MASONRY_CATEGORIES, READY_MIX_CATEGORIES, STEEL_CATEGORIES } from "@/data/categories";
+import { getCatalogue, getPackagedCatalogue, getReadyMixCatalogue, getSteelCatalogue, getMasonryCatalogue, getRoofingCatalogue, type MerchandisedMasonryProduct, type MerchandisedRoofingProduct, type MerchandisedPackagedProduct, type MerchandisedProduct, type MerchandisedReadyMixProduct, type MerchandisedSteelProduct } from "@/lib/cms";
+import { B2B_CATEGORIES, CATEGORIES, CORE_CATEGORIES, MASONRY_CATEGORIES, READY_MIX_CATEGORIES, ROOFING_CATEGORIES, STEEL_CATEGORIES } from "@/data/categories";
+import { ROOF_TILE_CATEGORIES } from "@/data/masonry";
 import { PACKAGED_PRODUCTS } from "@/data/packaged";
 import { INDUSTRIES } from "@/data/industries";
 import { getActivePromotions } from "@/lib/promotions";
@@ -63,6 +64,7 @@ function inScope(categorySlug: string, { category, industry, group }: SearchPara
   if (group === "ready-mix") return categorySlug === "ready-mix-concrete";
   if (group === "steel") return STEEL_CATEGORIES.some((c) => c.slug === categorySlug);
   if (group === "masonry") return MASONRY_CATEGORIES.some((c) => c.slug === categorySlug);
+  if (group === "roofing") return ROOFING_CATEGORIES.some((c) => c.slug === categorySlug) || ROOF_TILE_CATEGORIES.includes(categorySlug);
   return true;
 }
 
@@ -117,13 +119,20 @@ function filterMasonry(catalogue: MerchandisedMasonryProduct[], params: SearchPa
   return params.sort === "name" ? [...filtered].sort((a, b) => a.name.localeCompare(b.name)) : filtered;
 }
 
+function filterRoofing(catalogue: MerchandisedRoofingProduct[], params: SearchParams): MerchandisedRoofingProduct[] {
+  if (params.grading || params.sale || params.family || params.brand) return [];
+  const filtered = catalogue.filter((p) => (!params.q || matchesSearch({ ...p, description: p.description ?? p.summary }, params.q)) && inScope(p.categorySlug, params));
+  return params.sort === "name" ? [...filtered].sort((a, b) => a.name.localeCompare(b.name)) : filtered;
+}
+
 export default async function ProductListingPage({ searchParams }: { searchParams: SearchParams }) {
-  const [catalogue, packagedCatalogue, readyMixCatalogue, steelCatalogue, masonryCatalogue, promotions] = await Promise.all([
+  const [catalogue, packagedCatalogue, readyMixCatalogue, steelCatalogue, masonryCatalogue, roofingCatalogue, promotions] = await Promise.all([
     getCatalogue(),
     getPackagedCatalogue(),
     getReadyMixCatalogue(),
     getSteelCatalogue(),
     getMasonryCatalogue(),
+    getRoofingCatalogue(),
     getActivePromotions({ category: searchParams.category, industry: searchParams.industry }),
   ]);
   const products = filterProducts(catalogue, searchParams);
@@ -131,14 +140,16 @@ export default async function ProductListingPage({ searchParams }: { searchParam
   const readyMix = filterReadyMix(readyMixCatalogue, searchParams);
   const steel = filterSteel(steelCatalogue, searchParams);
   const masonry = filterMasonry(masonryCatalogue, searchParams);
-  const total = products.length + packaged.length + readyMix.length + steel.length + masonry.length;
+  const roofing = filterRoofing(roofingCatalogue, searchParams);
+  const total = products.length + packaged.length + readyMix.length + steel.length + masonry.length + roofing.length;
   const category = CATEGORIES.find((c) => c.slug === searchParams.category);
   const industry = category ? undefined : INDUSTRIES.find((i) => i.slug === searchParams.industry);
   const b2bGroup = !category && !industry && searchParams.group === "b2b-bulk";
   const steelGroup = !category && !industry && searchParams.group === "steel";
   const masonryGroup = !category && !industry && searchParams.group === "masonry";
+  const roofingGroup = !category && !industry && searchParams.group === "roofing";
   const query = searchParams.q?.trim();
-  const hasFilters = Boolean(query || searchParams.category || searchParams.grading || searchParams.sale || searchParams.family || searchParams.brand || industry || b2bGroup || steelGroup || masonryGroup);
+  const hasFilters = Boolean(query || searchParams.category || searchParams.grading || searchParams.sale || searchParams.family || searchParams.brand || industry || b2bGroup || steelGroup || masonryGroup || roofingGroup);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
@@ -150,9 +161,10 @@ export default async function ProductListingPage({ searchParams }: { searchParam
         {b2bGroup && <> / Bulk &amp; Infrastructure</>}
         {steelGroup && <> / Reinforcing &amp; Structural Steel</>}
         {masonryGroup && <> / Masonry, Paving &amp; Retaining</>}
+        {roofingGroup && <> / Roofing</>}
       </nav>
       <h1 className="mt-3 font-display text-3xl font-bold text-basalt">
-        {query ? `Results for “${query}”` : (category?.name ?? industry?.name ?? (b2bGroup ? "Bulk & Infrastructure" : steelGroup ? "Reinforcing & Structural Steel" : masonryGroup ? "Masonry, Paving & Retaining" : "All Products"))}
+        {query ? `Results for “${query}”` : (category?.name ?? industry?.name ?? (b2bGroup ? "Bulk & Infrastructure" : steelGroup ? "Reinforcing & Structural Steel" : masonryGroup ? "Masonry, Paving & Retaining" : roofingGroup ? "Roofing" : "All Products"))}
       </h1>
       {category && <p className="mt-1 font-body text-sm text-slate">{category.description}</p>}
       {industry && (
@@ -171,6 +183,7 @@ export default async function ProductListingPage({ searchParams }: { searchParam
             {b2bGroup && <input type="hidden" name="group" value="b2b-bulk" />}
             {steelGroup && <input type="hidden" name="group" value="steel" />}
             {masonryGroup && <input type="hidden" name="group" value="masonry" />}
+            {roofingGroup && <input type="hidden" name="group" value="roofing" />}
             <label className="mt-4 block">
               <span className="font-mono text-[10px] uppercase text-slate">Search</span>
               <input name="q" type="search" defaultValue={query ?? ""} placeholder="e.g. river sand" className={selectClass} />
@@ -201,6 +214,11 @@ export default async function ProductListingPage({ searchParams }: { searchParam
                 </optgroup>
                 <optgroup label="Masonry, paving & retaining">
                   {MASONRY_CATEGORIES.map((c) => (
+                    <option key={c.slug} value={c.slug}>{c.name}</option>
+                  ))}
+                </optgroup>
+                <optgroup label="Roofing">
+                  {ROOFING_CATEGORIES.map((c) => (
                     <option key={c.slug} value={c.slug}>{c.name}</option>
                   ))}
                 </optgroup>
@@ -304,6 +322,9 @@ export default async function ProductListingPage({ searchParams }: { searchParam
                 <PackagedProductCard key={product.sku} product={product} />
               ))}
               {masonry.map((product) => (
+                <PackagedProductCard key={product.sku} product={product} />
+              ))}
+              {roofing.map((product) => (
                 <PackagedProductCard key={product.sku} product={product} />
               ))}
             </div>

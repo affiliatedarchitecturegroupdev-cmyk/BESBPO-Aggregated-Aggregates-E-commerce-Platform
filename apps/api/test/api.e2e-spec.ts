@@ -338,7 +338,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
       const served = await http().get(`/merchandising/images/${image.body.id}`).expect(200);
       expect(served.headers["content-type"]).toBe("image/png");
       const overlay = await http().get("/merchandising/products").expect(200);
-      expect(overlay.body).toHaveLength(197); // 51 aggregates + 42 cement and other packaged goods + 7 ready-mix grades + 43 steel + 54 masonry & precast
+      expect(overlay.body).toHaveLength(231); // 51 aggregates + 42 cement and other packaged goods + 7 ready-mix grades + 43 steel + 58 masonry & precast (incl. roof tiles) + 30 roofing
       expect(overlay.body.find((p: { sku: string }) => p.sku === sku)).toMatchObject({
         featuredRank: 2,
         images: expect.arrayContaining([expect.objectContaining({ id: image.body.id, altText: "Filter media stockpile" })]),
@@ -718,6 +718,47 @@ describe("Aggregated Aggregates API (e2e)", () => {
             { sku: "AA-PAV-ROAD-KERB", unit: "EACH", quantity: 40 },
             { sku: "AA-RET-GABION-BASKET", unit: "EACH", quantity: 6 },
           ],
+        })
+        .expect(201);
+      expect(quote.body.reasonCode).toBe("PRICE_ON_REQUEST");
+      await prisma.quote.delete({ where: { id: quote.body.id } });
+      await prisma.order.delete({ where: { id: res.body.id } });
+    });
+
+    it("orders roof sheets by stock length and tiles on the flatbed in their own families, and quotes cut-to-length", async () => {
+      const token = await register("roofing");
+      const sheet = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-ROF-IBR-047-GALV" }, include: { category: true } });
+      expect(sheet.category.slug).toBe("roof-sheeting");
+      expect(sheet.category.catalogueGroup).toBe("roofing");
+      expect(sheet.roofProfile).toBe("IBR");
+      expect(Number(sheet.sheetThicknessMm)).toBe(0.47);
+      expect(sheet.coverWidthMm).toBe(686);
+      expect(sheet.unitsOfSale).toEqual(["SHEET_3_0M", "SHEET_3_6M", "SHEET_4_2M", "SHEET_4_8M", "SHEET_6_0M", "SHEET_6_6M", "METRE"]);
+      const tile = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-TIL-DOUBLE-ROMAN" }, include: { category: true } });
+      expect(tile.category.catalogueGroup).toBe("masonry");
+      const res = await http()
+        .post("/orders")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          deliveryDistanceKm: 15,
+          lineItems: [
+            { productId: sheet.id, unitOfSale: "SHEET_4_8M", quantity: 19 },
+            { productId: tile.id, unitOfSale: "EACH", quantity: 100 },
+          ],
+        })
+        .expect(201);
+      expect(Number(res.body.subtotal)).toBe(11023.57); // 19 x R525.03 + 100 x R10.48
+      expect(Number(res.body.deliveryFee)).toBe(0);
+      const lines = await prisma.orderLineItem.findMany({ where: { orderId: res.body.id } });
+      expect(lines.map((l) => l.pricingFamily).sort()).toEqual(["MASONRY", "ROOFING"]);
+      const quote = await http()
+        .post("/quotes")
+        .send({
+          contactName: "Roof Owner",
+          contactEmail: `roof-${run}@example.com`,
+          deliveryAddress: "3 Site Road, Pretoria",
+          notes: "Cut to length: 12 x 7.8 m",
+          lines: [{ sku: "AA-ROF-IBR-047-GALV", unit: "METRE", quantity: 94 }],
         })
         .expect(201);
       expect(quote.body.reasonCode).toBe("PRICE_ON_REQUEST");

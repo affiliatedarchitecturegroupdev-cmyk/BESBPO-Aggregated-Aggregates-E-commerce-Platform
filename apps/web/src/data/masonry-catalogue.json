@@ -1,5 +1,5 @@
 {
- "_source": "Masonry & precast line: CAT-19 Bricks & Blocks, CAT-20 Lintels, DPC & Wall Accessories, CAT-21 Paving, Kerbs & Edging, CAT-22 Retaining & Erosion Control, CAT-23 Pipes & Fittings, CAT-24 Precast Drainage and CAT-25 Geosynthetics & Membranes (MASONRY_CATALOGUE.md). A unit is live only where at least two SA retailers show a regular price for the same product; list = lowest x 1.08. Everything else is quoted with the supplier. Bricks are sold per 1,000; units_per_m2 is the count per m² of single-leaf wall with 10 mm joints (bricks and blocks), of paved area (pavers and slabs, laid tight) or of wall face (retaining blocks, as the maker lists).",
+ "_source": "Masonry & precast line: CAT-19 Bricks & Blocks, CAT-20 Lintels, DPC & Wall Accessories, CAT-21 Paving, Kerbs & Edging, CAT-22 Retaining & Erosion Control, CAT-23 Pipes & Fittings, CAT-24 Precast Drainage, CAT-25 Geosynthetics & Membranes and CAT-29 Concrete Roof Tiles (MASONRY_CATALOGUE.md). A unit is live only where at least two SA retailers show a regular price for the same product; list = lowest x 1.08. Everything else is quoted with the supplier. Bricks are sold per 1,000; units_per_m2 is the count per m² of single-leaf wall with 10 mm joints (bricks and blocks), of paved area (pavers and slabs, laid tight), of wall face (retaining blocks, as the maker lists) or of roof (concrete roof tiles, approximate — the batten gauge governs).",
  "categories": [
   {
    "slug": "bricks-blocks",
@@ -35,6 +35,11 @@
    "slug": "geosynthetics-membranes",
    "name": "Geosynthetics & Membranes",
    "code": "CAT-25"
+  },
+  {
+   "slug": "concrete-roof-tiles",
+   "name": "Concrete Roof Tiles",
+   "code": "CAT-29"
   }
  ],
  "products": [
@@ -1758,6 +1763,133 @@
      "list_price_per_unit": null,
      "pricing_status": "Quote-only — no retail benchmark",
      "source_note": "Engineered product — quoted with the supplier by grade."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-TIL-DOUBLE-ROMAN",
+   "slug": "concrete-roof-tile-double-roman",
+   "name": "Concrete Roof Tile, Double Roman — standard colours",
+   "category_slug": "concrete-roof-tiles",
+   "grading_standard": "SANS 542 concrete roofing tiles",
+   "masonry_class": "Concrete roof tile (Double Roman)",
+   "unit_size": "About 420 × 330 mm",
+   "units_per_m2": 10,
+   "description": "The everyday South African concrete roof tile with the double-roll Roman profile, in standard surface-coloured terracotta, red, brown or black. About 10 tiles to the square metre of roof — the exact count depends on the batten gauge and the roof pitch, so check it against the maker's fixing guide.",
+   "typical_uses": [
+    "Pitched house roofs (typically 17.5° and steeper)",
+    "Re-roofing and extensions to match an existing tiled roof"
+   ],
+   "handling_notes": "Stack tiles on edge on a level, firm base near the roof, and lift them to the roof in small batches. Order a whole roof from one batch so the colour matches, plus a few spares for breakages and future repairs.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": 9.7,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 9.7,
+     "markup_percent": 8,
+     "list_price_per_unit": 10.48,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Cashbuild Double Roman concrete roof tile terracotta R9.70 each (lowest; a R0.15 handling fee is excluded); Leroy Merlin Marley Double Roman standard terracotta and red R10.50 each; Cashbuild red R14.00. Black and other colours vary — the colour is confirmed on the order. checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-TIL-DOUBLE-ROMAN-THROUGH",
+   "slug": "concrete-roof-tile-double-roman-through-colour",
+   "name": "Concrete Roof Tile, Double Roman — through-colour and slate",
+   "category_slug": "concrete-roof-tiles",
+   "grading_standard": "SANS 542 concrete roofing tiles",
+   "masonry_class": "Concrete roof tile (Double Roman)",
+   "unit_size": "About 420 × 330 mm",
+   "units_per_m2": 10,
+   "description": "Double Roman tiles coloured right through the concrete (or in slate grey), so chips and wear don't show the grey core. About 10 to the square metre — check the maker's fixing guide for your batten gauge.",
+   "typical_uses": [
+    "Pitched roofs where the colour must last",
+    "Coastal and high-exposure roofs"
+   ],
+   "handling_notes": "Stack tiles on edge on a level, firm base near the roof, and lift them to the roof in small batches. Order a whole roof from one batch so the colour matches, plus a few spares for breakages and future repairs.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Prices depend on the maker and colour (Buco lists Coverland through-colour brown from R11.19 and Marley slate from R15.17) — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-TIL-FLAT",
+   "slug": "concrete-roof-tile-flat-profile",
+   "name": "Concrete Roof Tile, Flat Profile",
+   "category_slug": "concrete-roof-tiles",
+   "grading_standard": "SANS 542 concrete roofing tiles",
+   "masonry_class": "Concrete roof tile (flat)",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Flat (slate-look) concrete roof tile for a modern, clean roofline. Coverage per square metre depends on the range — we confirm it with the maker.",
+   "typical_uses": [
+    "Contemporary pitched roofs",
+    "Re-roofing to a flat-tile look"
+   ],
+   "handling_notes": "Stack tiles on edge on a level, firm base near the roof, and lift them to the roof in small batches. Order a whole roof from one batch so the colour matches, plus a few spares for breakages and future repairs.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Flat-profile ranges differ by maker — quoted with the supplier."
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-TIL-RIDGE",
+   "slug": "concrete-ridge-tile",
+   "name": "Concrete Ridge Tile (taper or V-capped)",
+   "category_slug": "concrete-roof-tiles",
+   "grading_standard": "SANS 542 concrete roofing tiles — ridge and hip fittings",
+   "masonry_class": "Ridge tile",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Ridge and hip tiles bedded or dry-fixed along the top of the roof, matched to the main tile's colour. Roughly 2.4 to 3 per metre of ridge, depending on the fitting.",
+   "typical_uses": [
+    "Ridges and hips of tiled roofs"
+   ],
+   "handling_notes": "Stack tiles on edge on a level, firm base near the roof, and lift them to the roof in small batches. Order a whole roof from one batch so the colour matches, plus a few spares for breakages and future repairs.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Only one retailer's ridge-tile prices found (Leroy Merlin, R45–R90 depending on fitting and colour) — quoted with the supplier."
     }
    ],
    "manufacturer": null,

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CategoryCarousel, type CategoryCard, type CategoryPage } from "@/components/merchandising/CategoryCarousel";
-import { CORE_CATEGORIES, CATEGORIES, MASONRY_CATEGORIES, type Category } from "@/data/categories";
+import { CORE_CATEGORIES, CATEGORIES, MASONRY_CATEGORIES, ROOFING_CATEGORIES, type Category } from "@/data/categories";
+import { ROOF_TILE_CATEGORIES } from "@/data/masonry";
 import { PLANT, SERVICES } from "@/data/plant-services";
 import { QUOTABLE } from "@/data/quotable";
 import { getCatalogue } from "@/lib/cms";
@@ -29,7 +30,9 @@ function categoryCard(category: Category): CategoryCard {
  * Shop by Category: up to nine cards a page. Page one is the nine aggregate
  * categories; page two cement, ready-mix, steel, plant hire and site
  * services; page three walls, paving and drainage — the seven masonry & precast
- * categories, CAT-19..25 (BUILD_STAGES.md).
+ * categories, CAT-19..25 (BUILD_STAGES.md); page four roofing — sheeting,
+ * flashings and fixings, insulation and rainwater, and concrete roof tiles
+ * (CAT-26..29, ROOFING_CATALOGUE.md).
  */
 export async function CategoryGrid() {
   const catalogue = await getCatalogue();
@@ -65,12 +68,14 @@ export async function CategoryGrid() {
     },
   ];
 
-  const walling = MASONRY_CATEGORIES.map(categoryCard);
+  const walling = MASONRY_CATEGORIES.filter((c) => !ROOF_TILE_CATEGORIES.includes(c.slug)).map(categoryCard);
+  const roofing = [...ROOFING_CATEGORIES, ...MASONRY_CATEGORIES.filter((c) => ROOF_TILE_CATEGORIES.includes(c.slug))].map(categoryCard);
 
   const pages: CategoryPage[] = [
     { label: "Aggregates", summary: "Nine aggregate categories, from sub-base to decorative — every price straight from our published pricing framework.", cards: aggregates },
     { label: "Cement, concrete, steel & hire", summary: "Cement, ready-mix, reinforcing and structural steel, plus plant hire and site services for the same job.", cards: more },
     { label: "Walls, paving & drainage", summary: "Bricks, blocks, lintels and DPC; pavers, kerbs and retaining; pipes, precast drainage and membranes.", cards: walling },
+    { label: "Roofing", summary: "IBR, corrugated and concealed-fix sheeting in stock lengths or cut to length, concrete roof tiles, flashings, insulation and gutters.", cards: roofing },
   ];
 
   return (
@@ -81,7 +86,7 @@ export async function CategoryGrid() {
           All products →
         </Link>
       </div>
-      <CategoryCarousel pages={pages} total={aggregates.length + more.length + walling.length} />
+      <CategoryCarousel pages={pages} total={aggregates.length + more.length + walling.length + roofing.length} />
     </section>
   );
 }
