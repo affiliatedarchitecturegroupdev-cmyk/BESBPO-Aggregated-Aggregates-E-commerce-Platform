@@ -12,6 +12,7 @@ straight to each one; neither does any maths of its own.
 | Paving | Area × units per m², +5% for cuts | `/paving#paving-calculator` |
 | French drain | Trench to drainage stone (t), perforated pipe (6 m lengths), geotextile rolls | `/drainage#french-drain-calculator` |
 | Rebar mass | Bars × length to kg, tonnes and 6 m stock lengths (SANS 920 mass/m) | `/reinforcing-steel#bar-mass-calculator` |
+| Roof | Gable or lean-to plan size and pitch to sheets per slope (stock length or cut to length) or tiles +5%, ridge, underlay, insulation, gutters, downpipes | `/roofing#roof-calculator` |
 | Project estimator | Job size to volume, tonnes and tipper loads, with the matching job pack | `/estimator` |
 
 The list is `apps/web/src/data/calculators.ts`. Each entry has a short line for

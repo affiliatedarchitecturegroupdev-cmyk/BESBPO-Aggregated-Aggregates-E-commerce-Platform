@@ -4,11 +4,12 @@ import { PendingPhotoTag } from "@/components/product/PendingPhotoTag";
 import type { PackagedProduct, TierPrices } from "@/data/packaged";
 import type { ReadyMixProduct } from "@/data/ready-mix";
 import type { MasonryProduct } from "@/data/masonry";
+import type { RoofingProduct } from "@/data/roofing";
 import type { SteelProduct } from "@/data/steel";
 import { formatZAR } from "@/lib/pricing";
 
-/** Listing card for packaged goods (CAT-10/11), ready-mix (CAT-12), steel (CAT-15..18) and masonry (CAT-19/20): a real price only where it is benchmarked. */
-export function PackagedProductCard({ product }: { product: (PackagedProduct | ReadyMixProduct | SteelProduct | MasonryProduct) & { images?: { src: string; alt: string; pending?: boolean }[] } }) {
+/** Listing card for packaged goods (CAT-10/11), ready-mix (CAT-12), steel (CAT-15..18), masonry (CAT-19..25, 29) and roofing (CAT-26..28): a real price only where it is benchmarked. */
+export function PackagedProductCard({ product }: { product: (PackagedProduct | ReadyMixProduct | SteelProduct | MasonryProduct | RoofingProduct) & { images?: { src: string; alt: string; pending?: boolean }[] } }) {
   const units: { unit: string; label: string; prices: TierPrices | null }[] = product.units;
   const headline = units.find((u) => u.prices !== null);
   const photo = product.images?.[0];

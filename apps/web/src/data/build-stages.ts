@@ -89,6 +89,21 @@ const SHOP: StageShop[] = [
     tools: [{ label: "Wall calculator", href: "/bricks-blocks" }],
   },
   {
+    stage: "ROOFING",
+    intro: "Closing the building in: roof sheets in stock lengths or cut to each slope (or concrete tiles), ridge and flashings, the fixings, insulation over the ceiling and gutters to carry the water away.",
+    picks: [
+      { sku: "AA-ROF-IBR-047-GALV", role: "Roof sheets", unit: "SHEET_6_0M" },
+      { sku: "AA-ROF-IBR-050-PREPAINTED", role: "Colour-coated sheets", unit: "SHEET_6_0M" },
+      { sku: "AA-TIL-DOUBLE-ROMAN", role: "Or concrete roof tiles" },
+      { sku: "AA-ROF-RIDGE-IBR", role: "Ridge capping" },
+      { sku: "AA-ROF-INSUL-GLASSWOOL-135", role: "Ceiling insulation", unit: "ROLL" },
+      { sku: "AA-ROF-DOWNPIPE-PVC-3M", role: "Downpipes" },
+    ],
+    categories: ["roof-sheeting", "concrete-roof-tiles", "roof-flashings-fixings", "roof-insulation-rainwater", "structural-steel"],
+    hire: ["AA-SVC-SKIP-6M3"],
+    tools: [{ label: "Roof calculator", href: "/roofing#roof-calculator" }],
+  },
+  {
     stage: "PAVING_ROADS",
     intro: "Driveways, yards and roads: a compacted sub-base and base course, sand bedding, the pavers themselves and kerbs to hold the edges.",
     picks: [

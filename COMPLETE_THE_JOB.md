@@ -41,6 +41,10 @@ companions show. A job left with fewer than two companions isn't shown.
 | Finish the garden and paths | Landscaping | Decorative stone, crusher dust, weed mat |
 | Build the retaining wall | Landscaping | Retaining blocks, geogrid |
 | Build the gabions | Landscaping | Gabions, gabion stone, rip rap |
+| Finish the sheeted roof | Roofing | Roof sheeting |
+| Roof it with sheeting | Roofing | Flashings & fixings, insulation & underlay, steel purlins |
+| Roof it with tiles | Roofing | Concrete roof tiles, under-tile membrane |
+| Take the rainwater away | Roofing | Gutters, downpipes and fittings |
 
 Agricultural and dolomitic lime and silica sand have no job on purpose — they go to farms, blasting and filtration, not builds (`NO_JOB` and the unmapped agricultural category).
 

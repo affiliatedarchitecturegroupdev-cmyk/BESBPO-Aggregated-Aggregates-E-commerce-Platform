@@ -16,6 +16,7 @@ What each tier may self-serve depends on the product family:
     READY_MIX       list     2%                 quote only
     STEEL           list     4%                 quote only
     MASONRY         list     4%                 quote only
+    ROOFING         list     4%                 quote only
 
 "Quote only" means the tier has no self-serve price for that family: the
 order goes to a quote. Card/gateway fees (~3%) are not netted off yet.
@@ -37,7 +38,8 @@ CEMENT_BULK = "CEMENT_BULK"
 READY_MIX = "READY_MIX"
 STEEL = "STEEL"
 MASONRY = "MASONRY"
-FAMILIES = (AGGREGATE, CEMENT_BAGGED, CEMENT_BULK, READY_MIX, STEEL, MASONRY)
+ROOFING = "ROOFING"
+FAMILIES = (AGGREGATE, CEMENT_BAGGED, CEMENT_BULK, READY_MIX, STEEL, MASONRY, ROOFING)
 
 # Discount per tier as a fraction; None = no self-serve price (quote it).
 SCHEDULE: dict[str, dict[str, Optional[Decimal]]] = {
@@ -49,6 +51,9 @@ SCHEDULE: dict[str, dict[str, Optional[Decimal]]] = {
     STEEL: {"RETAIL": Decimal(0), "CONTRACTOR_TRADE": Decimal("0.04"), "VOLUME_CIVIL_BULK": None},
     # Masonry & precast (bricks, blocks, paving, retaining, drainage, membranes): trade 4%, approved by the owner, 10 Oct 2026.
     MASONRY: {"RETAIL": Decimal(0), "CONTRACTOR_TRADE": Decimal("0.04"), "VOLUME_CIVIL_BULK": None},
+    # Roofing (sheeting, flashings, fixings, insulation, rainwater goods): trade 4% proposed to match steel
+    # and masonry — awaiting the owner's approval (PRICING_POLICY.md).
+    ROOFING: {"RETAIL": Decimal(0), "CONTRACTOR_TRADE": Decimal("0.04"), "VOLUME_CIVIL_BULK": None},
 }
 
 CENT = Decimal("0.01")

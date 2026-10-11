@@ -197,10 +197,15 @@ model Product {
   masonryClass              String? // e.g. "Clay stock (NFP)", "Hollow concrete block", "Prestressed lintel"
   unitSize                  String? // e.g. "222 × 106 × 73 mm", "1.8 m long", "110 mm × 40 m roll"
   unitsPerM2                Decimal?             @db.Decimal(6, 2) // per m² of single-leaf wall, 10 mm joints
+  // Roofing (ROOFING_CATALOGUE.md) — roof sheeting only.
+  roofProfile               String? // "IBR" | "Corrugated" | "Concealed-fix"
+  sheetThicknessMm          Decimal?             @db.Decimal(4, 2) // 0.30 to 0.80
+  coating                   String? // e.g. "Z150 galvanised", "AZ150 aluminium-zinc", "colour-coated"
+  coverWidthMm              Int? // effective cover width of one sheet
   readyMixPriceBand         ReadyMixPriceBand?
   images                    ProductImage[]
   priceBand                 PriceBand?
-  packagedPriceBands        PackagedPriceBand[] // CAT-10/CAT-11 packaged goods, CAT-15..18 steel and CAT-19/20 masonry
+  packagedPriceBands        PackagedPriceBand[] // CAT-10/CAT-11 packaged goods, CAT-15..18 steel, masonry (CAT-19..25, 29) and roofing (CAT-26..28)
   complianceDocuments       ComplianceDocument[]
   quoteLineItems            QuoteLineItem[]
   orderLineItems            OrderLineItem[]
@@ -453,6 +458,14 @@ enum UnitOfSale {
   EACH
   // Masonry (CAT-19/20, MASONRY_CATALOGUE.md) — bricks are sold per 1,000; blocks, lintels and DPC use EACH / ROLL
   THOUSAND
+  // Roofing (CAT-26..28, ROOFING_CATALOGUE.md) — roof sheets in the standard lengths; other lengths are cut on a quote
+  SHEET_3_0M
+  SHEET_3_6M
+  SHEET_4_2M
+  SHEET_4_8M
+  SHEET_6_0M
+  SHEET_6_6M
+  METRE // cut to length, 1 m to 14 m — always quoted; the cutting list travels with the quote
 }
 
 /// Captures quote-only orders before they become a priced Order — the RFQ
@@ -1605,6 +1618,7 @@ enum BuildStage {
   FOUNDATIONS
   SLABS
   WALLS
+  ROOFING
   PAVING_ROADS
   DRAINAGE
   LANDSCAPING

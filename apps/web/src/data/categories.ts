@@ -3,7 +3,7 @@ export type Category = {
   name: string;
   description: string;
   /** core = the aggregate catalogue (pricing framework workbook); b2b-bulk = packaged cement, binders and chemicals; ready-mix = CAT-12 concrete. */
-  catalogueGroup: "core" | "b2b-bulk" | "ready-mix" | "steel" | "masonry";
+  catalogueGroup: "core" | "b2b-bulk" | "ready-mix" | "steel" | "masonry" | "roofing";
 };
 
 // The nine core categories of the pricing framework workbook (Category Markup
@@ -42,6 +42,12 @@ export const CATEGORIES: Category[] = [
   { slug: "pipes-fittings", name: "Pipes & Fittings", description: "uPVC underground sewer and drain pipe in 6 m lengths, bends, junctions, rodding eyes and perforated subsoil drain pipe.", catalogueGroup: "masonry" },
   { slug: "precast-drainage", name: "Precast Drainage", description: "SANS 677 concrete pipes, manhole rings and covers, channel drains, V-drains and portal culverts.", catalogueGroup: "masonry" },
   { slug: "geosynthetics-membranes", name: "Geosynthetics & Membranes", description: "SABS damp-proof membrane for surface beds, nonwoven geotextile, weed-control fabric and geogrid.", catalogueGroup: "masonry" },
+  // CAT-29 — concrete roof tiles, in the masonry & precast line (MASONRY_CATALOGUE.md).
+  { slug: "concrete-roof-tiles", name: "Concrete Roof Tiles", description: "SANS 542 Double Roman and flat-profile concrete roof tiles, and matching ridge tiles.", catalogueGroup: "masonry" },
+  // CAT-26..28 — roofing (ROOFING_CATALOGUE.md).
+  { slug: "roof-sheeting", name: "Roof Sheeting", description: "IBR, corrugated and concealed-fix sheets from 0.30 to 0.80 mm — galvanised, Zincalume® or colour-coated — in standard lengths or cut to length.", catalogueGroup: "roofing" },
+  { slug: "roof-flashings-fixings", name: "Flashings, Ridges & Fixings", description: "Ridge capping, barge and over-tile flashings, closures, roofing screws and hook bolts.", catalogueGroup: "roofing" },
+  { slug: "roof-insulation-rainwater", name: "Insulation, Underlay & Rainwater", description: "135 mm ceiling insulation, foil underlay and under-tile membrane, and PVC gutters and downpipes.", catalogueGroup: "roofing" },
 ];
 
 export const CORE_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "core");
@@ -49,3 +55,4 @@ export const B2B_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "b2b
 export const READY_MIX_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "ready-mix");
 export const STEEL_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "steel");
 export const MASONRY_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "masonry");
+export const ROOFING_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "roofing");

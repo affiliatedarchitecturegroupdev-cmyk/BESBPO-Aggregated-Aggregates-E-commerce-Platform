@@ -1,4 +1,4 @@
-import { BrickWall, Calculator, Droplets, Grid2x2, Mountain, Truck, Weight, type LucideIcon } from "lucide-react";
+import { BrickWall, Calculator, Droplets, Grid2x2, House, Mountain, Truck, Weight, type LucideIcon } from "lucide-react";
 import type { CalculatorIcon as IconKey } from "@/data/calculators";
 
 const ICONS: Record<IconKey, LucideIcon> = {
@@ -8,6 +8,7 @@ const ICONS: Record<IconKey, LucideIcon> = {
   paving: Grid2x2,
   drain: Droplets,
   steel: Weight,
+  roof: House,
   estimator: Calculator,
 };
 

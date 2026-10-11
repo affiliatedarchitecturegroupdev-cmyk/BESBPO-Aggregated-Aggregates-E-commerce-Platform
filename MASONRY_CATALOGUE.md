@@ -185,6 +185,22 @@ accept CAT-19 and CAT-20.
 Bosun (Midrand, Brits, Gqeberha) makes pavers, kerbs and retaining blocks —
 a Phase P (paving) lead rather than a walling one.
 
+## CAT-29 Concrete Roof Tiles (Phase R, Oct 2026)
+
+Approved by the owner as part of the masonry line; shown and sold with the
+roofing line on `/roofing` (see `ROOFING_CATALOGUE.md`). Four products, per tile:
+
+| Product | Price |
+|---|---|
+| Double Roman, standard colours | R10.48 list (Cashbuild R9.70 lowest, handling fee excluded; Leroy Merlin Marley R10.50) |
+| Double Roman, through-colour and slate | quoted (prices depend on maker and colour) |
+| Flat profile | quoted |
+| Ridge tile (taper or V-capped) | quoted (one retailer only) |
+
+`units_per_m2` for Double Roman is **about 10** — approximate; the batten gauge
+and pitch decide the real count, and the roof calculator adds 5% for breakage.
+Tile product pages link to the roof calculator instead of the wall calculator.
+
 ## Open items
 
 - Verify and activate the brickyard leads; add map pins; find Free State and

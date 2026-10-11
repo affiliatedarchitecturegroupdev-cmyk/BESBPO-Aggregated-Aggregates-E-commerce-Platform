@@ -13,7 +13,7 @@ import type { MerchandisedMasonryProduct } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
-/** Product page for the masonry & precast line, CAT-19..25: walling, paving & retaining, and drainage & membranes. */
+/** Product page for the masonry & precast line, CAT-19..25 and 29: walling, paving & retaining, drainage & membranes, and concrete roof tiles. */
 export function MasonryProductPage({ product }: { product: MerchandisedMasonryProduct }) {
   const category = CATEGORIES.find((c) => c.slug === product.categorySlug)!;
   const priced = product.units.filter((u) => u.prices !== null);
@@ -23,7 +23,8 @@ export function MasonryProductPage({ product }: { product: MerchandisedMasonryPr
   const line = lineOf(product.categorySlug);
   const paving = line === "paving";
   const drainage = line === "drainage";
-  const perM2Label = paving ? (product.categorySlug === "paving-kerbs-edging" ? "Per m² of paving" : "Per m² of wall face") : "Per m² of wall";
+  const roofTile = line === "roofing";
+  const perM2Label = roofTile ? "Per m² of roof" : paving ? (product.categorySlug === "paving-kerbs-edging" ? "Per m² of paving" : "Per m² of wall face") : "Per m² of wall";
 
   // Offers only for benchmarked units — an unpriced product never implies a price.
   const structuredData = {
@@ -55,7 +56,7 @@ export function MasonryProductPage({ product }: { product: MerchandisedMasonryPr
       ["Standard", product.gradingStandard],
       ["Type", product.masonryClass],
       ["Size", product.unitSize],
-      [perM2Label, walling ? `About ${product.unitsPerM2}${paving ? "" : " (single leaf, 10 mm joints)"}` : null],
+      [perM2Label, walling ? `About ${product.unitsPerM2}${roofTile ? " (depends on batten gauge and pitch)" : paving ? "" : " (single leaf, 10 mm joints)"}` : null],
       ["Category code", MASONRY_CATEGORY_CODES[product.categorySlug] ?? null],
     ] as [string, string | null][]
   ).filter(([, value]) => value);
@@ -72,7 +73,12 @@ export function MasonryProductPage({ product }: { product: MerchandisedMasonryPr
       <div className="mt-6 grid gap-10 md:grid-cols-2">
         <div className="min-w-0 space-y-6">
           <ProductGallery sku={product.sku} categorySlug={product.categorySlug} images={product.images} />
-          {walling && product.categorySlug !== "retaining-erosion-control" && (
+          {roofTile && (
+            <Link href="/roofing#roof-calculator" className="block rounded-sm border border-seam-blue/30 bg-seam-blue/5 p-4 font-body text-sm text-basalt hover:border-seam-blue">
+              <span className="font-semibold">How many tiles?</span> The roof calculator works out tiles, ridge and underlay from the roof&apos;s plan size and pitch →
+            </Link>
+          )}
+          {walling && !roofTile && product.categorySlug !== "retaining-erosion-control" && (
             <WallCalculator
               mode={product.categorySlug === "paving-kerbs-edging" ? "area" : "wall"}
               options={[
@@ -155,7 +161,9 @@ export function MasonryProductPage({ product }: { product: MerchandisedMasonryPr
             ))}
           </ul>
           <p className="mt-3 font-body text-xs text-slate">
-            {drainage
+            {roofTile
+              ? "The roof pitch, batten gauge and the maker's fixing guide decide the tile count, the underlay and how tiles are fixed — follow the truss and tile makers' guides."
+              : drainage
               ? "Falls, bedding and connections to the municipal system follow the drawings, SANS 10400-P and the local authority's requirements."
               : paving
               ? "The base, bedding and wall design (height, drainage, backfill) decide how it performs — follow the maker's tables or an engineer."
@@ -169,7 +177,7 @@ export function MasonryProductPage({ product }: { product: MerchandisedMasonryPr
         <section className="rounded-sm border border-basalt/10 bg-white p-6">
           <h2 className="font-mono text-[10px] uppercase tracking-widest text-seam-blue">Delivery &amp; Returns</h2>
           <p className="mt-3 font-body text-sm text-basalt">
-            {drainage ? "Pipes, precast units and rolls" : paving ? "Pavers, kerbs, retaining blocks and gabions" : "Bricks, blocks and lintels"} come palletised on the supplier&apos;s flatbed or crane truck: we confirm the delivery slot, any
+            {roofTile ? "Roof tiles" : drainage ? "Pipes, precast units and rolls" : paving ? "Pavers, kerbs, retaining blocks and gabions" : "Bricks, blocks and lintels"} come palletised on the supplier&apos;s flatbed or crane truck: we confirm the delivery slot, any
             delivery charge and the yard&apos;s minimum load with you before dispatch. See the{" "}
             <Link href="/legal/shipping-delivery" className="text-seam-blue underline">Shipping &amp; Delivery</Link> and{" "}
             <Link href="/legal/returns-refunds" className="text-seam-blue underline">Returns &amp; Refunds</Link> policies.

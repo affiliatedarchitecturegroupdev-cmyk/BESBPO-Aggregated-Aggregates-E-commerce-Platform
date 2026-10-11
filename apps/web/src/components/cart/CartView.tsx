@@ -100,7 +100,8 @@ export function CartView({ signedIn }: { signedIn: boolean }) {
                     onChange={(e) => cart.update(index, { unit: e.target.value })}
                     className="rounded-sm border border-basalt/20 bg-white px-2 py-1.5 font-body text-sm"
                   >
-                    {product.units.map((u) => (
+                    {/* Cut-to-length roof sheet (METRE) goes through a quote with its cutting list, never the cart. */}
+                    {product.units.filter((u) => u.code !== "METRE" || u.code === line.unit).map((u) => (
                       <option key={u.code} value={u.code}>{u.label}</option>
                     ))}
                   </select>

@@ -33,8 +33,9 @@ FRAMEWORK = pricing_framework.load()
 PACKAGED_RAW, CEMENT_PACKAGED = packaged_goods.load()
 STEEL_RAW, STEEL = packaged_goods.load_steel()
 MASONRY_RAW, MASONRY = packaged_goods.load_masonry()
-# Steel and masonry are priced like packaged goods (their own STEEL / MASONRY families), so one lookup serves all three.
-PACKAGED = {**CEMENT_PACKAGED, **STEEL, **MASONRY}
+ROOFING_RAW, ROOFING = packaged_goods.load_roofing()
+# Steel, masonry and roofing are priced like packaged goods (their own STEEL / MASONRY / ROOFING families), so one lookup serves them all.
+PACKAGED = {**CEMENT_PACKAGED, **STEEL, **MASONRY, **ROOFING}
 READY_MIX_RAW, READY_MIX, PUMPS = ready_mix.load()
 PLANT_SERVICES = rental.load()
 
@@ -43,6 +44,7 @@ UnitName = Literal["ton", "m3", "bag"]
 PackagedUnitName = Literal[
     "BAG_25KG", "BAG_50KG", "BULK_BAG_1_5T", "BULK_TANKER_PER_TON", "DRUM_210L", "IBC_TOTE_1000L",
     "LENGTH_6M", "LENGTH_12M", "TONNE", "SHEET", "ROLL", "COIL", "PACK", "EACH", "THOUSAND",
+    "SHEET_3_0M", "SHEET_3_6M", "SHEET_4_2M", "SHEET_4_8M", "SHEET_6_0M", "SHEET_6_6M", "METRE",
 ]
 
 
@@ -72,6 +74,12 @@ def list_steel_products():
 def list_masonry_products():
     """CAT-19/20 bricks & blocks, and lintels, DPC & wall accessories."""
     return MASONRY_RAW["products"]
+
+
+@app.get("/products/roofing")
+def list_roofing_products():
+    """CAT-26..28 roof sheeting, flashings, ridges & fixings, and insulation, underlay & rainwater goods."""
+    return ROOFING_RAW["products"]
 
 
 @app.get("/products/ready-mix")
@@ -171,7 +179,7 @@ class PackagedGoodsRequest(BaseModel):
 @app.post("/calculate/packaged-goods")
 def calculate_packaged_goods(req: PackagedGoodsRequest):
     """
-    Prices a CAT-10/CAT-11 packaged unit, a CAT-15..18 steel unit or a CAT-19/20 masonry unit. A unit without a confirmed
+    Prices a CAT-10/CAT-11 packaged unit, a CAT-15..18 steel unit, a masonry unit (CAT-19..25, 29) or a roofing unit (CAT-26..28). A unit without a confirmed
     benchmark returns 422 — never a made-up price — so the caller routes it
     to a quote.
     """

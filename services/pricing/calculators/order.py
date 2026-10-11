@@ -39,6 +39,12 @@ MASONRY_DELIVERY_NOTE = (
     "the delivery slot, any delivery charge and the yard's minimum load with you before dispatch."
 )
 
+# Roof sheets, flashings and rainwater goods come on the merchant's flatbed.
+ROOFING_DELIVERY_NOTE = (
+    "Roof sheets, flashings and roofing accessories are delivered by the merchant's flatbed: we confirm the delivery slot, "
+    "any delivery charge and any cut-to-length lead time with you before dispatch. Long sheets need clear access for the truck."
+)
+
 
 @dataclass(frozen=True)
 class OrderLine:
@@ -129,13 +135,15 @@ def price_order(
                         if packaged_product.line == "steel"
                         else "Volume / Civil Bulk bricks, blocks, paving, precast and pipes are quoted per project."
                         if packaged_product.line == "masonry"
+                        else "Volume / Civil Bulk roofing is quoted per project."
+                        if packaged_product.line == "roofing"
                         else "Trade and volume pricing for cement in bulk, and volume pricing for all cement, is quoted individually."
                     )
             elif not result.is_priced and PRICE_ON_REQUEST not in extra_codes:
                 extra_codes.append(PRICE_ON_REQUEST)
                 extra_reasons.append("Some items have no confirmed price yet — our team confirms them with the supplier.")
             if packaged_product.own_transport:
-                note = STEEL_DELIVERY_NOTE if packaged_product.line == "steel" else MASONRY_DELIVERY_NOTE
+                note = {"steel": STEEL_DELIVERY_NOTE, "roofing": ROOFING_DELIVERY_NOTE}.get(packaged_product.line, MASONRY_DELIVERY_NOTE)
                 if note not in notes:
                     notes.append(note)
             elif line.unit in BAG_UNITS:
@@ -161,7 +169,7 @@ def price_order(
         own_skus = {sku for sku, p in packaged.items() if p.own_transport}
         own_transport = all(isinstance(l, ReadyMixLineResult) or l.sku in own_skus for l in priced)
         if own_transport:
-            # Nothing travels by tipper: the plant's mixer truck or the steel / masonry supplier's truck delivers.
+            # Nothing travels by tipper: the plant's mixer truck or the steel / masonry / roofing supplier's truck delivers.
             delivery = DeliveryQuoteResult(is_quote_only=False, reasons=[], reason_codes=[], distance_km=distance_km, load_size=None, fee=Decimal(0))
         else:
             # Bulk-format packaged goods (drums, totes, tankers, bulk bags):

@@ -4,7 +4,9 @@ CAT-11 (Mortars, Grouts & Admixtures), the steel line, CAT-15 to CAT-18
 (rebar, mesh & brickforce, fixing accessories, structural steel —
 data/steel_catalogue.json, STEEL_CATALOGUE.md) and the masonry line, CAT-19
 and CAT-20 (bricks & blocks; lintels, DPC & wall accessories —
-data/masonry_catalogue.json, MASONRY_CATALOGUE.md).
+data/masonry_catalogue.json, MASONRY_CATALOGUE.md), and the roofing line,
+CAT-26 to CAT-28 (roof sheeting; flashings, ridges & fixings; insulation,
+underlay & rainwater — data/roofing_catalogue.json, ROOFING_CATALOGUE.md).
 
 These are sold as discrete packaged units — a 50kg bag, a 210L drum, a
 tanker load per ton — each with its own list price, so there is no ton/m3
@@ -19,8 +21,8 @@ a quote.
 
 Bagged cement and mortar (25/50kg) take a 4% trade discount; bulk formats
 (bulk bag, tanker, drum, tote) have no self-serve trade price, and every
-Volume/Civil Bulk order of these goods is quoted (PRICING_POLICY.md). Steel
-and masonry are each their own family (STEEL, MASONRY) whatever the unit —
+Volume/Civil Bulk order of these goods is quoted (PRICING_POLICY.md). Steel,
+masonry and roofing are each their own family (STEEL, MASONRY, ROOFING) whatever the unit —
 the family follows the product's line, since the lines share units (item, roll).
 """
 from __future__ import annotations
@@ -31,31 +33,38 @@ from decimal import Decimal
 from pathlib import Path
 from typing import Optional
 
-from calculators.discount_floor import CEMENT_BAGGED, CEMENT_BULK, MASONRY, STEEL, STOREFRONT_MARKUP, TierQuoteOnly, tier_price
+from calculators.discount_floor import CEMENT_BAGGED, CEMENT_BULK, MASONRY, ROOFING, STEEL, STOREFRONT_MARKUP, TierQuoteOnly, tier_price
 from calculators.tonnage_volume import to_cents
 
 DATA_PATH = Path(__file__).parent.parent / "data" / "b2b_packaged_catalogue.json"
 STEEL_DATA_PATH = Path(__file__).parent.parent / "data" / "steel_catalogue.json"
 MASONRY_DATA_PATH = Path(__file__).parent.parent / "data" / "masonry_catalogue.json"
+ROOFING_DATA_PATH = Path(__file__).parent.parent / "data" / "roofing_catalogue.json"
 READY_STATUS = "Ready — benchmarked"
 CEMENT_UNITS = ("BAG_25KG", "BAG_50KG", "BULK_BAG_1_5T", "BULK_TANKER_PER_TON", "DRUM_210L", "IBC_TOTE_1000L")
 # Steel: stock lengths, tonnes, mesh sheets, brickforce rolls, wire coils, packs and single items.
 STEEL_UNITS = ("LENGTH_6M", "LENGTH_12M", "TONNE", "SHEET", "ROLL", "COIL", "PACK", "EACH")
 # Masonry & precast: bricks per 1,000; blocks, pavers, precast and fittings per item; DPC, DPM and fabrics per roll; pipes per 6 m length.
 MASONRY_UNITS = ("THOUSAND", "EACH", "ROLL", "LENGTH_6M")
-PACKAGED_UNITS = CEMENT_UNITS + STEEL_UNITS + ("THOUSAND",)
+# Roofing: roof sheets in the standard lengths, or per metre cut to length (always quoted — the cutting list
+# travels with the quote); flashings and fittings per item; screws per box; insulation and underlay per roll.
+SHEET_LENGTH_UNITS = ("SHEET_3_0M", "SHEET_3_6M", "SHEET_4_2M", "SHEET_4_8M", "SHEET_6_0M", "SHEET_6_6M")
+ROOFING_UNITS = SHEET_LENGTH_UNITS + ("METRE", "EACH", "PACK", "ROLL")
+PACKAGED_UNITS = CEMENT_UNITS + STEEL_UNITS + ("THOUSAND",) + SHEET_LENGTH_UNITS + ("METRE",)
 # Lines that travel on the supplier's own flatbed or crane truck, never in the tipper bands.
-OWN_TRANSPORT_LINES = ("steel", "masonry")
+OWN_TRANSPORT_LINES = ("steel", "masonry", "roofing")
 BAGGED_UNITS = ("BAG_25KG", "BAG_50KG")
 TIER_QUOTE_STATUS = "Quoted for your tier"
 
 
 def family_for(product: "PackagedProduct", unit: str) -> str:
-    """Steel and masonry are their own families; cement bags take the bagged discount and bulk formats are quoted for trade and volume."""
+    """Steel, masonry and roofing are their own families; cement bags take the bagged discount and bulk formats are quoted for trade and volume."""
     if product.line == "steel":
         return STEEL
     if product.line == "masonry":
         return MASONRY
+    if product.line == "roofing":
+        return ROOFING
     return CEMENT_BAGGED if unit in BAGGED_UNITS else CEMENT_BULK
 
 
@@ -88,7 +97,7 @@ class PackagedProduct:
     name: str
     category_slug: str
     units: dict[str, PackagedUnit]
-    line: str = "cement"  # "cement" (CAT-10/11), "steel" (CAT-15..18) or "masonry" (masonry & precast, CAT-19..25)
+    line: str = "cement"  # "cement" (CAT-10/11), "steel" (CAT-15..18), "masonry" (masonry & precast, CAT-19..25, 29) or "roofing" (CAT-26..28)
 
     @property
     def is_steel(self) -> bool:
@@ -139,6 +148,12 @@ def load_masonry(path: Path = MASONRY_DATA_PATH) -> tuple[dict, dict[str, Packag
     """The CAT-19/20 masonry catalogue — priced like packaged goods, in the MASONRY family."""
     raw = json.loads(path.read_text(encoding="utf-8"))
     return raw, _products(raw, MASONRY_UNITS, "masonry")
+
+
+def load_roofing(path: Path = ROOFING_DATA_PATH) -> tuple[dict, dict[str, PackagedProduct]]:
+    """The CAT-26..28 roofing catalogue — priced like packaged goods, in the ROOFING family."""
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    return raw, _products(raw, ROOFING_UNITS, "roofing")
 
 
 @dataclass

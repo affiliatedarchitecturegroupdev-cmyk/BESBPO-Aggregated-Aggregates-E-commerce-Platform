@@ -9,7 +9,7 @@
  */
 import type { CustomerTierName } from "@/data/catalogue";
 
-export type PricingFamily = "AGGREGATE" | "CEMENT_BAGGED" | "CEMENT_BULK" | "READY_MIX" | "STEEL" | "MASONRY";
+export type PricingFamily = "AGGREGATE" | "CEMENT_BAGGED" | "CEMENT_BULK" | "READY_MIX" | "STEEL" | "MASONRY" | "ROOFING";
 
 export const MIN_MARGIN = 0.03;
 export const STOREFRONT_MARKUP = 0.08;
@@ -23,6 +23,8 @@ export const SCHEDULE: Record<PricingFamily, Record<CustomerTierName, number | n
   STEEL: { RETAIL: 0, CONTRACTOR_TRADE: 0.04, VOLUME_CIVIL_BULK: null },
   // Trade 4% approved by the owner, 10 Oct 2026.
   MASONRY: { RETAIL: 0, CONTRACTOR_TRADE: 0.04, VOLUME_CIVIL_BULK: null },
+  // Trade 4% proposed to match steel and masonry — awaiting the owner's approval.
+  ROOFING: { RETAIL: 0, CONTRACTOR_TRADE: 0.04, VOLUME_CIVIL_BULK: null },
 };
 
 const cents = (value: number) => Math.round(value * 100 + 1e-9) / 100;
@@ -51,11 +53,12 @@ const STEEL_UNITS = ["LENGTH_6M", "LENGTH_12M", "TONNE", "SHEET", "ROLL", "COIL"
 
 /**
  * Bagged cement and mortar take the bagged discount; bulk formats are quoted
- * for trade and volume; steel and masonry are their own families. Masonry
- * shares units with steel (item, roll), so pass the product's line.
+ * for trade and volume; steel, masonry and roofing are their own families.
+ * Masonry and roofing share units with steel (item, roll, pack), so pass the product's line.
  */
-export function packagedFamily(unit: string, line?: "packaged" | "steel" | "masonry"): PricingFamily {
+export function packagedFamily(unit: string, line?: "packaged" | "steel" | "masonry" | "roofing"): PricingFamily {
   if (line === "masonry") return "MASONRY";
+  if (line === "roofing") return "ROOFING";
   if (line === "steel" || STEEL_UNITS.includes(unit)) return "STEEL";
   return unit === "BAG_25KG" || unit === "BAG_50KG" ? "CEMENT_BAGGED" : "CEMENT_BULK";
 }
@@ -74,5 +77,5 @@ export function tierBreakdown(tier: CustomerTierName): string {
     const d = pct(family);
     return d === null ? `${name} quoted` : `${Math.round(d * 100)}% off ${name}`;
   };
-  return `${part("AGGREGATE", "aggregates")} · ${part("CEMENT_BAGGED", "bagged cement")} · ${part("READY_MIX", "ready-mix")} · ${part("STEEL", "steel")} · ${part("MASONRY", "bricks, paving & drainage")}. Never below our margin floor.`;
+  return `${part("AGGREGATE", "aggregates")} · ${part("CEMENT_BAGGED", "bagged cement")} · ${part("READY_MIX", "ready-mix")} · ${part("STEEL", "steel")} · ${part("MASONRY", "bricks, paving & drainage")} · ${part("ROOFING", "roofing")}. Never below our margin floor.`;
 }

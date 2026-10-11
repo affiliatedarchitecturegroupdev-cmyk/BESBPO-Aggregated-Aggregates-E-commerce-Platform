@@ -2,8 +2,9 @@
  * The masonry & precast line (MASONRY_CATALOGUE.md): CAT-19 Bricks & Blocks,
  * CAT-20 Lintels, DPC & Wall Accessories, CAT-21 Paving, Kerbs & Edging and
  * CAT-22 Retaining & Erosion Control, CAT-23 Pipes & Fittings, CAT-24 Precast
- * Drainage and CAT-25 Geosynthetics & Membranes. Bricks per 1,000; pipes per
- * 6 m length; DPC, DPM and fabrics per roll; everything else per item.
+ * Drainage, CAT-25 Geosynthetics & Membranes and CAT-29 Concrete Roof Tiles.
+ * Bricks per 1,000; pipes per 6 m length; DPC, DPM and fabrics per roll;
+ * everything else (tiles included) per item.
  *
  * masonry-catalogue.json is an exact copy of
  * services/pricing/data/masonry_catalogue.json — a pricing-service test fails
@@ -84,11 +85,16 @@ export const PAVING = MASONRY_PRODUCTS.filter((p) => p.categorySlug === "paving-
 
 export const PAVING_CATEGORIES = ["paving-kerbs-edging", "retaining-erosion-control"];
 export const DRAINAGE_CATEGORIES = ["pipes-fittings", "precast-drainage", "geosynthetics-membranes"];
+/** Concrete roof tiles are masonry, but they're shown and sold with the roofing line (/roofing). */
+export const ROOF_TILE_CATEGORIES = ["concrete-roof-tiles"];
+/** Concrete roof tiles with an approximate coverage — the roof calculator's tile choices. */
+export const ROOF_TILES = MASONRY_PRODUCTS.filter((p) => ROOF_TILE_CATEGORIES.includes(p.categorySlug) && p.unitsPerM2 !== null);
 export const isPavingLine = (categorySlug: string) => PAVING_CATEGORIES.includes(categorySlug);
 
 /** Which part of the line a category belongs to — each has its own landing page. */
-export type MasonryLine = "walling" | "paving" | "drainage";
+export type MasonryLine = "walling" | "paving" | "drainage" | "roofing";
 export function lineOf(categorySlug: string): MasonryLine {
+  if (ROOF_TILE_CATEGORIES.includes(categorySlug)) return "roofing";
   if (PAVING_CATEGORIES.includes(categorySlug)) return "paving";
   if (DRAINAGE_CATEGORIES.includes(categorySlug)) return "drainage";
   return "walling";
@@ -97,6 +103,7 @@ export const LINE_PAGE: Record<MasonryLine, { href: string; label: string }> = {
   walling: { href: "/bricks-blocks", label: "Bricks, Blocks & Walling" },
   paving: { href: "/paving", label: "Paving & Retaining" },
   drainage: { href: "/drainage", label: "Drainage & Membranes" },
+  roofing: { href: "/roofing", label: "Roofing" },
 };
 
 /** Allowance for breakage and cutting, added on top of the count. */
