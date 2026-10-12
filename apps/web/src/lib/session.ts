@@ -14,6 +14,7 @@ export type SessionUser = {
   id: string;
   email: string;
   name: string | null;
+  mobileNumber?: string | null;
   role: Role;
   company: {
     id: string;

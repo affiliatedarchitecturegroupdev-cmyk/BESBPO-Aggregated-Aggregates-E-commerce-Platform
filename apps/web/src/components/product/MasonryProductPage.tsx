@@ -180,7 +180,8 @@ export function MasonryProductPage({ product }: { product: MerchandisedMasonryPr
             {roofTile ? "Roof tiles" : drainage ? "Pipes, precast units and rolls" : paving ? "Pavers, kerbs, retaining blocks and gabions" : "Bricks, blocks and lintels"} come palletised on the supplier&apos;s flatbed or crane truck: we confirm the delivery slot, any
             delivery charge and the yard&apos;s minimum load with you before dispatch. See the{" "}
             <Link href="/legal/shipping-delivery" className="text-seam-blue underline">Shipping &amp; Delivery</Link> and{" "}
-            <Link href="/legal/returns-refunds" className="text-seam-blue underline">Returns &amp; Refunds</Link> policies.
+            <Link href="/legal/returns-refunds" className="text-seam-blue underline">Returns &amp; Refunds</Link> policies. Returning materials that were supplied
+            correctly carries an 18% <Link href="/legal/handling-fee" className="text-seam-blue underline">handling fee</Link>.
           </p>
         </section>
       </div>

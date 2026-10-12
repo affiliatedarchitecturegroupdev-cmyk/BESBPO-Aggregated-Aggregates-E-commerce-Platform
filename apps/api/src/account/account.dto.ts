@@ -2,6 +2,8 @@ import { IsOptional, IsString, MaxLength, MinLength } from "class-validator";
 
 export class UpdateProfileDto {
   @IsString() @MaxLength(120) name!: string;
+  // Empty clears it; anything else must be a valid mobile number (common/mobile-number.ts).
+  @IsOptional() @IsString() @MaxLength(30) mobileNumber?: string;
 }
 
 export class ChangePasswordDto {

@@ -10,6 +10,7 @@ import type { SteelProduct } from "@/data/steel";
 import { formatZAR, unpricedLabel } from "@/lib/pricing";
 import { packagedFamily, tierOptionLabel } from "@/lib/tier-pricing";
 import { AddToCartButton } from "@/components/cart/AddToCartButton";
+import { NumberInput } from "@/components/ui/NumberInput";
 
 /**
  * Unit-of-sale selector for packaged goods — the counterpart of the
@@ -54,12 +55,12 @@ export function PackagedUnitSelector({ product, initialQuantity }: { product: Pa
       <div className="mt-4 grid grid-cols-2 gap-3">
         <label className="block">
           <span className="font-mono text-[10px] uppercase text-slate">{unit.unit === "THOUSAND" ? "Quantity (× 1,000 bricks)" : steel || masonry || roofing ? `Quantity (${unit.label.toLowerCase()})` : `Quantity (${unit.label}s)`}</span>
-          <input
-            type="number"
+          <NumberInput
             min={1}
             step={1}
+            integer
             value={quantity}
-            onChange={(e) => setQuantity(Math.max(1, Math.round(Number(e.target.value) || 1)))}
+            onValueChange={setQuantity}
             className="mt-1 w-full rounded-sm border border-basalt/20 px-3 py-2 font-body text-sm"
           />
         </label>

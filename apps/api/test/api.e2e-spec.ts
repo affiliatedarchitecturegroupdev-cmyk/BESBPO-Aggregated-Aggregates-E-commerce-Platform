@@ -28,7 +28,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
   async function register(label: string) {
     const res = await http()
       .post("/auth/register")
-      .send({ email: `${label}-${run}@example.com`, password, name: label })
+      .send({ email: `${label}-${run}@example.com`, password, name: label, mobileNumber: "082 123 4567" })
       .expect(201);
     return res.body.accessToken as string;
   }
@@ -55,14 +55,22 @@ describe("Aggregated Aggregates API (e2e)", () => {
         .expect(200);
       expect(login.body.accessToken).toBeTruthy();
       const me = await http().get("/auth/me").set("Authorization", `Bearer ${token}`).expect(200);
-      expect(me.body).toMatchObject({ email: `buyer-${run}@example.com`, role: "CUSTOMER", company: null });
+      expect(me.body).toMatchObject({ email: `buyer-${run}@example.com`, mobileNumber: "+27821234567", role: "CUSTOMER", company: null });
       expect(me.body.passwordHash).toBeUndefined();
     });
 
-    it("rejects wrong passwords, duplicate emails and short passwords", async () => {
+    it("rejects wrong passwords, duplicate emails, weak passwords and bad or missing mobile numbers", async () => {
+      const mobileNumber = "082 123 4567";
       await http().post("/auth/login").send({ email: `buyer-${run}@example.com`, password: "wrong-password" }).expect(401);
-      await http().post("/auth/register").send({ email: `buyer-${run}@example.com`, password }).expect(409);
-      await http().post("/auth/register").send({ email: `short-${run}@example.com`, password: "short" }).expect(400);
+      await http().post("/auth/register").send({ email: `buyer-${run}@example.com`, password, mobileNumber }).expect(409);
+      await http().post("/auth/register").send({ email: `short-${run}@example.com`, password: "short", mobileNumber }).expect(400);
+      for (const weak of ["password12345", "aaaaaaaaaaaa", "bluegravel7"]) {
+        const res = await http().post("/auth/register").send({ email: `weak-${run}@example.com`, password: weak, mobileNumber }).expect(400);
+        expect(res.body.message).toMatch(/too weak/);
+      }
+      await http().post("/auth/register").send({ email: `nomobile-${run}@example.com`, password }).expect(400);
+      const bad = await http().post("/auth/register").send({ email: `badmobile-${run}@example.com`, password, mobileNumber: "011 123 4567" }).expect(400);
+      expect(bad.body.message).toMatch(/valid mobile number/);
     });
   });
 
@@ -1539,10 +1547,14 @@ describe("Aggregated Aggregates API (e2e)", () => {
       const token = await register("profile");
       const auth = { Authorization: `Bearer ${token}` };
       await http().patch("/account/profile").set(auth).send({ name: "Nomsa Khumalo" }).expect(200);
+      const withMobile = await http().patch("/account/profile").set(auth).send({ name: "Nomsa Khumalo", mobileNumber: "+27 71 555 0000" }).expect(200);
+      expect(withMobile.body.mobileNumber).toBe("+27715550000");
+      await http().patch("/account/profile").set(auth).send({ name: "Nomsa Khumalo", mobileNumber: "12345" }).expect(400);
       expect((await http().get("/auth/me").set(auth).expect(200)).body.name).toBe("Nomsa Khumalo");
 
       await http().post("/account/password").set(auth).send({ currentPassword: "wrong-password", newPassword: "a-brand-new-passphrase" }).expect(400);
       await http().post("/account/password").set(auth).send({ currentPassword: password, newPassword: "short" }).expect(400);
+      await http().post("/account/password").set(auth).send({ currentPassword: password, newPassword: "qwerty123456" }).expect(400);
       await http().post("/account/password").set(auth).send({ currentPassword: password, newPassword: password }).expect(400);
       await http().post("/account/password").set(auth).send({ currentPassword: password, newPassword: "a-brand-new-passphrase" }).expect(204);
       await http().post("/auth/login").send({ email: `profile-${run}@example.com`, password }).expect(401);

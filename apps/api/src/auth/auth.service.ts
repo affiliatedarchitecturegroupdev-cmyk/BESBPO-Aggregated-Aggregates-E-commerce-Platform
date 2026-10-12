@@ -1,7 +1,9 @@
-import { ConflictException, Injectable, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, ConflictException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcrypt";
 import { UserRole } from "@aggregates/database";
+import { normaliseMobile } from "../common/mobile-number";
+import { assertStrongEnough } from "../common/password-policy";
 import { PrismaService } from "../common/prisma.service";
 import { RegisterDto } from "./dto/register.dto";
 
@@ -17,6 +19,9 @@ export class AuthService {
   ) {}
 
   async registerWithEmail(dto: RegisterDto) {
+    const mobileNumber = normaliseMobile(dto.mobileNumber);
+    if (!mobileNumber) throw new BadRequestException("Enter a valid mobile number, e.g. 082 123 4567, or with the country code (+44 …) outside South Africa.");
+    assertStrongEnough(dto.password, [dto.name, dto.email, mobileNumber]);
     const existing = await this.prisma.user.findUnique({ where: { email: dto.email } });
     if (existing) {
       throw new ConflictException("An account with this email already exists.");
@@ -25,6 +30,7 @@ export class AuthService {
       data: {
         email: dto.email,
         name: dto.name?.trim() || null,
+        mobileNumber,
         passwordHash: await bcrypt.hash(dto.password, 12),
         role: UserRole.CUSTOMER,
       },
@@ -49,6 +55,7 @@ export class AuthService {
         id: true,
         email: true,
         name: true,
+        mobileNumber: true,
         role: true,
         company: {
           select: {

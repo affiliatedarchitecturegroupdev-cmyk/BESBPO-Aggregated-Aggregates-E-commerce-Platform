@@ -14,4 +14,9 @@ export class RegisterDto {
   @IsString()
   @MaxLength(120)
   name?: string;
+
+  // Checked and stored in international form by AuthService (common/mobile-number.ts).
+  @IsString()
+  @MaxLength(30)
+  mobileNumber!: string;
 }

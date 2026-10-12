@@ -453,7 +453,7 @@ function policyAnswer(text: string): AssistantReply {
     text: cut
       ? "Materials cut or made to your specification — roof sheets cut to length and steel cut and bent — can't be returned, exchanged or refunded once cut or made, unless what's delivered doesn't match the quote you accepted or the material is defective. Check every length and shape before you accept the quote."
       : "Aggregates are delivered as bulk loads or bags to your quantity, so they're non-returnable once dispatched — unless the wrong product or grading was delivered, it's defective or out of specification, or the load is materially short. Cut-to-length sheets and cut-and-bent steel can't be refunded once cut. The policy sets out how to report a problem and the remedies.",
-    links: [{ label: "Returns & Refunds Policy", href: "/legal/returns-refunds" }, CONTACT],
+    links: [{ label: "Returns & Refunds Policy", href: "/legal/returns-refunds" }, { label: "Handling Fee Policy", href: "/legal/handling-fee" }, CONTACT],
   };
 }
 

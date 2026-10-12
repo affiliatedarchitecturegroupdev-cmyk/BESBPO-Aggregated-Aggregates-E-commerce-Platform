@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { barTakeOff, BAR_MASS_KG_PER_M, Y_BARS } from "@/data/steel";
+import { NumberInput } from "@/components/ui/NumberInput";
 
 /**
  * Rebar take-off: bars x length (or a total run) to kg, tonnes and 6 m
@@ -35,11 +36,11 @@ export function BarMassCalculator({ diameterMm, compact = false }: { diameterMm?
         </label>
         <label className="block">
           <span className="font-mono text-[10px] uppercase text-slate">Number of bars</span>
-          <input type="number" min={0} step={1} value={bars} onChange={(e) => setBars(Math.max(0, Math.round(Number(e.target.value) || 0)))} className={input} />
+          <NumberInput min={0} step={1} integer value={bars} onValueChange={setBars} className={input} />
         </label>
         <label className="block">
           <span className="font-mono text-[10px] uppercase text-slate">Length each (m)</span>
-          <input type="number" min={0} step={0.1} value={lengthM} onChange={(e) => setLengthM(Math.max(0, Number(e.target.value) || 0))} className={input} />
+          <NumberInput min={0} step={0.1} value={lengthM} onValueChange={setLengthM} className={input} />
         </label>
       </div>
       <dl className="mt-4 grid grid-cols-2 gap-2 font-body text-sm sm:grid-cols-4" aria-live="polite">

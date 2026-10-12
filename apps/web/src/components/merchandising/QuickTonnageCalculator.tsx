@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { PRODUCTS, type Unit } from "@/data/catalogue";
 import { CORE_CATEGORIES } from "@/data/categories";
 import { estimateDelivery, estimateLine, formatZAR, UNIT_LABELS } from "@/lib/pricing";
+import { NumberInput } from "@/components/ui/NumberInput";
 
 /**
  * The homepage's above-the-fold estimator (wireframe 01): product, quantity
@@ -59,11 +60,10 @@ export function QuickTonnageCalculator({ hiddenSkus = [] }: { hiddenSkus?: strin
           </label>
           <label className="block">
             <span className="font-mono text-[10px] uppercase text-slate">Quantity</span>
-            <input
-              type="number"
+            <NumberInput
               min={0}
               value={quantity}
-              onChange={(e) => setQuantity(Math.max(0, Number(e.target.value)))}
+              onValueChange={setQuantity}
               className="mt-1 w-full rounded-sm border border-basalt/20 bg-white px-3 py-2 font-body text-sm"
             />
           </label>
@@ -83,11 +83,10 @@ export function QuickTonnageCalculator({ hiddenSkus = [] }: { hiddenSkus?: strin
           </label>
           <label className="block">
             <span className="font-mono text-[10px] uppercase text-slate">Delivery distance (km)</span>
-            <input
-              type="number"
+            <NumberInput
               min={0}
               value={distanceKm}
-              onChange={(e) => setDistanceKm(Math.max(0, Number(e.target.value)))}
+              onValueChange={setDistanceKm}
               className="mt-1 w-full rounded-sm border border-basalt/20 bg-white px-3 py-2 font-body text-sm"
             />
           </label>

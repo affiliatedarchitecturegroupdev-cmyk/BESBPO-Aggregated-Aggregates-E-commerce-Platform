@@ -42,6 +42,7 @@ model User {
   id                String            @id @default(cuid())
   email             String            @unique
   name              String?
+  mobileNumber      String? // international form, e.g. +27821234567 — asked at email sign-up; social sign-ins add it in Settings
   passwordHash      String? // null for OAuth-only users (Email/Google/Microsoft SSO)
   role              UserRole          @default(CUSTOMER)
   companyId         String?

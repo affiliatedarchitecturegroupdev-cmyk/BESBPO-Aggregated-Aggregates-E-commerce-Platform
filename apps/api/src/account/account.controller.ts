@@ -12,7 +12,7 @@ export class AccountController {
 
   @Patch("profile")
   updateProfile(@CurrentUser() user: AuthUser, @Body() dto: UpdateProfileDto) {
-    return this.account.updateProfile(user, dto.name);
+    return this.account.updateProfile(user, dto.name, dto.mobileNumber);
   }
 
   @Post("password")

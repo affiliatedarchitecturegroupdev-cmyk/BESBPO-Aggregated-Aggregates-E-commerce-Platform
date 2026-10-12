@@ -2,6 +2,8 @@ import { BadRequestException, Injectable, NotFoundException } from "@nestjs/comm
 import * as bcrypt from "bcrypt";
 import { Prisma } from "@aggregates/database";
 import type { AuthUser } from "../common/auth/auth-user";
+import { normaliseMobile } from "../common/mobile-number";
+import { assertStrongEnough } from "../common/password-policy";
 import { PrismaService } from "../common/prisma.service";
 import type { CreateDeliveryAddressDto } from "../trade-accounts/dto/trade-account.dto";
 
@@ -14,13 +16,19 @@ import type { CreateDeliveryAddressDto } from "../trade-accounts/dto/trade-accou
 export class AccountService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async updateProfile(user: AuthUser, name: string) {
-    const updated = await this.prisma.user.update({ where: { id: user.id }, data: { name: name.trim() || null }, select: { id: true, name: true, email: true } });
-    return updated;
+  async updateProfile(user: AuthUser, name: string, mobileNumber?: string) {
+    const data: Prisma.UserUpdateInput = { name: name.trim() || null };
+    if (mobileNumber !== undefined) {
+      const normalised = mobileNumber.trim() ? normaliseMobile(mobileNumber) : null;
+      if (mobileNumber.trim() && !normalised) throw new BadRequestException("Enter a valid mobile number, e.g. 082 123 4567, or with the country code (+44 …) outside South Africa.");
+      data.mobileNumber = normalised;
+    }
+    return this.prisma.user.update({ where: { id: user.id }, data, select: { id: true, name: true, email: true, mobileNumber: true } });
   }
 
   async changePassword(user: AuthUser, currentPassword: string | undefined, newPassword: string) {
-    const account = await this.prisma.user.findUniqueOrThrow({ where: { id: user.id }, select: { passwordHash: true } });
+    const account = await this.prisma.user.findUniqueOrThrow({ where: { id: user.id }, select: { passwordHash: true, name: true, email: true, mobileNumber: true } });
+    assertStrongEnough(newPassword, [account.name, account.email, account.mobileNumber]);
     if (account.passwordHash) {
       if (!currentPassword || !(await bcrypt.compare(currentPassword, account.passwordHash))) {
         throw new BadRequestException("Your current password isn't right.");

@@ -179,8 +179,9 @@ export function CheckoutForm({ addresses, email }: { addresses: SavedAddress[]; 
         </button>
         <p className="font-body text-[11px] text-slate">
           By placing the order you accept our <Link href="/legal/terms-and-conditions" className="underline">Terms</Link> and{" "}
-          <Link href="/legal/shipping-delivery" className="underline">Shipping &amp; Delivery policy</Link>. You choose how to pay on
-          the next page.
+          <Link href="/legal/shipping-delivery" className="underline">Shipping &amp; Delivery policy</Link>. Returns follow our{" "}
+          <Link href="/legal/returns-refunds" className="underline">Returns &amp; Refunds</Link> and{" "}
+          <Link href="/legal/handling-fee" className="underline">Handling Fee</Link> policies. You choose how to pay on the next page.
         </p>
       </aside>
     </form>

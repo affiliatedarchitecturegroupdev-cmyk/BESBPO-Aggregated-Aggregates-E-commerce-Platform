@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ActionForm, Field, SubmitButton } from "@/components/account/Forms";
+import { ActionForm, Field, MobileField, SubmitButton } from "@/components/account/Forms";
+import { NewPasswordFields } from "@/components/account/NewPasswordFields";
 import { OrDivider, SocialSignIn } from "@/components/account/SocialSignIn";
 import { getSession, safeReturnPath } from "@/lib/session";
 import { register } from "../actions";
@@ -29,8 +30,8 @@ export default async function RegisterPage({ searchParams }: { searchParams: { n
           <input type="hidden" name="next" value={next} />
           <Field label="Full name" name="name" autoComplete="name" />
           <Field label="Email" name="email" type="email" autoComplete="email" required />
-          <Field label="Password (10+ characters)" name="password" type="password" autoComplete="new-password" minLength={10} required />
-          <Field label="Confirm password" name="confirmPassword" type="password" autoComplete="new-password" minLength={10} required />
+          <MobileField required />
+          <NewPasswordFields />
           <SubmitButton>Create account</SubmitButton>
         </ActionForm>
       </div>

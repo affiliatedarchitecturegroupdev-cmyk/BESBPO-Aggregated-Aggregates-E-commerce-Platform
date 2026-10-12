@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { BREAKAGE, wallTakeOff } from "@/data/masonry";
 import { formatZAR } from "@/lib/pricing";
+import { NumberInput } from "@/components/ui/NumberInput";
 
 export type WallingOption = {
   sku: string;
@@ -59,22 +60,21 @@ export function WallCalculator({ options, mode = "wall" }: { options: WallingOpt
         )}
         <label className="block">
           <span className={label}>{paving ? "Area length (m)" : "Wall length (m)"}</span>
-          <input type="number" min={0} step={0.1} value={length} onChange={(e) => setLength(Math.max(0, Number(e.target.value) || 0))} className={input} />
+          <NumberInput min={0} step={0.1} value={length} onValueChange={setLength} className={input} />
         </label>
         <label className="block">
           <span className={label}>{paving ? "Area width (m)" : "Wall height (m)"}</span>
-          <input type="number" min={0} step={0.1} value={height} onChange={(e) => setHeight(Math.max(0, Number(e.target.value) || 0))} className={input} />
+          <NumberInput min={0} step={0.1} value={height} onValueChange={setHeight} className={input} />
         </label>
         {!paving && (
           <>
             <label className="block">
               <span className={label}>Doors &amp; windows (m²)</span>
-              <input
-                type="number"
+              <NumberInput
                 min={0}
                 step={0.1}
                 value={openings}
-                onChange={(e) => setOpenings(Math.max(0, Number(e.target.value) || 0))}
+                onValueChange={setOpenings}
                 className={input}
               />
             </label>

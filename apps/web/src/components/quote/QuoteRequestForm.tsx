@@ -6,6 +6,7 @@ import { submitQuoteRequest } from "@/app/account/actions";
 import { CATEGORIES } from "@/data/categories";
 import { QUOTABLE, type Quotable } from "@/data/quotable";
 import { formatZAR } from "@/lib/pricing";
+import { NumberInput } from "@/components/ui/NumberInput";
 
 type LineItem = { sku: string; unit: string; quantity: number };
 type Project = { projectName: string; company: string; contactName: string; email: string; phone: string };
@@ -265,11 +266,10 @@ export function QuoteRequestForm({
                           </select>
                         </td>
                         <td>
-                          <input
-                            type="number"
+                          <NumberInput
                             min={0}
                             value={line.quantity}
-                            onChange={(e) => updateLine(index, { quantity: Math.max(0, Number(e.target.value)) })}
+                            onValueChange={(v) => updateLine(index, { quantity: v })}
                             className="w-24 rounded-sm border border-basalt/20 px-2 py-1"
                           />
                         </td>
