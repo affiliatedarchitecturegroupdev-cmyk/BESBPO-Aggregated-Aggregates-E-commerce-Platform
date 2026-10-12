@@ -63,13 +63,9 @@
      "unit": "THOUSAND",
      "unit_label": "Per 1,000",
      "weight_kg": null,
-     "market_benchmark_price": 2370.0,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 2370.0,
      "markup_percent": 8,
      "list_price_per_unit": 2559.6,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Cashbuild 'Brick Clay Stock' R2.37 each (lowest; a R0.15 handling fee is excluded); Buco NFP clay stock brick from R2.68 each. Per-brick benchmark x 1,000. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "manufacturer": null,
@@ -95,13 +91,9 @@
      "unit": "THOUSAND",
      "unit_label": "Per 1,000",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Face brick prices depend on the range and brickyard — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -127,13 +119,9 @@
      "unit": "THOUSAND",
      "unit_label": "Per 1,000",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Face brick prices depend on the range and brickyard — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -159,13 +147,9 @@
      "unit": "THOUSAND",
      "unit_label": "Per 1,000",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Clay maxi bricks are made by fewer yards — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -191,13 +175,9 @@
      "unit": "THOUSAND",
      "unit_label": "Per 1,000",
      "weight_kg": null,
-     "market_benchmark_price": 3220.0,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 3220.0,
      "markup_percent": 8,
      "list_price_per_unit": 3477.6,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Buco Cape Brick cement stock brick 14 MPa from R3.22 each; Cashbuild 'Brick Imperial Stock 7MPa' R3.22 each (Cashbuild cement stock R3.55). Per-brick benchmark x 1,000. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "manufacturer": null,
@@ -223,13 +203,9 @@
      "unit": "THOUSAND",
      "unit_label": "Per 1,000",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Retail listings conflict (Builders R3.85 to Cashbuild R6.65–R9.95 each for the same size) — quoted with the supplier until a consistent benchmark exists."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -255,13 +231,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": 10.12,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 10.12,
      "markup_percent": 8,
      "list_price_per_unit": 10.93,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Buco cement block 7 MPa 390x90x190 from R10.12 each (lowest); Cashbuild 'Block Concrete M4 390x190x90' R15.32. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "manufacturer": null,
@@ -288,13 +260,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": 10.85,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 10.85,
      "markup_percent": 8,
      "list_price_per_unit": 11.72,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Builders Magnum M140 390x140x190 R10.85 (lowest; Cape Brick MA140 7 MPa R11.00); Buco R14.42; Cashbuild MB140 R15.60. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "manufacturer": null,
@@ -320,13 +288,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's listings found (Buco, R17.19–R18.55) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -352,13 +316,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Retail lintel sections and prices differ too much to compare like for like — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -384,13 +344,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Retail lintel sections and prices differ too much to compare like for like — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -416,13 +372,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Retail lintel sections and prices differ too much to compare like for like — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -448,13 +400,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Retail lintel sections and prices differ too much to compare like for like — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -480,13 +428,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Retail lintel sections and prices differ too much to compare like for like — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -512,13 +456,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Retail lintel sections and prices differ too much to compare like for like — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -544,13 +484,9 @@
      "unit": "ROLL",
      "unit_label": "Roll (40 m)",
      "weight_kg": null,
-     "market_benchmark_price": 76.9,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 76.9,
      "markup_percent": 8,
      "list_price_per_unit": 83.05,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Chamberlains Brickgrip DPC 110mm x 40m 375mic regular R76.90 (R64.90 special excluded); Cashbuild R119.95. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "manufacturer": null,
@@ -576,13 +512,9 @@
      "unit": "ROLL",
      "unit_label": "Roll (40 m)",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Listings for this width were not clear enough to benchmark — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -608,13 +540,9 @@
      "unit": "ROLL",
      "unit_label": "Roll (40 m)",
      "weight_kg": null,
-     "market_benchmark_price": 159.0,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 159.0,
      "markup_percent": 8,
      "list_price_per_unit": 171.72,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Leroy Merlin DPC 375 micron 225mm x 40m R159.00 (lowest regular); Chamberlains R160.00 regular (R139 special excluded); Buco from R164.97; Cashbuild R239.95. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "manufacturer": null,
@@ -640,13 +568,9 @@
      "unit": "ROLL",
      "unit_label": "Roll (40 m)",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Listings for this width were not clear enough to benchmark — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -672,13 +596,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": 29.59,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 29.59,
      "markup_percent": 8,
      "list_price_per_unit": 31.96,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Chamberlains grey concrete air brick R29.59 (lowest); Leroy Merlin R29.60; Buco from R31.65. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "manufacturer": null,
@@ -703,13 +623,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's listing found — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -735,13 +651,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": 2.79,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 2.79,
      "markup_percent": 8,
      "list_price_per_unit": 3.01,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Builders 50 mm bevelled grey paver R2.79 (lowest); Buco bevelled paver grey 50 mm from R3.45; Cashbuild cement bevel grey R4.80. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "manufacturer": null,
@@ -768,13 +680,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": 2.85,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 2.85,
      "markup_percent": 8,
      "list_price_per_unit": 3.08,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Leroy Merlin 'Bosun Interlocking Paving Bricks 60mm Standard Grey' R2.85 (lowest; listed out of stock); Buco 'Bosun Interlocking Standard Paver 60mm Grey' from R3.16. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "specialist_characteristics": []
@@ -799,13 +707,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Retail listings are for different shapes and sizes (Cashbuild 200x100x80 R5.35; Buco Bosun premium 80 mm from R3.17) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -831,13 +735,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Clay paver prices depend on the range and maker — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -863,13 +763,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": 45.9,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 45.9,
      "markup_percent": 8,
      "list_price_per_unit": 49.57,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Chamberlains precast paving slab smooth 450x450 mm (50 mm) R45.90 (lowest; page about 500 days old); Buco Algoa Cement paving slab grey 450x450x50 from R65.91. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "manufacturer": null,
@@ -895,13 +791,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's price found (Buco) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -928,13 +820,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's price found (Chamberlains, Culterra R49.90) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -960,13 +848,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Retail kerbs differ in length and profile (e.g. Chamberlains slate-look 500 mm R57.90) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -992,13 +876,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "No retail price for a road kerb — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1025,13 +905,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's listings found (Cashbuild, conflicting R20.78 and R38.95) — quoted with the licensed maker."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "specialist_characteristics": []
@@ -1056,13 +932,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's price found (Buco, Cape Brick R12 from R60.57) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1088,13 +960,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Listed by one retailer without a price (Builders, Cape Brick VR18) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1121,13 +989,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "No retail price found — gabions are quoted with the supplier by size, wire gauge and coating."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1153,13 +1017,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "No retail price found — gabions are quoted with the supplier by size, wire gauge and coating."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1185,13 +1045,9 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": null,
-     "market_benchmark_price": 259.95,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 259.95,
      "markup_percent": 8,
      "list_price_per_unit": 280.75,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Cashbuild Marley underground pipe SABS 110mm x 6m 100 kPa R259.95 (lowest; non-SABS R179.95 excluded); Buco Marley UG pipe 110mm x 6m 100kPa SABS (ULE420) from R359.72. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "manufacturer": null,
@@ -1217,13 +1073,9 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": null,
-     "market_benchmark_price": 1299.0,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 1299.0,
      "markup_percent": 8,
      "list_price_per_unit": 1402.92,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Chamberlains Marley PVC underground Class 51 pipe 160mm x 6m (UL620) R1,299.00 (lowest product-page price); Buco Marley UG 160mm x 6m SABS 791 (UL620) from R1,723.19 (a Buco search page shows R1,152.55 — confirm). checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "manufacturer": null,
@@ -1248,13 +1100,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": 58.79,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 58.79,
      "markup_percent": 8,
      "list_price_per_unit": 63.49,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Buco Proflo UG 110mm bend 45deg plain long radius SABS from R58.79 (lowest); Leroy Merlin underground plain bend 45 deg 110mm R69.00; Chamberlains Marley R89.90; Cashbuild Marley R97.95. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "manufacturer": null,
@@ -1279,13 +1127,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Not benchmarked yet — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1310,13 +1154,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Retail junctions differ by hand and type (Buco Proflo plain R59.58; Cashbuild Marley right-hand R142.95) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1341,13 +1181,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Not benchmarked yet — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1373,13 +1209,9 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Retail listings are different materials (Leroy Merlin PVC perforated R355; Chamberlains Marley HDPE slotted R509) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1405,13 +1237,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Precast pipes are priced by class, joint and length with the maker — quoted."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1437,13 +1265,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Precast pipes are priced by class, joint and length with the maker — quoted."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1469,13 +1293,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Precast pipes are priced by class, joint and length with the maker — quoted."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1501,13 +1321,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Quoted with the maker by height and diameter."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1532,13 +1348,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Quoted by material and load rating."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1564,13 +1376,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Retail channels differ by make, depth and grate (ACO, Waterform, R149–R359) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1596,13 +1404,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Quoted with the maker by profile and length."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1628,13 +1432,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Engineered item — quoted with the maker."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1660,13 +1460,9 @@
      "unit": "ROLL",
      "unit_label": "Roll (3 × 30 m)",
      "weight_kg": null,
-     "market_benchmark_price": 826.62,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 826.62,
      "markup_percent": 8,
      "list_price_per_unit": 892.75,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Buco plastic sheet 3.0 x 30m 250mic SABS from R826.62 (lowest product-page price; a Buco catalogue page shows R629 — confirm); Cashbuild SABS green under-surface-bed membrane 3m x 30m x 250mic R899.95; Chamberlains SABS Type-F black 3 x 30m x 250mic R919.00. Cashbuild general-purpose black sheet excluded (not for damp-proofing). checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "manufacturer": null,
@@ -1692,13 +1488,9 @@
      "unit": "ROLL",
      "unit_label": "Roll (1.76 × 100 m)",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's price for this roll (Buco) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1725,13 +1517,9 @@
      "unit": "ROLL",
      "unit_label": "Roll (1 × 10 m)",
      "weight_kg": null,
-     "market_benchmark_price": 185.0,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 185.0,
      "markup_percent": 8,
      "list_price_per_unit": 199.8,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Chamberlains Weed Gard membrane 1 x 10m (80 gsm) R185.00 (lowest); Builders Topline Weed Gard 1 x 10m R229. checked 2026-10-10 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "specialist_characteristics": []
@@ -1756,13 +1544,9 @@
      "unit": "ROLL",
      "unit_label": "Roll",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Engineered product — quoted with the supplier by grade."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1788,13 +1572,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": 9.7,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 9.7,
      "markup_percent": 8,
      "list_price_per_unit": 10.48,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Cashbuild Double Roman concrete roof tile terracotta R9.70 each (lowest; a R0.15 handling fee is excluded); Leroy Merlin Marley Double Roman standard terracotta and red R10.50 each; Cashbuild red R14.00. Black and other colours vary — the colour is confirmed on the order. checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "manufacturer": null,
@@ -1820,13 +1600,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Prices depend on the maker and colour (Buco lists Coverland through-colour brown from R11.19 and Marley slate from R15.17) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1852,13 +1628,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Flat-profile ranges differ by maker — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1883,13 +1655,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's ridge-tile prices found (Leroy Merlin, R45–R90 depending on fitting and colour) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,

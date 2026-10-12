@@ -10,7 +10,7 @@ import { SocialShareButtons } from "@/components/social/SocialShareButtons";
 import { CATEGORIES } from "@/data/categories";
 import { LINE_PAGE, lineOf, MASONRY_CATEGORY_CODES, MASONRY_PRODUCTS } from "@/data/masonry";
 import type { MerchandisedMasonryProduct } from "@/lib/cms";
-import { formatZAR } from "@/lib/pricing";
+import { formatZAR, unpricedLabel } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
 /** Product page for the masonry & precast line, CAT-19..25 and 29: walling, paving & retaining, drainage & membranes, and concrete roof tiles. */
@@ -146,7 +146,7 @@ export function MasonryProductPage({ product }: { product: MerchandisedMasonryPr
                           u.prices.CONTRACTOR_TRADE === null ? "trade quoted" : `${formatZAR(u.prices.CONTRACTOR_TRADE)} trade`,
                           u.prices.VOLUME_CIVIL_BULK === null ? "volume quoted" : `${formatZAR(u.prices.VOLUME_CIVIL_BULK)} volume`,
                         ].join(" · ")
-                      : u.pricingStatus}
+                      : unpricedLabel(u.pricingStatus)}
                   </td>
                 </tr>
               ))}

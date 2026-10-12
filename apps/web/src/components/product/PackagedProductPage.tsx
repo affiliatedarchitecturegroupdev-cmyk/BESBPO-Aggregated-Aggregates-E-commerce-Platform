@@ -11,7 +11,7 @@ import { WhatsAppOrderButton } from "@/components/social/WhatsAppCta";
 import { CATEGORIES } from "@/data/categories";
 import { DATASHEETS, PACKAGED_PRODUCTS } from "@/data/packaged";
 import type { MerchandisedPackagedProduct } from "@/lib/cms";
-import { formatZAR } from "@/lib/pricing";
+import { formatZAR, unpricedLabel } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
 /** Product page for CAT-10/11 packaged goods (cement, binders, grout, admixtures). */
@@ -122,7 +122,7 @@ export function PackagedProductPage({ product }: { product: MerchandisedPackaged
                           u.prices.CONTRACTOR_TRADE === null ? "trade quoted" : `${formatZAR(u.prices.CONTRACTOR_TRADE)} trade`,
                           u.prices.VOLUME_CIVIL_BULK === null ? "volume quoted" : `${formatZAR(u.prices.VOLUME_CIVIL_BULK)} volume`,
                         ].join(" · ")
-                      : u.pricingStatus}
+                      : unpricedLabel(u.pricingStatus)}
                   </td>
                 </tr>
               ))}

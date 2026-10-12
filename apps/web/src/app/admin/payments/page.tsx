@@ -82,9 +82,8 @@ export default async function PaymentsPage() {
                 Checkout: {payfastPublic ? "open to customers" : "staff only — customers are asked to choose another method"}
               </p>
               <p className="mt-2 max-w-2xl font-body text-xs text-slate">
-                The credentials are read from the API&apos;s environment and never shown here. Test with a small real order while it&apos;s staff only:
-                pay it through PayFast, check it shows below as &ldquo;Paid&rdquo; and the order is confirmed, refund it from the PayFast dashboard, then
-                open checkout to customers.
+                The credentials are read from the API&apos;s environment and never shown here. A payment shows below as &ldquo;Paid&rdquo; once PayFast
+                confirms it. &ldquo;Back to staff only&rdquo; takes PayFast away from customers at once, for example if PayFast pauses the account.
               </p>
             </div>
             {canEdit && payfast.configured && (

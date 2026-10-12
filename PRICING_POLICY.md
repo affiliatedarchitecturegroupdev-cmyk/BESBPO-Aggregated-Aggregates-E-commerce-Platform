@@ -35,6 +35,24 @@ and quotes are always re-priced by the pricing service.
   benchmark itself (`costBasisPercent` 100) until real supplier
   cost/commission terms are known — the biggest open commercial item.
 
+## Internal pricing research stays internal
+
+Competitor names, their prices, benchmark notes (`source_note`,
+`market_benchmark_price`, `benchmark_sources`), cost bases and markups are for
+planning and the sales team only. They live in the pricing service's catalogues
+(`services/pricing/data/`), which is a private service, and never on the public
+site:
+
+- The storefront's copies under `apps/web/src/data/` are generated without those
+  fields by `python3 scripts/public-catalogues.py` — run it after changing a
+  pricing catalogue, never copy the files by hand.
+- `POST /orders/price` (public) returns only the customer-facing line fields;
+  costs and notes are dropped.
+- Unpriced items show "Price on request" or "Quoted per order", never the
+  internal status text.
+- `apps/api/src/pricing/public-catalogues.spec.ts` fails if a private field or a
+  retailer's name reaches the web copies.
+
 ## Discount schedule
 
 | Family | Retail | Contractor / Trade | Volume / Civil Bulk |

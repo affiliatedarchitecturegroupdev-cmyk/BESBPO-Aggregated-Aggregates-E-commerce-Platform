@@ -9,6 +9,7 @@ import { BadgeCarouselCompact } from "@/components/sourcing/BadgeCarouselCompact
 import { CorporateSiteBand } from "@/components/merchandising/CorporateSiteBand";
 import { CoverageStrip } from "@/components/merchandising/CoverageStrip";
 import { FeaturedProducts } from "@/components/merchandising/FeaturedProducts";
+import { RecentlyViewed } from "@/components/merchandising/RecentlyViewed";
 import { GroupCrossSell } from "@/components/merchandising/GroupCrossSell";
 import { HeroBanner } from "@/components/merchandising/HeroBanner";
 import { HeroSlideshow } from "@/components/merchandising/HeroSlideshow";
@@ -46,6 +47,10 @@ export default async function HomePage() {
       <ComplianceBar />
       <BadgeCarouselCompact />
       <QuickTonnageCalculator hiddenSkus={hiddenSkus} />
+      {/* Returning visitors pick up where they left off; nothing shows on a first visit. */}
+      <div className="mx-auto max-w-6xl px-4">
+        <RecentlyViewed hiddenSkus={hiddenSkus} className="my-10" />
+      </div>
       <CategoryGrid />
       <ShopByStage hiddenSkus={hiddenSkus} />
       <PlanYourBuild />

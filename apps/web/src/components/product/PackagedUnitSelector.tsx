@@ -7,7 +7,7 @@ import type { PackagedProduct } from "@/data/packaged";
 import type { MasonryProduct } from "@/data/masonry";
 import type { RoofingProduct } from "@/data/roofing";
 import type { SteelProduct } from "@/data/steel";
-import { formatZAR } from "@/lib/pricing";
+import { formatZAR, unpricedLabel } from "@/lib/pricing";
 import { packagedFamily, tierOptionLabel } from "@/lib/tier-pricing";
 import { AddToCartButton } from "@/components/cart/AddToCartButton";
 
@@ -105,7 +105,6 @@ export function PackagedUnitSelector({ product, initialQuantity }: { product: Pa
                   : "Delivery is added at checkout, per our bagged-goods rates."}
             </span>
           </div>
-          <p className="mt-2 font-mono text-[10px] text-slate">Benchmark: {unit.sourceNote}</p>
         </>
       ) : tierQuoted ? (
         <div className="mt-4 rounded-sm border border-ochre-gold/50 bg-ochre-gold/10 p-3 font-body text-sm text-basalt">
@@ -124,8 +123,8 @@ export function PackagedUnitSelector({ product, initialQuantity }: { product: Pa
         </div>
       ) : (
         <div className="mt-4 rounded-sm border border-ochre-gold/50 bg-ochre-gold/10 p-3 font-body text-sm text-basalt">
-          <p className="font-semibold">{unit.pricingStatus.startsWith("Quote-only") ? "Quote only" : "Price on request"}</p>
-          <p className="mt-1 text-xs text-slate">{unit.sourceNote}</p>
+          <p className="font-semibold">{unpricedLabel(unit.pricingStatus)}</p>
+          <p className="mt-1 text-xs text-slate">Request a quote and we confirm a supplier-backed price with you.</p>
         </div>
       )}
       <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -139,8 +138,8 @@ export function PackagedUnitSelector({ product, initialQuantity }: { product: Pa
         </Link>
       </div>
       <p className="mt-2 font-body text-[11px] text-slate">
-        Estimate only — every order is re-priced by our pricing service. We never publish a price we can&apos;t back with a
-        real benchmark.
+        Estimate only — every order is re-priced by our pricing service. We only publish prices we can stand
+        behind.
       </p>
     </div>
   );

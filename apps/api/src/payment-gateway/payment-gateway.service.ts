@@ -10,7 +10,10 @@ import { OrdersService } from "../orders/orders.service";
 import { confirmWithPayfast, isPayfastSource, parseNotification, payfastConfig, signatureMatches } from "./payfast/payfast";
 import { UpdatePaymentMethodDto } from "./payment-gateway.dto";
 
-/** SiteContent key for the switch that opens PayFast checkout to customers (staff can always use it). */
+/**
+ * SiteContent key for the PayFast checkout switch. Open to customers unless an
+ * admin has set it to staff only (owner's decision, Oct 2026); staff can always use it.
+ */
 const PAYFAST_VISIBILITY_KEY = "payfast-checkout";
 
 export type NotificationOutcome = "PAID" | "ALREADY_PAID" | "NOT_PAID" | "REJECTED";
@@ -70,7 +73,7 @@ export class PaymentGatewayService {
       cancelUrl: `${webUrl}/orders/${order.id}/confirmation?payment=cancelled`,
       notifyUrl: `${apiUrl}/api/v1/payment-methods/notify/${config.activeGateway.toLowerCase()}`,
     };
-    // Until an admin opens PayFast to customers (after a real test payment), only staff can pay through it.
+    // If an admin has set PayFast to staff only, customers are asked to choose another method.
     if (config.activeGateway === "PAYFAST" && !STAFF_ROLES.includes(user.role) && !(await this.payfastIsPublic())) {
       return {
         isLive: false,
@@ -99,7 +102,7 @@ export class PaymentGatewayService {
 
   async payfastIsPublic(): Promise<boolean> {
     const row = await this.prisma.siteContent.findUnique({ where: { key: PAYFAST_VISIBILITY_KEY } });
-    return (row?.data as { public?: boolean } | null)?.public === true;
+    return (row?.data as { public?: boolean } | null)?.public !== false;
   }
 
   /** Admin: open PayFast checkout to customers, or back to staff only. */

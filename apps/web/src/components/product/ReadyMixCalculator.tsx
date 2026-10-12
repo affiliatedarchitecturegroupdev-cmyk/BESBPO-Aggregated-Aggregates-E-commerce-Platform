@@ -5,7 +5,7 @@ import { useState } from "react";
 import { AddToCartButton } from "@/components/cart/AddToCartButton";
 import { CUSTOMER_TIERS, type CustomerTierName } from "@/data/catalogue";
 import { isPumpPriced, PUMP_OPTIONS, type ReadyMixProduct } from "@/data/ready-mix";
-import { formatZAR } from "@/lib/pricing";
+import { formatZAR, unpricedLabel } from "@/lib/pricing";
 import { tierOptionLabel } from "@/lib/tier-pricing";
 
 /**
@@ -64,8 +64,8 @@ export function ReadyMixCalculator({ product }: { product: ReadyMixProduct }) {
 
       {prices === null ? (
         <div className="mt-4 rounded-sm border border-ochre-gold/50 bg-ochre-gold/10 p-3 font-body text-sm text-basalt">
-          <p className="font-semibold">{product.pricingStatus.startsWith("Quote-only") ? "Quote only" : "Price on request"}</p>
-          <p className="mt-1 text-xs text-slate">{product.sourceNote}</p>
+          <p className="font-semibold">{unpricedLabel(product.pricingStatus)}</p>
+          <p className="mt-1 text-xs text-slate">Request a quote and we confirm the plant&apos;s price for your site.</p>
         </div>
       ) : unitPrice === null ? (
         <div className="mt-4 rounded-sm border border-ochre-gold/50 bg-ochre-gold/10 p-3 font-body text-sm text-basalt">
@@ -108,8 +108,7 @@ export function ReadyMixCalculator({ product }: { product: ReadyMixProduct }) {
           <p className="mt-2 font-body text-xs text-slate">
             {pumpTotal !== null
               ? `Pump: ${formatZAR(pumpTotal)} — distance and washout confirmed in the quote.`
-              : "Pump hire is quoted for your site (access, pour size and distance). Your concrete price above doesn't change."}{" "}
-            {pump.sourceNote}
+              : "Pump hire is quoted for your site (access, pour size and distance). Your concrete price above doesn't change."}
           </p>
         )}
       </div>
@@ -124,7 +123,7 @@ export function ReadyMixCalculator({ product }: { product: ReadyMixProduct }) {
         </Link>
       </div>
       <p className="mt-2 font-body text-[11px] text-slate">
-        Estimate only — every order is re-priced by our pricing service. Benchmark: {product.sourceNote}
+        Estimate only — every order is re-priced by our pricing service.
       </p>
     </div>
   );

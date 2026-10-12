@@ -120,7 +120,7 @@ export default function ReinforcingSteelPage() {
           {[
             {
               title: "Stock lengths",
-              text: "Y8 to Y25 in 6 m lengths, and 12 m lengths and bundles by the tonne for bigger jobs. Live prices where two retailers back a current benchmark; the rest are quoted with the merchant.",
+              text: "Y8 to Y25 in 6 m lengths, and 12 m lengths and bundles by the tonne for bigger jobs. Live prices on the everyday sizes; the rest are quoted with the merchant.",
             },
             {
               title: "Cut & bend to schedule",

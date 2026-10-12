@@ -102,7 +102,7 @@ export default function CementPage() {
           <div>
             <h2 className="font-display text-xl font-bold text-basalt">Bag, bulk bag or tanker?</h2>
             <ul className="mt-3 space-y-3 font-body text-sm text-basalt">
-              <li><strong>50kg bags</strong> — for most building jobs. Live prices where we hold a current benchmark.</li>
+              <li><strong>50kg bags</strong> — for most building jobs. Live prices on the everyday products; the rest are quoted.</li>
               <li><strong>1.5-ton bulk bags</strong> — for bigger pours and block yards, lifted off by crane or forklift. Quoted with the supplier.</li>
               <li><strong>Bulk tanker, per ton</strong> — for batching plants and civil works with a silo. Quoted with the supplier.</li>
             </ul>

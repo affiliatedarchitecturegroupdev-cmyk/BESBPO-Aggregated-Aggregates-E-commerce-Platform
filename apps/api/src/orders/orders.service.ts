@@ -54,7 +54,20 @@ export class OrdersService {
       distanceKm: delivery.distanceKm,
       customerTier: await this.tierOf(user?.companyId ?? null),
     });
-    return { ...priced, distance: delivery };
+    // The shopper sees prices only — never our cost, pricing family or benchmark research.
+    const publicLines = priced.lines.map(({ sku, unit, quantity, equivalent_tons, equivalent_m3, list_unit_price, unit_price, total, unit_label, pricing_status }) => ({
+      sku,
+      unit,
+      quantity,
+      equivalent_tons,
+      equivalent_m3,
+      list_unit_price,
+      unit_price,
+      total,
+      unit_label,
+      pricing_status,
+    }));
+    return { ...priced, lines: publicLines, distance: delivery };
   }
 
   async createOrder(dto: CreateOrderDto, user: AuthUser) {

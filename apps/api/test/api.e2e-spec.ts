@@ -1020,13 +1020,16 @@ describe("Aggregated Aggregates API (e2e)", () => {
         await prisma.siteContent.deleteMany({ where: { key: "payfast-checkout" } });
       });
 
-      it("is staff-only until an admin opens it, then posts a signed form to PayFast", async () => {
+      it("is open to customers unless an admin sets it to staff only, and posts a signed form to PayFast", async () => {
         const buyer = await register("pfbuyer");
         const admin = await register("pfadmin");
         await prisma.user.update({ where: { email: `pfadmin-${run}@example.com` }, data: { role: "ADMIN" } });
         const product = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-SBC-05" } });
         const order = await http().post("/orders").set("Authorization", `Bearer ${buyer}`).send({ deliveryDistanceKm: 20, lineItems: [{ productId: product.id, unitOfSale: "BULK_M3", quantity: 6 }] }).expect(201);
 
+        const byDefault = await http().post("/payment-methods/initiate").set("Authorization", `Bearer ${buyer}`).send({ orderId: order.body.id, methodKey: "CARD" }).expect(201);
+        expect(byDefault.body.isLive).toBe(true);
+        await http().put("/payment-methods/payfast/visibility").set("Authorization", `Bearer ${admin}`).send({ public: false }).expect(200);
         const hidden = await http().post("/payment-methods/initiate").set("Authorization", `Bearer ${buyer}`).send({ orderId: order.body.id, methodKey: "CARD" }).expect(201);
         expect(hidden.body).toMatchObject({ isLive: false });
         expect(hidden.body.form).toBeUndefined();
@@ -1266,6 +1269,14 @@ describe("Aggregated Aggregates API (e2e)", () => {
       expect(sandOnly.body.distance).toMatchObject({ source: "LOCATION", fromTown: "Durban North" });
       expect(sandOnly.body.distance.distanceKm).toBeLessThan(30);
       expect(sandOnly.body.delivery.fee).toBe(0);
+      // Prices only: never our cost, pricing family or benchmark research.
+      const brick = await http().post("/orders/price").send({ lines: [{ sku: "AA-CEM-AFS-ALLPURPOSE-425N", unit: "BAG_50KG", quantity: 10 }], ...durban, deliveryDistanceKm: 20 }).expect(200);
+      for (const line of [...sandOnly.body.lines, ...brick.body.lines]) {
+        expect(line).not.toHaveProperty("unit_cost");
+        expect(line).not.toHaveProperty("family");
+        expect(line).not.toHaveProperty("source_note");
+      }
+      expect(brick.body.lines[0].unit_price).toBeGreaterThan(0);
 
       const mixed = await http()
         .post("/orders/price")

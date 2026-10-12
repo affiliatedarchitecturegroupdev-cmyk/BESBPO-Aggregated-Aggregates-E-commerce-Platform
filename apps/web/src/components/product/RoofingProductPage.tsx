@@ -10,7 +10,7 @@ import { SocialShareButtons } from "@/components/social/SocialShareButtons";
 import { CATEGORIES } from "@/data/categories";
 import { CUT_TO_LENGTH, ROOFING_CATEGORY_CODES, ROOFING_PRODUCTS } from "@/data/roofing";
 import type { MerchandisedRoofingProduct } from "@/lib/cms";
-import { formatZAR } from "@/lib/pricing";
+import { formatZAR, unpricedLabel } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
 /** Product page for the roofing line, CAT-26..28: sheets in standard lengths or cut to length, flashings and fixings, insulation and rainwater goods. */
@@ -136,7 +136,7 @@ export function RoofingProductPage({ product }: { product: MerchandisedRoofingPr
                           u.prices.CONTRACTOR_TRADE === null ? "trade quoted" : `${formatZAR(u.prices.CONTRACTOR_TRADE)} trade`,
                           u.prices.VOLUME_CIVIL_BULK === null ? "volume quoted" : `${formatZAR(u.prices.VOLUME_CIVIL_BULK)} volume`,
                         ].join(" · ")
-                      : u.pricingStatus}
+                      : unpricedLabel(u.pricingStatus)}
                   </td>
                 </tr>
               ))}

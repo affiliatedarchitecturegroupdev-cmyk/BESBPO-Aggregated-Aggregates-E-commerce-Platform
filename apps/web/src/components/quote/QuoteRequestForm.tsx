@@ -298,8 +298,8 @@ export function QuoteRequestForm({
               + Add Another Product
             </button>
             <p className="mt-4 rounded-sm bg-seam-blue/5 p-3 font-body text-xs text-slate">
-              Estimated unit prices are retail list prices; trade accounts receive up to 8–15% off. Items marked “On request” have no
-              confirmed benchmark yet — our team confirms them with the supplier. Volume/Civil Bulk account
+              Estimated unit prices are retail list prices; trade accounts receive up to 8–15% off. Items marked “On request” are priced
+              by our team with the supplier. Volume/Civil Bulk account
               orders of 10m³ or more, and any delivery beyond 100km, are quoted individually — our team responds within 1
               business day with delivered pricing.
             </p>

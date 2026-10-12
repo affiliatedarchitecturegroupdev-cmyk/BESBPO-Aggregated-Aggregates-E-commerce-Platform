@@ -58,37 +58,25 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": 2.37,
-     "market_benchmark_price": 52.5,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 52.5,
      "markup_percent": 8,
      "list_price_per_unit": 56.7,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Buco R52.50 (from) is lowest; Build Africa R60.49. Y8 450 MPa x 6 m, web listings checked 2026-10-09 (pages undated). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "LENGTH_12M",
      "unit_label": "12 m length",
      "weight_kg": 4.74,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -117,37 +105,25 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": 3.7,
-     "market_benchmark_price": 76.95,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 76.95,
      "markup_percent": 8,
      "list_price_per_unit": 83.11,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Cashbuild R76.95 is lowest; Buco R79.50 (from), Chamberlains R88.90. Y10 450 MPa x 6 m, web listings checked 2026-10-09 (pages undated). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "LENGTH_12M",
      "unit_label": "12 m length",
      "weight_kg": 7.4,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -176,37 +152,25 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": 5.33,
-     "market_benchmark_price": 109.69,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 109.69,
      "markup_percent": 8,
      "list_price_per_unit": 118.47,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Hinterland R109.69 is lowest; Cashbuild R109.95, Buco R114.11 (from), Chamberlains R119.00. Y12 450 MPa x 6 m, web listings checked 2026-10-09 (pages undated). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "LENGTH_12M",
      "unit_label": "12 m length",
      "weight_kg": 10.66,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -235,37 +199,25 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": 9.47,
-     "market_benchmark_price": 194.95,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 194.95,
      "markup_percent": 8,
      "list_price_per_unit": 210.55,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Cashbuild R194.95 is lowest; Buco R205.82 (from), Build Africa R208.99, Hinterland R210.90, Chamberlains R225.00. Y16 450 MPa x 6 m, web listings checked 2026-10-09 (pages undated). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "LENGTH_12M",
      "unit_label": "12 m length",
      "weight_kg": 18.94,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -294,37 +246,25 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": 14.8,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Fewer than two SA retailers list a regular price for this unit (Oct 2026) — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "LENGTH_12M",
      "unit_label": "12 m length",
      "weight_kg": 29.59,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -353,37 +293,25 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": 23.12,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Fewer than two SA retailers list a regular price for this unit (Oct 2026) — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "LENGTH_12M",
      "unit_label": "12 m length",
      "weight_kg": 46.24,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -412,25 +340,17 @@
      "unit": "LENGTH_12M",
      "unit_label": "12 m length",
      "weight_kg": 75.76,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -459,25 +379,17 @@
      "unit": "LENGTH_12M",
      "unit_label": "12 m length",
      "weight_kg": 118.38,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -506,25 +418,17 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": 2.37,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Fewer than two SA retailers list a regular price for this unit (Oct 2026) — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -553,25 +457,17 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": 3.7,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Fewer than two SA retailers list a regular price for this unit (Oct 2026) — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -600,25 +496,17 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": 5.33,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Fewer than two SA retailers list a regular price for this unit (Oct 2026) — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -647,25 +535,17 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": 9.47,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Fewer than two SA retailers list a regular price for this unit (Oct 2026) — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -694,25 +574,17 @@
      "unit": "SHEET",
      "unit_label": "Sheet (6.0 x 2.4 m)",
      "weight_kg": null,
-     "market_benchmark_price": 315.0,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 315.0,
      "markup_percent": 8,
      "list_price_per_unit": 340.2,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Leroy Merlin R315.00 is lowest; Chamberlains R319.00, Cashbuild R384.95. Ref 100 welded mesh 2.4 x 6 m, web listings checked 2026-10-09 (pages undated). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -741,25 +613,17 @@
      "unit": "SHEET",
      "unit_label": "Sheet (6.0 x 2.4 m)",
      "weight_kg": null,
-     "market_benchmark_price": 519.9,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 519.9,
      "markup_percent": 8,
      "list_price_per_unit": 561.49,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Build it DTM R519.90 is lowest; Leroy Merlin R559.00 (K.Carrim's R399.00 is a sale price, so excluded). Ref 193 welded mesh 2.4 x 6 m, web listings checked 2026-10-09 (pages undated). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -788,25 +652,17 @@
      "unit": "SHEET",
      "unit_label": "Sheet (6.0 x 2.4 m)",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Fewer than two SA retailers list a regular price for this unit (Oct 2026) — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -835,25 +691,17 @@
      "unit": "SHEET",
      "unit_label": "Sheet (6.0 x 2.4 m)",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -882,25 +730,17 @@
      "unit": "SHEET",
      "unit_label": "Sheet (6.0 x 2.4 m)",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -929,25 +769,17 @@
      "unit": "SHEET",
      "unit_label": "Sheet (6.0 x 2.4 m)",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -976,25 +808,17 @@
      "unit": "SHEET",
      "unit_label": "Sheet (6.0 x 2.4 m)",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant (mass from SANS 920 nominal kg/m)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1023,13 +847,9 @@
      "unit": "ROLL",
      "unit_label": "20 m roll",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Fewer than two SA retailers list a regular price for this unit (Oct 2026) — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1058,13 +878,9 @@
      "unit": "ROLL",
      "unit_label": "20 m roll",
      "weight_kg": null,
-     "market_benchmark_price": 52.9,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 52.9,
      "markup_percent": 8,
      "list_price_per_unit": 57.13,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Chamberlains R52.90 and Leroy Merlin R52.90 (regular; Leroy's R49.00 is a sale) are lowest; Cashbuild R54.95. Brickforce 150 mm x 2.8 mm x 20 m NHBRC, web listings checked 2026-10-09 (pages undated). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ]
   },
@@ -1093,13 +909,9 @@
      "unit": "ROLL",
      "unit_label": "20 m roll",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Fewer than two SA retailers list a regular price for this unit (Oct 2026) — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1128,13 +940,9 @@
      "unit": "COIL",
      "unit_label": "5 kg coil (about 317 m)",
      "weight_kg": 5,
-     "market_benchmark_price": 179.9,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 179.9,
      "markup_percent": 8,
      "list_price_per_unit": 194.29,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Build it DTM R179.90 is lowest; K.Carrim R179.99. Black binding wire 1.6 mm, 5 kg coil, web listings checked 2026-10-09 (pages undated). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ]
   },
@@ -1163,13 +971,9 @@
      "unit": "PACK",
      "unit_label": "Pack (size confirmed on quote)",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1198,13 +1002,9 @@
      "unit": "PACK",
      "unit_label": "Pack (size confirmed on quote)",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1232,13 +1032,9 @@
      "unit": "PACK",
      "unit_label": "Bag of 200",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one SA supplier lists a price (Oct 2026) — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1267,13 +1063,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1301,13 +1093,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1336,13 +1124,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1371,13 +1155,9 @@
      "unit": "PACK",
      "unit_label": "Pack (size confirmed on quote)",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1405,13 +1185,9 @@
      "unit": "ROLL",
      "unit_label": "Roll (length confirmed on quote)",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1439,13 +1215,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1474,13 +1246,9 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": null,
-     "market_benchmark_price": 239.0,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 239.0,
      "markup_percent": 8,
      "list_price_per_unit": 258.12,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Leroy Merlin R239.00 is lowest; Cashbuild R239.95, Buco R255.19 (from). Equal angle 40 x 40 x 3 mm x 6 m, web listings checked 2026-10-09 (pages undated). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ]
   },
@@ -1509,25 +1277,17 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1556,13 +1316,9 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": null,
-     "market_benchmark_price": 460.1,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 460.1,
      "markup_percent": 8,
      "list_price_per_unit": 496.91,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Buco R460.10 (from) is lowest; Chamberlains R499.00. Square tube 50 x 50 x 2.0 mm x 6 m, web listings checked 2026-10-09 (pages undated). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ]
   },
@@ -1591,25 +1347,17 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1638,25 +1386,17 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1685,25 +1425,17 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1732,25 +1464,17 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1779,25 +1503,17 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1826,25 +1542,17 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1873,25 +1581,17 @@
      "unit": "LENGTH_6M",
      "unit_label": "6 m length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1920,25 +1620,17 @@
      "unit": "SHEET",
      "unit_label": "Sheet or cut to size",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold by steel merchants on request, not on retail shelves — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "TONNE",
      "unit_label": "Per tonne",
      "weight_kg": 1000,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Per-tonne merchant prices are not published — quoted with the merchant."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   }
