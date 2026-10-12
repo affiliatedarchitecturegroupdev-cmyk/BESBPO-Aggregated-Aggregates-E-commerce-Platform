@@ -94,6 +94,7 @@ aggregates-store-platform/
 ├── CALCULATORS.md        Calculators strip and /calculators page: what each calculator works out and where
 ├── RECENTLY_VIEWED.md    Recently viewed row: browser-only storage, privacy, where it shows
 ├── PLAN_YOUR_BUILD.md    Homepage project-lists band: steps, and the card that shows your latest project
+├── SHOPPING_ASSISTANT.md  Free rules-based shopping assistant: what it answers, rules, engine interface
 ├── STEEL_SPOTLIGHT.md    Homepage steel band: everyday rebar and mesh prices, cut & bend, mass calculator
 ├── PROJECT_LISTS.md      Wishlist by job: project lists, build stages, estimate, share, cart/quote
 ├── ANALYTICS.md          Sales & profit reporting: decisions, what's recorded, how profit is calculated

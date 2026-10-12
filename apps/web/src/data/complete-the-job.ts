@@ -260,7 +260,7 @@ const JOBS = {
   },
 } satisfies Record<string, Job>;
 
-type JobKey = keyof typeof JOBS;
+export type JobKey = keyof typeof JOBS;
 
 const BY_CATEGORY: Record<string, JobKey> = {
   "sub-base-base-course": "layerworks",
@@ -359,9 +359,16 @@ export type CompleteTheJobView = { title: string; stage: BuildStage; stageLabel:
 export function completeTheJob(sku: string, categorySlug: string, hiddenSkus: string[] = []): CompleteTheJobView | null {
   const key = BY_SKU[sku] ?? BY_CATEGORY[categorySlug];
   if (!key || NO_JOB.has(sku)) return null;
+  return resolveJob(key, [sku, ...hiddenSkus]);
+}
+
+export const JOB_KEYS = Object.keys(JOBS) as JobKey[];
+
+/** One job's companions resolved against the catalogue, leaving out the given SKUs — for the shopping assistant's "what do I need for…". */
+export function resolveJob(key: JobKey, excludeSkus: string[] = []): CompleteTheJobView | null {
   const job: Job = JOBS[key];
   const companions = job.companions
-    .filter((c) => c.sku !== sku && !hiddenSkus.includes(c.sku))
+    .filter((c) => !excludeSkus.includes(c.sku))
     .flatMap((c) => {
       const product = findQuotable(c.sku);
       if (!product) return [];
@@ -385,6 +392,12 @@ export function completeTheJob(sku: string, categorySlug: string, hiddenSkus: st
   if (companions.length < 2) return null;
   const stageLabel = STAGES.find((s) => s.value === job.stage)!.label;
   return { title: job.title, stage: job.stage, stageLabel, companions };
+}
+
+/** The job key a product maps to, if any. */
+export function jobKeyFor(sku: string, categorySlug: string): JobKey | null {
+  if (NO_JOB.has(sku)) return null;
+  return BY_SKU[sku] ?? BY_CATEGORY[categorySlug] ?? null;
 }
 
 /** Every SKU the pairings name — checked against the catalogue so a renamed product can't silently drop out. */
