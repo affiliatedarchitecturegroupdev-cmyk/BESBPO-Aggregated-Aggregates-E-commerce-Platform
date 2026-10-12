@@ -1,7 +1,5 @@
 # Returns & Refunds Policy
 
-_Last updated: 11 October 2026_
-
 This policy explains when a product purchased through Aggregated
 Aggregates can be returned, exchanged, or refunded.
 

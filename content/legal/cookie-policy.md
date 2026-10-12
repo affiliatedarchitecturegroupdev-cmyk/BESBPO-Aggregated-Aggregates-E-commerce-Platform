@@ -1,7 +1,5 @@
 # Cookie Policy
 
-_Last updated: 11 October 2026_
-
 This Cookie Policy explains how Aggregated Aggregates uses cookies and
 similar technologies on aggregates.store and app.aggregates.store.
 

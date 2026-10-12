@@ -7,7 +7,7 @@ import { formatZAR } from "@/lib/pricing";
 
 export const metadata: Metadata = {
   title: "Ways to Pay",
-  description: "Card, instant EFT, wallets, QR, buy-now-pay-later, Lulapay trade credit and EFT / purchase order — every way to pay, with terms.",
+  description: "Card, instant EFT, wallets, QR, pay in store (SCode), buy-now-pay-later, Lulapay trade credit and EFT / purchase order — every way to pay, with terms.",
   alternates: { canonical: "/ways-to-pay" },
 };
 
@@ -16,6 +16,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   eft: "Instant EFT",
   wallet: "Digital Wallets",
   qr: "QR / Scan to Pay",
+  store: "Pay in Store",
   bnpl: "Buy Now, Pay Later",
   b2b: "Trade Credit",
   manual: "Invoicing",
@@ -61,7 +62,7 @@ export default async function WaysToPayPage() {
                         <span className="rounded-sm bg-ochre-gold/20 px-2 py-0.5 font-mono text-[9px] uppercase text-basalt">Trade accounts</span>
                       )}
                     </div>
-                    {method.instalments && <p className="mt-1 font-body text-xs text-slate">{method.instalments}</p>}
+                    {(method.instalments ?? method.note) && <p className="mt-1 font-body text-xs text-slate">{method.instalments ?? method.note}</p>}
                     {(method.minOrderValue || method.maxOrderValue) && (
                       <p className="mt-1 font-mono text-[10px] text-slate">
                         {method.minOrderValue ? `From ${formatZAR(method.minOrderValue)}` : ""}

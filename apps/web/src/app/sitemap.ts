@@ -14,6 +14,20 @@ import { getPublishedPosts } from "@/lib/blog";
 import { getOpenVacancies } from "@/lib/careers";
 import { getHireCoverage, provinceSlug } from "@/lib/hire-coverage";
 import { SITE_URL } from "@/lib/site";
+import { policyVersions } from "@/lib/legal-content";
+
+/** Legal page path → its Markdown file, so the sitemap carries each policy's last-updated date. */
+const LEGAL_FILES: Record<string, string> = {
+  "/legal/privacy-policy": "privacy-policy.md",
+  "/legal/terms-and-conditions": "terms-and-conditions.md",
+  "/legal/hire-terms": "hire-terms.md",
+  "/legal/partner-terms": "partner-terms.md",
+  "/legal/popia-notice": "popia-notice.md",
+  "/legal/cookie-policy": "cookie-policy.md",
+  "/legal/returns-refunds": "returns-refunds-policy.md",
+  "/legal/shipping-delivery": "shipping-delivery-policy.md",
+  "/legal/paia-manual": "paia-manual.md",
+};
 
 const STATIC_PATHS = [
   "",
@@ -66,7 +80,7 @@ const STATIC_PATHS = [
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [posts, vacancies, coverage] = await Promise.all([getPublishedPosts(), getOpenVacancies(), getHireCoverage()]);
   return [
-    ...STATIC_PATHS.map((path) => ({ url: `${SITE_URL}${path}` })),
+    ...STATIC_PATHS.map((path) => ({ url: `${SITE_URL}${path}`, ...(LEGAL_FILES[path] ? { lastModified: policyVersions(LEGAL_FILES[path])[0].date } : {}) })),
     ...CATEGORIES.map((c) => ({ url: `${SITE_URL}/products?category=${c.slug}` })),
     ...INDUSTRIES.map((i) => ({ url: `${SITE_URL}/products?industry=${i.slug}` })),
     ...EXTRA_LINES.map((l) => ({ url: `${SITE_URL}${l.path}` })),

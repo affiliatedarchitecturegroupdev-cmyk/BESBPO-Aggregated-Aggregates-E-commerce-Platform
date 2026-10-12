@@ -1,7 +1,5 @@
 # Terms & Conditions
 
-_Last updated: 11 October 2026_
-
 These Terms & Conditions ("Terms") govern your use of aggregates.store and
 app.aggregates.store (the "Platform") and any purchase made through it.
 The Platform is operated by Aggregated Aggregates, a division of Besbpo

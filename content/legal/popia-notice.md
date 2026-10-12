@@ -1,7 +1,5 @@
 # POPIA Notice (Notice of Processing of Personal Information)
 
-_Last updated: 7 October 2026_
-
 This notice is provided in terms of Section 18 of the Protection of
 Personal Information Act 4 of 2013 ("POPIA"). It supplements, and should be
 read alongside, our full [Privacy Policy](/legal/privacy-policy).

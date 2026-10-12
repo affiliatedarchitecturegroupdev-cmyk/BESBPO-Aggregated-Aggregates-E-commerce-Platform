@@ -1,7 +1,5 @@
 # Plant Hire & Site Services Terms
 
-_Last updated: 7 October 2026_
-
 These terms apply when you request or book plant hire (such as TLBs,
 excavators, tippers and rollers) or a site service (such as haulage, rubble
 removal, skip bins, site clearing or demolition) through aggregates.store
