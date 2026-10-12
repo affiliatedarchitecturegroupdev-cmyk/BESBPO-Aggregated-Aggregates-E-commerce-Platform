@@ -2,38 +2,47 @@
   "about": "Version history of every public legal page, newest first. The legal pages show the latest date as 'Last updated' and the one before it as 'Previously updated', with this list as the change history. Add an entry at the top whenever a page's wording changes; the page's Markdown carries no date of its own. See content/legal/README.md.",
   "policies": {
     "terms-and-conditions.md": [
+      { "date": "2026-10-12", "changes": "Our website and email addresses moved to the aaggregates.store domain." },
       { "date": "2026-10-11", "changes": "Section 6 now covers materials cut or made to your specification, such as roof sheets cut to length and steel cut and bent, which can't be returned or refunded once cut." },
       { "date": "2026-10-07", "changes": "Section 2 sets out the units each product is sold in, \"price on request\" products, and trade discounts by product type; section 4 describes the payment methods generally." },
       { "date": "2026-09-26", "changes": "First published." }
     ],
     "privacy-policy.md": [
+      { "date": "2026-10-12", "changes": "Our website and email addresses moved to the aaggregates.store domain." },
       { "date": "2026-10-11", "changes": "Adds design briefs sent to Bellwether Architecture & Engineering (BAE), and a new section 3A on the shopping assistant." },
       { "date": "2026-10-07", "changes": "Covers plant hire and site service enquiries and bookings, partners and the partner portal, booking messages (new section 5A), job applications, the newsletter and more sign-in options; payment processors are now described generally." },
       { "date": "2026-09-26", "changes": "First published." }
     ],
     "popia-notice.md": [
+      { "date": "2026-10-12", "changes": "Our website and email addresses moved to the aaggregates.store domain." },
       { "date": "2026-10-07", "changes": "Covers plant hire and site service enquiries and bookings, booking messages, partner applications and the partner portal, job applications, the newsletter and more sign-in options." },
       { "date": "2026-09-26", "changes": "First published." }
     ],
     "cookie-policy.md": [
+      { "date": "2026-10-12", "changes": "Our website and email addresses moved to the aaggregates.store domain." },
       { "date": "2026-10-11", "changes": "Explains the browser storage behind \"Recently viewed\" and the shopping assistant's chat, and how to clear them." },
       { "date": "2026-09-26", "changes": "First published." }
     ],
     "returns-refunds-policy.md": [
+      { "date": "2026-10-12", "changes": "Our website and email addresses moved to the aaggregates.store domain." },
       { "date": "2026-10-11", "changes": "New section 2: roof sheets cut to length and steel cut and bent can't be returned, exchanged or refunded once cut, unless they don't match the accepted quote or are defective. Later sections renumbered." },
       { "date": "2026-09-26", "changes": "First published." }
     ],
     "shipping-delivery-policy.md": [
+      { "date": "2026-10-12", "changes": "Our website and email addresses moved to the aaggregates.store domain." },
       { "date": "2026-10-03", "changes": "Section 6 now says we deliver across all nine provinces, and how a site that isn't listed, or is more than 100 km from the nearest partner supplier, is quoted." },
       { "date": "2026-09-26", "changes": "First published." }
     ],
     "hire-terms.md": [
+      { "date": "2026-10-12", "changes": "Our website and email addresses moved to the aaggregates.store domain." },
       { "date": "2026-10-07", "changes": "First published." }
     ],
     "partner-terms.md": [
+      { "date": "2026-10-12", "changes": "Our website and email addresses moved to the aaggregates.store domain." },
       { "date": "2026-10-07", "changes": "First published." }
     ],
     "paia-manual.md": [
+      { "date": "2026-10-12", "changes": "Our website and email addresses moved to the aaggregates.store domain." },
       { "date": "2026-09-26", "changes": "First published." }
     ]
   }

@@ -24,7 +24,7 @@ your live domain:
 https://<storefront domain>/api/auth/oauth/<provider>/callback
 ```
 
-for example `https://aggregates.store/api/auth/oauth/google/callback`.
+for example `https://aaggregates.store/api/auth/oauth/google/callback`.
 `<provider>` is `google`, `microsoft`, `x`, `facebook` or `instagram`. While
 the store runs on Render's address, use `https://aggregates-store-web.onrender.com/...`
 (and add the custom-domain one when you switch). Set `NEXT_PUBLIC_SITE_URL`
@@ -45,7 +45,7 @@ on the **web** service so the callback always uses the right domain.
 - **Facebook** — developers.facebook.com → Create app → *Authenticate and
   request data from users with Facebook Login*. Add the redirect URI under
   Facebook Login → Settings. The app must be switched to Live mode (needs a
-  privacy-policy URL: `https://aggregates.store/legal/privacy-policy`).
+  privacy-policy URL: `https://aaggregates.store/legal/privacy-policy`).
 - **Instagram** — developers.facebook.com → Create app → *Instagram API with
   Instagram Login*. **Only Instagram professional (Business or Creator)
   accounts can sign in this way** — that's Meta's rule; personal Instagram

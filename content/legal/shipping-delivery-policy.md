@@ -52,10 +52,10 @@ attempt fails due to inadequate site access.
 
 We deliver across all nine provinces of South Africa, from the approved
 partner supplier nearest your site. Our Where We Deliver page
-(aggregates.store/coverage) lists the towns and cities we serve by province.
+(aaggregates.store/coverage) lists the towns and cities we serve by province.
 For a site that isn't listed, or more than 100km from the nearest partner
 supplier, we quote the delivery separately before you pay.
 
 ## 7. Contact
 
-Delivery queries can be directed to support@aggregates.store.
+Delivery queries can be directed to support@aaggregates.store.

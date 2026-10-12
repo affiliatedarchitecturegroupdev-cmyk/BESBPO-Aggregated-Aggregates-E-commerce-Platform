@@ -2,7 +2,7 @@
 
 These terms apply when you request or book plant hire (such as TLBs,
 excavators, tippers and rollers) or a site service (such as haulage, rubble
-removal, skip bins, site clearing or demolition) through aggregates.store
+removal, skip bins, site clearing or demolition) through aaggregates.store
 (the "Platform"). They sit alongside our general
 [Terms & Conditions](/legal/terms-and-conditions); where the two differ for
 a hire or service booking, these terms apply.
@@ -166,5 +166,5 @@ law.
 ## 15. Governing law and contact
 
 These terms are governed by the laws of the Republic of South Africa.
-Questions about them can be sent to legal@aggregates.store, and questions
-about a booking to the messages in that booking or sales@aggregates.store.
+Questions about them can be sent to legal@aaggregates.store, and questions
+about a booking to the messages in that booking or sales@aaggregates.store.

@@ -26,7 +26,7 @@ export const REGISTERED_ADDRESS = {
 };
 
 export const CORPORATE_EMAILS = {
-  sales: "sales@aggregates.store",
+  sales: "sales@aaggregates.store",
   partners: "partners@besbpo.co.za",
 };
 

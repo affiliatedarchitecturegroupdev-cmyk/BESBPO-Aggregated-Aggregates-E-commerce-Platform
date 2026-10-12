@@ -1,6 +1,6 @@
 # Aggregated Aggregates — E-Commerce Platform (Foundation Scaffold)
 
-**Division of Besbpo Group** · Domain: `aggregates.store` / `app.aggregates.store`
+**Division of Besbpo Group** · Domain: `aaggregates.store` / `app.aaggregates.store`
 Positioning: *"Every Layer Starts Here"*
 
 This repository is the **Phase 1 foundation scaffold** produced from the
@@ -55,7 +55,7 @@ for official files, and suppliers need map pins — see "Open items" in `AGENTIC
 ## Confirmed platform decisions
 
 - **Supplier network**: 104 approved partner suppliers (60 Tier 1, 44 Tier 2) across all nine provinces plus 18 researched B2B leads — broker/network model, no owned yards or inventory. Seeded on deploy from `packages/database/prisma/seed-data/`, managed at `/admin/suppliers`; KZN and Gauteng active at launch
-- **Domain**: `aggregates.store` (corporate + storefront) / `app.aggregates.store` (platform app)
+- **Domain**: `aaggregates.store` (corporate + storefront) / `app.aaggregates.store` (platform app)
 - **VAT**: bills under Besbpo Group's company VAT registration from day one
 - **Hosting**: Render
 - **Courier**: Besfleet + 15+ external tipper-truck delivery partners (hybrid)
@@ -95,6 +95,7 @@ aggregates-store-platform/
 ├── RECENTLY_VIEWED.md    Recently viewed row: browser-only storage, privacy, where it shows
 ├── PLAN_YOUR_BUILD.md    Homepage project-lists band: steps, and the card that shows your latest project
 ├── SHOPPING_ASSISTANT.md  Free rules-based shopping assistant: what it answers, rules, engine interface
+├── docs/payments-payfast.md PayFast: settings (AGG_PAYFAST_*), signed checkout, payment notifications, going live
 ├── STEEL_SPOTLIGHT.md    Homepage steel band: everyday rebar and mesh prices, cut & bend, mass calculator
 ├── PROJECT_LISTS.md      Wishlist by job: project lists, build stages, estimate, share, cart/quote
 ├── ANALYTICS.md          Sales & profit reporting: decisions, what's recorded, how profit is calculated

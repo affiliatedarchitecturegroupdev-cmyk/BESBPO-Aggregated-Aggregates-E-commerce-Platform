@@ -1,7 +1,7 @@
 # Terms & Conditions
 
-These Terms & Conditions ("Terms") govern your use of aggregates.store and
-app.aggregates.store (the "Platform") and any purchase made through it.
+These Terms & Conditions ("Terms") govern your use of aaggregates.store and
+app.aaggregates.store (the "Platform") and any purchase made through it.
 The Platform is operated by Aggregated Aggregates, a division of Besbpo
 Group (Pty) Ltd ("we", "us", "our"). By using the Platform or placing an
 order, you agree to these Terms.
@@ -124,4 +124,4 @@ South African courts.
 
 ## 11. Contact
 
-Questions about these Terms can be sent to legal@aggregates.store.
+Questions about these Terms can be sent to legal@aaggregates.store.

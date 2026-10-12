@@ -2,8 +2,8 @@
 
 This Privacy Policy explains how Aggregated Aggregates ("we", "us", "our"),
 a division of Besbpo Group (Pty) Ltd, collects, uses, discloses, and
-protects personal information when you use aggregates.store and
-app.aggregates.store (the "Platform"), in accordance with the Protection of
+protects personal information when you use aaggregates.store and
+app.aaggregates.store (the "Platform"), in accordance with the Protection of
 Personal Information Act 4 of 2013 ("POPIA").
 
 ## 1. Who we are
@@ -169,7 +169,7 @@ completely secure, and we cannot guarantee absolute security.
 ## 10. Contact us
 
 For any privacy-related query, or to exercise your POPIA rights, contact
-our Information Officer at: privacy@aggregates.store.
+our Information Officer at: privacy@aaggregates.store.
 
 ## 11. Changes to this policy
 

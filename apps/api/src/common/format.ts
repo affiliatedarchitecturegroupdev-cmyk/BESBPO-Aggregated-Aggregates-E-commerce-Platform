@@ -68,6 +68,6 @@ export const SELLER = {
   registrationNumber: "2026/490480/07",
   addressLines: ["2 Ncondo Place, Ridgeside Dr", "Umhlanga Ridge, Durban, KwaZulu-Natal, 4319"],
   phone: "087 265 2505",
-  email: "sales@aggregates.store",
-  website: "aggregates.store",
+  email: "sales@aaggregates.store",
+  website: "aaggregates.store",
 };

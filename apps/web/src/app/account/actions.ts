@@ -330,16 +330,31 @@ export async function deleteSupplier(form: FormData) {
 
 // --- payments -----------------------------------------------------------------
 
+export type PaymentForm = { action: string; fields: [string, string][] };
+
+/** Gateways a payment form may be posted to — PayFast's hosted checkout only. */
+const FORM_ACTIONS = ["https://www.payfast.co.za/eng/process", "https://sandbox.payfast.co.za/eng/process"];
+
 /** Starts paying an order with the chosen method; the API re-checks eligibility and routes it to its gateway. */
-export async function payForOrder(orderId: string, methodKey: string): Promise<{ ok: boolean; message: string; redirectUrl?: string }> {
-  const result = await api<{ isLive: boolean; note: string; redirectUrl?: string }>("/payment-methods/initiate", {
+export async function payForOrder(orderId: string, methodKey: string): Promise<{ ok: boolean; message: string; redirectUrl?: string; form?: PaymentForm }> {
+  const result = await api<{ isLive: boolean; note: string; redirectUrl?: string; form?: PaymentForm }>("/payment-methods/initiate", {
     method: "POST",
     token: sessionToken(),
     body: { orderId, methodKey },
   });
   if (!result.ok) return { ok: false, message: result.message };
   const redirect = result.data.redirectUrl && /^https:\/\//.test(result.data.redirectUrl) ? result.data.redirectUrl : undefined;
-  return { ok: result.data.isLive, message: result.data.note, redirectUrl: redirect };
+  const form = result.data.form && FORM_ACTIONS.includes(result.data.form.action) ? result.data.form : undefined;
+  return { ok: result.data.isLive, message: result.data.note, redirectUrl: redirect, form };
+}
+
+/** Admin: open PayFast checkout to customers, or back to staff only. */
+export async function setPayfastVisibility(_prev: FormState, form: FormData): Promise<FormState> {
+  const open = text(form, "public") === "true";
+  const result = await api("/payment-methods/payfast/visibility", { method: "PUT", token: sessionToken(), body: { public: open } });
+  if (!result.ok) return { error: result.status === 403 ? "Only admins can change this." : result.message };
+  revalidatePath("/admin/payments");
+  return { success: open ? "PayFast is now open to customers." : "PayFast is back to staff only." };
 }
 
 // --- ad system: promotions (staff) --------------------------------------------

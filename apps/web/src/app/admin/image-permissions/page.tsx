@@ -25,11 +25,11 @@ const FILTERS = [
 
 function requestEmail(source: Source) {
   const products = source.products.map((p) => p.name).join(", ");
-  return `Subject: Permission to use your product photos on aggregates.store
+  return `Subject: Permission to use your product photos on aaggregates.store
 
 Hello ${source.sourceName.replace(/\s*\(.*\)$/, "")} team,
 
-Aggregated Aggregates (a division of Besbpo Group (Pty) Ltd) is launching an online store for aggregates and building materials at aggregates.store.
+Aggregated Aggregates (a division of Besbpo Group (Pty) Ltd) is launching an online store for aggregates and building materials at aaggregates.store.
 
 We'd like your permission to use ${source.imageIds.length === 1 ? "a photo" : `${source.imageIds.length} photos`} from your website on our product pages for: ${products}.
 ${source.sourceUrls.length ? `\nThe photo${source.imageIds.length === 1 ? " is" : "s are"} from:\n${source.sourceUrls.map((u) => `- ${u}`).join("\n")}\n` : ""}

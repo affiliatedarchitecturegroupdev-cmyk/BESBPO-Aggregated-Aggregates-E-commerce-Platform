@@ -573,6 +573,8 @@ model Order {
   paidAt                DateTime?
   cancelledAt           DateTime?
   paymentMethod         PaymentMethodKey? // method chosen at payment (or confirmed by staff)
+  paymentReference      String? // the gateway's own payment ID (PayFast pf_payment_id), once paid online
+  paymentNotifications  PaymentNotification[]
   fulfilledBySupplierId String?
   fulfilledBySupplier   SupplierLocation?     @relation(fields: [fulfilledBySupplierId], references: [id], onDelete: SetNull)
   isTest                Boolean               @default(false) // excluded from reporting
@@ -834,6 +836,26 @@ enum PaymentGateway {
 /// fail a method over (e.g. Ozow outage -> Peach) without a deploy
 /// (AGENTIC_RULES.md rule 8). The gateway mapping is a researched default,
 /// not a confirmed merchant setup — see PAYMENT_PROVIDER_TERMS.md.
+/// Every payment notification a gateway sends (PayFast ITN), whether accepted
+/// or not — the audit trail for online payments (docs/payments-payfast.md).
+model PaymentNotification {
+  id                String         @id @default(cuid())
+  gateway           PaymentGateway
+  orderId           String?
+  order             Order?         @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  providerReference String? // pf_payment_id
+  paymentStatus     String? // COMPLETE, CANCELLED…
+  amount            Decimal?       @db.Decimal(12, 2)
+  outcome           String // PAID, ALREADY_PAID, NOT_PAID, REJECTED
+  reason            String? // why it was rejected or not acted on
+  sourceIp          String?
+  fields            Json // the notification's fields (no secrets: PayFast never sends the passphrase)
+  createdAt         DateTime       @default(now())
+
+  @@index([orderId])
+  @@index([createdAt])
+}
+
 model PaymentMethodConfig {
   id              String           @id @default(cuid())
   methodKey       PaymentMethodKey @unique

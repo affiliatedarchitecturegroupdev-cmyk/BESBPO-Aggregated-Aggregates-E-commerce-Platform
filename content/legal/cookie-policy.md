@@ -1,7 +1,7 @@
 # Cookie Policy
 
 This Cookie Policy explains how Aggregated Aggregates uses cookies and
-similar technologies on aggregates.store and app.aggregates.store.
+similar technologies on aaggregates.store and app.aaggregates.store.
 
 ## 1. What are cookies
 
@@ -49,4 +49,4 @@ be reflected by an updated "Last updated" date at the top of this page.
 
 ## 6. Contact
 
-Questions about our use of cookies can be sent to privacy@aggregates.store.
+Questions about our use of cookies can be sent to privacy@aaggregates.store.

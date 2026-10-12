@@ -116,7 +116,7 @@ export type EmailMessage = { subject: string; text: string; html: string };
 export type WhatsAppMessage = { templateName: string; params: string[]; text: string };
 
 export function siteUrl(): string {
-  return (process.env.NEXT_PUBLIC_SITE_URL ?? "https://aggregates.store").replace(/\/+$/, "");
+  return (process.env.NEXT_PUBLIC_SITE_URL ?? "https://aaggregates.store").replace(/\/+$/, "");
 }
 
 export function escapeHtml(value: string): string {
@@ -133,7 +133,7 @@ const greeting = (name: string | null) => (name?.trim() ? `Hi ${name.trim().spli
 
 export type Block = { kind: "h"; text: string } | { kind: "p"; text: string } | { kind: "list"; items: string[] } | { kind: "rows"; rows: [string, string][] } | { kind: "cta"; label: string; href: string };
 
-const DEFAULT_FOOTER = "Aggregated Aggregates — a Besbpo Group company. You're receiving this because of an order, quote or account on aggregates.store.";
+const DEFAULT_FOOTER = "Aggregated Aggregates — a Besbpo Group company. You're receiving this because of an order, quote or account on aaggregates.store.";
 
 /** One layout for every email, so the text and HTML bodies always say the same thing. */
 export function email(subject: string, blocks: Block[], footer = DEFAULT_FOOTER): EmailMessage {

@@ -92,7 +92,7 @@ unreviewed work.
     the WhatsApp number (`wa.me/27683676276`), corporate contact details
     (`apps/web/src/data/corporate-contact.ts`: 1 live line, 3 RICA-pending),
     the corporate site (`aggregated.besbpo.co.za`), the group site
-    (`besbpo.co.za`), the storefront domain (`aggregates.store`) and the legal
+    (`besbpo.co.za`), the storefront domain (`aaggregates.store`) and the legal
     line "Besbpo Group (Pty) Ltd T/A Aggregated Aggregates (2026/490480/07)"
     (footer and documents) are client-confirmed.
 13. **Supplier data policy.** The supplier CSVs are committed
