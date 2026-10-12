@@ -1,7 +1,5 @@
 # PAIA Manual
 
-_Last updated: 26 September 2026_
-
 This manual is published in terms of Section 51 of the Promotion of Access
 to Information Act 2 of 2000 ("PAIA"), as amended by the Protection of
 Personal Information Act 4 of 2013.

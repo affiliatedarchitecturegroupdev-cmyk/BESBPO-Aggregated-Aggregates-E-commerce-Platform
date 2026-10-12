@@ -10,7 +10,7 @@
 export type PaymentMethod = {
   key: string; // matches PaymentMethodKey enum in the Prisma schema
   displayName: string;
-  category: "card" | "eft" | "wallet" | "qr" | "bnpl" | "b2b" | "manual";
+  category: "card" | "eft" | "wallet" | "qr" | "store" | "bnpl" | "b2b" | "manual";
   logoAssetPath: string; // relative to /public/payment-logos/ — see PAYMENT_ASSETS.md for sourcing
   extraLogoPaths?: string[]; // further marks shown in the same badge (Card: Visa + Mastercard + Amex)
   logoFill?: boolean; // compact badge or stacked lockup that needs the badge's full height to stay legible
@@ -18,6 +18,7 @@ export type PaymentMethod = {
   minOrderValue?: number;
   maxOrderValue?: number;
   instalments?: string; // customer-facing "savvy" copy — see PAYMENT_PROVIDER_TERMS.md for sourcing
+  note?: string; // how a non-instalment method works, in one line
 };
 
 export const PAYMENT_METHODS: PaymentMethod[] = [
@@ -29,6 +30,14 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
   { key: "SAMSUNG_PAY", displayName: "Samsung Pay", category: "wallet", logoAssetPath: "payfast/samsung-pay.png", tradeOnly: false },
   { key: "SNAPSCAN", displayName: "SnapScan", category: "qr", logoAssetPath: "payfast/snapscan.svg", tradeOnly: false },
   { key: "ZAPPER", displayName: "Zapper", category: "qr", logoAssetPath: "payfast/zapper.svg", tradeOnly: false },
+  {
+    key: "SCODE",
+    displayName: "SCode",
+    category: "store",
+    logoAssetPath: "payfast/scode.svg",
+    tradeOnly: false,
+    note: "Pay in store: we email or SMS you a barcode, and you pay it in cash or by card at a participating retailer such as Shoprite, Checkers or the Post Office. Your order goes ahead once the payment comes through.",
+  },
   {
     key: "PAYJUSTNOW",
     displayName: "PayJustNow",

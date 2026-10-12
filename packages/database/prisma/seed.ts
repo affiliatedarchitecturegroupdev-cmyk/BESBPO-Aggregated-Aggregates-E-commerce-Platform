@@ -558,6 +558,7 @@ const PAYMENT_METHODS: {
   { methodKey: "SAMSUNG_PAY", displayName: "Samsung Pay", activeGateway: "PAYFAST" },
   { methodKey: "SNAPSCAN", displayName: "SnapScan", activeGateway: "PAYFAST" },
   { methodKey: "ZAPPER", displayName: "Zapper", activeGateway: "PAYFAST", fallbackGateway: "STITCH_DIRECT" },
+  { methodKey: "SCODE", displayName: "SCode", activeGateway: "PAYFAST" },
   { methodKey: "PAYJUSTNOW", displayName: "PayJustNow", activeGateway: "PEACH" },
   { methodKey: "PAYFLEX", displayName: "Payflex", activeGateway: "PAYFAST", fallbackGateway: "PEACH" },
   { methodKey: "MOBICRED", displayName: "Mobicred", activeGateway: "PAYFAST" },

@@ -38,6 +38,7 @@ export const LABELS = {
     GOOGLE_PAY: "Google Pay",
     SAMSUNG_PAY: "Samsung Pay",
     ZAPPER: "Zapper",
+    SCODE: "SCode",
     SNAPSCAN: "SnapScan",
     MOBICRED: "Mobicred",
     MORETYME: "MoreTyme",

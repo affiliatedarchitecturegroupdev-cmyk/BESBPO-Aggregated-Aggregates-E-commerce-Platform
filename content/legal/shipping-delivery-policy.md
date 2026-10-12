@@ -1,7 +1,5 @@
 # Shipping & Delivery Policy
 
-_Last updated: 26 September 2026_
-
 This policy explains how delivery works for orders placed on Aggregated
 Aggregates.
 

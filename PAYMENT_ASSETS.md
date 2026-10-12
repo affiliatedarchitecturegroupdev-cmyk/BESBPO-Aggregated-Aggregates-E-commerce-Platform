@@ -6,7 +6,7 @@ relative to `apps/web/public/payment-logos/`, and every logo is drawn by
 `components/payment/PaymentLogo.tsx` on a white badge — so dark or black
 official marks read the same on the dark footer as on white cards.
 
-**Status (Oct 2026):** 17 of the 18 methods use official logo files. EFT /
+**Status (Oct 2026):** 18 of the 19 methods use official logo files. EFT /
 Purchase Order uses a house icon, since it has no third-party brand.
 
 "Frame tightened" means only the SVG's viewBox/size was changed to remove
@@ -42,6 +42,7 @@ the table below.
 | Samsung Pay | `payfast/samsung-pay.png` | PayFast pack | Pack has PNG only; used as supplied |
 | SnapScan | `payfast/snapscan.svg` | PayFast pack | Frame tightened to the artwork (30% margin). Replaces the Brandfetch file, which turned out to be an Apple-style icon, not SnapScan's mark |
 | Zapper | `payfast/zapper.svg` | PayFast pack | SVG replaces the earlier Brandfetch PNG |
+| SCode | `payfast/scode.svg` | PayFast pack | `SCode_logoMark_grp.svg`, used as supplied (vector, already cropped to the artwork). Added Oct 2026 |
 | PayJustNow | `brandfetch/payjustnow.svg` | Brandfetch | Not in the PayFast pack |
 | Payflex | `payfast/payflex.svg` | PayFast pack | Shown at full badge height (`logoFill`). The pack's "vectorised" SVG had a full-page grey background rectangle; that one shape was removed and the frame fitted to the badge. Artwork unchanged |
 | Mobicred | `payfast/mobicred.svg` | PayFast pack | SVG replaces the earlier small white Brandfetch PNG |
@@ -54,7 +55,7 @@ the table below.
 | EFT / Purchase Order | `generic/eft-po.svg` | House icon | **Placeholder** — no third-party brand |
 
 The PayFast pack also has logos for methods the platform doesn't offer
-(Absa Pay, Diners Club, Maestro, MTN MoMoPay, Mukuru, PayPal, RCS, SCode,
+(Absa Pay, Diners Club, Maestro, MTN MoMoPay, Mukuru, PayPal, RCS,
 Scan to Pay, SiD, Visa Electron, Visa Checkout, 3-D Secure badges). They are
 not copied into the repo; add them from the pack if those methods are enabled.
 

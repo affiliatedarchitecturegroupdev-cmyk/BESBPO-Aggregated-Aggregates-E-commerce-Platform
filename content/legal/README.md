@@ -22,11 +22,45 @@ Non-legal page with legal content, also for counsel: **`/plant-hire/safety`**
 responsibilities are described (OHSA, Construction Regulations 2014,
 principal contractor).
 
-When counsel signs off a page, update its status here and its "Last
-updated" date in the file. If the Plant Hire or Partner Terms change
+When counsel signs off a page, update its status here (and, if the wording
+changed, add a version — see below). If the Plant Hire or Partner Terms change
 materially, also bump `HIRE_TERMS_VERSION` / `PARTNER_TERMS_VERSION` in
 `apps/api/src/bookings/terms.ts` — partners are then asked to accept again
 before their next offer.
+
+## Policy versions (last updated / previously updated)
+
+Each public page shows these under its title:
+
+- **Last updated**
+- **Previously updated**
+- **First published**, once a page has three or more versions
+- the version number
+- a "What changed" list
+
+That way a small recent edit doesn't make a long-standing policy look new.
+The dates come from **`policy-versions.json`**, newest first, one entry per
+date with a plain-language summary. The Markdown files no longer carry a
+date line. The same dates feed each legal page's `lastModified` in the
+sitemap.
+
+When a page's wording changes:
+
+1. Edit the Markdown.
+2. Add an entry at the **top** of that page's list in `policy-versions.json`
+   with today's date (`YYYY-MM-DD`) and a one-line, customer-readable
+   summary of what changed. If you change the same page twice in one day,
+   update that day's summary rather than adding another entry.
+3. Don't add an entry for typo or formatting fixes that don't change
+   meaning.
+
+The build fails if a published page has no entry, or if the entries aren't
+newest-first with valid dates (`policyVersions()` in
+`apps/web/src/lib/legal-content.ts`).
+
+The history was rebuilt from git in October 2026. Shipping & Delivery had
+been changed on 3 October without its date being updated; it now shows 3
+October 2026.
 
 ## How acceptance is recorded
 

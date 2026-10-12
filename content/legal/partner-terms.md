@@ -1,7 +1,5 @@
 # Partner Terms
 
-_Last updated: 7 October 2026_
-
 These terms apply to businesses that provide plant hire or site services to
 customers through aggregates.store (the "Platform") as a partner ("you",
 "the Partner"). The Platform is operated by Aggregated Aggregates, a

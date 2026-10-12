@@ -18,6 +18,12 @@ live feed.
 | **Happy Pay** | 2 payments — split across 2 paycheques, interest-free, no deposit required. | Added to the lineup after the original Roofsteel payment-asset library was built. |
 | **Float** | Up to 24 monthly instalments, zero interest, zero fees — draws against the customer's existing card's available credit rather than a separate credit line. | This is "Float Payments," the credit-facility product Fortune confirmed — distinct from any unrelated "Float" project-management tool. |
 
+## Pay in store
+
+| Provider | Terms as published | Notes |
+|---|---|---|
+| **SCode** | After checkout, the shopper gets a barcode by email or SMS and pays it in cash or by card at a participating retailer. PayFast names Shoprite, Checkers and the SA Post Office among more than 6,000 outlets. The merchant is notified when it's paid. | Through PayFast. PayFast's page says it's available on **Aggregator** accounts only, so confirm it's switched on for our account. PayFast lists the fee as 4.5% + R5.00 per transaction, but its pages differ. The order waits until PayFast confirms payment, like any other PayFast method. |
+
 ## B2B / Trade credit
 
 | Provider | Terms as published | Notes |
@@ -33,8 +39,9 @@ method still renders as its own standout tile to the customer (the
 confirmed "smart compromise" — see `AGENTIC_RULES.md`):
 
 - **PayFast**: card networks, Instant EFT, Capitec Pay, Apple/Google/Samsung
-  Pay, SnapScan, Zapper, Payflex, Mobicred, MoreTyme, PayJustNow — one
-  merchant account covers nearly the entire consumer-facing set.
+  Pay, SnapScan, Zapper, SCode, Payflex, Mobicred, MoreTyme, PayJustNow — one
+  merchant account covers nearly the entire consumer-facing set. The
+  Aggregated Aggregates PayFast account was approved in October 2026.
 - **Peach Payments**: an alternative/overlapping aggregator, notably strong
   on the BNPL partner network (PayJustNow, Happy Pay, Float) — used as the
   routing default for those three and as a documented failover target for

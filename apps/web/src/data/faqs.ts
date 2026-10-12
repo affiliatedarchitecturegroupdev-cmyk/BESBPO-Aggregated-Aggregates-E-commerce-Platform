@@ -36,7 +36,7 @@ export const FAQS: { question: string; answer: string }[] = [
   {
     question: "What payment methods do you accept?",
     answer:
-      "Card, instant EFT, Capitec Pay, digital wallets, SnapScan and Zapper, buy-now-pay-later options, and — for approved trade accounts — Lulapay trade credit or EFT / purchase-order invoicing. The Ways to Pay page lists every method and its terms.",
+      "Card, instant EFT, Capitec Pay, digital wallets, SnapScan and Zapper, SCode (pay in store with a barcode), buy-now-pay-later options, and — for approved trade accounts — Lulapay trade credit or EFT / purchase-order invoicing. The Ways to Pay page lists every method and its terms.",
   },
   {
     question: "Do you supply compliance documentation?",

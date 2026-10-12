@@ -807,6 +807,7 @@ enum PaymentMethodKey {
   SAMSUNG_PAY
   ZAPPER
   SNAPSCAN
+  SCODE // pay in store with a barcode, through PayFast (Aggregator accounts)
   MOBICRED
   MORETYME
   PAYFLEX

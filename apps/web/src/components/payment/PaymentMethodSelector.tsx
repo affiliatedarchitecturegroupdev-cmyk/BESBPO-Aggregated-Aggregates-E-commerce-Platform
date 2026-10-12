@@ -53,7 +53,7 @@ export function PaymentMethodSelector({ orderId, eligible }: { orderId: string; 
               >
                 <PaymentLogo method={method} decorative />
                 <span className="font-body text-sm font-semibold text-basalt">{method.displayName}</span>
-                {method.instalments && <span className="font-body text-[11px] text-slate">{method.instalments}</span>}
+                {(method.instalments ?? method.note) && <span className="font-body text-[11px] text-slate">{method.instalments ?? method.note}</span>}
               </button>
             );
           })}

@@ -1,7 +1,5 @@
 # Privacy Policy
 
-_Last updated: 11 October 2026_
-
 This Privacy Policy explains how Aggregated Aggregates ("we", "us", "our"),
 a division of Besbpo Group (Pty) Ltd, collects, uses, discloses, and
 protects personal information when you use aggregates.store and
