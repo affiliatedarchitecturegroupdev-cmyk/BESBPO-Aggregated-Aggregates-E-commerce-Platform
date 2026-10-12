@@ -63,6 +63,9 @@ describe("geography helpers", () => {
   it("derives the town from the last address part", () => {
     expect(townFromAddress("235 Pope Ellis Drive, Ashburton, Pietermaritzburg")).toBe("Pietermaritzburg");
     expect(townFromAddress("Mahikeng / Lichtenburg Lime District")).toBe("Mahikeng / Lichtenburg Lime District");
+    // A postal code at the end isn't the town.
+    expect(townFromAddress("Unit 2, 6 Burnley Road, Benoni South, Benoni, 1502")).toBe("Benoni");
+    expect(townFromAddress("226 Commercial Road, Sidwell, 6001")).toBe("Sidwell");
   });
 
   it("validates coordinates against South Africa", () => {
