@@ -1,5 +1,5 @@
 {
-  "about": "Product photography. Two kinds: (1) photos sourced via Kimi (Sep 2026) from supplier, marketplace and editorial sites \u2014 the owners' permission was received in Oct 2026 (\"permission\": \"GRANTED\"), so they're imported live and shown first; (2) manufacturer pack shots for the cement catalogue (Manus, Oct 2026; AfriSam, Cemza and NPC permission confirmed Oct 2026, so live); (3) open-licence photos from Wikimedia Commons (an \"openLicence\" block), live with the credit their licence requires. A sourced photo without \"permission\": \"GRANTED\" is imported hidden (PERMISSION_PENDING) until staff record permission in Admin -> Image permissions. \"retiredOpenLicence\" lists Commons photos taken down in Oct 2026 (weak matches). See PRODUCT_IMAGES.md.",
+  "about": "Product photography. Two kinds: (1) photos sourced via Kimi (Sep 2026) from supplier, marketplace and editorial sites \u2014 the owners' permission was received in Oct 2026 (\"permission\": \"GRANTED\"), so they're imported live and shown first; (2) manufacturer pack shots for the cement catalogue (Manus, Oct 2026; AfriSam, Cemza and NPC permission confirmed Oct 2026, so live); (3) open-licence photos from Wikimedia Commons (an \"openLicence\" block), live with the credit their licence requires. A sourced photo without \"permission\": \"GRANTED\" is imported hidden (PERMISSION_PENDING) until staff record permission in Admin -> Image permissions. \"retiredOpenLicence\" lists Commons photos taken down in Oct 2026 (weak matches). See PRODUCT_IMAGES.md; (5) reinforcing-steel photos (Manus, Oct 2026) from Pexels and from RMS and Steel & Pipes, whose permission the owner confirmed \u2014 live. See PRODUCT_IMAGES.md.",
   "images": [
     {
       "file": "03a76b21fa07.webp",
@@ -2565,6 +2565,231 @@
         "owner-upload/1fb2398e-image.jpg"
       ],
       "permission": "GRANTED"
+    },
+    {
+      "file": "afc6f265eba9.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 117398,
+      "originalWidth": 2400,
+      "originalHeight": 3600,
+      "source": "Pexels (owner-supplied stock photo)",
+      "sourceCountry": null,
+      "sourcePage": "https://www.pexels.com/photo/a-mass-of-rusty-steel-bars-10059199/",
+      "sourcingNote": "Deformed (ribbed) high-tensile reinforcing bars, close-up. Pexels licence: free commercial use, no attribution required. Supplied by the owner (Oct 2026). Shows the type of product, not a specific size, grade or SANS compliance.",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "south_africa_reinforcing_steel_image_pack/assets/license_friendly_pexels/pexels_rebar_bars_10059199.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "6b8b735a74f1.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 139546,
+      "originalWidth": 2400,
+      "originalHeight": 1600,
+      "source": "Pexels (owner-supplied stock photo)",
+      "sourceCountry": null,
+      "sourcePage": "https://www.pexels.com/photo/dramatic-black-and-white-construction-site-scene-39208824/",
+      "sourcingNote": "Bundle of reinforcing bars on a building site (black and white). Pexels licence: free commercial use, no attribution required. Supplied by the owner (Oct 2026). Shows the type of product, not a specific size, grade or SANS compliance.",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "south_africa_reinforcing_steel_image_pack/assets/license_friendly_pexels/pexels_rebar_bundle_39208824.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "e8daa60c9eeb.webp",
+      "width": 1200,
+      "height": 797,
+      "bytes": 237914,
+      "originalWidth": 2400,
+      "originalHeight": 1594,
+      "source": "Pexels (owner-supplied stock photo)",
+      "sourceCountry": null,
+      "sourcePage": "https://www.pexels.com/photo/close-up-of-rusty-rebar-grid-for-construction-37475275/",
+      "sourcingNote": "Welded grid of deformed bars \u2014 heavier reinforcing mesh. Pexels licence: free commercial use, no attribution required. Supplied by the owner (Oct 2026). Shows the type of product, not a specific size, grade or SANS compliance.",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "south_africa_reinforcing_steel_image_pack/assets/license_friendly_pexels/pexels_rebar_grid_37475275.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "e7c4d33f80f2.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 209762,
+      "originalWidth": 2400,
+      "originalHeight": 1600,
+      "source": "Pexels (owner-supplied stock photo)",
+      "sourceCountry": null,
+      "sourcePage": "https://www.pexels.com/photo/intricate-steel-wire-mesh-for-industrial-use-36398160/",
+      "sourcingNote": "Stacked sheets of light welded wire mesh. Pexels licence: free commercial use, no attribution required. Supplied by the owner (Oct 2026). Shows the type of product, not a specific size, grade or SANS compliance.",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "south_africa_reinforcing_steel_image_pack/assets/license_friendly_pexels/pexels_mesh_closeup_36398160.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "b98064223d05.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 89410,
+      "originalWidth": 2400,
+      "originalHeight": 1600,
+      "source": "Pexels (owner-supplied stock photo)",
+      "sourceCountry": null,
+      "sourcePage": "https://www.pexels.com/photo/close-up-of-industrial-steel-wire-mesh-structure-36398142/",
+      "sourcingNote": "Welded mesh of deformed wire, close-up. Pexels licence: free commercial use, no attribution required. Supplied by the owner (Oct 2026). Shows the type of product, not a specific size, grade or SANS compliance.",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "south_africa_reinforcing_steel_image_pack/assets/license_friendly_pexels/pexels_mesh_structure_36398142.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "c53305e44d79.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 65724,
+      "originalWidth": 2400,
+      "originalHeight": 1600,
+      "source": "Pexels (owner-supplied stock photo)",
+      "sourceCountry": null,
+      "sourcePage": "https://www.pexels.com/photo/intricate-close-up-of-wire-mesh-structure-36398141/",
+      "sourcingNote": "Welded mesh of deformed wire, detail. Pexels licence: free commercial use, no attribution required. Supplied by the owner (Oct 2026). Shows the type of product, not a specific size, grade or SANS compliance.",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "south_africa_reinforcing_steel_image_pack/assets/license_friendly_pexels/pexels_mesh_structure_detail_36398141.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "d5e842ff991b.webp",
+      "width": 1200,
+      "height": 691,
+      "bytes": 154610,
+      "originalWidth": 1500,
+      "originalHeight": 893,
+      "source": "RMS Reinforcing & Mesh Solutions (rms-sa.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://rms-sa.co.za/products/",
+      "sourcingNote": "RMS welded reinforcing mesh. Used with permission (owner, Oct 2026).",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "south_africa_reinforcing_steel_image_pack/assets/official_reference_manufacturer/rms_welded_mesh.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "6783e323e2dc.webp",
+      "width": 972,
+      "height": 534,
+      "bytes": 56574,
+      "originalWidth": 1024,
+      "originalHeight": 581,
+      "source": "RMS Reinforcing & Mesh Solutions (rms-sa.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://rms-sa.co.za/products/",
+      "sourcingNote": "Reinforcing bar on a bending machine \u2014 RMS cuts and bends to schedule. Used with permission (owner, Oct 2026).",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "south_africa_reinforcing_steel_image_pack/assets/official_reference_manufacturer/rms_reinforcing_steel_bars.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "bfe2f70e1d76.webp",
+      "width": 1024,
+      "height": 608,
+      "bytes": 46994,
+      "originalWidth": 1024,
+      "originalHeight": 608,
+      "source": "RMS Reinforcing & Mesh Solutions (rms-sa.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://rms-sa.co.za/products/",
+      "sourcingNote": "RMS mechanical rebar couplers. Used with permission (owner, Oct 2026).",
+      "flags": [],
+      "originalPaths": [
+        "south_africa_reinforcing_steel_image_pack/assets/official_reference_manufacturer/rms_bar_couplers.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "639c1f21cd72.webp",
+      "width": 1200,
+      "height": 713,
+      "bytes": 65568,
+      "originalWidth": 1500,
+      "originalHeight": 891,
+      "source": "RMS Reinforcing & Mesh Solutions (rms-sa.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://rms-sa.co.za/products/",
+      "sourcingNote": "Rebar safety caps fitted to starter bars. Used with permission (owner, Oct 2026).",
+      "flags": [],
+      "originalPaths": [
+        "south_africa_reinforcing_steel_image_pack/assets/official_reference_manufacturer/rms_reinforcing_accessories.webp"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "9664ad0e5bcc.webp",
+      "width": 566,
+      "height": 566,
+      "bytes": 24400,
+      "originalWidth": 566,
+      "originalHeight": 566,
+      "source": "Steel & Pipes (steelandpipes.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://steelandpipes.co.za/reinforcing-bending/",
+      "sourcingNote": "Coils of black annealed binding (tie) wire. Used with permission (owner, Oct 2026).",
+      "flags": [
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "south_africa_reinforcing_steel_image_pack/assets/official_reference_steel_pipes/steel_pipes_binding_wire.webp"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "915d1fc05d1c.webp",
+      "width": 710,
+      "height": 636,
+      "bytes": 15786,
+      "originalWidth": 710,
+      "originalHeight": 636,
+      "source": "Steel & Pipes (steelandpipes.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://steelandpipes.co.za/reinforcing-bending/",
+      "sourcingNote": "Short lengths of deformed bar (Steel & Pipes droppers). Used with permission (owner, Oct 2026).",
+      "flags": [
+        "LOW_RES",
+        "SHARED"
+      ],
+      "originalPaths": [
+        "south_africa_reinforcing_steel_image_pack/assets/official_reference_steel_pipes/steel_pipes_droppers.jpg"
+      ],
+      "permission": "GRANTED"
     }
   ],
   "products": {
@@ -2976,6 +3201,99 @@
       "eaafc85554c5.webp",
       "1cba154394e5.webp",
       "2a3d2d030c75.webp"
+    ],
+    "AA-STL-Y08": [
+      "afc6f265eba9.webp",
+      "6b8b735a74f1.webp",
+      "915d1fc05d1c.webp",
+      "6783e323e2dc.webp"
+    ],
+    "AA-STL-Y10": [
+      "6b8b735a74f1.webp",
+      "afc6f265eba9.webp",
+      "915d1fc05d1c.webp",
+      "6783e323e2dc.webp"
+    ],
+    "AA-STL-Y12": [
+      "afc6f265eba9.webp",
+      "6b8b735a74f1.webp",
+      "915d1fc05d1c.webp",
+      "6783e323e2dc.webp"
+    ],
+    "AA-STL-Y16": [
+      "6b8b735a74f1.webp",
+      "afc6f265eba9.webp",
+      "915d1fc05d1c.webp",
+      "6783e323e2dc.webp"
+    ],
+    "AA-STL-Y20": [
+      "afc6f265eba9.webp",
+      "6b8b735a74f1.webp",
+      "915d1fc05d1c.webp",
+      "6783e323e2dc.webp"
+    ],
+    "AA-STL-Y25": [
+      "6b8b735a74f1.webp",
+      "afc6f265eba9.webp",
+      "915d1fc05d1c.webp",
+      "6783e323e2dc.webp"
+    ],
+    "AA-STL-Y32": [
+      "afc6f265eba9.webp",
+      "6b8b735a74f1.webp",
+      "915d1fc05d1c.webp",
+      "6783e323e2dc.webp"
+    ],
+    "AA-STL-Y40": [
+      "6b8b735a74f1.webp",
+      "afc6f265eba9.webp",
+      "915d1fc05d1c.webp",
+      "6783e323e2dc.webp"
+    ],
+    "AA-STL-MESH-100": [
+      "e7c4d33f80f2.webp",
+      "b98064223d05.webp",
+      "c53305e44d79.webp",
+      "d5e842ff991b.webp"
+    ],
+    "AA-STL-MESH-193": [
+      "d5e842ff991b.webp",
+      "b98064223d05.webp",
+      "e7c4d33f80f2.webp",
+      "c53305e44d79.webp"
+    ],
+    "AA-STL-MESH-245": [
+      "b98064223d05.webp",
+      "d5e842ff991b.webp",
+      "c53305e44d79.webp",
+      "e8daa60c9eeb.webp"
+    ],
+    "AA-STL-MESH-311": [
+      "e8daa60c9eeb.webp",
+      "d5e842ff991b.webp",
+      "c53305e44d79.webp"
+    ],
+    "AA-STL-MESH-395": [
+      "c53305e44d79.webp",
+      "e8daa60c9eeb.webp",
+      "d5e842ff991b.webp"
+    ],
+    "AA-STL-MESH-617": [
+      "d5e842ff991b.webp",
+      "e8daa60c9eeb.webp"
+    ],
+    "AA-STL-MESH-888": [
+      "e8daa60c9eeb.webp",
+      "d5e842ff991b.webp"
+    ],
+    "AA-STL-ACC-TIE-WIRE": [
+      "9664ad0e5bcc.webp"
+    ],
+    "AA-STL-ACC-COUPLERS": [
+      "bfe2f70e1d76.webp"
+    ],
+    "AA-STL-ACC-SAFETY-CAPS": [
+      "639c1f21cd72.webp"
     ]
   },
   "noImage": {
@@ -3036,7 +3354,14 @@
     "cement-product-images/17-afrimat-buildcrete.jpg": "Identical to 13-afrimat-durabuild.jpg \u2014 limestone rock, not Afrimat Buildcrete",
     "cement-product-images/33-afrimat-roadcem.jpg": "Identical to 13-afrimat-durabuild.jpg \u2014 limestone rock, not Afrimat RoadCem",
     "cement-product-images/36-afrimat-fastcast.jpg": "Identical to 13-afrimat-durabuild.jpg \u2014 limestone rock, not Afrimat FastCast",
-    "cement-product-images/37-afrimat-powercrete-plus.jpg": "Identical to 13-afrimat-durabuild.jpg \u2014 limestone rock, not Afrimat Powercrete Plus"
+    "cement-product-images/37-afrimat-powercrete-plus.jpg": "Identical to 13-afrimat-durabuild.jpg \u2014 limestone rock, not Afrimat Powercrete Plus",
+    "south_africa_reinforcing_steel_image_pack/assets/license_friendly_pexels/pexels_mesh_roll_36398145.jpg": "Light wire-fencing roll \u2014 not reinforcing mesh or brickforce",
+    "south_africa_reinforcing_steel_image_pack/assets/official_reference_manufacturer/rms_piling_cages.jpg": "Piling cages \u2014 we don't sell them",
+    "south_africa_reinforcing_steel_image_pack/assets/official_reference_manufacturer/rms_products_overview.webp": "Welding a cage \u2014 no matching product",
+    "south_africa_reinforcing_steel_image_pack/assets/official_reference_steel_pipes/steel_pipes_brickforce.jpeg": "279\u00d7181 px \u2014 too small to show; send a larger brickforce photo",
+    "south_africa_reinforcing_steel_image_pack/assets/official_reference_steel_pipes/steel_pipes_reinforcing_mesh.jpg": "300\u00d7300 px, and the RMS and Pexels mesh photos are better",
+    "south_africa_reinforcing_steel_image_pack/assets/official_reference_steel_pipes/steel_pipes_y_bars.jpg": "300\u00d7300 px, and the Pexels rebar photos are better",
+    "south_africa_reinforcing_steel_image_pack/assets/official_reference_steel_pipes/steel_pipes_y_standards.jpeg": "225\u00d7225 px, and we don't sell Y-standards"
   },
   "damagedInUpload": [
     "01-sub-base-base-course/G2 Crushed Stone/02.png",
