@@ -92,7 +92,7 @@ no tipper fee — with its own delivery note.
 
 Added at the owner's request (12 Oct 2026) because of demand from the ad
 campaigns, and sold **under roofing**: same `/roofing` page, ROOFING pricing
-family, flatbed delivery and Roofing build stage.
+family (trade 4%, confirmed by the owner 12 Oct 2026), flatbed delivery and Roofing build stage.
 
 - **CAT-30 Roof & Structural Timber — 72 products.** SA pine, a product per
   **section × stress grade × treatment × profile**:
@@ -183,8 +183,7 @@ CAT-26..29.
 
 - Timber: a written supplier price list per section, grade, treatment and
   length (or the H2 confirmation above); S7 availability and lead times;
-  confirm the 4% trade discount applies to timber (it follows the ROOFING
-  family today); masses per length for delivery tonnage; photos.
+  masses per length for delivery tonnage; photos.
 
 - Verify and activate the supplier leads; find North West and Northern Cape
   roll-formers.
