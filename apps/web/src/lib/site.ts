@@ -1,13 +1,11 @@
 /**
- * Public site URL, for canonical links and the sitemap. On Render it falls
- * back to the service's own URL until the aggregates.store domain is live
- * (docs/deployment/render.md).
+ * Public site URL, for canonical links, the sitemap and structured data:
+ * NEXT_PUBLIC_SITE_URL when set, otherwise the live domain on Render
+ * (aaggregates.store, DNS on Cloudflare — docs/deployment/render.md) and
+ * localhost in development.
  */
-export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  process.env.RENDER_EXTERNAL_URL ??
-  "http://localhost:3000"
-).replace(/\/+$/, "");
+export const LIVE_SITE_URL = "https://aaggregates.store";
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? (process.env.RENDER ? LIVE_SITE_URL : "http://localhost:3000")).replace(/\/+$/, "");
 
 /** Industries, About and Where We Deliver moved to the footer when plant hire and services joined (Oct 2026). */
 export const NAV_LINKS = [
@@ -21,4 +19,4 @@ export const NAV_LINKS = [
   { href: "/contact", label: "Contact" },
 ];
 
-export const SALES_EMAIL = "sales@aggregates.store";
+export const SALES_EMAIL = "sales@aaggregates.store";

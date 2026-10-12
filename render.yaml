@@ -10,8 +10,9 @@
 # the Blueprint is created. Redis (Upstash) is not wired into any service yet,
 # so it is not requested here.
 #
-# Custom domains (aggregates.store / app.aggregates.store) are deliberately
-# not declared yet, so a test deploy runs on *.onrender.com without DNS.
+# Live domain: aaggregates.store (registered at GoDaddy, DNS on Cloudflare),
+# added as a custom domain on the web service in the Render dashboard.
+# NEXT_PUBLIC_SITE_URL tells both services the public address.
 # See docs/deployment/render.md for the full walkthrough.
 
 services:
@@ -39,6 +40,9 @@ services:
           type: web
           name: aggregates-store-api
           property: hostport
+      # Canonical links, the sitemap and structured data. Inlined at build time.
+      - key: NEXT_PUBLIC_SITE_URL
+        value: https://aaggregates.store
 
   - type: web
     name: aggregates-store-api
@@ -74,6 +78,21 @@ services:
           property: hostport
       - key: AUTH_SECRET
         generateValue: true
+      # Payment return links, links in emails and WhatsApp messages, the
+      # catalogue feed and the allowed browser origin.
+      - key: NEXT_PUBLIC_SITE_URL
+        value: https://aaggregates.store
+      # PayFast (docs/payments-payfast.md). Prefixed AGG_ because the owner
+      # runs several stores; MODE is "live" or "sandbox" (anything else is
+      # treated as sandbox).
+      - key: AGG_PAYFAST_MERCHANT_ID
+        sync: false
+      - key: AGG_PAYFAST_MERCHANT_KEY
+        sync: false
+      - key: AGG_PAYFAST_PASSPHRASE
+        sync: false
+      - key: AGG_PAYFAST_MODE
+        sync: false
       # Compliance documents live in a private Supabase Storage bucket; the API
       # serves them, applying each document's visibility rules.
       - key: SUPABASE_URL

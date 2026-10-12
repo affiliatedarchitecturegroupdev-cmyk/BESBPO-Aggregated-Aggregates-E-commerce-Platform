@@ -60,19 +60,19 @@ and can be resent once a provider works.
    **Resend**, **Postmark** and **SendGrid** (all send over HTTPS; nothing to
    install). Another provider — or Microsoft 365 / Google Workspace SMTP — is a
    small adapter in `providers.ts`.
-2. In the provider, verify the sending domain (`aggregates.store`) — add the
+2. In the provider, verify the sending domain (`aaggregates.store`) — add the
    SPF, DKIM and DMARC DNS records it gives you — and create an API key.
 3. On the **aggregates-store-api** service in Render set:
    - `EMAIL_PROVIDER` — `resend`, `postmark` or `sendgrid`
    - `EMAIL_API_KEY` — the provider's API key (Postmark: the server token)
-   - `EMAIL_FROM` — e.g. `Aggregated Aggregates <orders@aggregates.store>`
+   - `EMAIL_FROM` — e.g. `Aggregated Aggregates <orders@aaggregates.store>`
    - `EMAIL_REPLY_TO` (optional) — e.g. `sales@besbpo.co.za`, so customer
      replies reach a person
 4. In **Admin → Notifications** (admins): add the staff inboxes, send a test
    email, then open the **Logged** filter and resend anything that matters.
 
 Links in emails use `NEXT_PUBLIC_SITE_URL` on the API service (default
-`https://aggregates.store`).
+`https://aaggregates.store`).
 
 ## Setting up WhatsApp notifications
 
@@ -98,7 +98,7 @@ same WhatsApp Business account as WhatsApp Commerce (`WHATSAPP_PHONE_NUMBER_ID`,
 
 Sample values Meta asks for: order `AA-1790678251462`, carrier `Besfleet`,
 tracking reference `BF-2044`, amount `R9,133.12`, links
-`https://aggregates.store/orders/…/tracking`. The texts are also the
+`https://aaggregates.store/orders/…/tracking`. The texts are also the
 `WHATSAPP_TEMPLATES` constant in `notification-templates.ts` — change both
 together (Meta re-reviews an edited template).
 

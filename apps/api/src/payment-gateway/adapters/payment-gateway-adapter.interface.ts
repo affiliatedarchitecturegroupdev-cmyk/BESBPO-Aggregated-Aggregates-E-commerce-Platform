@@ -7,7 +7,8 @@
  * PaymentGateway enum value, so PaymentGatewayService never needs to know
  * which methods share a gateway.
  *
- * NONE of these adapters call a real provider yet. Doing so needs live
+ * PayFast is wired up for real (docs/payments-payfast.md); the others below
+ * are still structural stubs. Originally none of them called a provider. Doing so needs live
  * merchant credentials (PayFast merchant ID/key, Peach entity IDs, Ozow
  * site code, Stitch client ID, Lulapay API key) which have not been
  * supplied to this build. Each adapter is a faithful structural stub:
@@ -30,6 +31,8 @@ export type InitiatePaymentRequest = {
   customerEmail: string;
   /** Where the provider should send the customer back after paying. */
   returnUrl: string;
+  /** Where the provider sends the customer if they cancel on its page. */
+  cancelUrl: string;
   /** Server-to-server callback URL for async payment confirmation (ITN/webhook). */
   notifyUrl: string;
 };
@@ -39,6 +42,8 @@ export type InitiatePaymentResult = {
   isLive: boolean;
   /** URL to redirect the customer to (hosted checkout) or a payment-link URL for WhatsApp Commerce. */
   redirectUrl?: string;
+  /** A hosted checkout that must be reached by a form POST (PayFast): the browser submits these fields, in order, to action. */
+  form?: { action: string; fields: [string, string][] };
   /** Provider-side reference, once a real integration returns one. */
   providerReference?: string;
   /** Explains why isLive is false, or nothing further is needed if it's true. */
@@ -58,7 +63,7 @@ export type VerifyPaymentResult = {
   status: "PAID" | "FAILED" | "PENDING" | "UNKNOWN";
 };
 
-export type GatewayStatus = { live: boolean; configured: boolean; missingEnvVars: string[] };
+export type GatewayStatus = { live: boolean; configured: boolean; missingEnvVars: string[]; mode?: "live" | "sandbox" };
 
 export interface PaymentGatewayAdapter {
   /** Matches the PaymentGateway enum value this adapter implements. */

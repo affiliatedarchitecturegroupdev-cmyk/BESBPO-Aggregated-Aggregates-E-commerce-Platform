@@ -22,3 +22,7 @@ export class UpdatePaymentMethodDto {
   @Transform(emptyToNull) @ValidateIf((_, v) => v !== null) @IsNumber() @Min(0) maxOrderValue!: number | null;
   @IsBoolean() isEnabled!: boolean;
 }
+
+export class PayfastVisibilityDto {
+  @IsBoolean() public!: boolean;
+}

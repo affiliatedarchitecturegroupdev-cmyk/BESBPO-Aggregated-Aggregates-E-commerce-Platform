@@ -39,7 +39,7 @@ you have accepted, the order cannot be cancelled after cutting has started.
 ## 3. How to report an issue
 
 Report any delivery discrepancy or quality concern within **48 hours of
-delivery** to support@aggregates.store, including your order number,
+delivery** to support@aaggregates.store, including your order number,
 photographs of the product and delivery note, and a description of the
 issue. Claims raised after this window may not be honoured, given the
 practical difficulty of verifying a bulk material claim after it has been
@@ -64,7 +64,7 @@ they conflict.
 ## 6. Cancellations before dispatch
 
 You may cancel an order before it has been dispatched from the
-partner-supplier location by contacting support@aggregates.store. Once a
+partner-supplier location by contacting support@aaggregates.store. Once a
 tipper load has been dispatched, it cannot be recalled or cancelled.
 
 ## 7. Statutory rights
@@ -75,4 +75,4 @@ Protection Act 68 of 2008, to the extent it applies to your purchase.
 ## 8. Contact
 
 For any return, refund, or delivery discrepancy query, contact
-support@aggregates.store.
+support@aaggregates.store.

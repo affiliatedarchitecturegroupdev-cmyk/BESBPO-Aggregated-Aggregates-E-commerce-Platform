@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { OrdersModule } from "../orders/orders.module";
 import { PaymentGatewayAdapterFactory } from "./adapters/adapter.factory";
 import { LulapayAdapter } from "./adapters/lulapay.adapter";
 import { ManualEftAdapter } from "./adapters/manual-eft.adapter";
@@ -10,6 +11,7 @@ import { PaymentGatewayController } from "./payment-gateway.controller";
 import { PaymentGatewayService } from "./payment-gateway.service";
 
 @Module({
+  imports: [OrdersModule],
   controllers: [PaymentGatewayController],
   providers: [PaymentGatewayService, PaymentGatewayAdapterFactory, PayFastAdapter, PeachAdapter, OzowAdapter, StitchAdapter, LulapayAdapter, ManualEftAdapter],
   exports: [PaymentGatewayService],

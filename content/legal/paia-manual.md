@@ -13,7 +13,7 @@ top-level corporate record]
 
 ## 2. Contact details for requests
 
-Information Officer: privacy@aggregates.store
+Information Officer: privacy@aaggregates.store
 
 Requests for access to records held by Aggregated Aggregates should be
 submitted in writing to the Information Officer, using the prescribed
@@ -73,4 +73,4 @@ exemption.
 ## 8. Contact
 
 Requests and enquiries regarding this manual should be directed to
-privacy@aggregates.store.
+privacy@aaggregates.store.

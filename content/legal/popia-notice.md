@@ -8,12 +8,12 @@ read alongside, our full [Privacy Policy](/legal/privacy-policy).
 
 Besbpo Group (Pty) Ltd, trading as Aggregated Aggregates, is the
 responsible party for personal information collected through
-aggregates.store and app.aggregates.store.
+aaggregates.store and app.aaggregates.store.
 
 ## 2. Information Officer
 
 Our Information Officer, appointed in terms of POPIA, can be contacted at:
-privacy@aggregates.store. Registration details for our Information Officer
+privacy@aaggregates.store. Registration details for our Information Officer
 are lodged with the Information Regulator of South Africa.
 
 ## 3. Purpose of collection

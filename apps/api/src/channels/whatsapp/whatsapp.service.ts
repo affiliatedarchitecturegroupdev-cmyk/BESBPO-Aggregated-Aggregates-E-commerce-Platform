@@ -6,7 +6,7 @@ import { PrismaService } from "../../common/prisma.service";
 export type InboundMessage = { id: string; from: string; text: string };
 
 const OPEN_STATES = ["BROWSING", "CART_DRAFT", "HANDED_TO_SALES", "PAYMENT_LINK_SENT"] as const;
-const SITE = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://aggregates.store").replace(/\/+$/, "");
+const SITE = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://aaggregates.store").replace(/\/+$/, "");
 
 /**
  * WhatsApp Commerce — the one social channel with its own order intake

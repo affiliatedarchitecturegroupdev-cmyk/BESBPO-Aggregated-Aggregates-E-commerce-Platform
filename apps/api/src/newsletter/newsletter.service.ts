@@ -56,7 +56,7 @@ export class NewsletterService {
   }
 
   /** Active subscribers as CSV, with each one's unsubscribe link for the email tool. */
-  async exportCsv(siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://aggregates.store").replace(/\/+$/, "")) {
+  async exportCsv(siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://aaggregates.store").replace(/\/+$/, "")) {
     const rows = await this.prisma.newsletterSubscriber.findMany({ where: { unsubscribedAt: null }, orderBy: { createdAt: "asc" } });
     const cell = (value: string | null) => {
       const text = value ?? "";

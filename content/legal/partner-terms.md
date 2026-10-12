@@ -1,7 +1,7 @@
 # Partner Terms
 
 These terms apply to businesses that provide plant hire or site services to
-customers through aggregates.store (the "Platform") as a partner ("you",
+customers through aaggregates.store (the "Platform") as a partner ("you",
 "the Partner"). The Platform is operated by Aggregated Aggregates, a
 division of Besbpo Group (Pty) Ltd ("we", "us"). They are accepted in the
 partner portal by an authorised person on the Partner's behalf, and apply
@@ -140,4 +140,4 @@ under the terms in place when you accepted them.
 ## 13. Governing law and contact
 
 These terms are governed by the laws of the Republic of South Africa.
-Questions about them can be sent to legal@aggregates.store.
+Questions about them can be sent to legal@aaggregates.store.

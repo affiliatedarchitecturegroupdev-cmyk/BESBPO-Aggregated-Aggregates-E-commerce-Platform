@@ -9,11 +9,12 @@
  */
 import { INestApplication, ValidationPipe } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
-import { createHmac } from "crypto";
+import { createHash, createHmac } from "crypto";
 import request from "supertest";
 import { AppModule } from "../src/app.module";
 import { PrismaService } from "../src/common/prisma.service";
 import { DigestService } from "../src/insights/digest.service";
+import { PaymentGatewayService } from "../src/payment-gateway/payment-gateway.service";
 import { readManifest, seedProductImages } from "../src/merchandising/seed-product-images";
 
 const run = Date.now().toString(36);
@@ -292,7 +293,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
         headline: "Every Layer Starts Here.",
         body: "Test copy",
         primaryCta: { label: "Shop", href: "/products" },
-        secondaryCta: { label: "Quote", href: "https://aggregates.store/quote" },
+        secondaryCta: { label: "Quote", href: "https://aaggregates.store/quote" },
       };
       await http().put("/content/hero").set("Authorization", `Bearer ${customer}`).send(hero).expect(403);
       await http()
@@ -964,7 +965,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
   describe("payments", () => {
     it("shows tiles without routing, and eligibility at the caller's own tier", async () => {
       const tiles = await http().get("/payment-methods").expect(200);
-      expect(tiles.body).toHaveLength(18);
+      expect(tiles.body).toHaveLength(19); // SCode joined in Oct 2026
       expect(tiles.body[0].activeGateway).toBeUndefined();
 
       const anonymous = await http().get("/payment-methods/eligible?orderTotal=20000").expect(200);
@@ -993,6 +994,102 @@ describe("Aggregated Aggregates API (e2e)", () => {
       expect(card.body.note).toContain(order.body.orderNumber);
       expect(card.body.note).not.toMatch(/PAYFAST_|env/i); // no configuration details for shoppers
       await prisma.order.delete({ where: { id: order.body.id } });
+    });
+
+    describe("PayFast", () => {
+      const PF = { AGG_PAYFAST_MERCHANT_ID: "10000100", AGG_PAYFAST_MERCHANT_KEY: "46f0cd694581a", AGG_PAYFAST_PASSPHRASE: "test passphrase", AGG_PAYFAST_MODE: "sandbox" };
+      const md5 = (s: string) => createHash("md5").update(s).digest("hex");
+      const enc = (v: string) => encodeURIComponent(v).replace(/[!'()*]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`).replace(/%20/g, "+");
+      // A notification as PayFast sends it: fields in its order, signed over all of them with the passphrase.
+      const itn = (fields: [string, string][], passphrase = PF.AGG_PAYFAST_PASSPHRASE) => {
+        const base = fields.map(([k, v]) => `${k}=${enc(v)}`).join("&");
+        return `${base}&signature=${md5(`${base}&passphrase=${enc(passphrase)}`)}`;
+      };
+      let service: PaymentGatewayService;
+
+      beforeAll(() => {
+        Object.assign(process.env, PF);
+        service = app.get(PaymentGatewayService);
+        // Stand in for PayFast's servers: the source-address check and the "VALID" confirmation.
+        jest.spyOn(service as never as { isFromPayfast: () => Promise<boolean> }, "isFromPayfast").mockResolvedValue(true);
+        jest.spyOn(service as never as { payfastConfirms: () => Promise<boolean> }, "payfastConfirms").mockResolvedValue(true);
+      });
+      afterAll(async () => {
+        for (const key of Object.keys(PF)) delete process.env[key];
+        jest.restoreAllMocks();
+        await prisma.siteContent.deleteMany({ where: { key: "payfast-checkout" } });
+      });
+
+      it("is staff-only until an admin opens it, then posts a signed form to PayFast", async () => {
+        const buyer = await register("pfbuyer");
+        const admin = await register("pfadmin");
+        await prisma.user.update({ where: { email: `pfadmin-${run}@example.com` }, data: { role: "ADMIN" } });
+        const product = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-SBC-05" } });
+        const order = await http().post("/orders").set("Authorization", `Bearer ${buyer}`).send({ deliveryDistanceKm: 20, lineItems: [{ productId: product.id, unitOfSale: "BULK_M3", quantity: 6 }] }).expect(201);
+
+        const hidden = await http().post("/payment-methods/initiate").set("Authorization", `Bearer ${buyer}`).send({ orderId: order.body.id, methodKey: "CARD" }).expect(201);
+        expect(hidden.body).toMatchObject({ isLive: false });
+        expect(hidden.body.form).toBeUndefined();
+        const staffPay = await http().post("/payment-methods/initiate").set("Authorization", `Bearer ${admin}`).send({ orderId: order.body.id, methodKey: "CARD" }).expect(201);
+        expect(staffPay.body.isLive).toBe(true);
+        expect(staffPay.body.form.action).toBe("https://sandbox.payfast.co.za/eng/process");
+        const fields = Object.fromEntries(staffPay.body.form.fields);
+        expect(fields).toMatchObject({ merchant_id: "10000100", m_payment_id: order.body.id, amount: Number(order.body.total).toFixed(2) });
+        expect(fields.notify_url).toMatch(/\/api\/v1\/payment-methods\/notify\/payfast$/);
+        expect(fields.return_url).toContain(`/orders/${order.body.id}/confirmation?payment=returned`);
+        expect(JSON.stringify(staffPay.body)).not.toContain(PF.AGG_PAYFAST_PASSPHRASE);
+
+        await http().put("/payment-methods/payfast/visibility").set("Authorization", `Bearer ${buyer}`).send({ public: true }).expect(403);
+        await http().put("/payment-methods/payfast/visibility").set("Authorization", `Bearer ${admin}`).send({ public: true }).expect(200);
+        const open = await http().post("/payment-methods/initiate").set("Authorization", `Bearer ${buyer}`).send({ orderId: order.body.id, methodKey: "INSTANT_EFT" }).expect(201);
+        expect(open.body.isLive).toBe(true);
+        const routing = await http().get("/payment-methods/routing").set("Authorization", `Bearer ${admin}`).expect(200);
+        expect(routing.body.payfastPublic).toBe(true);
+        expect(routing.body.gateways.find((g: { gateway: string }) => g.gateway === "PAYFAST")).toMatchObject({ live: true, configured: true, mode: "sandbox" });
+        await prisma.order.delete({ where: { id: order.body.id } });
+      });
+
+      it("marks an order paid only from a genuine, matching notification, and logs every one", async () => {
+        const buyer = await register("pfpayer");
+        const product = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-SBC-05" } });
+        const order = await http().post("/orders").set("Authorization", `Bearer ${buyer}`).send({ deliveryDistanceKm: 20, lineItems: [{ productId: product.id, unitOfSale: "BULK_M3", quantity: 6 }] }).expect(201);
+        const total = Number(order.body.total).toFixed(2);
+        const base: [string, string][] = [
+          ["m_payment_id", order.body.id],
+          ["pf_payment_id", `PF${run}`],
+          ["payment_status", "COMPLETE"],
+          ["item_name", `Aggregated Aggregates order ${order.body.orderNumber}`],
+          ["item_description", ""],
+          ["amount_gross", total],
+          ["amount_fee", "-2.30"],
+          ["amount_net", (Number(total) - 2.3).toFixed(2)],
+          ["merchant_id", "10000100"],
+        ];
+        const post = (body: string) => http().post("/payment-methods/notify/payfast").set("Content-Type", "application/x-www-form-urlencoded").send(body).expect(200);
+        const outcomes = async () => (await prisma.paymentNotification.findMany({ where: { orderId: order.body.id }, orderBy: { createdAt: "asc" } })).map((n) => n.outcome);
+
+        await post(itn(base, "wrong passphrase"));
+        await post(itn(base.map(([k, v]): [string, string] => [k, k === "amount_gross" ? "1.00" : v])));
+        await post(itn(base.map(([k, v]): [string, string] => [k, k === "payment_status" ? "CANCELLED" : v])));
+        expect((await prisma.order.findUniqueOrThrow({ where: { id: order.body.id } })).status).toBe("PENDING");
+
+        await post(itn(base));
+        const paid = await prisma.order.findUniqueOrThrow({ where: { id: order.body.id } });
+        expect(paid).toMatchObject({ status: "CONFIRMED", paymentReference: `PF${run}` });
+        expect(paid.paidAt).not.toBeNull();
+        await post(itn(base)); // PayFast retries are harmless
+        expect(await outcomes()).toEqual(["REJECTED", "REJECTED", "NOT_PAID", "PAID", "ALREADY_PAID"]);
+        const log = await prisma.paymentNotification.findFirstOrThrow({ where: { orderId: order.body.id, outcome: "REJECTED" } });
+        expect(log.reason).toMatch(/Signature/);
+        expect(JSON.stringify(log.fields)).not.toContain("signature");
+
+        // A notification PayFast itself won't vouch for changes nothing.
+        jest.spyOn(service as never as { payfastConfirms: () => Promise<boolean> }, "payfastConfirms").mockResolvedValueOnce(false);
+        const second = await http().post("/orders").set("Authorization", `Bearer ${buyer}`).send({ deliveryDistanceKm: 20, lineItems: [{ productId: product.id, unitOfSale: "BULK_M3", quantity: 6 }] }).expect(201);
+        await post(itn(base.map(([k, v]): [string, string] => [k, k === "m_payment_id" ? second.body.id : k === "amount_gross" ? Number(second.body.total).toFixed(2) : v])));
+        expect((await prisma.order.findUniqueOrThrow({ where: { id: second.body.id } })).status).toBe("PENDING");
+        await prisma.order.deleteMany({ where: { id: { in: [order.body.id, second.body.id] } } });
+      });
     });
 
     it("lets admins, and only admins, change routing", async () => {
@@ -1648,7 +1745,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
 
   describe("sign-in with Google, Microsoft, X, Facebook and Instagram", () => {
     const env = ["GOOGLE", "MICROSOFT", "INSTAGRAM"].flatMap((p) => [`${p}_CLIENT_ID`, `${p}_CLIENT_SECRET`]);
-    const redirect = (p: string) => `https://aggregates.store/api/auth/oauth/${p}/callback`;
+    const redirect = (p: string) => `https://aaggregates.store/api/auth/oauth/${p}/callback`;
     const realFetch = global.fetch;
     let profiles: Record<string, unknown> = {};
 
@@ -1695,8 +1792,8 @@ describe("Aggregated Aggregates API (e2e)", () => {
       expect(url.searchParams.get("redirect_uri")).toBe(redirect("google"));
       expect(url.searchParams.get("code_challenge_method")).toBe("S256");
       expect(start.body.stateToken).not.toContain(url.searchParams.get("code_challenge"));
-      await http().post("/auth/oauth/google/start").send({ redirectUri: "https://aggregates.store/somewhere-else" }).expect(400);
-      await http().post("/auth/oauth/google/start").send({ redirectUri: "http://aggregates.store/api/auth/oauth/google/callback" }).expect(400);
+      await http().post("/auth/oauth/google/start").send({ redirectUri: "https://aaggregates.store/somewhere-else" }).expect(400);
+      await http().post("/auth/oauth/google/start").send({ redirectUri: "http://aaggregates.store/api/auth/oauth/google/callback" }).expect(400);
       // A tampered state is refused.
       await http().post("/auth/oauth/google/callback").send({ code: "c", state: "wrong", stateToken: start.body.stateToken }).expect(400);
     });

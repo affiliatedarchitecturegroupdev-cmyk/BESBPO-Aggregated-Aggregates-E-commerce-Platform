@@ -24,6 +24,23 @@ export function PaymentMethodSelector({ orderId, eligible }: { orderId: string; 
     setResult(null);
     start(async () => {
       const response = await payForOrder(orderId, methodKey);
+      if (response.ok && response.form) {
+        // Hosted checkout reached by form POST (PayFast): build the signed form and submit it.
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = response.form.action;
+        for (const [name, value] of response.form.fields) {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = name;
+          input.value = value;
+          form.appendChild(input);
+        }
+        document.body.appendChild(form);
+        setResult({ ok: true, message: response.message });
+        form.submit();
+        return;
+      }
       if (response.ok && response.redirectUrl) {
         window.location.assign(response.redirectUrl);
         return;

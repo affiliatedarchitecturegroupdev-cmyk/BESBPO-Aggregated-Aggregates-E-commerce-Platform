@@ -1,16 +1,53 @@
 import { Injectable } from "@nestjs/common";
-import { BaseStubAdapter } from "./base-stub.adapter";
+import { checkoutForm, missingPayfastEnv, payfastConfig, payfastMode } from "../payfast/payfast";
+import type { GatewayStatus, InitiatePaymentRequest, InitiatePaymentResult, PaymentGatewayAdapter, VerifyPaymentRequest, VerifyPaymentResult } from "./payment-gateway-adapter.interface";
 
 /**
  * PayFast — routes CARD, INSTANT_EFT, CAPITEC_PAY, APPLE_PAY, GOOGLE_PAY,
- * SAMSUNG_PAY, SNAPSCAN, ZAPPER, SCODE, PAYFLEX, MOBICRED, and MORETYME by default
- * (see the seed data in PaymentMethodConfig — PayFast's own onboarding
- * documentation lists all of these as available payment methods on a single
- * merchant account, which is why the routing table concentrates them here).
+ * SAMSUNG_PAY, SNAPSCAN, ZAPPER, SCODE, PAYFLEX, MOBICRED, and MORETYME by
+ * default. Live once AGG_PAYFAST_MERCHANT_ID, _MERCHANT_KEY and _PASSPHRASE
+ * are set on the API (AGG_PAYFAST_MODE = "live" or sandbox otherwise).
+ *
+ * The shopper's browser posts a signed form to PayFast's hosted page, where
+ * they choose among the methods enabled on the merchant account. PayFast
+ * then confirms the payment by a server-to-server notification (ITN),
+ * handled in PaymentGatewayService.payfastNotification —
+ * docs/payments-payfast.md.
  */
 @Injectable()
-export class PayFastAdapter extends BaseStubAdapter {
+export class PayFastAdapter implements PaymentGatewayAdapter {
   readonly gatewayKey = "PAYFAST";
-  protected readonly requiredEnvVars = ["PAYFAST_MERCHANT_ID", "PAYFAST_MERCHANT_KEY", "PAYFAST_PASSPHRASE"];
-  protected readonly hostedCheckoutUrl = "https://www.payfast.co.za/eng/process";
+
+  status(): GatewayStatus {
+    const missing = missingPayfastEnv();
+    return { live: missing.length === 0, configured: missing.length === 0, missingEnvVars: missing, mode: payfastMode() };
+  }
+
+  async initiate(request: InitiatePaymentRequest): Promise<InitiatePaymentResult> {
+    const config = payfastConfig();
+    if (!config) {
+      return {
+        isLive: false,
+        note: `Online payment isn't switched on yet, so order ${request.orderNumber} hasn't been charged. Choose another method, or contact sales and we'll help you pay.`,
+      };
+    }
+    return {
+      isLive: true,
+      form: checkoutForm(config, {
+        orderId: request.orderId,
+        orderNumber: request.orderNumber,
+        amount: request.amount,
+        customerEmail: request.customerEmail,
+        returnUrl: request.returnUrl,
+        cancelUrl: request.cancelUrl,
+        notifyUrl: request.notifyUrl,
+      }),
+      note: "Taking you to PayFast to pay securely…",
+    };
+  }
+
+  async verify(_request: VerifyPaymentRequest): Promise<VerifyPaymentResult> {
+    // Notifications are verified in PaymentGatewayService.payfastNotification, which also updates the order.
+    return { isValid: false, status: "UNKNOWN" };
+  }
 }

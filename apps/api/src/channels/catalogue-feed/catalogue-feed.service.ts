@@ -20,7 +20,7 @@ const FEED_IMAGE = { licence: "CLEARED", credit: null } as const;
 export class CatalogueFeedService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async rows(site = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://aggregates.store").replace(/\/+$/, "")) {
+  async rows(site = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://aaggregates.store").replace(/\/+$/, "")) {
     const products = await this.prisma.product.findMany({
       // Only photos we're cleared to publish ever go to Meta — and not ones whose
       // licence requires a credit line, which an ad can't carry.

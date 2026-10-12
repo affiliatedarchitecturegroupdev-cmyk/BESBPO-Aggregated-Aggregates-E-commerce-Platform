@@ -2,7 +2,7 @@
  * Besbpo Group companies we cross-sell to (Oct 2026): the materials we sell
  * are what they build and finish with, so the store points buyers who'd
  * rather have the job done to them. Every link carries UTM tags so each
- * company can see the leads aggregates.store sends.
+ * company can see the leads aaggregates.store sends.
  *
  * Service lists are kept general; confirm them against each company's own
  * site before adding anything more specific.
@@ -55,7 +55,7 @@ export const GROUP_COMPANIES: GroupCompany[] = [
 /** A Group company link, tagged so the company can see which page sent the lead. */
 export function groupLink(company: GroupCompany, placement: string) {
   const url = new URL(company.url);
-  url.searchParams.set("utm_source", "aggregates.store");
+  url.searchParams.set("utm_source", "aaggregates.store");
   url.searchParams.set("utm_medium", "cross_sell");
   url.searchParams.set("utm_campaign", placement);
   return url.toString();

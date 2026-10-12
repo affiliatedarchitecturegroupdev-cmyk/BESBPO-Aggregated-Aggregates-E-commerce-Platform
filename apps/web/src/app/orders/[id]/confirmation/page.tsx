@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { orderDocuments } from "@/components/account/OrderCard";
 import { ReorderButton } from "@/components/account/ReorderButton";
 import { PaymentMethodSelector, type EligibleMethods } from "@/components/payment/PaymentMethodSelector";
+import { RefreshWhilePending } from "@/components/payment/RefreshWhilePending";
 import { api } from "@/lib/api";
 import { UNIT_LABEL, type OrderRecord } from "@/lib/account-types";
 import { formatZAR } from "@/lib/pricing";
@@ -15,7 +16,7 @@ export const metadata: Metadata = { title: "Your order", robots: { index: false 
  * Order confirmation — where a payment gateway returns the buyer, and where a
  * PENDING order is paid. Only the buyer, their company or staff can see it.
  */
-export default async function OrderConfirmationPage({ params }: { params: { id: string } }) {
+export default async function OrderConfirmationPage({ params, searchParams }: { params: { id: string }; searchParams: { payment?: string } }) {
   await requireSession(`/orders/${params.id}/confirmation`);
   const token = sessionToken();
   const result = await api<OrderRecord>(`/orders/${encodeURIComponent(params.id)}`, { token });
@@ -25,6 +26,9 @@ export default async function OrderConfirmationPage({ params }: { params: { id: 
   }
   const order = result.data;
   const awaitingPayment = order.status === "PENDING";
+  // Back from PayFast: the payment is confirmed by PayFast's notification, which can arrive a few seconds after the shopper.
+  const returned = searchParams.payment === "returned";
+  const cancelled = searchParams.payment === "cancelled";
   const eligible = awaitingPayment
     ? await api<EligibleMethods>(`/payment-methods/eligible?orderTotal=${Number(order.total)}`, { token })
     : null;
@@ -42,6 +46,24 @@ export default async function OrderConfirmationPage({ params }: { params: { id: 
           Order reference <span className="font-mono text-basalt">{order.orderNumber}</span>
         </p>
       </div>
+
+      {returned && awaitingPayment && (
+        <p role="status" className="mt-6 rounded-sm border border-seam-blue/30 bg-seam-blue/5 p-4 text-center font-body text-sm text-seam-blue">
+          Thanks — PayFast is confirming your payment. This page updates by itself once it does, usually within a minute. If you paid with SCode, it
+          updates once you&apos;ve paid in store.
+          <RefreshWhilePending />
+        </p>
+      )}
+      {returned && !awaitingPayment && (
+        <p role="status" className="mt-6 rounded-sm border border-seam-blue/30 bg-seam-blue/5 p-4 text-center font-body text-sm text-seam-blue">
+          Payment received — thank you. We&apos;ve emailed your confirmation.
+        </p>
+      )}
+      {cancelled && awaitingPayment && (
+        <p role="status" className="mt-6 rounded-sm border border-ochre-gold/50 bg-ochre-gold/10 p-4 text-center font-body text-sm text-basalt">
+          Payment cancelled — you haven&apos;t been charged. Choose a way to pay below to try again.
+        </p>
+      )}
 
       <div className="mt-8 rounded-sm border border-basalt/10 bg-white p-5 font-body text-sm">
         <ul className="divide-y divide-basalt/5">

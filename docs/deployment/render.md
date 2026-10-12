@@ -209,15 +209,16 @@ in **Admin → Notifications** rather than sent.
   a buyer chooses EFT / purchase order. It's kept in Render rather than the
   code so finance can change it without a deploy, and so a code change can't
   quietly redirect payments. Until it's set, buyers are told to ask for it.
-- **Email.** Verify `aggregates.store` with a transactional email provider
+- **Email.** Verify `aaggregates.store` with a transactional email provider
   (Resend, Postmark or SendGrid), then set `EMAIL_PROVIDER`, `EMAIL_API_KEY`,
   `EMAIL_FROM` and optionally `EMAIL_REPLY_TO` on **aggregates-store-api**.
   In **Admin → Notifications**, add the staff inboxes, send a test email and
   resend anything logged. Full steps: `docs/notifications.md`.
 
 - **Payment gateways.** Set the merchant variables for each provider on
-  **aggregates-store-api** (PayFast: `PAYFAST_MERCHANT_ID`,
-  `PAYFAST_MERCHANT_KEY`, `PAYFAST_PASSPHRASE`; Peach: `PEACH_ENTITY_ID`,
+  **aggregates-store-api** (PayFast: `AGG_PAYFAST_MERCHANT_ID`,
+  `AGG_PAYFAST_MERCHANT_KEY`, `AGG_PAYFAST_PASSPHRASE`, `AGG_PAYFAST_MODE` —
+  see `docs/payments-payfast.md`; Peach: `PEACH_ENTITY_ID`,
   `PEACH_AUTH_TOKEN`; Ozow: `OZOW_SITE_CODE`, `OZOW_PRIVATE_KEY`,
   `OZOW_API_KEY`; Stitch: `STITCH_CLIENT_ID`, `STITCH_CLIENT_SECRET`;
   Lulapay: `LULAPAY_API_KEY`, `LULAPAY_MERCHANT_ID`). **Admin → Payments**
@@ -241,13 +242,13 @@ in **Admin → Notifications** rather than sent.
 
 | When | Set on | Variable / action |
 |---|---|---|
-| Going live on `aggregates.store` | web | Add the custom domain in Render; set `NEXT_PUBLIC_SITE_URL=https://aggregates.store` (used for canonical URLs and the sitemap; it falls back to the Render URL) |
-| Going live on `app.aggregates.store` | api | Add the custom domain; set `NEXT_PUBLIC_APP_URL=https://app.aggregates.store` |
+| Going live on `aaggregates.store` | web | Add the custom domain in Render; set `NEXT_PUBLIC_SITE_URL=https://aaggregates.store` (used for canonical URLs and the sitemap; on Render it defaults to https://aaggregates.store) |
+| Going live on `app.aaggregates.store` | api | Add the custom domain; set `NEXT_PUBLIC_APP_URL=https://app.aaggregates.store` |
 | When the storefront starts calling the API from the browser | api | `CORS_ORIGINS` — comma-separated storefront origins |
 | Enabling Google / Microsoft / X / Facebook / Instagram sign-in | api | `<PROVIDER>_CLIENT_ID` and `<PROVIDER>_CLIENT_SECRET` for each — see `docs/sign-in.md` for the redirect URI to register |
 | Using a different map tile provider on `/coverage` | web | `NEXT_PUBLIC_MAP_TILE_URL` and `NEXT_PUBLIC_MAP_ATTRIBUTION` (default: OpenStreetMap's standard tiles, fine for normal traffic; switch to a commercial tile service if traffic grows) |
 | When queues are wired in | api | `REDIS_URL` (Upstash) |
-| Going live on `aggregates.store` | api | `NEXT_PUBLIC_SITE_URL=https://aggregates.store` (payment return links, links in emails and WhatsApp messages, and the catalogue feed's product links) |
+| Going live on `aaggregates.store` | api | `NEXT_PUBLIC_SITE_URL=https://aaggregates.store` (payment return links, links in emails and WhatsApp messages, and the catalogue feed's product links) |
 
 ## Notes
 
@@ -341,3 +342,34 @@ in **Admin → Notifications** rather than sent.
 - **Don't set `NODE_ENV=production` at build time.** pnpm would then skip dev
   dependencies, which the build needs (Nest CLI, Prisma CLI, ts-node for the
   seed).
+
+## Domain: aaggregates.store (GoDaddy registration, Cloudflare DNS)
+
+The storefront's domain is **aaggregates.store** (double "a"). It was
+registered at GoDaddy, and its nameservers point to Cloudflare, which
+manages DNS.
+
+1. **Render → aggregates-store-web → Settings → Custom Domains.** Add
+   `aaggregates.store` and `www.aaggregates.store`. Render shows the record
+   to create for each.
+2. **Cloudflare → DNS.**
+   - Create the records Render shows: a CNAME for `www` to
+     `aggregates-store-web.onrender.com`, and for the bare domain the
+     A record or flattened CNAME Render gives.
+   - Leave them **DNS only (grey cloud)** until Render shows the domain
+     *Verified* and the certificate *Issued*.
+   - After that, switching the proxy on (orange cloud) is optional. If you
+     do, set **SSL/TLS → Full (strict)**, never "Flexible", which causes
+     redirect loops.
+3. **Environment.** Set `NEXT_PUBLIC_SITE_URL=https://aaggregates.store` on
+   the web *and* API services, then redeploy the web service. The value is
+   built into the pages, so it only takes effect after a rebuild.
+4. **Email addresses.** The pages and policies name `sales@`, `support@`,
+   `privacy@`, `legal@` and (as the sender) `orders@aaggregates.store`.
+   Create them, for example with Cloudflare **Email Routing** forwarding
+   to an existing inbox. Verify the domain with the email provider before
+   setting `EMAIL_FROM`.
+5. **PayFast** posts payment notifications to the API's own Render address
+   (`RENDER_EXTERNAL_URL`), not through Cloudflare, so Cloudflare's bot
+   protection can't block them (docs/payments-payfast.md).
+

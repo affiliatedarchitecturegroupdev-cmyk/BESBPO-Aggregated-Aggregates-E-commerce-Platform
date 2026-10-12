@@ -116,7 +116,7 @@ export function orderConfirmationSpec(o: OrderDocData, bankingDetails?: string):
     ],
     notes: [
       ...payNote,
-      "Delivery distance is confirmed at dispatch. Compliance documents for your materials are on your order record at aggregates.store.",
+      "Delivery distance is confirmed at dispatch. Compliance documents for your materials are on your order record at aaggregates.store.",
     ],
     footer: `${SELLER.tradingName} · ${SELLER.website} · Order ${o.orderNumber}`,
   };
@@ -148,7 +148,7 @@ export function deliveryNoteSpec(o: OrderDocData): DocSpec {
     },
     notes: [
       "Please check the load against this note before signing. Note any shortfall or damage here and on the driver's copy.",
-      "Compliance documents (SANS references and certificates of analysis) are on the order record at aggregates.store.",
+      "Compliance documents (SANS references and certificates of analysis) are on the order record at aaggregates.store.",
     ],
     signatures: ["Received by (name)", "Signature", "Date and time", "Vehicle registration"],
     footer: `${SELLER.tradingName} · ${SELLER.website} · Order ${o.orderNumber}`,

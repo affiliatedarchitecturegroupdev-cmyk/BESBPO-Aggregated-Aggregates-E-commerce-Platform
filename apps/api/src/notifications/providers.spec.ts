@@ -23,7 +23,7 @@ describe("notification providers", () => {
   });
 
   it("sends through Resend", async () => {
-    Object.assign(process.env, { EMAIL_PROVIDER: "resend", EMAIL_API_KEY: "re_test", EMAIL_FROM: "Aggregated Aggregates <orders@aggregates.store>" });
+    Object.assign(process.env, { EMAIL_PROVIDER: "resend", EMAIL_API_KEY: "re_test", EMAIL_FROM: "Aggregated Aggregates <orders@aaggregates.store>" });
     fetchMock.mockResolvedValue(new Response(JSON.stringify({ id: "msg_1" }), { status: 200 }));
     await expect(new EmailSender().send(email)).resolves.toEqual({ delivered: true, providerMessageId: "msg_1" });
     const [url, init] = fetchMock.mock.calls[0];
@@ -33,14 +33,14 @@ describe("notification providers", () => {
   });
 
   it("splits a display-name sender for SendGrid and records its message id", async () => {
-    Object.assign(process.env, { EMAIL_PROVIDER: "sendgrid", EMAIL_API_KEY: "SG.x", EMAIL_FROM: "Aggregated Aggregates <orders@aggregates.store>" });
+    Object.assign(process.env, { EMAIL_PROVIDER: "sendgrid", EMAIL_API_KEY: "SG.x", EMAIL_FROM: "Aggregated Aggregates <orders@aaggregates.store>" });
     fetchMock.mockResolvedValue(new Response(null, { status: 202, headers: { "x-message-id": "sg_1" } }));
     await expect(new EmailSender().send(email)).resolves.toEqual({ delivered: true, providerMessageId: "sg_1" });
-    expect(JSON.parse(fetchMock.mock.calls[0][1].body).from).toEqual({ email: "orders@aggregates.store", name: "Aggregated Aggregates" });
+    expect(JSON.parse(fetchMock.mock.calls[0][1].body).from).toEqual({ email: "orders@aaggregates.store", name: "Aggregated Aggregates" });
   });
 
   it("reports a provider rejection as a failure with its reason", async () => {
-    Object.assign(process.env, { EMAIL_PROVIDER: "postmark", EMAIL_API_KEY: "pm", EMAIL_FROM: "orders@aggregates.store" });
+    Object.assign(process.env, { EMAIL_PROVIDER: "postmark", EMAIL_API_KEY: "pm", EMAIL_FROM: "orders@aaggregates.store" });
     fetchMock.mockResolvedValue(new Response('{"Message":"Sender signature not confirmed"}', { status: 422 }));
     const result = await new EmailSender().send(email);
     expect(result).toMatchObject({ delivered: false, logged: false });
