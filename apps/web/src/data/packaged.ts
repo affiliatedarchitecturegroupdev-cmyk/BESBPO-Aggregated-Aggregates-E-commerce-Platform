@@ -19,7 +19,6 @@ export type PackagedUnit = {
   unit: PackagedUnitCode;
   label: string;
   pricingStatus: string;
-  sourceNote: string;
   /** Tier unit prices — only for a benchmarked unit; a tier whose price is quoted is null. */
   prices: TierPrices | null;
 };
@@ -91,7 +90,6 @@ export const PACKAGED_PRODUCTS: PackagedProduct[] = catalogue.products.map((p) =
     unit: u.unit as PackagedUnitCode,
     label: u.unit_label,
     pricingStatus: u.pricing_status,
-    sourceNote: u.source_note,
     prices:
       u.pricing_status === READY && u.list_price_per_unit !== null
         ? (Object.fromEntries(

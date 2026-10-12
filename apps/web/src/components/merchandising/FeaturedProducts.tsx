@@ -61,7 +61,7 @@ export async function FeaturedProducts() {
           View all products →
         </Link>
       </div>
-      <p className="mt-1 font-body text-sm text-slate">Our picks from every part of the range — priced live where a benchmark backs it.</p>
+      <p className="mt-1 font-body text-sm text-slate">Our picks from every part of the range — priced live wherever we have a confirmed price.</p>
       <FeaturedTabs tabs={lines.map((l): FeaturedTab => l.tab)}>
         {lines.map((l) => (
           <div key={l.tab.key} className={grid}>

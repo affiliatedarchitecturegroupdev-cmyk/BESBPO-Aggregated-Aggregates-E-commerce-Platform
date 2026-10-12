@@ -41,35 +41,23 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": 126.0,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 126.0,
      "markup_percent": 8,
      "list_price_per_unit": 136.08,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Chamberlains R126.00 (collection) is lowest; Leroy Merlin R128.00, Cashbuild Upington R147.85, Buildmate R151.00. PPC SureBuild 42.5N 50kg, regular (non-promo) prices from 2 retailers, fetched 2026-10-06 (pages undated). Benchmark = lowest regular price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "BULK_BAG_1_5T",
      "unit_label": "1.5-ton bulk bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -96,24 +84,16 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public 52.5N-specific SA retail benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "Same gap as the bagged unit — confirm with supplier."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -140,24 +120,16 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold bulk B2B by AfriSam/PPC, not bagged retail — request a direct quote."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Same gap as the bagged unit — request a direct quote."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -184,13 +156,9 @@
     {
      "unit": "BAG_25KG",
      "unit_label": "25kg bag",
-     "market_benchmark_price": 399.0,
-     "cost_basis_percent": 55,
-     "cost_per_unit": 219.45,
      "markup_percent": 22,
      "list_price_per_unit": 267.73,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Pinnacle Construction Products, SikaGrout 212 25kg, Sep 2026."
+     "pricing_status": "Ready — benchmarked"
     }
    ]
   },
@@ -217,13 +185,9 @@
     {
      "unit": "DRUM_210L",
      "unit_label": "210L drum",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 55,
-     "cost_per_unit": null,
      "markup_percent": 25,
      "list_price_per_unit": null,
-     "pricing_status": "BLOCKED — no benchmark",
-     "source_note": "No public benchmark — Sika/Chryso quote per-project. Request a quote."
+     "pricing_status": "BLOCKED — no benchmark"
     }
    ]
   },
@@ -250,13 +214,9 @@
     {
      "unit": "DRUM_210L",
      "unit_label": "210L drum",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 55,
-     "cost_per_unit": null,
      "markup_percent": 25,
      "list_price_per_unit": null,
-     "pricing_status": "BLOCKED — no benchmark",
-     "source_note": "Same gap as Accelerator — request a quote."
+     "pricing_status": "BLOCKED — no benchmark"
     }
    ]
   },
@@ -283,13 +243,9 @@
     {
      "unit": "DRUM_210L",
      "unit_label": "210L drum",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 55,
-     "cost_per_unit": null,
      "markup_percent": 25,
      "list_price_per_unit": null,
-     "pricing_status": "BLOCKED — no benchmark",
-     "source_note": "Same gap as Accelerator — request a quote."
+     "pricing_status": "BLOCKED — no benchmark"
     }
    ]
   },
@@ -316,35 +272,23 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "Only one retail source found (Oct 2026) — below the 2-retailer threshold for a live price. Confirm current price with supplier before publishing."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_BAG_1_5T",
      "unit_label": "1.5-ton bulk bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -371,35 +315,23 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": 89.42,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 89.42,
      "markup_percent": 8,
      "list_price_per_unit": 96.57,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "BUCO 'from' R89.42 is lowest; Cashbuild Upington R113.95. AfriSam StarBuild 32.5N 50kg, regular (non-promo) prices from 2 retailers, fetched 2026-10-06 (pages undated). Benchmark = lowest regular price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "BULK_BAG_1_5T",
      "unit_label": "1.5-ton bulk bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -426,35 +358,23 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": 106.47,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 106.47,
      "markup_percent": 8,
      "list_price_per_unit": 114.99,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "BUCO 'from' R106.47 is lowest; Cashbuild Upington R116.35. Cemza GP 32.5N 50kg, regular (non-promo) prices from 2 retailers, fetched 2026-10-06 (pages undated). Benchmark = lowest regular price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "BULK_BAG_1_5T",
      "unit_label": "1.5-ton bulk bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -481,35 +401,23 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No retail benchmark captured yet for this specific brand/SKU — commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_BAG_1_5T",
      "unit_label": "1.5-ton bulk bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -536,35 +444,23 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No retail benchmark captured yet for this specific brand/SKU — commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_BAG_1_5T",
      "unit_label": "1.5-ton bulk bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -591,35 +487,23 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No retail benchmark captured yet for this specific brand/SKU — commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_BAG_1_5T",
      "unit_label": "1.5-ton bulk bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -646,35 +530,23 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": 106.39,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 106.39,
      "markup_percent": 8,
      "list_price_per_unit": 114.9,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "BUCO 'from' R106.39 is lowest; Cashbuild Upington R118.25. Sephaku 32.5R 50kg, regular (non-promo) prices from 2 retailers, fetched 2026-10-06 (pages undated). Benchmark = lowest regular price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "BULK_BAG_1_5T",
      "unit_label": "1.5-ton bulk bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -701,35 +573,23 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No retail benchmark captured yet for this specific brand/SKU — commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_BAG_1_5T",
      "unit_label": "1.5-ton bulk bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -756,35 +616,23 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": 99.3,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 99.3,
      "markup_percent": 8,
      "list_price_per_unit": 107.24,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Cashbuild Upington R99.30 is lowest; BUCO 'from' R104.94. Kwikbuild 32.5N 50kg, regular (non-promo) prices from 2 retailers, fetched 2026-10-06 (pages undated). Benchmark = lowest regular price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "BULK_BAG_1_5T",
      "unit_label": "1.5-ton bulk bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -812,13 +660,9 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "Only one retail source found (Oct 2026) — below the 2-retailer threshold for a live price. Confirm current price with supplier before publishing. Afrimat's datasheet lists DuraBuild in 50 kg bags only."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -849,35 +693,23 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": 129.75,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 129.75,
      "markup_percent": 8,
      "list_price_per_unit": 140.13,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Cashbuild Upington R129.75 (lowest of three page prices) vs BUCO 'from' R132.92. AfriSam All Purpose 42.5N 50kg, regular (non-promo) prices from 2 retailers, fetched 2026-10-06 (pages undated). Benchmark = lowest regular price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "BULK_BAG_1_5T",
      "unit_label": "1.5-ton bulk bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -904,35 +736,23 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": 118.62,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 118.62,
      "markup_percent": 8,
      "list_price_per_unit": 128.11,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "BUCO 'from' R118.62 is lowest; Cashbuild Upington R139.55. Sephaku 42.5N 50kg, regular (non-promo) prices from 2 retailers, fetched 2026-10-06 (pages undated). Benchmark = lowest regular price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "BULK_BAG_1_5T",
      "unit_label": "1.5-ton bulk bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -959,35 +779,23 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": 126.55,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 126.55,
      "markup_percent": 8,
      "list_price_per_unit": 136.67,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Cashbuild Upington R126.55 is lowest; BUCO 'from' R127.44 (mapped from the retailers' Cemza 42.5N listing). Cemza 42.5N 50kg, regular (non-promo) prices from 2 retailers, fetched 2026-10-06 (pages undated). Benchmark = lowest regular price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "BULK_BAG_1_5T",
      "unit_label": "1.5-ton bulk bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -1014,35 +822,23 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": 109.86,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 109.86,
      "markup_percent": 8,
      "list_price_per_unit": 118.65,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "BUCO 'from' R109.86 is lowest; Cashbuild Upington R122.95. Afrimat BuildCrete 42.5N 50kg, regular (non-promo) prices from 2 retailers, fetched 2026-10-06 (pages undated). Benchmark = lowest regular price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "BULK_BAG_1_5T",
      "unit_label": "1.5-ton bulk bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -1069,35 +865,23 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "Only one retail source found (Oct 2026) — below the 2-retailer threshold for a live price. Confirm current price with supplier before publishing."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_BAG_1_5T",
      "unit_label": "1.5-ton bulk bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -1124,35 +908,23 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "Only one retail source found (Oct 2026) — below the 2-retailer threshold for a live price. Confirm current price with supplier before publishing."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_BAG_1_5T",
      "unit_label": "1.5-ton bulk bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -1181,35 +953,23 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No retail benchmark captured yet for this specific brand/SKU — commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_BAG_1_5T",
      "unit_label": "1.5-ton bulk bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public bulk-bag benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No public tanker-load benchmark found — confirm with supplier before ordering."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -1236,13 +996,9 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Added from Mamba's own product range (Oct 2026); no retail benchmark yet — request a supplier quote."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1272,24 +1028,16 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Performance/specialist cement of this class is typically project- or contractor-specified rather than bagged retail — request a direct supplier quote."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1316,24 +1064,16 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Performance/specialist cement of this class is typically project- or contractor-specified rather than bagged retail — request a direct supplier quote."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1363,24 +1103,16 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retail source found (Oct 2026) — below the 2-retailer threshold for a live price. Confirm current price with supplier before publishing."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1407,24 +1139,16 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Performance/specialist cement of this class is typically project- or contractor-specified rather than bagged retail — request a direct supplier quote."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1453,24 +1177,16 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Performance/specialist cement of this class is typically project- or contractor-specified rather than bagged retail — request a direct supplier quote."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1497,24 +1213,16 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Performance/specialist cement of this class is typically project- or contractor-specified rather than bagged retail — request a direct supplier quote."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1541,24 +1249,16 @@
     {
      "unit": "BULK_BAG_1_5T",
      "unit_label": "1.5-ton bulk bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold in bulk to precast/specialist producers, not bagged retail — request a direct supplier quote."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold in bulk to precast/specialist producers, not bagged retail — request a direct supplier quote."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1585,24 +1285,16 @@
     {
      "unit": "BAG_25KG",
      "unit_label": "25kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No retail benchmark captured yet for this specific brand/SKU — masonry cement is commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No retail benchmark captured yet for this specific brand/SKU — masonry cement is commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -1629,24 +1321,16 @@
     {
      "unit": "BAG_25KG",
      "unit_label": "25kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No retail benchmark captured yet for this specific brand/SKU — masonry cement is commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No retail benchmark captured yet for this specific brand/SKU — masonry cement is commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -1673,24 +1357,16 @@
     {
      "unit": "BAG_25KG",
      "unit_label": "25kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No retail benchmark captured yet for this specific brand/SKU — masonry cement is commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+     "pricing_status": "Provisional — confirm w/ supplier"
     },
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "No retail benchmark captured yet for this specific brand/SKU — masonry cement is commonly sold through builders' merchants; confirm current shelf price with supplier before publishing."
+     "pricing_status": "Provisional — confirm w/ supplier"
     }
    ]
   },
@@ -1717,24 +1393,16 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Performance/specialist cement of this class is typically project- or contractor-specified rather than bagged retail — request a direct supplier quote."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1761,24 +1429,16 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Performance/specialist cement of this class is typically project- or contractor-specified rather than bagged retail — request a direct supplier quote."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1805,24 +1465,16 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Performance/specialist cement of this class is typically project- or contractor-specified rather than bagged retail — request a direct supplier quote."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1849,24 +1501,16 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Performance/specialist cement of this class is typically project- or contractor-specified rather than bagged retail — request a direct supplier quote."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1893,24 +1537,16 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Performance/specialist cement of this class is typically project- or contractor-specified rather than bagged retail — request a direct supplier quote."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Same gap as the bagged unit — request a direct supplier quote rather than a storefront price."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1939,13 +1575,9 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Afrimat's FastCast datasheet lists 50 kg bags only (Oct 2026) — request a supplier quote."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   },
@@ -1976,46 +1608,30 @@
     {
      "unit": "BAG_25KG",
      "unit_label": "25kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Afrimat's datasheet lists 25 kg and 50 kg bags (Oct 2026) — request a supplier quote."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Afrimat's datasheet lists 25 kg and 50 kg bags (Oct 2026) — request a supplier quote."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "BULK_BAG_1_5T",
      "unit_label": "1.5-ton bulk bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold in bulk to precast/specialist producers, not bagged retail — request a direct supplier quote."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "BULK_TANKER_PER_TON",
      "unit_label": "Bulk tanker (per ton)",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold in bulk to precast/specialist producers, not bagged retail — request a direct supplier quote."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
   }

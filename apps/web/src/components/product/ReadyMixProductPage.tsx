@@ -10,7 +10,7 @@ import { SocialShareButtons } from "@/components/social/SocialShareButtons";
 import { CATEGORIES } from "@/data/categories";
 import { READY_MIX_PRODUCTS } from "@/data/ready-mix";
 import type { MerchandisedReadyMixProduct } from "@/lib/cms";
-import { formatZAR } from "@/lib/pricing";
+import { formatZAR, unpricedLabel } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
 /** Product page for CAT-12 ready-mix concrete: one strength grade per page. */
@@ -57,7 +57,7 @@ export function ReadyMixProductPage({ product }: { product: MerchandisedReadyMix
             prices.CONTRACTOR_TRADE === null ? "trade quoted" : `${formatZAR(prices.CONTRACTOR_TRADE)} trade`,
             prices.VOLUME_CIVIL_BULK === null ? "volume quoted" : `${formatZAR(prices.VOLUME_CIVIL_BULK)} volume`,
           ].join(" · ")
-        : product.pricingStatus,
+        : unpricedLabel(product.pricingStatus),
     ],
   ];
 

@@ -17,7 +17,7 @@ import { tierPrice } from "@/lib/tier-pricing";
 export const READY = "Ready — benchmarked";
 export const READY_MIX_CATEGORY = catalogue.category;
 
-export type ReadyMixUnit = { unit: "m3"; label: string; pricingStatus: string; sourceNote: string; prices: TierPrices | null };
+export type ReadyMixUnit = { unit: "m3"; label: string; pricingStatus: string; prices: TierPrices | null };
 
 export type ReadyMixProduct = {
   sku: string;
@@ -31,7 +31,6 @@ export type ReadyMixProduct = {
   listPricePerM3: number | null;
   markupPercent: number;
   pricingStatus: string;
-  sourceNote: string;
   typicalUses: string[];
   handlingNotes: string;
   /** One unit — per m³ — so listings and the cart treat it like any other product. */
@@ -48,7 +47,6 @@ export type PumpOption = {
   callOutFee: number | null;
   ratePerM3: number | null;
   pricingStatus: string;
-  sourceNote: string;
 };
 
 export const READY_MIX_PRODUCTS: ReadyMixProduct[] = catalogue.products.map((p) => {
@@ -70,10 +68,9 @@ export const READY_MIX_PRODUCTS: ReadyMixProduct[] = catalogue.products.map((p) 
     listPricePerM3: p.list_price_per_m3,
     markupPercent: p.markup_percent,
     pricingStatus: p.pricing_status,
-    sourceNote: p.source_note,
     typicalUses: p.typical_uses,
     handlingNotes: p.handling_notes,
-    units: [{ unit: "m3", label: "m³", pricingStatus: p.pricing_status, sourceNote: p.source_note, prices }],
+    units: [{ unit: "m3", label: "m³", pricingStatus: p.pricing_status, prices }],
     kind: "ready-mix",
   };
 });
@@ -87,7 +84,6 @@ export const PUMP_OPTIONS: PumpOption[] = catalogue.pumps.map((p) => ({
   callOutFee: p.call_out_fee,
   ratePerM3: p.rate_per_m3,
   pricingStatus: p.pricing_status,
-  sourceNote: p.source_note,
 }));
 
 export function findReadyMix(slug: string) {

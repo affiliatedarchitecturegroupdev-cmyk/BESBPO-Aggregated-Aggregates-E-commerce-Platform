@@ -12,8 +12,6 @@
       "sku_code": "SBC",
       "grading_standard": "SANS 1200-G",
       "bulk_density_kg_per_m3": 1700,
-      "base_cost_per_ton": 180,
-      "markup": 0.18,
       "bag_premium_multiplier": 2.5,
       "list_price_per_ton": 212.4,
       "list_price_per_m3": 361.08
@@ -24,8 +22,6 @@
       "sku_code": "CRS",
       "grading_standard": "SANS 1083",
       "bulk_density_kg_per_m3": 1450,
-      "base_cost_per_ton": 320,
-      "markup": 0.25,
       "bag_premium_multiplier": 3,
       "list_price_per_ton": 400.0,
       "list_price_per_m3": 580.0
@@ -36,8 +32,6 @@
       "sku_code": "SND",
       "grading_standard": null,
       "bulk_density_kg_per_m3": 1550,
-      "base_cost_per_ton": 280,
-      "markup": 0.28,
       "bag_premium_multiplier": 2.7,
       "list_price_per_ton": 358.4,
       "list_price_per_m3": 555.52
@@ -48,8 +42,6 @@
       "sku_code": "CRR",
       "grading_standard": "COLTO/TRH14",
       "bulk_density_kg_per_m3": 1800,
-      "base_cost_per_ton": 190,
-      "markup": 0.18,
       "bag_premium_multiplier": 2.5,
       "list_price_per_ton": 224.2,
       "list_price_per_m3": 403.56
@@ -60,8 +52,6 @@
       "sku_code": "BAL",
       "grading_standard": null,
       "bulk_density_kg_per_m3": 1600,
-      "base_cost_per_ton": 210,
-      "markup": 0.22,
       "bag_premium_multiplier": 2.5,
       "list_price_per_ton": 256.2,
       "list_price_per_m3": 409.92
@@ -72,8 +62,6 @@
       "sku_code": "DRN",
       "grading_standard": null,
       "bulk_density_kg_per_m3": 1500,
-      "base_cost_per_ton": 300,
-      "markup": 0.3,
       "bag_premium_multiplier": 2.8,
       "list_price_per_ton": 390.0,
       "list_price_per_m3": 585.0
@@ -84,8 +72,6 @@
       "sku_code": "DEC",
       "grading_standard": null,
       "bulk_density_kg_per_m3": 1500,
-      "base_cost_per_ton": 380,
-      "markup": 0.55,
       "bag_premium_multiplier": 3.5,
       "list_price_per_ton": 589.0,
       "list_price_per_m3": 883.5
@@ -96,8 +82,6 @@
       "sku_code": "AGR",
       "grading_standard": null,
       "bulk_density_kg_per_m3": 900,
-      "base_cost_per_ton": 700,
-      "markup": 0.35,
       "bag_premium_multiplier": 2.2,
       "list_price_per_ton": 945.0,
       "list_price_per_m3": 850.5
@@ -108,8 +92,6 @@
       "sku_code": "REC",
       "grading_standard": null,
       "bulk_density_kg_per_m3": 1500,
-      "base_cost_per_ton": 90,
-      "markup": 0.15,
       "bag_premium_multiplier": 2.5,
       "list_price_per_ton": 103.5,
       "list_price_per_m3": 155.25

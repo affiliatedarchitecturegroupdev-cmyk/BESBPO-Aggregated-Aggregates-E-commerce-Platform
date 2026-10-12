@@ -24,7 +24,6 @@ export type MasonryUnit = {
   label: string;
   weightKg: number | null;
   pricingStatus: string;
-  sourceNote: string;
   prices: TierPrices | null;
 };
 
@@ -65,7 +64,6 @@ export const MASONRY_PRODUCTS: MasonryProduct[] = catalogue.products.map((p) => 
     label: u.unit_label,
     weightKg: u.weight_kg,
     pricingStatus: u.pricing_status,
-    sourceNote: u.source_note,
     prices:
       u.pricing_status === READY && u.list_price_per_unit !== null
         ? (Object.fromEntries(CUSTOMER_TIERS.map((t) => [t.name, tierPrice(u.list_price_per_unit as number, u.markup_percent / 100, "MASONRY", t.name)])) as TierPrices)

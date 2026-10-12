@@ -1,7 +1,7 @@
 # Recently viewed
 
-Product pages and the cart show a **Recently viewed** row: the last products this
-browser opened, newest first, as one sideways-scrolling row with each product's
+The homepage, the `/products` listing, product pages and the cart show a
+**Recently viewed** row: the last products this browser opened, newest first, as one sideways-scrolling row with each product's
 headline list price (or "Price on quote").
 
 ## Privacy
@@ -27,4 +27,8 @@ headline list price (or "Price on quote").
 - `apps/web/src/lib/recently-viewed.ts`: the store (`useRecentlyViewed`, `recentlyViewed.record/clear`).
 - `apps/web/src/components/merchandising/RecentlyViewed.tsx`: the row (client).
 - `apps/web/src/components/merchandising/RecentlyViewedRow.tsx`: server wrapper that
-  passes hidden SKUs; used at the end of all five product page layouts and on `/cart`.
+  passes hidden SKUs; used at the end of all five product page layouts, `/products`
+  and `/cart`. The homepage renders `RecentlyViewed` directly (it already has the
+  hidden SKUs) after the quick tonnage calculator.
+- The row renders nothing until the visitor has viewed a product, so first-time
+  visitors never see an empty section.

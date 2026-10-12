@@ -128,3 +128,8 @@ export function estimateDelivery(params: {
 
   return reasons.length > 0 ? { isQuoteOnly: true, reasons } : { isQuoteOnly: false, fee };
 }
+
+/** What a shopper sees for a unit without a list price — never the internal benchmark status. */
+export function unpricedLabel(pricingStatus: string): string {
+  return pricingStatus.startsWith("Quote-only") ? "Quoted per order" : "Price on request";
+}

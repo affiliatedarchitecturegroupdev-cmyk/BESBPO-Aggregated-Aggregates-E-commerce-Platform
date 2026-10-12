@@ -100,7 +100,7 @@ aggregates-store-platform/
 ├── PROJECT_LISTS.md      Wishlist by job: project lists, build stages, estimate, share, cart/quote
 ├── ANALYTICS.md          Sales & profit reporting: decisions, what's recorded, how profit is calculated
 ├── PLANT_HIRE_CATALOGUE.md CAT-13/14 plant hire and site services: Agent model, rate cards, enquiries
-├── PRICING_POLICY.md     Floor-based tier discounts for every catalogue
+├── PRICING_POLICY.md     Floor-based tier discounts for every catalogue; public catalogue copies come from scripts/public-catalogues.py
 ├── BLOG_CMS.md           Blog/CMS: API, admin, content rules
 ├── PAYMENT_ASSETS.md     Logo/icon provenance (Brandfetch files and remaining placeholders)
 ├── RESPONSIBLE_SOURCING.md Badges on /responsible-sourcing: provenance, rules, claims to avoid

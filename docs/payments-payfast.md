@@ -67,21 +67,25 @@ Paid, Already handled, Not paid or Rejected, plus the reason. The latest
 20 show on **Admin → Payments**. PayFast always gets a 200 response, so it
 doesn't keep retrying.
 
-## Going live safely
+## Customer access
 
-PayFast checkout starts **staff only**. Customers who choose a PayFast
-method are asked to choose another method, while staff can pay through it.
+PayFast checkout is **open to customers** (owner's decision, October 2026).
+An admin can set it to **staff only** on **Admin → Payments**. Customers
+are then asked to choose another method, while staff can still pay through
+it. Use this if PayFast pauses the account or something looks wrong.
+**Open to customers** switches it back.
 
-1. **Payment methods.** In the PayFast dashboard, give PayFast the live
+Before relying on it:
+
+1. **PayFast setup.** In the PayFast dashboard, give PayFast the live
    domain (aaggregates.store) and switch on the payment methods you want.
-2. **Test payment.** Signed in as staff, place a small order (PayFast's
-   minimum is R5) and pay it through PayFast.
+   Until the account is cleared, PayFast's page says "This merchant
+   account is currently not able to receive payments".
+2. **Test payment.** Make one small real payment (PayFast's minimum is R5).
 3. **Check it.** On **Admin → Payments**, the notification shows as
-   *Paid — order confirmed*, and the order is confirmed.
-4. **Refund.** Refund the test payment from the PayFast dashboard, then
-   cancel the order in Admin → Orders.
-5. **Open it.** Click **Open to customers**. **Back to staff only** closes
-   it again at any time.
+   *Paid — order confirmed*.
+4. **Refund.** Refund the test payment from the PayFast dashboard and
+   cancel the order.
 
 ## When something goes wrong
 
@@ -92,6 +96,7 @@ method are asked to choose another method, while staff can pay through it.
 | Rejected — amount | The amount paid doesn't match the order total; don't release the order |
 | Already handled — "order had been cancelled" | The customer paid a cancelled order: refund it from the PayFast dashboard |
 | Nothing arrives | The PayFast page showed an error, or the notify URL isn't reachable: check that the API is up |
+| PayFast page: "This merchant account is currently not able to receive payments" | PayFast hasn't finished clearing the account (website and policy pages under review). Nothing to change on our side |
 
 A "signature mismatch" error on the PayFast payment page itself means the
 merchant ID, key or passphrase on Render doesn't match the dashboard.

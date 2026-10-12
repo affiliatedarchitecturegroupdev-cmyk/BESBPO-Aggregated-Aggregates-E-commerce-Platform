@@ -10,7 +10,7 @@ import { SocialShareButtons } from "@/components/social/SocialShareButtons";
 import { CATEGORIES } from "@/data/categories";
 import { STEEL_CATEGORY_CODES, STEEL_PRODUCTS } from "@/data/steel";
 import type { MerchandisedSteelProduct } from "@/lib/cms";
-import { formatZAR } from "@/lib/pricing";
+import { formatZAR, unpricedLabel } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
 /** Product page for CAT-15..18 steel: rebar, mesh & brickforce, fixing accessories, structural sections. */
@@ -130,7 +130,7 @@ export function SteelProductPage({ product }: { product: MerchandisedSteelProduc
                           u.prices.CONTRACTOR_TRADE === null ? "trade quoted" : `${formatZAR(u.prices.CONTRACTOR_TRADE)} trade`,
                           u.prices.VOLUME_CIVIL_BULK === null ? "volume quoted" : `${formatZAR(u.prices.VOLUME_CIVIL_BULK)} volume`,
                         ].join(" · ")
-                      : u.pricingStatus}
+                      : unpricedLabel(u.pricingStatus)}
                   </td>
                 </tr>
               ))}

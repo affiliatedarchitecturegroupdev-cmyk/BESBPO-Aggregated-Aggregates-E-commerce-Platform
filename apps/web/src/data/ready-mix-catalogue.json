@@ -15,12 +15,9 @@
    "strength_grade_mpa": 10,
    "mix_type": "General Purpose",
    "minimum_load_m3": 6,
-   "market_benchmark_price": null,
-   "cost_basis_percent": 100,
    "markup_percent": 8,
    "list_price_per_m3": null,
    "pricing_status": "Provisional — confirm w/ supplier",
-   "source_note": "No retail benchmark found for 10 MPa specifically — blinding/mass-fill grade, typically quoted directly. Confirm with supplier before publishing.",
    "typical_uses": [
     "Blinding layers",
     "Mass concrete fill",
@@ -37,12 +34,9 @@
    "strength_grade_mpa": 15,
    "mix_type": "General Purpose",
    "minimum_load_m3": 30,
-   "market_benchmark_price": 977.5,
-   "cost_basis_percent": 100,
    "markup_percent": 8,
    "list_price_per_m3": 1055.7,
    "pricing_status": "Ready — benchmarked",
-   "source_note": "Ozzon.co.za, Ready Mix 15MPa, 30m³ load = R29,325 incl. VAT (R977.50/m³), Oct 2026. List price = benchmark + 8% AA storefront margin.",
    "typical_uses": [
     "Mass concrete fill",
     "Non-structural slabs",
@@ -59,12 +53,9 @@
    "strength_grade_mpa": 20,
    "mix_type": "General Purpose",
    "minimum_load_m3": 6,
-   "market_benchmark_price": null,
-   "cost_basis_percent": 100,
    "markup_percent": 8,
    "list_price_per_m3": null,
    "pricing_status": "Provisional — confirm w/ supplier",
-   "source_note": "No retail benchmark found for 20 MPa specifically — sits between the benchmarked 15 and 25 MPa grades. Confirm with supplier before publishing; do not interpolate a price.",
    "typical_uses": [
     "Residential slabs and foundations",
     "Light-duty paving",
@@ -81,12 +72,9 @@
    "strength_grade_mpa": 25,
    "mix_type": "General Purpose",
    "minimum_load_m3": 9,
-   "market_benchmark_price": 1344.44,
-   "cost_basis_percent": 100,
    "markup_percent": 8,
    "list_price_per_m3": 1452.0,
    "pricing_status": "Ready — benchmarked",
-   "source_note": "Ozzon.co.za, Ready Mix 25MPa: 9m³ load = R12,100 incl. VAT (R1,344.44/m³); 12m³ load = R16,300 incl. VAT (R1,358.33/m³) — cross-checks within 1%. Oct 2026. List price = benchmark + 8% AA storefront margin.",
    "typical_uses": [
     "General structural concrete",
     "Residential and light commercial slabs",
@@ -103,12 +91,9 @@
    "strength_grade_mpa": 30,
    "mix_type": "General Purpose, 19mm stone",
    "minimum_load_m3": 10,
-   "market_benchmark_price": 1667.5,
-   "cost_basis_percent": 100,
    "markup_percent": 8,
    "list_price_per_m3": 1800.9,
    "pricing_status": "Ready — benchmarked",
-   "source_note": "Ozzon.co.za, Ready Mix 30MPa 19mm, 10m³ load = R16,675 incl. VAT (R1,667.50/m³), Oct 2026. List price = benchmark + 8% AA storefront margin.",
    "typical_uses": [
     "Structural slabs and beams",
     "Commercial foundations",
@@ -125,12 +110,9 @@
    "strength_grade_mpa": 35,
    "mix_type": "General Purpose",
    "minimum_load_m3": 10,
-   "market_benchmark_price": 1897.5,
-   "cost_basis_percent": 100,
    "markup_percent": 8,
    "list_price_per_m3": 2049.3,
    "pricing_status": "Ready — benchmarked",
-   "source_note": "Ozzon.co.za, Ready Mix 35MPa, 10m³ load = R18,975 incl. VAT (R1,897.50/m³), Oct 2026. List price = benchmark + 8% AA storefront margin.",
    "typical_uses": [
     "High-strength structural concrete",
     "Industrial floors",
@@ -147,12 +129,9 @@
    "strength_grade_mpa": 40,
    "mix_type": "High Strength",
    "minimum_load_m3": 6,
-   "market_benchmark_price": null,
-   "cost_basis_percent": 100,
    "markup_percent": 8,
    "list_price_per_m3": null,
    "pricing_status": "Quote-only — no retail benchmark",
-   "source_note": "High-strength grades above 35 MPa are overwhelmingly project-specified, not off-the-shelf retail — request a direct supplier quote rather than a storefront price.",
    "typical_uses": [
     "High-strength structural and industrial concrete",
     "Precast and prestressed products",
@@ -170,8 +149,7 @@
    "capacity_m3_per_hr": 70,
    "call_out_fee": null,
    "rate_per_m3": null,
-   "pricing_status": "Quote-only — no retail benchmark",
-   "source_note": "Static pumps up to 600m horizontal / 150m vertical (Foxcrete). Good for restricted access, basements, long runs."
+   "pricing_status": "Quote-only — no retail benchmark"
   },
   {
    "code": "PUMP-BOOM-32M",
@@ -181,8 +159,7 @@
    "capacity_m3_per_hr": 90,
    "call_out_fee": null,
    "rate_per_m3": null,
-   "pricing_status": "Quote-only — no retail benchmark",
-   "source_note": "32m boom, 90 m³/h (Foxcrete)."
+   "pricing_status": "Quote-only — no retail benchmark"
   },
   {
    "code": "PUMP-BOOM-36M",
@@ -192,8 +169,7 @@
    "capacity_m3_per_hr": 120,
    "call_out_fee": null,
    "rate_per_m3": null,
-   "pricing_status": "Quote-only — no retail benchmark",
-   "source_note": "36m boom, 120 m³/h (Foxcrete); 36m booms are common in KZN fleets (GC&G)."
+   "pricing_status": "Quote-only — no retail benchmark"
   },
   {
    "code": "PUMP-BOOM-43M",
@@ -203,8 +179,7 @@
    "capacity_m3_per_hr": 120,
    "call_out_fee": null,
    "rate_per_m3": null,
-   "pricing_status": "Quote-only — no retail benchmark",
-   "source_note": "43m boom, 120 m³/h (Foxcrete) — high-rise and long reach."
+   "pricing_status": "Quote-only — no retail benchmark"
   }
  ]
 }

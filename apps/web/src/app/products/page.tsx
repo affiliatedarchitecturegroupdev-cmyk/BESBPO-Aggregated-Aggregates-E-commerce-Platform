@@ -1,3 +1,4 @@
+import { RecentlyViewedRow } from "@/components/merchandising/RecentlyViewedRow";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PromoSlot } from "@/components/merchandising/PromoSlot";
@@ -331,6 +332,7 @@ export default async function ProductListingPage({ searchParams }: { searchParam
           )}
         </div>
       </div>
+      <RecentlyViewedRow />
     </div>
   );
 }

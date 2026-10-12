@@ -57,85 +57,57 @@
      "unit": "SHEET_3_0M",
      "unit_label": "3.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Buco lists 0.30 mm Z100 IBR from about R66/m; Cashbuild's 0.30 mm Z100 sheets show no legible price — quoted with the supplier until a second price is confirmed."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_3_6M",
      "unit_label": "3.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Buco lists 0.30 mm Z100 IBR from about R66/m; Cashbuild's 0.30 mm Z100 sheets show no legible price — quoted with the supplier until a second price is confirmed."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_2M",
      "unit_label": "4.2 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Buco lists 0.30 mm Z100 IBR from about R66/m; Cashbuild's 0.30 mm Z100 sheets show no legible price — quoted with the supplier until a second price is confirmed."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_8M",
      "unit_label": "4.8 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Buco lists 0.30 mm Z100 IBR from about R66/m; Cashbuild's 0.30 mm Z100 sheets show no legible price — quoted with the supplier until a second price is confirmed."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_0M",
      "unit_label": "6.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Buco lists 0.30 mm Z100 IBR from about R66/m; Cashbuild's 0.30 mm Z100 sheets show no legible price — quoted with the supplier until a second price is confirmed."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_6M",
      "unit_label": "6.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Buco lists 0.30 mm Z100 IBR from about R66/m; Cashbuild's 0.30 mm Z100 sheets show no legible price — quoted with the supplier until a second price is confirmed."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "METRE",
      "unit_label": "Per metre, cut to length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -169,85 +141,57 @@
      "unit": "SHEET_3_0M",
      "unit_label": "3.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": 273.12,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 273.12,
      "markup_percent": 8,
      "list_price_per_unit": 294.97,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Per-metre benchmark R91.04/m x 3.0 m. Buco IBR 0.40mm Galv Z150 (686 cover) 6.0m from R546.22 (R91.04/m, lowest; 4.2m R408.30, 4.8m R438.54, 6.6m R604.59); Builders Macsteel IBR Galvanised Z150 0.4mm 3.3m R419.00 and 6.0m R699.00 (R116.50/m). Cashbuild 0.4mm Z100 sheets excluded (different coating class). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "SHEET_3_6M",
      "unit_label": "3.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": 327.74,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 327.74,
      "markup_percent": 8,
      "list_price_per_unit": 353.96,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Per-metre benchmark R91.04/m x 3.6 m. Buco IBR 0.40mm Galv Z150 (686 cover) 6.0m from R546.22 (R91.04/m, lowest; 4.2m R408.30, 4.8m R438.54, 6.6m R604.59); Builders Macsteel IBR Galvanised Z150 0.4mm 3.3m R419.00 and 6.0m R699.00 (R116.50/m). Cashbuild 0.4mm Z100 sheets excluded (different coating class). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "SHEET_4_2M",
      "unit_label": "4.2 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": 382.37,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 382.37,
      "markup_percent": 8,
      "list_price_per_unit": 412.96,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Per-metre benchmark R91.04/m x 4.2 m. Buco IBR 0.40mm Galv Z150 (686 cover) 6.0m from R546.22 (R91.04/m, lowest; 4.2m R408.30, 4.8m R438.54, 6.6m R604.59); Builders Macsteel IBR Galvanised Z150 0.4mm 3.3m R419.00 and 6.0m R699.00 (R116.50/m). Cashbuild 0.4mm Z100 sheets excluded (different coating class). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "SHEET_4_8M",
      "unit_label": "4.8 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": 436.99,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 436.99,
      "markup_percent": 8,
      "list_price_per_unit": 471.95,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Per-metre benchmark R91.04/m x 4.8 m. Buco IBR 0.40mm Galv Z150 (686 cover) 6.0m from R546.22 (R91.04/m, lowest; 4.2m R408.30, 4.8m R438.54, 6.6m R604.59); Builders Macsteel IBR Galvanised Z150 0.4mm 3.3m R419.00 and 6.0m R699.00 (R116.50/m). Cashbuild 0.4mm Z100 sheets excluded (different coating class). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "SHEET_6_0M",
      "unit_label": "6.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": 546.24,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 546.24,
      "markup_percent": 8,
      "list_price_per_unit": 589.94,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Per-metre benchmark R91.04/m x 6.0 m. Buco IBR 0.40mm Galv Z150 (686 cover) 6.0m from R546.22 (R91.04/m, lowest; 4.2m R408.30, 4.8m R438.54, 6.6m R604.59); Builders Macsteel IBR Galvanised Z150 0.4mm 3.3m R419.00 and 6.0m R699.00 (R116.50/m). Cashbuild 0.4mm Z100 sheets excluded (different coating class). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "SHEET_6_6M",
      "unit_label": "6.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": 600.86,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 600.86,
      "markup_percent": 8,
      "list_price_per_unit": 648.93,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Per-metre benchmark R91.04/m x 6.6 m. Buco IBR 0.40mm Galv Z150 (686 cover) 6.0m from R546.22 (R91.04/m, lowest; 4.2m R408.30, 4.8m R438.54, 6.6m R604.59); Builders Macsteel IBR Galvanised Z150 0.4mm 3.3m R419.00 and 6.0m R699.00 (R116.50/m). Cashbuild 0.4mm Z100 sheets excluded (different coating class). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "METRE",
      "unit_label": "Per metre, cut to length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up. Estimate at the benchmarked rate: R98.32/m."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -281,85 +225,57 @@
      "unit": "SHEET_3_0M",
      "unit_label": "3.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": 303.84,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 303.84,
      "markup_percent": 8,
      "list_price_per_unit": 328.15,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Per-metre benchmark R101.28/m x 3.0 m. Buco 0.47mm Z150 IBR 3.9m from R394.99 (R101.28/m, lowest; Buco 3.6m R427.19); Leroy Merlin Metal Roof Sheet IBR Galvanized Steel Z150 0.47mm 1.8m R202.00, 4.8m R559.00, 6m R699.00 (R112–R117/m). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "SHEET_3_6M",
      "unit_label": "3.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": 364.61,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 364.61,
      "markup_percent": 8,
      "list_price_per_unit": 393.78,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Per-metre benchmark R101.28/m x 3.6 m. Buco 0.47mm Z150 IBR 3.9m from R394.99 (R101.28/m, lowest; Buco 3.6m R427.19); Leroy Merlin Metal Roof Sheet IBR Galvanized Steel Z150 0.47mm 1.8m R202.00, 4.8m R559.00, 6m R699.00 (R112–R117/m). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "SHEET_4_2M",
      "unit_label": "4.2 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": 425.38,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 425.38,
      "markup_percent": 8,
      "list_price_per_unit": 459.41,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Per-metre benchmark R101.28/m x 4.2 m. Buco 0.47mm Z150 IBR 3.9m from R394.99 (R101.28/m, lowest; Buco 3.6m R427.19); Leroy Merlin Metal Roof Sheet IBR Galvanized Steel Z150 0.47mm 1.8m R202.00, 4.8m R559.00, 6m R699.00 (R112–R117/m). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "SHEET_4_8M",
      "unit_label": "4.8 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": 486.14,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 486.14,
      "markup_percent": 8,
      "list_price_per_unit": 525.03,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Per-metre benchmark R101.28/m x 4.8 m. Buco 0.47mm Z150 IBR 3.9m from R394.99 (R101.28/m, lowest; Buco 3.6m R427.19); Leroy Merlin Metal Roof Sheet IBR Galvanized Steel Z150 0.47mm 1.8m R202.00, 4.8m R559.00, 6m R699.00 (R112–R117/m). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "SHEET_6_0M",
      "unit_label": "6.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": 607.68,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 607.68,
      "markup_percent": 8,
      "list_price_per_unit": 656.29,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Per-metre benchmark R101.28/m x 6.0 m. Buco 0.47mm Z150 IBR 3.9m from R394.99 (R101.28/m, lowest; Buco 3.6m R427.19); Leroy Merlin Metal Roof Sheet IBR Galvanized Steel Z150 0.47mm 1.8m R202.00, 4.8m R559.00, 6m R699.00 (R112–R117/m). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "SHEET_6_6M",
      "unit_label": "6.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": 668.45,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 668.45,
      "markup_percent": 8,
      "list_price_per_unit": 721.93,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Per-metre benchmark R101.28/m x 6.6 m. Buco 0.47mm Z150 IBR 3.9m from R394.99 (R101.28/m, lowest; Buco 3.6m R427.19); Leroy Merlin Metal Roof Sheet IBR Galvanized Steel Z150 0.47mm 1.8m R202.00, 4.8m R559.00, 6m R699.00 (R112–R117/m). checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "METRE",
      "unit_label": "Per metre, cut to length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up. Estimate at the benchmarked rate: R109.38/m."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -393,85 +309,57 @@
      "unit": "SHEET_3_0M",
      "unit_label": "3.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Buco's prices found (4.2m R540.63 to 6.6m R859.14, about R127–R130/m) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_3_6M",
      "unit_label": "3.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Buco's prices found (4.2m R540.63 to 6.6m R859.14, about R127–R130/m) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_2M",
      "unit_label": "4.2 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Buco's prices found (4.2m R540.63 to 6.6m R859.14, about R127–R130/m) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_8M",
      "unit_label": "4.8 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Buco's prices found (4.2m R540.63 to 6.6m R859.14, about R127–R130/m) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_0M",
      "unit_label": "6.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Buco's prices found (4.2m R540.63 to 6.6m R859.14, about R127–R130/m) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_6M",
      "unit_label": "6.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Buco's prices found (4.2m R540.63 to 6.6m R859.14, about R127–R130/m) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "METRE",
      "unit_label": "Per metre, cut to length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -505,85 +393,57 @@
      "unit": "SHEET_3_0M",
      "unit_label": "3.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Heavy gauge rolled to order by the steel merchant — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_3_6M",
      "unit_label": "3.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Heavy gauge rolled to order by the steel merchant — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_2M",
      "unit_label": "4.2 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Heavy gauge rolled to order by the steel merchant — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_8M",
      "unit_label": "4.8 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Heavy gauge rolled to order by the steel merchant — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_0M",
      "unit_label": "6.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Heavy gauge rolled to order by the steel merchant — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_6M",
      "unit_label": "6.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Heavy gauge rolled to order by the steel merchant — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "METRE",
      "unit_label": "Per metre, cut to length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -617,85 +477,57 @@
      "unit": "SHEET_3_0M",
      "unit_label": "3.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Heaviest gauge, rolled to order by the steel merchant — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_3_6M",
      "unit_label": "3.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Heaviest gauge, rolled to order by the steel merchant — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_2M",
      "unit_label": "4.2 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Heaviest gauge, rolled to order by the steel merchant — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_8M",
      "unit_label": "4.8 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Heaviest gauge, rolled to order by the steel merchant — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_0M",
      "unit_label": "6.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Heaviest gauge, rolled to order by the steel merchant — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_6M",
      "unit_label": "6.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Heaviest gauge, rolled to order by the steel merchant — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "METRE",
      "unit_label": "Per metre, cut to length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -729,85 +561,57 @@
      "unit": "SHEET_3_0M",
      "unit_label": "3.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Buco's prices found (3.6m R439.00, 4.2m R538.99) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_3_6M",
      "unit_label": "3.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Buco's prices found (3.6m R439.00, 4.2m R538.99) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_2M",
      "unit_label": "4.2 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Buco's prices found (3.6m R439.00, 4.2m R538.99) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_8M",
      "unit_label": "4.8 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Buco's prices found (3.6m R439.00, 4.2m R538.99) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_0M",
      "unit_label": "6.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Buco's prices found (3.6m R439.00, 4.2m R538.99) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_6M",
      "unit_label": "6.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Buco's prices found (3.6m R439.00, 4.2m R538.99) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "METRE",
      "unit_label": "Per metre, cut to length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -841,85 +645,57 @@
      "unit": "SHEET_3_0M",
      "unit_label": "3.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Leroy Merlin's prices found (charcoal, about R182/m) — quoted with the supplier by colour."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_3_6M",
      "unit_label": "3.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Leroy Merlin's prices found (charcoal, about R182/m) — quoted with the supplier by colour."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_2M",
      "unit_label": "4.2 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Leroy Merlin's prices found (charcoal, about R182/m) — quoted with the supplier by colour."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_8M",
      "unit_label": "4.8 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Leroy Merlin's prices found (charcoal, about R182/m) — quoted with the supplier by colour."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_0M",
      "unit_label": "6.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Leroy Merlin's prices found (charcoal, about R182/m) — quoted with the supplier by colour."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_6M",
      "unit_label": "6.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Leroy Merlin's prices found (charcoal, about R182/m) — quoted with the supplier by colour."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "METRE",
      "unit_label": "Per metre, cut to length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -953,85 +729,57 @@
      "unit": "SHEET_3_0M",
      "unit_label": "3.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": 537.48,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 537.48,
      "markup_percent": 8,
      "list_price_per_unit": 580.48,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Per-metre benchmark R179.16/m x 3.0 m. Cashbuild IBR Chromadeck 0.5mm x 6.0m Buffalo Brown R1,074.95 (R179.16/m, lowest; 4.2m Buffalo Brown R769.95, Traffic Green R859.95); Leroy Merlin IBR 686 Chromadek Traffic Green 0.5mm per linear metre R191.00. Some colours cost more — the colour is confirmed on the order. checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "SHEET_3_6M",
      "unit_label": "3.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": 644.98,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 644.98,
      "markup_percent": 8,
      "list_price_per_unit": 696.58,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Per-metre benchmark R179.16/m x 3.6 m. Cashbuild IBR Chromadeck 0.5mm x 6.0m Buffalo Brown R1,074.95 (R179.16/m, lowest; 4.2m Buffalo Brown R769.95, Traffic Green R859.95); Leroy Merlin IBR 686 Chromadek Traffic Green 0.5mm per linear metre R191.00. Some colours cost more — the colour is confirmed on the order. checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "SHEET_4_2M",
      "unit_label": "4.2 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": 752.47,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 752.47,
      "markup_percent": 8,
      "list_price_per_unit": 812.67,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Per-metre benchmark R179.16/m x 4.2 m. Cashbuild IBR Chromadeck 0.5mm x 6.0m Buffalo Brown R1,074.95 (R179.16/m, lowest; 4.2m Buffalo Brown R769.95, Traffic Green R859.95); Leroy Merlin IBR 686 Chromadek Traffic Green 0.5mm per linear metre R191.00. Some colours cost more — the colour is confirmed on the order. checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "SHEET_4_8M",
      "unit_label": "4.8 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": 859.97,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 859.97,
      "markup_percent": 8,
      "list_price_per_unit": 928.77,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Per-metre benchmark R179.16/m x 4.8 m. Cashbuild IBR Chromadeck 0.5mm x 6.0m Buffalo Brown R1,074.95 (R179.16/m, lowest; 4.2m Buffalo Brown R769.95, Traffic Green R859.95); Leroy Merlin IBR 686 Chromadek Traffic Green 0.5mm per linear metre R191.00. Some colours cost more — the colour is confirmed on the order. checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "SHEET_6_0M",
      "unit_label": "6.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": 1074.96,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 1074.96,
      "markup_percent": 8,
      "list_price_per_unit": 1160.96,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Per-metre benchmark R179.16/m x 6.0 m. Cashbuild IBR Chromadeck 0.5mm x 6.0m Buffalo Brown R1,074.95 (R179.16/m, lowest; 4.2m Buffalo Brown R769.95, Traffic Green R859.95); Leroy Merlin IBR 686 Chromadek Traffic Green 0.5mm per linear metre R191.00. Some colours cost more — the colour is confirmed on the order. checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "SHEET_6_6M",
      "unit_label": "6.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": 1182.46,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 1182.46,
      "markup_percent": 8,
      "list_price_per_unit": 1277.06,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Per-metre benchmark R179.16/m x 6.6 m. Cashbuild IBR Chromadeck 0.5mm x 6.0m Buffalo Brown R1,074.95 (R179.16/m, lowest; 4.2m Buffalo Brown R769.95, Traffic Green R859.95); Leroy Merlin IBR 686 Chromadek Traffic Green 0.5mm per linear metre R191.00. Some colours cost more — the colour is confirmed on the order. checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "METRE",
      "unit_label": "Per metre, cut to length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up. Estimate at the benchmarked rate: R193.49/m."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1065,85 +813,57 @@
      "unit": "SHEET_3_0M",
      "unit_label": "3.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Buco's prices legible (3.0m R208.87, 3.3m R234.99) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_3_6M",
      "unit_label": "3.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Buco's prices legible (3.0m R208.87, 3.3m R234.99) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_2M",
      "unit_label": "4.2 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Buco's prices legible (3.0m R208.87, 3.3m R234.99) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_8M",
      "unit_label": "4.8 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Buco's prices legible (3.0m R208.87, 3.3m R234.99) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_0M",
      "unit_label": "6.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Buco's prices legible (3.0m R208.87, 3.3m R234.99) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_6M",
      "unit_label": "6.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Buco's prices legible (3.0m R208.87, 3.3m R234.99) — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "METRE",
      "unit_label": "Per metre, cut to length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1177,85 +897,57 @@
      "unit": "SHEET_3_0M",
      "unit_label": "3.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Buco 0.40mm Z150 (R290.75 for 3.0m) and Cashbuild 0.4mm (R284.95 for 3.0m, coating class not stated) — quoted with the supplier until the coating class is confirmed to match."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_3_6M",
      "unit_label": "3.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Buco 0.40mm Z150 (R290.75 for 3.0m) and Cashbuild 0.4mm (R284.95 for 3.0m, coating class not stated) — quoted with the supplier until the coating class is confirmed to match."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_2M",
      "unit_label": "4.2 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Buco 0.40mm Z150 (R290.75 for 3.0m) and Cashbuild 0.4mm (R284.95 for 3.0m, coating class not stated) — quoted with the supplier until the coating class is confirmed to match."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_8M",
      "unit_label": "4.8 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Buco 0.40mm Z150 (R290.75 for 3.0m) and Cashbuild 0.4mm (R284.95 for 3.0m, coating class not stated) — quoted with the supplier until the coating class is confirmed to match."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_0M",
      "unit_label": "6.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Buco 0.40mm Z150 (R290.75 for 3.0m) and Cashbuild 0.4mm (R284.95 for 3.0m, coating class not stated) — quoted with the supplier until the coating class is confirmed to match."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_6M",
      "unit_label": "6.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Buco 0.40mm Z150 (R290.75 for 3.0m) and Cashbuild 0.4mm (R284.95 for 3.0m, coating class not stated) — quoted with the supplier until the coating class is confirmed to match."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "METRE",
      "unit_label": "Per metre, cut to length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1289,85 +981,57 @@
      "unit": "SHEET_3_0M",
      "unit_label": "3.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Leroy Merlin 3.6m R438.00)."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_3_6M",
      "unit_label": "3.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Leroy Merlin 3.6m R438.00)."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_2M",
      "unit_label": "4.2 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Leroy Merlin 3.6m R438.00)."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_8M",
      "unit_label": "4.8 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Leroy Merlin 3.6m R438.00)."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_0M",
      "unit_label": "6.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Leroy Merlin 3.6m R438.00)."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_6M",
      "unit_label": "6.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Leroy Merlin 3.6m R438.00)."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "METRE",
      "unit_label": "Per metre, cut to length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1401,85 +1065,57 @@
      "unit": "SHEET_3_0M",
      "unit_label": "3.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Buco)."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_3_6M",
      "unit_label": "3.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Buco)."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_2M",
      "unit_label": "4.2 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Buco)."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_8M",
      "unit_label": "4.8 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Buco)."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_0M",
      "unit_label": "6.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Buco)."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_6M",
      "unit_label": "6.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Buco)."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "METRE",
      "unit_label": "Per metre, cut to length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1513,85 +1149,57 @@
      "unit": "SHEET_3_0M",
      "unit_label": "3.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Colour-coated corrugated is priced by colour and length — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_3_6M",
      "unit_label": "3.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Colour-coated corrugated is priced by colour and length — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_2M",
      "unit_label": "4.2 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Colour-coated corrugated is priced by colour and length — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_8M",
      "unit_label": "4.8 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Colour-coated corrugated is priced by colour and length — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_0M",
      "unit_label": "6.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Colour-coated corrugated is priced by colour and length — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_6M",
      "unit_label": "6.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Colour-coated corrugated is priced by colour and length — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "METRE",
      "unit_label": "Per metre, cut to length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1624,85 +1232,57 @@
      "unit": "SHEET_3_0M",
      "unit_label": "3.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "System product rolled to length by the maker — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_3_6M",
      "unit_label": "3.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "System product rolled to length by the maker — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_2M",
      "unit_label": "4.2 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "System product rolled to length by the maker — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_4_8M",
      "unit_label": "4.8 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "System product rolled to length by the maker — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_0M",
      "unit_label": "6.0 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "System product rolled to length by the maker — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "SHEET_6_6M",
      "unit_label": "6.6 m sheet",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "System product rolled to length by the maker — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     },
     {
      "unit": "METRE",
      "unit_label": "Per metre, cut to length",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Cut to length (1 m to 14 m) on a quote: send the cutting list (lengths and quantities) and the merchant confirms the lengths, lead time and price. Quantity is the total metres, rounded up."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1726,13 +1306,9 @@
      "unit": "EACH",
      "unit_label": "Each (length)",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only Cashbuild's price matched (3.6m x 400mm 0.4mm R282.95); other retailers list different lengths and coatings — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1761,13 +1337,9 @@
      "unit": "EACH",
      "unit_label": "Each (length)",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1797,13 +1369,9 @@
      "unit": "EACH",
      "unit_label": "Each (length)",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Pressed to size and colour by the merchant — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1832,13 +1400,9 @@
      "unit": "EACH",
      "unit_label": "Each (1.8 m)",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Retail listings show the item without a legible price — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1867,13 +1431,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Buco broad closure R19.99–R21.60)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1902,13 +1462,9 @@
      "unit": "PACK",
      "unit_label": "Box of 100",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Cashbuild Eureka T17 5.5x70 R209.95)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1937,13 +1493,9 @@
      "unit": "PACK",
      "unit_label": "Box of 100",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Cashbuild 5.5x65 R179.95 and Leroy Merlin 5.5x70 R199.00 are different lengths — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -1972,13 +1524,9 @@
      "unit": "PACK",
      "unit_label": "Pack",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Sold in various lengths and pack sizes — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -2008,13 +1556,9 @@
      "unit": "ROLL",
      "unit_label": "Roll (1.2 × 5 m, 6 m²)",
      "weight_kg": null,
-     "market_benchmark_price": 759.89,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 759.89,
      "markup_percent": 8,
      "list_price_per_unit": 820.68,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Buco Aerolite 135mm 1.2 x 5.0m from R759.89 (lowest; another Buco listing R790.84); Cashbuild Isover Aerolite 135mm 6m² roll R774.95. checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "manufacturer": null,
@@ -2044,13 +1588,9 @@
      "unit": "ROLL",
      "unit_label": "Roll (1.2 × 5 m, 6 m²)",
      "weight_kg": null,
-     "market_benchmark_price": 735.0,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 735.0,
      "markup_percent": 8,
      "list_price_per_unit": 793.8,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Leroy Merlin Polyester Ceiling Insulation Isotherm 135mm x 6m² R735.00 (lowest); Buco Isotherm 1200 x 5m 135mm from R737.90. checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "manufacturer": null,
@@ -2080,13 +1620,9 @@
      "unit": "ROLL",
      "unit_label": "Roll (1.25 × 40 m)",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Buco Sisalation 405/FR405 R1,919–R2,579)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -2115,13 +1651,9 @@
      "unit": "ROLL",
      "unit_label": "Roll (1.5 × 30 m)",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Buco Coverland 250mic 1.5x30m R517.78)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -2150,13 +1682,9 @@
      "unit": "EACH",
      "unit_label": "Each (6 m)",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Leroy Merlin Vynadeep 6m R279.00)."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
@@ -2186,13 +1714,9 @@
      "unit": "EACH",
      "unit_label": "Each (3 m)",
      "weight_kg": null,
-     "market_benchmark_price": 153.95,
-     "cost_basis_percent": 100,
-     "cost_per_unit": 153.95,
      "markup_percent": 8,
      "list_price_per_unit": 166.27,
-     "pricing_status": "Ready — benchmarked",
-     "source_note": "Cashbuild Macneil downpipe 3m R153.95 (lowest); Buco Macneil Umac downpipe plain 3.0m from R163.76. checked 2026-10-11 via retailer search listings (pages undated; product pages could not be opened from the build environment — confirm before relying on them). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "manufacturer": null,
@@ -2221,13 +1745,9 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
-     "cost_basis_percent": 100,
-     "cost_per_unit": null,
      "markup_percent": 8,
      "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Fittings differ by range — quoted with the supplier."
+     "pricing_status": "Quote-only — no retail benchmark"
     }
    ],
    "manufacturer": null,
