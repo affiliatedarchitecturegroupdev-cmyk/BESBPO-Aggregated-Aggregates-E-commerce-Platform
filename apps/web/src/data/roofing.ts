@@ -2,6 +2,9 @@
  * The roofing line (ROOFING_CATALOGUE.md): CAT-26 Roof Sheeting, CAT-27
  * Flashings, Ridges & Fixings and CAT-28 Insulation, Underlay & Rainwater.
  * Concrete roof tiles (CAT-29) are in the masonry line but sold alongside.
+ * Roof & structural timber (CAT-30) and timber connectors & accessories
+ * (CAT-31) are part of this line too: SA pine in every listed section, S5 or
+ * S7, H2 or H3, sized or rough-sawn, in the same six standard lengths.
  *
  * Roof sheets come in six standard lengths (3.0 to 6.6 m), one unit each;
  * any length from 1 m to 14 m is cut to length on a quote. Flashings and
@@ -19,7 +22,8 @@ import { READY, type TierPrices } from "./packaged";
 import { tierPrice } from "@/lib/tier-pricing";
 
 export type SheetLengthUnit = "SHEET_3_0M" | "SHEET_3_6M" | "SHEET_4_2M" | "SHEET_4_8M" | "SHEET_6_0M" | "SHEET_6_6M";
-export type RoofingUnitCode = SheetLengthUnit | "METRE" | "EACH" | "PACK" | "ROLL";
+export type TimberLengthUnit = "TIMBER_3_0M" | "TIMBER_3_6M" | "TIMBER_4_2M" | "TIMBER_4_8M" | "TIMBER_6_0M" | "TIMBER_6_6M";
+export type RoofingUnitCode = SheetLengthUnit | TimberLengthUnit | "METRE" | "EACH" | "PACK" | "ROLL";
 
 /** The standard sheet lengths, in metres, by unit. */
 export const SHEET_LENGTHS: Record<SheetLengthUnit, number> = {
@@ -55,6 +59,11 @@ export type RoofingProduct = {
   coverWidthMm: number | null;
   /** Retail list price per metre where the sheet is benchmarked — the rate for cut-to-length estimates. */
   listPricePerMetre: number | null;
+  /** Roof & structural timber only: section ("38 × 114 mm"), stress grade, hazard class and finish. */
+  section: string | null;
+  timberGrade: "S5" | "S7" | null;
+  timberTreatment: "H2" | "H3" | null;
+  timberFinish: "Sized" | "Rough-sawn" | null;
   typicalUses: string[];
   handlingNotes: string;
   units: RoofingUnit[];
@@ -76,6 +85,10 @@ export const ROOFING_PRODUCTS: RoofingProduct[] = catalogue.products.map((p) => 
   coating: p.coating,
   coverWidthMm: p.cover_width_mm,
   listPricePerMetre: p.list_price_per_metre,
+  section: p.section,
+  timberGrade: p.timber_grade as RoofingProduct["timberGrade"],
+  timberTreatment: p.timber_treatment as RoofingProduct["timberTreatment"],
+  timberFinish: p.timber_finish as RoofingProduct["timberFinish"],
   typicalUses: p.typical_uses,
   handlingNotes: p.handling_notes,
   kind: "roofing",
@@ -97,6 +110,18 @@ export function findRoofingProduct(slug: string) {
 
 export const ROOF_SHEETS = ROOFING_PRODUCTS.filter((p) => p.categorySlug === "roof-sheeting");
 export const isSheetUnit = (unit: string): unit is SheetLengthUnit => unit in SHEET_LENGTHS;
+
+/** Roof & structural timber (CAT-30), in catalogue order: section, then grade, treatment and finish. */
+export const TIMBER_PRODUCTS = ROOFING_PRODUCTS.filter((p) => p.timberGrade !== null);
+export const TIMBER_SECTIONS = [...new Set(TIMBER_PRODUCTS.map((p) => p.section as string))];
+export const TIMBER_GRADES = ["S5", "S7"] as const;
+export const TIMBER_TREATMENTS = ["H2", "H3"] as const;
+export const TIMBER_FINISHES = ["Sized", "Rough-sawn"] as const;
+
+/** The timber product with the given section, grade, treatment and finish. */
+export function timberVariant(section: string, grade: string, treatment: string, finish: string) {
+  return TIMBER_PRODUCTS.find((p) => p.section === section && p.timberGrade === grade && p.timberTreatment === treatment && p.timberFinish === finish);
+}
 
 /** Overlap allowed where two sheets meet end to end on a long roof slope. */
 export const END_LAP_M = 0.2;

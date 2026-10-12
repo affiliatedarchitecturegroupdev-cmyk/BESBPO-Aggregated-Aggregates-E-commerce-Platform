@@ -166,6 +166,10 @@ type RoofingCatalogue = {
     thickness_mm: number | null;
     coating: string | null;
     cover_width_mm: number | null;
+    section: string | null;
+    timber_grade: string | null;
+    timber_treatment: string | null;
+    timber_finish: string | null;
     specialist_characteristics: string[];
     units: SteelCatalogue["products"][number]["units"];
   }[];
@@ -439,7 +443,7 @@ async function seedMasonryCatalogue() {
   }
 }
 
-/** CAT-26..28 roofing: categories after masonry, products, and a price band per unit (the packaged-goods shape). */
+/** CAT-26..28 roofing with timber, CAT-30/31: categories after masonry, products, and a price band per unit (the packaged-goods shape). */
 async function seedRoofingCatalogue() {
   const categoryIds: Record<string, string> = {};
   const after = FRAMEWORK.categories.length + PACKAGED.categories.length + 1 + STEEL.categories.length + MASONRY.categories.length;
@@ -462,6 +466,10 @@ async function seedRoofingCatalogue() {
       sheetThicknessMm: p.thickness_mm,
       coating: p.coating,
       coverWidthMm: p.cover_width_mm,
+      sectionSize: p.section,
+      timberGrade: p.timber_grade,
+      timberTreatment: p.timber_treatment,
+      timberFinish: p.timber_finish,
       specialistCharacteristics: p.specialist_characteristics,
     };
     const product = await prisma.product.upsert({ where: { sku: p.sku }, update: productData, create: { sku: p.sku, ...productData } });

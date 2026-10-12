@@ -6,6 +6,7 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
+from public_copy import public_copy
 from calculators import ready_mix
 from calculators.discount_floor import TierQuoteOnly
 from calculators.order import OrderLine, price_order
@@ -17,7 +18,7 @@ client = TestClient(app)
 
 def test_storefront_copy_matches_the_pricing_service():
     web = Path(__file__).parents[3] / "apps" / "web" / "src" / "data" / "ready-mix-catalogue.json"
-    assert json.loads(web.read_text(encoding="utf-8")) == RAW
+    assert json.loads(web.read_text(encoding="utf-8")) == public_copy("ready_mix_catalogue.json", RAW)
 
 
 def test_only_benchmarked_grades_carry_a_price_of_benchmark_x_1_08():

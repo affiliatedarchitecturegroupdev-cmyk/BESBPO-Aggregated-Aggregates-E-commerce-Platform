@@ -24,7 +24,7 @@ import pricing_framework  # noqa: E402
 from calculators.packaged_goods import load as load_packaged  # noqa: E402
 from calculators.discount_floor import floor_price  # noqa: E402
 from calculators.tonnage_volume import tier_unit_price, unit_price  # noqa: E402
-from import_pricing_framework import OUTPUT_PATHS, WORKBOOK_PATH, import_workbook, render  # noqa: E402
+from import_pricing_framework import WORKBOOK_PATH, import_workbook, render_outputs  # noqa: E402
 
 FRAMEWORK = pricing_framework.load()
 WORKBOOK = openpyxl.load_workbook(WORKBOOK_PATH, data_only=True)
@@ -38,9 +38,8 @@ def cents(value) -> Decimal:
 
 
 def test_generated_files_match_workbook():
-    rendered = render(import_workbook())
-    for path in OUTPUT_PATHS:
-        assert path.read_text() == rendered, (
+    for path, text in render_outputs(import_workbook()).items():
+        assert path.read_text() == text, (
             f"{path} is out of date with the workbook — run "
             "`python services/pricing/scripts/import_pricing_framework.py`"
         )

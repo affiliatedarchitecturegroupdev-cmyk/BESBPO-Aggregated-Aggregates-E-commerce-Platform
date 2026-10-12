@@ -27,6 +27,9 @@ const PALETTES: Record<string, { base: string; grains: string[] }> = {
   "roof-sheeting": { base: "#A9AEB1", grains: ["#C7CCCF", "#8C9295", "#6B4A3A"] },
   "roof-flashings-fixings": { base: "#9DA3A6", grains: ["#7E8487", "#BEC3C5", "#3E5E4A"] },
   "roof-insulation-rainwater": { base: "#E5D9A8", grains: ["#D3C48C", "#F1E9C6", "#F2F2F0"] },
+  // Timber: pale SA pine with the green tint of CCA treatment; galvanised connectors.
+  "structural-timber": { base: "#D8BE8C", grains: ["#C4A472", "#E6D2A8", "#9FAE7E"] },
+  "timber-connectors": { base: "#B0B5B8", grains: ["#D8BE8C", "#8E9497", "#C9CED0"] },
   "concrete-roof-tiles": { base: "#9C4A32", grains: ["#7F3A26", "#B65E43", "#5C5A57"] },
   "ready-mix-concrete": { base: "#A7A49E", grains: ["#8D8A84", "#C2BFB9", "#75726C"] },
   // Plant hire and site services: machine yellow and safety orange on site soil.

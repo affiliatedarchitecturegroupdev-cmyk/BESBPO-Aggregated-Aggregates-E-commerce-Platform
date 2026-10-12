@@ -36,14 +36,15 @@ sys.path.insert(0, str(SERVICE_DIR))
 
 from calculators.tonnage_volume import tier_unit_price, to_cents, unit_price  # noqa: E402
 from pricing_framework import build  # noqa: E402
+from public_copy import render as public_render  # noqa: E402
 
 WORKBOOK_PATH = REPO_ROOT / "docs" / "pricing" / "aggregated-aggregates-pricing-framework.xlsx"
 # Approved aggregates the workbook doesn't list, priced by their category band.
 ADDITIONAL_PATH = SERVICE_DIR / "data" / "additional_aggregates.json"
-OUTPUT_PATHS = [
-    SERVICE_DIR / "data" / "pricing_framework.json",
-    REPO_ROOT / "apps" / "web" / "src" / "data" / "pricing-framework.json",
-]
+SERVICE_PATH = SERVICE_DIR / "data" / "pricing_framework.json"
+# The storefront's copy, without the category cost/markup bands (public_copy.py).
+WEB_PATH = REPO_ROOT / "apps" / "web" / "src" / "data" / "pricing-framework.json"
+OUTPUT_PATHS = [SERVICE_PATH, WEB_PATH]
 
 # Workbook category name -> (storefront slug, SKU code, reference standard).
 # Standards are the three the platform spec names (Module 5); categories it
@@ -342,20 +343,25 @@ def render(data: dict) -> str:
     return json.dumps(data, indent=2, ensure_ascii=False) + "\n"
 
 
+def render_outputs(data: dict) -> dict[Path, str]:
+    """Each generated file and its contents: the service's full framework and the storefront's public copy."""
+    return {SERVICE_PATH: render(data), WEB_PATH: public_render("pricing_framework.json", data)}
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--check", action="store_true", help="exit non-zero if the generated files are out of date")
     args = parser.parse_args()
 
-    rendered = render(import_workbook())
-    stale = [path for path in OUTPUT_PATHS if not path.exists() or path.read_text() != rendered]
+    outputs = render_outputs(import_workbook())
+    stale = [path for path, text in outputs.items() if not path.exists() or path.read_text() != text]
     if args.check:
         for path in stale:
             print(f"out of date: {path.relative_to(REPO_ROOT)}", file=sys.stderr)
         return 1 if stale else 0
-    for path in OUTPUT_PATHS:
+    for path, text in outputs.items():
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(rendered)
+        path.write_text(text)
         print(f"wrote {path.relative_to(REPO_ROOT)}")
     return 0
 

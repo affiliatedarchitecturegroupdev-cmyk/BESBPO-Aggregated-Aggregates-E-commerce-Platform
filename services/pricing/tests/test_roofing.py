@@ -5,6 +5,7 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
+from public_copy import public_copy
 from calculators import packaged_goods
 from calculators.order import MASONRY_DELIVERY_NOTE, ROOFING_DELIVERY_NOTE, OrderLine, price_order
 from main import FRAMEWORK, PACKAGED, app
@@ -23,9 +24,9 @@ def test_catalogue_shape_and_counts():
     by_cat = {}
     for p in RAW["products"]:
         by_cat[p["category_slug"]] = by_cat.get(p["category_slug"], 0) + 1
-    assert by_cat == {"roof-sheeting": 15, "roof-flashings-fixings": 8, "roof-insulation-rainwater": 7}
-    assert [c["code"] for c in RAW["categories"]] == ["CAT-26", "CAT-27", "CAT-28"]
-    assert len({p["slug"] for p in RAW["products"]}) == len({p["sku"] for p in RAW["products"]}) == 30
+    assert by_cat == {"roof-sheeting": 15, "roof-flashings-fixings": 8, "roof-insulation-rainwater": 7, "structural-timber": 72, "timber-connectors": 10}
+    assert [c["code"] for c in RAW["categories"]] == ["CAT-26", "CAT-27", "CAT-28", "CAT-30", "CAT-31"]
+    assert len({p["slug"] for p in RAW["products"]}) == len({p["sku"] for p in RAW["products"]}) == 112
     assert RAW["standard_lengths_m"] == [3.0, 3.6, 4.2, 4.8, 6.0, 6.6]
     assert RAW["cut_to_length"] == {"min_m": 1.0, "max_m": 14.0}
     # SKUs never collide with another line's.
@@ -79,7 +80,7 @@ def test_every_live_price_is_lowest_retail_benchmark_times_1_08():
 
 def test_storefront_copy_matches_the_pricing_service():
     web = Path(__file__).parents[3] / "apps" / "web" / "src" / "data" / "roofing-catalogue.json"
-    assert json.loads(web.read_text(encoding="utf-8")) == RAW
+    assert json.loads(web.read_text(encoding="utf-8")) == public_copy("roofing_catalogue.json", RAW)
 
 
 def test_roofing_takes_its_own_family_even_on_units_it_shares():
@@ -116,7 +117,7 @@ def test_roofing_and_tiles_travel_by_flatbed_with_no_tipper_fee():
 
 
 def test_whole_units_only_and_endpoints():
-    assert len(client.get("/products/roofing").json()) == 30
+    assert len(client.get("/products/roofing").json()) == 112
     body = client.post("/calculate/packaged-goods", json={"sku": "AA-ROF-IBR-040-GALV", "quantity": 20, "unit": "SHEET_6_6M"}).json()
     assert body["family"] == "ROOFING" and body["total"] == 12978.6  # 20 x 648.93
     assert client.post("/calculate/packaged-goods", json={"sku": "AA-ROF-IBR-040-GALV", "quantity": 2.5, "unit": "SHEET_6_6M"}).status_code == 422

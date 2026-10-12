@@ -88,6 +88,79 @@ no tipper fee — with its own delivery note.
   rainwater away); the roof calculator in the calculators strip;
   `/products?group=roofing`; search, sitemap and footer.
 
+## Roof & structural timber (CAT-30, CAT-31) — Oct 2026
+
+Added at the owner's request (12 Oct 2026) because of demand from the ad
+campaigns, and sold **under roofing**: same `/roofing` page, ROOFING pricing
+family, flatbed delivery and Roofing build stage.
+
+- **CAT-30 Roof & Structural Timber — 72 products.** SA pine, a product per
+  **section × stress grade × treatment × profile**:
+  - Sections (thickness × width) and what they're for:
+    38 × 38 (brandering, battens, light framing), 38 × 76 (purlins, studs,
+    trusses), 38 × 114 (rafters, floor joists, kappa beams), 38 × 152
+    (structural roof beams and rafters), 38 × 228 (heavy roof beams), 50 × 76
+    (heavy purlins, supports), 50 × 114, 50 × 152 and 50 × 228 (heavy-duty
+    structural and industrial).
+  - **S5 or S7** (SANS 1783). S7 is graded to order at most mills.
+  - **H2 or H3** CCA (SANS 10005). H2 is the budget choice for timber kept dry
+    under the roof; H3 for timber above ground that gets wet.
+  - **Sized** (planed to a uniform size) or **rough-sawn** — the two profiles
+    structural pine is sold in.
+  - Each of the six standard lengths — 3.0, 3.6, 4.2, 4.8, 6.0 and 6.6 m — is
+    a unit of sale (`TIMBER_3_0M` … `TIMBER_6_6M`). The sheet units weren't
+    reused so order lines, invoices and quotes say "length", not "sheet".
+  - Attributes on `Product`: the section in `sectionSize`, plus `timberGrade`,
+    `timberTreatment` and `timberFinish` (migration `20261022090000_roof_timber`).
+- **CAT-31 Timber Connectors & Accessories — 10 products:** truss hangers,
+  joist hangers, truss (hurricane) clips, hoop iron tie-down strap, galvanised
+  wire nails (75 and 100 mm), M12 cuphead bolts, M10 coach screws, cut-end
+  preservative and fibre-cement fascia/barge board.
+
+### Pricing
+
+The sheet rule applies: a length goes live only where **at least two SA
+retailers show a regular price for the same section, grade, hazard class and
+length**; list = lowest × 1.08. On 12 Oct 2026 **no timber line met it**:
+
+- Retailers mostly list "CCA treated" or "S5P CCA" without the H class,
+  some list "SABS" without a grade, and S7 is graded to order.
+- Retailer product pages couldn't be opened from the build environment, so
+  only search listings were available.
+
+So **every timber and connector line is quoted** with the supplier for now.
+The indicative ranges found are recorded in the catalogue's internal notes
+for the sales team (never shown publicly). To publish prices: either a
+written supplier price list (preferred), or the owner confirming that
+unclassed "CCA treated" structural pine at retail is H2, which would let the
+S5 H2 benchmarks go live.
+
+### On the storefront
+
+- `/roofing#roof-timber` — a section × grade/treatment table linking to each
+  sized and rough-sawn product, with the H2/H3, S5/S7 and profile guide.
+- **Timber product pages** use the roofing page with a **variant picker**
+  (section, grade, treatment, profile — each choice is its own product page),
+  timber specification rows, "other sizes in the same grade" and a
+  **Frame the roof** "Complete the job" pairing (rafters, purlins,
+  brandering, truss clips, hoop iron, nails, cut-end preservative).
+- Shop by Category page 4, the Roofing build stage (roof timber pick and a
+  guide link), project lists, `/products?group=roofing`, search and sitemap
+  pick the new categories up automatically.
+
+### Timber supplier leads
+
+`suppliers-timber.csv` — 5 leads, seeded **unverified and inactive**, each
+citing its source; no coordinates or phone numbers. Supplier CSVs accept
+CAT-30/31.
+
+| Province | Leads |
+|---|---|
+| Mpumalanga | York Timbers (Sabie) |
+| Gauteng | Merensky depot (Johannesburg) |
+| Western Cape | Merensky depot (Cape Town); Cape Lumber Marketing (Cape Town) |
+| KwaZulu-Natal | Merensky depot (Pietermaritzburg) |
+
 ## Supplier leads
 
 `suppliers-roofing.csv` — 12 leads, seeded **unverified and inactive**, each
@@ -107,6 +180,11 @@ CAT-26..29.
 **Gaps:** no roofing lead yet for **North West** or the **Northern Cape**.
 
 ## Open items
+
+- Timber: a written supplier price list per section, grade, treatment and
+  length (or the H2 confirmation above); S7 availability and lead times;
+  confirm the 4% trade discount applies to timber (it follows the ROOFING
+  family today); masses per length for delivery tonnage; photos.
 
 - Verify and activate the supplier leads; find North West and Northern Cape
   roll-formers.

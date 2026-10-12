@@ -97,8 +97,9 @@ const SHOP: StageShop[] = [
   },
   {
     stage: "ROOFING",
-    intro: "Closing the building in: roof sheets in stock lengths or cut to each slope (or concrete tiles), ridge and flashings, the fixings, insulation over the ceiling and gutters to carry the water away.",
+    intro: "Closing the building in: the roof timber, roof sheets in stock lengths or cut to each slope (or concrete tiles), ridge and flashings, the fixings, insulation over the ceiling and gutters to carry the water away.",
     picks: [
+      { sku: "AA-TMB-38114-S5-H2-SZ", role: "Roof timber", unit: "TIMBER_6_6M" },
       { sku: "AA-ROF-IBR-047-GALV", role: "Roof sheets", unit: "SHEET_6_0M" },
       { sku: "AA-ROF-IBR-050-PREPAINTED", role: "Colour-coated sheets", unit: "SHEET_6_0M" },
       { sku: "AA-TIL-DOUBLE-ROMAN", role: "Or concrete roof tiles" },
@@ -106,10 +107,11 @@ const SHOP: StageShop[] = [
       { sku: "AA-ROF-INSUL-GLASSWOOL-135", role: "Ceiling insulation", unit: "ROLL" },
       { sku: "AA-ROF-DOWNPIPE-PVC-3M", role: "Downpipes" },
     ],
-    categories: ["roof-sheeting", "concrete-roof-tiles", "roof-flashings-fixings", "roof-insulation-rainwater", "structural-steel"],
+    categories: ["structural-timber", "roof-sheeting", "concrete-roof-tiles", "roof-flashings-fixings", "roof-insulation-rainwater", "timber-connectors", "structural-steel"],
     hire: ["AA-SVC-SKIP-6M3"],
     tools: [
       { label: "Roof calculator", href: "/roofing#roof-calculator" },
+      { label: "Roof timber guide", href: "/roofing#roof-timber" },
       { label: "Steel & roof structure design (BAE)", href: "/design/steel-structure-design" },
     ],
   },
