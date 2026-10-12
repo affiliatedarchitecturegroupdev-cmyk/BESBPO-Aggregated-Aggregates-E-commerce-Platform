@@ -45,7 +45,10 @@ export function HandlingFeeHelper({ maxRefund }: { maxRefund: number }) {
           Use this refund
         </button>
       </div>
-      <p className="mt-1 text-slate">Wrong, short or defective deliveries are refunded in full — don&apos;t use this for those.</p>
+      <p className="mt-1 text-slate">
+        Only for returns asked for within 7 days of delivery. The fee includes collecting from site and taking the materials back to the
+        manufacturer or distributor — don&apos;t charge transport on top. Wrong, short or defective deliveries are refunded in full.
+      </p>
     </div>
   );
 }

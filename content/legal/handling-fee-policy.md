@@ -32,9 +32,11 @@ The fee is deducted from the refund (or credit) for the returned materials.
 For example, if the materials you return were charged at R10,000.00, the
 handling fee is R1,800.00 and R8,200.00 is refunded.
 
-The fee covers the cost of arranging the return with the manufacturer or
-supplier, the supplier's own restocking charges, inspecting the materials
-and processing the refund.
+The fee covers everything involved in the return: arranging it with the
+manufacturer or supplier, coming to your site, collecting the materials and
+taking them back to the manufacturer or distributor, the supplier's own
+restocking charges, inspecting the materials and processing the refund.
+**There is no separate charge for collection transport.**
 
 ## 3. Conditions for a return
 
@@ -44,8 +46,9 @@ We can only accept a return where:
 - the materials are unused, undamaged and in the condition in which they
   were delivered (complete packs, pallets or bundles where they were
   delivered that way); and
-- you ask for the return in writing at support@aaggregates.store, quoting
-  your order number and the items and quantities you want to return.
+- you ask for the return in writing at support@aaggregates.store **within
+  7 days of delivery**, quoting your order number and the items and
+  quantities you want to return.
 
 We will confirm in writing whether the return is accepted and the handling
 fee before the materials are returned.
