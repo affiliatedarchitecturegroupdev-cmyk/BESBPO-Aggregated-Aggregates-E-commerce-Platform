@@ -31,10 +31,11 @@ and quotes are always re-priced by the pricing service.
   lowest per-metre price × its length, × 1.08. Cut-to-length is always
   quoted; so are single-retailer items, flashings and fixings
   (`ROOFING_CATALOGUE.md`).
-- **Roof & structural timber (Oct 2026):** the roofing rule, per length, for
-  the same section, stress grade (S5/S7), hazard class (H2/H3) and profile.
-  None qualified on 12 Oct 2026, so all timber is quoted until a supplier
-  price list or matching retail prices are confirmed (`ROOFING_CATALOGUE.md`).
+- **Roof & structural timber (Oct 2026):** the roofing rule, compared per
+  metre, for the same section, stress grade (S5/S7), hazard class (H2/H3)
+  and profile. Retail "CCA treated" structural pine counts as H2 (owner,
+  12 Oct 2026). Live: S5 H2 sized 38 × 76, 38 × 114 and 38 × 228 mm;
+  everything else quoted (`ROOFING_CATALOGUE.md`).
 - **Cost proxy:** for cement, ready-mix, steel, masonry and roofing the cost is assumed to be the
   benchmark itself (`costBasisPercent` 100) until real supplier
   cost/commission terms are known — the biggest open commercial item.

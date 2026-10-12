@@ -47,7 +47,7 @@ Stages are data. When a new category lands, add its slug to the stage's
 | P | CAT-21 Paving, Kerbs & Edging, CAT-22 Retaining & Erosion Control | Paving and Landscaping — **built** (`MASONRY_CATALOGUE.md`) |
 | D | CAT-23 Pipes & Fittings, CAT-24 Precast Drainage, CAT-25 Geosynthetics & Membranes | Drainage and Slabs (DPM) — **built** (`MASONRY_CATALOGUE.md`) |
 | R | CAT-26 Roof Sheeting, CAT-27 Flashings, Ridges & Fixings, CAT-28 Insulation, Underlay & Rainwater, CAT-29 Concrete Roof Tiles | Roofing — a new stage between walls and paving — **built** (`ROOFING_CATALOGUE.md`) |
-| T | CAT-30 Roof & Structural Timber, CAT-31 Timber Connectors & Accessories | Roofing — **built**, all quoted (`ROOFING_CATALOGUE.md`) |
+| T | CAT-30 Roof & Structural Timber, CAT-31 Timber Connectors & Accessories | Roofing — **built**; S5 H2 38 × 76, 38 × 114 and 38 × 228 priced, the rest quoted (`ROOFING_CATALOGUE.md`) |
 
 A pick whose product is hidden by staff (Admin → Merchandising) drops out of
 its stage automatically.

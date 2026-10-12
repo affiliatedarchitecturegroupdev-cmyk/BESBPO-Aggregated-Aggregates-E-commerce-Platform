@@ -28,22 +28,43 @@ def test_every_section_in_every_grade_treatment_and_finish():
         assert p["roof_profile"] is None and p["cut_to_length"] is None
 
 
-def test_timber_stays_quoted_until_two_matching_retail_prices_back_it():
+def test_only_retail_backed_s5_h2_sized_sections_are_live_at_the_per_metre_benchmark_plus_8_percent():
+    live = {}
     for p in RAW["products"]:
         if p["category_slug"] not in ("structural-timber", "timber-connectors"):
             continue
-        for u in p["units"]:
-            assert u["list_price_per_unit"] is None and u["market_benchmark_price"] is None, p["sku"]
-            assert u["pricing_status"].startswith("Quote-only"), p["sku"]
+        priced = [u for u in p["units"] if u["pricing_status"] == packaged_goods.READY_STATUS]
+        if not priced:
+            assert p["list_price_per_metre"] is None and all(u["list_price_per_unit"] is None for u in p["units"]), p["sku"]
+            continue
+        # A section is live in every length or none, and only as S5 H2 sized (retail "CCA treated" counts as H2).
+        assert len(priced) == 6 and (p["timber_grade"], p["timber_treatment"], p["timber_finish"]) == ("S5", "H2", "Sized"), p["sku"]
+        per_metre = Decimal(str(priced[0]["market_benchmark_price"])) / Decimal("3.0")
+        per_metre = per_metre.quantize(Decimal("0.01"))
+        assert Decimal(str(p["list_price_per_metre"])) == (per_metre * Decimal("1.08")).quantize(Decimal("0.01"))
+        for u, length in zip(priced, ("3.0", "3.6", "4.2", "4.8", "6.0", "6.6")):
+            bench = (per_metre * Decimal(length)).quantize(Decimal("0.01"))
+            assert Decimal(str(u["market_benchmark_price"])) == bench, (p["sku"], u["unit"])
+            assert Decimal(str(u["list_price_per_unit"])) == (bench * Decimal("1.08")).quantize(Decimal("0.01"))
+            assert "lowest" in u["source_note"].lower() and "H2" in u["source_note"]
+        live[p["section"]] = p["list_price_per_metre"]
+    assert live == {"38 × 76 mm": 24.09, "38 × 114 mm": 36.47, "38 × 228 mm": 108.56}
 
 
-def test_timber_is_roofing_family_by_flatbed_and_goes_to_a_quote():
+def test_live_timber_is_roofing_family_by_flatbed_with_the_4_percent_trade_discount():
     order = price_order(
         FRAMEWORK, [OrderLine("AA-TMB-38114-S5-H2-SZ", Decimal(20), "TIMBER_6_6M"), OrderLine("AA-ROF-DOWNPIPE-PVC-3M", Decimal(2), "EACH")], Decimal(20), "RETAIL", packaged=PACKAGED
     ).as_dict()
+    assert not order["is_quote_only"]
+    assert order["delivery"]["fee"] == 0 and order["notes"] == [ROOFING_DELIVERY_NOTE]
+    assert order["subtotal"] == 5146.74  # 20 x 240.71 + 2 x 166.27
+    trade = packaged_goods.calculate(ROOFING["AA-TMB-38114-S5-H2-SZ"], Decimal(10), "TIMBER_6_6M", "CONTRACTOR_TRADE")
+    assert trade.family == "ROOFING" and trade.unit_price == Decimal("231.08")  # 240.71 x 0.96
+
+
+def test_unbacked_timber_goes_to_a_quote():
+    order = price_order(FRAMEWORK, [OrderLine("AA-TMB-38114-S7-H3-RS", Decimal(10), "TIMBER_6_6M")], Decimal(20), "RETAIL", packaged=PACKAGED).as_dict()
     assert order["is_quote_only"] and order["reason_codes"] == ["PRICE_ON_REQUEST"]
-    assert ROOFING["AA-TMB-38114-S5-H2-SZ"].line == "roofing" and ROOFING["AA-TMB-38114-S5-H2-SZ"].own_transport
-    assert ROOFING_DELIVERY_NOTE
 
 
 def test_units_outside_the_standard_lengths_are_refused():

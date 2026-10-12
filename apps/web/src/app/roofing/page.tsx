@@ -143,7 +143,7 @@ export default async function RoofingPage() {
           <h2 className="font-display text-2xl font-bold text-basalt">Roof &amp; structural timber</h2>
           <p className="mt-2 max-w-3xl font-body text-sm text-slate">
             SA pine in every section below, in 3.0, 3.6, 4.2, 4.8, 6.0 and 6.6 m lengths. Pick the section, then the grade and treatment — each is sized
-            (planed to size) or rough-sawn. Timber is priced with the supplier on your quote, with the grade and treatment confirmed.
+            (planed to size) or rough-sawn. The everyday S5 H2 sized sections are priced to order online; everything else is priced with the supplier on your quote, with the grade and treatment confirmed.
           </p>
           <div className="mt-5 grid gap-8 lg:grid-cols-5">
             <div className="min-w-0 lg:col-span-3">

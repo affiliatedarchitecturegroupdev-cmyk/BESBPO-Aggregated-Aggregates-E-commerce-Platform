@@ -119,21 +119,35 @@ family (trade 4%, confirmed by the owner 12 Oct 2026), flatbed delivery and Roof
 
 ### Pricing
 
-The sheet rule applies: a length goes live only where **at least two SA
+The sheet rule applies: a section goes live only where **at least two SA
 retailers show a regular price for the same section, grade, hazard class and
-length**; list = lowest × 1.08. On 12 Oct 2026 **no timber line met it**:
+profile**. Prices are compared per metre; a length is the lowest per-metre
+price × the length, and list = benchmark × 1.08. Retail listings
+undated, from search results; product pages couldn't be opened from the build
+environment — confirm before relying on them.
 
-- Retailers mostly list "CCA treated" or "S5P CCA" without the H class,
-  some list "SABS" without a grade, and S7 is graded to order.
-- Retailer product pages couldn't be opened from the build environment, so
-  only search listings were available.
+**Owner's decision (12 Oct 2026):** structural pine sold at retail as "CCA
+treated" without a class counts as **H2** (the standard off-the-shelf roofing
+class). A listing that doesn't say rough or planed is taken as **sized**, the
+standard for structural pine.
 
-So **every timber and connector line is quoted** with the supplier for now.
-The indicative ranges found are recorded in the catalogue's internal notes
-for the sales team (never shown publicly). To publish prices: either a
-written supplier price list (preferred), or the owner confirming that
-unclassed "CCA treated" structural pine at retail is H2, which would let the
-S5 H2 benchmarks go live.
+Live on 12 Oct 2026 — **S5 H2 sized** only:
+
+| Section | Benchmark | List | 6.6 m list |
+|---|---|---|---|
+| 38 × 76 mm | R22.31/m | R24.09/m | R159.03 |
+| 38 × 114 mm | R33.77/m | R36.47/m | R240.71 |
+| 38 × 228 mm | R100.52/m | R108.56/m | R716.50 |
+
+The retailers behind each benchmark are in the catalogue's internal notes
+(never shown publicly). Everything else is **quoted**: other sections had one
+retailer only (38 × 38, 38 × 152, the 50 mm sections), H3 is listed by one
+retailer, S7 is graded to order, and rough-sawn had no second retailer.
+Connectors and accessories are quoted.
+
+Prices compared per metre take the cheapest length's rate, and longer
+lengths often cost a little more per metre — a supplier price list per length
+should replace these benchmarks as soon as there is one.
 
 ### On the storefront
 
@@ -182,7 +196,7 @@ CAT-26..29.
 ## Open items
 
 - Timber: a written supplier price list per section, grade, treatment and
-  length (or the H2 confirmation above); S7 availability and lead times;
+  length to replace the retail benchmarks and price the quoted lines; S7 availability and lead times;
   masses per length for delivery tonnage; photos.
 
 - Verify and activate the supplier leads; find North West and Northern Cape
