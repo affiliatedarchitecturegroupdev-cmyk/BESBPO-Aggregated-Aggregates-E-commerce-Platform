@@ -80,6 +80,67 @@ darkened wheelbarrow shot and a shovel banner whose source isn't
 Unsplash/Pexels as far as we can tell — those stay out until their licence
 is confirmed. The seed set's size budget is now 20 MB (it was 15 MB).
 
+## Reinforcing-steel photos (Oct 2026) — live
+
+Manus sourced a pack of 19 reinforcing-steel images. They come from three
+sources:
+
+- 7 from Pexels. The Pexels licence allows free commercial use and needs no
+  attribution.
+- 6 from RMS Reinforcing & Mesh Solutions (rms-sa.co.za).
+- 6 from Steel & Pipes (steelandpipes.co.za).
+
+RMS and Steel & Pipes are established relationships, and the owner
+confirmed on 12 October 2026 that their images are cleared for our use.
+Keep their written confirmation on file. All three sources carry
+`"permission": "GRANTED"` and are imported **live**. RMS and Steel & Pipes
+each get their own switch on **Admin → Image permissions**, so either can
+be withdrawn.
+
+Every image was checked by eye. **12 were placed, 7 left out.** Each was
+resized to ≤1,200 px WebP. On two RMS photos, the website's rounded-corner
+cut-out was trimmed off. The portrait Pexels rebar close-up was cropped to
+landscape so it works as a card image.
+
+The photos show the type of product. They don't prove a size, grade, Ref
+or SANS compliance, and the sourcing note on each photo says so.
+
+| Products | Photos (first one leads the card) |
+|---|---|
+| Y8–Y40 high-tensile rebar (8) | Ribbed rebar close-up (Pexels) and rebar bundle on site (Pexels, black and white), alternating as the lead so the cards vary; short deformed bars (Steel & Pipes); bar on a bending machine (RMS) |
+| Ref 100, 193, 245 mesh (light) | Light welded mesh sheets (Pexels), deformed-wire mesh close-up and detail (Pexels), RMS welded mesh; Ref 245 also has the heavy grid |
+| Ref 311, 395, 617, 888 mesh (heavy) | RMS welded mesh; welded grid of deformed bars (Pexels); deformed-wire mesh detail (Pexels) on 311 and 395 |
+| Binding (tie) wire | Coils of black annealed wire (Steel & Pipes; 566 px, flagged low-res) |
+| Rebar couplers | RMS mechanical couplers |
+| Rebar safety caps | Safety caps on starter bars (RMS) |
+
+**Not placed:**
+
+| Image | Why |
+|---|---|
+| Pexels rolled mesh | Light fencing roll, not reinforcing mesh or brickforce |
+| RMS piling cages | We don't sell piling cages |
+| RMS products overview | Welding a cage; no matching product |
+| Steel & Pipes brickforce | 279 × 181 px, too small. Brickforce still needs a photo |
+| Steel & Pipes mesh and Y-bars | 300 × 300 px, and the RMS and Pexels photos are better |
+| Steel & Pipes Y-standards | 225 × 225 px, and we don't sell Y-standards |
+
+Three Steel & Pipes files didn't match the pack's own checksums (mesh,
+Y-bars, Y-standards). They were left out anyway.
+
+**Still without photos:**
+
+- R-bars (smooth mild steel). None of these photos shows smooth bar, and
+  ribbed bar would mislead.
+- Brickforce.
+- Bar chairs, cover blocks, dowels, starter bars, wall ties and hoop iron.
+- The bender/cutter.
+- All structural steel.
+
+Larger brickforce, R-bar and structural-steel photos from RMS or Steel &
+Pipes would fill most of these gaps. The seed set is now about 18 MB of
+its 20 MB budget.
+
 ## Open-licence photos — live now
 
 To give the store real photos before launch, photos were chosen from

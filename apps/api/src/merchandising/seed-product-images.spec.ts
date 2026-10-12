@@ -13,6 +13,10 @@ const readyMix = JSON.parse(readFileSync(join(__dirname, "../../../../services/p
   products: { sku: string }[];
 };
 
+const steel = JSON.parse(readFileSync(join(__dirname, "../../../../services/pricing/data/steel_catalogue.json"), "utf8")) as {
+  products: { sku: string }[];
+};
+
 describe("sourced product image set", () => {
   const manifest = readManifest();
   const files = new Set(manifest.images.map((i) => i.file));
@@ -42,7 +46,7 @@ describe("sourced product image set", () => {
   });
 
   it("assigns photos only to real catalogue SKUs, at most five each, all from the set", () => {
-    const skus = new Set([...framework.products, ...packaged.products, ...readyMix.products].map((p) => p.sku));
+    const skus = new Set([...framework.products, ...packaged.products, ...readyMix.products, ...steel.products].map((p) => p.sku));
     for (const [sku, list] of Object.entries(manifest.products)) {
       expect(skus.has(sku)).toBe(true);
       expect(list.length).toBeGreaterThan(0);
@@ -77,6 +81,24 @@ describe("sourced product image set", () => {
       // Card images are landscape, so every grade leads with a landscape photo.
       expect(bySku.get(list[0])!.width).toBeGreaterThan(bySku.get(list[0])!.height);
       for (const file of list) expect(bySku.get(file)).toMatchObject({ permission: "GRANTED", source: "Owner-supplied stock photo (Unsplash / Pexels)" });
+    }
+  });
+
+  it("publishes the reinforcing-steel photos from Pexels, RMS and Steel & Pipes, which the owner cleared", () => {
+    const steelSkus = Object.entries(manifest.products).filter(([sku]) => sku.startsWith("AA-STL-"));
+    expect(steelSkus.length).toBe(18); // 8 Y-bars, 7 mesh references, tie wire, couplers, safety caps
+    const bySku = new Map(manifest.images.map((i) => [i.file, i]));
+    for (const [sku, list] of steelSkus) {
+      // Mild-steel R-bars are smooth: none of these ribbed-bar photos may stand in for them.
+      expect(sku).not.toMatch(/^AA-STL-R\d/);
+      expect(bySku.get(list[0])!.width).toBeGreaterThanOrEqual(bySku.get(list[0])!.height);
+      for (const file of list) {
+        const image = bySku.get(file)!;
+        expect(image.permission).toBe("GRANTED");
+        expect(image.openLicence).toBeUndefined();
+        expect(image.source).toMatch(/^(Pexels|RMS Reinforcing|Steel & Pipes)/);
+        expect(image.sourcePage).toMatch(/^https:\/\/(www\.pexels\.com|rms-sa\.co\.za|steelandpipes\.co\.za)\//);
+      }
     }
   });
 
