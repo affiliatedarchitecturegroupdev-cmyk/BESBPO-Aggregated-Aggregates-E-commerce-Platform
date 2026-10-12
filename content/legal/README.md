@@ -14,7 +14,7 @@ published — only the files named in `apps/web/src/app/legal/*/page.tsx` are.
 | Partner Terms | `partner-terms.md` | **New draft, 7 Oct 2026 — awaiting attorney review before final** |
 | Cookie Policy | `cookie-policy.md` | Draft — awaiting attorney review |
 | Returns & Refunds | `returns-refunds-policy.md` | Draft — awaiting attorney review (section 2A added 12 Oct 2026) |
-| Handling Fee Policy | `handling-fee-policy.md` | **New draft, 12 Oct 2026** — 18% handling fee on correctly supplied materials returned by agreement (owner's decision: suppliers' usual 15% plus 3% for coordinating the return), on the amount charged incl. VAT; awaiting attorney review. Open: a time limit for asking to return, and whether collection transport is charged |
+| Handling Fee Policy | `handling-fee-policy.md` | **New draft, 12 Oct 2026** — 18% handling fee on correctly supplied materials returned by agreement (owner's decision: suppliers' usual 15% plus 3% for coordinating the return), on the amount charged incl. VAT; returns must be asked for within 7 days of delivery, and the fee covers collection and transport back to the manufacturer or distributor (owner, 12 Oct 2026); awaiting attorney review |
 | Shipping & Delivery | `shipping-delivery-policy.md` | Draft — awaiting attorney review |
 | PAIA Manual | `paia-manual.md` | Draft — awaiting attorney review |
 

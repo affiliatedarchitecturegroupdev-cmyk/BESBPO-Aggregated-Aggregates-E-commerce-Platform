@@ -40,10 +40,11 @@ you have accepted, the order cannot be cancelled after cutting has started.
 
 If the materials were delivered as ordered but you want to return them —
 for example you ordered the wrong product or quantity, or your plans
-changed — we may accept the return where the manufacturer or supplier
-agrees to take them back and they are unused and undamaged. A **handling
-fee of 18%** of the amount charged for the returned materials applies, as
-set out in our [Handling Fee Policy](/legal/handling-fee). No handling fee
+changed — we may accept the return where you ask within **7 days of
+delivery**, the manufacturer or supplier agrees to take them back and they
+are unused and undamaged. A **handling fee of 18%** of the amount charged
+for the returned materials applies, which also covers collecting them from
+your site, as set out in our [Handling Fee Policy](/legal/handling-fee). No handling fee
 applies to the cases in section 1 or to materials that are defective,
 wrong or short.
 
