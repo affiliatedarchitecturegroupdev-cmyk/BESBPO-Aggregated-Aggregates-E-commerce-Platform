@@ -195,8 +195,8 @@ export default async function RoofingPage() {
               <table className="w-full rounded-sm border border-basalt/10 bg-white text-left font-body text-sm">
                 <tbody className="divide-y divide-basalt/10">
                   {[
-                    ["H2", "Insect and borer protection for timber kept dry under the roof — trusses, rafters, purlins, brandering. The budget choice."],
-                    ["H3", "For timber above ground that gets wet: exposed eaves and overhangs, carports, pergolas, coastal and damp sites."],
+                    ["H2", "Insect and borer protection for timber kept dry under the roof — trusses, rafters, purlins, ceiling battens. Never where it will get wet. The budget choice."],
+                    ["H3", "For timber above ground that gets wet: exposed eaves and overhangs, fencing rails, balustrades, cladding, decks, carports and pergolas, and coastal or damp sites."],
                     ["S5", "The standard stress grade for house roofs (SANS 1783) — what most truss designs call for."],
                     ["S7", "Stronger and stiffer, for longer spans and heavier loads — only where the truss design or engineer specifies it. Graded to order."],
                     ["Profile", "Sized timber is planed to a uniform size so members line up; rough-sawn is straight off the saw for hidden or clad framing."],
