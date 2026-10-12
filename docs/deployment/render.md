@@ -290,7 +290,7 @@ in **Admin → Notifications** rather than sent.
   `20261022090000_roof_timber` adds the six `TIMBER_*` length units and
   `timberGrade`, `timberTreatment` and `timberFinish` on `Product`. The
   pre-deploy seed adds the CAT-30/31 categories and 82 products from
-  `roofing_catalogue.json` (all quoted); the supplier seed adds 5 leads from
+  `roofing_catalogue.json` (three S5 H2 sections priced, the rest quoted); the supplier seed adds 5 leads from
   `suppliers-timber.csv` as unverified and inactive. No new environment
   variables.
 - **Drainage & membranes (Oct 2026).** No migration: the pre-deploy seed

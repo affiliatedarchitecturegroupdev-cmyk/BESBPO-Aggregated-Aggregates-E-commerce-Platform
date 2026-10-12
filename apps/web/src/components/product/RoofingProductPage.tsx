@@ -101,7 +101,7 @@ export function RoofingProductPage({ product }: { product: MerchandisedRoofingPr
           </p>
           <h1 className="mt-1 font-display text-3xl font-bold text-basalt">{product.name}</h1>
           <p className="mt-3 font-display text-2xl font-bold text-seam-blue">
-            {sheet && product.listPricePerMetre !== null ? (
+            {(sheet || timber) && product.listPricePerMetre !== null ? (
               <>
                 {formatZAR(product.listPricePerMetre)} <span className="text-base font-normal text-slate">/ metre</span>
               </>
@@ -113,6 +113,11 @@ export function RoofingProductPage({ product }: { product: MerchandisedRoofingPr
               <span className="text-xl">Price on request</span>
             )}
           </p>
+          {timber && priced[0] && (
+            <p className="mt-1 font-body text-xs text-slate">
+              From {formatZAR(priced[0].prices!.RETAIL)} ({priced[0].label}) to {formatZAR(priced[priced.length - 1].prices!.RETAIL)} ({priced[priced.length - 1].label}).
+            </p>
+          )}
           {sheet && priced[0] && (
             <p className="mt-1 font-body text-xs text-slate">
               Stock lengths from {formatZAR(priced[0].prices!.RETAIL)} ({priced[0].label}) — or cut to any length from {CUT_TO_LENGTH.min_m} m to {CUT_TO_LENGTH.max_m} m on a quote.

@@ -1,5 +1,5 @@
 {
- "_source": "Roofing line: CAT-26 Roof Sheeting, CAT-27 Flashings, Ridges & Fixings and CAT-28 Insulation, Underlay & Rainwater (ROOFING_CATALOGUE.md). Sheets come in standard lengths of 3.0, 3.6, 4.2, 4.8, 6.0 and 6.6 m (one unit each) and are cut to any length from 1 m to 14 m on a quote (unit METRE, always quoted: the cutting list travels with the quote). A sheet is live only where at least two SA retailers show a regular price for the same profile, thickness and coating: the benchmark is the lowest price per metre, a standard length is that rate x the length, and list = benchmark x 1.08. Everything else is quoted with the supplier. Concrete roof tiles are in the masonry line (CAT-29). Roof & structural timber (CAT-30) is SA pine in S5 or S7, H2 or H3, sized or rough-sawn, in lengths of 3.0 to 6.6 m (one unit each); connectors and accessories are CAT-31. Timber is priced on the same rule as sheets: at least two SA retailers' regular prices for the same section, grade, hazard class and length, list = benchmark x 1.08; otherwise quoted.",
+ "_source": "Roofing line: CAT-26 Roof Sheeting, CAT-27 Flashings, Ridges & Fixings and CAT-28 Insulation, Underlay & Rainwater (ROOFING_CATALOGUE.md). Sheets come in standard lengths of 3.0, 3.6, 4.2, 4.8, 6.0 and 6.6 m (one unit each) and are cut to any length from 1 m to 14 m on a quote (unit METRE, always quoted: the cutting list travels with the quote). A sheet is live only where at least two SA retailers show a regular price for the same profile, thickness and coating: the benchmark is the lowest price per metre, a standard length is that rate x the length, and list = benchmark x 1.08. Everything else is quoted with the supplier. Concrete roof tiles are in the masonry line (CAT-29). Roof & structural timber (CAT-30) is SA pine in S5 or S7, H2 or H3, sized or rough-sawn, in lengths of 3.0 to 6.6 m (one unit each); connectors and accessories are CAT-31. Timber is priced on the same rule as sheets: at least two SA retailers' regular prices for the same section, grade, hazard class and profile, compared per metre: a length is the lowest per-metre price x the length, list = benchmark x 1.08; otherwise quoted. Retail 'CCA treated' structural pine counts as H2 (owner's decision, 12 Oct 2026).",
  "categories": [
   {
    "slug": "roof-sheeting",
@@ -2524,48 +2524,48 @@
      "unit_label": "3.0 m length",
      "weight_kg": null,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "list_price_per_unit": 72.28,
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "TIMBER_3_6M",
      "unit_label": "3.6 m length",
      "weight_kg": null,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "list_price_per_unit": 86.75,
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "TIMBER_4_2M",
      "unit_label": "4.2 m length",
      "weight_kg": null,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "list_price_per_unit": 101.2,
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "TIMBER_4_8M",
      "unit_label": "4.8 m length",
      "weight_kg": null,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "list_price_per_unit": 115.66,
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "TIMBER_6_0M",
      "unit_label": "6.0 m length",
      "weight_kg": null,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "list_price_per_unit": 144.57,
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "TIMBER_6_6M",
      "unit_label": "6.6 m length",
      "weight_kg": null,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "list_price_per_unit": 159.03,
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "manufacturer": null,
@@ -2575,7 +2575,7 @@
    "thickness_mm": null,
    "coating": null,
    "cover_width_mm": null,
-   "list_price_per_metre": null,
+   "list_price_per_metre": 24.09,
    "cut_to_length": null,
    "section": "38 × 76 mm",
    "timber_grade": "S5",
@@ -3140,48 +3140,48 @@
      "unit_label": "3.0 m length",
      "weight_kg": null,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "list_price_per_unit": 109.41,
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "TIMBER_3_6M",
      "unit_label": "3.6 m length",
      "weight_kg": null,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "list_price_per_unit": 131.3,
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "TIMBER_4_2M",
      "unit_label": "4.2 m length",
      "weight_kg": null,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "list_price_per_unit": 153.18,
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "TIMBER_4_8M",
      "unit_label": "4.8 m length",
      "weight_kg": null,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "list_price_per_unit": 175.07,
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "TIMBER_6_0M",
      "unit_label": "6.0 m length",
      "weight_kg": null,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "list_price_per_unit": 218.83,
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "TIMBER_6_6M",
      "unit_label": "6.6 m length",
      "weight_kg": null,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "list_price_per_unit": 240.71,
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "manufacturer": null,
@@ -3191,7 +3191,7 @@
    "thickness_mm": null,
    "coating": null,
    "cover_width_mm": null,
-   "list_price_per_metre": null,
+   "list_price_per_metre": 36.47,
    "cut_to_length": null,
    "section": "38 × 114 mm",
    "timber_grade": "S5",
@@ -4372,48 +4372,48 @@
      "unit_label": "3.0 m length",
      "weight_kg": null,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "list_price_per_unit": 325.68,
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "TIMBER_3_6M",
      "unit_label": "3.6 m length",
      "weight_kg": null,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "list_price_per_unit": 390.82,
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "TIMBER_4_2M",
      "unit_label": "4.2 m length",
      "weight_kg": null,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "list_price_per_unit": 455.95,
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "TIMBER_4_8M",
      "unit_label": "4.8 m length",
      "weight_kg": null,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "list_price_per_unit": 521.1,
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "TIMBER_6_0M",
      "unit_label": "6.0 m length",
      "weight_kg": null,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "list_price_per_unit": 651.37,
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "TIMBER_6_6M",
      "unit_label": "6.6 m length",
      "weight_kg": null,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "list_price_per_unit": 716.5,
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "manufacturer": null,
@@ -4423,7 +4423,7 @@
    "thickness_mm": null,
    "coating": null,
    "cover_width_mm": null,
-   "list_price_per_metre": null,
+   "list_price_per_metre": 108.56,
    "cut_to_length": null,
    "section": "38 × 228 mm",
    "timber_grade": "S5",
