@@ -6,7 +6,8 @@ data/steel_catalogue.json, STEEL_CATALOGUE.md) and the masonry line, CAT-19
 and CAT-20 (bricks & blocks; lintels, DPC & wall accessories —
 data/masonry_catalogue.json, MASONRY_CATALOGUE.md), and the roofing line,
 CAT-26 to CAT-28 (roof sheeting; flashings, ridges & fixings; insulation,
-underlay & rainwater — data/roofing_catalogue.json, ROOFING_CATALOGUE.md).
+underlay & rainwater) with roof & structural timber and its connectors,
+CAT-30 and CAT-31 — data/roofing_catalogue.json, ROOFING_CATALOGUE.md.
 
 These are sold as discrete packaged units — a 50kg bag, a 210L drum, a
 tanker load per ton — each with its own list price, so there is no ton/m3
@@ -49,8 +50,10 @@ MASONRY_UNITS = ("THOUSAND", "EACH", "ROLL", "LENGTH_6M")
 # Roofing: roof sheets in the standard lengths, or per metre cut to length (always quoted — the cutting list
 # travels with the quote); flashings and fittings per item; screws per box; insulation and underlay per roll.
 SHEET_LENGTH_UNITS = ("SHEET_3_0M", "SHEET_3_6M", "SHEET_4_2M", "SHEET_4_8M", "SHEET_6_0M", "SHEET_6_6M")
-ROOFING_UNITS = SHEET_LENGTH_UNITS + ("METRE", "EACH", "PACK", "ROLL")
-PACKAGED_UNITS = CEMENT_UNITS + STEEL_UNITS + ("THOUSAND",) + SHEET_LENGTH_UNITS + ("METRE",)
+# Roof & structural timber (CAT-30): SA pine in the same six standard lengths, one unit each.
+TIMBER_LENGTH_UNITS = ("TIMBER_3_0M", "TIMBER_3_6M", "TIMBER_4_2M", "TIMBER_4_8M", "TIMBER_6_0M", "TIMBER_6_6M")
+ROOFING_UNITS = SHEET_LENGTH_UNITS + TIMBER_LENGTH_UNITS + ("METRE", "EACH", "PACK", "ROLL")
+PACKAGED_UNITS = CEMENT_UNITS + STEEL_UNITS + ("THOUSAND",) + SHEET_LENGTH_UNITS + TIMBER_LENGTH_UNITS + ("METRE",)
 # Lines that travel on the supplier's own flatbed or crane truck, never in the tipper bands.
 OWN_TRANSPORT_LINES = ("steel", "masonry", "roofing")
 BAGGED_UNITS = ("BAG_25KG", "BAG_50KG")
@@ -97,7 +100,7 @@ class PackagedProduct:
     name: str
     category_slug: str
     units: dict[str, PackagedUnit]
-    line: str = "cement"  # "cement" (CAT-10/11), "steel" (CAT-15..18), "masonry" (masonry & precast, CAT-19..25, 29) or "roofing" (CAT-26..28)
+    line: str = "cement"  # "cement" (CAT-10/11), "steel" (CAT-15..18), "masonry" (masonry & precast, CAT-19..25, 29) or "roofing" (CAT-26..28, 30, 31)
 
     @property
     def is_steel(self) -> bool:
@@ -151,7 +154,7 @@ def load_masonry(path: Path = MASONRY_DATA_PATH) -> tuple[dict, dict[str, Packag
 
 
 def load_roofing(path: Path = ROOFING_DATA_PATH) -> tuple[dict, dict[str, PackagedProduct]]:
-    """The CAT-26..28 roofing catalogue — priced like packaged goods, in the ROOFING family."""
+    """The roofing catalogue (CAT-26..28, with timber CAT-30/31) — priced like packaged goods, in the ROOFING family."""
     raw = json.loads(path.read_text(encoding="utf-8"))
     return raw, _products(raw, ROOFING_UNITS, "roofing")
 

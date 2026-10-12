@@ -27,6 +27,13 @@ export const PACKAGED_UNITS = [
   "SHEET_6_0M",
   "SHEET_6_6M",
   "METRE",
+  // Roof & structural timber (CAT-30): SA pine in the same six standard lengths.
+  "TIMBER_3_0M",
+  "TIMBER_3_6M",
+  "TIMBER_4_2M",
+  "TIMBER_4_8M",
+  "TIMBER_6_0M",
+  "TIMBER_6_6M",
 ] as const;
 export type PackagedUnit = (typeof PACKAGED_UNITS)[number];
 export type PricingUnit = "ton" | "m3" | "bag" | PackagedUnit;

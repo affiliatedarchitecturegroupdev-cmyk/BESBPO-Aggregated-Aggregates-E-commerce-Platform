@@ -221,6 +221,19 @@ const JOBS = {
       { sku: "AA-ROF-DOWNPIPE-PVC-3M", why: "Downpipes from the gutters" },
     ],
   },
+  roofTimber: {
+    title: "Frame the roof",
+    stage: "ROOFING",
+    companions: [
+      { sku: "AA-TMB-38114-S5-H2-SZ", why: "Rafters and kappa beams — S5 H2 for roofs under cover", unit: "TIMBER_6_6M" },
+      { sku: "AA-TMB-3876-S5-H2-SZ", why: "Purlins under sheeting", unit: "TIMBER_6_6M" },
+      { sku: "AA-TMB-3838-S5-H2-SZ", why: "Brandering for the ceiling", unit: "TIMBER_6_6M" },
+      { sku: "AA-TMB-TRUSS-CLIP", why: "Truss clips onto the wall plate" },
+      { sku: "AA-TMB-HOOP-IRON", why: "Hoop iron to tie the roof down", unit: "ROLL" },
+      { sku: "AA-TMB-NAILS-75", why: "Galvanised nails for treated timber", unit: "PACK" },
+      { sku: "AA-TMB-END-SEALER", why: "Preservative for every cut end" },
+    ],
+  },
   sheetRoof: {
     title: "Roof it with sheeting",
     stage: "ROOFING",
@@ -289,6 +302,8 @@ const BY_CATEGORY: Record<string, JobKey> = {
   "roof-flashings-fixings": "sheetRoof",
   "roof-insulation-rainwater": "sheetRoof",
   "concrete-roof-tiles": "tiledRoof",
+  "structural-timber": "roofTimber",
+  "timber-connectors": "roofTimber",
 };
 
 /** Products whose job differs from the rest of their category. */

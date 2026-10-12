@@ -5,6 +5,7 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
+from public_copy import public_copy
 from calculators import packaged_goods
 from calculators.order import STEEL_DELIVERY_NOTE, OrderLine, price_order
 from main import FRAMEWORK, PACKAGED, app
@@ -53,7 +54,7 @@ def test_rebar_mass_follows_sans_920():
 
 def test_storefront_copy_matches_the_pricing_service():
     web = Path(__file__).parents[3] / "apps" / "web" / "src" / "data" / "steel-catalogue.json"
-    assert json.loads(web.read_text(encoding="utf-8")) == RAW
+    assert json.loads(web.read_text(encoding="utf-8")) == public_copy("steel_catalogue.json", RAW)
 
 
 def test_steel_takes_its_own_family_with_4_percent_trade():

@@ -6,6 +6,7 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
+from public_copy import public_copy
 from calculators import packaged_goods
 from calculators.discount_floor import TierQuoteOnly
 from calculators.order import OrderLine, price_order
@@ -51,7 +52,7 @@ def test_the_cement_master_catalogue_is_complete_and_deduplicated():
 
 def test_storefront_copy_matches_the_pricing_service():
     web = Path(__file__).parents[3] / "apps" / "web" / "src" / "data" / "b2b-packaged-catalogue.json"
-    assert json.loads(web.read_text(encoding="utf-8")) == RAW
+    assert json.loads(web.read_text(encoding="utf-8")) == public_copy("b2b_packaged_catalogue.json", RAW)
 
 
 def test_bagged_cement_takes_the_4_percent_trade_discount():

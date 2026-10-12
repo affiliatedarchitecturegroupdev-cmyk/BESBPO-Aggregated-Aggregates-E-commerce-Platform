@@ -48,6 +48,9 @@ export const CATEGORIES: Category[] = [
   { slug: "roof-sheeting", name: "Roof Sheeting", description: "IBR, corrugated and concealed-fix sheets from 0.30 to 0.80 mm — galvanised, Zincalume® or colour-coated — in standard lengths or cut to length.", catalogueGroup: "roofing" },
   { slug: "roof-flashings-fixings", name: "Flashings, Ridges & Fixings", description: "Ridge capping, barge and over-tile flashings, closures, roofing screws and hook bolts.", catalogueGroup: "roofing" },
   { slug: "roof-insulation-rainwater", name: "Insulation, Underlay & Rainwater", description: "135 mm ceiling insulation, foil underlay and under-tile membrane, and PVC gutters and downpipes.", catalogueGroup: "roofing" },
+  // CAT-30/31 — roof & structural timber, sold with roofing (ROOFING_CATALOGUE.md).
+  { slug: "structural-timber", name: "Roof & Structural Timber", description: "SA pine from 38 × 38 mm brandering to 50 × 228 mm beams — S5 or S7, H2 or H3, sized or rough-sawn, in lengths from 3.0 to 6.6 m.", catalogueGroup: "roofing" },
+  { slug: "timber-connectors", name: "Timber Connectors & Accessories", description: "Truss and joist hangers, truss clips, hoop iron, galvanised nails and bolts, cut-end preservative and fibre-cement fascia.", catalogueGroup: "roofing" },
 ];
 
 export const CORE_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "core");

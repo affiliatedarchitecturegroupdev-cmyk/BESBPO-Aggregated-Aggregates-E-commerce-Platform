@@ -339,7 +339,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
       const served = await http().get(`/merchandising/images/${image.body.id}`).expect(200);
       expect(served.headers["content-type"]).toBe("image/png");
       const overlay = await http().get("/merchandising/products").expect(200);
-      expect(overlay.body).toHaveLength(231); // 51 aggregates + 42 cement and other packaged goods + 7 ready-mix grades + 43 steel + 58 masonry & precast (incl. roof tiles) + 30 roofing
+      expect(overlay.body).toHaveLength(313); // 51 aggregates + 42 cement and other packaged goods + 7 ready-mix grades + 43 steel + 58 masonry & precast (incl. roof tiles) + 30 roofing + 82 roof timber & connectors
       expect(overlay.body.find((p: { sku: string }) => p.sku === sku)).toMatchObject({
         featuredRank: 2,
         images: expect.arrayContaining([expect.objectContaining({ id: image.body.id, altText: "Filter media stockpile" })]),
@@ -765,6 +765,29 @@ describe("Aggregated Aggregates API (e2e)", () => {
       expect(quote.body.reasonCode).toBe("PRICE_ON_REQUEST");
       await prisma.quote.delete({ where: { id: quote.body.id } });
       await prisma.order.delete({ where: { id: res.body.id } });
+    });
+
+    it("lists roof timber in every grade, treatment and profile under roofing, and quotes it by length", async () => {
+      const timber = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-TMB-38114-S5-H2-SZ" }, include: { category: true } });
+      expect(timber.category.slug).toBe("structural-timber");
+      expect(timber.category.catalogueGroup).toBe("roofing");
+      expect([timber.sectionSize, timber.timberGrade, timber.timberTreatment, timber.timberFinish]).toEqual(["38 × 114 mm", "S5", "H2", "Sized"]);
+      expect(timber.unitsOfSale).toEqual(["TIMBER_3_0M", "TIMBER_3_6M", "TIMBER_4_2M", "TIMBER_4_8M", "TIMBER_6_0M", "TIMBER_6_6M"]);
+      expect(await prisma.product.count({ where: { category: { slug: "structural-timber" } } })).toBe(72);
+      const quote = await http()
+        .post("/quotes")
+        .send({
+          contactName: "Roof Builder",
+          contactEmail: `timber-${run}@example.com`,
+          deliveryAddress: "4 Site Road, Pretoria",
+          lines: [
+            { sku: "AA-TMB-38114-S5-H2-SZ", unit: "TIMBER_6_6M", quantity: 24 },
+            { sku: "AA-TMB-TRUSS-CLIP", unit: "EACH", quantity: 24 },
+          ],
+        })
+        .expect(201);
+      expect(quote.body.reasonCode).toBe("PRICE_ON_REQUEST");
+      await prisma.quote.delete({ where: { id: quote.body.id } });
     });
   });
 

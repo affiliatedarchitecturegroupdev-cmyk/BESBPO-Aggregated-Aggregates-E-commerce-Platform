@@ -202,10 +202,14 @@ model Product {
   sheetThicknessMm          Decimal?             @db.Decimal(4, 2) // 0.30 to 0.80
   coating                   String? // e.g. "Z150 galvanised", "AZ150 aluminium-zinc", "colour-coated"
   coverWidthMm              Int? // effective cover width of one sheet
+  // Roof & structural timber (CAT-30, ROOFING_CATALOGUE.md) — the section is in sectionSize, e.g. "38 × 114 mm".
+  timberGrade               String? // "S5" | "S7" (SANS 1783)
+  timberTreatment           String? // "H2" | "H3" (SANS 10005, CCA)
+  timberFinish              String? // "Sized" | "Rough-sawn"
   readyMixPriceBand         ReadyMixPriceBand?
   images                    ProductImage[]
   priceBand                 PriceBand?
-  packagedPriceBands        PackagedPriceBand[] // CAT-10/CAT-11 packaged goods, CAT-15..18 steel, masonry (CAT-19..25, 29) and roofing (CAT-26..28)
+  packagedPriceBands        PackagedPriceBand[] // CAT-10/CAT-11 packaged goods, CAT-15..18 steel, masonry (CAT-19..25, 29) and roofing (CAT-26..28, 30, 31)
   complianceDocuments       ComplianceDocument[]
   quoteLineItems            QuoteLineItem[]
   orderLineItems            OrderLineItem[]
@@ -466,6 +470,13 @@ enum UnitOfSale {
   SHEET_6_0M
   SHEET_6_6M
   METRE // cut to length, 1 m to 14 m — always quoted; the cutting list travels with the quote
+  // Roof & structural timber (CAT-30) — SA pine in the same standard lengths
+  TIMBER_3_0M
+  TIMBER_3_6M
+  TIMBER_4_2M
+  TIMBER_4_8M
+  TIMBER_6_0M
+  TIMBER_6_6M
 }
 
 /// Captures quote-only orders before they become a priced Order — the RFQ

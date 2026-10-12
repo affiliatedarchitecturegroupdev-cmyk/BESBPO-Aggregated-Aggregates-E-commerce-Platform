@@ -31,6 +31,10 @@ and quotes are always re-priced by the pricing service.
   lowest per-metre price × its length, × 1.08. Cut-to-length is always
   quoted; so are single-retailer items, flashings and fixings
   (`ROOFING_CATALOGUE.md`).
+- **Roof & structural timber (Oct 2026):** the roofing rule, per length, for
+  the same section, stress grade (S5/S7), hazard class (H2/H3) and profile.
+  None qualified on 12 Oct 2026, so all timber is quoted until a supplier
+  price list or matching retail prices are confirmed (`ROOFING_CATALOGUE.md`).
 - **Cost proxy:** for cement, ready-mix, steel, masonry and roofing the cost is assumed to be the
   benchmark itself (`costBasisPercent` 100) until real supplier
   cost/commission terms are known — the biggest open commercial item.
@@ -63,7 +67,7 @@ site:
 | Ready-mix | list | 2% | quoted |
 | Steel (rebar, mesh, brickforce, accessories, sections) | list | 4% (approved Oct 2026) | quoted |
 | Masonry & precast (bricks, blocks, lintels, DPC, air bricks; pavers, kerbs, retaining, gabions; pipes, precast drainage, membranes; concrete roof tiles) | list | 4% (approved Oct 2026) | quoted |
-| Roofing (sheeting, flashings, fixings, insulation, underlay, rainwater goods) | list | 4% (approved Oct 2026) | quoted |
+| Roofing (sheeting, flashings, fixings, insulation, underlay, rainwater goods; roof & structural timber and connectors) | list | 4% (approved Oct 2026; timber 12 Oct 2026) | quoted |
 
 "Quoted" means the tier has no self-serve price for that family: the cart
 or quote goes to a person, who confirms it with the supplier.

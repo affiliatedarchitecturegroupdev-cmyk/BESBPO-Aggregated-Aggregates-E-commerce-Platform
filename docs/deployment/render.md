@@ -286,6 +286,13 @@ in **Admin → Notifications** rather than sent.
   tiles from `masonry_catalogue.json`; the supplier seed adds 12 leads from
   `suppliers-roofing.csv` as unverified and inactive. No new environment
   variables.
+- **Roof & structural timber (Oct 2026).** Migration
+  `20261022090000_roof_timber` adds the six `TIMBER_*` length units and
+  `timberGrade`, `timberTreatment` and `timberFinish` on `Product`. The
+  pre-deploy seed adds the CAT-30/31 categories and 82 products from
+  `roofing_catalogue.json` (all quoted); the supplier seed adds 5 leads from
+  `suppliers-timber.csv` as unverified and inactive. No new environment
+  variables.
 - **Drainage & membranes (Oct 2026).** No migration: the pre-deploy seed
   adds the CAT-23..25 categories and 19 products (pipes sold per 6 m length),
   and the supplier seed adds 9 leads from `suppliers-drainage.csv` as

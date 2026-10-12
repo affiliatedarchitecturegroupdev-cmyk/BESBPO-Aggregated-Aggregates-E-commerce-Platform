@@ -18,7 +18,7 @@ the same stages as project lists (`PROJECT_LISTS.md`):
 | Foundations | 25 MPa ready-mix, 19 mm stone, concrete sand, 42,5N cement, Y12, tie wire | Mini excavator, TLB, steel fixing, rubble removal |
 | Surface beds & slabs | 25 and 30 MPa ready-mix, Ref 193 mesh, bar chairs, 250 µm DPM, screed sand | 1–3 t roller, steel fixing, site dumper |
 | Walls & superstructure | Clay stock bricks, 140 mm blocks, building sand, 32,5N cement, 110 mm DPC, brickforce | Site dumper, skip |
-| Roofing | 0.47 mm IBR (6.0 m), colour-coated IBR (6.0 m), Double Roman tiles, IBR ridge capping, 135 mm ceiling insulation, PVC downpipes | Skip |
+| Roofing | 38 × 114 S5 H2 roof timber (6.6 m), 0.47 mm IBR (6.0 m), colour-coated IBR (6.0 m), Double Roman tiles, IBR ridge capping, 135 mm ceiling insulation, PVC downpipes | Skip |
 | Paving, driveways & roads | G7 sub-base, crusher run base, bedding sand, Bosun 60 mm interlocking pavers, 50 mm bevel pavers, barrier kerbs | Smooth-drum roller, water truck, tipper, haulage |
 | Drainage & services | 110 mm uPVC pipe, 45° bends, pipe bedding sand, French drain stone, nonwoven geotextile, channel drain | Mini excavator, TLB, rubble removal |
 | Landscaping | Terraforce L22 retaining blocks, 450 mm paving slabs, river pebble, pea gravel, stone mulch, crusher dust | Skid steer, site dumper, skip |
@@ -47,6 +47,7 @@ Stages are data. When a new category lands, add its slug to the stage's
 | P | CAT-21 Paving, Kerbs & Edging, CAT-22 Retaining & Erosion Control | Paving and Landscaping — **built** (`MASONRY_CATALOGUE.md`) |
 | D | CAT-23 Pipes & Fittings, CAT-24 Precast Drainage, CAT-25 Geosynthetics & Membranes | Drainage and Slabs (DPM) — **built** (`MASONRY_CATALOGUE.md`) |
 | R | CAT-26 Roof Sheeting, CAT-27 Flashings, Ridges & Fixings, CAT-28 Insulation, Underlay & Rainwater, CAT-29 Concrete Roof Tiles | Roofing — a new stage between walls and paving — **built** (`ROOFING_CATALOGUE.md`) |
+| T | CAT-30 Roof & Structural Timber, CAT-31 Timber Connectors & Accessories | Roofing — **built**, all quoted (`ROOFING_CATALOGUE.md`) |
 
 A pick whose product is hidden by staff (Admin → Merchandising) drops out of
 its stage automatically.

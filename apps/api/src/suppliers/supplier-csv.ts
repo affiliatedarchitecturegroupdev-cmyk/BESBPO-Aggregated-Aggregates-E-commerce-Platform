@@ -46,6 +46,8 @@ export const CATEGORY_CODES: Record<string, string> = {
   "CAT-27": "roof-flashings-fixings",
   "CAT-28": "roof-insulation-rainwater",
   "CAT-29": "concrete-roof-tiles",
+  "CAT-30": "structural-timber",
+  "CAT-31": "timber-connectors",
 };
 const CODE_BY_SLUG = Object.fromEntries(Object.entries(CATEGORY_CODES).map(([code, slug]) => [slug, code]));
 

@@ -5,6 +5,7 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
+from public_copy import public_copy
 from calculators import packaged_goods
 from calculators.order import MASONRY_DELIVERY_NOTE, STEEL_DELIVERY_NOTE, OrderLine, price_order
 from main import FRAMEWORK, PACKAGED, app
@@ -56,7 +57,7 @@ def test_bricks_are_sold_per_thousand_and_counts_per_m2_follow_the_joint_geometr
 
 def test_storefront_copy_matches_the_pricing_service():
     web = Path(__file__).parents[3] / "apps" / "web" / "src" / "data" / "masonry-catalogue.json"
-    assert json.loads(web.read_text(encoding="utf-8")) == RAW
+    assert json.loads(web.read_text(encoding="utf-8")) == public_copy("masonry_catalogue.json", RAW)
 
 
 def test_masonry_takes_its_own_family_even_on_units_it_shares_with_steel():

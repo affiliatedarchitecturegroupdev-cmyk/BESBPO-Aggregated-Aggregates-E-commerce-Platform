@@ -6,6 +6,7 @@ import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { PackagedUnitSelector } from "@/components/product/PackagedUnitSelector";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { SaveToProject } from "@/components/projects/SaveToProject";
+import { TimberVariantPicker } from "@/components/product/TimberVariantPicker";
 import { SocialShareButtons } from "@/components/social/SocialShareButtons";
 import { CATEGORIES } from "@/data/categories";
 import { CUT_TO_LENGTH, ROOFING_CATEGORY_CODES, ROOFING_PRODUCTS } from "@/data/roofing";
@@ -13,14 +14,23 @@ import type { MerchandisedRoofingProduct } from "@/lib/cms";
 import { formatZAR, unpricedLabel } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
-/** Product page for the roofing line, CAT-26..28: sheets in standard lengths or cut to length, flashings and fixings, insulation and rainwater goods. */
+/**
+ * Product page for the roofing line, CAT-26..28: sheets in standard lengths or cut to length, flashings and fixings,
+ * insulation and rainwater goods — and roof & structural timber with its connectors, CAT-30/31.
+ */
 export function RoofingProductPage({ product }: { product: MerchandisedRoofingProduct }) {
   const category = CATEGORIES.find((c) => c.slug === product.categorySlug)!;
   const sheet = product.roofProfile !== null;
+  const timber = product.timberGrade !== null;
   // Cut-to-length is quoted through its own cutting-list form, never added to the cart from the unit buttons.
   const stockUnits = { ...product, units: product.units.filter((u) => u.unit !== "METRE") };
   const priced = stockUnits.units.filter((u) => u.prices !== null);
-  const related = ROOFING_PRODUCTS.filter((p) => p.categorySlug === product.categorySlug && p.sku !== product.sku).slice(0, 4);
+  // Timber: the other sections in the same grade, treatment and profile, rather than this section's variants.
+  const related = (
+    timber
+      ? ROOFING_PRODUCTS.filter((p) => p.timberGrade === product.timberGrade && p.timberTreatment === product.timberTreatment && p.timberFinish === product.timberFinish && p.sku !== product.sku)
+      : ROOFING_PRODUCTS.filter((p) => p.categorySlug === product.categorySlug && p.sku !== product.sku)
+  ).slice(0, 4);
   const url = `${SITE_URL}/products/${product.slug}`;
 
   // Offers only for benchmarked units — an unpriced product never implies a price.
@@ -55,6 +65,11 @@ export function RoofingProductPage({ product }: { product: MerchandisedRoofingPr
       ["Thickness", product.thicknessMm !== null ? `${product.thicknessMm.toFixed(2)} mm` : null],
       ["Coating", product.coating],
       ["Cover width", product.coverWidthMm !== null ? `${product.coverWidthMm} mm per sheet` : null],
+      ["Section", timber ? `${product.section} (thickness × width)` : null],
+      ["Strength grade", timber ? `${product.timberGrade} (SANS 1783)` : null],
+      ["Treatment", timber ? `${product.timberTreatment} CCA (SANS 10005) — ${product.timberTreatment === "H2" ? "dry, under cover" : "above ground, exposed to weather"}` : null],
+      ["Profile", timber ? product.timberFinish : null],
+      ["Lengths", timber ? "3.0, 3.6, 4.2, 4.8, 6.0 and 6.6 m" : null],
       ["Lengths", sheet ? `3.0, 3.6, 4.2, 4.8, 6.0 and 6.6 m in stock lengths; ${CUT_TO_LENGTH.min_m}–${CUT_TO_LENGTH.max_m} m cut to length` : null],
       ["Size", product.unitSize],
       ["Category code", ROOFING_CATEGORY_CODES[product.categorySlug] ?? null],
@@ -71,6 +86,7 @@ export function RoofingProductPage({ product }: { product: MerchandisedRoofingPr
       <div className="mt-6 grid gap-10 md:grid-cols-2">
         <div className="min-w-0 space-y-6">
           <ProductGallery sku={product.sku} categorySlug={product.categorySlug} images={product.images} />
+          {timber && <TimberVariantPicker product={product} />}
           {sheet && <CutToLengthForm sku={product.sku} name={product.name} ratePerMetre={product.listPricePerMetre} />}
           {sheet && (
             <Link href="/roofing#roof-calculator" className="block rounded-sm border border-seam-blue/30 bg-seam-blue/5 p-4 font-body text-sm text-basalt hover:border-seam-blue">
@@ -153,7 +169,9 @@ export function RoofingProductPage({ product }: { product: MerchandisedRoofingPr
           <p className="mt-3 font-body text-xs text-slate">
             {sheet
               ? "The minimum pitch, purlin spacing and fixing pattern for a profile and gauge come from the maker's tables; your truss design and drawings govern."
-              : "Your drawings, the truss design and SANS 10400 decide the build-up — follow the maker's installation guide."}
+              : timber
+                ? "Member sizes, spans and the grade come from your truss design, the SANS 10400-L span tables or your engineer — S7 only where it is specified."
+                : "Your drawings, the truss design and SANS 10400 decide the build-up — follow the maker's installation guide."}
           </p>
         </section>
         <section className="rounded-sm border border-basalt/10 bg-white p-6">
@@ -163,8 +181,14 @@ export function RoofingProductPage({ product }: { product: MerchandisedRoofingPr
         <section className="rounded-sm border border-basalt/10 bg-white p-6">
           <h2 className="font-mono text-[10px] uppercase tracking-widest text-seam-blue">Delivery &amp; Returns</h2>
           <p className="mt-3 font-body text-sm text-basalt">
-            {sheet ? "Roof sheets" : "Roofing accessories"} come on the merchant&apos;s flatbed: we confirm the delivery slot, any delivery charge and any cut-to-length lead time with you
-            before dispatch. Cut-to-length sheets are made for your order and can&apos;t be returned or refunded once cut, so check every length on your quote before you accept it. See the{" "}
+            {timber ? (
+              <>Timber comes on the merchant&apos;s flatbed: we confirm the grade and treatment, stock, the delivery slot and any delivery charge with you before dispatch. See the </>
+            ) : (
+              <>
+                {sheet ? "Roof sheets" : "Roofing accessories"} come on the merchant&apos;s flatbed: we confirm the delivery slot, any delivery charge and any cut-to-length lead time with you
+                before dispatch. Cut-to-length sheets are made for your order and can&apos;t be returned or refunded once cut, so check every length on your quote before you accept it. See the{" "}
+              </>
+            )}
             <Link href="/legal/shipping-delivery" className="text-seam-blue underline">Shipping &amp; Delivery</Link> and{" "}
             <Link href="/legal/returns-refunds" className="text-seam-blue underline">Returns &amp; Refunds</Link> policies.
           </p>
@@ -175,7 +199,9 @@ export function RoofingProductPage({ product }: { product: MerchandisedRoofingPr
 
       {related.length > 0 && (
         <section className="mt-16">
-          <h2 className="font-display text-xl font-bold text-basalt">More in {category.name}</h2>
+          <h2 className="font-display text-xl font-bold text-basalt">
+            {timber ? `Other sizes in ${product.timberGrade} ${product.timberTreatment} ${product.timberFinish?.toLowerCase()}` : `More in ${category.name}`}
+          </h2>
           <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {related.map((p) => (
               <PackagedProductCard key={p.sku} product={p} />

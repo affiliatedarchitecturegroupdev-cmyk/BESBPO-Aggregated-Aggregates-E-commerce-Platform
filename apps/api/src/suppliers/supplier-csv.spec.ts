@@ -159,6 +159,18 @@ describe("seed supplier files", () => {
     expect(rows.every((r) => r.latitude == null && r.longitude == null)).toBe(true);
   });
 
+  it("lists structural timber sawmills and merchants as unverified, sourced leads coded to CAT-30/31", () => {
+    const { readFileSync } = jest.requireActual<typeof import("node:fs")>("node:fs");
+    const { join } = jest.requireActual<typeof import("node:path")>("node:path");
+    const text = readFileSync(join(__dirname, "../../../../packages/database/prisma/seed-data/suppliers-timber.csv"), "utf8");
+    const { rows, errors } = parseSupplierCsv(text);
+    expect(errors).toEqual([]);
+    expect(rows.length).toBe(5);
+    expect(rows.every((r) => !r.isVerifiedPartner && r.sourceUrl?.startsWith("https://"))).toBe(true);
+    expect(rows.every((r) => r.categorySlugs.every((c) => ["structural-timber", "timber-connectors"].includes(c)))).toBe(true);
+    expect(rows.every((r) => r.latitude == null && r.longitude == null)).toBe(true);
+  });
+
   it("lists paving, kerb, retaining and gabion makers as unverified, sourced leads coded to CAT-21/22", () => {
     const { readFileSync } = jest.requireActual<typeof import("node:fs")>("node:fs");
     const { join } = jest.requireActual<typeof import("node:path")>("node:path");

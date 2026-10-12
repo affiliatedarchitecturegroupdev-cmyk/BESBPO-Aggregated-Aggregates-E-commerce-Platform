@@ -45,6 +45,7 @@ PackagedUnitName = Literal[
     "BAG_25KG", "BAG_50KG", "BULK_BAG_1_5T", "BULK_TANKER_PER_TON", "DRUM_210L", "IBC_TOTE_1000L",
     "LENGTH_6M", "LENGTH_12M", "TONNE", "SHEET", "ROLL", "COIL", "PACK", "EACH", "THOUSAND",
     "SHEET_3_0M", "SHEET_3_6M", "SHEET_4_2M", "SHEET_4_8M", "SHEET_6_0M", "SHEET_6_6M", "METRE",
+    "TIMBER_3_0M", "TIMBER_3_6M", "TIMBER_4_2M", "TIMBER_4_8M", "TIMBER_6_0M", "TIMBER_6_6M",
 ]
 
 
@@ -78,7 +79,7 @@ def list_masonry_products():
 
 @app.get("/products/roofing")
 def list_roofing_products():
-    """CAT-26..28 roof sheeting, flashings, ridges & fixings, and insulation, underlay & rainwater goods."""
+    """CAT-26..28 roof sheeting, flashings, ridges & fixings, and insulation, underlay & rainwater goods; CAT-30/31 roof & structural timber and connectors."""
     return ROOFING_RAW["products"]
 
 
