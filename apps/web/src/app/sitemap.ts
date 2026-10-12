@@ -25,6 +25,7 @@ const LEGAL_FILES: Record<string, string> = {
   "/legal/popia-notice": "popia-notice.md",
   "/legal/cookie-policy": "cookie-policy.md",
   "/legal/returns-refunds": "returns-refunds-policy.md",
+  "/legal/handling-fee": "handling-fee-policy.md",
   "/legal/shipping-delivery": "shipping-delivery-policy.md",
   "/legal/paia-manual": "paia-manual.md",
 };

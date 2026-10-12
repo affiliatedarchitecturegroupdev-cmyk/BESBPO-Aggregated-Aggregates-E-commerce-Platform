@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { formatZAR } from "@/lib/pricing";
+import { NumberInput } from "@/components/ui/NumberInput";
 
 export type DrainStoneOption = { sku: string; slug: string; name: string; densityKgPerM3: number; pricePerTon: number | null };
 
@@ -52,15 +53,15 @@ export function FrenchDrainCalculator({ stones }: { stones: DrainStoneOption[] }
         </label>
         <label className="col-span-2 block">
           <span className={label}>Drain length (m)</span>
-          <input type="number" min={0} step={1} value={length} onChange={(e) => setLength(Math.max(0, Number(e.target.value) || 0))} className={input} />
+          <NumberInput min={0} step={1} value={length} onValueChange={setLength} className={input} />
         </label>
         <label className="block">
           <span className={label}>Trench width (m)</span>
-          <input type="number" min={0} step={0.05} value={width} onChange={(e) => setWidth(Math.max(0, Number(e.target.value) || 0))} className={input} />
+          <NumberInput min={0} step={0.05} value={width} onValueChange={setWidth} className={input} />
         </label>
         <label className="block">
           <span className={label}>Trench depth (m)</span>
-          <input type="number" min={0} step={0.05} value={depth} onChange={(e) => setDepth(Math.max(0, Number(e.target.value) || 0))} className={input} />
+          <NumberInput min={0} step={0.05} value={depth} onValueChange={setDepth} className={input} />
         </label>
       </div>
       <dl className="mt-4 space-y-1 font-body text-sm text-basalt">

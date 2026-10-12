@@ -195,7 +195,8 @@ export function RoofingProductPage({ product }: { product: MerchandisedRoofingPr
               </>
             )}
             <Link href="/legal/shipping-delivery" className="text-seam-blue underline">Shipping &amp; Delivery</Link> and{" "}
-            <Link href="/legal/returns-refunds" className="text-seam-blue underline">Returns &amp; Refunds</Link> policies.
+            <Link href="/legal/returns-refunds" className="text-seam-blue underline">Returns &amp; Refunds</Link> policies. Returning materials that were supplied
+            correctly carries an 18% <Link href="/legal/handling-fee" className="text-seam-blue underline">handling fee</Link>.
           </p>
         </section>
       </div>

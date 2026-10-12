@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AccountNav } from "@/components/account/AccountNav";
-import { ActionForm, Field, inputClass, SubmitButton } from "@/components/account/Forms";
+import { ActionForm, Field, inputClass, MobileField, SubmitButton } from "@/components/account/Forms";
+import { NewPasswordFields } from "@/components/account/NewPasswordFields";
 import { api } from "@/lib/api";
 import type { SavedAddress } from "@/lib/account-types";
 import { requireSession, sessionToken } from "@/lib/session";
@@ -86,21 +87,21 @@ export default async function SettingsPage() {
 
       <div className="mt-8 grid gap-6 md:grid-cols-2">
         <section className={`${card} p-4`}>
-          <h2 className="font-body text-sm font-semibold text-basalt">Your name</h2>
-          <p className="font-body text-xs text-slate">Used on your orders, quotes and emails.</p>
+          <h2 className="font-body text-sm font-semibold text-basalt">Your details</h2>
+          <p className="font-body text-xs text-slate">Used on your orders, quotes and emails, and to coordinate deliveries.</p>
           <ActionForm action={updateProfile} className="mt-3 space-y-3">
             <Field label="Full name" name="name" defaultValue={user.name ?? ""} autoComplete="name" />
-            <SubmitButton variant="subtle">Save name</SubmitButton>
+            <MobileField defaultValue={user.mobileNumber ?? ""} />
+            <SubmitButton variant="subtle">Save details</SubmitButton>
           </ActionForm>
         </section>
 
         <section className={`${card} p-4`}>
           <h2 className="font-body text-sm font-semibold text-basalt">Password</h2>
-          <p className="font-body text-xs text-slate">At least 10 characters. Signed in with Google or Microsoft? Leave the current password blank to set one.</p>
+          <p className="font-body text-xs text-slate">At least 10 characters — the meter shows how strong it is. Signed in with Google or Microsoft? Leave the current password blank to set one.</p>
           <ActionForm action={changePassword} className="mt-3 space-y-3">
             <Field label="Current password" name="currentPassword" type="password" autoComplete="current-password" />
-            <Field label="New password" name="newPassword" type="password" required minLength={10} autoComplete="new-password" />
-            <Field label="Confirm new password" name="confirmPassword" type="password" required minLength={10} autoComplete="new-password" />
+            <NewPasswordFields name="newPassword" label="New password" personal={[user.name, user.email, user.mobileNumber]} />
             <SubmitButton variant="subtle">Change password</SubmitButton>
           </ActionForm>
         </section>

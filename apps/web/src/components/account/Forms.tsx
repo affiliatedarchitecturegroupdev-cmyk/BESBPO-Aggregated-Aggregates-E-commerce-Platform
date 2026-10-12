@@ -41,6 +41,31 @@ export function Field({
   );
 }
 
+/** Mobile number — South African numbers as typed locally (082 123 4567), others with the country code. Checked by the API. */
+export function MobileField({ required = false, defaultValue }: { required?: boolean; defaultValue?: string }) {
+  return (
+    <label className="block">
+      <span className="font-mono text-[10px] uppercase text-slate">
+        Mobile number
+        {required && " *"}
+      </span>
+      <input
+        name="mobileNumber"
+        type="tel"
+        inputMode="tel"
+        autoComplete="tel"
+        required={required}
+        defaultValue={defaultValue}
+        placeholder="082 123 4567"
+        pattern="[+0-9()\s.\-]{9,20}"
+        title="A mobile number, e.g. 082 123 4567 — or with the country code (+44 …) outside South Africa"
+        className={inputClass}
+      />
+      <span className="mt-1 block font-body text-[11px] text-slate">For delivery coordination and order updates. Outside South Africa, start with the country code.</span>
+    </label>
+  );
+}
+
 export function SubmitButton({ children, variant = "primary" }: { children: React.ReactNode; variant?: "primary" | "subtle" }) {
   const { pending } = useFormStatus();
   const style =

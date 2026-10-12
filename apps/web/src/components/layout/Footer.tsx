@@ -17,6 +17,7 @@ const LEGAL_LINKS = [
   { href: "/legal/popia-notice", label: "POPIA Notice" },
   { href: "/legal/cookie-policy", label: "Cookie Policy" },
   { href: "/legal/returns-refunds", label: "Returns & Refunds" },
+  { href: "/legal/handling-fee", label: "Handling Fee Policy" },
   { href: "/legal/shipping-delivery", label: "Shipping & Delivery" },
   { href: "/legal/paia-manual", label: "PAIA Manual" },
   { href: "/photo-credits", label: "Photo Credits" },

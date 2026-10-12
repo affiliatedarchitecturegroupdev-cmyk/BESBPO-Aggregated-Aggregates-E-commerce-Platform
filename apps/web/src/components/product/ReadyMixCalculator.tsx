@@ -7,6 +7,7 @@ import { CUSTOMER_TIERS, type CustomerTierName } from "@/data/catalogue";
 import { isPumpPriced, PUMP_OPTIONS, type ReadyMixProduct } from "@/data/ready-mix";
 import { formatZAR, unpricedLabel } from "@/lib/pricing";
 import { tierOptionLabel } from "@/lib/tier-pricing";
+import { NumberInput } from "@/components/ui/NumberInput";
 
 /**
  * Ready-mix calculator: m³ at the chosen tier, never below a full
@@ -34,12 +35,11 @@ export function ReadyMixCalculator({ product }: { product: ReadyMixProduct }) {
       <div className="mt-4 grid grid-cols-2 gap-3">
         <label className="block">
           <span className="font-mono text-[10px] uppercase text-slate">Quantity (m³)</span>
-          <input
-            type="number"
+          <NumberInput
             min={product.minimumLoadM3}
             step={0.5}
             value={quantity}
-            onChange={(e) => setQuantity(Math.max(0, Number(e.target.value)))}
+            onValueChange={setQuantity}
             className="mt-1 w-full rounded-sm border border-basalt/20 px-3 py-2 font-body text-sm"
           />
         </label>

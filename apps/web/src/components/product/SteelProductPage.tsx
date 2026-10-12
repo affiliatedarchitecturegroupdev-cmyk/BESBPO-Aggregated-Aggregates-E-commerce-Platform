@@ -156,7 +156,8 @@ export function SteelProductPage({ product }: { product: MerchandisedSteelProduc
             Steel is delivered on the merchant&apos;s flatbed or crane truck, not a tipper: we confirm the delivery slot and any
             delivery charge with you before dispatch, and mill certificates travel with the load. See the{" "}
             <Link href="/legal/shipping-delivery" className="text-seam-blue underline">Shipping &amp; Delivery</Link> and{" "}
-            <Link href="/legal/returns-refunds" className="text-seam-blue underline">Returns &amp; Refunds</Link> policies.
+            <Link href="/legal/returns-refunds" className="text-seam-blue underline">Returns &amp; Refunds</Link> policies. Returning materials that were supplied
+            correctly carries an 18% <Link href="/legal/handling-fee" className="text-seam-blue underline">handling fee</Link>.
           </p>
         </section>
       </div>

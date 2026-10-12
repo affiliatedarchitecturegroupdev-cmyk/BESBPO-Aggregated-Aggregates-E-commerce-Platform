@@ -1,5 +1,6 @@
 import { deleteRefund, recordRefund } from "@/app/admin/finance/actions";
 import { ActionForm, inputClass, SubmitButton } from "@/components/account/Forms";
+import { HandlingFeeHelper } from "@/components/finance/HandlingFeeHelper";
 import { formatZAR } from "@/lib/pricing";
 
 export type RefundRecord = { id: string; orderId: string | null; bookingId: string | null; amount: string; reason: string; reference: string | null; refundedAt: string };
@@ -51,6 +52,7 @@ export function RefundPanel({
       {remaining > 0 ? (
         <ActionForm action={recordRefund} className="mt-3 grid gap-2 sm:grid-cols-[8rem_1fr_9rem_9rem_auto] sm:items-end">
           {"orderId" in target ? <input type="hidden" name="orderId" value={target.orderId} /> : <input type="hidden" name="bookingId" value={target.bookingId} />}
+          {"orderId" in target && <HandlingFeeHelper maxRefund={remaining} />}
           <label className="block"><span className={label}>Amount (R)</span><input name="amount" type="number" step="0.01" min="0.01" max={remaining} required className={inputClass} /></label>
           <label className="block"><span className={label}>Reason</span><input name="reason" required minLength={3} maxLength={500} className={inputClass} /></label>
           <label className="block"><span className={label}>EFT reference</span><input name="reference" maxLength={120} className={inputClass} /></label>

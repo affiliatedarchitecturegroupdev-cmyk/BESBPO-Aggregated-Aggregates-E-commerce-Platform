@@ -6,6 +6,7 @@ import { priceCart, type CartPricing } from "@/app/account/actions";
 import { findQuotable, isWholeUnit } from "@/data/quotable";
 import { cart, useCart, type CartDelivery } from "@/lib/cart";
 import { formatZAR } from "@/lib/pricing";
+import { NumberInput } from "@/components/ui/NumberInput";
 
 const GEOLOCATION_ERRORS: Record<number, string> = {
   1: "Location access was blocked — enter the distance instead.",
@@ -108,15 +109,12 @@ export function CartView({ signedIn }: { signedIn: boolean }) {
                 </label>
                 <label className="block">
                   <span className="sr-only">Quantity</span>
-                  <input
-                    type="number"
+                  <NumberInput
                     min={isWholeUnit(line.unit) ? 1 : 0.5}
                     step={isWholeUnit(line.unit) ? 1 : 0.5}
                     value={line.quantity}
-                    onChange={(e) => {
-                      const q = Number(e.target.value);
-                      if (q > 0) cart.update(index, { quantity: isWholeUnit(line.unit) ? Math.round(q) : q });
-                    }}
+                    integer={isWholeUnit(line.unit)}
+                    onValueChange={(q) => cart.update(index, { quantity: q })}
                     className="w-24 rounded-sm border border-basalt/20 px-2 py-1.5 font-body text-sm"
                   />
                 </label>

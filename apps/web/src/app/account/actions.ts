@@ -28,7 +28,7 @@ export async function register(_prev: FormState, form: FormData): Promise<FormSt
   if (form.get("password") !== form.get("confirmPassword")) return { error: "The passwords don't match." };
   const result = await api<{ accessToken: string }>("/auth/register", {
     method: "POST",
-    body: { email: text(form, "email"), password: form.get("password"), name: optional(form, "name") },
+    body: { email: text(form, "email"), password: form.get("password"), name: optional(form, "name"), mobileNumber: text(form, "mobileNumber") },
   });
   if (!result.ok) return { error: result.message };
   startSession(result.data.accessToken);
@@ -602,10 +602,10 @@ export async function resendNotification(form: FormData) {
 // --- account settings -------------------------------------------------------------
 
 export async function updateProfile(_prev: FormState, form: FormData): Promise<FormState> {
-  const result = await api("/account/profile", { method: "PATCH", token: sessionToken(), body: { name: text(form, "name") } });
+  const result = await api("/account/profile", { method: "PATCH", token: sessionToken(), body: { name: text(form, "name"), mobileNumber: text(form, "mobileNumber") } });
   if (!result.ok) return { error: result.message };
   revalidatePath("/account", "layout");
-  return { success: "Name saved." };
+  return { success: "Details saved." };
 }
 
 export async function changePassword(_prev: FormState, form: FormData): Promise<FormState> {
@@ -616,7 +616,7 @@ export async function changePassword(_prev: FormState, form: FormData): Promise<
     token: sessionToken(),
     body: { currentPassword: text(form, "currentPassword") || undefined, newPassword },
   });
-  if (!result.ok) return { error: result.status === 400 && /least 10/.test(result.message) ? "Use at least 10 characters." : result.message };
+  if (!result.ok) return { error: result.status === 400 && /least 10|longer than or equal/.test(result.message) ? "Use at least 10 characters." : result.message };
   return { success: "Password changed. Use it next time you sign in." };
 }
 

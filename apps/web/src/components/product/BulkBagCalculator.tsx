@@ -7,6 +7,7 @@ import { AddToCartButton } from "@/components/cart/AddToCartButton";
 import { useNearestDeliveryPoint } from "@/components/suppliers/useNearestDeliveryPoint";
 import { estimateDelivery, estimateLine, formatZAR, UNIT_LABELS } from "@/lib/pricing";
 import { tierOptionLabel } from "@/lib/tier-pricing";
+import { NumberInput } from "@/components/ui/NumberInput";
 
 function unitButtonLabel(unit: Unit, product: Product) {
   if (unit === "ton") return "Bulk (ton)";
@@ -76,23 +77,21 @@ export function BulkBagCalculator({ product }: { product: Product }) {
       <div className="mt-4 grid grid-cols-2 gap-3">
         <label className="block">
           <span className="font-mono text-[10px] uppercase text-slate">Quantity ({UNIT_LABELS[unit]})</span>
-          <input
-            type="number"
+          <NumberInput
             min={0}
             step={unit === "bag" ? 1 : "any"}
             value={quantity}
-            onChange={(e) => setQuantity(Math.max(0, Number(e.target.value)))}
+            onValueChange={setQuantity}
             className="mt-1 w-full rounded-sm border border-basalt/20 px-3 py-2 font-body text-sm"
           />
         </label>
         <label className="block">
           <span className="font-mono text-[10px] uppercase text-slate">Delivery distance (km)</span>
-          <input
-            type="number"
+          <NumberInput
             min={0}
             value={distanceKm}
-            onChange={(e) => {
-              setDistanceKm(Math.max(0, Number(e.target.value)));
+            onValueChange={(v) => {
+              setDistanceKm(v);
               setFromLocation(false);
             }}
             className="mt-1 w-full rounded-sm border border-basalt/20 px-3 py-2 font-body text-sm"

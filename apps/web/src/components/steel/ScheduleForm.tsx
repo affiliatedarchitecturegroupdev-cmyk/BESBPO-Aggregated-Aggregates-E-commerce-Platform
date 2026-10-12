@@ -5,10 +5,10 @@ import { useState } from "react";
 import { submitSchedule } from "@/app/reinforcing-steel/cut-and-bend/actions";
 import { ActionForm, Field, inputClass, SubmitButton } from "@/components/account/Forms";
 import { blankRow, DIAMETERS, kg, MAX_ROWS, parseScheduleCsv, rowMassKg, totalsBySize, type BarType, type ScheduleRow } from "@/lib/bar-schedule";
+import { NumberInput } from "@/components/ui/NumberInput";
 
 const label = "font-mono text-[10px] uppercase text-slate";
 const cell = "w-full rounded-sm border border-basalt/20 bg-white px-2 py-1.5 font-body text-sm";
-const whole = (value: string) => Math.max(0, Math.round(Number(value) || 0));
 
 /**
  * The cut & bend request: schedule rows (typed, or imported from our CSV
@@ -100,9 +100,9 @@ export function ScheduleForm({ name, email, signedIn, provinces }: { name?: stri
                     </select>
                   </td>
                   <td className="w-16 px-1 py-1.5"><input aria-label={`Row ${i + 1} shape code`} value={r.shapeCode} inputMode="numeric" maxLength={2} onChange={(e) => update(i, { shapeCode: e.target.value.replace(/\D/g, "").slice(0, 2) })} className={cell} /></td>
-                  <td className="w-20 px-1 py-1.5"><input aria-label={`Row ${i + 1} number of members`} type="number" min={1} value={r.members} onChange={(e) => update(i, { members: whole(e.target.value) })} className={cell} /></td>
-                  <td className="w-20 px-1 py-1.5"><input aria-label={`Row ${i + 1} bars per member`} type="number" min={1} value={r.barsPerMember} onChange={(e) => update(i, { barsPerMember: whole(e.target.value) })} className={cell} /></td>
-                  <td className="w-24 px-1 py-1.5"><input aria-label={`Row ${i + 1} cut length in mm`} type="number" min={100} max={13000} step={5} value={r.lengthMm} onChange={(e) => update(i, { lengthMm: whole(e.target.value) })} className={cell} /></td>
+                  <td className="w-20 px-1 py-1.5"><NumberInput aria-label={`Row ${i + 1} number of members`} integer min={0} value={r.members} onValueChange={(v) => update(i, { members: v })} className={cell} /></td>
+                  <td className="w-20 px-1 py-1.5"><NumberInput aria-label={`Row ${i + 1} bars per member`} integer min={0} value={r.barsPerMember} onValueChange={(v) => update(i, { barsPerMember: v })} className={cell} /></td>
+                  <td className="w-24 px-1 py-1.5"><NumberInput aria-label={`Row ${i + 1} cut length in mm`} integer min={0} max={13000} step={5} value={r.lengthMm} onValueChange={(v) => update(i, { lengthMm: v })} className={cell} /></td>
                   <td className="w-24 whitespace-nowrap px-1 py-2.5 text-right tabular-nums text-basalt">{kg(rowMassKg(r))}</td>
                   <td className="w-8 px-1 py-1.5 text-right">
                     <button type="button" onClick={() => setRows((rs) => (rs.length > 1 ? rs.filter((_, j) => j !== i) : [blankRow("A1")]))} aria-label={`Remove row ${i + 1}`} className="rounded-sm px-2 py-1 text-slate hover:bg-limestone hover:text-basalt">
