@@ -42,7 +42,7 @@ def test_every_live_price_is_lowest_retail_benchmark_times_1_08():
             assert cents(benchmark * Decimal("1.08")) == Decimal(str(u["list_price_per_unit"]))
             assert "lowest" in u["source_note"], p["sku"]
             priced += 1
-    assert priced == 16
+    assert priced == 18
 
 
 def test_bricks_are_sold_per_thousand_and_counts_per_m2_follow_the_joint_geometry():

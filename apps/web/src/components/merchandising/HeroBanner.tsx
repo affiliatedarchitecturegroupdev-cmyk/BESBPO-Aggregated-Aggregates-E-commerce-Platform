@@ -1,13 +1,14 @@
 import Link from "next/link";
 import type { HeroContent } from "@/lib/cms";
 
-// Courses of the strata motif, top to bottom: each a material the platform sells.
+// Courses of the strata motif, top to bottom: a build from the roof down to
+// the ground it stands on — each course a department the platform sells.
 const STRATA = [
-  { label: "Decorative & landscaping", color: "#C08A34", width: "38%" },
-  { label: "Sand & fine aggregates", color: "#D6BE8E", width: "52%" },
-  { label: "Crushed stone", color: "#8C8A86", width: "66%" },
-  { label: "Crusher run & base course", color: "#6F695F", width: "80%" },
-  { label: "Sub-base & selected fill", color: "#2C4A5E", width: "94%" },
+  { label: "Roofing & timber", color: "#C08A34", width: "38%" },
+  { label: "Bricks, blocks & paving", color: "#D6BE8E", width: "52%" },
+  { label: "Steel, cement & concrete", color: "#8C8A86", width: "66%" },
+  { label: "Sand, stone & drainage", color: "#6F695F", width: "80%" },
+  { label: "Sub-base & foundations", color: "#2C4A5E", width: "94%" },
 ];
 
 export function HeroBanner({ content }: { content: HeroContent }) {

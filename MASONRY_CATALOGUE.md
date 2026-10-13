@@ -24,12 +24,12 @@
    **4% (approved by the owner, 10 Oct 2026)**, Volume/Civil Bulk quoted.
    Never below the 3% margin floor.
 
-## The catalogue (21 products, 7 priced units)
+## The catalogue (21 products, 8 priced units)
 
 | Code | Category | Products | Live-priced units |
 |---|---|---|---|
 | CAT-19 | Bricks & Blocks | Clay stock (NFP), clay face FBS and FBX, clay maxi, cement imperial stock, cement maxi, 90 mm block, 140 and 190 mm hollow blocks — 9 | Clay stock and cement imperial per 1,000; 90 mm and 140 mm blocks each |
-| CAT-20 | Lintels, DPC & Wall Accessories | Prestressed lintels 1.2, 1.5, 1.8, 2.4, 3.0, 3.6 m; DPC 375 µm 110/150/225/300 mm × 40 m; concrete and PVC air bricks — 12 | DPC 110 and 225 mm; concrete air brick |
+| CAT-20 | Lintels, DPC & Wall Accessories | Prestressed lintels 1.2, 1.5, 1.8, 2.4, 3.0, 3.6 m; DPC 375 µm 110/150/225/300 mm × 40 m; concrete and PVC air bricks — 12 | DPC 110, 150 and 225 mm; concrete air brick |
 
 **Units of sale:** bricks per 1,000 (the trade unit; the product page also
 shows the price per brick); blocks, lintels and air bricks per item; DPC per
@@ -195,7 +195,7 @@ roofing line on `/roofing` (see `ROOFING_CATALOGUE.md`). Four products, per tile
 | Double Roman, standard colours | R10.48 list (Cashbuild R9.70 lowest, handling fee excluded; Leroy Merlin Marley R10.50) |
 | Double Roman, through-colour and slate | quoted (prices depend on maker and colour) |
 | Flat profile | quoted |
-| Ridge tile (taper or V-capped) | quoted (one retailer only) |
+| Ridge tile (taper or V-capped) | R45.00 → **R48.60** (13 Oct 2026: Builders BMI Coverland / Marley taper ridge R45.00; Cashbuild R62.95) |
 
 `units_per_m2` for Double Roman is **about 10** — approximate; the batten gauge
 and pitch decide the real count, and the roof calculator adds 5% for breakage.

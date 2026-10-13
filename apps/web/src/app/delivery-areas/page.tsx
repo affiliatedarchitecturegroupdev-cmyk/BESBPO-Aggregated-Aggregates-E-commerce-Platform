@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { DELIVERY_RULES } from "@/data/catalogue";
-import { NearestDeliveryPointFinder } from "@/components/suppliers/NearestDeliveryPointFinder";
+import { DeliveryBand } from "@/components/merchandising/DeliveryBand";
 import { CATEGORIES } from "@/data/categories";
 import { apiCached } from "@/lib/api";
 import { formatZAR } from "@/lib/pricing";
@@ -78,7 +78,7 @@ export default async function DeliveryAreasPage() {
 
       {(coverage?.withCoordinates ?? 0) > 0 && (
         <div className="mt-8">
-          <NearestDeliveryPointFinder quoteOverKm={DELIVERY_RULES.quoteOverKm} />
+          <DeliveryBand bare />
         </div>
       )}
 

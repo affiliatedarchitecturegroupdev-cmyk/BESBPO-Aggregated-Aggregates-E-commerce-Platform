@@ -42,7 +42,7 @@ def test_every_live_price_is_lowest_retail_benchmark_times_1_08():
             assert "lowest" in u["source_note"]
             priced += 1
     # Y8–Y16 6 m lengths, Ref 100 and 193 mesh, 150 mm brickforce, tie wire, 40x40x3 angle, 50x50x2 square tube.
-    assert priced == 10
+    assert priced == 11
 
 
 def test_rebar_mass_follows_sans_920():

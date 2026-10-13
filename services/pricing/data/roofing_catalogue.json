@@ -1953,13 +1953,13 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
+     "market_benchmark_price": 19.99,
      "cost_basis_percent": 100,
-     "cost_per_unit": null,
+     "cost_per_unit": 19.99,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's prices found for this specification — quoted with the supplier. (Buco broad closure R19.99–R21.60)."
+     "list_price_per_unit": 21.59,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Buco broad closure R19.99 (lowest; R19.99–R21.60, from a search listing checked 2026-10-10 — Buco's site could not be opened from the build environment, confirm before relying on it); Cashbuild 'IBR Closure Broad Ridge Galvanized 0.4mm x 685mm' and 'IBR Eave Closure Narrow Galvanized 0.4mm x 685mm' R25.95 each and Builders 'Heunis Steel IBR Broad Eave Closures Galvanized' R35.00, checked 2026-10-13 on the retailers' own websites. Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
     }
    ],
    "manufacturer": null,

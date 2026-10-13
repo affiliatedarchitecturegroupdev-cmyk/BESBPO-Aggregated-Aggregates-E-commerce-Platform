@@ -2,6 +2,9 @@
 export type SitePage = { href: string; title: string; keywords: string };
 
 export const SITE_PAGES: SitePage[] = [
+  { href: "/departments", title: "All Departments", keywords: "departments categories all range catalogue browse shop" },
+  { href: "/buy-online", title: "Buy Online — Priced Products", keywords: "buy online add to cart priced price shop now order online" },
+  { href: "/coverage", title: "Check Delivery to Your Area", keywords: "check delivery town suburb location nearest supplier map where deliver" },
   { href: "/delivery-areas", title: "Delivery Areas & Charges", keywords: "delivery distance charges tipper province coverage km" },
   { href: "/suppliers", title: "Partner Supplier Network", keywords: "suppliers quarries partners network plants" },
   { href: "/ways-to-pay", title: "Ways to Pay", keywords: "payment card eft capitec payflex payjustnow float lulapay credit bnpl invoice" },

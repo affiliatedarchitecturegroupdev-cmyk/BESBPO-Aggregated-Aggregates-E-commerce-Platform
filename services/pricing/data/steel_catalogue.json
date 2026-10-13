@@ -1023,13 +1023,13 @@
      "unit": "ROLL",
      "unit_label": "20 m roll",
      "weight_kg": null,
-     "market_benchmark_price": null,
+     "market_benchmark_price": 50.0,
      "cost_basis_percent": 100,
-     "cost_per_unit": null,
+     "cost_per_unit": 50.0,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Fewer than two SA retailers list a regular price for this unit (Oct 2026) — quoted with the merchant."
+     "list_price_per_unit": 54.0,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Builders 'Brickforce 75 mm x 2.8 mm x 20 m – Wall Reinforcing Steel (NHBRC Approved)' R50.00 (lowest; another Builders listing R69.00); Cashbuild 'Brick Force 75mm 2.8mm X 20m NHBRC' R54.95. checked 2026-10-13 on the retailers' own websites (Builders product listings flagged non-promotional; Cashbuild category listings at the default store — Cashbuild prices vary by store). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
     }
    ]
   },

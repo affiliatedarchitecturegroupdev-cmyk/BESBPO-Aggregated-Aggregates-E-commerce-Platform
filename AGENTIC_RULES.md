@@ -126,7 +126,10 @@ unreviewed work.
   the 30/60/100km delivery bands. 42 suppliers are pinned from coordinates
   their operators publish (migration `20261025090000_supplier_official_pins`),
   and 76 more operator-published sites are seeded as unverified, pinned
-  leads (`suppliers-official-network.csv`). Delivery is national (all nine provinces,
+  leads (`suppliers-official-network.csv`). On 13 Oct 2026 the owner cleared
+  the researched leads that are real sites as approved, live partners
+  (migration `20261026090000_clear_researched_suppliers`); staff switch off any
+  that prove unsuitable. Delivery is national (all nine provinces,
   Oct 2026): verified partners in every province are active.
 - Payment gateways: every adapter except Manual EFT/PO is a structural stub
   until merchant credentials exist (PayFast, Peach, Ozow, Stitch, Lulapay —

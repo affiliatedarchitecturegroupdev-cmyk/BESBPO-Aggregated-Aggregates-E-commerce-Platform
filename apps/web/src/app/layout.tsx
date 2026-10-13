@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     template: "%s — Aggregated Aggregates",
   },
   description:
-    "Sub-base, crushed stone, sand, and decorative aggregates — sold by ton, m³ or bag, delivered across all nine provinces of South Africa. A Besbpo Group division.",
+    "Building materials from the foundations to the roof — aggregates and sand, cement and ready-mix, steel, bricks and blocks, paving, drainage, roofing and timber — delivered across all nine provinces of South Africa from the nearest approved partner supplier. A Besbpo Group division.",
   openGraph: { siteName: "Aggregated Aggregates", locale: "en_ZA", type: "website" },
 };
 

@@ -25,13 +25,16 @@ export type Slide = { imageId: string; caption: string; href?: string; enabled: 
 export type SlideshowContent = { enabled: boolean; intervalSeconds: number; slides: Slide[] };
 export type SiteContent = { announcement: AnnouncementContent; hero: HeroContent; promo: PromoContent; slideshow: SlideshowContent };
 
+// Every product family on the storefront (the hero quotes the total).
+const PRODUCT_COUNT = PRODUCTS.length + PACKAGED_PRODUCTS.length + READY_MIX_PRODUCTS.length + STEEL_PRODUCTS.length + MASONRY_PRODUCTS.length + ROOFING_PRODUCTS.length;
+
 export const DEFAULT_CONTENT: SiteContent = {
   announcement: { enabled: false, message: "" },
   hero: {
-    eyebrow: "SANS / COLTO Graded",
+    eyebrow: "Foundations to Roof · SANS Graded",
     headline: "Every Layer Starts Here.",
-    body: `Sub-base, crushed stone, sand and decorative aggregate — ${PRODUCTS.length} graded materials priced by ton, m³ or bag, delivered by tipper across South Africa from our approved partner-supplier network.`,
-    primaryCta: { label: "Shop Products", href: "/products" },
+    body: `Aggregates and sand, cement and ready-mix, steel, bricks and blocks, paving, drainage, roofing and timber — ${PRODUCT_COUNT} products, many priced to buy online and the rest quoted fast, delivered from the approved partner supplier nearest your site, anywhere in South Africa.`,
+    primaryCta: { label: "Shop All Departments", href: "/departments" },
     secondaryCta: { label: "Request a Bulk Quote", href: "/quote" },
   },
   promo: {

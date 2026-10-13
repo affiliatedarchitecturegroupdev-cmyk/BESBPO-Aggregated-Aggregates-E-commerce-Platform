@@ -48,6 +48,8 @@ const STATIC_PATHS = [
   "/calculators",
   "/estimator",
   "/shop-by-stage",
+  "/departments",
+  "/buy-online",
   "/partners",
   "/partners/onboarding",
   "/plant-hire/how-it-works",

@@ -3,7 +3,10 @@ import Link from "next/link";
 import { CATEGORIES } from "@/data/categories";
 import { INDUSTRIES } from "@/data/industries";
 import { getPublishedPosts } from "@/lib/blog";
-import { getCatalogue, getMasonryCatalogue, getPackagedCatalogue, getRoofingCatalogue, getSteelCatalogue } from "@/lib/cms";
+import { DEPARTMENTS } from "@/data/departments";
+import { getHiddenSkus } from "@/lib/cms";
+import { formatZAR } from "@/lib/pricing";
+import { PRODUCT_INDEX, searchProducts } from "@/lib/product-index";
 import { SITE_PAGES } from "@/data/site-pages";
 
 export const metadata: Metadata = { title: "Search", robots: { index: false } };
@@ -11,23 +14,19 @@ export const metadata: Metadata = { title: "Search", robots: { index: false } };
 
 const matches = (haystack: string, words: string[]) => words.every((w) => haystack.toLowerCase().includes(w));
 
-/** Site-wide search: products (aggregates and packaged goods), categories, industries, articles and key pages. */
+/** Site-wide search: every product (ranked, with its "from" price), departments, categories, industries, articles and key pages. */
 export default async function SearchPage({ searchParams }: { searchParams: { q?: string } }) {
   const raw = (searchParams.q ?? "").trim().slice(0, 100);
   const words = raw.toLowerCase().split(/\s+/).filter(Boolean);
-  const [catalogue, packaged, steel, masonry, roofing, posts] = words.length
-    ? await Promise.all([getCatalogue(), getPackagedCatalogue(), getSteelCatalogue(), getMasonryCatalogue(), getRoofingCatalogue(), getPublishedPosts()])
-    : [[], [], [], [], [], []];
-  const categoryName = (slug: string) => CATEGORIES.find((c) => c.slug === slug)?.name ?? "";
-
-  const products = [...catalogue, ...packaged, ...[...steel, ...masonry, ...roofing].map((p) => ({ ...p, description: p.description ?? p.summary }))].filter((p) =>
-    matches([p.name, p.sku, categoryName(p.categorySlug), p.gradingStandard ?? "", p.description ?? ""].join(" "), words),
-  );
+  const [hidden, posts] = words.length ? await Promise.all([getHiddenSkus(), getPublishedPosts()]) : [[], []];
+  const hiddenSet = new Set(hidden);
+  const products = words.length ? searchProducts(raw, PRODUCT_INDEX.filter((p) => !hiddenSet.has(p.sku)), 60) : [];
+  const departments = words.length ? DEPARTMENTS.filter((d) => matches(`${d.name} ${d.blurb}`, words)) : [];
   const categories = words.length ? CATEGORIES.filter((c) => matches(`${c.name} ${c.description}`, words)) : [];
   const industries = words.length ? INDUSTRIES.filter((i) => matches(`${i.name} ${i.description}`, words)) : [];
   const articles = posts.filter((p) => matches(`${p.title} ${p.excerpt ?? ""} ${p.bodyMarkdown}`, words));
   const pages = words.length ? SITE_PAGES.filter((p) => matches(`${p.title} ${p.keywords}`, words)) : [];
-  const total = products.length + categories.length + industries.length + articles.length + pages.length;
+  const total = products.length + departments.length + categories.length + industries.length + articles.length + pages.length;
 
   const section = (title: string, items: { href: string; label: string; detail?: string }[]) =>
     items.length > 0 && (
@@ -56,7 +55,15 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
         <button type="submit" className="rounded-sm bg-seam-blue px-5 py-2 font-body text-sm font-semibold text-limestone hover:bg-basalt">Search</button>
       </form>
       {raw && <p className="mt-6 font-body text-sm text-slate">{total} result{total === 1 ? "" : "s"}</p>}
-      {section("Products", products.map((p) => ({ href: `/products/${p.slug}`, label: p.name, detail: `${p.sku} · ${categoryName(p.categorySlug)}` })))}
+      {section("Departments", departments.map((d) => ({ href: d.href, label: d.name, detail: d.blurb })))}
+      {section(
+        "Products",
+        products.map((p) => ({
+          href: `/products/${p.slug}`,
+          label: p.name,
+          detail: `${p.categoryName} · ${p.fromPrice !== null ? `from ${formatZAR(p.fromPrice)} / ${p.fromUnit} — buy online` : "price on quote"}`,
+        })),
+      )}
       {section("Categories", categories.map((c) => ({ href: `/products?category=${c.slug}`, label: c.name, detail: c.description })))}
       {section("Industries", industries.map((i) => ({ href: `/products?industry=${i.slug}`, label: i.name, detail: i.description })))}
       {section("Articles", articles.map((a) => ({ href: `/blog/${a.slug}`, label: a.title, detail: a.excerpt ?? undefined })))}
