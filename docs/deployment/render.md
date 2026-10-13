@@ -179,6 +179,11 @@ labelled as leads). To bring in a revised list later:
 
    Take each pin from the supplier's loading gate on a map. Don't estimate
    it: a wrong pin moves customers into the wrong 30/60/100km delivery band.
+
+   Migration `20261025090000_supplier_official_pins` already pins 42
+   suppliers from coordinates their operators publish (Afrimat's branch
+   locator, AfriSam's locations map, Raumix's contact map). It only fills
+   suppliers that have no pin, so it never overwrites a pin staff set.
 4. The admin overview counts active suppliers still without a pin. Until at
    least one has a pin, `/delivery-areas` shows provinces and towns but hides
    the **Use my location** finder.
@@ -293,6 +298,15 @@ in **Admin → Notifications** rather than sent.
   `roofing_catalogue.json` (three S5 H2 sections priced, the rest quoted); the supplier seed adds 5 leads from
   `suppliers-timber.csv` as unverified and inactive. No new environment
   variables.
+- **Official supplier pins & network leads (Oct 2026).** Migration
+  `20261025090000_supplier_official_pins` sets map pins for 42 existing
+  suppliers from coordinates their operators publish on their own websites,
+  and only where the supplier has no pin yet. The supplier seed adds 76
+  leads from `suppliers-official-network.csv` (`NET-SUP-*`), each with a pin and
+  its source page: Afrimat, AfriSam, Raumix and PPC quarries, ready-mix
+  plants and cement depots taken from those companies' location maps. They
+  arrive unverified and inactive. Rows that may overlap an existing supplier
+  say so in their notes. No new environment variables.
 - **Drainage & membranes (Oct 2026).** No migration: the pre-deploy seed
   adds the CAT-23..25 categories and 19 products (pipes sold per 6 m length),
   and the supplier seed adds 9 leads from `suppliers-drainage.csv` as

@@ -383,13 +383,18 @@ describe("Aggregated Aggregates API (e2e)", () => {
       `T${run}-3,Secret Quarry C,Tier 1,Western Cape,"3 Road, Worcester",CAT-02 (19mm),CAT-02,x`,
     ].join("\n");
     let staff: string;
+    // Real suppliers already pinned (official pins, staff edits) would compete with the fictional ones; set them aside.
+    let setAside: string[] = [];
 
     beforeAll(async () => {
       staff = await register("supstaff");
       await prisma.user.update({ where: { email: `supstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      setAside = (await prisma.supplierLocation.findMany({ where: { isActive: true, latitude: { not: null } }, select: { id: true } })).map((s) => s.id);
+      await prisma.supplierLocation.updateMany({ where: { id: { in: setAside } }, data: { isActive: false } });
     });
     afterAll(async () => {
       await prisma.supplierLocation.deleteMany({ where: { externalId: { startsWith: `T${run}-` } } });
+      await prisma.supplierLocation.updateMany({ where: { id: { in: setAside } }, data: { isActive: true } });
     });
 
     it("keeps the supplier list, import and export staff-only", async () => {
@@ -1284,11 +1289,21 @@ describe("Aggregated Aggregates API (e2e)", () => {
       { externalId: "SUP-016", latitude: -29.62, longitude: 30.38 }, // Pietermaritzburg: sub-base & crushed stone
       { externalId: "SUP-020", latitude: -29.7, longitude: 31.05 }, // Durban North: sand
     ];
+    // Every other pinned supplier is set aside, so only the two test pins count.
+    let original: { externalId: string | null; latitude: number | null; longitude: number | null }[] = [];
+    let setAside: string[] = [];
     beforeAll(async () => {
+      const ids = pins.map((p) => p.externalId);
+      original = await prisma.supplierLocation.findMany({ where: { externalId: { in: ids } }, select: { externalId: true, latitude: true, longitude: true } });
+      setAside = (
+        await prisma.supplierLocation.findMany({ where: { isActive: true, latitude: { not: null }, externalId: { notIn: ids } }, select: { id: true } })
+      ).map((s) => s.id);
+      await prisma.supplierLocation.updateMany({ where: { id: { in: setAside } }, data: { isActive: false } });
       for (const pin of pins) await prisma.supplierLocation.update({ where: { externalId: pin.externalId }, data: { latitude: pin.latitude, longitude: pin.longitude } });
     });
     afterAll(async () => {
-      for (const pin of pins) await prisma.supplierLocation.update({ where: { externalId: pin.externalId }, data: { latitude: null, longitude: null } });
+      for (const o of original) await prisma.supplierLocation.update({ where: { externalId: o.externalId! }, data: { latitude: o.latitude, longitude: o.longitude } });
+      await prisma.supplierLocation.updateMany({ where: { id: { in: setAside } }, data: { isActive: true } });
     });
 
     it("prices a cart for anyone, from the customer's pin to the farthest supplier needed", async () => {

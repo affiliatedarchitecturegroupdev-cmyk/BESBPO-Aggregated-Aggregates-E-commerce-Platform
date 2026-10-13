@@ -186,4 +186,22 @@ describe("seed supplier files", () => {
     expect(rows.every((r) => r.categorySlugs.every((c) => ["paving-kerbs-edging", "retaining-erosion-control"].includes(c)))).toBe(true);
     expect(rows.every((r) => r.latitude == null && r.longitude == null)).toBe(true);
   });
+  it("lists operator-published quarries, plants and depots as unverified leads, each pinned and sourced from the operator's own site", () => {
+    const { readFileSync, readdirSync } = jest.requireActual<typeof import("node:fs")>("node:fs");
+    const { join } = jest.requireActual<typeof import("node:path")>("node:path");
+    const dir = join(__dirname, "../../../../packages/database/prisma/seed-data");
+    const { rows, errors } = parseSupplierCsv(readFileSync(join(dir, "suppliers-official-network.csv"), "utf8"));
+    expect(errors).toEqual([]);
+    expect(rows.length).toBe(76);
+    expect(rows.every((r) => !r.isVerifiedPartner)).toBe(true);
+    const official = ["https://www.afrimat.co.za/", "https://www.afrisam.co.za/", "https://raumix.co.za/", "https://www.ppc.co.za/"];
+    expect(rows.every((r) => official.some((u) => r.sourceUrl?.startsWith(u)))).toBe(true);
+    expect(rows.every((r) => r.latitude != null && r.longitude != null && coordinateError(r.latitude, r.longitude) === null)).toBe(true);
+    // No two leads share a pin, and no supplier_id clashes with another seed file.
+    expect(new Set(rows.map((r) => `${r.latitude},${r.longitude}`)).size).toBe(rows.length);
+    const others = readdirSync(dir)
+      .filter((f) => f.startsWith("suppliers-") && f.endsWith(".csv") && f !== "suppliers-official-network.csv")
+      .flatMap((f) => parseSupplierCsv(readFileSync(join(dir, f), "utf8")).rows.map((r) => r.externalId));
+    expect(rows.filter((r) => others.includes(r.externalId))).toEqual([]);
+  });
 });

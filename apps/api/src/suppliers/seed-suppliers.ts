@@ -13,7 +13,7 @@ import { join } from "path";
 import { PrismaClient } from "@aggregates/database";
 import { parseSupplierCsv, SERVICE_PROVINCES } from "./supplier-csv";
 
-const FILES = ["suppliers-aggregates.csv", "suppliers-b2b-bulk.csv", "suppliers-ready-mix.csv", "suppliers-steel.csv", "suppliers-masonry.csv", "suppliers-paving.csv", "suppliers-drainage.csv", "suppliers-roofing.csv", "suppliers-timber.csv"];
+const FILES = ["suppliers-aggregates.csv", "suppliers-b2b-bulk.csv", "suppliers-ready-mix.csv", "suppliers-steel.csv", "suppliers-masonry.csv", "suppliers-paving.csv", "suppliers-drainage.csv", "suppliers-roofing.csv", "suppliers-timber.csv", "suppliers-official-network.csv"];
 
 export async function seedSuppliers(prisma: PrismaClient, dir = join(__dirname, "../../../../packages/database/prisma/seed-data")) {
   let created = 0;
@@ -37,6 +37,9 @@ export async function seedSuppliers(prisma: PrismaClient, dir = join(__dirname, 
         isVerifiedPartner: row.isVerifiedPartner,
         isGroupEntity: row.isGroupEntity ?? false,
         sourceUrl: row.sourceUrl,
+        // Pins published by the operator itself (see the file's source_url); staff confirm before activating.
+        latitude: row.latitude ?? null,
+        longitude: row.longitude ?? null,
         // Verified partners go live in every province; researched leads wait for staff.
         isActive: row.isVerifiedPartner && SERVICE_PROVINCES.includes(row.province),
       })),

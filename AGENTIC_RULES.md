@@ -123,7 +123,10 @@ unreviewed work.
   staff edits survive). Neither CSV has coordinates, so each active supplier
   needs a map pin from staff before it's used for distance estimates. Pins
   must come from a map, never be guessed: a wrong pin moves customers across
-  the 30/60/100km delivery bands. Delivery is national (all nine provinces,
+  the 30/60/100km delivery bands. 42 suppliers are pinned from coordinates
+  their operators publish (migration `20261025090000_supplier_official_pins`),
+  and 76 more operator-published sites are seeded as unverified, pinned
+  leads (`suppliers-official-network.csv`). Delivery is national (all nine provinces,
   Oct 2026): verified partners in every province are active.
 - Payment gateways: every adapter except Manual EFT/PO is a structural stub
   until merchant credentials exist (PayFast, Peach, Ozow, Stitch, Lulapay —
