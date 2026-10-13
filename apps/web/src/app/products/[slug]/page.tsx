@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
 import { ProductReviews } from "@/components/reviews/ProductReviews";
 import { RatingSummaryLink } from "@/components/reviews/RatingSummaryLink";
+import { getProductReviews, reviewStructuredData } from "@/lib/reviews";
 import { RecentlyViewedRow } from "@/components/merchandising/RecentlyViewedRow";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -132,7 +133,9 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
   const related = (await getCatalogue()).filter((p) => p.categorySlug === product.categorySlug && p.sku !== product.sku).slice(0, 4);
 
   // schema.org Product data so search engines can show the price.
+  const reviewData = await getProductReviews(product.sku);
   const structuredData = {
+    ...reviewStructuredData(reviewData),
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
 import { ProductReviews } from "@/components/reviews/ProductReviews";
 import { RatingSummaryLink } from "@/components/reviews/RatingSummaryLink";
+import { getProductReviews, reviewStructuredData } from "@/lib/reviews";
 import { RecentlyViewedRow } from "@/components/merchandising/RecentlyViewedRow";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { PackagedUnitSelector } from "@/components/product/PackagedUnitSelector";
@@ -17,14 +18,16 @@ import { formatZAR, unpricedLabel } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
 /** Product page for CAT-10/11 packaged goods (cement, binders, grout, admixtures). */
-export function PackagedProductPage({ product }: { product: MerchandisedPackagedProduct }) {
+export async function PackagedProductPage({ product }: { product: MerchandisedPackagedProduct }) {
   const category = CATEGORIES.find((c) => c.slug === product.categorySlug)!;
   const priced = product.units.filter((u) => u.prices !== null);
   const related = PACKAGED_PRODUCTS.filter((p) => p.categorySlug === product.categorySlug && p.sku !== product.sku).slice(0, 4);
   const url = `${SITE_URL}/products/${product.slug}`;
 
   // Offers only for benchmarked units — an unpriced product never implies a price.
+  const reviewData = await getProductReviews(product.sku);
   const structuredData = {
+    ...reviewStructuredData(reviewData),
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
 import { ProductReviews } from "@/components/reviews/ProductReviews";
 import { RatingSummaryLink } from "@/components/reviews/RatingSummaryLink";
+import { getProductReviews, reviewStructuredData } from "@/lib/reviews";
 import { RecentlyViewedRow } from "@/components/merchandising/RecentlyViewedRow";
 import { BarMassCalculator } from "@/components/product/BarMassCalculator";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
@@ -16,7 +17,7 @@ import { formatZAR, unpricedLabel } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
 /** Product page for CAT-15..18 steel: rebar, mesh & brickforce, fixing accessories, structural sections. */
-export function SteelProductPage({ product }: { product: MerchandisedSteelProduct }) {
+export async function SteelProductPage({ product }: { product: MerchandisedSteelProduct }) {
   const category = CATEGORIES.find((c) => c.slug === product.categorySlug)!;
   const priced = product.units.filter((u) => u.prices !== null);
   const related = STEEL_PRODUCTS.filter((p) => p.categorySlug === product.categorySlug && p.sku !== product.sku).slice(0, 4);
@@ -24,7 +25,9 @@ export function SteelProductPage({ product }: { product: MerchandisedSteelProduc
   const isBar = product.categorySlug === "reinforcing-bar" && product.diameterMm !== null;
 
   // Offers only for benchmarked units — an unpriced product never implies a price.
+  const reviewData = await getProductReviews(product.sku);
   const structuredData = {
+    ...reviewStructuredData(reviewData),
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
