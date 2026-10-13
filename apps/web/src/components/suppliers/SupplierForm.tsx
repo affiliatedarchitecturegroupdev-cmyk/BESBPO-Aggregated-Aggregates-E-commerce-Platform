@@ -1,4 +1,5 @@
 import { ActionForm, inputClass, SubmitButton } from "@/components/account/Forms";
+import { MapsLinkPaste } from "@/components/suppliers/MapsLinkPaste";
 import { CATEGORIES } from "@/data/categories";
 import { PROVINCES, SUPPLIER_TIER_LABEL, type Supplier } from "@/lib/suppliers";
 import { saveSupplier } from "@/app/account/actions";
@@ -49,6 +50,7 @@ export function SupplierForm({ supplier }: { supplier?: Supplier }) {
       <fieldset className="rounded-sm border border-basalt/10 p-3">
         <legend className={`${labelClass} px-1`}>Map pin (delivery distances are measured from here)</legend>
         <div className="grid gap-3 sm:grid-cols-2">
+          <MapsLinkPaste />
           <label className="block">
             <span className={labelClass}>Latitude</span>
             <input name="latitude" type="number" step="any" min={-35.5} max={-22} defaultValue={supplier?.latitude ?? ""} placeholder="-29.6006" className={inputClass} />

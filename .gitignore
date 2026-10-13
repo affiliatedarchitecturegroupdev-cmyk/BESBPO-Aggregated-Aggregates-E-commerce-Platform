@@ -17,3 +17,6 @@ coverage/
 !apps/web/src/app/coverage/
 !apps/web/src/components/coverage/
 .storage/
+
+# One-off working files handed to the owner (e.g. supplier lists for pin sourcing) — not part of the app
+exports/

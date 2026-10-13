@@ -56,6 +56,7 @@ model User {
   bookings          Booking[]
   insightsViews     InsightsView[]
   projectLists      ProjectList[]
+  productReviews    ProductReview[]
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
 }
@@ -209,6 +210,7 @@ model Product {
   timberFinish              String? // "Sized" | "Rough-sawn"
   readyMixPriceBand         ReadyMixPriceBand?
   images                    ProductImage[]
+  reviews                   ProductReview[]
   priceBand                 PriceBand?
   packagedPriceBands        PackagedPriceBand[] // CAT-10/CAT-11 packaged goods, CAT-15..18 steel, masonry (CAT-19..25, 29) and roofing (CAT-26..28, 30, 31)
   complianceDocuments       ComplianceDocument[]
@@ -1601,7 +1603,7 @@ model BendingSchedule {
   projectName     String?
   province        String?
   siteAddress     String?
-  requiredBy      DateTime? @db.Date
+  requiredBy      DateTime?             @db.Date
   message         String?
   lineCount       Int                   @default(0)
   totalMassKg     Decimal               @default(0) @db.Decimal(12, 2)
@@ -1662,18 +1664,18 @@ enum BuildStage {
 }
 
 model ProjectList {
-  id          String            @id @default(cuid())
-  userId      String
-  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  name        String
-  siteName    String?
-  province    String?
-  neededBy    DateTime?         @db.Date
-  notes       String?
-  shareToken  String?           @unique // set = anyone with the link can view (read-only)
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
-  items       ProjectListItem[]
+  id         String            @id @default(cuid())
+  userId     String
+  user       User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name       String
+  siteName   String?
+  province   String?
+  neededBy   DateTime?         @db.Date
+  notes      String?
+  shareToken String?           @unique // set = anyone with the link can view (read-only)
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+  items      ProjectListItem[]
 
   @@index([userId, updatedAt])
 }
@@ -1692,4 +1694,38 @@ model ProjectListItem {
 
   @@unique([listId, sku, unit])
   @@index([listId, stage])
+}
+
+// ---------------------------------------------------------------------------
+// Product reviews (PRODUCT_REVIEWS.md)
+// ---------------------------------------------------------------------------
+
+enum ReviewStatus {
+  PUBLISHED
+  HIDDEN // staff took it down (abuse, off-topic); the reviewer still sees it as hidden
+}
+
+/// One per customer per product. Any signed-in customer can give stars;
+/// a written review needs a paid, uncancelled order of theirs that included
+/// the product — that order is kept as the proof of purchase.
+model ProductReview {
+  id            String       @id @default(cuid())
+  productId     String
+  product       Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId        String
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rating        Int // 1–5
+  title         String?
+  body          String? // contact details are removed before saving
+  orderId       String? // the paid order that allows the written review; null for a rating only
+  status        ReviewStatus @default(PUBLISHED)
+  hiddenReason  String?
+  moderatedById String?
+  moderatedAt   DateTime?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@unique([productId, userId])
+  @@index([productId, status])
+  @@index([status, createdAt])
 }

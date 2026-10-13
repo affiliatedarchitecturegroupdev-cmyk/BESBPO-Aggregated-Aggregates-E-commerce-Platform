@@ -6,6 +6,7 @@ import { PrismaModule } from "./common/prisma.module";
 import { CatalogueModule } from "./catalogue/catalogue.module";
 import { ContentModule } from "./content/content.module";
 import { MerchandisingModule } from "./merchandising/merchandising.module";
+import { ReviewsModule } from "./reviews/reviews.module";
 import { HealthModule } from "./health/health.module";
 import { ComplianceDocumentsModule } from "./compliance-documents/compliance-documents.module";
 import { OrdersModule } from "./orders/orders.module";
@@ -43,6 +44,7 @@ import { ProjectListsModule } from "./project-lists/project-lists.module";
     CatalogueModule,
     ContentModule,
     MerchandisingModule,
+    ReviewsModule,
     PricingModule,
     TradeAccountsModule,
     QuotesModule,

@@ -97,9 +97,10 @@ export type ParsedSupplier = {
 
 export type CsvError = { line: number; message: string };
 
-/** The public town for a delivery point: the last part of the address ("…, Pietermaritzburg"). */
+/** The public town for a delivery point: the last part of the address ("…, Pietermaritzburg"), skipping a trailing postal code. */
 export function townFromAddress(address: string): string {
   const parts = address.split(",").map((p) => p.trim()).filter(Boolean);
+  while (parts.length > 1 && /^\d{4}$/.test(parts.at(-1)!)) parts.pop();
   return (parts.at(-1) ?? address).replace(/^and\s+/i, "").slice(0, 80);
 }
 

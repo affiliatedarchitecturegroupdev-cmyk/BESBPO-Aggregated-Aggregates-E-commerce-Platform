@@ -66,6 +66,7 @@ export type OrderRecord = {
   deliveryFee: string;
   total: string;
   createdAt: string;
+  paidAt?: string | null;
   lineItems: { id?: string; quantity?: number; unitOfSale?: keyof typeof UNIT_LABEL; lineTotal?: string; product: { name: string; sku?: string; slug?: string } }[];
   shipment?: { carrier: string; externalPartnerName: string | null; trackingRef: string | null; dispatchedAt: string | null; deliveredAt: string | null } | null;
   documents: DocumentSummary[];

@@ -46,10 +46,10 @@ export async function api<T>(
  * which has no private network — so pages fall back to built-in content and
  * pick up the live data when they revalidate.
  */
-export async function apiCached<T>(path: string, revalidateSeconds = 60): Promise<T | null> {
+export async function apiCached<T>(path: string, revalidateSeconds = 60, tags: string[] = ["cms"]): Promise<T | null> {
   try {
     const response = await fetch(`${API_BASE}${path}`, {
-      next: { revalidate: revalidateSeconds, tags: ["cms"] },
+      next: { revalidate: revalidateSeconds, tags },
       signal: AbortSignal.timeout(3000),
     });
     return response.ok ? ((await response.json()) as T) : null;

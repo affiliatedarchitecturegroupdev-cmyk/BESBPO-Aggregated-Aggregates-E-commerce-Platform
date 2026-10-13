@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
+import { ProductReviews } from "@/components/reviews/ProductReviews";
+import { RatingSummaryLink } from "@/components/reviews/RatingSummaryLink";
 import { RecentlyViewedRow } from "@/components/merchandising/RecentlyViewedRow";
 import { GroupServiceBanner } from "@/components/merchandising/GroupServiceBanner";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
@@ -75,6 +77,7 @@ export function ReadyMixProductPage({ product }: { product: MerchandisedReadyMix
             {category.name} · {product.gradingStandard ?? "SANS 878"} · {product.sku}
           </p>
           <h1 className="mt-1 font-display text-3xl font-bold text-basalt">{product.name}</h1>
+          <RatingSummaryLink sku={product.sku} />
           <p className="mt-3 font-display text-2xl font-bold text-seam-blue">
             {prices ? (
               <>
@@ -136,6 +139,8 @@ export function ReadyMixProductPage({ product }: { product: MerchandisedReadyMix
       <div className="mt-10">
         <GroupServiceBanner categorySlug={product.categorySlug} placement={`product_${product.categorySlug}`} />
       </div>
+
+      <ProductReviews sku={product.sku} slug={product.slug} productName={product.name} />
 
       <CompleteTheJob sku={product.sku} categorySlug={product.categorySlug} />
 

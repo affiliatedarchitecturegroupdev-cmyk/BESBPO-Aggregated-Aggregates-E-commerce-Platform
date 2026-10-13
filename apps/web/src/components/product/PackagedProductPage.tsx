@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
+import { ProductReviews } from "@/components/reviews/ProductReviews";
+import { RatingSummaryLink } from "@/components/reviews/RatingSummaryLink";
 import { RecentlyViewedRow } from "@/components/merchandising/RecentlyViewedRow";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { PackagedUnitSelector } from "@/components/product/PackagedUnitSelector";
@@ -62,6 +64,7 @@ export function PackagedProductPage({ product }: { product: MerchandisedPackaged
             {product.gradingStandard ? ` · ${product.gradingStandard}` : ""} · {product.sku}
           </p>
           <h1 className="mt-1 font-display text-3xl font-bold text-basalt">{product.name}</h1>
+          <RatingSummaryLink sku={product.sku} />
           <p className="mt-3 font-display text-2xl font-bold text-seam-blue">
             {priced[0] ? (
               <>
@@ -167,6 +170,8 @@ export function PackagedProductPage({ product }: { product: MerchandisedPackaged
       <div className="mt-10">
         <GroupServiceBanner categorySlug={product.categorySlug} placement={`product_${product.categorySlug}`} />
       </div>
+
+      <ProductReviews sku={product.sku} slug={product.slug} productName={product.name} />
 
       <CompleteTheJob sku={product.sku} categorySlug={product.categorySlug} />
 

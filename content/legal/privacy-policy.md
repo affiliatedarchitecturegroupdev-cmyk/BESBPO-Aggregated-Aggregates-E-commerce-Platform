@@ -78,6 +78,20 @@ questions, and the conversation is kept only in your browser tab (see the
 details in the chat — use the quote, contact or account pages for anything
 that needs them.
 
+## 3B. Product ratings and reviews
+
+If you rate or review a product, we keep your star rating, any title and
+text you write, the product, the date, and — for a written review — which of
+your paid orders included the product, so the review can show as a verified
+purchase. Your review is published on the product page with your **first
+name and the initial of your surname only**; we never publish your email
+address, phone number, company or order details. Phone numbers, email
+addresses and links in a review are removed automatically before it is
+saved. Our staff can see the reviewer's name and email address to moderate
+reviews and follow up on problems. You can change or remove your rating or
+review at any time from the product page, and we may hide reviews that are
+abusive or not about the product.
+
 ## 4. Legal basis for processing
 
 We process your personal information where necessary to perform a contract
