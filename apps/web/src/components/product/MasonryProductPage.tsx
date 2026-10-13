@@ -2,6 +2,7 @@ import Link from "next/link";
 import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
 import { ProductReviews } from "@/components/reviews/ProductReviews";
 import { RatingSummaryLink } from "@/components/reviews/RatingSummaryLink";
+import { getProductReviews, reviewStructuredData } from "@/lib/reviews";
 import { RecentlyViewedRow } from "@/components/merchandising/RecentlyViewedRow";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { PackagedUnitSelector } from "@/components/product/PackagedUnitSelector";
@@ -16,7 +17,7 @@ import { formatZAR, unpricedLabel } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
 /** Product page for the masonry & precast line, CAT-19..25 and 29: walling, paving & retaining, drainage & membranes, and concrete roof tiles. */
-export function MasonryProductPage({ product }: { product: MerchandisedMasonryProduct }) {
+export async function MasonryProductPage({ product }: { product: MerchandisedMasonryProduct }) {
   const category = CATEGORIES.find((c) => c.slug === product.categorySlug)!;
   const priced = product.units.filter((u) => u.prices !== null);
   const related = MASONRY_PRODUCTS.filter((p) => p.categorySlug === product.categorySlug && p.sku !== product.sku).slice(0, 4);
@@ -29,7 +30,9 @@ export function MasonryProductPage({ product }: { product: MerchandisedMasonryPr
   const perM2Label = roofTile ? "Per m² of roof" : paving ? (product.categorySlug === "paving-kerbs-edging" ? "Per m² of paving" : "Per m² of wall face") : "Per m² of wall";
 
   // Offers only for benchmarked units — an unpriced product never implies a price.
+  const reviewData = await getProductReviews(product.sku);
   const structuredData = {
+    ...reviewStructuredData(reviewData),
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,

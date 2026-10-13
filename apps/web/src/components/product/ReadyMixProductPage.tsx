@@ -2,6 +2,7 @@ import Link from "next/link";
 import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
 import { ProductReviews } from "@/components/reviews/ProductReviews";
 import { RatingSummaryLink } from "@/components/reviews/RatingSummaryLink";
+import { getProductReviews, reviewStructuredData } from "@/lib/reviews";
 import { RecentlyViewedRow } from "@/components/merchandising/RecentlyViewedRow";
 import { GroupServiceBanner } from "@/components/merchandising/GroupServiceBanner";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
@@ -16,13 +17,15 @@ import { formatZAR, unpricedLabel } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
 /** Product page for CAT-12 ready-mix concrete: one strength grade per page. */
-export function ReadyMixProductPage({ product }: { product: MerchandisedReadyMixProduct }) {
+export async function ReadyMixProductPage({ product }: { product: MerchandisedReadyMixProduct }) {
   const category = CATEGORIES.find((c) => c.slug === product.categorySlug)!;
   const prices = product.units[0].prices;
   const related = READY_MIX_PRODUCTS.filter((p) => p.sku !== product.sku);
   const url = `${SITE_URL}/products/${product.slug}`;
 
+  const reviewData = await getProductReviews(product.sku);
   const structuredData = {
+    ...reviewStructuredData(reviewData),
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,

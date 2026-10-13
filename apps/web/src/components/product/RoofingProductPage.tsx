@@ -2,6 +2,7 @@ import Link from "next/link";
 import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
 import { ProductReviews } from "@/components/reviews/ProductReviews";
 import { RatingSummaryLink } from "@/components/reviews/RatingSummaryLink";
+import { getProductReviews, reviewStructuredData } from "@/lib/reviews";
 import { RecentlyViewedRow } from "@/components/merchandising/RecentlyViewedRow";
 import { CutToLengthForm } from "@/components/product/CutToLengthForm";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
@@ -20,7 +21,7 @@ import { SITE_URL } from "@/lib/site";
  * Product page for the roofing line, CAT-26..28: sheets in standard lengths or cut to length, flashings and fixings,
  * insulation and rainwater goods — and roof & structural timber with its connectors, CAT-30/31.
  */
-export function RoofingProductPage({ product }: { product: MerchandisedRoofingProduct }) {
+export async function RoofingProductPage({ product }: { product: MerchandisedRoofingProduct }) {
   const category = CATEGORIES.find((c) => c.slug === product.categorySlug)!;
   const sheet = product.roofProfile !== null;
   const timber = product.timberGrade !== null;
@@ -36,7 +37,9 @@ export function RoofingProductPage({ product }: { product: MerchandisedRoofingPr
   const url = `${SITE_URL}/products/${product.slug}`;
 
   // Offers only for benchmarked units — an unpriced product never implies a price.
+  const reviewData = await getProductReviews(product.sku);
   const structuredData = {
+    ...reviewStructuredData(reviewData),
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,

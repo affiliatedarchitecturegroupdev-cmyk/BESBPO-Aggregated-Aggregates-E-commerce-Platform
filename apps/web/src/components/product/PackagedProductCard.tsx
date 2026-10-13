@@ -7,6 +7,7 @@ import type { MasonryProduct } from "@/data/masonry";
 import type { RoofingProduct } from "@/data/roofing";
 import type { SteelProduct } from "@/data/steel";
 import { formatZAR } from "@/lib/pricing";
+import { CardStars } from "@/components/reviews/CardStars";
 
 /** Listing card for packaged goods (CAT-10/11), ready-mix (CAT-12), steel (CAT-15..18), masonry (CAT-19..25, 29) and roofing (CAT-26..28): a real price only where it is benchmarked. */
 export function PackagedProductCard({ product }: { product: (PackagedProduct | ReadyMixProduct | SteelProduct | MasonryProduct | RoofingProduct) & { images?: { src: string; alt: string; pending?: boolean }[] } }) {
@@ -32,6 +33,7 @@ export function PackagedProductCard({ product }: { product: (PackagedProduct | R
         {product.sku}
         {product.gradingStandard && ` · ${product.gradingStandard}`}
       </p>
+      <CardStars sku={product.sku} />
       <p className="mt-2 flex-1 font-body text-sm text-basalt">
         {headline?.prices ? (
           <span className="font-semibold">

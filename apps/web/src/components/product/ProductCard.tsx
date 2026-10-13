@@ -6,6 +6,7 @@ import { pricePoints, type Product } from "@/data/catalogue";
 import { MaterialSwatch } from "@/components/product/MaterialSwatch";
 import { PendingPhotoTag } from "@/components/product/PendingPhotoTag";
 import { formatZAR } from "@/lib/pricing";
+import { CardStars } from "@/components/reviews/CardStars";
 
 type Mode = "bulk" | "bag";
 
@@ -47,6 +48,7 @@ export function ProductCard({
         {product.sku}
         {product.gradingStandard && ` · ${product.gradingStandard}`}
       </p>
+      <CardStars sku={product.sku} />
       <p className="mt-2 flex-1 font-body text-sm text-basalt">
         {shown.map((point, index) => (
           <span key={point.unit} className={index === 0 ? "font-semibold" : "text-slate"}>

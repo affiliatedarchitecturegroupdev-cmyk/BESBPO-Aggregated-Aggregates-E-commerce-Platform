@@ -61,7 +61,15 @@ Negative reviews are not hidden for being negative (Terms §6A).
   `app/admin/reviews/`. Review data is cached for a minute under the
   `reviews` tag and refreshed when a review is saved or moderated.
 
-## Not yet
+## Product cards and search results
 
-- Stars on product cards in listings (`GET /reviews/summaries` is ready for it).
-- Review stars in search results (schema.org `aggregateRating`).
+- **Product cards** (listings, carousels, related products) show the stars,
+  average and rating count once a product has a published rating; nothing
+  before that. Every card on a page shares one cached request
+  (`/api/reviews/summaries`, refreshed each minute).
+- **Search results:** each product page's schema.org `Product` data carries
+  an `aggregateRating` (average, rating count and written-review count) and
+  up to five written reviews, so Google can show review stars. Only real,
+  published ratings are used — products without ratings carry none. Google
+  decides whether and when to show the stars; it can take a few weeks after
+  a page is recrawled.
