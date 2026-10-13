@@ -77,27 +77,35 @@ export function Header() {
       <div className="px-4 pb-3 md:hidden">
         <SearchBar id="site-search-mobile" />
       </div>
-      {/* Desktop department bar: every department one click away; scrolls sideways if the window is narrow. */}
+      {/*
+        Desktop navigation in two tiers, so nothing is cut off at any width:
+        a slim top line with "All departments", the services and "Check
+        delivery"; below it, the eight departments spread across the full
+        width (they wrap onto a second line rather than scroll on a narrow window).
+      */}
       <nav aria-label="Departments" className="hidden border-t border-basalt/10 bg-white/70 md:block">
-        <div className="mx-auto flex max-w-6xl items-center gap-4 overflow-x-auto whitespace-nowrap px-4 py-2 font-body text-sm text-basalt">
-          <Link href="/departments" className="font-semibold text-seam-blue hover:text-basalt">
-            All departments
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-1 border-b border-basalt/5 px-4 py-1.5 font-body text-xs">
+          <Link href="/departments" className="font-semibold uppercase tracking-wide text-seam-blue hover:text-basalt">
+            All departments →
           </Link>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
+            {SERVICE_LINKS.map((l) => (
+              <Link key={l.href} href={l.href} className="text-slate hover:text-seam-blue">
+                {l.label}
+              </Link>
+            ))}
+            <Link href="/coverage" className="flex items-center gap-1 font-semibold text-seam-blue hover:text-basalt">
+              <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+              Check delivery
+            </Link>
+          </div>
+        </div>
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4 py-2 font-body text-[13px] text-basalt lg:text-sm">
           {DEPARTMENTS.map((d) => (
-            <Link key={d.slug} href={d.href} className="hover:text-seam-blue">
+            <Link key={d.slug} href={d.href} className="whitespace-nowrap hover:text-seam-blue">
               {d.shortName}
             </Link>
           ))}
-          <span className="h-4 w-px shrink-0 bg-basalt/15" aria-hidden="true" />
-          {SERVICE_LINKS.slice(0, 3).map((l) => (
-            <Link key={l.href} href={l.href} className="text-slate hover:text-seam-blue">
-              {l.label}
-            </Link>
-          ))}
-          <Link href="/coverage" className="ml-auto flex items-center gap-1 text-seam-blue hover:text-basalt">
-            <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
-            Check delivery
-          </Link>
         </div>
       </nav>
     </header>
