@@ -576,13 +576,13 @@
      "unit": "ROLL",
      "unit_label": "Roll (40 m)",
      "weight_kg": null,
-     "market_benchmark_price": null,
+     "market_benchmark_price": 125.0,
      "cost_basis_percent": 100,
-     "cost_per_unit": null,
+     "cost_per_unit": 125.0,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Listings for this width were not clear enough to benchmark — quoted with the supplier."
+     "list_price_per_unit": 135.0,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Builders 'DPC MIC SABS 40 m x 150 x 375' R125.00 (lowest); Cashbuild 'Dpc-sabs: 150mm X 40m X 375mic' R164.95. checked 2026-10-13 on the retailers' own websites (Builders product listings flagged non-promotional; Cashbuild category listings at the default store — Cashbuild prices vary by store). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
     }
    ],
    "manufacturer": null,
@@ -1883,13 +1883,13 @@
      "unit": "EACH",
      "unit_label": "Each",
      "weight_kg": null,
-     "market_benchmark_price": null,
+     "market_benchmark_price": 45.0,
      "cost_basis_percent": 100,
-     "cost_per_unit": null,
+     "cost_per_unit": 45.0,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Only one retailer's ridge-tile prices found (Leroy Merlin, R45–R90 depending on fitting and colour) — quoted with the supplier."
+     "list_price_per_unit": 48.6,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Builders BMI Coverland Taper Ridge R45.00 and Marley Taper Ridge R45.00 (lowest; V-ridge R40.00–R55.00 by colour); Cashbuild 'Concrete Roof Ridge Tapered' R62.95. checked 2026-10-13 on the retailers' own websites (Builders product listings flagged non-promotional; Cashbuild category listings at the default store — Cashbuild prices vary by store). Benchmark = lowest regular (non-promo) VAT-inclusive price; list = benchmark x 1.08 (8% AA storefront markup)."
     }
    ],
    "manufacturer": null,

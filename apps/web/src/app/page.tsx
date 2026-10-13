@@ -8,6 +8,8 @@ import { ComplianceBar } from "@/components/merchandising/ComplianceBar";
 import { BadgeCarouselCompact } from "@/components/sourcing/BadgeCarouselCompact";
 import { CorporateSiteBand } from "@/components/merchandising/CorporateSiteBand";
 import { CoverageStrip } from "@/components/merchandising/CoverageStrip";
+import { DeliveryBand } from "@/components/merchandising/DeliveryBand";
+import { DepartmentTiles } from "@/components/merchandising/DepartmentTiles";
 import { FeaturedProducts } from "@/components/merchandising/FeaturedProducts";
 import { RecentlyViewed } from "@/components/merchandising/RecentlyViewed";
 import { GroupCrossSell } from "@/components/merchandising/GroupCrossSell";
@@ -28,7 +30,11 @@ import { getHiddenSkus, getSiteContent, slideshowSlides } from "@/lib/cms";
 import { getCoverage, getNetwork } from "@/lib/network";
 import { getActivePromotions } from "@/lib/promotions";
 
-/** Section order follows the as-built homepage wireframe (build documentation, p. 13). */
+/**
+ * Section order (Oct 2026): hero, the delivery checker and departments first —
+ * find it, check delivery, shop — then featured products and tools, the wider
+ * business (plant, services, B2B bulk), and the why-us sections together.
+ */
 export default async function HomePage() {
   const [content, hiddenSkus, promotions, coverage, network] = await Promise.all([
     getSiteContent(),
@@ -42,22 +48,23 @@ export default async function HomePage() {
   return (
     <>
       <HeroBanner content={content.hero} />
+      {/* The public location service: where's my nearest supplier, and what does delivery cost? */}
+      <DeliveryBand />
+      <DepartmentTiles />
       <HeroSlideshow slides={slideshowSlides(content.slideshow)} intervalSeconds={content.slideshow.intervalSeconds} />
       <TrustBadges partnerSuppliers={partnerSuppliers} liveProvinces={liveProvinces} />
-      <ComplianceBar />
-      <BadgeCarouselCompact />
-      <QuickTonnageCalculator hiddenSkus={hiddenSkus} />
       {/* Returning visitors pick up where they left off; nothing shows on a first visit. */}
       <div className="mx-auto max-w-6xl px-4">
         <RecentlyViewed hiddenSkus={hiddenSkus} className="my-10" />
       </div>
+      <FeaturedProducts />
+      <QuickTonnageCalculator hiddenSkus={hiddenSkus} />
       <CategoryGrid />
       <ShopByStage hiddenSkus={hiddenSkus} />
+      <SteelSpotlight hiddenSkus={hiddenSkus} />
+      <CalculatorsStrip hiddenSkus={hiddenSkus} />
       <PlanYourBuild />
       <BulkVsBagged />
-      <FeaturedProducts />
-      <CalculatorsStrip hiddenSkus={hiddenSkus} />
-      <SteelSpotlight hiddenSkus={hiddenSkus} />
       <BusinessLinesCarousel />
       <PlantAndServicesSection />
       <JobPacksSection />
@@ -66,14 +73,17 @@ export default async function HomePage() {
           <PromoSlot promotion={promotions.HOMEPAGE_SECONDARY_BANNER} />
         </section>
       )}
-      <GroupCrossSell promotion={promotions.GROUP_CROSS_SELL} />
-      <CorporateSiteBand partnerSuppliers={partnerSuppliers} />
-      <IndustriesWeServe />
       <B2BBulkSection />
+      <IndustriesWeServe />
+      <GroupCrossSell promotion={promotions.GROUP_CROSS_SELL} />
+      {/* Why buy from us: sourcing, standards and the partner network, together. */}
       <QuarryToSite partnerSuppliers={partnerSuppliers} />
+      <ComplianceBar />
+      <BadgeCarouselCompact />
       <TierComparison />
       <PartnerCta />
       <CoverageStrip coverage={coverage} />
+      <CorporateSiteBand partnerSuppliers={partnerSuppliers} />
       <WhatsAppCta />
       <PromoStrip content={content.promo} />
     </>

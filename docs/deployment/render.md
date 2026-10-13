@@ -298,6 +298,23 @@ in **Admin → Notifications** rather than sent.
   `roofing_catalogue.json` (three S5 H2 sections priced, the rest quoted); the supplier seed adds 5 leads from
   `suppliers-timber.csv` as unverified and inactive. No new environment
   variables.
+- **Storefront refresh, cleared suppliers & public delivery checker (Oct 2026).**
+  Migration `20261026090000_clear_researched_suppliers` clears the researched
+  supplier leads that are real sites (steel, masonry, paving, drainage,
+  roofing, timber, the B2B plants and the 76 `NET-SUP-*` sites) as approved,
+  live partners. The two product-line rows and the per-province "Afrimat
+  Readymix, multi-branch" rows stay as leads. Staff switch off any partner
+  that turns out unsuitable in **Admin → Suppliers**. Migration
+  `20261026090100_refresh_default_hero` removes a saved homepage hero only
+  while it still holds the old aggregates-only copy, so the new
+  all-departments copy shows; hero copy staff wrote themselves is kept. On the
+  storefront: an always-visible header search bar with suggestions, a
+  department bar, `/departments`, `/buy-online`, the delivery checker on the
+  homepage and `/delivery-areas` (town search or "use my location" — the nearest
+  partner and the delivery band), a filterable `/suppliers` page and a trimmed
+  B2B band. Four more products priced from Builders and Cashbuild (brickforce
+  75 mm, DPC 150 mm, IBR closures, concrete ridge tile). No new environment
+  variables.
 - **Official supplier pins & network leads (Oct 2026).** Migration
   `20261025090000_supplier_official_pins` sets map pins for 42 existing
   suppliers from coordinates their operators publish on their own websites,

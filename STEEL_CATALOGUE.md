@@ -40,7 +40,7 @@
 | Code | Category | Products | Live-priced units |
 |---|---|---|---|
 | CAT-15 | Reinforcing Bar (Rebar) | Y8–Y40 high-tensile (450 MPa), R8–R16 mild steel (250 MPa) — 12 | Y8, Y10, Y12, Y16 × 6 m |
-| CAT-16 | Mesh & Brickforce | Ref 100, 193, 245, 311, 395, 617, 888 mesh; brickforce 75, 150, 230 mm — 10 | Ref 100, Ref 193 sheets; brickforce 150 mm |
+| CAT-16 | Mesh & Brickforce | Ref 100, 193, 245, 311, 395, 617, 888 mesh; brickforce 75, 150, 230 mm — 10 | Ref 100, Ref 193 sheets; brickforce 75 and 150 mm |
 | CAT-17 | Steel Fixing Accessories | Tie wire, bar chairs, cover blocks, safety caps, couplers, dowels, starter bars, wall ties, hoop iron, bender & cutter — 10 | Tie wire 5 kg coil |
 | CAT-18 | Structural Steel | 40×40×3 angle, other angles, 50×50×2 square tube, other tubes, flat bar, round & square bar, IPE, H-sections, PFC channels, lipped channel, plate — 11 | 40×40×3 angle × 6 m; 50×50×2 square tube × 6 m |
 

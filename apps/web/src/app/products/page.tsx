@@ -61,6 +61,7 @@ function inScope(categorySlug: string, { category, industry, group }: SearchPara
   if (category) return categorySlug === category;
   const industryMatch = INDUSTRIES.find((i) => i.slug === industry);
   if (industryMatch) return industryMatch.relevantCategorySlugs.includes(categorySlug);
+  if (group === "core") return CORE_CATEGORIES.some((c) => c.slug === categorySlug);
   if (group === "b2b-bulk") return B2B_CATEGORIES.some((c) => c.slug === categorySlug);
   if (group === "ready-mix") return categorySlug === "ready-mix-concrete";
   if (group === "steel") return STEEL_CATEGORIES.some((c) => c.slug === categorySlug);
@@ -145,12 +146,13 @@ export default async function ProductListingPage({ searchParams }: { searchParam
   const total = products.length + packaged.length + readyMix.length + steel.length + masonry.length + roofing.length;
   const category = CATEGORIES.find((c) => c.slug === searchParams.category);
   const industry = category ? undefined : INDUSTRIES.find((i) => i.slug === searchParams.industry);
+  const coreGroup = !category && !industry && searchParams.group === "core";
   const b2bGroup = !category && !industry && searchParams.group === "b2b-bulk";
   const steelGroup = !category && !industry && searchParams.group === "steel";
   const masonryGroup = !category && !industry && searchParams.group === "masonry";
   const roofingGroup = !category && !industry && searchParams.group === "roofing";
   const query = searchParams.q?.trim();
-  const hasFilters = Boolean(query || searchParams.category || searchParams.grading || searchParams.sale || searchParams.family || searchParams.brand || industry || b2bGroup || steelGroup || masonryGroup || roofingGroup);
+  const hasFilters = Boolean(query || searchParams.category || searchParams.grading || searchParams.sale || searchParams.family || searchParams.brand || industry || coreGroup || b2bGroup || steelGroup || masonryGroup || roofingGroup);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
@@ -159,13 +161,14 @@ export default async function ProductListingPage({ searchParams }: { searchParam
         <Link href="/products" className="hover:text-seam-blue">Products</Link>
         {category && <> / {category.name}</>}
         {industry && <> / {industry.name}</>}
+        {coreGroup && <> / Aggregates &amp; Sand</>}
         {b2bGroup && <> / Bulk &amp; Infrastructure</>}
         {steelGroup && <> / Reinforcing &amp; Structural Steel</>}
         {masonryGroup && <> / Masonry, Paving &amp; Retaining</>}
         {roofingGroup && <> / Roofing</>}
       </nav>
       <h1 className="mt-3 font-display text-3xl font-bold text-basalt">
-        {query ? `Results for “${query}”` : (category?.name ?? industry?.name ?? (b2bGroup ? "Bulk & Infrastructure" : steelGroup ? "Reinforcing & Structural Steel" : masonryGroup ? "Masonry, Paving & Retaining" : roofingGroup ? "Roofing" : "All Products"))}
+        {query ? `Results for “${query}”` : (category?.name ?? industry?.name ?? (coreGroup ? "Aggregates & Sand" : b2bGroup ? "Bulk & Infrastructure" : steelGroup ? "Reinforcing & Structural Steel" : masonryGroup ? "Masonry, Paving & Retaining" : roofingGroup ? "Roofing" : "All Products"))}
       </h1>
       {category && <p className="mt-1 font-body text-sm text-slate">{category.description}</p>}
       {industry && (
@@ -181,6 +184,7 @@ export default async function ProductListingPage({ searchParams }: { searchParam
           <form method="get" action="/products" className="rounded-sm border border-basalt/10 bg-white p-4">
             <p className="font-body text-sm font-semibold text-basalt">Filters</p>
             {industry && <input type="hidden" name="industry" value={industry.slug} />}
+            {coreGroup && <input type="hidden" name="group" value="core" />}
             {b2bGroup && <input type="hidden" name="group" value="b2b-bulk" />}
             {steelGroup && <input type="hidden" name="group" value="steel" />}
             {masonryGroup && <input type="hidden" name="group" value="masonry" />}

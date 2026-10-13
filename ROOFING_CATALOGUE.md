@@ -54,12 +54,14 @@ environment — confirm before relying on them). List = lowest × 1.08.
 | Polyester insulation 135 mm, 1.2 × 5 m | R735.00 | R793.80 | Leroy Merlin Isotherm; Buco R737.90 |
 | PVC downpipe 3 m | R153.95 | R166.27 | Cashbuild Macneil; Buco Macneil R163.76 |
 | Concrete roof tile, Double Roman, standard colours (CAT-29) | R9.70 | R10.48 | Cashbuild R9.70 (handling fee excluded); Leroy Merlin Marley R10.50 |
+| IBR ridge & eaves closures (added 13 Oct 2026) | R19.99 | R21.59 | Buco broad closure R19.99 (search listing, 10 Oct); Cashbuild 0.4 mm galvanised closures R25.95; Builders Heunis R35.00 |
+| Concrete ridge tile, taper or V (CAT-29, added 13 Oct 2026) | R45.00 | R48.60 | Builders BMI Coverland and Marley taper ridge R45.00; Cashbuild tapered ridge R62.95 |
 
 Everything else is **quoted with the supplier** — usually because only one
 retailer's price was found (0.30 and 0.50 FH galvanised, Zincalume®, 0.47
-colour-coated, corrugated, ridge, closures, screws, foil underlay, membrane,
+colour-coated, corrugated, ridge, screws, foil underlay, membrane,
 gutters) or the item is rolled or pressed to order (0.58/0.80 mm, concealed-fix,
-flashings, hook bolts, flat and through-colour tiles, ridge tiles).
+flashings, hook bolts, flat and through-colour tiles).
 
 ## Pricing family
 
