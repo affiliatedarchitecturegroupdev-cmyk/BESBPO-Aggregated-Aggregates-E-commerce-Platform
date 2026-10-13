@@ -116,6 +116,20 @@ export default async function AdminSuppliersPage({ searchParams }: { searchParam
                   </div>
                   <p className="text-xs text-slate">
                     {s.city}, {s.province} · {s.categorySlugs.map((c) => CATEGORY_NAME.get(c) ?? c).join(", ")}
+                    {s.latitude === null && (
+                      <>
+                        {" · "}
+                        <a
+                          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${s.name.split(" — ")[0]} ${s.city} ${s.province}`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-seam-blue underline"
+                        >
+                          Find on Google Maps ↗
+                        </a>{" "}
+                        then <Link href={`/admin/suppliers/${s.id}`} className="text-seam-blue underline">paste the pin</Link>
+                      </>
+                    )}
                   </p>
                 </li>
               ))}

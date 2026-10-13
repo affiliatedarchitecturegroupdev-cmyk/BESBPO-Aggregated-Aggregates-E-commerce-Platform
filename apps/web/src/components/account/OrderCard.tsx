@@ -15,6 +15,8 @@ export function orderDocuments(order: OrderRecord) {
 
 /** One order in the customer's history: what, where, status, documents and next actions. */
 export function OrderCard({ order }: { order: OrderRecord }) {
+  // Paid orders invite a review of each product on them (PRODUCT_REVIEWS.md).
+  const reviewable = [...new Map(order.lineItems.filter((l) => l.product.slug).map((l) => [l.product.slug!, { slug: l.product.slug!, name: l.product.name }])).values()];
   return (
     <li className="rounded-sm border border-basalt/10 bg-white p-4 font-body text-sm">
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -68,6 +70,19 @@ export function OrderCard({ order }: { order: OrderRecord }) {
         </Link>
         <ReorderButton lines={order.lineItems.map((l) => ({ sku: l.product.sku, unitOfSale: l.unitOfSale, quantity: l.quantity, name: l.product.name }))} />
       </div>
+      {order.paidAt && order.status !== "CANCELLED" && reviewable.length > 0 && (
+        <p className="mt-3 border-t border-basalt/10 pt-3 text-xs text-slate">
+          <span className="font-semibold text-basalt">Rate &amp; review:</span>{" "}
+          {reviewable.map((l, i) => (
+            <span key={l.slug}>
+              {i > 0 && " · "}
+              <Link href={`/products/${l.slug}#reviews`} className="text-seam-blue hover:underline">
+                {l.name}
+              </Link>
+            </span>
+          ))}
+        </p>
+      )}
     </li>
   );
 }

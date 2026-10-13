@@ -93,6 +93,7 @@ aggregates-store-platform/
 ├── COMPLETE_THE_JOB.md   Product-page cross-sell: jobs, pairings by category and SKU, add-to-cart
 ├── CALCULATORS.md        Calculators strip and /calculators page: what each calculator works out and where
 ├── RECENTLY_VIEWED.md    Recently viewed row: browser-only storage, privacy, where it shows
+├── PRODUCT_REVIEWS.md    Ratings for signed-in customers, written reviews only after a paid order; moderation
 ├── PLAN_YOUR_BUILD.md    Homepage project-lists band: steps, and the card that shows your latest project
 ├── SHOPPING_ASSISTANT.md  Free rules-based shopping assistant: what it answers, rules, engine interface
 ├── docs/payments-payfast.md PayFast: settings (AGG_PAYFAST_*), signed checkout, payment notifications, going live

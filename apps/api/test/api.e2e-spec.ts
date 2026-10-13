@@ -2790,4 +2790,68 @@ describe("Aggregated Aggregates API (e2e)", () => {
       await http().get("/insights/summary?from=2020-01-01&to=2031-03-01").set(auth(admin)).expect(400);
     });
   });
+
+  describe("product reviews", () => {
+    const bearer = (t: string) => ({ Authorization: `Bearer ${t}` });
+
+    it("lets any customer rate, but only a paid buyer write a review, and staff hide reviews", async () => {
+      const buyer = await register("reviewbuyer");
+      const browser = await register("reviewbrowser");
+      const staff = await register("reviewstaff");
+      await prisma.user.update({ where: { email: `reviewstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      await prisma.user.update({ where: { email: `reviewbuyer-${run}@example.com` }, data: { name: "Thandi Mokoena" } });
+      const sku = "AA-SND-01";
+
+      await http().get(`/reviews/products/${sku}/mine`).expect(401);
+      await http().put(`/reviews/products/${sku}/mine`).send({ rating: 5 }).expect(401);
+
+      // Stars without buying.
+      const before = await http().get(`/reviews/products/${sku}/mine`).set(bearer(browser)).expect(200);
+      expect(before.body).toMatchObject({ review: null, canRate: true, canWrite: false });
+      await http().put(`/reviews/products/${sku}/mine`).set(bearer(browser)).send({ rating: 4 }).expect(200);
+      const noText = await http().put(`/reviews/products/${sku}/mine`).set(bearer(browser)).send({ rating: 4, body: "Lovely sand, would buy again." }).expect(403);
+      expect(noText.body.message).toMatch(/bought and paid/);
+      await http().put(`/reviews/products/${sku}/mine`).set(bearer(browser)).send({ rating: 6 }).expect(400);
+
+      // An unpaid order isn't enough; a paid one is.
+      const order = await http().post("/orders").set(bearer(buyer)).send({ lines: [{ sku, unit: "m3", quantity: 6 }], deliveryDistanceKm: 20 }).expect(201);
+      expect((await http().get(`/reviews/products/${sku}/mine`).set(bearer(buyer)).expect(200)).body.canWrite).toBe(false);
+      await prisma.order.update({ where: { id: order.body.id }, data: { status: "CONFIRMED", paidAt: new Date() } });
+      const eligible = await http().get(`/reviews/products/${sku}/mine`).set(bearer(buyer)).expect(200);
+      expect(eligible.body).toMatchObject({ canWrite: true, purchase: { orderNumber: order.body.orderNumber } });
+      const saved = await http()
+        .put(`/reviews/products/${sku}/mine`)
+        .set(bearer(buyer))
+        .send({ rating: 5, title: "Clean and well graded", body: "Arrived on time and the plaster came out smooth. Call me on 082 123 4567." })
+        .expect(200);
+      expect(saved.body.body).toContain("[contact details removed]");
+      expect(saved.body.contactDetailsRemoved).toBe(true);
+
+      // Public: both ratings count; only the written one is listed, with a short name.
+      const listed = await http().get(`/reviews/products/${sku}`).expect(200);
+      expect(listed.body.summary).toMatchObject({ average: 4.5, count: 2, written: 1 });
+      expect(listed.body.reviews).toHaveLength(1);
+      expect(listed.body.reviews[0]).toMatchObject({ reviewer: "Thandi M.", rating: 5, verifiedPurchase: true });
+      expect(JSON.stringify(listed.body)).not.toContain("example.com");
+      const summaries = await http().get("/reviews/summaries").expect(200);
+      expect(summaries.body[sku]).toEqual({ average: 4.5, count: 2 });
+
+      // Staff hide it: gone from the list and the average; the author sees why.
+      await http().get("/reviews/staff").set(bearer(buyer)).expect(403);
+      const queue = await http().get("/reviews/staff").set(bearer(staff)).expect(200);
+      const row = queue.body.find((r: { reviewer: { email: string } }) => r.reviewer.email === `reviewbuyer-${run}@example.com`);
+      expect(row.orderNumber).toBe(order.body.orderNumber);
+      await http().patch(`/reviews/staff/${row.id}`).set(bearer(staff)).send({ status: "HIDDEN", reason: "Contained a phone number" }).expect(200);
+      expect((await http().get(`/reviews/products/${sku}`).expect(200)).body.summary).toMatchObject({ average: 4, count: 1, written: 0 });
+      expect((await http().get(`/reviews/products/${sku}/mine`).set(bearer(buyer)).expect(200)).body.review).toMatchObject({ status: "HIDDEN", hiddenReason: "Contained a phone number" });
+
+      // Removing my rating.
+      await http().delete(`/reviews/products/${sku}/mine`).set(bearer(browser)).expect(204);
+      expect((await http().get(`/reviews/products/${sku}`).expect(200)).body.summary.count).toBe(0);
+      await http().get("/reviews/products/NO-SUCH-SKU").expect(404);
+
+      await prisma.productReview.deleteMany({ where: { user: { email: { endsWith: `-${run}@example.com` } } } });
+      await prisma.order.delete({ where: { id: order.body.id } });
+    });
+  });
 });

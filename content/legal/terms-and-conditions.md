@@ -94,6 +94,17 @@ returned or refunded once cut, as set out in our
 does not affect your statutory rights under the Consumer Protection Act 68
 of 2008, where applicable.
 
+## 6A. Ratings and reviews
+
+Signed-in customers may rate products. A written review can only be posted
+by a customer who has bought and paid for the product through their
+account, so every written review is a verified purchase. Reviews must be
+honest, about the product and your own experience, and must not be
+abusive, defamatory or advertise anything. We publish reviews as written —
+apart from removing contact details — whether they are positive or
+negative, and we may hide reviews that break these rules. We do not pay or
+reward anyone for reviews.
+
 ## 7. Compliance documentation
 
 Where applicable, we attach the relevant SANS reference standard (e.g.
