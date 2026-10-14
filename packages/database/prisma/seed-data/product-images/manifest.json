@@ -1,5 +1,5 @@
 {
-  "about": "Product photography. Two kinds: (1) photos sourced via Kimi (Sep 2026) from supplier, marketplace and editorial sites \u2014 the owners' permission was received in Oct 2026 (\"permission\": \"GRANTED\"), so they're imported live and shown first; (2) manufacturer pack shots for the cement catalogue (Manus, Oct 2026; AfriSam, Cemza and NPC permission confirmed Oct 2026, so live); (3) open-licence photos from Wikimedia Commons (an \"openLicence\" block), live with the credit their licence requires. A sourced photo without \"permission\": \"GRANTED\" is imported hidden (PERMISSION_PENDING) until staff record permission in Admin -> Image permissions. \"retiredOpenLicence\" lists Commons photos taken down in Oct 2026 (weak matches). See PRODUCT_IMAGES.md; (5) reinforcing-steel photos (Manus, Oct 2026) from Pexels and from RMS and Steel & Pipes, whose permission the owner confirmed \u2014 live. See PRODUCT_IMAGES.md.",
+  "about": "Product photography. Two kinds: (1) photos sourced via Kimi (Sep 2026) from supplier, marketplace and editorial sites \u2014 the owners' permission was received in Oct 2026 (\"permission\": \"GRANTED\"), so they're imported live and shown first; (2) manufacturer pack shots for the cement catalogue (Manus, Oct 2026; AfriSam, Cemza and NPC permission confirmed Oct 2026, so live); (3) open-licence photos from Wikimedia Commons (an \"openLicence\" block), live with the credit their licence requires. A sourced photo without \"permission\": \"GRANTED\" is imported hidden (PERMISSION_PENDING) until staff record permission in Admin -> Image permissions. \"retiredOpenLicence\" lists Commons photos taken down in Oct 2026 (weak matches). See PRODUCT_IMAGES.md; (5) reinforcing-steel photos (Manus, Oct 2026) from Pexels and from RMS and Steel & Pipes, whose permission the owner confirmed \u2014 live. See PRODUCT_IMAGES.md. (6) bricks, blocks, DPC and air bricks, roof sheets and structural timber (Manus, Oct 2026) from SA retailers and manufacturers, cleared by the owner \u2014 live. See PRODUCT_IMAGES.md.",
   "images": [
     {
       "file": "03a76b21fa07.webp",
@@ -2790,6 +2790,580 @@
         "south_africa_reinforcing_steel_image_pack/assets/official_reference_steel_pipes/steel_pipes_droppers.jpg"
       ],
       "permission": "GRANTED"
+    },
+    {
+      "file": "6ce6481a3dc9.webp",
+      "width": 768,
+      "height": 767,
+      "bytes": 23046,
+      "originalWidth": 768,
+      "originalHeight": 767,
+      "source": "Apollo Brick (apollobrick.com)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://apollobrick.com/our-products/",
+      "sourcingNote": "Apollo Imperial solid NFP clay stock bricks. Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [],
+      "originalPaths": [
+        "6b01a810-product_image_sources/product_image_sources_bundle/images/01_apollo_imperial_solid_nfp_brick.webp"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "e7da50dac234.webp",
+      "width": 350,
+      "height": 350,
+      "bytes": 3898,
+      "originalWidth": 350,
+      "originalHeight": 350,
+      "source": "Cashbuild (cashbuild.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.cashbuild.co.za/cement-blocks/1099225-block-cement-mb-90-grey",
+      "sourcingNote": "Grey 90 mm concrete block (Cashbuild MB90). Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "6b01a810-product_image_sources/product_image_sources_bundle/images/03_cashbuild_mb90_grey_block.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "0f2e31ee9cc6.webp",
+      "width": 425,
+      "height": 395,
+      "bytes": 12008,
+      "originalWidth": 425,
+      "originalHeight": 395,
+      "source": "Cashbuild (cashbuild.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.cashbuild.co.za/cement-blocks/1099227-block-grey-mb-140",
+      "sourcingNote": "Grey 140 mm hollow concrete block (Cashbuild MB140). Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "6b01a810-product_image_sources/product_image_sources_bundle/images/04_cashbuild_mb140_grey_block.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "786fcdf4fe42.webp",
+      "width": 1000,
+      "height": 1000,
+      "bytes": 20118,
+      "originalWidth": 2363,
+      "originalHeight": 2363,
+      "source": "B&L Concrete (blconcrete.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://blconcrete.co.za/product/building-blocks-390-x-140-x-190/",
+      "sourcingNote": "Dimension drawing of a 390 \u00d7 140 \u00d7 190 mm hollow block (B&L Concrete). Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [],
+      "originalPaths": [
+        "6b01a810-product_image_sources/product_image_sources_bundle/images/05_b_l_140_mm_block.png"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "545f4741b532.webp",
+      "width": 300,
+      "height": 300,
+      "bytes": 4004,
+      "originalWidth": 300,
+      "originalHeight": 300,
+      "source": "Cashbuild (cashbuild.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.cashbuild.co.za/cement-blocks/1099229-block-cement-mb190-grey",
+      "sourcingNote": "Grey 190 mm hollow concrete block (Cashbuild MB190). Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "6b01a810-product_image_sources/product_image_sources_bundle/images/07_cashbuild_mb190_grey_block.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "844cb65ef166.webp",
+      "width": 599,
+      "height": 900,
+      "bytes": 15186,
+      "originalWidth": 599,
+      "originalHeight": 900,
+      "source": "Corobrik (corobrik.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.corobrik.co.za/clay-face-bricks/buff-satin-fbs",
+      "sourcingNote": "Corobrik Buff Satin FBS face bricks \u2014 one colour of the FBS range; colour and range are confirmed on the quote. Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [],
+      "originalPaths": [
+        "6b01a810-product_image_sources/product_image_sources_bundle/images/10_corobrik_buff_satin_fbs_brick.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "3ce2708943d7.webp",
+      "width": 797,
+      "height": 797,
+      "bytes": 131542,
+      "originalWidth": 797,
+      "originalHeight": 797,
+      "source": "Corobrik (corobrik.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.corobrik.co.za/clay-face-bricks/buff-satin-fbs",
+      "sourcingNote": "Buff Satin FBS face texture, close up (Corobrik). Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [],
+      "originalPaths": [
+        "6b01a810-product_image_sources/product_image_sources_bundle/images/11_buff_satin_fbs_texture_swatch.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "35e337caa2fe.webp",
+      "width": 1000,
+      "height": 609,
+      "bytes": 179128,
+      "originalWidth": 1774,
+      "originalHeight": 1080,
+      "source": "Corobrik (corobrik.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.corobrik.co.za/clay-face-bricks/black-brick-satin-fbx",
+      "sourcingNote": "Corobrik Black Satin FBX face bricks laid in a feature wall \u2014 one colour of the FBX range; colour and range are confirmed on the quote. Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [],
+      "originalPaths": [
+        "6b01a810-product_image_sources/product_image_sources_bundle/images/12_corobrik_black_brick_satin_fbx.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "02739bdbc297.webp",
+      "width": 600,
+      "height": 520,
+      "bytes": 2674,
+      "originalWidth": 600,
+      "originalHeight": 520,
+      "source": "Cashbuild (cashbuild.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.cashbuild.co.za/damp-course/10645-dpc-sabs-110mm-x-40m-x-375mic",
+      "sourcingNote": "SABS 375 \u00b5m damp-proof course roll (Cashbuild). Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "6b01a810-product_image_sources/product_image_sources_bundle/images/13_cashbuild_110_mm_dpc_roll.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "2a38e852fc58.webp",
+      "width": 500,
+      "height": 395,
+      "bytes": 4626,
+      "originalWidth": 500,
+      "originalHeight": 395,
+      "source": "Noag's (noags.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://noags.co.za/product/plastic-dpc-110mm-x-40m-375-micron/",
+      "sourcingNote": "Rolls of 375 \u00b5m plastic DPC (Noag's). Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "6b01a810-product_image_sources/product_image_sources_bundle/images/14_noag_s_110_mm_dpc.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "4d6b8ec51e06.webp",
+      "width": 480,
+      "height": 416,
+      "bytes": 2088,
+      "originalWidth": 480,
+      "originalHeight": 416,
+      "source": "Cashbuild (cashbuild.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.cashbuild.co.za/damp-course/10646-dpc-sabs-150mm-x-40m-x-375mic",
+      "sourcingNote": "SABS 375 \u00b5m damp-proof course roll (Cashbuild uses this photo for every width). Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "SHARED",
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "6b01a810-product_image_sources/product_image_sources_bundle/images/15_cashbuild_150_mm_dpc_roll.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "1d79befb3486.webp",
+      "width": 1000,
+      "height": 1000,
+      "bytes": 22776,
+      "originalWidth": 1000,
+      "originalHeight": 1000,
+      "source": "Jacks Hardware (jacksgeorge.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://jacksgeorge.co.za/products/sabs-dpc-375mic-x-225mm-x-40m",
+      "sourcingNote": "SABS 375 \u00b5m DPC, 225 mm \u00d7 40 m rolls (Jacks). Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "BRAND_VISIBLE"
+      ],
+      "originalPaths": [
+        "6b01a810-product_image_sources/product_image_sources_bundle/images/17_jacks_225_mm_dpc_roll.webp"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "14e111ab318f.webp",
+      "width": 710,
+      "height": 636,
+      "bytes": 24046,
+      "originalWidth": 710,
+      "originalHeight": 636,
+      "source": "Builders (builders.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.builders.co.za/Building-Materials/Concrete-Products/Concrete-Decor/Lion-Concrete-Air-Brick-Grey-220-x-156-x-45-mm/p/000000000000040572",
+      "sourcingNote": "Grey concrete air brick, 220 \u00d7 156 \u00d7 45 mm (Lion, via Builders). Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [],
+      "originalPaths": [
+        "6b01a810-product_image_sources/product_image_sources_bundle/images/19_lion_grey_concrete_air_brick.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "c5e66f441b57.webp",
+      "width": 1000,
+      "height": 1000,
+      "bytes": 18690,
+      "originalWidth": 1000,
+      "originalHeight": 1000,
+      "source": "Cashbuild (cashbuild.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.cashbuild.co.za/air-bricks-vents/961-air-vent-concrete-210x150x45mm-grey",
+      "sourcingNote": "Grey concrete air vent, 210 \u00d7 150 \u00d7 45 mm (Cashbuild). Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [],
+      "originalPaths": [
+        "6b01a810-product_image_sources/product_image_sources_bundle/images/20_cashbuild_grey_concrete_air_vent.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "8408a58f2b7f.webp",
+      "width": 1000,
+      "height": 862,
+      "bytes": 41134,
+      "originalWidth": 1770,
+      "originalHeight": 1525,
+      "source": "BUCO (buco.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.buco.co.za/ibr-roof-sheet-0-50mm-galv-fh-z275-686-cover-3-0m-1013605",
+      "sourcingNote": "Stack of galvanised IBR sheets (BUCO). Shows the profile and finish, not the gauge or coating class. Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "a730fde3-roofing_sheet_candidates_approved/roofing_sheet_candidates/IBR/ibr_03_buco_galv.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "43671ced49a4.webp",
+      "width": 1000,
+      "height": 1000,
+      "bytes": 57370,
+      "originalWidth": 1000,
+      "originalHeight": 1000,
+      "source": "BUCO (buco.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.buco.co.za/departments/roofing-ceiling/roof-sheeting/steel",
+      "sourcingNote": "IBR profile close-up (BUCO). BUCO uses this photo for galvanised and Zincalume sheets alike, so it shows the profile, not the coating. Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "a730fde3-roofing_sheet_candidates_approved/roofing_sheet_candidates/IBR/ibr_09_buco_z150.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "9950effd4064.webp",
+      "width": 1000,
+      "height": 1000,
+      "bytes": 114792,
+      "originalWidth": 1042,
+      "originalHeight": 1042,
+      "source": "IBR World (ibrworld.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://ibrworld.co.za/",
+      "sourcingNote": "0.50 mm galvanised IBR with its 686 mm cover dimensions (IBR World). Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [],
+      "originalPaths": [
+        "a730fde3-roofing_sheet_candidates_approved/roofing_sheet_candidates/IBR/ibr_04_ibrworld.bmp"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "4bf79c4a74ca.webp",
+      "width": 1000,
+      "height": 1000,
+      "bytes": 30524,
+      "originalWidth": 2160,
+      "originalHeight": 2160,
+      "source": "DIY Superstore (diysuperstore.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.diysuperstore.co.za/",
+      "sourcingNote": "Colour-coated (Chromadek\u00ae-type) IBR sheet in brown (DIY Superstore). Colours are confirmed on the quote. Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "a730fde3-roofing_sheet_candidates_approved/roofing_sheet_candidates/IBR/ibr_06_diy_brown.webp"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "cc4fa6039fef.webp",
+      "width": 1000,
+      "height": 667,
+      "bytes": 32088,
+      "originalWidth": 2560,
+      "originalHeight": 1707,
+      "source": "Steelman (steelman.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://steelman.co.za/",
+      "sourcingNote": "Colour-coated roof sheets in a range of colours (Steelman). Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "a730fde3-roofing_sheet_candidates_approved/roofing_sheet_candidates/IBR/ibr_07_steelman.jpeg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "505cdb5ca81c.webp",
+      "width": 1000,
+      "height": 475,
+      "bytes": 24990,
+      "originalWidth": 1850,
+      "originalHeight": 879,
+      "source": "BUCO (buco.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.buco.co.za/departments/roofing-ceiling/roof-sheeting/steel",
+      "sourcingNote": "Stack of galvanised corrugated sheets (BUCO). Shows the profile and finish, not the gauge or coating class. Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "a730fde3-roofing_sheet_candidates_approved/roofing_sheet_candidates/Corrugated/corr_04_buco_762.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "2e7f21c56a7c.webp",
+      "width": 853,
+      "height": 578,
+      "bytes": 12302,
+      "originalWidth": 853,
+      "originalHeight": 578,
+      "source": "Cashbuild (cashbuild.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.cashbuild.co.za/corrugated-iron/300415-galvanised-roof-sheeting-corrugated-profile",
+      "sourcingNote": "Single galvanised corrugated sheet (Cashbuild). Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "a730fde3-roofing_sheet_candidates_approved/roofing_sheet_candidates/Corrugated/corr_01_cashbuild_48m.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "5b0b9345370b.webp",
+      "width": 1000,
+      "height": 521,
+      "bytes": 73884,
+      "originalWidth": 1024,
+      "originalHeight": 533,
+      "source": "Youngman Roofing (youngman.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://youngman.co.za/metal-roof-sheeting/",
+      "sourcingNote": "Colour-coated corrugated roof on a house (Youngman). Colours are confirmed on the quote. Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [],
+      "originalPaths": [
+        "a730fde3-roofing_sheet_candidates_approved/roofing_sheet_candidates/Corrugated/corr_10_youngman_victorian.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "c29d996effb4.webp",
+      "width": 670,
+      "height": 670,
+      "bytes": 16164,
+      "originalWidth": 670,
+      "originalHeight": 670,
+      "source": "ECO Roofing (ecoroofing.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://ecoroofing.co.za/",
+      "sourcingNote": "Concealed-fix (clip-lock) profile with its clips and cover width. The exact profile (e.g. Klip-Lok, Saflok, Brownbuilt) is confirmed with the supplier. Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "a730fde3-roofing_sheet_candidates_approved/roofing_sheet_candidates/Concealed_Fix/cf_05_kliplok700.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "223e09e5c65a.webp",
+      "width": 674,
+      "height": 458,
+      "bytes": 17062,
+      "originalWidth": 674,
+      "originalHeight": 458,
+      "source": "Safintra (safintra.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.safintra.co.za/newlok/",
+      "sourcingNote": "Concealed-fix roof in a metallic finish (Safintra Newlok). Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "a730fde3-roofing_sheet_candidates_approved/roofing_sheet_candidates/Concealed_Fix/cf_10_newlok_roof.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "ab2acdfbccd1.webp",
+      "width": 670,
+      "height": 670,
+      "bytes": 15706,
+      "originalWidth": 670,
+      "originalHeight": 670,
+      "source": "ECO Roofing (ecoroofing.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://ecoroofing.co.za/",
+      "sourcingNote": "Brownbuilt 406 concealed-fix profile and clip (ECO Roofing). Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "a730fde3-roofing_sheet_candidates_approved/roofing_sheet_candidates/Concealed_Fix/cf_11_brownbuilt.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "45bb538a06b0.webp",
+      "width": 601,
+      "height": 800,
+      "bytes": 22494,
+      "originalWidth": 601,
+      "originalHeight": 800,
+      "source": "BUCO (buco.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.buco.co.za/departments/boards-timber/timber/structural-timber/pine-s5-structural",
+      "sourcingNote": "CCA-treated SA pine structural timber (BUCO). Shows the material; the section, grade and treatment are as listed. Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "a06e903e-structural_roofing_timber_approved/structural_roofing_timber_candidates/S5/s5_01_buco_50x152.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "8bafae7b115a.webp",
+      "width": 1000,
+      "height": 593,
+      "bytes": 51416,
+      "originalWidth": 1000,
+      "originalHeight": 593,
+      "source": "Cashbuild (cashbuild.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.cashbuild.co.za/timber/1121481-structural-timber-sabs-cca-treated-50x228-48m",
+      "sourcingNote": "Strapped bundles of SABS CCA-treated structural timber (Cashbuild). Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "a06e903e-structural_roofing_timber_approved/structural_roofing_timber_candidates/S5/s5_11_cashbuild_50x228.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "0b6e5c218641.webp",
+      "width": 800,
+      "height": 600,
+      "bytes": 22446,
+      "originalWidth": 800,
+      "originalHeight": 600,
+      "source": "Foresta Timber (forestatimber.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://forestatimber.co.za/",
+      "sourcingNote": "An S5 grade stamp on SA pine \u2014 look for the grade mark on every length (Foresta Timber). Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "a06e903e-structural_roofing_timber_approved/structural_roofing_timber_candidates/Roof_Truss_Systems/truss_04_foresta.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "4cdd4d8413b3.webp",
+      "width": 700,
+      "height": 525,
+      "bytes": 17636,
+      "originalWidth": 700,
+      "originalHeight": 525,
+      "source": "BUCO (buco.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.buco.co.za/departments/boards-timber/timber/structural-timber/pine-s7-structural",
+      "sourcingNote": "S7P CCA-treated SA pine (BUCO). Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "a06e903e-structural_roofing_timber_approved/structural_roofing_timber_candidates/S7/s7_05_buco_38x114_48m.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "6465f8df1267.webp",
+      "width": 584,
+      "height": 419,
+      "bytes": 7726,
+      "originalWidth": 584,
+      "originalHeight": 419,
+      "source": "BUCO (buco.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.buco.co.za/departments/boards-timber/timber/structural-timber/pine-s7-structural",
+      "sourcingNote": "Rough-sawn SA pine (BUCO) \u2014 the sawn, unplaned surface of rough-sawn timber. Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "SHARED",
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "a06e903e-structural_roofing_timber_approved/structural_roofing_timber_candidates/S7/s7_03_buco_38x114.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "12bfb9f4de74.webp",
+      "width": 600,
+      "height": 600,
+      "bytes": 61600,
+      "originalWidth": 600,
+      "originalHeight": 600,
+      "source": "Roof Trusses Pretoria (rooftrussespretoria.co.za)",
+      "sourceCountry": "SA",
+      "sourcePage": "https://www.rooftrussespretoria.co.za/",
+      "sourcingNote": "Graded SA pine roof trusses with nail plates, as built on site. Used with permission (owner, via Manus, Oct 2026).",
+      "flags": [
+        "SHARED",
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "a06e903e-structural_roofing_timber_approved/structural_roofing_timber_candidates/Roof_Truss_Systems/truss_05_rooftruss.jpg"
+      ],
+      "permission": "GRANTED"
     }
   ],
   "products": {
@@ -3294,6 +3868,534 @@
     ],
     "AA-STL-ACC-SAFETY-CAPS": [
       "639c1f21cd72.webp"
+    ],
+    "AA-MAS-CLAY-STOCK": [
+      "6ce6481a3dc9.webp"
+    ],
+    "AA-MAS-BLOCK-90": [
+      "e7da50dac234.webp"
+    ],
+    "AA-MAS-BLOCK-140": [
+      "0f2e31ee9cc6.webp",
+      "786fcdf4fe42.webp"
+    ],
+    "AA-MAS-BLOCK-190": [
+      "545f4741b532.webp"
+    ],
+    "AA-MAS-CLAY-FBS": [
+      "844cb65ef166.webp",
+      "3ce2708943d7.webp"
+    ],
+    "AA-MAS-CLAY-FBX": [
+      "35e337caa2fe.webp"
+    ],
+    "AA-MAS-DPC-110": [
+      "02739bdbc297.webp",
+      "2a38e852fc58.webp"
+    ],
+    "AA-MAS-DPC-150": [
+      "4d6b8ec51e06.webp",
+      "2a38e852fc58.webp"
+    ],
+    "AA-MAS-DPC-225": [
+      "1d79befb3486.webp",
+      "4d6b8ec51e06.webp"
+    ],
+    "AA-MAS-DPC-300": [
+      "4d6b8ec51e06.webp",
+      "2a38e852fc58.webp"
+    ],
+    "AA-MAS-AIRBRICK-CONC": [
+      "14e111ab318f.webp",
+      "c5e66f441b57.webp"
+    ],
+    "AA-ROF-IBR-030-GALV": [
+      "8408a58f2b7f.webp",
+      "43671ced49a4.webp"
+    ],
+    "AA-ROF-IBR-040-GALV": [
+      "8408a58f2b7f.webp",
+      "43671ced49a4.webp"
+    ],
+    "AA-ROF-IBR-047-GALV": [
+      "8408a58f2b7f.webp",
+      "43671ced49a4.webp"
+    ],
+    "AA-ROF-IBR-058-GALV": [
+      "8408a58f2b7f.webp",
+      "43671ced49a4.webp"
+    ],
+    "AA-ROF-IBR-080-GALV": [
+      "8408a58f2b7f.webp",
+      "43671ced49a4.webp"
+    ],
+    "AA-ROF-IBR-050-GALV-FH": [
+      "8408a58f2b7f.webp",
+      "9950effd4064.webp",
+      "43671ced49a4.webp"
+    ],
+    "AA-ROF-IBR-047-AZ150": [
+      "43671ced49a4.webp"
+    ],
+    "AA-ROF-IBR-047-PREPAINTED": [
+      "4bf79c4a74ca.webp",
+      "cc4fa6039fef.webp"
+    ],
+    "AA-ROF-IBR-050-PREPAINTED": [
+      "4bf79c4a74ca.webp",
+      "cc4fa6039fef.webp"
+    ],
+    "AA-ROF-CORR-030-GALV": [
+      "505cdb5ca81c.webp",
+      "2e7f21c56a7c.webp"
+    ],
+    "AA-ROF-CORR-040-GALV": [
+      "505cdb5ca81c.webp",
+      "2e7f21c56a7c.webp"
+    ],
+    "AA-ROF-CORR-047-GALV": [
+      "505cdb5ca81c.webp",
+      "2e7f21c56a7c.webp"
+    ],
+    "AA-ROF-CORR-050-PREPAINTED": [
+      "5b0b9345370b.webp"
+    ],
+    "AA-ROF-CONCEALED-053-AZ150": [
+      "c29d996effb4.webp",
+      "223e09e5c65a.webp",
+      "ab2acdfbccd1.webp"
+    ],
+    "AA-TMB-3838-S5-H2-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-3838-S5-H2-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-3838-S5-H3-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-3838-S5-H3-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-3838-S7-H2-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-3838-S7-H2-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-3838-S7-H3-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-3838-S7-H3-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-3876-S5-H2-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-3876-S5-H2-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-3876-S5-H3-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-3876-S5-H3-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-3876-S7-H2-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-3876-S7-H2-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-3876-S7-H3-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-3876-S7-H3-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38114-S5-H2-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38114-S5-H2-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38114-S5-H3-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38114-S5-H3-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38114-S7-H2-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38114-S7-H2-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38114-S7-H3-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38114-S7-H3-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38152-S5-H2-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38152-S5-H2-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38152-S5-H3-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38152-S5-H3-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38152-S7-H2-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38152-S7-H2-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38152-S7-H3-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38152-S7-H3-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38228-S5-H2-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38228-S5-H2-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38228-S5-H3-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38228-S5-H3-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38228-S7-H2-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38228-S7-H2-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38228-S7-H3-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-38228-S7-H3-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-5076-S5-H2-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-5076-S5-H2-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-5076-S5-H3-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-5076-S5-H3-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-5076-S7-H2-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-5076-S7-H2-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-5076-S7-H3-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-5076-S7-H3-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50114-S5-H2-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50114-S5-H2-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50114-S5-H3-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50114-S5-H3-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50114-S7-H2-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50114-S7-H2-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50114-S7-H3-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50114-S7-H3-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50152-S5-H2-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50152-S5-H2-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50152-S5-H3-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50152-S5-H3-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50152-S7-H2-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50152-S7-H2-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50152-S7-H3-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50152-S7-H3-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50228-S5-H2-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50228-S5-H2-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50228-S5-H3-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50228-S5-H3-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "0b6e5c218641.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50228-S7-H2-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50228-S7-H2-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50228-S7-H3-SZ": [
+      "45bb538a06b0.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
+    ],
+    "AA-TMB-50228-S7-H3-RS": [
+      "6465f8df1267.webp",
+      "8bafae7b115a.webp",
+      "4cdd4d8413b3.webp",
+      "12bfb9f4de74.webp"
     ]
   },
   "noImage": {
