@@ -188,9 +188,20 @@ or treatment, and each photo's sourcing note says so where it matters.
 | Untreated / pale timber (Cashbuild 38 × 38, Foresta 38 × 76, Online Building end grain, Somerset, other BUCO battens and industrial timber) | Untreated or non-structural, or 240–400 px; our timber is all CCA treated |
 | Other truss photos | 260–718 px, or a reference diagram rather than our product |
 
-**Still without photos:** clay maxi and cement imperial and maxi bricks,
-lintels, the PVC air brick, Zincalume corrugated, and the timber
-connectors.
+**Owner-supplied follow-up (Oct 2026).** The owner then supplied six
+photos and confirmed they are cleared for our use (source "Owner-supplied
+product photo (cleared for use)", live):
+
+- Cement stock brick (imperial): two photos of solid grey stock bricks.
+- Cement maxi: a three-core grey maxi brick.
+- Clay maxi: a stacked clay maxi brick.
+- 90 mm block: two photos of the actual slim block. These replace the
+  Cashbuild photo of a larger hollow block it had borrowed. Migration
+  `20261027090000_retire_block90_photo` takes that photo down on the live
+  site.
+
+**Still without photos:** lintels, the PVC air brick, Zincalume corrugated
+and the timber connectors.
 
 ## Open-licence photos — live now
 

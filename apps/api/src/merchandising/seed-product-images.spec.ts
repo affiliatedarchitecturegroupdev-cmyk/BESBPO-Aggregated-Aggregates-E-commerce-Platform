@@ -113,8 +113,8 @@ describe("sourced product image set", () => {
   it("publishes the cleared walling, roof-sheet and structural-timber photos (Manus, Oct 2026)", () => {
     const bySku = new Map(manifest.images.map((i) => [i.file, i]));
     const batch = Object.entries(manifest.products).filter(([sku]) => /^AA-(MAS|ROF|TMB)-/.test(sku));
-    // 11 walling products, 14 roof sheets and all 72 structural-timber variants.
-    expect(batch.length).toBe(97);
+    // 14 walling products, 14 roof sheets and all 72 structural-timber variants.
+    expect(batch.length).toBe(100);
     const timber = roofing.products.filter((p) => p.category_slug === "structural-timber").map((p) => p.sku);
     for (const sku of timber) expect(manifest.products[sku]).toHaveLength(4);
     for (const [sku, list] of batch) {
@@ -123,11 +123,14 @@ describe("sourced product image set", () => {
         expect(image.permission).toBe("GRANTED");
         expect(image.openLicence).toBeUndefined();
         expect(image.sourceCountry).toBe("SA");
-        expect(image.sourcePage).toMatch(/^https:\/\//);
+        // Photos the owner supplied directly have no web page; every other one names its source page.
+        if (!image.source.startsWith("Owner-supplied")) expect(image.sourcePage).toMatch(/^https:\/\//);
       }
       // Rough-sawn timber leads with the rough-sawn photo; sized timber never shows it.
       if (sku.startsWith("AA-TMB-")) expect(list[0] === manifest.products["AA-TMB-38114-S5-H2-RS"][0]).toBe(sku.endsWith("-RS"));
     }
+    // The slim 90 mm block has its own photos, not the larger blocks'.
+    expect(manifest.products["AA-MAS-BLOCK-90"]).not.toEqual(expect.arrayContaining(manifest.products["AA-MAS-BLOCK-140"]));
     // Colour-coated sheets never borrow a galvanised photo, and vice versa.
     expect(manifest.products["AA-ROF-IBR-047-PREPAINTED"]).not.toEqual(expect.arrayContaining(manifest.products["AA-ROF-IBR-047-GALV"]));
   });

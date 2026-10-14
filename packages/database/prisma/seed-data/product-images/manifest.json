@@ -2809,25 +2809,6 @@
       "permission": "GRANTED"
     },
     {
-      "file": "e7da50dac234.webp",
-      "width": 350,
-      "height": 350,
-      "bytes": 3898,
-      "originalWidth": 350,
-      "originalHeight": 350,
-      "source": "Cashbuild (cashbuild.co.za)",
-      "sourceCountry": "SA",
-      "sourcePage": "https://www.cashbuild.co.za/cement-blocks/1099225-block-cement-mb-90-grey",
-      "sourcingNote": "Grey 90 mm concrete block (Cashbuild MB90). Used with permission (owner, via Manus, Oct 2026).",
-      "flags": [
-        "LOW_RES"
-      ],
-      "originalPaths": [
-        "6b01a810-product_image_sources/product_image_sources_bundle/images/03_cashbuild_mb90_grey_block.jpg"
-      ],
-      "permission": "GRANTED"
-    },
-    {
       "file": "0f2e31ee9cc6.webp",
       "width": 425,
       "height": 395,
@@ -3364,6 +3345,114 @@
         "a06e903e-structural_roofing_timber_approved/structural_roofing_timber_candidates/Roof_Truss_Systems/truss_05_rooftruss.jpg"
       ],
       "permission": "GRANTED"
+    },
+    {
+      "file": "4a41d2ab56ba.webp",
+      "width": 800,
+      "height": 799,
+      "bytes": 59808,
+      "originalWidth": 800,
+      "originalHeight": 799,
+      "source": "Owner-supplied product photo (cleared for use)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Solid grey cement stock brick. Supplied by the owner, who confirmed it is cleared for our use (Oct 2026).",
+      "flags": [],
+      "originalPaths": [
+        "owner upload 1946a3b6-image.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "8f979e19eda3.webp",
+      "width": 1000,
+      "height": 667,
+      "bytes": 58016,
+      "originalWidth": 1560,
+      "originalHeight": 1040,
+      "source": "Owner-supplied product photo (cleared for use)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Solid cement stock brick, light grey. Supplied by the owner, who confirmed it is cleared for our use (Oct 2026).",
+      "flags": [],
+      "originalPaths": [
+        "owner upload 67886869-image.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "8b1dd2314774.webp",
+      "width": 1000,
+      "height": 900,
+      "bytes": 28506,
+      "originalWidth": 1027,
+      "originalHeight": 924,
+      "source": "Owner-supplied product photo (cleared for use)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Grey cement maxi brick with three cores. Supplied by the owner, who confirmed it is cleared for our use (Oct 2026).",
+      "flags": [],
+      "originalPaths": [
+        "owner upload 53adf2ac-image.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "833460127e31.webp",
+      "width": 554,
+      "height": 554,
+      "bytes": 12558,
+      "originalWidth": 554,
+      "originalHeight": 554,
+      "source": "Owner-supplied product photo (cleared for use)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Slim 90 mm hollow concrete block. Supplied by the owner, who confirmed it is cleared for our use (Oct 2026).",
+      "flags": [
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "owner upload d4fe991d-image.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "7b86ed52b8f4.webp",
+      "width": 554,
+      "height": 554,
+      "bytes": 7132,
+      "originalWidth": 554,
+      "originalHeight": 554,
+      "source": "Owner-supplied product photo (cleared for use)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Slim 90 mm hollow concrete block, alternate view. Supplied by the owner, who confirmed it is cleared for our use (Oct 2026).",
+      "flags": [
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "owner upload e63a9dd7-image.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "e9840f08e4cf.webp",
+      "width": 554,
+      "height": 554,
+      "bytes": 50214,
+      "originalWidth": 554,
+      "originalHeight": 554,
+      "source": "Owner-supplied product photo (cleared for use)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Stacked clay maxi bricks at the works. Supplied by the owner, who confirmed it is cleared for our use (Oct 2026).",
+      "flags": [
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "owner upload e618ed00-image.jpg"
+      ],
+      "permission": "GRANTED"
     }
   ],
   "products": {
@@ -3873,7 +3962,8 @@
       "6ce6481a3dc9.webp"
     ],
     "AA-MAS-BLOCK-90": [
-      "e7da50dac234.webp"
+      "833460127e31.webp",
+      "7b86ed52b8f4.webp"
     ],
     "AA-MAS-BLOCK-140": [
       "0f2e31ee9cc6.webp",
@@ -4396,6 +4486,16 @@
       "8bafae7b115a.webp",
       "4cdd4d8413b3.webp",
       "12bfb9f4de74.webp"
+    ],
+    "AA-MAS-CEM-IMPERIAL": [
+      "4a41d2ab56ba.webp",
+      "8f979e19eda3.webp"
+    ],
+    "AA-MAS-CEM-MAXI": [
+      "8b1dd2314774.webp"
+    ],
+    "AA-MAS-CLAY-MAXI": [
+      "e9840f08e4cf.webp"
     ]
   },
   "noImage": {
