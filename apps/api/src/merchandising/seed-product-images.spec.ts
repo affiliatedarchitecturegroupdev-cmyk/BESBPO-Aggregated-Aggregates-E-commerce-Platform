@@ -113,8 +113,8 @@ describe("sourced product image set", () => {
   it("publishes the cleared walling, roof-sheet and structural-timber photos (Manus, Oct 2026)", () => {
     const bySku = new Map(manifest.images.map((i) => [i.file, i]));
     const batch = Object.entries(manifest.products).filter(([sku]) => /^AA-(MAS|ROF|TMB)-/.test(sku));
-    // 14 walling products, 14 roof sheets and all 72 structural-timber variants.
-    expect(batch.length).toBe(100);
+    // 21 walling products, 14 roof sheets and all 72 structural-timber variants.
+    expect(batch.length).toBe(107);
     const timber = roofing.products.filter((p) => p.category_slug === "structural-timber").map((p) => p.sku);
     for (const sku of timber) expect(manifest.products[sku]).toHaveLength(4);
     for (const [sku, list] of batch) {

@@ -200,8 +200,14 @@ product photo (cleared for use)", live):
   `20261027090000_retire_block90_photo` takes that photo down on the live
   site.
 
-**Still without photos:** lintels, the PVC air brick, Zincalume corrugated
-and the timber connectors.
+The owner also supplied five photos of prestressed concrete lintel
+designs and one of the terracotta PVC air brick, all cleared for use. Each
+of the six lintels (1.2 to 3.6 m) leads with a different design so the
+cards vary, and the square-section photo on white is reused for 3.6 m. Every
+lintel's gallery shows all five designs. The photo note says the profile
+supplied depends on the maker.
+
+**Still without photos:** Zincalume corrugated and the timber connectors.
 
 ## Open-licence photos — live now
 

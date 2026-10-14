@@ -3453,6 +3453,121 @@
         "owner upload e618ed00-image.jpg"
       ],
       "permission": "GRANTED"
+    },
+    {
+      "file": "2075dd784bdd.webp",
+      "width": 800,
+      "height": 679,
+      "bytes": 18228,
+      "originalWidth": 800,
+      "originalHeight": 679,
+      "source": "Owner-supplied product photo (cleared for use)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Precast concrete lintel with a channel profile. Shows a prestressed concrete lintel design; the profile supplied depends on the maker. Supplied by the owner, who confirmed it is cleared for our use (Oct 2026).",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "owner upload 2b549362-image.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "19ac4b2cfccb.webp",
+      "width": 1000,
+      "height": 1000,
+      "bytes": 19778,
+      "originalWidth": 1920,
+      "originalHeight": 1920,
+      "source": "Owner-supplied product photo (cleared for use)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Prestressed concrete lintel, square section. Shows a prestressed concrete lintel design; the profile supplied depends on the maker. Supplied by the owner, who confirmed it is cleared for our use (Oct 2026).",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "owner upload 2f5ce476-image.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "f05f826349e1.webp",
+      "width": 900,
+      "height": 501,
+      "bytes": 12466,
+      "originalWidth": 900,
+      "originalHeight": 501,
+      "source": "Owner-supplied product photo (cleared for use)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Prestressed concrete lintel. Shows a prestressed concrete lintel design; the profile supplied depends on the maker. Supplied by the owner, who confirmed it is cleared for our use (Oct 2026).",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "owner upload e88dd737-image.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "88f43b3c28fe.webp",
+      "width": 1000,
+      "height": 1000,
+      "bytes": 58348,
+      "originalWidth": 2282,
+      "originalHeight": 2282,
+      "source": "Owner-supplied product photo (cleared for use)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Prestressed concrete lintel end, showing the prestressing wires. Shows a prestressed concrete lintel design; the profile supplied depends on the maker. Supplied by the owner, who confirmed it is cleared for our use (Oct 2026).",
+      "flags": [
+        "SHARED"
+      ],
+      "originalPaths": [
+        "owner upload 510eadb7-image.png"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "50da4df96a3f.webp",
+      "width": 440,
+      "height": 294,
+      "bytes": 5332,
+      "originalWidth": 440,
+      "originalHeight": 294,
+      "source": "Owner-supplied product photo (cleared for use)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Prestressed concrete lintel, end view with the wires. Shows a prestressed concrete lintel design; the profile supplied depends on the maker. Supplied by the owner, who confirmed it is cleared for our use (Oct 2026).",
+      "flags": [
+        "LOW_RES",
+        "SHARED"
+      ],
+      "originalPaths": [
+        "owner upload a8a52cc7-image.jpg"
+      ],
+      "permission": "GRANTED"
+    },
+    {
+      "file": "99698b3937b5.webp",
+      "width": 600,
+      "height": 436,
+      "bytes": 22850,
+      "originalWidth": 600,
+      "originalHeight": 436,
+      "source": "Owner-supplied product photo (cleared for use)",
+      "sourceCountry": "SA",
+      "sourcePage": null,
+      "sourcingNote": "Terracotta PVC air brick. Supplied by the owner, who confirmed it is cleared for our use (Oct 2026).",
+      "flags": [
+        "LOW_RES"
+      ],
+      "originalPaths": [
+        "owner upload edeed1b5-image.jpg"
+      ],
+      "permission": "GRANTED"
     }
   ],
   "products": {
@@ -4496,6 +4611,51 @@
     ],
     "AA-MAS-CLAY-MAXI": [
       "e9840f08e4cf.webp"
+    ],
+    "AA-MAS-LINTEL-1200": [
+      "19ac4b2cfccb.webp",
+      "2075dd784bdd.webp",
+      "f05f826349e1.webp",
+      "88f43b3c28fe.webp",
+      "50da4df96a3f.webp"
+    ],
+    "AA-MAS-LINTEL-1500": [
+      "2075dd784bdd.webp",
+      "19ac4b2cfccb.webp",
+      "f05f826349e1.webp",
+      "88f43b3c28fe.webp",
+      "50da4df96a3f.webp"
+    ],
+    "AA-MAS-LINTEL-1800": [
+      "f05f826349e1.webp",
+      "2075dd784bdd.webp",
+      "19ac4b2cfccb.webp",
+      "88f43b3c28fe.webp",
+      "50da4df96a3f.webp"
+    ],
+    "AA-MAS-LINTEL-2400": [
+      "88f43b3c28fe.webp",
+      "2075dd784bdd.webp",
+      "19ac4b2cfccb.webp",
+      "f05f826349e1.webp",
+      "50da4df96a3f.webp"
+    ],
+    "AA-MAS-LINTEL-3000": [
+      "50da4df96a3f.webp",
+      "2075dd784bdd.webp",
+      "19ac4b2cfccb.webp",
+      "f05f826349e1.webp",
+      "88f43b3c28fe.webp"
+    ],
+    "AA-MAS-LINTEL-3600": [
+      "19ac4b2cfccb.webp",
+      "2075dd784bdd.webp",
+      "f05f826349e1.webp",
+      "88f43b3c28fe.webp",
+      "50da4df96a3f.webp"
+    ],
+    "AA-MAS-AIRBRICK-PVC": [
+      "99698b3937b5.webp"
     ]
   },
   "noImage": {
