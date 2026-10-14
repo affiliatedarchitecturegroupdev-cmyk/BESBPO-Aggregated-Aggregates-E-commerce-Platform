@@ -1,4 +1,4 @@
-import { Type } from "class-transformer";
+import { Transform, Type } from "class-transformer";
 import {
   ArrayMaxSize,
   ArrayMinSize,
@@ -79,6 +79,14 @@ export class CreateOrderDto extends DeliveryDto {
   @IsOptional() @IsString() @MaxLength(40) contactPhone?: string;
   @IsOptional() @IsBoolean() whatsappUpdates?: boolean;
   @IsOptional() @IsString() @MaxLength(2000) notes?: string;
+  /** AA 60/120 express delivery (R1,000 on top of delivery) — the API decides whether the cart qualifies. */
+  @IsOptional() @IsBoolean() express?: boolean;
+}
+
+/** Staff: AA 60/120 — accept once a supplier confirms it can load, or decline (standard delivery, fee refunded). */
+export class ExpressDecisionDto {
+  @IsIn(["ACCEPT", "DECLINE"]) decision!: "ACCEPT" | "DECLINE";
+  @IsOptional() @IsString() @MaxLength(500) note?: string;
 }
 
 /** Staff: move an order along and record the dispatch. */
@@ -98,4 +106,6 @@ export class UpdateOrderStatusDto {
 
 export class ListOrdersQuery {
   @IsOptional() @IsEnum(OrderStatus) status?: OrderStatus;
+  /** AA 60/120 orders only (any status unless one is given). */
+  @IsOptional() @Transform(({ value }) => value === true || value === "true" || value === "1") @IsBoolean() express?: boolean;
 }

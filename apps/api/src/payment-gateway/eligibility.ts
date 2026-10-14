@@ -6,11 +6,24 @@ export type EligibilityInput = {
   customerTier: CustomerTierName;
   /** Quote-only (RFQ) orders are invoiced: EFT / Purchase Order only. */
   isQuoteOnly: boolean;
+  /** AA 60/120 orders must be paid there and then: Card, or a method PayFast processes. */
+  isExpress?: boolean;
 };
+
+/** SiteContent key for the PayFast checkout switch (open to customers unless an admin sets it to staff only). */
+export const PAYFAST_VISIBILITY_KEY = "payfast-checkout";
 
 export type EligibilityResult<T> = { recommended: T[]; available: T[] };
 
-type Config = Pick<PaymentMethodConfig, "methodKey" | "isEnabled" | "tradeOnly" | "minOrderValue" | "maxOrderValue">;
+type Config = Pick<PaymentMethodConfig, "methodKey" | "isEnabled" | "tradeOnly" | "minOrderValue" | "maxOrderValue"> & Partial<Pick<PaymentMethodConfig, "activeGateway">>;
+
+/** Paid later, away from checkout (SCode: cash at a retailer) — too slow for a 120-minute promise. */
+const DEFERRED_METHODS = ["EFT_PO", "SCODE"];
+
+/** Card, or anything PayFast processes that's paid on the spot — never an invoice or a pay-in-store code. */
+export function isExpressMethod(method: Config): boolean {
+  return method.methodKey === "CARD" || (method.activeGateway === "PAYFAST" && !DEFERRED_METHODS.includes(method.methodKey));
+}
 
 /** Lowest-fee rails first — shown as "recommended" on the tiles. */
 export const RECOMMENDED_METHODS = ["INSTANT_EFT", "CAPITEC_PAY", "CARD"];
@@ -30,6 +43,7 @@ export function eligiblePaymentMethods<T extends Config>(configs: T[], input: El
     if (method.tradeOnly && input.customerTier === "RETAIL") return false;
     if (method.minOrderValue != null && input.orderTotal < Number(method.minOrderValue)) return false;
     if (method.maxOrderValue != null && input.orderTotal > Number(method.maxOrderValue)) return false;
+    if (input.isExpress && !isExpressMethod(method)) return false;
     return true;
   });
   return {

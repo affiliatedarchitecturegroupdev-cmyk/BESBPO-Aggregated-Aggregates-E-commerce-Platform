@@ -594,6 +594,14 @@ model Order {
   isTest                Boolean               @default(false) // excluded from reporting
   timestampsEstimated   Boolean               @default(false) // paidAt/cancelledAt backfilled for orders placed before they were recorded
   refunds               Refund[]
+  // AA 60/120 express delivery (docs/express-delivery.md). Null fee = standard delivery.
+  expressFee            Decimal?              @db.Decimal(10, 2) // VAT-inclusive, on top of the delivery fee
+  expressAcceptedAt     DateTime? // sales confirmed a supplier can load it; prep starts
+  expressDueAt          DateTime? // accepted + 20 min prep + 120 min
+  expressDeclinedAt     DateTime? // sales couldn't take it on: standard delivery, express fee refunded
+  expressNote           String? // why it was declined, or a dispatch note for the customer
+
+  @@index([expressDueAt])
 }
 
 /// Confirmed orders — unit-of-sale (bulk/bag) and quantity recorded per line.
@@ -949,6 +957,9 @@ enum NotificationEvent {
   BENDING_SCHEDULE_QUOTED
   BENDING_SCHEDULE_ACCEPTED
   BENDING_SCHEDULE_DECLINED
+  EXPRESS_PAID // AA 60/120: an express order is paid — sales must confirm a supplier now
+  EXPRESS_ACCEPTED // AA 60/120: the 120-minute clock is running
+  EXPRESS_DECLINED // AA 60/120: standard delivery instead, express fee refunded
 }
 
 enum NotificationChannel {

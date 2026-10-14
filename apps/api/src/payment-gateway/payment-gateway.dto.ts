@@ -5,6 +5,8 @@ import { PaymentGateway, PaymentMethodKey } from "@aggregates/database";
 export class EligibleMethodsQuery {
   @Type(() => Number) @IsNumber() @Min(0) @Max(100_000_000) orderTotal!: number;
   @IsOptional() @Transform(({ value }) => value === true || value === "true") @IsBoolean() isQuoteOnly?: boolean;
+  /** AA 60/120: Card or PayFast only (re-checked against the order when paying). */
+  @IsOptional() @Transform(({ value }) => value === true || value === "true") @IsBoolean() express?: boolean;
 }
 
 export class InitiatePaymentDto {

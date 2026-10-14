@@ -50,6 +50,7 @@ const STATIC_PATHS = [
   "/shop-by-stage",
   "/departments",
   "/buy-online",
+  "/aa-60-120",
   "/partners",
   "/partners/onboarding",
   "/plant-hire/how-it-works",

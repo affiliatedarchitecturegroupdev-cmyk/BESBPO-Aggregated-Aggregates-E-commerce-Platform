@@ -210,6 +210,13 @@ export function CartView({ signedIn }: { signedIn: boolean }) {
                   {signedIn ? "Checkout" : "Sign in to check out"}
                 </Link>
               )}
+              {pricing.express?.available && (
+                <p className="mt-3 rounded-sm border border-ochre-gold bg-ochre-gold/10 p-2 text-xs text-basalt">
+                  <span className="font-semibold">AA 60/120 available:</span> delivered within {pricing.express.promiseMinutes} minutes for{" "}
+                  {formatZAR(pricing.express.fee)} more — choose it at checkout.{" "}
+                  <Link href="/aa-60-120" className="text-seam-blue underline">How it works</Link>
+                </p>
+              )}
             </>
           ) : null}
         </section>

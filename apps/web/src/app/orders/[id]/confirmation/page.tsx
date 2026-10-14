@@ -5,6 +5,7 @@ import { orderDocuments } from "@/components/account/OrderCard";
 import { ReorderButton } from "@/components/account/ReorderButton";
 import { PaymentMethodSelector, type EligibleMethods } from "@/components/payment/PaymentMethodSelector";
 import { RefreshWhilePending } from "@/components/payment/RefreshWhilePending";
+import { ExpressStatusCard } from "@/components/orders/ExpressStatusCard";
 import { api } from "@/lib/api";
 import { UNIT_LABEL, type OrderRecord } from "@/lib/account-types";
 import { formatZAR } from "@/lib/pricing";
@@ -26,11 +27,13 @@ export default async function OrderConfirmationPage({ params, searchParams }: { 
   }
   const order = result.data;
   const awaitingPayment = order.status === "PENDING";
+  // AA 60/120 is paid by card or PayFast only (the API re-checks this on payment).
+  const isExpress = Boolean(order.express && order.express.outcome !== "DECLINED");
   // Back from PayFast: the payment is confirmed by PayFast's notification, which can arrive a few seconds after the shopper.
   const returned = searchParams.payment === "returned";
   const cancelled = searchParams.payment === "cancelled";
   const eligible = awaitingPayment
-    ? await api<EligibleMethods>(`/payment-methods/eligible?orderTotal=${Number(order.total)}`, { token })
+    ? await api<EligibleMethods>(`/payment-methods/eligible?orderTotal=${Number(order.total)}${isExpress ? "&express=true" : ""}`, { token })
     : null;
 
   return (
@@ -65,6 +68,8 @@ export default async function OrderConfirmationPage({ params, searchParams }: { 
         </p>
       )}
 
+      <ExpressStatusCard order={order} />
+
       <div className="mt-8 rounded-sm border border-basalt/10 bg-white p-5 font-body text-sm">
         <ul className="divide-y divide-basalt/5">
           {order.lineItems.map((line, i) => (
@@ -92,6 +97,12 @@ export default async function OrderConfirmationPage({ params, searchParams }: { 
             <dt className="text-slate">Delivery</dt>
             <dd>{Number(order.deliveryFee) === 0 ? "Included" : formatZAR(Number(order.deliveryFee))}</dd>
           </div>
+          {Number(order.expressFee ?? 0) > 0 && (
+            <div className="flex justify-between">
+              <dt className="text-slate">AA 60/120 express</dt>
+              <dd>{formatZAR(Number(order.expressFee))}</dd>
+            </div>
+          )}
           <div className="flex justify-between font-semibold">
             <dt>Total</dt>
             <dd>{formatZAR(Number(order.total))}</dd>

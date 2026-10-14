@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNearestDeliveryPoint } from "@/components/suppliers/useNearestDeliveryPoint";
 import type { CoverageTown } from "@/data/coverage-towns";
 import type { NearestDeliveryPoint } from "@/lib/suppliers";
+import { EXPRESS } from "@/data/express";
 
 type Band = { label: string; minKm: number; maxKm: number };
 type Option = { slug: string; name: string };
@@ -135,6 +136,12 @@ export function DeliveryChecker({ towns, materials, bands, quoteOverKm }: { town
                 Delivery band: <strong>{band.label}</strong>. <Link href="/delivery-areas" className="text-seam-blue hover:underline">See charges</Link>
               </>
             ) : null}
+            {result.distanceKm <= EXPRESS.radiusKm && (
+              <span className="mt-2 block rounded-sm bg-ochre-gold/15 px-2 py-1 text-xs">
+                <strong>Within {EXPRESS.radiusKm} km — AA 60/120 may be available:</strong> qualifying materials delivered within {EXPRESS.promiseMinutes} minutes,
+                checked at checkout. <Link href="/aa-60-120" className="font-semibold text-seam-blue hover:underline">How it works →</Link>
+              </span>
+            )}
           </p>
         )}
         {result.status === "none" && (

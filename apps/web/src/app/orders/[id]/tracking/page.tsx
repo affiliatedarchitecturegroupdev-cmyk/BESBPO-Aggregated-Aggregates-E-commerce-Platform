@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ExpressStatusCard } from "@/components/orders/ExpressStatusCard";
 import { api } from "@/lib/api";
 import { formatDate, type OrderRecord } from "@/lib/account-types";
 import { formatZAR } from "@/lib/pricing";
@@ -57,6 +58,7 @@ export default async function OrderTrackingPage({ params }: { params: { id: stri
         </ol>
       )}
 
+      <ExpressStatusCard order={order} />
       {order.shipment && (
         <p className="rounded-sm bg-white p-4 font-body text-sm text-basalt">
           Carrier: {order.shipment.carrier === "BESFLEET" ? "Besfleet" : (order.shipment.externalPartnerName ?? "Delivery partner")}

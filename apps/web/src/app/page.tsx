@@ -10,6 +10,7 @@ import { CorporateSiteBand } from "@/components/merchandising/CorporateSiteBand"
 import { CoverageStrip } from "@/components/merchandising/CoverageStrip";
 import { DeliveryBand } from "@/components/merchandising/DeliveryBand";
 import { DepartmentTiles } from "@/components/merchandising/DepartmentTiles";
+import { ExpressBand } from "@/components/merchandising/ExpressBand";
 import { FeaturedProducts } from "@/components/merchandising/FeaturedProducts";
 import { RecentlyViewed } from "@/components/merchandising/RecentlyViewed";
 import { GroupCrossSell } from "@/components/merchandising/GroupCrossSell";
@@ -32,7 +33,7 @@ import { getActivePromotions } from "@/lib/promotions";
 
 /**
  * Section order (Oct 2026): hero, the delivery checker and departments first —
- * find it, check delivery, shop — then featured products and tools, the wider
+ * find it, check delivery, shop — then AA 60/120 express, featured products and tools, the wider
  * business (plant, services, B2B bulk), and the why-us sections together.
  */
 export default async function HomePage() {
@@ -51,6 +52,8 @@ export default async function HomePage() {
       {/* The public location service: where's my nearest supplier, and what does delivery cost? */}
       <DeliveryBand />
       <DepartmentTiles />
+      {/* AA 60/120 express delivery — its own section, straight after the departments. */}
+      <ExpressBand />
       <HeroSlideshow slides={slideshowSlides(content.slideshow)} intervalSeconds={content.slideshow.intervalSeconds} />
       <TrustBadges partnerSuppliers={partnerSuppliers} liveProvinces={liveProvinces} />
       {/* Returning visitors pick up where they left off; nothing shows on a first visit. */}

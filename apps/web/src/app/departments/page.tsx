@@ -72,7 +72,7 @@ export default async function DepartmentsPage() {
       <section className="mt-10 rounded-sm border border-basalt/10 bg-limestone p-5">
         <h2 className="font-display text-lg font-bold text-basalt">Plant hire, services &amp; design</h2>
         <div className="mt-3 flex flex-wrap gap-2">
-          {[...SERVICE_LINKS, { href: "/equipment-hire", label: "Equipment Hire" }, { href: "/estimator", label: "Project Estimator" }, { href: "/calculators", label: "Calculators" }].map((l) => (
+          {[{ href: "/aa-60-120", label: "AA 60/120 Express" }, ...SERVICE_LINKS, { href: "/equipment-hire", label: "Equipment Hire" }, { href: "/estimator", label: "Project Estimator" }, { href: "/calculators", label: "Calculators" }].map((l) => (
             <Link key={l.href} href={l.href} className="rounded-sm border border-basalt/15 bg-white px-3 py-1.5 font-body text-sm text-basalt hover:border-seam-blue hover:text-seam-blue">
               {l.label}
             </Link>

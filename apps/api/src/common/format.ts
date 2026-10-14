@@ -45,6 +45,11 @@ export function formatZAR(value: Money): string {
   return `${n < 0 ? "-" : ""}R${ZAR.format(Math.abs(n))}`;
 }
 
+/** "14:35" in South African time. */
+export function formatTimeZA(date: Date | string): string {
+  return new Date(date).toLocaleTimeString("en-ZA", { timeZone: "Africa/Johannesburg", hour: "2-digit", minute: "2-digit", hour12: false });
+}
+
 export function formatDateZA(date: Date | string): string {
   return new Date(date).toLocaleDateString("en-ZA", { timeZone: "Africa/Johannesburg", day: "numeric", month: "long", year: "numeric" });
 }

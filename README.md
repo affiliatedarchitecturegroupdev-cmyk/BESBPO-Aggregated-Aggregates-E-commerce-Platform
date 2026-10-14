@@ -140,6 +140,12 @@ Every price comes from the pricing framework workbook in `docs/pricing/`.
 See [`docs/pricing/README.md`](docs/pricing/README.md) for how it flows into
 the platform and how to change a price.
 
+## AA 60/120 express delivery
+
+Qualifying materials delivered within 120 minutes for R1,000 on top of
+delivery — the rules, admin workflow and data are in
+[`docs/express-delivery.md`](docs/express-delivery.md).
+
 ## Reference
 
 - [`docs/aggregated-aggregates-ecommerce-spec.pdf`](docs/aggregated-aggregates-ecommerce-spec.pdf) —

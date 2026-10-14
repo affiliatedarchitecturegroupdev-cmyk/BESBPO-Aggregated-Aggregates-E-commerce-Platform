@@ -116,6 +116,7 @@ function toDocData(order: LoadedOrder): OrderDocData {
     createdAt: order.createdAt,
     subtotal: order.subtotal,
     deliveryFee: order.deliveryFee,
+    expressFee: order.expressFee,
     total: order.total,
     deliveryAddress: order.deliveryAddress,
     deliveryProvince: order.deliveryProvince,

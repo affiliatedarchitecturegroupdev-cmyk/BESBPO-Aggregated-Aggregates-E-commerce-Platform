@@ -71,7 +71,37 @@ export type OrderRecord = {
   shipment?: { carrier: string; externalPartnerName: string | null; trackingRef: string | null; dispatchedAt: string | null; deliveredAt: string | null } | null;
   documents: DocumentSummary[];
   invoice?: InvoiceSummary | null;
+  /** AA 60/120: the fee (null = standard delivery; "0.00" once declined before payment) and the clock the API works out. */
+  expressFee?: string | null;
+  expressNote?: string | null;
+  express?: ExpressStatus | null;
 };
+
+export type ExpressOutcome = "AWAITING_PAYMENT" | "AWAITING_ACCEPTANCE" | "IN_PROGRESS" | "ON_TIME" | "LATE" | "REFUND_DUE" | "DECLINED" | "CANCELLED";
+
+export type ExpressStatus = {
+  outcome: ExpressOutcome;
+  clockStartsAt: string | null;
+  dueAt: string | null;
+  refundAfter: string | null;
+  feeRefundDue: boolean;
+};
+
+export const EXPRESS_OUTCOME_LABEL: Record<ExpressOutcome, string> = {
+  AWAITING_PAYMENT: "Awaiting payment",
+  AWAITING_ACCEPTANCE: "Paid — confirming a supplier",
+  IN_PROGRESS: "Clock running",
+  ON_TIME: "Delivered on time",
+  LATE: "Delivered late (within the hour's grace)",
+  REFUND_DUE: "More than an hour late — fee refundable",
+  DECLINED: "Moved to standard delivery",
+  CANCELLED: "Cancelled",
+};
+
+/** "14:35" in South African time. */
+export function formatTimeZA(date: string | Date) {
+  return new Date(date).toLocaleTimeString("en-ZA", { timeZone: "Africa/Johannesburg", hour: "2-digit", minute: "2-digit", hour12: false });
+}
 
 export type InvoiceSummary = { id: string; invoiceNumber: string; status: "UNPAID" | "PAID" | "OVERDUE" | "VOID"; amountDue?: string; createdAt?: string };
 

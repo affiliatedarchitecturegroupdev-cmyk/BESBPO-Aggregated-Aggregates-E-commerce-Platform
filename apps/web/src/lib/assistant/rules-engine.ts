@@ -7,6 +7,7 @@
  */
 import { resolveJob, jobKeyFor, type JobKey } from "@/data/complete-the-job";
 import { COVERAGE_TOWNS } from "@/data/coverage-towns";
+import { EXPRESS } from "@/data/express";
 import { feeFor, feeLabel, nhbrcEnrolmentFee } from "@/data/design-services";
 import { wallTakeOff } from "@/data/masonry";
 import { CUT_TO_LENGTH } from "@/data/roofing";
@@ -370,6 +371,18 @@ function quantityAnswer(text: string, context: AssistantContext, state: Assistan
   };
 }
 
+/** AA 60/120 express delivery (data/express.ts; the API decides each cart). */
+function expressAnswer(): AssistantReply {
+  return {
+    intent: "delivery",
+    text: `AA 60/120 delivers cement in bags, bagged sand and stone, bricks, blocks, lintels, DPC, small steel and roofing within ${EXPRESS.promiseMinutes} minutes, for ${formatZAR(EXPRESS.fee)} on top of delivery. Your site must be within ${EXPRESS.radiusKm} km of a partner supplier for every item, and orders are taken ${EXPRESS.hours} (card or PayFast). The clock starts ${EXPRESS.prepMinutes} minutes after our sales team confirms the supplier, and if we're more than an hour late the express fee is refunded. Checkout tells you if your cart qualifies.`,
+    links: [
+      { label: "How AA 60/120 works", href: "/aa-60-120" },
+      { label: "Check your site", href: "/aa-60-120#check" },
+    ],
+  };
+}
+
 function deliveryAnswer(text: string): AssistantReply {
   const s = ` ${normalise(text)} `;
   const town = COVERAGE_TOWNS.find((t) => [t.name, ...(t.aliases ?? [])].some((n) => s.includes(` ${normalise(n)} `)));
@@ -520,6 +533,7 @@ export async function respondWithRules(message: string, context: AssistantContex
   if (has(text, "hire", "rent*", "tlb", "excavator*", "digger", "bobcat", "skid steer", "roller", "tipper*", "skip*", "rubble", "demolition", "demolish", "clearing", "site clearing", "haulage", "water truck", "steel fixer*", "operator")) {
     return hireAnswer(words);
   }
+  if (has(text, "60/120", "60 120", "express", "urgent*", "same day", "same-day", "within 2 hours", "within two hours", "in 2 hours", "asap", "rush")) return expressAnswer();
   if (has(text, "deliver*", "delivery", "shipping", "transport", "collect*", "do you come to", "available in", "you service")) return deliveryAnswer(text);
   if (has(text, "what else", "go with", "goes with", "complete the job", "anything else", "am i missing", "forgot*", "also need", "else do i need")) return completeAnswer(context, state);
   if (has(text, "my cart", "cart", "basket", "trolley")) return cartAnswer(context);

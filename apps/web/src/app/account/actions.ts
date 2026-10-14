@@ -488,6 +488,21 @@ export type CartPricing = {
   delivery: { fee: number | null; load_size: string | null };
   total: number | null;
   distance: { distanceKm: number; source: "LOCATION" | "CUSTOMER"; fromTown: string | null; fromProvince: string | null };
+  /** AA 60/120 — decided by the API (lines, 30 km pin, one truck, hours). */
+  express?: ExpressQuote;
+};
+
+export type ExpressQuote = {
+  available: boolean;
+  reasons: string[];
+  fee: number;
+  prepMinutes: number;
+  promiseMinutes: number;
+  refundAfterMinutes: number;
+  radiusKm: number;
+  maxLoadKg: number;
+  estimatedLoadKg: number;
+  hours: string;
 };
 
 type CartInput = {
@@ -513,7 +528,7 @@ export async function priceCart(input: CartInput): Promise<{ ok: true; pricing: 
 
 /** Places the order; the API re-prices everything and refuses quote-only carts. */
 export async function placeOrder(
-  input: CartInput & { deliveryAddress: string; deliveryProvince: string; contactPhone?: string; whatsappUpdates?: boolean; notes?: string },
+  input: CartInput & { deliveryAddress: string; deliveryProvince: string; contactPhone?: string; whatsappUpdates?: boolean; notes?: string; express?: boolean },
 ): Promise<{ ok: true; orderId: string } | { ok: false; error: string }> {
   const result = await api<{ id: string }>("/orders", {
     method: "POST",
@@ -526,6 +541,7 @@ export async function placeOrder(
       contactPhone: input.contactPhone || undefined,
       whatsappUpdates: input.whatsappUpdates || undefined,
       notes: input.notes || undefined,
+      express: input.express || undefined,
     },
   });
   if (!result.ok) return { ok: false, error: result.status === 401 ? "Please sign in again to place your order." : result.message };
@@ -554,6 +570,19 @@ export async function updateOrderStatus(_prev: FormState, form: FormData): Promi
   if (!result.ok) return { error: result.message };
   revalidatePath("/admin", "layout");
   return { success: "Order updated." };
+}
+
+/** Staff: AA 60/120 — accept once a supplier confirms it can load, or decline (standard delivery, fee refunded). */
+export async function decideExpress(_prev: FormState, form: FormData): Promise<FormState> {
+  const decision = text(form, "decision");
+  const result = await api(`/orders/${encodeURIComponent(text(form, "id"))}/express`, {
+    method: "PATCH",
+    token: sessionToken(),
+    body: { decision, note: optional(form, "note") },
+  });
+  if (!result.ok) return { error: result.message };
+  revalidatePath("/admin", "layout");
+  return { success: decision === "ACCEPT" ? "Accepted — the customer has their due time." : "Moved to standard delivery — the customer has been told." };
 }
 
 // --- notifications (staff view; admins change settings) ---------------------------

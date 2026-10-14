@@ -44,6 +44,15 @@ const order: OrderData = {
   shipment: { carrier: "BESFLEET", externalPartnerName: null, trackingRef: "BF-2044" },
 };
 
+const baseOrder = order;
+
+/** An AA 60/120 order, accepted at 10:00 SAST — due at 12:20. */
+const expressOrder: OrderData = {
+  ...order,
+  total: "10133.12",
+  express: { fee: "1000.00", acceptedAt: new Date("2026-10-14T08:00:00Z"), dueAt: new Date("2026-10-14T10:20:00Z"), declinedAt: null, note: null },
+};
+
 const quote: QuoteData = {
   id: "q_1",
   reference: "Q-7K2M",
@@ -184,6 +193,7 @@ describe("notification templates", () => {
   it("has a message for every channel an event is allowed to use", () => {
     for (const event of Object.values(NotificationEvent)) {
       const channels = EVENT_CHANNELS[event];
+      const order = event.startsWith("EXPRESS_") ? expressOrder : baseOrder;
       const customerEmail = customerOrderEmail(event, order) ?? customerQuoteEmail(event, quote) ?? customerCompanyEmail(event, company) ?? customerEnquiryEmail(event, enquiry) ?? customerBookingEmail(event, booking) ?? customerScheduleEmail(event, schedule);
       const customerWhatsApp = customerOrderWhatsApp(event, order) ?? customerQuoteWhatsApp(event, quote);
       const staffEmail = staffOrderEmail(event, order) ?? staffQuoteEmail(event, quote) ?? staffCompanyEmail(event, company) ?? staffEnquiryEmail(event, enquiry) ?? staffBookingEmail(event, booking) ?? staffScheduleEmail(event, schedule);
@@ -249,5 +259,21 @@ describe("notification templates", () => {
     expect(whatsappNumber("12345")).toBeNull();
     expect(whatsappNumber("")).toBeNull();
     expect(whatsappNumber(null)).toBeNull();
+  });
+
+  it("tells the buyer when AA 60/120 is due, and staff to confirm a supplier once it's paid", () => {
+    const placed = customerOrderEmail("ORDER_PLACED", expressOrder)!;
+    expect(placed.text).toMatch(/AA 60\/120 order/);
+    expect(placed.text).toMatch(/AA 60\/120 express: R1,000\.00/);
+    const accepted = customerOrderEmail("EXPRESS_ACCEPTED", expressOrder)!;
+    expect(accepted.subject).toBe("AA 60/120: order AA-100 is due by 12:20");
+    expect(accepted.text).toMatch(/more than an hour late/);
+    const paid = staffOrderEmail("EXPRESS_PAID", expressOrder)!;
+    expect(paid.subject).toMatch(/^AA 60\/120 PAID/);
+    const declined = customerOrderEmail("EXPRESS_DECLINED", { ...expressOrder, express: { ...expressOrder.express!, declinedAt: new Date(), note: "No truck free." } })!;
+    expect(declined.text).toMatch(/No truck free\..*refunding/s);
+    const unpaid = customerOrderEmail("EXPRESS_DECLINED", { ...expressOrder, express: { ...expressOrder.express!, fee: "0.00", declinedAt: new Date() } })!;
+    expect(unpaid.text).toMatch(/taken off/);
+    expect(customerOrderEmail("EXPRESS_ACCEPTED", order)).toBeNull();
   });
 });
