@@ -17,6 +17,14 @@ const steel = JSON.parse(readFileSync(join(__dirname, "../../../../services/pric
   products: { sku: string }[];
 };
 
+const masonry = JSON.parse(readFileSync(join(__dirname, "../../../../services/pricing/data/masonry_catalogue.json"), "utf8")) as {
+  products: { sku: string; category_slug: string }[];
+};
+
+const roofing = JSON.parse(readFileSync(join(__dirname, "../../../../services/pricing/data/roofing_catalogue.json"), "utf8")) as {
+  products: { sku: string; category_slug: string }[];
+};
+
 describe("sourced product image set", () => {
   const manifest = readManifest();
   const files = new Set(manifest.images.map((i) => i.file));
@@ -46,7 +54,7 @@ describe("sourced product image set", () => {
   });
 
   it("assigns photos only to real catalogue SKUs, at most five each, all from the set", () => {
-    const skus = new Set([...framework.products, ...packaged.products, ...readyMix.products, ...steel.products].map((p) => p.sku));
+    const skus = new Set([...framework.products, ...packaged.products, ...readyMix.products, ...steel.products, ...masonry.products, ...roofing.products].map((p) => p.sku));
     for (const [sku, list] of Object.entries(manifest.products)) {
       expect(skus.has(sku)).toBe(true);
       expect(list.length).toBeGreaterThan(0);
@@ -100,6 +108,28 @@ describe("sourced product image set", () => {
         expect(image.sourcePage).toMatch(/^https:\/\/(www\.pexels\.com|rms-sa\.co\.za|steelandpipes\.co\.za)\//);
       }
     }
+  });
+
+  it("publishes the cleared walling, roof-sheet and structural-timber photos (Manus, Oct 2026)", () => {
+    const bySku = new Map(manifest.images.map((i) => [i.file, i]));
+    const batch = Object.entries(manifest.products).filter(([sku]) => /^AA-(MAS|ROF|TMB)-/.test(sku));
+    // 11 walling products, 14 roof sheets and all 72 structural-timber variants.
+    expect(batch.length).toBe(97);
+    const timber = roofing.products.filter((p) => p.category_slug === "structural-timber").map((p) => p.sku);
+    for (const sku of timber) expect(manifest.products[sku]).toHaveLength(4);
+    for (const [sku, list] of batch) {
+      for (const file of list) {
+        const image = bySku.get(file)!;
+        expect(image.permission).toBe("GRANTED");
+        expect(image.openLicence).toBeUndefined();
+        expect(image.sourceCountry).toBe("SA");
+        expect(image.sourcePage).toMatch(/^https:\/\//);
+      }
+      // Rough-sawn timber leads with the rough-sawn photo; sized timber never shows it.
+      if (sku.startsWith("AA-TMB-")) expect(list[0] === manifest.products["AA-TMB-38114-S5-H2-RS"][0]).toBe(sku.endsWith("-RS"));
+    }
+    // Colour-coated sheets never borrow a galvanised photo, and vice versa.
+    expect(manifest.products["AA-ROF-IBR-047-PREPAINTED"]).not.toEqual(expect.arrayContaining(manifest.products["AA-ROF-IBR-047-GALV"]));
   });
 
   it("publishes only photos whose licence allows commercial use, with the credit it requires", () => {

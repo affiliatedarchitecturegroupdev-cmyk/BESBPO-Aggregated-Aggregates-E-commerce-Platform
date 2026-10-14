@@ -141,6 +141,57 @@ Larger brickforce, R-bar and structural-steel photos from RMS or Steel &
 Pipes would fill most of these gaps. The seed set is now about 18 MB of
 its 20 MB budget.
 
+## Walling, roof-sheet and structural-timber photos (Oct 2026) — live
+
+Manus sourced three packs (75 files) for bricks and blocks, roof sheeting
+and structural roofing timber, from South African retailers and makers:
+Cashbuild, Builders, BUCO, Leroy Merlin, Corobrik, Apollo Brick, B&L
+Concrete, Noag's, Jacks, IBR World, DIY Superstore, Steelman, Youngman,
+Safintra, ECO Roofing, Foresta Timber and Roof Trusses Pretoria. The owner
+confirmed on 14 October 2026 that the images are cleared for our use, so
+all carry `"permission": "GRANTED"` and import **live**. Each source has its
+own switch on **Admin → Image permissions**.
+
+Every file was checked by eye. The packs held many byte-identical copies.
+**31 distinct photos were placed on 97 products.** Each was resized to
+≤1,000 px WebP, with white space or letterboxing trimmed. The photos show
+the product type. They don't prove a gauge, coating class, strength grade
+or treatment, and each photo's sourcing note says so where it matters.
+
+| Products | Photos (first one leads the card) |
+|---|---|
+| Clay stock brick (NFP) | Apollo Imperial solid NFP bricks |
+| Face bricks FBS / FBX | Corobrik Buff Satin FBS bricks and texture; Corobrik Black Satin FBX wall. Colour and range are confirmed on the quote |
+| Concrete blocks 90 / 140 / 190 mm | Cashbuild grey blocks; B&L dimension drawing (140 mm) |
+| DPC 110 / 150 / 225 / 300 mm | Cashbuild DPC roll (one photo for every width); Noag's rolls; Jacks 225 mm rolls |
+| Concrete air brick | Lion grey air brick (Builders); Cashbuild grey air vent |
+| Galvanised IBR (0.30–0.80 mm) | BUCO galvanised IBR stack; IBR profile close-up; the 0.50 mm full-hard also has IBR World's 0.50 mm / 686 mm cover graphic |
+| IBR Zincalume® | IBR profile close-up (BUCO uses it for both coatings, so it shows the profile, not the coating) |
+| Colour-coated IBR (0.47, 0.50) | DIY Superstore brown IBR; Steelman colour range |
+| Galvanised corrugated (0.30–0.47 mm) | BUCO corrugated stack; Cashbuild single sheet |
+| Colour-coated corrugated | Youngman corrugated roof on a house |
+| Concealed-fix (clip-lock) | Klip-Lok 700 profile and clips (ECO Roofing); Safintra Newlok roof; Brownbuilt 406 profile |
+| Structural timber, all 72 variants | Sized: BUCO CCA-treated board. Rough-sawn: BUCO rough-sawn board. Then Cashbuild CCA bundles; an S5 grade stamp (S5) or BUCO S7P treated stack (S7); graded pine roof trusses |
+
+**Not placed:**
+
+| Image | Why |
+|---|---|
+| Ribbed NFX brick (Agrimark) | NFX, not NFP — the pack itself marks it as not a match |
+| Cashbuild cement maxi brick | The product is a 144 px swatch in an 800 px frame |
+| Leroy Merlin cement maxi brick | 152 px once trimmed — too small |
+| Chamberlains "grey" air brick | The photo shows a tan air brick, not grey |
+| B&L block section drawing | A cross-section drawing; the dimension drawing is clearer |
+| Cashbuild ZAM IBR | ZAM (zinc-aluminium-magnesium) coating, which we don't list |
+| Afrisheet blue sheeting | Filed under corrugated, but it's an IBR profile; 590 px |
+| Saflok 410/700 graphics, ECO Roofing Zip-Tek, Saflok building | Branded diagrams or a dark colour-coated roof — the Klip-Lok, Newlok and Brownbuilt photos match our Zincalume listing better |
+| Untreated / pale timber (Cashbuild 38 × 38, Foresta 38 × 76, Online Building end grain, Somerset, other BUCO battens and industrial timber) | Untreated or non-structural, or 240–400 px; our timber is all CCA treated |
+| Other truss photos | 260–718 px, or a reference diagram rather than our product |
+
+**Still without photos:** clay maxi and cement imperial and maxi bricks,
+lintels, the PVC air brick, Zincalume corrugated, and the timber
+connectors.
+
 ## Open-licence photos — live now
 
 To give the store real photos before launch, photos were chosen from
