@@ -65,7 +65,7 @@ orders without a payment method, estimated rows, test orders/bookings.
 
 ```
 Revenue (materials)  = Σ line totals of paid, non-test orders
-+ Delivery fees      = Σ order delivery fees
++ Delivery fees      = Σ order delivery fees + AA 60/120 express fees
 + Hire commission    = Σ (customerTotal − partnerAmount) of paid, non-test bookings
 − Refunds            = Σ refunds in the period
 Net revenue

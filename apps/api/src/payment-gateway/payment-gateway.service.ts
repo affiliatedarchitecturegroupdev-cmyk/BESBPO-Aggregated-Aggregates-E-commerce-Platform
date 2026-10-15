@@ -4,17 +4,11 @@ import { STAFF_ROLES, type AuthUser } from "../common/auth/auth-user";
 import { PrismaService } from "../common/prisma.service";
 import type { CustomerTierName } from "../pricing/pricing.service";
 import { PaymentGatewayAdapterFactory } from "./adapters/adapter.factory";
-import { eligiblePaymentMethods, isMethodEligible } from "./eligibility";
+import { eligiblePaymentMethods, isMethodEligible, PAYFAST_VISIBILITY_KEY } from "./eligibility";
 import type { UpdateOrderStatusDto } from "../orders/dto/create-order.dto";
 import { OrdersService } from "../orders/orders.service";
 import { confirmWithPayfast, isPayfastSource, parseNotification, payfastConfig, signatureMatches } from "./payfast/payfast";
 import { UpdatePaymentMethodDto } from "./payment-gateway.dto";
-
-/**
- * SiteContent key for the PayFast checkout switch. Open to customers unless an
- * admin has set it to staff only (owner's decision, Oct 2026); staff can always use it.
- */
-const PAYFAST_VISIBILITY_KEY = "payfast-checkout";
 
 export type NotificationOutcome = "PAID" | "ALREADY_PAID" | "NOT_PAID" | "REJECTED";
 
@@ -42,9 +36,12 @@ export class PaymentGatewayService {
   }
 
   /** Eligible tiles for an order total, at the caller's own tier (from the session, never the request). */
-  async eligible(orderTotal: number, isQuoteOnly: boolean, user?: AuthUser) {
-    const configs = await this.prisma.paymentMethodConfig.findMany({ select: PUBLIC_FIELDS, orderBy: { sortOrder: "asc" } });
-    return eligiblePaymentMethods(configs, { orderTotal, isQuoteOnly, customerTier: await this.tierOf(user?.companyId ?? null) });
+  async eligible(orderTotal: number, isQuoteOnly: boolean, user?: AuthUser, isExpress = false) {
+    const configs = await this.prisma.paymentMethodConfig.findMany({ select: { ...PUBLIC_FIELDS, activeGateway: true }, orderBy: { sortOrder: "asc" } });
+    const result = eligiblePaymentMethods(configs, { orderTotal, isQuoteOnly, isExpress, customerTier: await this.tierOf(user?.companyId ?? null) });
+    // Routing stays private: the gateway is only used to decide eligibility.
+    const strip = (list: typeof configs) => list.map(({ activeGateway: _gateway, ...rest }) => rest);
+    return { recommended: strip(result.recommended), available: strip(result.available) };
   }
 
   async initiate(orderId: string, methodKey: PaymentMethodKey, user: AuthUser) {
@@ -55,7 +52,12 @@ export class PaymentGatewayService {
 
     const configs = await this.prisma.paymentMethodConfig.findMany();
     const config = configs.find((c) => c.methodKey === methodKey);
-    const input = { orderTotal: Number(order.total), customerTier: await this.tierOf(order.companyId), isQuoteOnly: false };
+    const input = {
+      orderTotal: Number(order.total),
+      customerTier: await this.tierOf(order.companyId),
+      isQuoteOnly: false,
+      isExpress: order.expressFee !== null && Number(order.expressFee) > 0 && !order.expressDeclinedAt,
+    };
     if (!config || !isMethodEligible(configs, methodKey, input)) {
       throw new BadRequestException(`${config?.displayName ?? methodKey} isn't available for this order.`);
     }

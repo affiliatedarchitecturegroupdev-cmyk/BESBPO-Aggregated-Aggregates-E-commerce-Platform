@@ -32,6 +32,10 @@ Code: `apps/api/src/notifications/` (message texts live in
 | Cut & bend schedule received | ✓ reference, rows and mass by size | — | ✓ with contact details and a link to Admin → Cut & bend |
 | Cut & bend schedule quoted | ✓ quoted total, validity, what's included; account holders get an accept link, guests reply | — | — |
 | Cut & bend quote accepted / declined | — | — | ✓ |
+| AA 60/120 order placed | ✓ "pay by card or PayFast", how the clock works | — | ✓ subject starts "AA 60/120 express —" |
+| AA 60/120 order paid | — | — | ✓ "confirm a supplier now" with a link to Admin → Orders → AA 60/120 |
+| AA 60/120 accepted | ✓ the time it's due, and the late-refund promise | — | — |
+| AA 60/120 declined | ✓ standard delivery instead; fee refunded (or taken off if unpaid), with staff's reason | — | — |
 
 ¹ Only to buyers who ticked "send updates on WhatsApp" at checkout or on the
 quote form, and only for events an admin has switched on (off by default —

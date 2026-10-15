@@ -4,7 +4,7 @@ import type { AuthUser } from "../common/auth/auth-user";
 import { Public, Roles } from "../common/auth/decorators";
 import { CurrentUser } from "../common/decorators/current-user.decorator";
 import { forViewer } from "../common/costs";
-import { CreateOrderDto, ListOrdersQuery, PriceCartDto, UpdateOrderStatusDto } from "./dto/create-order.dto";
+import { CreateOrderDto, ExpressDecisionDto, ListOrdersQuery, PriceCartDto, UpdateOrderStatusDto } from "./dto/create-order.dto";
 import { DOCUMENT_KINDS, OrderDocumentsService, type DocumentKind } from "../documents/order-documents.service";
 import { OrdersService } from "./orders.service";
 
@@ -36,7 +36,7 @@ export class OrdersController {
   @Roles("STAFF", "ADMIN")
   @Get()
   async listAll(@Query() query: ListOrdersQuery, @CurrentUser() user: AuthUser) {
-    return forViewer(await this.ordersService.listAll(query.status), user);
+    return forViewer(await this.ordersService.listAll(query.status, query.express), user);
   }
 
   /** Staff: whether tax invoices can be issued yet, and what's missing. */
@@ -75,5 +75,12 @@ export class OrdersController {
   @Patch(":id/status")
   async updateStatus(@Param("id") id: string, @Body() dto: UpdateOrderStatusDto, @CurrentUser() user: AuthUser) {
     return forViewer(await this.ordersService.updateStatus(id, dto), user);
+  }
+
+  /** Staff: AA 60/120 — accept (starts the prep and 120-minute clock) or decline. */
+  @Roles("STAFF", "ADMIN")
+  @Patch(":id/express")
+  async decideExpress(@Param("id") id: string, @Body() dto: ExpressDecisionDto, @CurrentUser() user: AuthUser) {
+    return forViewer(await this.ordersService.decideExpress(id, dto), user);
   }
 }

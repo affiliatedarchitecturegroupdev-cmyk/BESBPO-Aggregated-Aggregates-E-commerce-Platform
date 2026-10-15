@@ -12,12 +12,16 @@ import type { DocSpec } from "./pdf-renderer";
 
 export const VAT_RATE_PERCENT = 15; // South African standard rate
 
+const hasExpress = (o: { expressFee?: Money | null }) => o.expressFee != null && Number(o.expressFee.toString()) > 0;
+
 export type OrderDocData = {
   orderNumber: string;
   status: string;
   createdAt: Date;
   subtotal: Money;
   deliveryFee: Money;
+  /** AA 60/120 express fee, VAT-inclusive (null for standard delivery). */
+  expressFee?: Money | null;
   total: Money;
   deliveryAddress: string | null;
   deliveryProvince: string | null;
@@ -112,6 +116,7 @@ export function orderConfirmationSpec(o: OrderDocData, bankingDetails?: string):
     totals: [
       { label: "Materials", value: formatZAR(o.subtotal) },
       { label: o.deliveryDistanceKm !== null ? `Delivery (${o.deliveryDistanceKm}km)` : "Delivery", value: Number(o.deliveryFee.toString()) === 0 ? "Included" : formatZAR(o.deliveryFee) },
+      ...(hasExpress(o) ? [{ label: "AA 60/120 express delivery", value: formatZAR(o.expressFee!) }] : []),
       { label: "Total", value: formatZAR(o.total), strong: true },
     ],
     notes: [
@@ -185,6 +190,7 @@ export function taxInvoiceSpec(inv: InvoiceDocData, o: OrderDocData, bankingDeta
       rows: [
         ...o.lines.map((l) => [l.name, quantity(l), l.unitPrice !== null ? formatZAR(l.unitPrice) : "—", l.lineTotal !== null ? formatZAR(l.lineTotal) : "—"]),
         ...(Number(o.deliveryFee.toString()) > 0 ? [[`Delivery${o.deliveryDistanceKm !== null ? ` (${o.deliveryDistanceKm}km)` : ""}`, "1", formatZAR(o.deliveryFee), formatZAR(o.deliveryFee)]] : []),
+        ...(hasExpress(o) ? [["AA 60/120 express delivery", "1", formatZAR(o.expressFee!), formatZAR(o.expressFee!)]] : []),
       ],
     },
     totals: [

@@ -23,7 +23,7 @@ export class PaymentGatewayController {
   @Public()
   @Get("eligible")
   eligible(@Query() query: EligibleMethodsQuery, @CurrentUser() user?: AuthUser) {
-    return this.payments.eligible(query.orderTotal, query.isQuoteOnly ?? false, user);
+    return this.payments.eligible(query.orderTotal, query.isQuoteOnly ?? false, user, query.express ?? false);
   }
 
   /** Starts paying a PENDING order with the chosen tile; routed to its gateway. */

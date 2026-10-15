@@ -7,9 +7,33 @@ import { PrismaService } from "../common/prisma.service";
 import { CustomerTierName, PricingService, type PricingUnit } from "../pricing/pricing.service";
 import { pricingUnit, unitOfSale } from "../pricing/units";
 import { SuppliersService } from "../suppliers/suppliers.service";
-import { CreateOrderDto, DeliveryDto, UpdateOrderStatusDto } from "./dto/create-order.dto";
+import { PAYFAST_VISIBILITY_KEY } from "../payment-gateway/eligibility";
+import { CreateOrderDto, DeliveryDto, ExpressDecisionDto, UpdateOrderStatusDto } from "./dto/create-order.dto";
+import { EXPRESS, expressClock, expressOutcome, expressQuote, type ExpressQuote } from "./express";
 
-type Line = { productId: string; sku: string; categorySlug: string; unit: PricingUnit; quantity: number };
+type Line = { productId: string; sku: string; name: string; categorySlug: string; unit: PricingUnit; quantity: number };
+
+/** An order with the AA 60/120 clock worked out (null for standard delivery). */
+export function withExpress<T extends { status: string; expressFee: unknown; expressAcceptedAt: Date | null; expressDeclinedAt: Date | null; shipment?: { deliveredAt: Date | null } | null }>(
+  order: T,
+  now = new Date(),
+) {
+  const outcome = expressOutcome(order, order.shipment?.deliveredAt ?? null, now);
+  const clock = order.expressAcceptedAt ? expressClock(order.expressAcceptedAt) : null;
+  return {
+    ...order,
+    express: outcome
+      ? {
+          outcome,
+          clockStartsAt: clock?.clockStartsAt ?? null,
+          dueAt: clock?.dueAt ?? null,
+          refundAfter: clock?.refundAfter ?? null,
+          // A paid express fee is owed back if sales declined it or we were more than an hour late.
+          feeRefundDue: (outcome === "DECLINED" || outcome === "REFUND_DUE") && Number(order.expressFee) > 0,
+        }
+      : null,
+  };
+}
 
 /** Order status moves forward only (or to CANCELLED before delivery). */
 const NEXT_STATUSES: Record<OrderStatus, OrderStatus[]> = {
@@ -45,6 +69,9 @@ export class OrdersService {
     private readonly notifications: NotificationsService,
   ) {}
 
+  /** The time AA 60/120 rules are checked against (tests pin it to ordering hours). */
+  clock: () => Date = () => new Date();
+
   /** Prices a cart at the caller's tier without saving anything. */
   async priceCart(dto: { lines: { sku: string; unit: PricingUnit; quantity: number }[] } & DeliveryDto, user?: AuthUser) {
     const lines = await this.resolveLines({ lines: dto.lines });
@@ -54,6 +81,7 @@ export class OrdersService {
       distanceKm: delivery.distanceKm,
       customerTier: await this.tierOf(user?.companyId ?? null),
     });
+    const express = await this.express(lines, priced, delivery, user);
     // The shopper sees prices only — never our cost, pricing family or benchmark research.
     const publicLines = priced.lines.map(({ sku, unit, quantity, equivalent_tons, equivalent_m3, list_unit_price, unit_price, total, unit_label, pricing_status }) => ({
       sku,
@@ -67,7 +95,7 @@ export class OrdersService {
       unit_label,
       pricing_status,
     }));
-    return { ...priced, lines: publicLines, distance: delivery };
+    return { ...priced, lines: publicLines, distance: delivery, express };
   }
 
   async createOrder(dto: CreateOrderDto, user: AuthUser) {
@@ -86,6 +114,12 @@ export class OrdersService {
         `This order is quote-only (${priced.reasons.join("; ")}) — route it to the RFQ flow (POST /quotes) instead of checkout.`,
       );
     }
+    // AA 60/120 is re-checked here, never taken on the storefront's word.
+    if (dto.express) {
+      const express = await this.express(lines, priced, delivery, user);
+      if (!express.available) throw new BadRequestException(`AA 60/120 isn't available for this order: ${express.reasons.join(" ")}`);
+    }
+    const expressFee = dto.express ? EXPRESS.feeRand : null;
 
     const order = await this.prisma.order.create({
       data: {
@@ -95,7 +129,8 @@ export class OrdersService {
         status: OrderStatus.PENDING,
         subtotal: priced.subtotal,
         deliveryFee: priced.delivery.fee,
-        total: priced.total,
+        total: priced.total + (expressFee ?? 0),
+        expressFee,
         deliveryAddress: dto.deliveryAddress?.trim() || null,
         deliveryProvince: dto.deliveryProvince?.trim() || null,
         deliveryDistanceKm: delivery.distanceKm,
@@ -130,7 +165,7 @@ export class OrdersService {
       include: { lineItems: { include: { product: true } } },
     });
     await this.notifications.order("ORDER_PLACED", order.id);
-    return order;
+    return withExpress(order, this.clock());
   }
 
   /** The caller's own orders and their company's, newest first, with documents. */
@@ -145,7 +180,7 @@ export class OrdersService {
         invoice: { select: { id: true, invoiceNumber: true, status: true, amountDue: true, createdAt: true } },
       },
     });
-    return this.documents.attachToOrders(orders);
+    return (await this.documents.attachToOrders(orders)).map((o) => withExpress(o, this.clock()));
   }
 
   async getOrder(id: string, user: AuthUser) {
@@ -158,14 +193,14 @@ export class OrdersService {
       throw new NotFoundException(`Order not found: ${id}`);
     }
     const [withDocuments] = await this.documents.attachToOrders([order]);
-    return withDocuments;
+    return withExpress(withDocuments, this.clock());
   }
 
-  /** Staff: every order, newest first. */
-  listAll(status?: OrderStatus) {
-    return this.prisma.order.findMany({
-      where: status ? { status } : undefined,
-      orderBy: { createdAt: "desc" },
+  /** Staff: every order, newest first — or AA 60/120 orders, the soonest due first. */
+  async listAll(status?: OrderStatus, express = false) {
+    const orders = await this.prisma.order.findMany({
+      where: { ...(status ? { status } : {}), ...(express ? { expressFee: { not: null }, expressDeclinedAt: null } : {}) },
+      orderBy: express ? [{ expressDueAt: { sort: "asc", nulls: "first" } }, { createdAt: "desc" }] : { createdAt: "desc" },
       take: 200,
       include: {
         lineItems: { include: { product: { select: { name: true, sku: true } } } },
@@ -175,6 +210,7 @@ export class OrdersService {
         company: { select: { name: true } },
       },
     });
+    return orders.map((o) => withExpress(o, this.clock()));
   }
 
   /** Staff: confirm, dispatch (with carrier and tracking), deliver or cancel. */
@@ -233,7 +269,84 @@ export class OrdersService {
     }
     // Only a real status change is news to the customer (tracking edits aren't).
     if (order.status !== dto.status) await this.notifications.order(STATUS_EVENT[dto.status], id);
-    return updated;
+    // A paid AA 60/120 order: sales confirms a supplier by phone or email, then accepts it here.
+    if (statusChanged && dto.status === "CONFIRMED" && order.expressFee !== null && !order.expressDeclinedAt) {
+      await this.notifications.order("EXPRESS_PAID", id);
+    }
+    return withExpress(updated, this.clock());
+  }
+
+  /**
+   * Staff: AA 60/120. Accept once a supplier has confirmed it can load (the
+   * 20-minute prep starts now, then the 120-minute clock), or decline: the
+   * order goes by standard delivery and the express fee is refunded — or, if
+   * it isn't paid yet, taken off the total.
+   */
+  async decideExpress(id: string, dto: ExpressDecisionDto) {
+    const order = await this.prisma.order.findUnique({ where: { id }, include: { shipment: true } });
+    if (!order) throw new NotFoundException("Order not found.");
+    if (order.expressFee === null) throw new BadRequestException("This isn't an AA 60/120 order.");
+    if (order.expressDeclinedAt) throw new BadRequestException("AA 60/120 was already declined for this order.");
+    const now = this.clock();
+    const note = dto.note?.trim() || null;
+    if (dto.decision === "ACCEPT") {
+      if (order.expressAcceptedAt) throw new BadRequestException("This order was already accepted for AA 60/120.");
+      if (order.status !== "CONFIRMED") throw new BadRequestException("Accept AA 60/120 once payment is confirmed and before dispatch.");
+      const updated = await this.prisma.order.update({
+        where: { id },
+        data: { expressAcceptedAt: now, expressDueAt: expressClock(now).dueAt, expressNote: note },
+        include: { shipment: true },
+      });
+      await this.notifications.order("EXPRESS_ACCEPTED", id);
+      return withExpress(updated, this.clock());
+    }
+    if (order.status !== "PENDING" && order.status !== "CONFIRMED") {
+      throw new BadRequestException("Only an order that hasn't been dispatched can be moved off AA 60/120.");
+    }
+    if (!note) throw new BadRequestException("Say why AA 60/120 can't be done — the customer sees it.");
+    const unpaid = order.status === "PENDING";
+    const updated = await this.prisma.$transaction(async (tx) => {
+      const changed = await tx.order.update({
+        where: { id },
+        data: {
+          expressDeclinedAt: now,
+          expressNote: note,
+          // Not paid yet: the fee simply comes off what's owed.
+          ...(unpaid ? { expressFee: 0, total: { decrement: order.expressFee! } } : {}),
+        },
+        include: { shipment: true },
+      });
+      if (unpaid) await tx.invoice.updateMany({ where: { orderId: id, status: "UNPAID" }, data: { amountDue: changed.total } });
+      return changed;
+    });
+    await this.notifications.order("EXPRESS_DECLINED", id);
+    return withExpress(updated, this.clock());
+  }
+
+  /**
+   * AA 60/120 for a cart: every line qualifies, priced, the pin within 30 km
+   * of the nearest supplier of each material, one truck's load, ordering
+   * hours — and online payment open to the customer (Card or PayFast only).
+   */
+  private async express(
+    lines: Line[],
+    priced: { is_quote_only: boolean; lines: { equivalent_tons?: number | null }[] },
+    delivery: { distanceKm: number; source: "LOCATION" | "CUSTOMER" },
+    user?: AuthUser,
+  ): Promise<ExpressQuote> {
+    const quote = expressQuote({
+      lines: lines.map((l, i) => ({ ...l, equivalentTons: priced.lines[i]?.equivalent_tons ?? null })),
+      distance: delivery,
+      isQuoteOnly: priced.is_quote_only,
+      now: this.clock(),
+    });
+    if (!(user && STAFF_ROLES.includes(user.role))) {
+      const payfast = await this.prisma.siteContent.findUnique({ where: { key: PAYFAST_VISIBILITY_KEY } });
+      if ((payfast?.data as { public?: boolean } | null)?.public === false) {
+        return { ...quote, available: false, reasons: [...quote.reasons, "AA 60/120 is paid by card or PayFast, and online payment isn't open yet."] };
+      }
+    }
+    return quote;
   }
 
   /**
@@ -276,13 +389,13 @@ export class OrdersService {
     const products = await this.prisma.product.findMany({
       // Products staff have hidden from the storefront can't be ordered either.
       where: { ...(bySku ? { sku: { in: requested.map((r) => r.key) } } : { id: { in: requested.map((r) => r.key) } }), isActive: true },
-      select: { id: true, sku: true, category: { select: { slug: true } } },
+      select: { id: true, sku: true, name: true, category: { select: { slug: true } } },
     });
     const byKey = new Map(products.map((p) => [bySku ? p.sku : p.id, p]));
     return requested.map((r) => {
       const product = byKey.get(r.key);
       if (!product) throw new NotFoundException(`Product not found: ${r.key}`);
-      return { productId: product.id, sku: product.sku, categorySlug: product.category.slug, unit: r.unit, quantity: r.quantity };
+      return { productId: product.id, sku: product.sku, name: product.name, categorySlug: product.category.slug, unit: r.unit, quantity: r.quantity };
     });
   }
 

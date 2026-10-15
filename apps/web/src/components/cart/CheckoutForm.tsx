@@ -35,11 +35,14 @@ export function CheckoutForm({ addresses, email }: { addresses: SavedAddress[]; 
   const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
   const [whatsappUpdates, setWhatsappUpdates] = useState(false);
+  const [express, setExpress] = useState(false);
   const [pricing, setPricing] = useState<CartPricing | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [placing, startPlacing] = useTransition();
   const [, startPricing] = useTransition();
   const input = deliveryInput(delivery);
+  const expressQuote = pricing?.express;
+  const expressOn = express && Boolean(expressQuote?.available);
 
   const key = JSON.stringify({ lines, delivery });
   useEffect(() => {
@@ -67,7 +70,7 @@ export function CheckoutForm({ addresses, email }: { addresses: SavedAddress[]; 
     e.preventDefault();
     setError(null);
     startPlacing(async () => {
-      const result = await placeOrder({ lines, delivery: input, deliveryAddress: address, deliveryProvince: province, contactPhone: phone, whatsappUpdates: whatsappUpdates && phone.trim() !== "", notes });
+      const result = await placeOrder({ lines, delivery: input, deliveryAddress: address, deliveryProvince: province, contactPhone: phone, whatsappUpdates: whatsappUpdates && phone.trim() !== "", notes, express: expressOn });
       if (!result.ok) {
         setError(result.error);
         return;
@@ -160,7 +163,8 @@ export function CheckoutForm({ addresses, email }: { addresses: SavedAddress[]; 
             <dl className="mt-3 space-y-1 border-t border-basalt/10 pt-3">
               <div className="flex justify-between"><dt className="text-slate">Materials</dt><dd className="tabular-nums">{formatZAR(pricing.subtotal)}</dd></div>
               <div className="flex justify-between"><dt className="text-slate">Delivery ({pricing.distance.distanceKm}km)</dt><dd className="tabular-nums">{pricing.delivery.fee === null ? "Quoted" : pricing.delivery.fee === 0 ? "Included" : formatZAR(pricing.delivery.fee)}</dd></div>
-              {pricing.total !== null && <div className="flex justify-between font-semibold"><dt>Total</dt><dd className="tabular-nums">{formatZAR(pricing.total)}</dd></div>}
+              {expressOn && <div className="flex justify-between"><dt className="text-slate">AA 60/120 express</dt><dd className="tabular-nums">{formatZAR(expressQuote!.fee)}</dd></div>}
+              {pricing.total !== null && <div className="flex justify-between font-semibold"><dt>Total</dt><dd className="tabular-nums">{formatZAR(pricing.total + (expressOn ? expressQuote!.fee : 0))}</dd></div>}
             </dl>
           )}
           {pricing?.is_quote_only && (
@@ -169,13 +173,42 @@ export function CheckoutForm({ addresses, email }: { addresses: SavedAddress[]; 
             </p>
           )}
         </section>
+        {expressQuote && !pricing?.is_quote_only && (
+          <section className={`rounded-sm border p-4 font-body text-sm ${expressQuote.available ? "border-ochre-gold bg-ochre-gold/10" : "border-basalt/10 bg-white"}`} aria-label="AA 60/120 express delivery">
+            {expressQuote.available ? (
+              <label className="flex cursor-pointer items-start gap-3">
+                <input type="checkbox" checked={express} onChange={(e) => setExpress(e.target.checked)} className="mt-1 h-4 w-4" />
+                <span>
+                  <span className="block font-semibold text-basalt">
+                    AA 60/120 — delivered within {expressQuote.promiseMinutes} minutes <span className="whitespace-nowrap">+{formatZAR(expressQuote.fee)}</span>
+                  </span>
+                  <span className="mt-1 block text-xs text-slate">
+                    Pay now by card or PayFast. Our sales team confirms a supplier, then there&apos;s {expressQuote.prepMinutes} minutes&apos; loading prep and the{" "}
+                    {expressQuote.promiseMinutes}-minute clock starts — we email you the time it&apos;s due. More than an hour late, and we refund the fee. If we
+                    can&apos;t take it on, it comes standard and the fee is refunded in full.{" "}
+                    <Link href="/aa-60-120" className="text-seam-blue underline" target="_blank">How AA 60/120 works</Link>
+                  </span>
+                </span>
+              </label>
+            ) : (
+              <details>
+                <summary className="cursor-pointer text-xs text-slate">
+                  <span className="font-semibold text-basalt">AA 60/120</span> express delivery isn&apos;t available for this order — why?
+                </summary>
+                <ul className="mt-2 list-disc space-y-1 pl-5 text-xs text-slate">
+                  {expressQuote.reasons.map((r) => <li key={r}>{r}</li>)}
+                </ul>
+              </details>
+            )}
+          </section>
+        )}
         {error && <p role="alert" className="rounded-sm border border-red-700/30 bg-red-50 p-3 font-body text-sm text-red-800">{error}</p>}
         <button
           type="submit"
           disabled={placing || !pricing || pricing.is_quote_only}
           className="w-full rounded-sm bg-seam-blue px-4 py-3 font-body text-sm font-semibold text-limestone hover:bg-basalt disabled:opacity-50"
         >
-          {placing ? "Placing order…" : "Place order and choose payment"}
+          {placing ? "Placing order…" : expressOn ? "Place AA 60/120 order and pay" : "Place order and choose payment"}
         </button>
         <p className="font-body text-[11px] text-slate">
           By placing the order you accept our <Link href="/legal/terms-and-conditions" className="underline">Terms</Link> and{" "}

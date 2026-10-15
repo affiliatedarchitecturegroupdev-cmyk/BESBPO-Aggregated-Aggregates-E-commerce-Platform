@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { issueInvoice, updateOrderStatus } from "@/app/account/actions";
+import { decideExpress, issueInvoice, updateOrderStatus } from "@/app/account/actions";
 import { setTestFlag } from "@/app/admin/finance/actions";
 import { RefundPanel, type RefundRecord } from "@/components/finance/RefundPanel";
 import { ActionForm, inputClass, SubmitButton } from "@/components/account/Forms";
+import { ExpressCountdown } from "@/components/orders/ExpressCountdown";
 import { api } from "@/lib/api";
-import { formatDate, UNIT_LABEL, type InvoiceSummary, type OrderRecord } from "@/lib/account-types";
+import { EXPRESS_OUTCOME_LABEL, formatDate, formatTimeZA, UNIT_LABEL, type InvoiceSummary, type OrderRecord } from "@/lib/account-types";
 import { formatZAR } from "@/lib/pricing";
 import { getSession, sessionToken } from "@/lib/session";
 
@@ -40,7 +41,7 @@ function margin(order: StaffOrder) {
   const cost = lines.reduce((n, l) => n + Number(l.unitCost) * Number(l.quantity), 0);
   const sales = lines.reduce((n, l) => n + Number(l.lineTotal ?? 0), 0);
   const delivery = order.shipment?.deliveryCost != null ? Number(order.shipment.deliveryCost) : null;
-  const gross = sales - cost + Number(order.deliveryFee ?? 0) - (delivery ?? 0);
+  const gross = sales - cost + Number(order.deliveryFee ?? 0) + Number(order.expressFee ?? 0) - (delivery ?? 0);
   return { cost, sales, delivery, gross, estimated: lines.some((l) => l.costSource === "ESTIMATED") };
 }
 
@@ -65,11 +66,12 @@ const NEXT: Record<(typeof STATUSES)[number], (typeof STATUSES)[number][]> = {
  * reconciled), dispatch with the carrier and tracking reference the
  * customer sees, and mark delivered.
  */
-export default async function AdminOrdersPage({ searchParams }: { searchParams: { status?: string } }) {
-  const status = STATUSES.find((s) => s === searchParams.status) ?? "PENDING";
+export default async function AdminOrdersPage({ searchParams }: { searchParams: { status?: string; express?: string } }) {
+  const express = searchParams.express === "1";
+  const status = express ? null : (STATUSES.find((s) => s === searchParams.status) ?? "PENDING");
   const token = sessionToken();
   const [result, invoicing, user, methods, suppliers, refunds] = await Promise.all([
-    api<StaffOrder[]>(`/orders?status=${status}`, { token }),
+    api<StaffOrder[]>(express ? "/orders?express=true" : `/orders?status=${status}`, { token }),
     api<{ ready: boolean; problems: string[] }>("/orders/invoicing-status", { token }),
     getSession(),
     api<PaymentMethod[]>("/payment-methods", { token }),
@@ -87,7 +89,17 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
             {STATUS_LABEL[s]}
           </Link>
         ))}
+        <Link href="/admin/orders?express=1" className={`rounded-sm px-2.5 py-1 font-semibold ${express ? "bg-ochre-gold text-basalt" : "bg-ochre-gold/15 text-basalt"}`}>
+          AA 60/120
+        </Link>
       </div>
+      {express && (
+        <p className="mt-4 max-w-3xl font-body text-xs text-slate">
+          Express orders, the soonest due first. Once one is paid, call or email the nearest partner supplier; when they confirm they can load, accept it here —
+          that starts 20 minutes&apos; prep, then the 120-minute clock. If no supplier can, decline it with a reason: it goes by standard delivery and the R1,000
+          fee is refunded (or taken off, if it isn&apos;t paid yet). Delivered more than an hour late (over 3 hours on the clock), the fee is refunded too.
+        </p>
+      )}
       {invoicing.ok && !invoicing.data.ready && status !== "CANCELLED" && (
         <p className="mt-4 rounded-sm border border-ochre-gold/40 bg-ochre-gold/10 p-3 font-body text-xs text-basalt">
           Tax invoices can&apos;t be issued yet. {invoicing.data.problems.join(" ")} (Set these on the API service — see docs/deployment/render.md.)
@@ -132,6 +144,7 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
                 ))}
               </ul>
               {order.notes && <p className="mt-2 rounded-sm bg-limestone p-2 text-slate">{order.notes}</p>}
+              {order.express && <ExpressPanel order={order} />}
               {order.shipment && (
                 <p className="mt-2 font-mono text-[11px] text-slate">
                   {order.shipment.carrier === "BESFLEET" ? "Besfleet" : order.shipment.externalPartnerName}
@@ -245,5 +258,57 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
         </ul>
       )}
     </section>
+  );
+}
+
+/** AA 60/120 on a staff order: the clock, and accept / decline while it's open. */
+function ExpressPanel({ order }: { order: StaffOrder }) {
+  const x = order.express!;
+  const open = x.outcome === "AWAITING_PAYMENT" || x.outcome === "AWAITING_ACCEPTANCE";
+  return (
+    <div className="mt-3 rounded-sm border border-ochre-gold/50 bg-ochre-gold/10 p-3 text-xs text-basalt">
+      <p className="flex flex-wrap items-center gap-2">
+        <span className="rounded-sm bg-ochre-gold px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase">AA 60/120</span>
+        <span className="font-semibold">{EXPRESS_OUTCOME_LABEL[x.outcome]}</span>
+        {Number(order.expressFee) > 0 && <span className="text-slate">· fee {formatZAR(Number(order.expressFee))}</span>}
+        {x.outcome === "IN_PROGRESS" && x.clockStartsAt && x.dueAt && x.refundAfter && (
+          <>
+            · <ExpressCountdown clockStartsAt={x.clockStartsAt} dueAt={x.dueAt} refundAfter={x.refundAfter} />
+          </>
+        )}
+        {(x.outcome === "ON_TIME" || x.outcome === "LATE") && x.dueAt && <span className="text-slate">· was due by {formatTimeZA(x.dueAt)}</span>}
+      </p>
+      {order.expressNote && <p className="mt-1 text-slate">Note to customer: {order.expressNote}</p>}
+      {x.feeRefundDue && (
+        <p className="mt-1 font-semibold text-red-800">
+          Refund the {formatZAR(Number(order.expressFee))} express fee in full — record it under Refunds below with the reason &ldquo;AA 60/120 {x.outcome === "DECLINED" ? "declined" : "more than an hour late"}&rdquo;.
+        </p>
+      )}
+      {x.outcome === "AWAITING_PAYMENT" && <p className="mt-1 text-slate">Card or PayFast only. You can accept once payment is confirmed.</p>}
+      {open && (
+        <div className="mt-3 grid gap-3 md:grid-cols-2">
+          {x.outcome === "AWAITING_ACCEPTANCE" && (
+            <ActionForm action={decideExpress} className="space-y-2 rounded-sm bg-white p-3">
+              <input type="hidden" name="id" value={order.id} />
+              <input type="hidden" name="decision" value="ACCEPT" />
+              <label className="block">
+                <span className="font-mono text-[10px] uppercase text-slate">Supplier confirmed — note for the customer (optional)</span>
+                <input name="note" maxLength={500} placeholder="e.g. Loading at our Durban North partner now." className={inputClass} />
+              </label>
+              <SubmitButton>Accept — start the clock</SubmitButton>
+            </ActionForm>
+          )}
+          <ActionForm action={decideExpress} className="space-y-2 rounded-sm bg-white p-3">
+            <input type="hidden" name="id" value={order.id} />
+            <input type="hidden" name="decision" value="DECLINE" />
+            <label className="block">
+              <span className="font-mono text-[10px] uppercase text-slate">Can&apos;t do it — reason (the customer sees this) *</span>
+              <input name="note" required maxLength={500} placeholder="e.g. No supplier can load within the hour." className={inputClass} />
+            </label>
+            <SubmitButton variant="subtle">Decline — standard delivery, fee {x.outcome === "AWAITING_PAYMENT" ? "taken off" : "refunded"}</SubmitButton>
+          </ActionForm>
+        </div>
+      )}
+    </div>
   );
 }

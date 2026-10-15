@@ -55,6 +55,7 @@ export function Header() {
               </Link>
               <p className="mt-2 border-t border-basalt/10 px-3 pb-1 pt-3 font-mono text-[10px] uppercase tracking-widest text-slate">More</p>
               {[
+                { href: "/aa-60-120", label: "AA 60/120 — delivered within 2 hours" },
                 { href: "/buy-online", label: "Buy online — priced products" },
                 { href: "/coverage", label: "Check delivery to your area" },
                 ...NAV_LINKS.filter((l) => !["/products", "/reinforcing-steel"].includes(l.href)),
@@ -94,6 +95,9 @@ export function Header() {
                 {l.label}
               </Link>
             ))}
+            <Link href="/aa-60-120" className="rounded-sm bg-ochre-gold px-2 py-0.5 font-semibold text-basalt hover:bg-basalt hover:text-limestone">
+              AA 60/120 Express
+            </Link>
             <Link href="/coverage" className="flex items-center gap-1 font-semibold text-seam-blue hover:text-basalt">
               <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
               Check delivery

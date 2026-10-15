@@ -1,7 +1,11 @@
 import type { NotificationEvent, UnitOfSale } from "@aggregates/database";
-import { formatZAR, UNIT_LABEL, type Money } from "../common/format";
+import { formatTimeZA, formatZAR, UNIT_LABEL, type Money } from "../common/format";
 
 export { formatZAR };
+
+// AA 60/120 (orders/express.ts), repeated here so templates stay free of service imports.
+const EXPRESS_PREP = 20;
+const EXPRESS_PROMISE = 120;
 
 /**
  * Every message the platform sends, as pure functions of the record it's
@@ -28,6 +32,8 @@ export type OrderData = {
   companyName: string | null;
   lines: { name: string; quantity: number; unitOfSale: UnitOfSale | null; lineTotal: Money | null }[];
   shipment: { carrier: string; externalPartnerName: string | null; trackingRef: string | null } | null;
+  /** AA 60/120: the fee (0 once declined before payment), when sales accepted it and when it's due. */
+  express?: { fee: Money; acceptedAt: Date | null; dueAt: Date | null; declinedAt: Date | null; note: string | null } | null;
 };
 
 export type QuoteData = {
@@ -171,6 +177,7 @@ function orderSummary(o: OrderData): Block[] {
   const rows: [string, string][] = [
     ["Materials", formatZAR(o.subtotal)],
     ["Delivery", Number(o.deliveryFee.toString()) === 0 ? "Included" : formatZAR(o.deliveryFee)],
+    ...(o.express && Number(o.express.fee.toString()) > 0 ? ([["AA 60/120 express", formatZAR(o.express.fee)]] as [string, string][]) : []),
     ["Total", formatZAR(o.total)],
   ];
   const where = o.deliveryAddress ? [{ kind: "p" as const, text: `Delivering to ${o.deliveryAddress}${o.deliveryProvince ? `, ${o.deliveryProvince}` : ""}.` }] : [];
@@ -189,7 +196,12 @@ export function customerOrderEmail(event: NotificationEvent, o: OrderData): Emai
     case "ORDER_PLACED":
       return email(`Order ${o.orderNumber} received — choose how to pay`, [
         hi,
-        { kind: "p", text: `Thanks for your order. Here's what you ordered — it's confirmed with our partner supplier once payment is received.` },
+        {
+          kind: "p",
+          text: o.express
+            ? `Thanks for your AA 60/120 order. Pay now by card or PayFast: once payment is in, our sales team confirms a supplier, then there's ${EXPRESS_PREP} minutes' loading prep and the ${EXPRESS_PROMISE}-minute delivery clock starts. We'll email you the time it's due.`
+            : `Thanks for your order. Here's what you ordered — it's confirmed with our partner supplier once payment is received.`,
+        },
         ...orderSummary(o),
         { kind: "cta", label: "Pay for your order", href: `${site}/orders/${o.id}/confirmation` },
       ]);
@@ -216,6 +228,34 @@ export function customerOrderEmail(event: NotificationEvent, o: OrderData): Emai
         { kind: "cta", label: "View your order", href: `${site}/orders/${o.id}/confirmation` },
         { kind: "p", text: "Something not right with the delivery? Reply to this email and our team will help." },
       ]);
+    case "EXPRESS_ACCEPTED":
+      if (!o.express?.dueAt) return null;
+      return email(`AA 60/120: order ${o.orderNumber} is due by ${formatTimeZA(o.express.dueAt)}`, [
+        hi,
+        {
+          kind: "p",
+          text: `Your AA 60/120 delivery is confirmed. The supplier is loading now (${EXPRESS_PREP} minutes' prep), and your order is due on site by ${formatTimeZA(o.express.dueAt)} — within ${EXPRESS_PROMISE} minutes of the clock starting.`,
+        },
+        ...(o.express.note ? [{ kind: "p" as const, text: o.express.note }] : []),
+        ...(o.deliveryAddress ? [{ kind: "p" as const, text: `Delivering to ${o.deliveryAddress}${o.deliveryProvince ? `, ${o.deliveryProvince}` : ""}. Please have someone on site to receive it.` }] : []),
+        { kind: "p", text: `If we're more than an hour late, we refund the ${formatZAR(o.express.fee)} express fee.` },
+        track,
+      ]);
+    case "EXPRESS_DECLINED": {
+      if (!o.express) return null;
+      const paid = Number(o.express.fee.toString()) > 0;
+      return email(`Order ${o.orderNumber}: standard delivery instead of AA 60/120`, [
+        hi,
+        { kind: "p", text: `We're sorry — we can't deliver order ${o.orderNumber} on AA 60/120 this time.${o.express.note ? ` ${o.express.note}` : ""}` },
+        {
+          kind: "p",
+          text: paid
+            ? `Your order goes ahead with standard delivery, and we're refunding the ${formatZAR(o.express.fee)} express fee in full to the card or account you paid from. Our team will confirm the delivery date with you.`
+            : `Your order goes ahead with standard delivery, and the express fee has been taken off — the amount to pay is now ${formatZAR(o.total)}.`,
+        },
+        paid ? track : { kind: "cta", label: "Pay for your order", href: `${site}/orders/${o.id}/confirmation` },
+      ]);
+    }
     case "ORDER_CANCELLED":
       return email(`Order ${o.orderNumber} cancelled`, [
         hi,
@@ -289,9 +329,18 @@ export function customerCompanyEmail(event: NotificationEvent, c: CompanyData): 
 // ---------------------------------------------------------------------------
 
 export function staffOrderEmail(event: NotificationEvent, o: OrderData): EmailMessage | null {
+  const who = o.companyName ?? o.customerName ?? "A customer";
+  if (event === "EXPRESS_PAID") {
+    return email(`AA 60/120 PAID — ${o.orderNumber}: confirm a supplier now`, [
+      { kind: "p", text: `${who} has paid for AA 60/120 order ${o.orderNumber}. Call or email the nearest partner supplier to confirm they can load it, then accept it in admin — that starts the ${EXPRESS_PREP}-minute prep and the ${EXPRESS_PROMISE}-minute clock. If no supplier can, decline it: it goes by standard delivery and the express fee is refunded.` },
+      ...orderSummary(o),
+      ...(o.deliveryDistanceKm !== null ? [{ kind: "p" as const, text: `Nearest supplier distance: ${o.deliveryDistanceKm}km.` }] : []),
+      { kind: "cta", label: "Accept or decline in admin", href: `${siteUrl()}/admin/orders?express=1` },
+    ]);
+  }
   if (event !== "ORDER_PLACED") return null;
-  return email(`New order ${o.orderNumber} — ${formatZAR(o.total)}`, [
-    { kind: "p", text: `${o.companyName ?? o.customerName ?? "A customer"} placed order ${o.orderNumber}. It's awaiting payment.` },
+  return email(`${o.express ? "AA 60/120 express — " : ""}New order ${o.orderNumber} — ${formatZAR(o.total)}`, [
+    { kind: "p", text: `${who} placed ${o.express ? "AA 60/120 express " : ""}order ${o.orderNumber}. It's awaiting payment${o.express ? " by card or PayFast — you'll get another email when it's paid" : ""}.` },
     ...orderSummary(o),
     ...(o.deliveryDistanceKm !== null ? [{ kind: "p" as const, text: `Delivery distance: ${o.deliveryDistanceKm}km (confirm road distance at dispatch).` }] : []),
     { kind: "cta", label: "Open in admin", href: `${siteUrl()}/admin/orders` },
@@ -648,6 +697,9 @@ export const EVENT_CHANNELS: Record<NotificationEvent, { customerEmail: boolean;
   BENDING_SCHEDULE_QUOTED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
   BENDING_SCHEDULE_ACCEPTED: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
   BENDING_SCHEDULE_DECLINED: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
+  EXPRESS_PAID: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
+  EXPRESS_ACCEPTED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
+  EXPRESS_DECLINED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
 };
 
 /** Events that also email the partner (always on — offers can't wait for a setting). */
@@ -680,6 +732,9 @@ export const EVENT_LABEL: Record<NotificationEvent, string> = {
   BENDING_SCHEDULE_QUOTED: "Cut & bend schedule quoted",
   BENDING_SCHEDULE_ACCEPTED: "Cut & bend quote accepted",
   BENDING_SCHEDULE_DECLINED: "Cut & bend quote declined",
+  EXPRESS_PAID: "AA 60/120 order paid — confirm a supplier",
+  EXPRESS_ACCEPTED: "AA 60/120 accepted (due time)",
+  EXPRESS_DECLINED: "AA 60/120 declined (standard delivery, fee refunded)",
 };
 
 /** A South African or international number in the digits-only form WhatsApp expects, or null. */

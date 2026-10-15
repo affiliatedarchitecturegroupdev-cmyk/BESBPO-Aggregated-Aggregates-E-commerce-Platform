@@ -106,6 +106,7 @@ export async function Footer() {
           </FooterColumn>
           <FooterColumn title="Buy">
             <li><Link href="/quote">Request a Quote</Link></li>
+            <li><Link href="/aa-60-120">AA 60/120 Express Delivery</Link></li>
             <li><Link href="/coverage">Where We Deliver</Link></li>
             <li><Link href="/delivery-areas">Delivery Areas & Charges</Link></li>
             <li><Link href="/suppliers">Partner Network</Link></li>

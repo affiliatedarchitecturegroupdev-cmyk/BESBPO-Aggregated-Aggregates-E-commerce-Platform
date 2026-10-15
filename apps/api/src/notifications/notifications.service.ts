@@ -120,6 +120,10 @@ export class NotificationsService implements OnModuleDestroy {
         companyName: order.company?.name ?? null,
         lines: order.lineItems.map((l) => ({ name: l.product.name, quantity: l.quantity, unitOfSale: l.unitOfSale, lineTotal: l.lineTotal })),
         shipment: order.shipment,
+        express:
+          order.expressFee !== null
+            ? { fee: order.expressFee, acceptedAt: order.expressAcceptedAt, dueAt: order.expressDueAt, declinedAt: order.expressDeclinedAt, note: order.expressNote }
+            : null,
       };
       const setting = await this.setting(event);
       const out: Outgoing[] = [];

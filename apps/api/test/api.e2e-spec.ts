@@ -14,6 +14,7 @@ import request from "supertest";
 import { AppModule } from "../src/app.module";
 import { PrismaService } from "../src/common/prisma.service";
 import { DigestService } from "../src/insights/digest.service";
+import { OrdersService } from "../src/orders/orders.service";
 import { PaymentGatewayService } from "../src/payment-gateway/payment-gateway.service";
 import { readManifest, seedProductImages } from "../src/merchandising/seed-product-images";
 
@@ -1386,6 +1387,95 @@ describe("Aggregated Aggregates API (e2e)", () => {
       const seen = await http().get(`/orders/${order.body.id}`).set("Authorization", `Bearer ${buyer}`).expect(200);
       expect(seen.body.shipment.trackingRef).toBe("CT-881");
       await prisma.order.delete({ where: { id: order.body.id } });
+    });
+
+    describe("AA 60/120 express delivery", () => {
+      const durban = { deliveryLatitude: -29.86, deliveryLongitude: 31.02 };
+      const bags = [{ sku: "AA-SND-07", unit: "bag", quantity: 40 }];
+      const site = { deliveryAddress: "4 Express Lane, Durban North", deliveryProvince: "KwaZulu-Natal" };
+      let realClock: () => Date;
+      const wednesday10am = new Date("2026-10-14T10:00:00+02:00");
+      beforeAll(() => {
+        const orders = app.get(OrdersService);
+        realClock = orders.clock;
+        orders.clock = () => wednesday10am; // ordering hours, whenever the suite runs
+      });
+      afterAll(() => {
+        app.get(OrdersService).clock = realClock;
+      });
+
+      it("is offered only on a qualifying cart, pinned within 30 km, in ordering hours", async () => {
+        const priced = await http().post("/orders/price").send({ lines: bags, ...durban }).expect(200);
+        expect(priced.body.express).toMatchObject({ available: true, reasons: [], fee: 1000, promiseMinutes: 120, prepMinutes: 20, radiusKm: 30 });
+        const bulk = await http().post("/orders/price").send({ lines: [{ sku: "AA-SND-01", unit: "m3", quantity: 6 }], ...durban }).expect(200);
+        expect(bulk.body.express.available).toBe(false);
+        const typed = await http().post("/orders/price").send({ lines: bags, deliveryDistanceKm: 10 }).expect(200);
+        expect(typed.body.express.available).toBe(false);
+        app.get(OrdersService).clock = () => new Date("2026-10-14T15:05:00+02:00");
+        const late = await http().post("/orders/price").send({ lines: bags, ...durban }).expect(200);
+        expect(late.body.express.reasons.join(" ")).toMatch(/cut-off/);
+        app.get(OrdersService).clock = () => wednesday10am;
+      });
+
+      it("charges R1,000 on top, takes Card or PayFast only, and runs the clock from acceptance", async () => {
+        const buyer = await register("express");
+        const staff = await register("expressstaff");
+        await prisma.user.update({ where: { email: `expressstaff-${run}@example.com` }, data: { role: "STAFF" } });
+        await http().post("/orders").set("Authorization", `Bearer ${buyer}`).send({ lines: [{ sku: "AA-SND-01", unit: "m3", quantity: 6 }], ...durban, ...site, express: true }).expect(400);
+
+        const priced = await http().post("/orders/price").send({ lines: bags, ...durban }).expect(200);
+        const order = await http().post("/orders").set("Authorization", `Bearer ${buyer}`).send({ lines: bags, ...durban, ...site, express: true }).expect(201);
+        expect(Number(order.body.total)).toBeCloseTo(priced.body.total + 1000, 2);
+        expect(Number(order.body.expressFee)).toBe(1000);
+        expect(order.body.express).toMatchObject({ outcome: "AWAITING_PAYMENT", feeRefundDue: false });
+
+        const methods = await http().get(`/payment-methods/eligible?orderTotal=${Number(order.body.total)}&express=true`).expect(200);
+        const keys = [...methods.body.recommended, ...methods.body.available].map((m: { methodKey: string }) => m.methodKey);
+        expect(keys).toContain("CARD");
+        expect(keys).not.toContain("EFT_PO");
+        for (const m of [...methods.body.recommended, ...methods.body.available]) expect(m).not.toHaveProperty("activeGateway");
+        await http().post("/payment-methods/initiate").set("Authorization", `Bearer ${buyer}`).send({ orderId: order.body.id, methodKey: "EFT_PO" }).expect(400);
+
+        const decide = (token: string, body: object) => http().patch(`/orders/${order.body.id}/express`).set("Authorization", `Bearer ${token}`).send(body);
+        await decide(buyer, { decision: "ACCEPT" }).expect(403);
+        await decide(staff, { decision: "ACCEPT" }).expect(400); // not paid yet
+        await http().patch(`/orders/${order.body.id}/status`).set("Authorization", `Bearer ${staff}`).send({ status: "CONFIRMED" }).expect(200);
+        const accepted = await decide(staff, { decision: "ACCEPT", note: "Loading at Durban North now." }).expect(200);
+        expect(accepted.body.express).toMatchObject({ outcome: "IN_PROGRESS" });
+        expect(new Date(accepted.body.express.dueAt).getTime() - wednesday10am.getTime()).toBe(140 * 60 * 1000);
+        expect(new Date(accepted.body.express.refundAfter).getTime() - wednesday10am.getTime()).toBe(200 * 60 * 1000);
+        await decide(staff, { decision: "ACCEPT" }).expect(400);
+
+        const events = (await prisma.notification.findMany({ where: { orderId: order.body.id }, select: { event: true } })).map((n) => n.event);
+        expect(events).toEqual(expect.arrayContaining(["ORDER_PLACED", "ORDER_CONFIRMED", "EXPRESS_ACCEPTED"]));
+        const mine = await http().get(`/orders/${order.body.id}`).set("Authorization", `Bearer ${buyer}`).expect(200);
+        expect(mine.body.express.outcome).toBe("IN_PROGRESS");
+        await prisma.notification.deleteMany({ where: { orderId: order.body.id } });
+        await prisma.order.delete({ where: { id: order.body.id } });
+      });
+
+      it("declined before payment takes the fee off; after payment flags it for refund", async () => {
+        const buyer = await register("expressdecline");
+        const staff = await register("expressdeclinestaff");
+        await prisma.user.update({ where: { email: `expressdeclinestaff-${run}@example.com` }, data: { role: "STAFF" } });
+        const place = () => http().post("/orders").set("Authorization", `Bearer ${buyer}`).send({ lines: bags, ...durban, ...site, express: true }).expect(201);
+
+        const unpaid = await place();
+        await http().patch(`/orders/${unpaid.body.id}/express`).set("Authorization", `Bearer ${staff}`).send({ decision: "DECLINE" }).expect(400); // reason needed
+        const off = await http().patch(`/orders/${unpaid.body.id}/express`).set("Authorization", `Bearer ${staff}`).send({ decision: "DECLINE", note: "No truck free this afternoon." }).expect(200);
+        expect(Number(off.body.total)).toBeCloseTo(Number(unpaid.body.total) - 1000, 2);
+        expect(off.body.express).toMatchObject({ outcome: "DECLINED", feeRefundDue: false });
+
+        const paid = await place();
+        await http().patch(`/orders/${paid.body.id}/status`).set("Authorization", `Bearer ${staff}`).send({ status: "CONFIRMED" }).expect(200);
+        const refund = await http().patch(`/orders/${paid.body.id}/express`).set("Authorization", `Bearer ${staff}`).send({ decision: "DECLINE", note: "Supplier out of stock." }).expect(200);
+        expect(Number(refund.body.total)).toBeCloseTo(Number(paid.body.total), 2);
+        expect(refund.body.express).toMatchObject({ outcome: "DECLINED", feeRefundDue: true });
+        for (const id of [unpaid.body.id, paid.body.id]) {
+          await prisma.notification.deleteMany({ where: { orderId: id } });
+          await prisma.order.delete({ where: { id } });
+        }
+      });
     });
   });
 
