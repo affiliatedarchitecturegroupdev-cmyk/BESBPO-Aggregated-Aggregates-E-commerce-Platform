@@ -57,6 +57,25 @@ export class NotificationsController {
     return this.notifications.removeRecipient(email);
   }
 
+  /** Addresses we no longer email (hard bounces, spam complaints, or added by an admin). */
+  @Roles("STAFF", "ADMIN")
+  @Get("suppressions")
+  suppressions() {
+    return this.notifications.suppressions();
+  }
+
+  @Roles("ADMIN")
+  @Post("suppressions")
+  addSuppression(@Body() dto: EmailAddressDto) {
+    return this.notifications.addSuppression(dto.email);
+  }
+
+  @Roles("ADMIN")
+  @Delete("suppressions/:email")
+  removeSuppression(@Param("email") email: string) {
+    return this.notifications.removeSuppression(email);
+  }
+
   @Roles("ADMIN")
   @Post("test")
   test(@Body() dto: EmailAddressDto) {

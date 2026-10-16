@@ -2,6 +2,8 @@ import { Global, Module } from "@nestjs/common";
 import { APP_GUARD } from "@nestjs/core";
 import { JwtModule } from "@nestjs/jwt";
 import { AuthGuard } from "../common/auth/auth.guard";
+import { NotificationsModule } from "../notifications/notifications.module";
+import { AccountEmailsService } from "./account-emails.service";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
 import { OAuthService } from "./oauth/oauth.service";
@@ -25,9 +27,10 @@ function authSecret(): string {
 @Module({
   imports: [
     JwtModule.register({ secret: authSecret(), signOptions: { expiresIn: "7d" } }),
+    NotificationsModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, OAuthService, { provide: APP_GUARD, useClass: AuthGuard }],
+  providers: [AuthService, AccountEmailsService, OAuthService, { provide: APP_GUARD, useClass: AuthGuard }],
   exports: [AuthService, JwtModule],
 })
 export class AuthModule {}

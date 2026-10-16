@@ -28,6 +28,9 @@ export default async function LoginPage({ searchParams }: { searchParams: { next
           <Field label="Email" name="email" type="email" autoComplete="email" required />
           <Field label="Password" name="password" type="password" autoComplete="current-password" required />
           <SubmitButton>Sign in</SubmitButton>
+          <p className="font-body text-xs">
+            <Link href="/account/forgot-password" className="text-seam-blue hover:underline">Forgot your password?</Link>
+          </p>
         </ActionForm>
       </div>
       <p className="mt-4 font-body text-sm text-slate">

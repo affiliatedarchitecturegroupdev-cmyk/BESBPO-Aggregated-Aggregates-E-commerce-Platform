@@ -23,7 +23,14 @@ export async function subscribeToNewsletter(_prev: FormState, form: FormData): P
     },
   });
   if (!result.ok) return { error: result.message };
-  return { success: "You're subscribed. Look out for prices, new products and delivery news — you can unsubscribe from any email." };
+  return { success: "Almost done — we've emailed you a link to confirm your subscription. Click it and you're in (check your spam folder if it doesn't arrive)." };
+}
+
+/** Double opt-in: the button on the page the confirmation email links to. */
+export async function confirmNewsletter(_prev: FormState, form: FormData): Promise<FormState> {
+  const result = await api<{ email: string }>("/newsletter/confirm", { method: "POST", body: { token: text(form, "token") } });
+  if (!result.ok) return { error: result.status === 404 ? "This confirmation link isn't valid — it may already have been used. Sign up again for a new one." : result.message };
+  return { success: `${result.data.email} is subscribed. Look out for prices, new products and delivery news — you can unsubscribe from any email.` };
 }
 
 export async function unsubscribeFromNewsletter(_prev: FormState, form: FormData): Promise<FormState> {

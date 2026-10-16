@@ -1,9 +1,10 @@
 # Render Blueprint — Aggregated Aggregates platform.
 #
-# Three services, matching the Roofsteel/Bricksplaza hosting pattern:
+# Services, matching the Roofsteel/Bricksplaza hosting pattern:
 #   aggregates-store-web      Next.js storefront          (public)
 #   aggregates-store-api      NestJS API + DB migrations  (public)
 #   aggregates-store-pricing  FastAPI pricing service     (private — reachable only by the API)
+#   aggregates-listmonk       Listmonk newsletters        (public admin UI, its own small Postgres)
 #
 # The database is Supabase Postgres (confirmed architecture), not a
 # Render-managed instance: Render asks for DATABASE_URL and DIRECT_URL when
@@ -118,6 +119,23 @@ services:
         sync: false
       - key: EMAIL_REPLY_TO
         sync: false
+      # Resend's delivery webhook signing secret (whsec_…): bounces and spam
+      # complaints stop further email to that address (docs/email.md).
+      - key: RESEND_WEBHOOK_SECRET
+        sync: false
+      # Listmonk newsletters (docs/email.md). Confirmed subscribers are pushed
+      # over the private network; unsubscribes sync both ways every hour.
+      - key: LISTMONK_URL
+        fromService:
+          type: web
+          name: aggregates-listmonk
+          property: hostport
+      - key: LISTMONK_API_USER
+        sync: false
+      - key: LISTMONK_API_TOKEN
+        sync: false
+      - key: LISTMONK_LIST_IDS
+        sync: false
       # Sign-in providers (docs/sign-in.md). Each button stays "coming soon"
       # until its client ID and secret are set.
       - key: GOOGLE_CLIENT_ID
@@ -152,3 +170,56 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: "3.12.7"
+
+  # Listmonk — newsletters and campaigns (docs/email.md). The official image,
+  # pinned; it installs its tables on first start and upgrades them on later
+  # ones. Campaign email goes out through Resend's SMTP, set in Listmonk's own
+  # Settings → SMTP (never in this file).
+  - type: web
+    name: aggregates-listmonk
+    runtime: image
+    image:
+      url: docker.io/listmonk/listmonk:v4.1.0
+    region: frankfurt
+    plan: starter
+    dockerCommand: sh -c "./listmonk --install --idempotent --yes --config '' && ./listmonk --upgrade --yes --config '' && ./listmonk --config ''"
+    healthCheckPath: /health
+    envVars:
+      - key: LISTMONK_app__address
+        value: 0.0.0.0:10000
+      - key: PORT
+        value: "10000"
+      - key: LISTMONK_db__host
+        fromDatabase:
+          name: aggregates-listmonk-db
+          property: host
+      - key: LISTMONK_db__port
+        fromDatabase:
+          name: aggregates-listmonk-db
+          property: port
+      - key: LISTMONK_db__user
+        fromDatabase:
+          name: aggregates-listmonk-db
+          property: user
+      - key: LISTMONK_db__password
+        fromDatabase:
+          name: aggregates-listmonk-db
+          property: password
+      - key: LISTMONK_db__database
+        fromDatabase:
+          name: aggregates-listmonk-db
+          property: database
+      - key: LISTMONK_db__ssl_mode
+        value: disable
+      # The first admin login, used only when Listmonk installs itself.
+      - key: LISTMONK_ADMIN_USER
+        sync: false
+      - key: LISTMONK_ADMIN_PASSWORD
+        sync: false
+
+databases:
+  - name: aggregates-listmonk-db
+    region: frankfurt
+    plan: basic-256mb
+    databaseName: listmonk
+    user: listmonk

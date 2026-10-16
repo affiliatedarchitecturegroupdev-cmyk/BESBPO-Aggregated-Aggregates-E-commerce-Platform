@@ -30,7 +30,12 @@ import {
   type ScheduleData,
   type WhatsAppMessage,
 } from "./notification-templates";
+import type { SystemEmail } from "./account-emails";
 import { EmailSender, WhatsAppTemplateSender, type SendResult } from "./providers";
+import { DELIVERY_RANK, parseResendEvent, verifyResendSignature, type DeliveryStatus } from "./resend-webhook";
+
+/** Emails a person asks for themselves: always sent, and logged with their one-time link removed, so they can't be resent. */
+export const SYSTEM_EVENTS: NotificationEvent[] = ["PASSWORD_RESET", "EMAIL_VERIFICATION", "NEWSLETTER_CONFIRMATION"];
 
 type Setting = { customerEmail: boolean; customerWhatsApp: boolean; staffEmail: boolean };
 type Outgoing = {
@@ -101,11 +106,15 @@ export class NotificationsService implements OnModuleDestroy {
         include: {
           lineItems: { include: { product: { select: { name: true } } } },
           shipment: true,
+          invoice: { select: { invoiceNumber: true, amountDue: true } },
           user: { select: { email: true, name: true } },
           company: { select: { name: true } },
         },
       });
       if (!order) return;
+      const method = order.paymentMethod
+        ? ((await this.prisma.paymentMethodConfig.findUnique({ where: { methodKey: order.paymentMethod }, select: { displayName: true } }))?.displayName ?? order.paymentMethod)
+        : null;
       const data: OrderData = {
         id: order.id,
         orderNumber: order.orderNumber,
@@ -120,6 +129,8 @@ export class NotificationsService implements OnModuleDestroy {
         companyName: order.company?.name ?? null,
         lines: order.lineItems.map((l) => ({ name: l.product.name, quantity: l.quantity, unitOfSale: l.unitOfSale, lineTotal: l.lineTotal })),
         shipment: order.shipment,
+        payment: { paidAt: order.paidAt, method, reference: order.paymentReference },
+        invoice: order.invoice,
         express:
           order.expressFee !== null
             ? { fee: order.expressFee, acceptedAt: order.expressAcceptedAt, dueAt: order.expressDueAt, declinedAt: order.expressDeclinedAt, note: order.expressNote }
@@ -337,6 +348,8 @@ export class NotificationsService implements OnModuleDestroy {
         body: true,
         templateName: true,
         status: true,
+        deliveryStatus: true,
+        deliveryUpdatedAt: true,
         provider: true,
         error: true,
         attempts: true,
@@ -369,6 +382,9 @@ export class NotificationsService implements OnModuleDestroy {
   async resend(id: string) {
     const notification = await this.prisma.notification.findUnique({ where: { id } });
     if (!notification) throw new NotFoundException("Notification not found.");
+    if (SYSTEM_EVENTS.includes(notification.event)) {
+      throw new BadRequestException("This message held a one-time link, which isn't kept — the person can ask for a new one.");
+    }
     if (notification.status === "SENT" || notification.status === "PENDING") {
       throw new BadRequestException(notification.status === "SENT" ? "This message was already sent." : "This message is still being sent.");
     }
@@ -422,12 +438,119 @@ export class NotificationsService implements OnModuleDestroy {
   }
 
   async status() {
-    const [recipients, failed, logged] = await Promise.all([
+    const [recipients, failed, logged, suppressed, bounced] = await Promise.all([
       this.staffRecipients(),
       this.prisma.notification.count({ where: { status: "FAILED" } }),
       this.prisma.notification.count({ where: { status: "LOGGED" } }),
+      this.prisma.emailSuppression.count(),
+      this.prisma.notification.count({ where: { deliveryStatus: { in: ["BOUNCED", "COMPLAINED"] } } }),
     ]);
-    return { email: this.emailSender.status(), whatsapp: this.whatsappSender.status(), staffRecipientCount: recipients.length, failed, logged };
+    return {
+      email: this.emailSender.status(),
+      whatsapp: this.whatsappSender.status(),
+      // Delivery reports from Resend (docs/email.md): bounces and spam complaints.
+      webhook: { configured: Boolean(process.env.RESEND_WEBHOOK_SECRET), path: "/api/v1/email/webhooks/resend" },
+      staffRecipientCount: recipients.length,
+      failed,
+      logged,
+      suppressed,
+      bounced,
+    };
+  }
+
+  // -------------------------------------------------------------------------
+  // System emails (password reset, email verification, newsletter confirmation)
+  // -------------------------------------------------------------------------
+
+  /**
+   * Sends an email the person just asked for. The log keeps the redacted copy
+   * (no one-time link); the real message goes straight to the provider and is
+   * never stored. Suppressions don't apply: the person is asking right now.
+   */
+  async system(event: NotificationEvent, to: string, mail: SystemEmail, links: { companyId?: string } = {}) {
+    const row = await this.prisma.notification.create({
+      data: { event, channel: "EMAIL", audience: "CUSTOMER", recipient: to, subject: mail.redacted.subject, body: mail.redacted.text, html: null, attempts: 1, ...links },
+      select: { id: true },
+    });
+    const result = await this.emailSender.send({ to, ...mail.message }).catch((error: Error): SendResult => ({ delivered: false, logged: false, error: error.message }));
+    const provider = this.emailSender.status().provider ?? "log";
+    await this.prisma.notification.update({
+      where: { id: row.id },
+      data: result.delivered
+        ? { status: "SENT", provider, providerMessageId: result.providerMessageId, sentAt: new Date() }
+        : result.logged
+          ? { status: "LOGGED", provider: "log" }
+          : { status: "FAILED", provider, error: result.error },
+    });
+    // Locally (no provider) the link is printed so a developer can follow it; never in a deployment.
+    if (result.delivered === false && "logged" in result && result.logged && !process.env.RENDER) {
+      this.logger.log(`[dev] ${event} for …${to.slice(-12)}: ${mail.message.text.match(/https?:\/\/\S+/)?.[0] ?? ""}`);
+    }
+    return result;
+  }
+
+  // -------------------------------------------------------------------------
+  // Delivery reports and suppressions
+  // -------------------------------------------------------------------------
+
+  /**
+   * A Resend webhook. Records what happened to the message, and suppresses
+   * an address that hard-bounced or marked us as spam. Returns the addresses
+   * that complained, so the newsletter can unsubscribe them.
+   */
+  async resendWebhook(rawBody: Buffer | undefined, headers: { id?: string; timestamp?: string; signature?: string }) {
+    const secret = process.env.RESEND_WEBHOOK_SECRET;
+    if (!secret) return { accepted: false as const, reason: "not-configured" };
+    if (!verifyResendSignature(rawBody, headers, secret)) return { accepted: false as const, reason: "bad-signature" };
+    let payload: unknown;
+    try {
+      payload = JSON.parse(rawBody!.toString("utf8"));
+    } catch {
+      return { accepted: false as const, reason: "bad-json" };
+    }
+    const event = parseResendEvent(payload);
+    if (!event) return { accepted: true as const, complained: [] as string[] };
+    const rows = await this.prisma.notification.findMany({ where: { providerMessageId: event.messageId }, select: { id: true, deliveryStatus: true } });
+    const now = new Date();
+    for (const row of rows) {
+      const current = row.deliveryStatus as DeliveryStatus | null;
+      if (current && DELIVERY_RANK[current] > DELIVERY_RANK[event.status]) continue;
+      await this.prisma.notification.update({ where: { id: row.id }, data: { deliveryStatus: event.status, deliveryUpdatedAt: now } });
+    }
+    if (event.suppress) {
+      for (const email of event.recipients) {
+        await this.prisma.emailSuppression.upsert({
+          where: { email },
+          create: { email, reason: event.status, detail: event.detail },
+          update: { reason: event.status, detail: event.detail },
+        });
+      }
+    }
+    return { accepted: true as const, complained: event.status === "COMPLAINED" ? event.recipients : [] };
+  }
+
+  suppressions() {
+    return this.prisma.emailSuppression.findMany({ orderBy: { createdAt: "desc" }, take: 500 });
+  }
+
+  async addSuppression(email: string, detail?: string) {
+    const normalised = email.trim().toLowerCase();
+    if (!EMAIL_PATTERN.test(normalised)) throw new BadRequestException("Enter a valid email address.");
+    return this.prisma.emailSuppression.upsert({
+      where: { email: normalised },
+      create: { email: normalised, reason: "MANUAL", detail: detail?.trim() || null },
+      update: {},
+    });
+  }
+
+  /** Admin: email this address again (e.g. the mailbox is fixed). */
+  async removeSuppression(email: string) {
+    await this.prisma.emailSuppression.deleteMany({ where: { email: email.trim().toLowerCase() } });
+    return { removed: true };
+  }
+
+  async isSuppressed(email: string) {
+    return Boolean(await this.prisma.emailSuppression.findUnique({ where: { email: email.trim().toLowerCase() }, select: { id: true } }));
   }
 
   /** Admin: send a one-off test email to check the provider set-up (not recorded in the log). */
@@ -503,6 +626,17 @@ export class NotificationsService implements OnModuleDestroy {
 
   private async deliver(id: string) {
     const n = await this.prisma.notification.update({ where: { id }, data: { attempts: { increment: 1 } } });
+    // A hard bounce or spam complaint stops further email to that address (Admin → Notifications can lift it).
+    if (n.channel === "EMAIL") {
+      const suppressed = await this.prisma.emailSuppression.findUnique({ where: { email: n.recipient.toLowerCase() }, select: { reason: true } });
+      if (suppressed) {
+        return this.prisma.notification.update({
+          where: { id },
+          data: { status: "FAILED", provider: "suppressed", error: `Not sent: this address is suppressed (${suppressed.reason.toLowerCase()}). Lift it on Admin → Notifications to email it again.` },
+          select: { id: true, status: true, error: true, attempts: true, sentAt: true },
+        });
+      }
+    }
     const result =
       n.channel === "EMAIL"
         ? await this.emailSender.send({ to: n.recipient, subject: n.subject ?? "", text: n.body, html: n.html ?? n.body })

@@ -49,14 +49,20 @@ export class AuthGuard implements CanActivate {
     const token = header?.startsWith("Bearer ") ? header.slice(7) : null;
     if (!token) return null;
     try {
-      const claims = await this.jwt.verifyAsync<{ sub?: unknown; kind?: unknown }>(token);
+      const claims = await this.jwt.verifyAsync<{ sub?: unknown; kind?: unknown; iat?: unknown }>(token);
       // Sign-in state and pending tokens share the signing key but are never sessions.
       if (typeof claims.sub !== "string" || claims.kind !== undefined) return null;
       const sub = claims.sub;
-      return await this.prisma.user.findUnique({
+      const user = await this.prisma.user.findUnique({
         where: { id: sub },
-        select: { id: true, email: true, name: true, role: true, companyId: true },
+        select: { id: true, email: true, name: true, role: true, companyId: true, sessionsValidFrom: true },
       });
+      if (!user) return null;
+      // A password reset ends every session issued before it.
+      const issuedAt = typeof claims.iat === "number" ? claims.iat * 1000 : 0;
+      if (user.sessionsValidFrom && issuedAt < user.sessionsValidFrom.getTime()) return null;
+      const { sessionsValidFrom: _cutoff, ...rest } = user;
+      return rest;
     } catch {
       return null;
     }

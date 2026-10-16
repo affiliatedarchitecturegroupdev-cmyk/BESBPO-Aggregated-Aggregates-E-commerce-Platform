@@ -1,10 +1,11 @@
-import { BadRequestException, ConflictException, Injectable, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, ConflictException, Injectable, Logger, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcrypt";
 import { UserRole } from "@aggregates/database";
 import { normaliseMobile } from "../common/mobile-number";
 import { assertStrongEnough } from "../common/password-policy";
 import { PrismaService } from "../common/prisma.service";
+import { AccountEmailsService } from "./account-emails.service";
 import { RegisterDto } from "./dto/register.dto";
 
 // Compared against when the email is unknown, so a login takes the same time
@@ -13,9 +14,12 @@ const DUMMY_HASH = bcrypt.hashSync("timing-equaliser", 12);
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwt: JwtService,
+    private readonly accountEmails: AccountEmailsService,
   ) {}
 
   async registerWithEmail(dto: RegisterDto) {
@@ -35,7 +39,14 @@ export class AuthService {
         role: UserRole.CUSTOMER,
       },
     });
+    // Ask them to confirm the address; a mail problem never blocks the sign-up.
+    await this.accountEmails.sendVerification(user.id).catch((error: Error) => this.logger.warn(`Verification email not sent: ${error.message}`));
     return this.session(user.id);
+  }
+
+  /** A new session for a user (after a password reset). */
+  signIn(userId: string) {
+    return this.session(userId);
   }
 
   async loginWithEmail(email: string, password: string) {
@@ -56,6 +67,7 @@ export class AuthService {
         email: true,
         name: true,
         mobileNumber: true,
+        emailVerifiedAt: true,
         role: true,
         company: {
           select: {

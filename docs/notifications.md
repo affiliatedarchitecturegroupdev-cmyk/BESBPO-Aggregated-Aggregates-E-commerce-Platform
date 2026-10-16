@@ -32,6 +32,9 @@ Code: `apps/api/src/notifications/` (message texts live in
 | Cut & bend schedule received | ✓ reference, rows and mass by size | — | ✓ with contact details and a link to Admin → Cut & bend |
 | Cut & bend schedule quoted | ✓ quoted total, validity, what's included; account holders get an accept link, guests reply | — | — |
 | Cut & bend quote accepted / declined | — | — | ✓ |
+| Payment receipt (order confirmed) | ✓ amount, date, method and reference, then the order | (as order confirmed) | — |
+| Tax invoice issued | ✓ link to download it | — | — |
+| Password reset / email confirmation / newsletter confirmation | ✓ always sent, link never stored ([email.md](email.md)) | — | — |
 | AA 60/120 order placed | ✓ "pay by card or PayFast", how the clock works | — | ✓ subject starts "AA 60/120 express —" |
 | AA 60/120 order paid | — | — | ✓ "confirm a supplier now" with a link to Admin → Orders → AA 60/120 |
 | AA 60/120 accepted | ✓ the time it's due, and the late-refund promise | — | — |
@@ -56,6 +59,8 @@ Guest quote requesters (no account) can't accept online, so their "quote
 priced" email asks them to reply instead of linking to the dashboard.
 
 ## Setting up email
+
+Full Resend and Listmonk set-up, delivery reports and suppressions: [email.md](email.md).
 
 Nothing is lost before this is done: messages are logged (status **Logged**)
 and can be resent once a provider works.

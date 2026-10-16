@@ -44,6 +44,9 @@ model User {
   name              String?
   mobileNumber      String? // international form, e.g. +27821234567 — asked at email sign-up; social sign-ins add it in Settings
   passwordHash      String? // null for OAuth-only users (Email/Google/Microsoft SSO)
+  emailVerifiedAt   DateTime? // the address was proven: a verification link, a password reset, or a provider that verifies email
+  sessionsValidFrom DateTime? // sessions issued before this (a password reset) no longer work
+  emailTokens       EmailToken[]
   role              UserRole          @default(CUSTOMER)
   companyId         String?
   company           Company?          @relation(fields: [companyId], references: [id])
@@ -59,6 +62,26 @@ model User {
   productReviews    ProductReview[]
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
+}
+
+enum EmailTokenPurpose {
+  PASSWORD_RESET
+  EMAIL_VERIFICATION
+}
+
+/// One-time links emailed to a user. Only a SHA-256 of the token is stored.
+model EmailToken {
+  id        String            @id @default(cuid())
+  userId    String
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  purpose   EmailTokenPurpose
+  tokenHash String            @unique
+  email     String // the address it was sent to (a verification is void if the email changed)
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime          @default(now())
+
+  @@index([userId, purpose, createdAt])
 }
 
 model OAuthAccount {
@@ -960,6 +983,10 @@ enum NotificationEvent {
   EXPRESS_PAID // AA 60/120: an express order is paid — sales must confirm a supplier now
   EXPRESS_ACCEPTED // AA 60/120: the 120-minute clock is running
   EXPRESS_DECLINED // AA 60/120: standard delivery instead, express fee refunded
+  INVOICE_ISSUED // the tax invoice is ready to download
+  PASSWORD_RESET // system email: always sent; the link is never stored
+  EMAIL_VERIFICATION // system email: always sent; the link is never stored
+  NEWSLETTER_CONFIRMATION // double opt-in: always sent; the link is never stored
 }
 
 enum NotificationChannel {
@@ -1006,9 +1033,13 @@ model Notification {
   bendingScheduleId String?
   createdAt         DateTime             @default(now())
   sentAt            DateTime?
+  // What the provider reported afterwards (Resend webhook): DELIVERED, DELAYED, BOUNCED or COMPLAINED.
+  deliveryStatus    String?
+  deliveryUpdatedAt DateTime?
 
   @@index([createdAt])
   @@index([status])
+  @@index([providerMessageId])
   @@index([orderId])
   @@index([quoteId])
 }
@@ -1130,6 +1161,15 @@ enum SubscriberAudience {
 
 /// Newsletter sign-ups from the strip above the footer. POPIA s69: consentAt
 /// records opt-in; every email carries the unsubscribe link (by token).
+/// Addresses we must not email: they hard-bounced or marked us as spam (Resend webhook), or staff added them.
+model EmailSuppression {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  reason    String // BOUNCED | COMPLAINED | MANUAL
+  detail    String?
+  createdAt DateTime @default(now())
+}
+
 model NewsletterSubscriber {
   id               String             @id @default(cuid())
   email            String             @unique
@@ -1140,6 +1180,14 @@ model NewsletterSubscriber {
   consentAt        DateTime
   unsubscribeToken String             @unique
   unsubscribedAt   DateTime?
+  // Double opt-in: only confirmed subscribers are emailed or synced to Listmonk.
+  confirmedAt      DateTime?
+  confirmToken     String?            @unique
+  confirmSentAt    DateTime?
+  // Listmonk (docs/email.md): its subscriber ID, and when this record last reached it.
+  listmonkId       Int?
+  listmonkSyncedAt DateTime?
+  listmonkError    String?
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
 

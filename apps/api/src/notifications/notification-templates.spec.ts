@@ -46,6 +46,8 @@ const order: OrderData = {
 
 const baseOrder = order;
 
+const invoicedOrder: OrderData = { ...order, invoice: { invoiceNumber: "AAI-000042", amountDue: "9133.12" } };
+
 /** An AA 60/120 order, accepted at 10:00 SAST — due at 12:20. */
 const expressOrder: OrderData = {
   ...order,
@@ -193,7 +195,7 @@ describe("notification templates", () => {
   it("has a message for every channel an event is allowed to use", () => {
     for (const event of Object.values(NotificationEvent)) {
       const channels = EVENT_CHANNELS[event];
-      const order = event.startsWith("EXPRESS_") ? expressOrder : baseOrder;
+      const order = event.startsWith("EXPRESS_") ? expressOrder : event === "INVOICE_ISSUED" ? invoicedOrder : baseOrder;
       const customerEmail = customerOrderEmail(event, order) ?? customerQuoteEmail(event, quote) ?? customerCompanyEmail(event, company) ?? customerEnquiryEmail(event, enquiry) ?? customerBookingEmail(event, booking) ?? customerScheduleEmail(event, schedule);
       const customerWhatsApp = customerOrderWhatsApp(event, order) ?? customerQuoteWhatsApp(event, quote);
       const staffEmail = staffOrderEmail(event, order) ?? staffQuoteEmail(event, quote) ?? staffCompanyEmail(event, company) ?? staffEnquiryEmail(event, enquiry) ?? staffBookingEmail(event, booking) ?? staffScheduleEmail(event, schedule);
@@ -275,5 +277,24 @@ describe("notification templates", () => {
     const unpaid = customerOrderEmail("EXPRESS_DECLINED", { ...expressOrder, express: { ...expressOrder.express!, fee: "0.00", declinedAt: new Date() } })!;
     expect(unpaid.text).toMatch(/taken off/);
     expect(customerOrderEmail("EXPRESS_ACCEPTED", order)).toBeNull();
+  });
+
+  it("sends a payment receipt on confirmation, and a link when the tax invoice is issued", () => {
+    const receipt = customerOrderEmail("ORDER_CONFIRMED", { ...order, status: "CONFIRMED", payment: { paidAt: new Date("2026-10-15T09:00:00Z"), method: "Card (Visa / Mastercard / Amex)", reference: "pf_12345" } })!;
+    expect(receipt.subject).toBe("Payment receipt — order AA-100 confirmed");
+    expect(receipt.text).toMatch(/Amount paid: R9,133\.12\nPaid on: 15 October 2026\nPayment method: Card \(Visa \/ Mastercard \/ Amex\)\nPayment reference: pf_12345/);
+    const invoice = customerOrderEmail("INVOICE_ISSUED", invoicedOrder)!;
+    expect(invoice.subject).toBe("Tax invoice AAI-000042 — order AA-100");
+    expect(invoice.text).toContain("https://aaggregates.store/orders/ord_1/confirmation");
+  });
+
+  it("uses the branded layout: logo, preview text, company footer, escaped content", () => {
+    const placed = customerOrderEmail("ORDER_PLACED", order)!;
+    expect(placed.html).toContain("AGGREGATED<br>AGGREGATES");
+    expect(placed.html).toMatch(/display:none[^>]*>Thanks for your order/);
+    expect(placed.html).toContain("Besbpo Group (Pty) Ltd (Reg. 2026/490480/07)");
+    expect(placed.html).toContain("/legal/privacy-policy");
+    expect(placed.html).not.toContain("<b>Hilton</b>");
+    expect(placed.text).toContain("087 265 2505");
   });
 });
