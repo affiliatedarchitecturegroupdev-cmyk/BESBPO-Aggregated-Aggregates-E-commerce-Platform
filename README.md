@@ -140,6 +140,12 @@ Every price comes from the pricing framework workbook in `docs/pricing/`.
 See [`docs/pricing/README.md`](docs/pricing/README.md) for how it flows into
 the platform and how to change a price.
 
+## Email
+
+Transactional email through Resend (receipts, invoices, password reset,
+email verification, delivery reports) and newsletters through a
+self-hosted Listmonk with double opt-in — see [`docs/email.md`](docs/email.md).
+
 ## AA 60/120 express delivery
 
 Qualifying materials delivered within 120 minutes for R1,000 on top of

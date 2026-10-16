@@ -218,7 +218,13 @@ in **Admin → Notifications** rather than sent.
   (Resend, Postmark or SendGrid), then set `EMAIL_PROVIDER`, `EMAIL_API_KEY`,
   `EMAIL_FROM` and optionally `EMAIL_REPLY_TO` on **aggregates-store-api**.
   In **Admin → Notifications**, add the staff inboxes, send a test email and
-  resend anything logged. Full steps: `docs/notifications.md`.
+  resend anything logged. Full steps: `docs/notifications.md`. With Resend,
+  also add its delivery webhook and `RESEND_WEBHOOK_SECRET` (bounces and spam
+  complaints) — `docs/email.md`.
+- **Newsletters (Listmonk).** The Blueprint adds `aggregates-listmonk` and its
+  Postgres `aggregates-listmonk-db` (paid resources). Set the admin login when
+  asked, connect Resend SMTP inside Listmonk, then set `LISTMONK_API_USER`,
+  `LISTMONK_API_TOKEN` and `LISTMONK_LIST_IDS` on the API. Steps: `docs/email.md`.
 
 - **Payment gateways.** Set the merchant variables for each provider on
   **aggregates-store-api** (PayFast: `AGG_PAYFAST_MERCHANT_ID`,

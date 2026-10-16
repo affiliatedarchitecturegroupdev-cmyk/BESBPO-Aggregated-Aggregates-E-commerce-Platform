@@ -17,6 +17,10 @@ export class SubscribeDto {
   @IsOptional() @IsString() @MaxLength(0, { message: "Invalid submission." }) website?: string;
 }
 
+export class ConfirmSubscriptionDto {
+  @IsString() @MinLength(20) @MaxLength(100) token!: string;
+}
+
 export class UnsubscribeDto {
   @IsString() @MinLength(20) @MaxLength(100) token!: string;
 }

@@ -1,6 +1,8 @@
 import Link from "next/link";
 import {
+  addEmailSuppression,
   addNotificationRecipient,
+  removeEmailSuppression,
   removeNotificationRecipient,
   resendNotification,
   sendTestEmail,
@@ -17,10 +19,14 @@ type Setting = Channels & { event: string; label: string; available: Channels };
 type Status = {
   email: { provider: string | null; live: boolean; missingEnvVars: string[]; from: string | null };
   whatsapp: { live: boolean; missingEnvVars: string[]; language: string };
+  webhook: { configured: boolean; path: string };
   staffRecipientCount: number;
   failed: number;
   logged: number;
+  suppressed: number;
+  bounced: number;
 };
+type Suppression = { id: string; email: string; reason: "BOUNCED" | "COMPLAINED" | "MANUAL"; detail: string | null; createdAt: string };
 type Recipients = { recipients: string[]; fromEnv: string[] };
 type LogEntry = {
   id: string;
@@ -32,6 +38,8 @@ type LogEntry = {
   body: string;
   templateName: string | null;
   status: "PENDING" | "SENT" | "LOGGED" | "FAILED";
+  /** What Resend reported afterwards (webhook). */
+  deliveryStatus: "DELIVERED" | "DELAYED" | "BOUNCED" | "COMPLAINED" | null;
   error: string | null;
   attempts: number;
   orderId: string | null;
@@ -54,6 +62,18 @@ const STATUS_STYLE: Record<LogEntry["status"], string> = {
   PENDING: "bg-ochre-gold/10 text-basalt",
 };
 
+const DELIVERY_STYLE: Record<NonNullable<LogEntry["deliveryStatus"]>, [string, string]> = {
+  DELIVERED: ["Delivered", "bg-seam-blue/10 text-seam-blue"],
+  DELAYED: ["Delayed", "bg-ochre-gold/10 text-basalt"],
+  BOUNCED: ["Bounced", "bg-red-50 text-red-800"],
+  COMPLAINED: ["Marked as spam", "bg-red-50 text-red-800"],
+};
+
+const SUPPRESSION_REASON = { BOUNCED: "Hard bounce", COMPLAINED: "Marked as spam", MANUAL: "Added by an admin" } as const;
+
+/** Emails holding a one-time link (logged without it), so they can't be resent. */
+const SYSTEM_EVENTS = ["PASSWORD_RESET", "EMAIL_VERIFICATION", "NEWSLETTER_CONFIRMATION"];
+
 const COLUMNS: { key: keyof Channels; label: string }[] = [
   { key: "customerEmail", label: "Customer email" },
   { key: "customerWhatsApp", label: "Customer WhatsApp" },
@@ -71,12 +91,13 @@ const when = (iso: string) =>
 export default async function NotificationsPage({ searchParams }: { searchParams: { status?: string } }) {
   const token = sessionToken();
   const filter = FILTERS.find((f) => f.key === searchParams.status)?.key ?? "";
-  const [user, status, settings, recipients, log] = await Promise.all([
+  const [user, status, settings, recipients, log, suppressions] = await Promise.all([
     getSession(),
     api<Status>("/notifications/status", { token }),
     api<Setting[]>("/notifications/settings", { token }),
     api<Recipients>("/notifications/recipients", { token }),
     api<LogEntry[]>(`/notifications?take=100${filter ? `&status=${filter}` : ""}`, { token }),
+    api<Suppression[]>("/notifications/suppressions", { token }),
   ]);
   const isAdmin = user?.role === "ADMIN";
   if (!status.ok) return <p className="font-body text-sm text-slate">{status.message}</p>;
@@ -88,7 +109,10 @@ export default async function NotificationsPage({ searchParams }: { searchParams
         <StatusCard
           title="Email"
           live={s.email.live}
-          detail={s.email.live ? `Sending via ${s.email.provider} from ${s.email.from}` : "Not configured — emails are logged below, not sent."}
+          detail={
+            (s.email.live ? `Sending via ${s.email.provider} from ${s.email.from}.` : "Not configured — emails are logged below, not sent.") +
+            (s.webhook.configured ? " Delivery reports (bounces, spam complaints) are on." : ` Delivery reports are off — set RESEND_WEBHOOK_SECRET and point Resend's webhook at ${s.webhook.path}.`)
+          }
           needs={s.email.missingEnvVars}
         />
         <StatusCard
@@ -101,8 +125,10 @@ export default async function NotificationsPage({ searchParams }: { searchParams
           <p className="font-body text-sm font-semibold text-basalt">Needs attention</p>
           <p className="mt-1 font-body text-sm">
             <Link href="/admin/notifications?status=FAILED" className="text-seam-blue hover:underline">{s.failed} failed</Link> ·{" "}
-            <Link href="/admin/notifications?status=LOGGED" className="text-seam-blue hover:underline">{s.logged} logged</Link>
+            <Link href="/admin/notifications?status=LOGGED" className="text-seam-blue hover:underline">{s.logged} logged</Link> ·{" "}
+            <a href="#suppressions" className="text-seam-blue hover:underline">{s.suppressed} suppressed</a>
           </p>
+          {s.bounced > 0 && <p className="mt-1 font-mono text-[11px] text-red-800">{s.bounced} bounced or marked as spam</p>}
           <p className={`mt-1 font-mono text-[11px] ${s.staffRecipientCount ? "text-slate" : "text-ochre-gold"}`}>
             {s.staffRecipientCount ? s.staffRecipientCount === 1 ? "1 staff inbox gets alerts" : `${s.staffRecipientCount} staff inboxes get alerts` : "No staff inbox — alerts go nowhere"}
           </p>
@@ -142,7 +168,7 @@ export default async function NotificationsPage({ searchParams }: { searchParams
                     </span>
                   ),
                 )}
-                {isAdmin ? <SubmitButton variant="subtle">Save</SubmitButton> : <span />}
+                {isAdmin && COLUMNS.some((c) => setting.available[c.key]) ? <SubmitButton variant="subtle">Save</SubmitButton> : <span />}
                 </div>
               </ActionForm>
             ))}
@@ -206,6 +232,47 @@ export default async function NotificationsPage({ searchParams }: { searchParams
         )}
       </div>
 
+      <section id="suppressions" className="scroll-mt-24 rounded-sm border border-basalt/10 bg-white p-5">
+        <h2 className="font-body text-sm font-semibold text-basalt">Suppressed addresses</h2>
+        <p className="font-body text-xs text-slate">
+          We stop emailing an address that hard-bounces or marks us as spam (reported by Resend), so the sending domain keeps its good name. A spam complaint
+          also unsubscribes the newsletter. Password-reset and confirmation emails the person asks for still go through.
+          {isAdmin ? " Lift one once the mailbox is fixed." : " Only admins can change this list."}
+        </p>
+        {suppressions.ok && suppressions.data.length > 0 ? (
+          <ul className="mt-3 divide-y divide-basalt/5 font-body text-sm">
+            {suppressions.data.map((x) => (
+              <li key={x.id} className="flex flex-wrap items-center justify-between gap-2 py-2">
+                <span className="min-w-0 break-all text-basalt">
+                  {x.email}
+                  <span className="ml-2 font-mono text-[11px] text-slate">
+                    {SUPPRESSION_REASON[x.reason]} · {when(x.createdAt)}
+                    {x.detail && ` · ${x.detail}`}
+                  </span>
+                </span>
+                {isAdmin && (
+                  <form action={removeEmailSuppression}>
+                    <input type="hidden" name="email" value={x.email} />
+                    <button type="submit" className="font-mono text-[11px] text-seam-blue hover:underline">Lift</button>
+                  </form>
+                )}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-3 font-body text-sm text-slate">None.</p>
+        )}
+        {isAdmin && (
+          <ActionForm action={addEmailSuppression} className="mt-3 flex flex-wrap items-end gap-2">
+            <label className="block flex-1">
+              <span className="font-mono text-[10px] uppercase text-slate">Stop emailing an address</span>
+              <input name="email" type="email" required className={inputClass} />
+            </label>
+            <SubmitButton variant="subtle">Suppress</SubmitButton>
+          </ActionForm>
+        )}
+      </section>
+
       <section>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h2 className="font-body text-sm font-semibold text-basalt">Recent messages</h2>
@@ -232,6 +299,9 @@ export default async function NotificationsPage({ searchParams }: { searchParams
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <p className="min-w-0 text-basalt">
                     <span className={`mr-2 rounded-sm px-1.5 py-0.5 font-mono text-[10px] ${STATUS_STYLE[n.status]}`}>{n.status}</span>
+                    {n.deliveryStatus && (
+                      <span className={`mr-2 rounded-sm px-1.5 py-0.5 font-mono text-[10px] ${DELIVERY_STYLE[n.deliveryStatus][1]}`}>{DELIVERY_STYLE[n.deliveryStatus][0]}</span>
+                    )}
                     <span className="font-semibold">{n.subject ?? n.templateName}</span>
                   </p>
                   <p className="font-mono text-[11px] text-slate">{when(n.createdAt)}</p>
@@ -252,7 +322,7 @@ export default async function NotificationsPage({ searchParams }: { searchParams
                     <summary className="cursor-pointer font-mono text-[11px] text-seam-blue">Show message</summary>
                     <pre className="mt-2 max-h-72 overflow-auto whitespace-pre-wrap break-words rounded-sm bg-limestone p-3 font-body text-xs text-basalt">{n.body}</pre>
                   </details>
-                  {(n.status === "FAILED" || n.status === "LOGGED") && (
+                  {(n.status === "FAILED" || n.status === "LOGGED") && !SYSTEM_EVENTS.includes(n.event) && (
                     <form action={resendNotification}>
                       <input type="hidden" name="id" value={n.id} />
                       <button type="submit" className="rounded-sm border border-basalt/20 px-3 py-1 font-mono text-[11px] text-basalt hover:border-seam-blue">

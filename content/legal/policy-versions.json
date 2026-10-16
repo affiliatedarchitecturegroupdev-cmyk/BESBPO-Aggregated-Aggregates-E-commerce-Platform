@@ -9,6 +9,7 @@
       { "date": "2026-09-26", "changes": "First published." }
     ],
     "privacy-policy.md": [
+      { "date": "2026-10-16", "changes": "Newsletter sign-ups are now confirmed by email before we send anything, and unconfirmed sign-ups are deleted after 30 days. We keep whether our emails were delivered, bounced or reported as spam, so we stop emailing addresses that can't or don't want to receive them. Names Resend, our email delivery provider outside South Africa, and Listmonk, our self-hosted newsletter system." },
       { "date": "2026-10-13", "changes": "New section 3B on product ratings and reviews: what we keep, and that reviews show only your first name and initial." },
       { "date": "2026-10-12", "changes": "Our website and email addresses moved to the aaggregates.store domain." },
       { "date": "2026-10-11", "changes": "Adds design briefs sent to Bellwether Architecture & Engineering (BAE), and a new section 3A on the shopping assistant." },

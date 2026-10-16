@@ -108,7 +108,11 @@ export class OAuthService {
         `An account already uses ${email}. Sign in with your email and password — ${config.label} can't be linked to it automatically.`,
       );
     }
-    const user = existing ?? (await this.prisma.user.create({ data: { email, name: profile.name, role: UserRole.CUSTOMER } }));
+    // When the provider vouches for the address (Google with email_verified, Facebook, X), it counts as verified.
+    const verifiedAt = profile.emailVerified ? new Date() : null;
+    const user = existing ?? (await this.prisma.user.create({ data: { email, name: profile.name, role: UserRole.CUSTOMER, emailVerifiedAt: verifiedAt } }));
+    // Linking an existing account only happens for a verified provider address (checked above).
+    if (existing && !existing.emailVerifiedAt) await this.prisma.user.update({ where: { id: existing.id }, data: { emailVerifiedAt: new Date() } });
     await this.prisma.oAuthAccount.create({ data: { provider: config.provider, providerAccountId: profile.id, userId: user.id } });
     return { accessToken: await this.auth.issueToken(user.id) };
   }

@@ -2,6 +2,7 @@ import { BadRequestException, ConflictException, Injectable, NotFoundException }
 import { Prisma } from "@aggregates/database";
 import { STAFF_ROLES, type AuthUser } from "../common/auth/auth-user";
 import { PrismaService } from "../common/prisma.service";
+import { NotificationsService } from "../notifications/notifications.service";
 import { deliveryNoteSpec, orderConfirmationSpec, taxInvoiceSpec, vatBreakdown, VAT_RATE_PERCENT, type OrderDocData } from "./order-documents";
 import { renderPdf } from "./pdf-renderer";
 
@@ -29,7 +30,10 @@ type LoadedOrder = Prisma.OrderGetPayload<{ include: typeof ORDER_INCLUDE }>;
  */
 @Injectable()
 export class OrderDocumentsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly notifications: NotificationsService,
+  ) {}
 
   /** What stops invoices being issued right now (empty when ready). */
   invoicingProblems(): string[] {
@@ -75,7 +79,7 @@ export class OrderDocumentsService {
     const paid = order.status !== "PENDING";
     const [{ nextval }] = await this.prisma.$queryRaw<{ nextval: bigint }[]>`SELECT nextval('invoice_number_seq')`;
     try {
-      return await this.prisma.invoice.create({
+      const invoice = await this.prisma.invoice.create({
         data: {
           orderId: order.id,
           companyId: order.companyId,
@@ -93,6 +97,9 @@ export class OrderDocumentsService {
           paidAt: paid ? new Date() : null,
         },
       });
+      // The buyer gets an email with a link to download it.
+      await this.notifications.order("INVOICE_ISSUED", order.id);
+      return invoice;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
         throw new ConflictException("An invoice has already been issued for this order.");

@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Header, HttpCode, Param, Post, Query } from "@nestjs/common";
 import { Public, Roles } from "../common/auth/decorators";
-import { SubscribeDto, UnsubscribeDto } from "./newsletter.dto";
+import { ConfirmSubscriptionDto, SubscribeDto, UnsubscribeDto } from "./newsletter.dto";
 import { NewsletterService } from "./newsletter.service";
 
 @Controller("newsletter")
@@ -14,6 +14,14 @@ export class NewsletterController {
     return this.newsletter.subscribe(dto);
   }
 
+  /** Double opt-in: the link in the confirmation email. */
+  @Public()
+  @Post("confirm")
+  @HttpCode(200)
+  confirm(@Body() dto: ConfirmSubscriptionDto) {
+    return this.newsletter.confirm(dto.token);
+  }
+
   @Public()
   @Post("unsubscribe")
   @HttpCode(200)
@@ -23,8 +31,16 @@ export class NewsletterController {
 
   @Roles("STAFF", "ADMIN")
   @Get("admin/subscribers")
-  list(@Query("status") status?: "active" | "unsubscribed" | "all") {
-    return this.newsletter.list(status === "unsubscribed" || status === "all" ? status : "active");
+  list(@Query("status") status?: string) {
+    return this.newsletter.list(status === "unsubscribed" || status === "all" || status === "pending" ? status : "active");
+  }
+
+  /** Staff: run the Listmonk sync now (it also runs every hour). */
+  @Roles("STAFF", "ADMIN")
+  @Post("admin/sync")
+  @HttpCode(200)
+  sync() {
+    return this.newsletter.reconcile();
   }
 
   @Roles("STAFF", "ADMIN")

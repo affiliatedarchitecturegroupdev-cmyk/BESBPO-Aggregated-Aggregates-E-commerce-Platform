@@ -55,6 +55,37 @@ export async function completeOAuthSignUp(_prev: FormState, form: FormData): Pro
   redirect(safeReturnPath(form.get("next")));
 }
 
+/** "Forgot your password?" — always the same answer, whether or not the account exists. */
+export async function forgotPassword(_prev: FormState, form: FormData): Promise<FormState> {
+  const result = await api("/auth/password/forgot", { method: "POST", body: { email: text(form, "email") } });
+  if (!result.ok) return { error: result.status === 400 ? "Enter the email address you sign in with." : result.message };
+  return { success: "If there's an account for that address, we've emailed it a link to choose a new password. The link works once, for 60 minutes — check your spam folder if it doesn't arrive." };
+}
+
+/** Sets the new password from the emailed link, then signs in (every other session is signed out). */
+export async function resetPassword(_prev: FormState, form: FormData): Promise<FormState> {
+  const newPassword = String(form.get("newPassword") ?? "");
+  if (newPassword !== form.get("confirmPassword")) return { error: "The new passwords don't match." };
+  const result = await api<{ accessToken: string }>("/auth/password/reset", { method: "POST", body: { token: text(form, "token"), newPassword } });
+  if (!result.ok) return { error: /least 10|longer than or equal/.test(result.message) ? "Use at least 10 characters." : result.message };
+  startSession(result.data.accessToken);
+  redirect("/account/dashboard?reset=1");
+}
+
+/** The button on the "confirm your email address" page (a click, so email scanners that open links don't confirm it). */
+export async function verifyEmail(_prev: FormState, form: FormData): Promise<FormState> {
+  const result = await api("/auth/email/verify", { method: "POST", body: { token: text(form, "token") } });
+  if (!result.ok) return { error: result.message };
+  revalidatePath("/account", "layout");
+  return { success: "Thank you — your email address is confirmed." };
+}
+
+export async function resendVerificationEmail(_prev: FormState): Promise<FormState> {
+  const result = await api<{ sent: boolean; alreadyVerified: boolean }>("/auth/email/verify/resend", { method: "POST", token: sessionToken() });
+  if (!result.ok) return { error: result.message };
+  return { success: result.data.alreadyVerified ? "Your email address is already confirmed." : "We've sent a new link — check your inbox (and spam folder)." };
+}
+
 export async function logout() {
   endSession();
   redirect("/");
@@ -621,6 +652,18 @@ export async function sendTestEmail(_prev: FormState, form: FormData): Promise<F
   if (result.data.delivered) return { success: "Test email sent — check the inbox (and spam folder)." };
   if (result.data.logged) return { error: "No email provider is configured yet, so the test was only logged. See the set-up notes above." };
   return { error: `The provider rejected the test email: ${result.data.error ?? "unknown error"}` };
+}
+
+export async function addEmailSuppression(_prev: FormState, form: FormData): Promise<FormState> {
+  const result = await api("/notifications/suppressions", { method: "POST", token: sessionToken(), body: { email: text(form, "email") } });
+  if (!result.ok) return { error: result.status === 403 ? "Only admins can change this list." : result.message };
+  revalidatePath("/admin/notifications");
+  return { success: "We won't email that address again until it's lifted." };
+}
+
+export async function removeEmailSuppression(form: FormData) {
+  await api(`/notifications/suppressions/${encodeURIComponent(text(form, "email"))}`, { method: "DELETE", token: sessionToken() });
+  revalidatePath("/admin/notifications");
 }
 
 export async function resendNotification(form: FormData) {

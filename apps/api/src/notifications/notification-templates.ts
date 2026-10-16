@@ -1,5 +1,5 @@
 import type { NotificationEvent, UnitOfSale } from "@aggregates/database";
-import { formatTimeZA, formatZAR, UNIT_LABEL, type Money } from "../common/format";
+import { formatDateZA, formatTimeZA, formatZAR, SELLER, UNIT_LABEL, type Money } from "../common/format";
 
 export { formatZAR };
 
@@ -32,6 +32,10 @@ export type OrderData = {
   companyName: string | null;
   lines: { name: string; quantity: number; unitOfSale: UnitOfSale | null; lineTotal: Money | null }[];
   shipment: { carrier: string; externalPartnerName: string | null; trackingRef: string | null } | null;
+  /** How it was paid, for the receipt (ORDER_CONFIRMED). */
+  payment?: { paidAt: Date | null; method: string | null; reference: string | null } | null;
+  /** The tax invoice, once issued (INVOICE_ISSUED). */
+  invoice?: { invoiceNumber: string; amountDue: Money } | null;
   /** AA 60/120: the fee (0 once declined before payment), when sales accepted it and when it's due. */
   express?: { fee: Money; acceptedAt: Date | null; dueAt: Date | null; declinedAt: Date | null; note: string | null } | null;
 };
@@ -139,10 +143,59 @@ const greeting = (name: string | null) => (name?.trim() ? `Hi ${name.trim().spli
 
 export type Block = { kind: "h"; text: string } | { kind: "p"; text: string } | { kind: "list"; items: string[] } | { kind: "rows"; rows: [string, string][] } | { kind: "cta"; label: string; href: string };
 
-const DEFAULT_FOOTER = "Aggregated Aggregates — a Besbpo Group company. You're receiving this because of an order, quote or account on aaggregates.store.";
+const DEFAULT_FOOTER = "You're receiving this because of an order, quote or account on aaggregates.store.";
 
-/** One layout for every email, so the text and HTML bodies always say the same thing. */
+// Brand colours (apps/web/tailwind.config.ts).
+const BRAND = { basalt: "#1C1B1A", limestone: "#F2EFE9", slate: "#6B6560", blue: "#2C4A5E", ochre: "#C08A34", rule: "#E3DFD6", markBlue: "#3E6A85" };
+const FONT = "Arial,Helvetica,sans-serif";
+
+/**
+ * The logo mark — the five-layer pyramid — drawn with table cells rather than
+ * an image, so it shows even when the mail client blocks images.
+ */
+function logoMark(): string {
+  const bars = [
+    [10, BRAND.ochre],
+    [15, BRAND.markBlue],
+    [20, BRAND.markBlue],
+    [25, BRAND.markBlue],
+    [30, BRAND.markBlue],
+  ] as const;
+  const rows = bars
+    .map(
+      ([w, c]) =>
+        `<tr><td align="center" style="padding:0 0 2px"><table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td width="${w}" height="4" bgcolor="${c}" style="width:${w}px;height:4px;font-size:0;line-height:0;background:${c}">&nbsp;</td></tr></table></td></tr>`,
+    )
+    .join("");
+  return `<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="40" style="width:40px;background:${BRAND.basalt};border:1px solid #3a3836;border-radius:6px"><tr><td style="padding:7px 4px 5px"><table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">${rows}</table></td></tr></table>`;
+}
+
+function blockHtml(b: Block): string {
+  if (b.kind === "h") return `<h2 style="margin:24px 0 8px;font-family:${FONT};font-size:16px;line-height:1.3;color:${BRAND.basalt}">${escapeHtml(b.text)}</h2>`;
+  if (b.kind === "p") return `<p style="margin:0 0 16px">${escapeHtml(b.text)}</p>`;
+  if (b.kind === "list") return `<ul style="margin:0 0 16px;padding-left:20px">${b.items.map((i) => `<li style="margin:0 0 4px">${escapeHtml(i)}</li>`).join("")}</ul>`;
+  if (b.kind === "rows") {
+    const rows = b.rows
+      .map(([k, v]) => {
+        const strong = /^(Total|Amount paid)$/i.test(k);
+        const cell = `padding:6px 0;${strong ? `border-top:1px solid ${BRAND.rule};font-weight:700;color:${BRAND.basalt}` : ""}`;
+        return `<tr><td style="${cell};padding-right:12px;color:${strong ? BRAND.basalt : BRAND.slate}">${escapeHtml(k)}</td><td style="${cell};text-align:right">${escapeHtml(v)}</td></tr>`;
+      })
+      .join("");
+    return `<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;border-collapse:collapse;margin:0 0 16px">${rows}</table>`;
+  }
+  // A "bulletproof" button: a coloured table cell, so it renders as a button in Outlook too.
+  return `<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:24px 0"><tr><td bgcolor="${BRAND.blue}" style="background:${BRAND.blue};border-radius:2px"><a href="${escapeHtml(b.href)}" style="display:inline-block;padding:12px 22px;font-family:${FONT};font-size:15px;font-weight:700;color:${BRAND.limestone};text-decoration:none">${escapeHtml(b.label)}</a></td></tr></table>`;
+}
+
+/**
+ * One branded layout for every email — header with the logo, a white card,
+ * and the company footer — so the text and HTML bodies always say the same
+ * thing. The first paragraph doubles as the inbox preview text.
+ */
 export function email(subject: string, blocks: Block[], footer = DEFAULT_FOOTER): EmailMessage {
+  const site = siteUrl();
+  const company = `${SELLER.tradingName} — a division of ${SELLER.legalName} (Reg. ${SELLER.registrationNumber}) · ${SELLER.addressLines.join(", ")} · ${SELLER.phone} · ${SELLER.email}`;
   const text = [
     ...blocks.map((b) => {
       if (b.kind === "h") return b.text.toUpperCase();
@@ -153,23 +206,33 @@ export function email(subject: string, blocks: Block[], footer = DEFAULT_FOOTER)
     }),
     "--",
     footer,
+    company,
   ].join("\n\n");
 
-  const body = blocks
-    .map((b) => {
-      if (b.kind === "h") return `<h2 style="margin:24px 0 8px;font-size:16px">${escapeHtml(b.text)}</h2>`;
-      if (b.kind === "p") return `<p style="margin:0 0 16px">${escapeHtml(b.text)}</p>`;
-      if (b.kind === "list") return `<ul style="margin:0 0 16px;padding-left:20px">${b.items.map((i) => `<li style="margin:0 0 4px">${escapeHtml(i)}</li>`).join("")}</ul>`;
-      if (b.kind === "rows") {
-        const rows = b.rows
-          .map(([k, v]) => `<tr><td style="padding:4px 12px 4px 0;color:#5b6470">${escapeHtml(k)}</td><td style="padding:4px 0;text-align:right">${escapeHtml(v)}</td></tr>`)
-          .join("");
-        return `<table role="presentation" style="width:100%;border-collapse:collapse;margin:0 0 16px">${rows}</table>`;
-      }
-      return `<p style="margin:24px 0"><a href="${escapeHtml(b.href)}" style="display:inline-block;background:#1f4e79;color:#f4f1ea;padding:12px 20px;border-radius:2px;text-decoration:none;font-weight:600">${escapeHtml(b.label)}</a></p>`;
-    })
-    .join("");
-  const html = `<!doctype html><html><body style="margin:0;background:#f4f1ea;font-family:Arial,Helvetica,sans-serif;color:#1d1d1f;font-size:15px;line-height:1.5"><div style="max-width:560px;margin:0 auto;padding:24px 16px"><p style="margin:0 0 24px;font-weight:700;letter-spacing:.04em">AGGREGATED AGGREGATES</p><div style="background:#fff;border:1px solid #e3dfd6;padding:24px">${body}</div><p style="margin:16px 0 0;font-size:12px;color:#5b6470">${escapeHtml(footer)}</p></div></body></html>`;
+  const preview = blocks.find((b): b is Extract<Block, { kind: "p" }> => b.kind === "p" && !/^Hi\b/.test(b.text))?.text ?? "";
+  const links = [
+    [site.replace(/^https?:\/\//, ""), site],
+    ["Privacy Policy", `${site}/legal/privacy-policy`],
+    ["Contact us", `${site}/contact`],
+  ]
+    .map(([label, href]) => `<a href="${escapeHtml(href)}" style="color:${BRAND.slate};text-decoration:underline">${escapeHtml(label)}</a>`)
+    .join(" &nbsp;·&nbsp; ");
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light"><title>${escapeHtml(subject)}</title></head>
+<body style="margin:0;padding:0;background:${BRAND.limestone};font-family:${FONT};color:${BRAND.basalt};font-size:15px;line-height:1.55">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:${BRAND.limestone}">${escapeHtml(preview.slice(0, 140))}</div>
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="${BRAND.limestone}" style="background:${BRAND.limestone}"><tr><td align="center" style="padding:24px 12px">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:600px;width:100%">
+<tr><td bgcolor="${BRAND.basalt}" style="background:${BRAND.basalt};padding:18px 24px">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td valign="middle" style="padding-right:12px">${logoMark()}</td><td valign="middle" style="font-family:${FONT};font-size:15px;font-weight:700;line-height:1.1;letter-spacing:.04em;color:${BRAND.limestone}"><a href="${escapeHtml(site)}" style="color:${BRAND.limestone};text-decoration:none">AGGREGATED<br>AGGREGATES</a></td></tr></table>
+</td></tr>
+<tr><td height="4" bgcolor="${BRAND.ochre}" style="height:4px;font-size:0;line-height:0;background:${BRAND.ochre}">&nbsp;</td></tr>
+<tr><td bgcolor="#ffffff" style="background:#ffffff;border:1px solid ${BRAND.rule};border-top:0;padding:28px 24px 12px;font-family:${FONT};font-size:15px;line-height:1.55;color:${BRAND.basalt}">${blocks.map(blockHtml).join("")}</td></tr>
+<tr><td style="padding:16px 8px 0;font-family:${FONT};font-size:12px;line-height:1.5;color:${BRAND.slate}">
+<p style="margin:0 0 8px">${escapeHtml(footer)}</p>
+<p style="margin:0 0 8px">${escapeHtml(company)}</p>
+<p style="margin:0">${links}</p>
+</td></tr>
+</table></td></tr></table></body></html>`;
   return { subject, text, html };
 }
 
@@ -205,12 +268,35 @@ export function customerOrderEmail(event: NotificationEvent, o: OrderData): Emai
         ...orderSummary(o),
         { kind: "cta", label: "Pay for your order", href: `${site}/orders/${o.id}/confirmation` },
       ]);
-    case "ORDER_CONFIRMED":
-      return email(`Order ${o.orderNumber} confirmed`, [
+    case "ORDER_CONFIRMED": {
+      // The payment receipt: what was paid, when and how, then the order.
+      const p = o.payment;
+      const receipt: [string, string][] = [
+        ["Amount paid", formatZAR(o.total)],
+        ...(p?.paidAt ? ([["Paid on", formatDateZA(p.paidAt)]] as [string, string][]) : []),
+        ...(p?.method ? ([["Payment method", p.method]] as [string, string][]) : []),
+        ...(p?.reference ? ([["Payment reference", p.reference]] as [string, string][]) : []),
+        ["Order", o.orderNumber],
+      ];
+      return email(`Payment receipt — order ${o.orderNumber} confirmed`, [
         hi,
-        { kind: "p", text: `Payment received — your order ${o.orderNumber} is confirmed. The partner supplier nearest your site is preparing your load, and we'll let you know when it's dispatched.` },
+        { kind: "p", text: `Thank you — we've received your payment and order ${o.orderNumber} is confirmed. The partner supplier nearest your site is preparing your load, and we'll let you know when it's dispatched.` },
+        { kind: "h", text: "Payment receipt" },
+        { kind: "rows", rows: receipt },
+        { kind: "h", text: "Your order" },
         ...orderSummary(o),
+        { kind: "p", text: "This is your payment receipt. Your tax invoice follows by email once our team issues it, and it's always on your order page." },
         track,
+      ]);
+    }
+    case "INVOICE_ISSUED":
+      if (!o.invoice) return null;
+      return email(`Tax invoice ${o.invoice.invoiceNumber} — order ${o.orderNumber}`, [
+        hi,
+        { kind: "p", text: `Your tax invoice ${o.invoice.invoiceNumber} for order ${o.orderNumber} is ready.` },
+        { kind: "rows", rows: [["Invoice", o.invoice.invoiceNumber], ["Order", o.orderNumber], ["Total", formatZAR(o.invoice.amountDue)]] },
+        { kind: "cta", label: "Download your tax invoice", href: `${site}/orders/${o.id}/confirmation` },
+        { kind: "p", text: "You'll need to sign in to download it. Keep it for your records — it's also on your order page whenever you need it." },
       ]);
     case "ORDER_DISPATCHED": {
       const s = o.shipment;
@@ -697,6 +783,11 @@ export const EVENT_CHANNELS: Record<NotificationEvent, { customerEmail: boolean;
   BENDING_SCHEDULE_QUOTED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
   BENDING_SCHEDULE_ACCEPTED: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
   BENDING_SCHEDULE_DECLINED: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
+  INVOICE_ISSUED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
+  // System emails: always sent, never switched off, and their links are never stored (account-emails.ts).
+  PASSWORD_RESET: { customerEmail: false, customerWhatsApp: false, staffEmail: false },
+  EMAIL_VERIFICATION: { customerEmail: false, customerWhatsApp: false, staffEmail: false },
+  NEWSLETTER_CONFIRMATION: { customerEmail: false, customerWhatsApp: false, staffEmail: false },
   EXPRESS_PAID: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
   EXPRESS_ACCEPTED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
   EXPRESS_DECLINED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
@@ -732,6 +823,10 @@ export const EVENT_LABEL: Record<NotificationEvent, string> = {
   BENDING_SCHEDULE_QUOTED: "Cut & bend schedule quoted",
   BENDING_SCHEDULE_ACCEPTED: "Cut & bend quote accepted",
   BENDING_SCHEDULE_DECLINED: "Cut & bend quote declined",
+  INVOICE_ISSUED: "Tax invoice issued",
+  PASSWORD_RESET: "Password reset link (always sent)",
+  EMAIL_VERIFICATION: "Email address verification (always sent)",
+  NEWSLETTER_CONFIRMATION: "Newsletter sign-up confirmation (always sent)",
   EXPRESS_PAID: "AA 60/120 order paid — confirm a supplier",
   EXPRESS_ACCEPTED: "AA 60/120 accepted (due time)",
   EXPRESS_DECLINED: "AA 60/120 declined (standard delivery, fee refunded)",

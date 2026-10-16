@@ -15,6 +15,8 @@ export type SessionUser = {
   email: string;
   name: string | null;
   mobileNumber?: string | null;
+  /** Null until the address is confirmed (a link, a password reset, or a sign-in provider that verifies email). */
+  emailVerifiedAt?: string | null;
   role: Role;
   company: {
     id: string;

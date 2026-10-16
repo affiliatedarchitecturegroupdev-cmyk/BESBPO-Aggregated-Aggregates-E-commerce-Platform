@@ -61,6 +61,18 @@ export async function deleteApplication(form: FormData) {
   revalidatePath("/admin/careers", "layout");
 }
 
+/** Newsletter: run the two-way Listmonk sync now (it also runs hourly). */
+export async function syncNewsletter(_prev: FormState): Promise<FormState> {
+  const result = await api<{ live: boolean; pulledUnsubscribes: number; pushed: number; failed: number; purgedUnconfirmed: number }>("/newsletter/admin/sync", {
+    method: "POST",
+    token: sessionToken(),
+  });
+  if (!result.ok) return { error: result.message };
+  revalidatePath("/admin/newsletter");
+  const r = result.data;
+  return { success: `Synced: ${r.pushed} sent to Listmonk, ${r.pulledUnsubscribes} unsubscribe(s) brought back${r.failed ? `, ${r.failed} failed (retried hourly)` : ""}.` };
+}
+
 /** Newsletter: erase a subscriber on request (POPIA). Kept here with the other people-data admin actions. */
 export async function eraseSubscriber(form: FormData) {
   await api(`/newsletter/admin/subscribers/${encodeURIComponent(text(form, "id"))}`, { method: "DELETE", token: sessionToken() });

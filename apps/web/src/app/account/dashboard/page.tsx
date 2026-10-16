@@ -14,7 +14,8 @@ import {
 } from "@/lib/account-types";
 import { formatZAR } from "@/lib/pricing";
 import { isStaff, requireSession, sessionToken, type SessionUser } from "@/lib/session";
-import { logout, respondToQuote } from "../actions";
+import { ActionForm, SubmitButton } from "@/components/account/Forms";
+import { logout, resendVerificationEmail, respondToQuote } from "../actions";
 
 const INVOICE_STATUS_LABEL = { UNPAID: "Unpaid", PAID: "Paid", OVERDUE: "Overdue", VOID: "Void" } as const;
 
@@ -27,7 +28,7 @@ const card = "rounded-sm border border-basalt/10 bg-white";
  * tax invoices. Full order history is /account/orders; delivery sites, name
  * and password are /account/settings.
  */
-export default async function DashboardPage({ searchParams }: { searchParams: { applied?: string } }) {
+export default async function DashboardPage({ searchParams }: { searchParams: { applied?: string; reset?: string } }) {
   const user = await requireSession("/account/dashboard");
   const token = sessionToken();
   const [company, quotes, ordersResult] = await Promise.all([
@@ -64,6 +65,24 @@ export default async function DashboardPage({ searchParams }: { searchParams: { 
           </form>
         </div>
       </div>
+
+      {searchParams.reset && (
+        <p className="mt-6 rounded-sm border border-seam-blue/30 bg-seam-blue/5 p-3 font-body text-sm text-seam-blue">
+          Your new password is saved, and you&apos;re signed out on every other device.
+        </p>
+      )}
+
+      {user.emailVerifiedAt === null && (
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-sm border border-ochre-gold/50 bg-ochre-gold/10 p-3 font-body text-sm text-basalt">
+          <p>
+            <span className="font-semibold">Please confirm your email address.</span> We sent a link to {user.email} — it makes sure your receipts and tax
+            invoices reach you, and lets you reset your password.
+          </p>
+          <ActionForm action={resendVerificationEmail} className="flex items-center gap-2">
+            <SubmitButton variant="subtle">Send the link again</SubmitButton>
+          </ActionForm>
+        </div>
+      )}
 
       {searchParams.applied && (
         <p className="mt-6 rounded-sm border border-seam-blue/30 bg-seam-blue/5 p-3 font-body text-sm text-seam-blue">

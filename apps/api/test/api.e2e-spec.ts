@@ -10,10 +10,13 @@
 import { INestApplication, ValidationPipe } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
 import { createHash, createHmac } from "crypto";
+import { createServer } from "http";
+import type { AddressInfo } from "net";
 import request from "supertest";
 import { AppModule } from "../src/app.module";
 import { PrismaService } from "../src/common/prisma.service";
 import { DigestService } from "../src/insights/digest.service";
+import { EmailSender } from "../src/notifications/providers";
 import { OrdersService } from "../src/orders/orders.service";
 import { PaymentGatewayService } from "../src/payment-gateway/payment-gateway.service";
 import { readManifest, seedProductImages } from "../src/merchandising/seed-product-images";
@@ -25,6 +28,68 @@ describe("Aggregated Aggregates API (e2e)", () => {
   let app: INestApplication;
   let prisma: PrismaService;
   const http = () => request(app.getHttpServer());
+
+  /** Captures what EmailSender is asked to send (the real message, with its one-time links) for the rest of a test. */
+  function captureEmails() {
+    const sender = app.get(EmailSender);
+    const sent: { to: string; subject: string; text: string }[] = [];
+    const spy = jest.spyOn(sender, "send").mockImplementation(async (mail) => {
+      sent.push({ to: mail.to, subject: mail.subject, text: mail.text });
+      return { delivered: false, logged: true };
+    });
+    return { to: (email: string) => sent.filter((m) => m.to.toLowerCase() === email.toLowerCase()), restore: () => spy.mockRestore() };
+  }
+
+  /** A minimal stand-in for Listmonk's subscriber API. */
+  async function fakeListmonk() {
+    type Sub = { id: number; email: string; name: string; status: string; lists: number[]; attribs: Record<string, unknown>; preconfirm_subscriptions?: boolean; listStatus: string };
+    const subscribers = new Map<number, Sub>();
+    const authHeaders: string[] = [];
+    let next = 100;
+    const server = createServer((req, res) => {
+      authHeaders.push(String(req.headers.authorization));
+      let raw = "";
+      req.on("data", (c) => (raw += c));
+      req.on("end", () => {
+        const url = new URL(req.url!, "http://x");
+        const json = (status: number, body: unknown) => {
+          res.writeHead(status, { "Content-Type": "application/json" });
+          res.end(JSON.stringify(body));
+        };
+        const body = raw ? JSON.parse(raw) : {};
+        const idMatch = url.pathname.match(/^\/api\/subscribers\/(\d+)(\/blocklist)?$/);
+        if (req.method === "GET" && url.pathname === "/api/subscribers") {
+          const query = url.searchParams.get("query");
+          let results = [...subscribers.values()];
+          if (query) results = results.filter((s) => query.includes(`'${s.email}'`));
+          const page = Number(url.searchParams.get("page") ?? 1);
+          if (page > 1) results = [];
+          return json(200, { data: { results: results.map((s) => ({ ...s, lists: s.lists.map((id) => ({ id, subscription_status: s.listStatus })) })), total: results.length, per_page: 500 } });
+        }
+        if (req.method === "POST" && url.pathname === "/api/subscribers") {
+          const sub = { ...body, id: next++, listStatus: "confirmed" };
+          subscribers.set(sub.id, sub);
+          return json(200, { data: { id: sub.id } });
+        }
+        if (idMatch && req.method === "PUT" && idMatch[2]) {
+          subscribers.get(Number(idMatch[1]))!.status = "blocklisted";
+          return json(200, { data: true });
+        }
+        if (idMatch && req.method === "PUT") {
+          subscribers.set(Number(idMatch[1]), { ...subscribers.get(Number(idMatch[1]))!, ...body, listStatus: "confirmed" });
+          return json(200, { data: { id: Number(idMatch[1]) } });
+        }
+        if (idMatch && req.method === "DELETE") {
+          subscribers.delete(Number(idMatch[1]));
+          return json(200, { data: true });
+        }
+        json(404, { message: "not found" });
+      });
+    });
+    await new Promise<void>((r) => server.listen(0, "127.0.0.1", r));
+    const port = (server.address() as AddressInfo).port;
+    return { url: `http://127.0.0.1:${port}`, subscribers, authHeaders, close: () => new Promise<void>((r) => server.close(() => r())) };
+  }
 
   async function register(label: string) {
     const res = await http()
@@ -2079,24 +2144,43 @@ describe("Aggregated Aggregates API (e2e)", () => {
   describe("newsletter", () => {
     const email = `news-${run}@example.com`;
     afterAll(async () => {
+      await prisma.notification.deleteMany({ where: { recipient: { endsWith: `-${run}@example.com` } } });
       await prisma.newsletterSubscriber.deleteMany({ where: { email: { endsWith: `-${run}@example.com` } } });
     });
 
-    it("subscribes with consent, unsubscribes by private link, and exports for staff only", async () => {
+    it("double opt-in: subscribes with consent, confirms by email, unsubscribes by private link, exports for staff only", async () => {
+      const sent = captureEmails();
       await http().post("/newsletter/subscribe").send({ email, audience: "CONTRACTOR" }).expect(400);
       await http().post("/newsletter/subscribe").send({ email, audience: "CONTRACTOR", consent: "yes", website: "bot" }).expect(400);
       await http().post("/newsletter/subscribe").send({ email: email.toUpperCase(), audience: "CONTRACTOR", province: "Limpopo", consent: "yes", source: "/products" }).expect(200);
-      // Signing up twice is harmless and answers the same.
+      // Signing up twice is harmless, answers the same, and doesn't send a second confirmation within 10 minutes.
       const again = await http().post("/newsletter/subscribe").send({ email, audience: "PARTNER", consent: "yes" }).expect(200);
-      expect(again.body).toEqual({ subscribed: true });
+      expect(again.body).toEqual({ subscribed: true, confirmationRequired: true });
+      const confirmations = sent.to(email);
+      expect(confirmations).toHaveLength(1);
+      expect(confirmations[0].subject).toBe("Confirm your newsletter subscription");
       const row = await prisma.newsletterSubscriber.findUniqueOrThrow({ where: { email } });
-      expect(row).toMatchObject({ audience: "PARTNER", province: "Limpopo", unsubscribedAt: null });
+      expect(row).toMatchObject({ audience: "PARTNER", province: "Limpopo", unsubscribedAt: null, confirmedAt: null });
+      // The log keeps the email without its link.
+      const logged = await prisma.notification.findFirstOrThrow({ where: { recipient: email, event: "NEWSLETTER_CONFIRMATION" } });
+      expect(logged.body).not.toContain(row.confirmToken!);
 
-      await http().get("/newsletter/admin/export.csv").expect(401);
       const staff = await register("newsstaff");
       await prisma.user.update({ where: { email: `newsstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      // Not confirmed yet: pending, and not exported.
+      const pending = await http().get("/newsletter/admin/subscribers?status=pending").set("Authorization", `Bearer ${staff}`).expect(200);
+      expect(pending.body.subscribers.map((s: { email: string }) => s.email)).toContain(email);
+      expect((await http().get("/newsletter/admin/export.csv").set("Authorization", `Bearer ${staff}`).expect(200)).text).not.toContain(email);
+
+      await http().post("/newsletter/confirm").send({ token: "x".repeat(32) }).expect(404);
+      const token = confirmations[0].text.match(/confirm\?token=([\w-]+)/)![1];
+      const confirmed = await http().post("/newsletter/confirm").send({ token }).expect(200);
+      expect(confirmed.body).toEqual({ confirmed: true, email: "n•••@example.com" });
+      await http().post("/newsletter/confirm").send({ token }).expect(404); // one use
+
+      await http().get("/newsletter/admin/export.csv").expect(401);
       const csv = await http().get("/newsletter/admin/export.csv").set("Authorization", `Bearer ${staff}`).expect(200);
-      expect(csv.text.split("\n")[0]).toBe("email,name,audience,province,consent_at,unsubscribe_url");
+      expect(csv.text.split("\n")[0]).toBe("email,name,audience,province,consent_at,confirmed_at,unsubscribe_url");
       expect(csv.text).toContain(`${email},,PARTNER,Limpopo,`);
       expect(csv.text).toContain(`/newsletter/unsubscribe?token=${row.unsubscribeToken}`);
 
@@ -2107,9 +2191,171 @@ describe("Aggregated Aggregates API (e2e)", () => {
       expect(list.body.subscribers.map((s: { email: string }) => s.email)).not.toContain(email);
       expect((await http().get("/newsletter/admin/export.csv").set("Authorization", `Bearer ${staff}`).expect(200)).text).not.toContain(email);
 
-      // Signing up again is fresh consent.
+      // Signing up again is fresh consent — confirmed by email again before anything is sent.
+      await prisma.newsletterSubscriber.update({ where: { email }, data: { confirmSentAt: null } });
       await http().post("/newsletter/subscribe").send({ email, audience: "CUSTOMER", consent: "yes" }).expect(200);
-      expect((await prisma.newsletterSubscriber.findUniqueOrThrow({ where: { email } })).unsubscribedAt).toBeNull();
+      const back = await prisma.newsletterSubscriber.findUniqueOrThrow({ where: { email } });
+      expect(back.confirmedAt).toBeNull();
+      expect(sent.to(email)).toHaveLength(2);
+      sent.restore();
+    });
+
+    it("syncs confirmed subscribers to Listmonk and pulls unsubscribes back", async () => {
+      const fake = await fakeListmonk();
+      const listEmail = `listmonk-${run}@example.com`;
+      const env = { LISTMONK_URL: fake.url.replace(/^http:\/\//, ""), LISTMONK_API_USER: "aa-api", LISTMONK_API_TOKEN: "test-token", LISTMONK_LIST_IDS: "3" };
+      const saved = Object.fromEntries(Object.keys(env).map((k) => [k, process.env[k]]));
+      Object.assign(process.env, env);
+      const sent = captureEmails();
+      try {
+        await http().post("/newsletter/subscribe").send({ email: listEmail, name: "Lindiwe", audience: "CUSTOMER", province: "Gauteng", consent: "yes" }).expect(200);
+        expect(fake.subscribers.size).toBe(0); // not before confirming
+        const token = sent.to(listEmail)[0].text.match(/confirm\?token=([\w-]+)/)![1];
+        await http().post("/newsletter/confirm").send({ token }).expect(200);
+        const remote = [...fake.subscribers.values()].find((s) => s.email === listEmail)!;
+        expect(remote).toMatchObject({ name: "Lindiwe", status: "enabled", lists: [3], preconfirm_subscriptions: true });
+        expect(remote.attribs).toMatchObject({ audience: "CUSTOMER", province: "Gauteng" });
+        expect(String(remote.attribs.unsubscribe_url)).toMatch(/\/newsletter\/unsubscribe\?token=/);
+        expect(fake.authHeaders.every((h) => h === "token aa-api:test-token")).toBe(true);
+        const local = await prisma.newsletterSubscriber.findUniqueOrThrow({ where: { email: listEmail } });
+        expect(local.listmonkId).toBe(remote.id);
+
+        // Unsubscribed in Listmonk (its own link): the hourly sync records it here.
+        remote.listStatus = "unsubscribed";
+        const staff = await register("syncstaff");
+        await prisma.user.update({ where: { email: `syncstaff-${run}@example.com` }, data: { role: "STAFF" } });
+        const result = await http().post("/newsletter/admin/sync").set("Authorization", `Bearer ${staff}`).expect(200);
+        expect(result.body).toMatchObject({ live: true, pulledUnsubscribes: 1 });
+        expect((await prisma.newsletterSubscriber.findUniqueOrThrow({ where: { email: listEmail } })).unsubscribedAt).not.toBeNull();
+
+        // POPIA erasure deletes Listmonk's copy too.
+        const admin = await register("syncadmin");
+        await prisma.user.update({ where: { email: `syncadmin-${run}@example.com` }, data: { role: "ADMIN" } });
+        await http().delete(`/newsletter/admin/subscribers/${local.id}`).set("Authorization", `Bearer ${admin}`).expect(204);
+        expect(fake.subscribers.has(remote.id)).toBe(false);
+      } finally {
+        sent.restore();
+        for (const [k, v] of Object.entries(saved)) {
+          if (v === undefined) delete process.env[k];
+          else process.env[k] = v;
+        }
+        await fake.close();
+      }
+    });
+  });
+
+  describe("account emails: password reset, verification, delivery reports", () => {
+    afterAll(async () => {
+      await prisma.notification.deleteMany({ where: { recipient: { endsWith: `-${run}@example.com` } } });
+      await prisma.emailSuppression.deleteMany({ where: { email: { endsWith: `-${run}@example.com` } } });
+    });
+
+    it("verifies a new account's email address from the emailed link", async () => {
+      const sent = captureEmails();
+      const token = await register("verify");
+      const mail = sent.to(`verify-${run}@example.com`);
+      sent.restore();
+      expect(mail.map((m) => m.subject)).toEqual(["Confirm your email address"]);
+      const me = await http().get("/auth/me").set("Authorization", `Bearer ${token}`).expect(200);
+      expect(me.body.emailVerifiedAt).toBeNull();
+      const link = mail[0].text.match(/verify-email\?token=([\w-]+)/)![1];
+      await http().post("/auth/email/verify").send({ token: link }).expect(200);
+      await http().post("/auth/email/verify").send({ token: link }).expect(400); // one use
+      expect((await http().get("/auth/me").set("Authorization", `Bearer ${token}`).expect(200)).body.emailVerifiedAt).not.toBeNull();
+      const resend = await http().post("/auth/email/verify/resend").set("Authorization", `Bearer ${token}`).expect(200);
+      expect(resend.body).toEqual({ sent: false, alreadyVerified: true });
+    });
+
+    it("resets a forgotten password with a one-time link, and signs out older sessions", async () => {
+      const email = `reset-${run}@example.com`;
+      const oldSession = await register("reset");
+      // A session issued a moment before the reset must stop working.
+      await new Promise((r) => setTimeout(r, 1100));
+      const sent = captureEmails();
+      const unknown = await http().post("/auth/password/forgot").send({ email: `nobody-${run}@example.com` }).expect(200);
+      const known = await http().post("/auth/password/forgot").send({ email: email.toUpperCase() }).expect(200);
+      expect(known.body).toEqual(unknown.body); // never says whether the account exists
+      await new Promise((r) => setTimeout(r, 300)); // sent in the background
+      const mail = sent.to(email);
+      sent.restore();
+      expect(mail).toHaveLength(1);
+      expect(mail[0].subject).toBe("Reset your Aggregated Aggregates password");
+      const link = mail[0].text.match(/reset-password\?token=([\w-]+)/)![1];
+      // The logged copy has no link; it can't be resent.
+      const logged = await prisma.notification.findFirstOrThrow({ where: { recipient: email, event: "PASSWORD_RESET" } });
+      expect(logged.body).not.toContain(link);
+      const staff = await register("resetstaff");
+      await prisma.user.update({ where: { email: `resetstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      await http().post(`/notifications/${logged.id}/resend`).set("Authorization", `Bearer ${staff}`).expect(400);
+
+      await http().post("/auth/password/reset").send({ token: link, newPassword: "short" }).expect(400);
+      await http().post("/auth/password/reset").send({ token: "y".repeat(43), newPassword: "Gravel-Quarry-Lime-2026" }).expect(400);
+      const reset = await http().post("/auth/password/reset").send({ token: link, newPassword: "Gravel-Quarry-Lime-2026" }).expect(200);
+      expect(reset.body.user.emailVerifiedAt).not.toBeNull(); // the reset proved the mailbox
+      await http().post("/auth/password/reset").send({ token: link, newPassword: "Another-Quarry-Lime-2026" }).expect(400); // one use
+      await http().get("/auth/me").set("Authorization", `Bearer ${oldSession}`).expect(401);
+      await http().get("/auth/me").set("Authorization", `Bearer ${reset.body.accessToken}`).expect(200);
+      await http().post("/auth/login").send({ email, password: password }).expect(401);
+      await http().post("/auth/login").send({ email, password: "Gravel-Quarry-Lime-2026" }).expect(200);
+    });
+
+    it("limits reset emails per account per hour", async () => {
+      const email = `limit-${run}@example.com`;
+      await register("limit");
+      const sent = captureEmails();
+      for (let i = 0; i < 5; i++) await http().post("/auth/password/forgot").send({ email }).expect(200);
+      await new Promise((r) => setTimeout(r, 300));
+      expect(sent.to(email)).toHaveLength(3);
+      sent.restore();
+    });
+
+    it("records Resend delivery reports, suppresses hard bounces and unsubscribes complaints", async () => {
+      const secretBytes = Buffer.from(`webhook-secret-${run}`);
+      process.env.RESEND_WEBHOOK_SECRET = `whsec_${secretBytes.toString("base64")}`;
+      const post = (payload: object, tamper = false) => {
+        const body = JSON.stringify(payload);
+        const id = `msg_${Math.random().toString(36).slice(2)}`;
+        const ts = String(Math.floor(Date.now() / 1000));
+        const sig = createHmac("sha256", secretBytes).update(`${id}.${ts}.${tamper ? body + " " : body}`).digest("base64");
+        return http().post("/email/webhooks/resend").set("Content-Type", "application/json").set("svix-id", id).set("svix-timestamp", ts).set("svix-signature", `v1,${sig}`).send(body);
+      };
+      try {
+        const bounced = `bounce-${run}@example.com`;
+        const complainer = `complain-${run}@example.com`;
+        const n = await prisma.notification.create({ data: { event: "ORDER_PLACED", channel: "EMAIL", audience: "CUSTOMER", recipient: bounced, subject: "s", body: "b", status: "SENT", providerMessageId: `re_${run}` } });
+        await post({ type: "email.delivered", data: { email_id: `re_${run}`, to: [bounced] } }, true).expect(403);
+        await post({ type: "email.delivered", data: { email_id: `re_${run}`, to: [bounced] } }).expect(200);
+        await post({ type: "email.bounced", data: { email_id: `re_${run}`, to: [bounced], bounce: { type: "Permanent", message: "No such mailbox" } } }).expect(200);
+        // A late "delivered" never hides the bounce.
+        await post({ type: "email.delivered", data: { email_id: `re_${run}`, to: [bounced] } }).expect(200);
+        expect((await prisma.notification.findUniqueOrThrow({ where: { id: n.id } })).deliveryStatus).toBe("BOUNCED");
+        expect(await prisma.emailSuppression.findUnique({ where: { email: bounced } })).toMatchObject({ reason: "BOUNCED" });
+
+        // Suppressed: the next email to that address isn't sent.
+        const queued = await prisma.notification.create({ data: { event: "ORDER_PLACED", channel: "EMAIL", audience: "CUSTOMER", recipient: bounced, subject: "s", body: "b", status: "LOGGED" } });
+        const staff = await register("hookstaff");
+        await prisma.user.update({ where: { email: `hookstaff-${run}@example.com` }, data: { role: "STAFF" } });
+        const resent = await http().post(`/notifications/${queued.id}/resend`).set("Authorization", `Bearer ${staff}`).expect(201);
+        expect(resent.body).toMatchObject({ status: "FAILED" });
+        expect(resent.body.error).toMatch(/suppressed/);
+
+        // A spam complaint unsubscribes the newsletter too.
+        await prisma.newsletterSubscriber.create({ data: { email: complainer, consentAt: new Date(), confirmedAt: new Date(), unsubscribeToken: `tok-${run}-complain-xxxxxxxx` } });
+        await post({ type: "email.complained", data: { email_id: `re_other_${run}`, to: [complainer] } }).expect(200);
+        expect((await prisma.newsletterSubscriber.findUniqueOrThrow({ where: { email: complainer } })).unsubscribedAt).not.toBeNull();
+
+        const admin = await register("hookadmin");
+        await prisma.user.update({ where: { email: `hookadmin-${run}@example.com` }, data: { role: "ADMIN" } });
+        const list = await http().get("/notifications/suppressions").set("Authorization", `Bearer ${staff}`).expect(200);
+        expect(list.body.map((s: { email: string }) => s.email)).toEqual(expect.arrayContaining([bounced, complainer]));
+        await http().delete(`/notifications/suppressions/${encodeURIComponent(bounced)}`).set("Authorization", `Bearer ${staff}`).expect(403);
+        await http().delete(`/notifications/suppressions/${encodeURIComponent(bounced)}`).set("Authorization", `Bearer ${admin}`).expect(200);
+        await prisma.notification.deleteMany({ where: { id: { in: [n.id, queued.id] } } });
+      } finally {
+        delete process.env.RESEND_WEBHOOK_SECRET;
+      }
+      // Without a secret the endpoint refuses everything.
+      await post({ type: "email.delivered", data: { email_id: "x", to: ["a@b.co"] } }).expect(503);
     });
   });
 

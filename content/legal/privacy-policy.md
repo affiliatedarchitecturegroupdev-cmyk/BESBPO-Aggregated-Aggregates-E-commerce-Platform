@@ -43,7 +43,12 @@ POPIA.
 - **Job applications**: your application, CV and contact details if you
   apply for a vacancy or join our talent pool.
 - **Newsletter**: your email address, optional name, audience and province,
-  and the date you consented, if you subscribe.
+  and the dates you consented and confirmed your subscription, if you
+  subscribe. You confirm by clicking the link in the email we send when you
+  sign up; until you do, we don't send you the newsletter.
+- **Email delivery information**: whether an email we sent you was
+  delivered, bounced, or reported as spam, so we stop emailing an address
+  that can't receive our emails or doesn't want them.
 - **Technical information**: IP address, browser type, and usage data
   collected via cookies — see our [Cookie Policy](/legal/cookie-policy).
 
@@ -61,7 +66,7 @@ We process personal information to:
 4. Communicate with you about your orders, quotes, bookings and account,
    by email and, where you've opted in, by WhatsApp.
 5. Consider job applications, and send our newsletter to subscribers who
-   asked for it.
+   asked for it and confirmed their email address.
 6. Comply with tax, invoicing, and other legal obligations (invoices are
    issued under Besbpo Group's company VAT registration).
 7. Improve the Platform and prevent fraud or abuse, including keeping
@@ -125,7 +130,12 @@ We share personal information with:
   purposes.
 - Service providers who host, maintain, or support the Platform (e.g. our
   hosting and database providers, and our email and WhatsApp messaging
-  providers), under contractual confidentiality obligations.
+  providers), under contractual confidentiality obligations. Our emails are
+  sent through Resend, an email delivery provider based outside South
+  Africa, so the emails we send you — including your email address — are
+  processed outside South Africa under Resend's data processing terms. Our
+  newsletter list is kept in Listmonk, a newsletter system we run on our own
+  hosting.
 - Regulators or authorities, where required by law.
 
 We do not sell personal information to third parties.
@@ -154,7 +164,9 @@ purposes described in this policy, including retaining transaction records
 for the period required by tax and financial record-keeping legislation in
 South Africa. Job applications and CVs are kept for up to 12 months unless
 you ask us to delete them sooner. Newsletter details are kept until you
-unsubscribe. Enquiries and booking records are kept while they're needed
+unsubscribe; a newsletter sign-up that is never confirmed is deleted after
+30 days. Password-reset and email-confirmation links stop working after
+60 minutes and 48 hours respectively. Enquiries and booking records are kept while they're needed
 to deliver and support the job, and then for as long as the related
 financial records must be kept; you can ask us to delete an enquiry that
 didn't lead to a booking.
