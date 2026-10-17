@@ -7,6 +7,7 @@ import { findQuotable, isWholeUnit } from "@/data/quotable";
 import { cart, useCart, type CartDelivery } from "@/lib/cart";
 import { formatZAR } from "@/lib/pricing";
 import { NumberInput } from "@/components/ui/NumberInput";
+import { ProductThumb } from "@/components/product/ProductThumb";
 
 const GEOLOCATION_ERRORS: Record<number, string> = {
   1: "Location access was blocked — enter the distance instead.",
@@ -90,9 +91,12 @@ export function CartView({ signedIn }: { signedIn: boolean }) {
             const priced = pricing?.lines[index];
             return (
               <li key={`${line.sku}-${line.unit}`} className="grid gap-3 p-4 sm:grid-cols-[1fr_auto_auto_auto] sm:items-center">
-                <div>
-                  <Link href={`/products/${product.slug}`} className="font-body text-sm font-semibold text-basalt hover:text-seam-blue">{product.name}</Link>
-                  <p className="font-mono text-[10px] text-slate">{product.sku}</p>
+                <div className="flex items-center gap-3">
+                  <ProductThumb sku={product.sku} categorySlug={product.categorySlug} name={product.name} className="h-14 w-14 shrink-0 rounded-sm" grains={16} />
+                  <div className="min-w-0">
+                    <Link href={`/products/${product.slug}`} className="font-body text-sm font-semibold text-basalt hover:text-seam-blue">{product.name}</Link>
+                    <p className="font-mono text-[10px] text-slate">{product.sku}</p>
+                  </div>
                 </div>
                 <label className="block">
                   <span className="sr-only">Unit</span>

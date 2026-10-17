@@ -9,6 +9,8 @@ import { ShoppingAssistant } from "@/components/assistant/ShoppingAssistant";
 import { PhotoPreviewBanner } from "@/components/layout/PhotoPreviewBanner";
 import { CORPORATE_EMAILS, PHONE_LINES, REGISTERED_ADDRESS } from "@/data/corporate-contact";
 import { SOCIAL_LINKS } from "@/data/social";
+import { ProductPhotosProvider } from "@/components/product/ProductPhotos";
+import { getLeadPhotos } from "@/lib/cms";
 import { SITE_URL } from "@/lib/site";
 import "@/styles/globals.css";
 
@@ -52,7 +54,9 @@ const ORGANIZATION = {
   sameAs: SOCIAL_LINKS.filter((s) => s.status === "live").map((s) => s.url),
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // Every product's lead photo, so thumbnails anywhere on the site show it (ProductThumb).
+  const photos = await getLeadPhotos();
   return (
     <html lang="en-ZA">
       <body className={`${spaceGrotesk.variable} ${inter.variable} ${ibmPlexMono.variable} font-body`}>
@@ -60,10 +64,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <PhotoPreviewBanner />
         <CorporateBar />
         <AnnouncementBar />
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <ShoppingAssistant />
+        <ProductPhotosProvider photos={photos}>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          <ShoppingAssistant />
+        </ProductPhotosProvider>
         <CookieConsentBanner />
       </body>
     </html>

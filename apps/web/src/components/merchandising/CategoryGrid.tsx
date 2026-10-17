@@ -71,11 +71,14 @@ export async function CategoryGrid() {
   const walling = MASONRY_CATEGORIES.filter((c) => !ROOF_TILE_CATEGORIES.includes(c.slug)).map(categoryCard);
   const roofing = [...ROOFING_CATEGORIES, ...MASONRY_CATEGORIES.filter((c) => ROOF_TILE_CATEGORIES.includes(c.slug))].map(categoryCard);
 
+  // Each tile shows the first photographed product in its category (ProductThumb's photos).
+  const withCovers = (cards: CategoryCard[]) =>
+    cards.map((card) => ({ ...card, coverSkus: QUOTABLE.filter((q) => q.categorySlug === card.key).map((q) => q.sku) }));
   const pages: CategoryPage[] = [
-    { label: "Aggregates", summary: "Nine aggregate categories, from sub-base to decorative — every price straight from our published pricing framework.", cards: aggregates },
-    { label: "Cement, concrete, steel & hire", summary: "Cement, ready-mix, reinforcing and structural steel, plus plant hire and site services for the same job.", cards: more },
-    { label: "Walls, paving & drainage", summary: "Bricks, blocks, lintels and DPC; pavers, kerbs and retaining; pipes, precast drainage and membranes.", cards: walling },
-    { label: "Roofing", summary: "IBR, corrugated and concealed-fix sheeting in stock lengths or cut to length, concrete roof tiles, flashings, insulation and gutters.", cards: roofing },
+    { label: "Aggregates", summary: "Nine aggregate categories, from sub-base to decorative — every price straight from our published pricing framework.", cards: withCovers(aggregates) },
+    { label: "Cement, concrete, steel & hire", summary: "Cement, ready-mix, reinforcing and structural steel, plus plant hire and site services for the same job.", cards: withCovers(more) },
+    { label: "Walls, paving & drainage", summary: "Bricks, blocks, lintels and DPC; pavers, kerbs and retaining; pipes, precast drainage and membranes.", cards: withCovers(walling) },
+    { label: "Roofing", summary: "IBR, corrugated and concealed-fix sheeting in stock lengths or cut to length, concrete roof tiles, flashings, insulation and gutters.", cards: withCovers(roofing) },
   ];
 
   return (

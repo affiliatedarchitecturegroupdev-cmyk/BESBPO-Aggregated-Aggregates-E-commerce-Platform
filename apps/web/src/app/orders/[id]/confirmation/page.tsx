@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { orderDocuments } from "@/components/account/OrderCard";
 import { ReorderButton } from "@/components/account/ReorderButton";
+import { ProductThumb } from "@/components/product/ProductThumb";
+import { findQuotable } from "@/data/quotable";
 import { PaymentMethodSelector, type EligibleMethods } from "@/components/payment/PaymentMethodSelector";
 import { RefreshWhilePending } from "@/components/payment/RefreshWhilePending";
 import { ExpressStatusCard } from "@/components/orders/ExpressStatusCard";
@@ -73,9 +75,14 @@ export default async function OrderConfirmationPage({ params, searchParams }: { 
       <div className="mt-8 rounded-sm border border-basalt/10 bg-white p-5 font-body text-sm">
         <ul className="divide-y divide-basalt/5">
           {order.lineItems.map((line, i) => (
-            <li key={line.id ?? i} className="flex justify-between gap-4 py-2">
-              <span>
-                {line.quantity} {line.unitOfSale ? UNIT_LABEL[line.unitOfSale] : ""} — {line.product.name}
+            <li key={line.id ?? i} className="flex items-center justify-between gap-4 py-2">
+              <span className="flex min-w-0 items-center gap-3">
+                {line.product.sku && (
+                  <ProductThumb sku={line.product.sku} categorySlug={findQuotable(line.product.sku)?.categorySlug ?? ""} name={line.product.name} className="h-10 w-10 shrink-0 rounded-sm" grains={12} />
+                )}
+                <span>
+                  {line.quantity} {line.unitOfSale ? UNIT_LABEL[line.unitOfSale] : ""} — {line.product.name}
+                </span>
               </span>
               {line.lineTotal && <span>{formatZAR(Number(line.lineTotal))}</span>}
             </li>

@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { removeProjectItem, updateProjectItem } from "@/app/account/projects/actions";
 import { ActionForm, SubmitButton } from "@/components/account/Forms";
+import { ProductThumb } from "@/components/product/ProductThumb";
+import { findQuotable } from "@/data/quotable";
 import { cart } from "@/lib/cart";
 import { formatZAR } from "@/lib/pricing";
 import { isWholeUnit, quoteHref, STAGES, summarise, type ProjectItem } from "@/lib/project-lists";
@@ -102,6 +104,8 @@ export function ProjectBoard({ list, items, editable }: { list: { id?: string; n
               {lines.map((l) => (
                 <li key={l.item.id} className="px-4 py-3">
                   <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div className="flex min-w-0 items-start gap-3">
+                      <ProductThumb sku={l.item.sku} categorySlug={findQuotable(l.item.sku)?.categorySlug ?? ""} name={l.name} className="h-12 w-12 shrink-0 rounded-sm" grains={14} />
                     <div className="min-w-0">
                       {l.slug ? (
                         <Link href={`/products/${l.slug}`} className="font-body text-sm font-semibold text-basalt hover:text-seam-blue">{l.name}</Link>
@@ -114,6 +118,7 @@ export function ProjectBoard({ list, items, editable }: { list: { id?: string; n
                         {l.item.note ? ` · ${l.item.note}` : ""}
                       </p>
                       {!l.available && <p className="font-body text-xs text-red-800">No longer sold in this unit — choose another or remove it.</p>}
+                    </div>
                     </div>
                     <p className="text-right font-body text-sm text-basalt">
                       {l.lineTotal !== null ? (

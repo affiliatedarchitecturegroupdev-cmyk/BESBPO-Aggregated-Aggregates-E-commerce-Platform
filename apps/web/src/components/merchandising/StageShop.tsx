@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { MaterialSwatch } from "@/components/product/MaterialSwatch";
+import { ProductThumb } from "@/components/product/ProductThumb";
 import { SaveStageToProject } from "@/components/projects/SaveStageToProject";
 import type { StageView } from "@/data/build-stages";
 import { formatZAR } from "@/lib/pricing";
@@ -68,7 +68,7 @@ export function StageShop({ stages, initialStage }: { stages: StageView[]; initi
             {s.picks.map((p) => (
               <li key={p.sku}>
                 <Link href={`/products/${p.slug}`} className="group flex h-full overflow-hidden rounded-sm border border-basalt/10 bg-white transition hover:border-seam-blue hover:shadow-sm">
-                  <MaterialSwatch sku={p.sku} categorySlug={p.categorySlug} className="w-16 shrink-0 rounded-none" grains={30} />
+                  <ProductThumb sku={p.sku} categorySlug={p.categorySlug} className="w-16 shrink-0 rounded-none" grains={30} />
                   <div className="flex min-w-0 flex-1 flex-col p-3">
                     <p className="font-mono text-[10px] uppercase tracking-wide text-seam-blue">{p.role}</p>
                     <p className="mt-0.5 font-body text-sm font-semibold text-basalt group-hover:text-seam-blue">{p.name}</p>

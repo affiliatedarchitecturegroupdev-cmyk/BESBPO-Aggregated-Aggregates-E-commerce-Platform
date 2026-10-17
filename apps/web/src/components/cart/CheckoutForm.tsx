@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { placeOrder, priceCart, type CartPricing } from "@/app/account/actions";
 import { deliveryInput } from "@/components/cart/CartView";
+import { ProductThumb } from "@/components/product/ProductThumb";
 import { findQuotable } from "@/data/quotable";
 import { cart, useCart } from "@/lib/cart";
 import { PROVINCES } from "@/lib/suppliers";
@@ -152,8 +153,11 @@ export function CheckoutForm({ addresses, email }: { addresses: SavedAddress[]; 
               const product = findQuotable(line.sku)!;
               const unit = product.units.find((u) => u.code === line.unit)!;
               return (
-                <li key={`${line.sku}-${line.unit}`} className="flex justify-between gap-3 py-2">
-                  <span>{line.quantity} × {unit.label} {product.name}</span>
+                <li key={`${line.sku}-${line.unit}`} className="flex items-center justify-between gap-3 py-2">
+                  <span className="flex min-w-0 items-center gap-2">
+                    <ProductThumb sku={product.sku} categorySlug={product.categorySlug} name={product.name} className="h-10 w-10 shrink-0 rounded-sm" grains={12} />
+                    <span>{line.quantity} × {unit.label} {product.name}</span>
+                  </span>
                   <span className="tabular-nums">{pricing?.lines[i]?.total != null ? formatZAR(pricing.lines[i].total!) : "…"}</span>
                 </li>
               );

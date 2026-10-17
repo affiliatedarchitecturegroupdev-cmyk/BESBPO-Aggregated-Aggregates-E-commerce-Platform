@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ProductThumb } from "@/components/product/ProductThumb";
 import { DEPARTMENTS } from "@/data/departments";
 import { getHiddenSkus } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
@@ -47,11 +48,14 @@ export default async function BuyOnlinePage() {
           <ul className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {items.map((p) => (
               <li key={p.sku}>
-                <Link href={`/products/${p.slug}`} className="flex h-full flex-col rounded-sm border border-basalt/10 bg-white px-4 py-3 hover:border-seam-blue">
-                  <span className="font-body text-sm font-semibold text-basalt">{p.name}</span>
-                  <span className="mt-0.5 font-body text-xs text-slate">{p.categoryName}</span>
-                  <span className="mt-auto pt-2 font-mono text-xs text-seam-blue">
-                    from {formatZAR(p.fromPrice!)} / {p.fromUnit}
+                <Link href={`/products/${p.slug}`} className="flex h-full overflow-hidden rounded-sm border border-basalt/10 bg-white hover:border-seam-blue">
+                  <ProductThumb sku={p.sku} categorySlug={p.categorySlug} name={p.name} className="w-20 shrink-0 rounded-none" grains={24} />
+                  <span className="flex min-w-0 flex-1 flex-col px-4 py-3">
+                    <span className="font-body text-sm font-semibold text-basalt">{p.name}</span>
+                    <span className="mt-0.5 font-body text-xs text-slate">{p.categoryName}</span>
+                    <span className="mt-auto pt-2 font-mono text-xs text-seam-blue">
+                      from {formatZAR(p.fromPrice!)} / {p.fromUnit}
+                    </span>
                   </span>
                 </Link>
               </li>

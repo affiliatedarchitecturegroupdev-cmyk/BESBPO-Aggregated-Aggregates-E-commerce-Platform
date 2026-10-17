@@ -3,8 +3,17 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { MaterialSwatch } from "@/components/product/MaterialSwatch";
+import { useFirstPhoto } from "@/components/product/ProductPhotos";
 
-export type CategoryCard = { key: string; href: string; name: string; description: string; meta: string };
+/** `coverSkus`: the category's products — the first with a photo becomes the tile's picture. */
+export type CategoryCard = { key: string; href: string; name: string; description: string; meta: string; coverSkus?: string[] };
+
+function CategoryCover({ card }: { card: CategoryCard }) {
+  const photo = useFirstPhoto(card.coverSkus ?? []);
+  if (!photo) return <MaterialSwatch sku={card.key} categorySlug={card.key} className="h-20 rounded-none" grains={70} />;
+  // eslint-disable-next-line @next/next/no-img-element -- served by our own licence-gated route
+  return <img src={photo.src} alt="" loading="lazy" decoding="async" className="h-20 w-full bg-limestone object-cover" />;
+}
 export type CategoryPage = { label: string; summary: string; cards: CategoryCard[] };
 
 const arrow =
@@ -89,7 +98,7 @@ export function CategoryCarousel({ pages, total }: { pages: CategoryPage[]; tota
                   tabIndex={i === index ? undefined : -1}
                   className="group flex flex-col overflow-hidden rounded-sm border border-basalt/10 bg-white transition hover:border-seam-blue hover:shadow-sm"
                 >
-                  <MaterialSwatch sku={card.key} categorySlug={card.key} className="h-20 rounded-none" grains={70} />
+                  <CategoryCover card={card} />
                   <div className="flex flex-1 flex-col p-4">
                     <p className="font-body text-sm font-semibold text-basalt group-hover:text-seam-blue">{card.name}</p>
                     <p className="mt-1 line-clamp-3 flex-1 font-body text-xs text-slate">{card.description}</p>
