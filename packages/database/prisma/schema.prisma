@@ -537,6 +537,7 @@ model Quote {
   createdAt          DateTime        @default(now())
   updatedAt          DateTime        @updatedAt
   respondedAt        DateTime? // when the customer accepted or declined
+  order              Order? // the order staff turned this quote into (payable by link, deposit or EFT)
 }
 
 model QuoteLineItem {
@@ -572,6 +573,7 @@ enum Carrier {
 /// normal storefront. WHATSAPP is the one channel with its own intake.
 enum OrderChannel {
   WEBSITE
+  QUOTE // created by staff from an accepted quote
   WHATSAPP
   INSTAGRAM_REFERRAL
   FACEBOOK_REFERRAL
@@ -617,6 +619,15 @@ model Order {
   isTest                Boolean               @default(false) // excluded from reporting
   timestampsEstimated   Boolean               @default(false) // paidAt/cancelledAt backfilled for orders placed before they were recorded
   refunds               Refund[]
+  // Payments (docs/payments.md): an order can be paid in full, by deposit then balance, or on lay-by (LayUp).
+  paymentPlan           PaymentPlan           @default(FULL)
+  depositPercent        Int? // the deposit asked for, when paying by deposit
+  amountPaid            Decimal               @default(0) @db.Decimal(12, 2)
+  payments              Payment[]
+  paymentLinks          PaymentLink[]
+  quoteId               String?               @unique
+  quote                 Quote?                @relation(fields: [quoteId], references: [id], onDelete: SetNull)
+  contactEmail          String? // for orders made from a guest's quote (no account): where order emails go
   // AA 60/120 express delivery (docs/express-delivery.md). Null fee = standard delivery.
   expressFee            Decimal?              @db.Decimal(10, 2) // VAT-inclusive, on top of the delivery fee
   expressAcceptedAt     DateTime? // sales confirmed a supplier can load it; prep starts
@@ -865,6 +876,7 @@ enum PaymentMethodKey {
   STITCH
   LULAPAY
   EFT_PO
+  LAYUP // lay-by: pay off over time, goods released when paid (LayUp)
 }
 
 enum PaymentGateway {
@@ -874,6 +886,87 @@ enum PaymentGateway {
   STITCH_DIRECT
   LULAPAY_DIRECT
   MANUAL_EFT
+  LAYUP
+}
+
+enum PaymentPlan {
+  FULL
+  DEPOSIT // a deposit now, the balance before dispatch
+  LAYBY // LayUp: instalments, goods released once fully paid
+}
+
+enum PaymentKind {
+  FULL
+  DEPOSIT
+  BALANCE
+  INSTALMENT // a lay-by payment
+}
+
+enum PaymentStatus {
+  INITIATED // sent to the gateway; waiting for the customer or its confirmation
+  PAID
+  FAILED
+  CANCELLED
+  EXPIRED
+}
+
+/// One payment towards an order — the ledger behind deposits, balances,
+/// lay-by and payment links, across every gateway (docs/payments.md).
+model Payment {
+  id                 String           @id @default(cuid())
+  orderId            String
+  order              Order            @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  kind               PaymentKind
+  amount             Decimal          @db.Decimal(12, 2)
+  methodKey          PaymentMethodKey
+  gateway            PaymentGateway
+  status             PaymentStatus    @default(INITIATED)
+  providerCheckoutId String? // Peach checkoutId, Stitch payment request ID, LayUp order ID
+  providerReference  String? // the gateway's own payment/transaction ID once paid
+  failureReason      String?
+  paidSoFar          Decimal?         @db.Decimal(12, 2) // lay-by: what the customer has paid LayUp so far (the payment is PAID only once complete)
+  wasFailover        Boolean          @default(false) // routed to the fallback gateway
+  linkId             String?
+  link               PaymentLink?     @relation(fields: [linkId], references: [id], onDelete: SetNull)
+  recordedById       String? // staff who recorded a manual (EFT) payment
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  paidAt             DateTime?
+
+  @@index([orderId])
+  @@index([providerCheckoutId])
+  @@index([gateway, status])
+}
+
+/// A link staff send so a customer can pay an order (or its deposit or balance) without signing in.
+model PaymentLink {
+  id          String      @id @default(cuid())
+  orderId     String
+  order       Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  tokenHash   String      @unique
+  kind        PaymentKind
+  amount      Decimal     @db.Decimal(12, 2)
+  note        String?
+  expiresAt   DateTime
+  createdById String
+  createdAt   DateTime    @default(now())
+  paidAt      DateTime?
+  revokedAt   DateTime?
+  payments    Payment[]
+
+  @@index([orderId])
+}
+
+/// A payment gateway failing — tripped automatically (repeated errors) or paused by an admin; its methods use their fallback meanwhile.
+model GatewayIncident {
+  id        String         @id @default(cuid())
+  gateway   PaymentGateway
+  reason    String
+  automatic Boolean        @default(true)
+  startedAt DateTime       @default(now())
+  endedAt   DateTime?
+
+  @@index([gateway, endedAt])
 }
 
 /// Every payment method is its own tile on the storefront; this table is
@@ -987,6 +1080,9 @@ enum NotificationEvent {
   PASSWORD_RESET // system email: always sent; the link is never stored
   EMAIL_VERIFICATION // system email: always sent; the link is never stored
   NEWSLETTER_CONFIRMATION // double opt-in: always sent; the link is never stored
+  PAYMENT_RECEIVED // a deposit, balance or lay-by payment (not the first full payment — that's ORDER_CONFIRMED)
+  PAYMENT_LINK_SENT // staff sent a link to pay an order
+  GATEWAY_DEGRADED // staff: a payment gateway is failing; its methods are on their fallback
 }
 
 enum NotificationChannel {

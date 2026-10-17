@@ -577,6 +577,8 @@ const PAYMENT_METHODS: {
   { methodKey: "STITCH", displayName: "Stitch", activeGateway: "STITCH_DIRECT" },
   { methodKey: "LULAPAY", displayName: "Lulapay", activeGateway: "LULAPAY_DIRECT", minOrderValue: 10000, maxOrderValue: 5000000, tradeOnly: true },
   { methodKey: "EFT_PO", displayName: "EFT / Purchase Order", activeGateway: "MANUAL_EFT", tradeOnly: true },
+  // Lay-by: pay off over up to 3 months, goods released once fully paid (docs/payments.md).
+  { methodKey: "LAYUP", displayName: "LayUp lay-by", activeGateway: "LAYUP", minOrderValue: 500, maxOrderValue: 150000 },
 ];
 
 async function seedPaymentMethods() {

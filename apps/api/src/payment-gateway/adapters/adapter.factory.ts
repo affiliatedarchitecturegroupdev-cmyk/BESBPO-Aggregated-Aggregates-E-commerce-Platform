@@ -6,6 +6,7 @@ import { PeachAdapter } from "./peach.adapter";
 import { OzowAdapter } from "./ozow.adapter";
 import { StitchAdapter } from "./stitch.adapter";
 import { LulapayAdapter } from "./lulapay.adapter";
+import { LayupAdapter } from "./layup.adapter";
 import { ManualEftAdapter } from "./manual-eft.adapter";
 
 /**
@@ -23,6 +24,7 @@ export class PaymentGatewayAdapterFactory {
     private readonly stitch: StitchAdapter,
     private readonly lulapay: LulapayAdapter,
     private readonly manualEft: ManualEftAdapter,
+    private readonly layup: LayupAdapter,
   ) {}
 
   get(gateway: PaymentGateway): PaymentGatewayAdapter {
@@ -39,6 +41,8 @@ export class PaymentGatewayAdapterFactory {
         return this.lulapay;
       case "MANUAL_EFT":
         return this.manualEft;
+      case "LAYUP":
+        return this.layup;
       default: {
         const exhaustiveCheck: never = gateway;
         throw new Error(`No adapter registered for gateway: ${exhaustiveCheck}`);

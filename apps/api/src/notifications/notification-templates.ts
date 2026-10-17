@@ -34,6 +34,13 @@ export type OrderData = {
   shipment: { carrier: string; externalPartnerName: string | null; trackingRef: string | null } | null;
   /** How it was paid, for the receipt (ORDER_CONFIRMED). */
   payment?: { paidAt: Date | null; method: string | null; reference: string | null } | null;
+  /** Payments ledger (docs/payments.md): what's been paid so far, and the plan (FULL, DEPOSIT, LAYBY). */
+  amountPaid?: Money;
+  paymentPlan?: string;
+  /** The payment a receipt is for (ORDER_CONFIRMED, PAYMENT_RECEIVED). */
+  lastPayment?: { amount: Money; kind: string; paidAt: Date | null; method: string | null; reference: string | null } | null;
+  /** A payment link staff sent (PAYMENT_LINK_SENT). */
+  payLink?: { url: string; amount: Money; kind: string; expiresAt: Date; note: string | null } | null;
   /** The tax invoice, once issued (INVOICE_ISSUED). */
   invoice?: { invoiceNumber: string; amountDue: Money } | null;
   /** AA 60/120: the fee (0 once declined before payment), when sales accepted it and when it's due. */
@@ -247,6 +254,19 @@ function orderSummary(o: OrderData): Block[] {
   return [{ kind: "list", items: o.lines.map(lineText) }, { kind: "rows", rows }, ...where];
 }
 
+/** How each kind of payment is described to the customer. */
+export const PAYMENT_KIND_LABEL: Record<string, string> = { FULL: "full amount", DEPOSIT: "deposit", BALANCE: "balance", INSTALMENT: "instalment" };
+
+const balanceOf = (o: OrderData) => Math.max(0, Math.round((Number(o.total.toString()) - Number((o.amountPaid ?? o.total).toString())) * 100) / 100);
+
+function paymentRows(p: { paidAt: Date | null; method: string | null; reference: string | null } | null | undefined): [string, string][] {
+  return [
+    ...(p?.paidAt ? ([["Paid on", formatDateZA(p.paidAt)]] as [string, string][]) : []),
+    ...(p?.method ? ([["Payment method", p.method]] as [string, string][]) : []),
+    ...(p?.reference ? ([["Payment reference", p.reference]] as [string, string][]) : []),
+  ];
+}
+
 // ---------------------------------------------------------------------------
 // Customer emails
 // ---------------------------------------------------------------------------
@@ -269,24 +289,72 @@ export function customerOrderEmail(event: NotificationEvent, o: OrderData): Emai
         { kind: "cta", label: "Pay for your order", href: `${site}/orders/${o.id}/confirmation` },
       ]);
     case "ORDER_CONFIRMED": {
-      // The payment receipt: what was paid, when and how, then the order.
-      const p = o.payment;
+      // The payment receipt: what was paid, when and how, then the order. A deposit confirms the order too.
+      const p = o.lastPayment ?? (o.payment ? { ...o.payment, amount: o.total, kind: "FULL" } : null);
+      const balance = balanceOf(o);
       const receipt: [string, string][] = [
-        ["Amount paid", formatZAR(o.total)],
-        ...(p?.paidAt ? ([["Paid on", formatDateZA(p.paidAt)]] as [string, string][]) : []),
-        ...(p?.method ? ([["Payment method", p.method]] as [string, string][]) : []),
-        ...(p?.reference ? ([["Payment reference", p.reference]] as [string, string][]) : []),
+        [p?.kind === "DEPOSIT" ? "Deposit paid" : "Amount paid", formatZAR(p?.amount ?? o.total)],
+        ...paymentRows(p),
         ["Order", o.orderNumber],
+        ...(balance > 0.01 ? ([["Balance due before delivery", formatZAR(balance)]] as [string, string][]) : []),
       ];
       return email(`Payment receipt — order ${o.orderNumber} confirmed`, [
         hi,
-        { kind: "p", text: `Thank you — we've received your payment and order ${o.orderNumber} is confirmed. The partner supplier nearest your site is preparing your load, and we'll let you know when it's dispatched.` },
+        {
+          kind: "p",
+          text:
+            balance > 0.01
+              ? `Thank you — we've received your deposit and order ${o.orderNumber} is confirmed. The balance of ${formatZAR(balance)} is due before your load is dispatched; pay it any time from your order page, and we'll remind you before delivery.`
+              : `Thank you — we've received your payment and order ${o.orderNumber} is confirmed. The partner supplier nearest your site is preparing your load, and we'll let you know when it's dispatched.`,
+        },
         { kind: "h", text: "Payment receipt" },
         { kind: "rows", rows: receipt },
         { kind: "h", text: "Your order" },
         ...orderSummary(o),
         { kind: "p", text: "This is your payment receipt. Your tax invoice follows by email once our team issues it, and it's always on your order page." },
-        track,
+        balance > 0.01 ? { kind: "cta", label: "Pay the balance", href: `${site}/orders/${o.id}/confirmation` } : track,
+      ]);
+    }
+    case "PAYMENT_RECEIVED": {
+      // A later payment on an order that's already confirmed: the balance after a deposit, or a payment link.
+      const p = o.lastPayment;
+      if (!p) return null;
+      const balance = balanceOf(o);
+      return email(`Payment receipt — ${formatZAR(p.amount)} for order ${o.orderNumber}`, [
+        hi,
+        {
+          kind: "p",
+          text:
+            balance > 0.01
+              ? `Thank you — we've received ${formatZAR(p.amount)} for order ${o.orderNumber}. ${formatZAR(balance)} is still to be paid before delivery.`
+              : `Thank you — we've received ${formatZAR(p.amount)} and order ${o.orderNumber} is now paid in full. We'll let you know when it's dispatched.`,
+        },
+        { kind: "h", text: "Payment receipt" },
+        {
+          kind: "rows",
+          rows: [
+            ["Amount paid", formatZAR(p.amount)],
+            ...paymentRows(p),
+            ["Order", o.orderNumber],
+            ["Order total", formatZAR(o.total)],
+            ["Paid so far", formatZAR(o.amountPaid ?? p.amount)],
+            ["Balance", balance > 0.01 ? formatZAR(balance) : "Paid in full"],
+          ],
+        },
+        balance > 0.01 ? { kind: "cta", label: "Pay the balance", href: `${site}/orders/${o.id}/confirmation` } : track,
+      ]);
+    }
+    case "PAYMENT_LINK_SENT": {
+      const link = o.payLink;
+      if (!link) return null;
+      const what = PAYMENT_KIND_LABEL[link.kind] ?? "payment";
+      return email(`Pay for order ${o.orderNumber} — ${formatZAR(link.amount)}`, [
+        hi,
+        { kind: "p", text: `Here's a secure link to pay the ${what} of ${formatZAR(link.amount)} for order ${o.orderNumber}. You don't need to sign in, and you can choose how to pay on the page.` },
+        ...(link.note ? [{ kind: "p" as const, text: link.note }] : []),
+        { kind: "rows", rows: [["Order", o.orderNumber], ["To pay now", formatZAR(link.amount)], ["Order total", formatZAR(o.total)], ["Link valid until", formatDateZA(link.expiresAt)]] },
+        { kind: "cta", label: `Pay ${formatZAR(link.amount)}`, href: link.url },
+        { kind: "p", text: "The page also has a proforma invoice to download if your accounts team needs one to pay. Didn't expect this email? Reply and our team will help." },
       ]);
     }
     case "INVOICE_ISSUED":
@@ -424,12 +492,31 @@ export function staffOrderEmail(event: NotificationEvent, o: OrderData): EmailMe
       { kind: "cta", label: "Accept or decline in admin", href: `${siteUrl()}/admin/orders?express=1` },
     ]);
   }
+  if (event === "PAYMENT_RECEIVED" && o.lastPayment) {
+    const balance = balanceOf(o);
+    return email(`Payment ${formatZAR(o.lastPayment.amount)} received — ${o.orderNumber}${balance > 0.01 ? "" : " (paid in full)"}`, [
+      {
+        kind: "p",
+        text: `${who} paid ${formatZAR(o.lastPayment.amount)} on order ${o.orderNumber}${o.lastPayment.method ? ` by ${o.lastPayment.method}` : ""}. ${balance > 0.01 ? `${formatZAR(balance)} is still outstanding — it must be paid before dispatch.` : "It's paid in full and can be dispatched."}`,
+      },
+      { kind: "cta", label: "Open in admin", href: `${siteUrl()}/admin/orders` },
+    ]);
+  }
   if (event !== "ORDER_PLACED") return null;
   return email(`${o.express ? "AA 60/120 express — " : ""}New order ${o.orderNumber} — ${formatZAR(o.total)}`, [
     { kind: "p", text: `${who} placed ${o.express ? "AA 60/120 express " : ""}order ${o.orderNumber}. It's awaiting payment${o.express ? " by card or PayFast — you'll get another email when it's paid" : ""}.` },
     ...orderSummary(o),
     ...(o.deliveryDistanceKm !== null ? [{ kind: "p" as const, text: `Delivery distance: ${o.deliveryDistanceKm}km (confirm road distance at dispatch).` }] : []),
     { kind: "cta", label: "Open in admin", href: `${siteUrl()}/admin/orders` },
+  ]);
+}
+
+/** Staff: a payment gateway is failing (or was paused), so its methods are using their fallback. */
+export function gatewayDegradedEmail(g: { gateway: string; reason: string; startedAt: Date; until: Date | null; fallbacks: string[] }): EmailMessage {
+  return email(`Payments: ${g.gateway} is failing — customers are being sent to the fallback`, [
+    { kind: "p", text: `${g.gateway} ${g.until ? "has failed repeatedly" : "was paused"} (${g.reason}). Since ${formatTimeZA(g.startedAt)}, new payments for its methods go to their fallback gateway${g.until ? ` until ${formatTimeZA(g.until)}, when ${g.gateway} is tried again` : " until an admin resumes it"}.` },
+    ...(g.fallbacks.length ? [{ kind: "list" as const, items: g.fallbacks }] : [{ kind: "p" as const, text: "None of its methods has a fallback set, so they can't be paid online until it recovers. Set fallbacks on Admin → Payments." }]),
+    { kind: "cta", label: "Payments health in admin", href: `${siteUrl()}/admin/payments` },
   ]);
 }
 
@@ -791,6 +878,9 @@ export const EVENT_CHANNELS: Record<NotificationEvent, { customerEmail: boolean;
   EXPRESS_PAID: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
   EXPRESS_ACCEPTED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
   EXPRESS_DECLINED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
+  PAYMENT_RECEIVED: { customerEmail: true, customerWhatsApp: false, staffEmail: true },
+  PAYMENT_LINK_SENT: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
+  GATEWAY_DEGRADED: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
 };
 
 /** Events that also email the partner (always on — offers can't wait for a setting). */
@@ -830,6 +920,9 @@ export const EVENT_LABEL: Record<NotificationEvent, string> = {
   EXPRESS_PAID: "AA 60/120 order paid — confirm a supplier",
   EXPRESS_ACCEPTED: "AA 60/120 accepted (due time)",
   EXPRESS_DECLINED: "AA 60/120 declined (standard delivery, fee refunded)",
+  PAYMENT_RECEIVED: "Payment received on a confirmed order (balance, payment link)",
+  PAYMENT_LINK_SENT: "Payment link sent to a customer",
+  GATEWAY_DEGRADED: "Payment gateway failing — fallback in use",
 };
 
 /** A South African or international number in the digits-only form WhatsApp expects, or null. */

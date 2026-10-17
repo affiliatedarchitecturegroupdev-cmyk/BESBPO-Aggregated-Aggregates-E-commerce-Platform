@@ -23,6 +23,8 @@ export type OrderDocData = {
   /** AA 60/120 express fee, VAT-inclusive (null for standard delivery). */
   expressFee?: Money | null;
   total: Money;
+  /** Paid so far (the payments ledger) — a deposit leaves a balance. */
+  amountPaid?: Money;
   deliveryAddress: string | null;
   deliveryProvince: string | null;
   deliveryDistanceKm: number | null;
@@ -124,6 +126,39 @@ export function orderConfirmationSpec(o: OrderDocData, bankingDetails?: string):
       "Delivery distance is confirmed at dispatch. Compliance documents for your materials are on your order record at aaggregates.store.",
     ],
     footer: `${SELLER.tradingName} · ${SELLER.website} · Order ${o.orderNumber}`,
+  };
+}
+
+/**
+ * A proforma invoice: what's to be paid now (the full amount, a deposit or the
+ * balance), for an accounts team that needs a document before it pays. Not a
+ * tax invoice — that's issued by staff once the order is paid.
+ */
+export function proformaSpec(o: OrderDocData, due: { amount: Money; kind: string; validUntil?: Date | null }, bankingDetails?: string): DocSpec {
+  const base = orderConfirmationSpec({ ...o, status: o.status }, bankingDetails);
+  const paid = o.amountPaid !== undefined ? Number(o.amountPaid.toString()) : 0;
+  const label = ({ DEPOSIT: "Deposit due now", BALANCE: "Balance due now", INSTALMENT: "Instalment due now" } as Record<string, string>)[due.kind] ?? "Amount due now";
+  return {
+    ...base,
+    title: "Proforma invoice",
+    subtitle: "This is not a tax invoice",
+    meta: [
+      ["Proforma for order", o.orderNumber],
+      ["Date", formatDateZA(new Date())],
+      ...(due.validUntil ? ([["Valid until", formatDateZA(due.validUntil)]] as [string, string][]) : []),
+      ["Payment reference", o.orderNumber],
+    ],
+    totals: [
+      ...(base.totals ?? []).map((t) => ({ ...t, label: t.label === "Total" ? "Order total" : t.label, strong: false })),
+      ...(paid > 0 ? [{ label: "Paid so far", value: formatZAR(paid) }] : []),
+      { label, value: formatZAR(due.amount), strong: true },
+    ],
+    notes: [
+      `Prices include VAT at ${VAT_RATE_PERCENT}%. A tax invoice is issued once the order is paid.`,
+      ...(due.kind === "DEPOSIT" ? ["The deposit secures your order and its prices; the balance is due before delivery."] : []),
+      "Pay online with the link we sent you, or by EFT:",
+      ...eftNote(o.orderNumber, bankingDetails),
+    ],
   };
 }
 

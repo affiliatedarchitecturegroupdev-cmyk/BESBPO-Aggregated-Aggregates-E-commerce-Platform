@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Patch, Post, Query } from "@nestjs/common
 import type { AuthUser } from "../common/auth/auth-user";
 import { Public, Roles } from "../common/auth/decorators";
 import { CurrentUser } from "../common/decorators/current-user.decorator";
-import { CreateQuoteDto, ListQuotesQuery, RespondToQuoteDto, UpdateQuoteDto } from "./dto/create-quote.dto";
+import { CreateQuoteDto, ListQuotesQuery, QuoteToOrderDto, RespondToQuoteDto, UpdateQuoteDto } from "./dto/create-quote.dto";
 import { QuotesService } from "./quotes.service";
 
 @Controller("quotes")
@@ -36,6 +36,13 @@ export class QuotesController {
   @Patch(":id")
   update(@Param("id") id: string, @Body() dto: UpdateQuoteDto) {
     return this.quotes.update(id, dto);
+  }
+
+  /** Staff: make the order for a priced quote, so the customer can pay it (deposit, link, EFT). */
+  @Roles("STAFF", "ADMIN")
+  @Post(":id/order")
+  toOrder(@Param("id") id: string, @Body() dto: QuoteToOrderDto) {
+    return this.quotes.toOrder(id, dto);
   }
 
   @Post(":id/respond")

@@ -22,6 +22,8 @@
 export type InitiatePaymentRequest = {
   /** Internal Order.id this payment is for. */
   orderId: string;
+  /** Payment.id (the ledger row) — the merchant reference the gateway echoes back, so one order can take several payments. */
+  paymentId: string;
   /** Order.orderNumber — shown to the customer/provider as a merchant reference. */
   orderNumber: string;
   /** Rand amount, already computed by the pricing engine — never recomputed here. */
@@ -29,6 +31,9 @@ export type InitiatePaymentRequest = {
   /** PaymentMethodKey (e.g. "CARD", "OZOW", "LULAPAY") — the tile the customer picked. */
   methodKey: string;
   customerEmail: string;
+  customerName?: string | null;
+  /** The order's lines, for gateways that list them (LayUp's plan shows the products). */
+  lines?: { sku: string; name: string; amount: number; link: string }[];
   /** Where the provider should send the customer back after paying. */
   returnUrl: string;
   /** Where the provider sends the customer if they cancel on its page. */
@@ -46,6 +51,8 @@ export type InitiatePaymentResult = {
   form?: { action: string; fields: [string, string][] };
   /** Provider-side reference, once a real integration returns one. */
   providerReference?: string;
+  /** The provider's ID for this checkout (Peach checkoutId, Stitch payment request ID, LayUp order ID) — used to check its status. */
+  providerCheckoutId?: string;
   /** Explains why isLive is false, or nothing further is needed if it's true. */
   note: string;
 };
@@ -63,6 +70,26 @@ export type VerifyPaymentResult = {
   status: "PAID" | "FAILED" | "PENDING" | "UNKNOWN";
 };
 
+/** What a gateway says about one checkout, asked directly (never taken from a browser redirect). */
+export type ProviderPaymentStatus = {
+  status: "PAID" | "PENDING" | "FAILED";
+  /** The gateway's payment/transaction ID. */
+  providerReference?: string;
+  /** Rand amount the gateway says was paid (checked against the ledger). */
+  amount?: number;
+  /** Lay-by: how much the customer has paid so far, before the plan completes. */
+  paidSoFar?: number;
+  detail?: string;
+};
+
+/** A gateway answered with an error (not "not configured") — counts towards tripping failover. */
+export class GatewayError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "GatewayError";
+  }
+}
+
 export type GatewayStatus = { live: boolean; configured: boolean; missingEnvVars: string[]; mode?: "live" | "sandbox" };
 
 export interface PaymentGatewayAdapter {
@@ -74,4 +101,7 @@ export interface PaymentGatewayAdapter {
   initiate(request: InitiatePaymentRequest): Promise<InitiatePaymentResult>;
 
   verify(request: VerifyPaymentRequest): Promise<VerifyPaymentResult>;
+
+  /** Ask the gateway directly how a checkout stands (Peach, Stitch, LayUp). */
+  checkStatus?(providerCheckoutId: string, amount: number): Promise<ProviderPaymentStatus>;
 }

@@ -3,10 +3,10 @@ import { Prisma } from "@aggregates/database";
 import { STAFF_ROLES, type AuthUser } from "../common/auth/auth-user";
 import { PrismaService } from "../common/prisma.service";
 import { NotificationsService } from "../notifications/notifications.service";
-import { deliveryNoteSpec, orderConfirmationSpec, taxInvoiceSpec, vatBreakdown, VAT_RATE_PERCENT, type OrderDocData } from "./order-documents";
+import { deliveryNoteSpec, orderConfirmationSpec, proformaSpec, taxInvoiceSpec, vatBreakdown, VAT_RATE_PERCENT, type OrderDocData } from "./order-documents";
 import { renderPdf } from "./pdf-renderer";
 
-export const DOCUMENT_KINDS = ["confirmation", "delivery-note", "invoice"] as const;
+export const DOCUMENT_KINDS = ["confirmation", "proforma", "delivery-note", "invoice"] as const;
 export type DocumentKind = (typeof DOCUMENT_KINDS)[number];
 
 const ORDER_INCLUDE = {
@@ -56,6 +56,7 @@ export class OrderDocumentsService {
     if (kind === "confirmation") {
       return { fileName: `${order.orderNumber}-order-confirmation.pdf`, pdf: await renderPdf(orderConfirmationSpec(data, process.env.EFT_BANKING_DETAILS)) };
     }
+    if (kind === "proforma") return this.proforma(order);
     if (kind === "delivery-note") {
       if (!order.shipment || !["IN_TRANSIT", "DELIVERED"].includes(order.status)) {
         throw new NotFoundException("The delivery note is available once the order is dispatched.");
@@ -64,6 +65,20 @@ export class OrderDocumentsService {
     }
     if (!order.invoice) throw new NotFoundException("No tax invoice has been issued for this order yet.");
     return { fileName: `${order.invoice.invoiceNumber}.pdf`, pdf: await renderPdf(taxInvoiceSpec(order.invoice, data, process.env.EFT_BANKING_DETAILS)) };
+  }
+
+  /**
+   * A proforma for what's due now: the given amount (a payment link's), else
+   * the outstanding balance. Used by the order page and the public pay page.
+   */
+  async proforma(orderOrId: LoadedOrder | string, due?: { amount: number; kind: string; validUntil?: Date | null }): Promise<{ fileName: string; pdf: Buffer }> {
+    const order = typeof orderOrId === "string" ? await this.prisma.order.findUnique({ where: { id: orderOrId }, include: ORDER_INCLUDE }) : orderOrId;
+    if (!order) throw new NotFoundException("Order not found.");
+    if (order.status === "CANCELLED") throw new BadRequestException("This order was cancelled.");
+    const balance = Math.round((Number(order.total) - Number(order.amountPaid)) * 100) / 100;
+    if (!due && balance <= 0.01) throw new BadRequestException("This order is paid in full — download the tax invoice instead.");
+    const owed = due ?? { amount: balance, kind: Number(order.amountPaid) > 0 ? "BALANCE" : "FULL" };
+    return { fileName: `${order.orderNumber}-proforma.pdf`, pdf: await renderPdf(proformaSpec(toDocData(order), { ...owed, amount: new Prisma.Decimal(owed.amount) }, process.env.EFT_BANKING_DETAILS)) };
   }
 
   /** Staff: issue the tax invoice for an order — once, with its details frozen. */
@@ -76,7 +91,8 @@ export class OrderDocumentsService {
     if (order.invoice) throw new ConflictException(`Invoice ${order.invoice.invoiceNumber} has already been issued for this order.`);
 
     const { total, vat, exVat } = vatBreakdown(order.total);
-    const paid = order.status !== "PENDING";
+    // Paid only once the ledger covers the total (a deposit leaves it unpaid until the balance is in).
+    const paid = order.status !== "PENDING" && Number(order.amountPaid) >= Number(order.total) - 0.01;
     const [{ nextval }] = await this.prisma.$queryRaw<{ nextval: bigint }[]>`SELECT nextval('invoice_number_seq')`;
     try {
       const invoice = await this.prisma.invoice.create({
@@ -125,6 +141,7 @@ function toDocData(order: LoadedOrder): OrderDocData {
     deliveryFee: order.deliveryFee,
     expressFee: order.expressFee,
     total: order.total,
+    amountPaid: order.amountPaid,
     deliveryAddress: order.deliveryAddress,
     deliveryProvince: order.deliveryProvince,
     deliveryDistanceKm: order.deliveryDistanceKm,

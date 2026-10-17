@@ -31,7 +31,7 @@ describe("PayFast helpers", () => {
 
   it("builds the checkout form in PayFast's field order with the signature last", () => {
     const form = checkoutForm(payfastConfig(ENV)!, {
-      orderId: "ord_1",
+      reference: "ord_1",
       orderNumber: "AA-0001",
       amount: 5,
       customerEmail: "buyer@example.com",

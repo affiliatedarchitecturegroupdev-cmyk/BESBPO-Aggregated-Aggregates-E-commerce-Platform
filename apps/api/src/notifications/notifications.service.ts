@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, Logger, NotFoundException, OnModuleDestroy } from "@nestjs/common";
-import { NotificationAudience, NotificationChannel, NotificationEvent, NotificationStatus, Prisma } from "@aggregates/database";
+import { NotificationAudience, NotificationChannel, NotificationEvent, NotificationStatus, PaymentMethodKey, Prisma } from "@aggregates/database";
 import { PrismaService } from "../common/prisma.service";
 import {
   customerCompanyEmail,
@@ -99,7 +99,13 @@ export class NotificationsService implements OnModuleDestroy {
   // Events
   // -------------------------------------------------------------------------
 
-  async order(event: NotificationEvent, orderId: string) {
+  /**
+   * `extra.paymentId` picks the payment a receipt is for (else the latest paid
+   * one); `extra.payLink` is the link for PAYMENT_LINK_SENT. Order emails go to
+   * the account holder, or to the contact email of an order made from a
+   * guest's quote.
+   */
+  async order(event: NotificationEvent, orderId: string, extra: { paymentId?: string; payLink?: OrderData["payLink"] } = {}) {
     await this.safely(event, async () => {
       const order = await this.prisma.order.findUnique({
         where: { id: orderId },
@@ -112,9 +118,14 @@ export class NotificationsService implements OnModuleDestroy {
         },
       });
       if (!order) return;
-      const method = order.paymentMethod
-        ? ((await this.prisma.paymentMethodConfig.findUnique({ where: { methodKey: order.paymentMethod }, select: { displayName: true } }))?.displayName ?? order.paymentMethod)
-        : null;
+      const methodName = async (key: PaymentMethodKey | null) =>
+        key ? ((await this.prisma.paymentMethodConfig.findUnique({ where: { methodKey: key }, select: { displayName: true } }))?.displayName ?? key) : null;
+      const method = await methodName(order.paymentMethod);
+      const paid = await this.prisma.payment.findFirst({
+        where: { orderId: order.id, status: "PAID", ...(extra.paymentId ? { id: extra.paymentId } : {}) },
+        orderBy: { paidAt: "desc" },
+      });
+      const recipientEmail = order.user?.email ?? order.contactEmail ?? null;
       const data: OrderData = {
         id: order.id,
         orderNumber: order.orderNumber,
@@ -130,6 +141,12 @@ export class NotificationsService implements OnModuleDestroy {
         lines: order.lineItems.map((l) => ({ name: l.product.name, quantity: l.quantity, unitOfSale: l.unitOfSale, lineTotal: l.lineTotal })),
         shipment: order.shipment,
         payment: { paidAt: order.paidAt, method, reference: order.paymentReference },
+        amountPaid: order.amountPaid,
+        paymentPlan: order.paymentPlan,
+        lastPayment: paid
+          ? { amount: paid.amount, kind: paid.kind, paidAt: paid.paidAt, method: await methodName(paid.methodKey), reference: paid.providerReference ?? (paid.gateway === "MANUAL_EFT" ? null : paid.id) }
+          : null,
+        payLink: extra.payLink ?? null,
         invoice: order.invoice,
         express:
           order.expressFee !== null
@@ -138,8 +155,8 @@ export class NotificationsService implements OnModuleDestroy {
       };
       const setting = await this.setting(event);
       const out: Outgoing[] = [];
-      const customerEmail = setting.customerEmail && order.user?.email ? customerOrderEmail(event, data) : null;
-      if (customerEmail) out.push({ audience: "CUSTOMER", channel: "EMAIL", recipient: order.user!.email, email: customerEmail });
+      const customerEmail = setting.customerEmail && recipientEmail ? customerOrderEmail(event, data) : null;
+      if (customerEmail) out.push({ audience: "CUSTOMER", channel: "EMAIL", recipient: recipientEmail!, email: customerEmail });
       const phone = order.whatsappUpdates ? whatsappNumber(order.contactPhone) : null;
       const message = setting.customerWhatsApp && phone ? customerOrderWhatsApp(event, data) : null;
       if (message) out.push({ audience: "CUSTOMER", channel: "WHATSAPP", recipient: phone!, whatsapp: message });
@@ -376,6 +393,18 @@ export class NotificationsService implements OnModuleDestroy {
       {},
     );
     return to.length;
+  }
+
+  /** A staff-only alert that isn't about one record (a payment gateway failing). Respects the admin switch. */
+  async staffAlert(event: NotificationEvent, message: EmailMessage) {
+    await this.safely(event, async () => {
+      if (!(await this.setting(event)).staffEmail) return;
+      await this.enqueue(
+        event,
+        (await this.staffRecipients()).map((recipient) => ({ audience: "STAFF" as const, channel: "EMAIL" as const, recipient, email: message })),
+        {},
+      );
+    });
   }
 
   /** Staff: try a failed (or merely logged) message again — e.g. once a provider is configured. */

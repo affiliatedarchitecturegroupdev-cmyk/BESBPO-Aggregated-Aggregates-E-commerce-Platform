@@ -19,6 +19,11 @@ import { DigestService } from "../src/insights/digest.service";
 import { EmailSender } from "../src/notifications/providers";
 import { OrdersService } from "../src/orders/orders.service";
 import { PaymentGatewayService } from "../src/payment-gateway/payment-gateway.service";
+import { PaymentsService } from "../src/payment-gateway/payments.service";
+import { LayupAdapter } from "../src/payment-gateway/adapters/layup.adapter";
+import { PeachAdapter } from "../src/payment-gateway/adapters/peach.adapter";
+import { StitchAdapter } from "../src/payment-gateway/adapters/stitch.adapter";
+import { peachSignature } from "../src/payment-gateway/peach/peach";
 import { readManifest, seedProductImages } from "../src/merchandising/seed-product-images";
 
 const run = Date.now().toString(36);
@@ -1067,7 +1072,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
   describe("payments", () => {
     it("shows tiles without routing, and eligibility at the caller's own tier", async () => {
       const tiles = await http().get("/payment-methods").expect(200);
-      expect(tiles.body).toHaveLength(19); // SCode joined in Oct 2026
+      expect(tiles.body).toHaveLength(20); // SCode and LayUp joined in Oct 2026
       expect(tiles.body[0].activeGateway).toBeUndefined();
 
       const anonymous = await http().get("/payment-methods/eligible?orderTotal=20000").expect(200);
@@ -1139,7 +1144,9 @@ describe("Aggregated Aggregates API (e2e)", () => {
         expect(staffPay.body.isLive).toBe(true);
         expect(staffPay.body.form.action).toBe("https://sandbox.payfast.co.za/eng/process");
         const fields = Object.fromEntries(staffPay.body.form.fields);
-        expect(fields).toMatchObject({ merchant_id: "10000100", m_payment_id: order.body.id, amount: Number(order.body.total).toFixed(2) });
+        // The merchant reference is the ledger payment, so one order can take a deposit and a balance.
+        expect(staffPay.body.paymentId).toEqual(expect.any(String));
+        expect(fields).toMatchObject({ merchant_id: "10000100", m_payment_id: staffPay.body.paymentId, amount: Number(order.body.total).toFixed(2) });
         expect(fields.notify_url).toMatch(/\/api\/v1\/payment-methods\/notify\/payfast$/);
         expect(fields.return_url).toContain(`/orders/${order.body.id}/confirmation?payment=returned`);
         expect(JSON.stringify(staffPay.body)).not.toContain(PF.AGG_PAYFAST_PASSPHRASE);
@@ -1151,6 +1158,107 @@ describe("Aggregated Aggregates API (e2e)", () => {
         const routing = await http().get("/payment-methods/routing").set("Authorization", `Bearer ${admin}`).expect(200);
         expect(routing.body.payfastPublic).toBe(true);
         expect(routing.body.gateways.find((g: { gateway: string }) => g.gateway === "PAYFAST")).toMatchObject({ live: true, configured: true, mode: "sandbox" });
+        await prisma.order.delete({ where: { id: order.body.id } });
+      });
+
+      it("takes a deposit, holds dispatch until the balance is in, and takes the balance by link or EFT", async () => {
+        const buyer = await register("depbuyer");
+        const admin = await register("depadmin");
+        await prisma.user.update({ where: { email: `depadmin-${run}@example.com` }, data: { role: "ADMIN" } });
+        const product = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-SBC-05" } });
+        const order = await http().post("/orders").set("Authorization", `Bearer ${buyer}`).send({ deliveryDistanceKm: 20, lineItems: [{ productId: product.id, unitOfSale: "BULK_M3", quantity: 6 }] }).expect(201);
+        const total = Number(order.body.total);
+
+        // Below the policy's minimum: no deposit. Admins can change the policy, inside 15–50%.
+        const before = await http().get(`/payments/orders/${order.body.id}`).set("Authorization", `Bearer ${buyer}`).expect(200);
+        expect(before.body.deposit).toMatchObject({ available: false });
+        expect(before.body.choices.deposit).toBeNull();
+        const policy = { minOrderTotal: 1000, retail: [{ fromTotal: 0, percent: 30 }], trade: [{ fromTotal: 0, percent: 25 }], madeToOrderPercent: 50 };
+        await http().put("/payment-methods/deposit-policy").set("Authorization", `Bearer ${buyer}`).send(policy).expect(403);
+        await http().put("/payment-methods/deposit-policy").set("Authorization", `Bearer ${admin}`).send({ ...policy, retail: [{ fromTotal: 0, percent: 60 }] }).expect(400);
+        await http().put("/payment-methods/deposit-policy").set("Authorization", `Bearer ${admin}`).send(policy).expect(200);
+        expect((await http().get("/payment-methods/deposit-policy").expect(200)).body).toMatchObject({ minOrderTotal: 1000, floorPercent: 15, ceilingPercent: 50 });
+
+        const options = await http().get(`/payments/orders/${order.body.id}`).set("Authorization", `Bearer ${buyer}`).expect(200);
+        const deposit = Math.round(total * 30) / 100;
+        expect(options.body.deposit).toMatchObject({ available: true, percent: 30, amount: deposit });
+        expect(options.body.choices.deposit.recommended.map((m: { methodKey: string }) => m.methodKey)).toContain("CARD");
+        expect(JSON.stringify(options.body.choices.deposit)).not.toContain("LAYUP"); // lay-by is for the whole order
+
+        const start = await http().post("/payment-methods/initiate").set("Authorization", `Bearer ${buyer}`).send({ orderId: order.body.id, methodKey: "CARD", plan: "DEPOSIT" }).expect(201);
+        expect(start.body).toMatchObject({ isLive: true, kind: "DEPOSIT", amount: deposit });
+        const fields = Object.fromEntries(start.body.form.fields);
+        expect(fields.amount).toBe(deposit.toFixed(2));
+        const post = (body: string) => http().post("/payment-methods/notify/payfast").set("Content-Type", "application/x-www-form-urlencoded").send(body).expect(200);
+        const itnFor = (paymentId: string, amount: number, pf: string): [string, string][] => [
+          ["m_payment_id", paymentId],
+          ["pf_payment_id", pf],
+          ["payment_status", "COMPLETE"],
+          ["item_name", "x"],
+          ["amount_gross", amount.toFixed(2)],
+          ["merchant_id", "10000100"],
+        ];
+        // The full amount against the deposit's reference doesn't match what that payment was for.
+        await post(itn(itnFor(start.body.paymentId, total, `PFD${run}`)));
+        expect((await prisma.order.findUniqueOrThrow({ where: { id: order.body.id } })).status).toBe("PENDING");
+        await post(itn(itnFor(start.body.paymentId, deposit, `PFD${run}`)));
+        const confirmed = await prisma.order.findUniqueOrThrow({ where: { id: order.body.id } });
+        expect(confirmed).toMatchObject({ status: "CONFIRMED", paymentPlan: "DEPOSIT", depositPercent: 30 });
+        expect(Number(confirmed.amountPaid)).toBe(deposit);
+
+        // Dispatch waits for the balance.
+        const dispatch = await http().patch(`/orders/${order.body.id}/status`).set("Authorization", `Bearer ${admin}`).send({ status: "IN_TRANSIT", carrier: "BESFLEET" }).expect(400);
+        expect(dispatch.body.message).toMatch(/still to be paid/);
+
+        // Staff send a link for the balance; the customer can open it without signing in.
+        const balance = Math.round((total - deposit) * 100) / 100;
+        await http().post(`/payments/orders/${order.body.id}/links`).set("Authorization", `Bearer ${buyer}`).send({ kind: "BALANCE" }).expect(403);
+        await http().post(`/payments/orders/${order.body.id}/links`).set("Authorization", `Bearer ${admin}`).send({ kind: "BALANCE", amount: total }).expect(400);
+        const link = await http().post(`/payments/orders/${order.body.id}/links`).set("Authorization", `Bearer ${admin}`).send({ kind: "BALANCE", note: "Balance before delivery" }).expect(201);
+        expect(link.body).toMatchObject({ kind: "BALANCE", amount: balance });
+        const token = (link.body.url as string).split("/pay/")[1];
+        const view = await http().get(`/payment-links/${token}`).expect(200);
+        expect(view.body).toMatchObject({ orderNumber: order.body.orderNumber, amount: balance, paid: false, note: "Balance before delivery" });
+        expect(JSON.stringify(view.body)).not.toMatch(/deliveryAddress|contactPhone|@example\.com/);
+        await http().get(`/payment-links/not-a-token`).expect(404);
+        const proforma = await http().get(`/payment-links/${token}/proforma`).expect(200);
+        expect(proforma.headers["content-type"]).toBe("application/pdf");
+        const viaLink = await http().post(`/payment-links/${token}/pay`).send({ methodKey: "CARD" }).expect(201);
+        expect(viaLink.body).toMatchObject({ isLive: true, kind: "BALANCE", amount: balance });
+        expect(Object.fromEntries(viaLink.body.form.fields).return_url).toContain(`/pay/${token}?payment=returned`);
+
+        // The balance arrives by EFT instead: staff record it, and the link shows as paid.
+        await http().post(`/payments/orders/${order.body.id}/record`).set("Authorization", `Bearer ${admin}`).send({ amount: balance + 10 }).expect(400);
+        const ledger = await http().post(`/payments/orders/${order.body.id}/record`).set("Authorization", `Bearer ${admin}`).send({ amount: balance, reference: "FNB 123" }).expect(201);
+        expect(ledger.body).toMatchObject({ balance: 0, amountPaid: total });
+        expect(ledger.body.payments.filter((p: { status: string }) => p.status === "PAID").map((p: { kind: string }) => p.kind)).toEqual(["DEPOSIT", "BALANCE"]);
+        expect((await http().get(`/payment-links/${token}`).expect(200)).body).toMatchObject({ paid: true, balance: 0 });
+        await http().post(`/payment-links/${token}/pay`).send({ methodKey: "CARD" }).expect(400);
+        await http().patch(`/orders/${order.body.id}/status`).set("Authorization", `Bearer ${admin}`).send({ status: "IN_TRANSIT", carrier: "BESFLEET" }).expect(200);
+
+        await prisma.siteContent.deleteMany({ where: { key: "deposit-policy" } });
+        await prisma.order.delete({ where: { id: order.body.id } });
+      });
+
+      it("fails over when a gateway is paused, and admins resume it", async () => {
+        const buyer = await register("fobuyer");
+        const admin = await register("foadmin");
+        await prisma.user.update({ where: { email: `foadmin-${run}@example.com` }, data: { role: "ADMIN" } });
+        const product = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-SBC-05" } });
+        const order = await http().post("/orders").set("Authorization", `Bearer ${buyer}`).send({ deliveryDistanceKm: 20, lineItems: [{ productId: product.id, unitOfSale: "BULK_M3", quantity: 6 }] }).expect(201);
+        await http().post("/payment-methods/gateways/PAYFAST/pause").set("Authorization", `Bearer ${buyer}`).send({}).expect(403);
+        await http().post("/payment-methods/gateways/PAYFAST/pause").set("Authorization", `Bearer ${admin}`).send({ reason: "PayFast outage" }).expect(201);
+        // Card falls back to Peach, which isn't configured here: nothing charged, a clear note.
+        const paused = await http().post("/payment-methods/initiate").set("Authorization", `Bearer ${buyer}`).send({ orderId: order.body.id, methodKey: "CARD" }).expect(201);
+        expect(paused.body).toMatchObject({ isLive: false });
+        expect(paused.body.note).toMatch(/temporarily unavailable/);
+        const routing = await http().get("/payment-methods/routing").set("Authorization", `Bearer ${admin}`).expect(200);
+        expect(routing.body.gateways.find((g: { gateway: string }) => g.gateway === "PAYFAST")).toMatchObject({ down: true });
+        expect(routing.body.incidents[0]).toMatchObject({ gateway: "PAYFAST", reason: "PayFast outage", automatic: false });
+        await http().post("/payment-methods/gateways/PAYFAST/resume").set("Authorization", `Bearer ${admin}`).expect(201);
+        const resumed = await http().post("/payment-methods/initiate").set("Authorization", `Bearer ${buyer}`).send({ orderId: order.body.id, methodKey: "CARD" }).expect(201);
+        expect(resumed.body).toMatchObject({ isLive: true, wasFailover: false });
+        await prisma.gatewayIncident.deleteMany({ where: { gateway: "PAYFAST" } });
         await prisma.order.delete({ where: { id: order.body.id } });
       });
 
@@ -1194,6 +1302,115 @@ describe("Aggregated Aggregates API (e2e)", () => {
         await post(itn(base.map(([k, v]): [string, string] => [k, k === "m_payment_id" ? second.body.id : k === "amount_gross" ? Number(second.body.total).toFixed(2) : v])));
         expect((await prisma.order.findUniqueOrThrow({ where: { id: second.body.id } })).status).toBe("PENDING");
         await prisma.order.deleteMany({ where: { id: { in: [order.body.id, second.body.id] } } });
+      });
+    });
+
+    describe("Peach, Stitch and LayUp", () => {
+      const ENV = {
+        PEACH_CLIENT_ID: "c",
+        PEACH_CLIENT_SECRET: "s",
+        PEACH_MERCHANT_ID: "m",
+        PEACH_ENTITY_ID: "e",
+        PEACH_SECRET_TOKEN: "peach-secret",
+        STITCH_WEBHOOK_SECRET: `whsec_${Buffer.from("stitch-key").toString("base64")}`,
+      };
+      beforeAll(() => Object.assign(process.env, ENV));
+      afterAll(() => {
+        for (const key of Object.keys(ENV)) delete process.env[key];
+        jest.restoreAllMocks();
+      });
+
+      async function pendingOrder(label: string) {
+        const buyer = await register(label);
+        const product = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-SBC-05" } });
+        const order = await http().post("/orders").set("Authorization", `Bearer ${buyer}`).send({ deliveryDistanceKm: 20, lineItems: [{ productId: product.id, unitOfSale: "BULK_M3", quantity: 6 }] }).expect(201);
+        return { buyer, order: order.body as { id: string; total: string; orderNumber: string } };
+      }
+
+      it("confirms a Peach payment from its signed webhook and Peach's own status", async () => {
+        const { order } = await pendingOrder("peachbuyer");
+        const payment = await prisma.payment.create({ data: { orderId: order.id, kind: "FULL", amount: order.total, methodKey: "PAYJUSTNOW", gateway: "PEACH", providerCheckoutId: `chk_${run}` } });
+        const status = jest.spyOn(app.get(PeachAdapter), "checkStatus").mockResolvedValue({ status: "PAID", amount: Number(order.total), providerReference: `peach_${run}` });
+        const fields: [string, string][] = [["merchantTransactionId", payment.id], ["checkoutId", `chk_${run}`], ["result.code", "000.000.000"], ["amount", Number(order.total).toFixed(2)]];
+        const post = (sig: string) => http().post("/payment-methods/notify/peach").set("Content-Type", "application/x-www-form-urlencoded").send(new URLSearchParams([...fields, ["signature", sig]]).toString()).expect(200);
+        await post("0".repeat(64));
+        expect((await prisma.order.findUniqueOrThrow({ where: { id: order.id } })).status).toBe("PENDING");
+        await post(peachSignature(fields, ENV.PEACH_SECRET_TOKEN));
+        expect(status).toHaveBeenCalledWith(`chk_${run}`, Number(order.total));
+        const paid = await prisma.order.findUniqueOrThrow({ where: { id: order.id } });
+        expect(paid).toMatchObject({ status: "CONFIRMED", paymentReference: `peach_${run}` });
+        await post(peachSignature(fields, ENV.PEACH_SECRET_TOKEN));
+        const outcomes = (await prisma.paymentNotification.findMany({ where: { gateway: "PEACH", orderId: order.id }, orderBy: { createdAt: "asc" } })).map((n) => n.outcome);
+        expect(outcomes).toEqual(["PAID", "ALREADY_PAID"]);
+        status.mockRestore();
+        await prisma.order.delete({ where: { id: order.id } });
+      });
+
+      it("confirms a Stitch pay-by-bank payment from its Svix-signed webhook", async () => {
+        const { order } = await pendingOrder("stitchbuyer");
+        await prisma.payment.create({ data: { orderId: order.id, kind: "FULL", amount: order.total, methodKey: "STITCH", gateway: "STITCH_DIRECT", providerCheckoutId: `pir_${run}` } });
+        const status = jest.spyOn(app.get(StitchAdapter), "checkStatus").mockResolvedValue({ status: "PAID", amount: Number(order.total), providerReference: `pir_${run}` });
+        const body = JSON.stringify({ type: "payment.completed", data: { id: `pir_${run}` } });
+        const id = `msg_${run}`;
+        const timestamp = String(Math.floor(Date.now() / 1000));
+        const signature = `v1,${createHmac("sha256", Buffer.from("stitch-key")).update(`${id}.${timestamp}.${body}`).digest("base64")}`;
+        const send = (sig: string) => http().post("/payment-methods/notify/stitch").set("Content-Type", "application/json").set({ "svix-id": id, "svix-timestamp": timestamp, "svix-signature": sig }).send(body).expect(200);
+        await send("v1,bad");
+        expect((await prisma.order.findUniqueOrThrow({ where: { id: order.id } })).status).toBe("PENDING");
+        await send(signature);
+        expect((await prisma.order.findUniqueOrThrow({ where: { id: order.id } })).status).toBe("CONFIRMED");
+        status.mockRestore();
+        await prisma.order.delete({ where: { id: order.id } });
+      });
+
+      it("follows a LayUp lay-by plan: progress recorded, the order held until it's paid off", async () => {
+        const { buyer, order } = await pendingOrder("laybuyer");
+        const options = await http().get(`/payments/orders/${order.id}`).set("Authorization", `Bearer ${buyer}`).expect(200);
+        expect([...options.body.choices.full.recommended, ...options.body.choices.full.available].map((m: { methodKey: string }) => m.methodKey)).toContain("LAYUP");
+        expect(options.body.layby.terms).toEqual({ depositPercent: 20, maxMonths: 3 });
+        // Not configured: nothing set up, and the order can still be paid another way.
+        const notLive = await http().post("/payment-methods/initiate").set("Authorization", `Bearer ${buyer}`).send({ orderId: order.id, methodKey: "LAYUP" }).expect(201);
+        expect(notLive.body).toMatchObject({ isLive: false });
+        await http().post("/payment-methods/initiate").set("Authorization", `Bearer ${buyer}`).send({ orderId: order.id, methodKey: "LAYUP", plan: "DEPOSIT" }).expect(400);
+
+        await prisma.order.update({ where: { id: order.id }, data: { paymentPlan: "LAYBY", paymentMethod: "LAYUP" } });
+        const plan = await prisma.payment.create({ data: { orderId: order.id, kind: "FULL", amount: order.total, methodKey: "LAYUP", gateway: "LAYUP", providerCheckoutId: `lay_${run}` } });
+        const status = jest.spyOn(app.get(LayupAdapter), "checkStatus").mockResolvedValue({ status: "PENDING", paidSoFar: 500 });
+        await app.get(PaymentsService).sync();
+        expect(Number((await prisma.payment.findUniqueOrThrow({ where: { id: plan.id } })).paidSoFar)).toBe(500);
+        expect((await prisma.order.findUniqueOrThrow({ where: { id: order.id } })).status).toBe("PENDING");
+        // Once a plan has payments on it, the customer keeps paying it at LayUp.
+        await http().post("/payment-methods/initiate").set("Authorization", `Bearer ${buyer}`).send({ orderId: order.id, methodKey: "CARD" }).expect(400);
+
+        status.mockResolvedValue({ status: "PAID", paidSoFar: Number(order.total), amount: Number(order.total) });
+        const back = await http().post(`/payments/orders/${order.id}/refresh`).set("Authorization", `Bearer ${buyer}`).expect(201);
+        expect(back.body).toMatchObject({ status: "CONFIRMED", balance: 0, paymentPlan: "LAYBY" });
+        status.mockRestore();
+        await prisma.order.delete({ where: { id: order.id } });
+      });
+
+      it("turns a priced quote into an order at the quoted total, payable like any other", async () => {
+        const staff = await register("qostaff");
+        await prisma.user.update({ where: { email: `qostaff-${run}@example.com` }, data: { role: "STAFF" } });
+        const quote = await http()
+          .post("/quotes")
+          .send({ contactName: "Guest Builder", contactEmail: `qoguest-${run}@example.com`, deliveryAddress: "5 Site Road, Durban", deliveryDistanceKm: 20, lines: [{ sku: "AA-SBC-05", unit: "m3", quantity: 12 }] })
+          .expect(201);
+        const lineId = quote.body.lineItems[0].id;
+        await http().post(`/quotes/${quote.body.id}/order`).set("Authorization", `Bearer ${staff}`).send({ lines: [{ lineItemId: lineId, unitPrice: 300 }], deliveryFee: 500 }).expect(400); // not priced yet
+        await http().patch(`/quotes/${quote.body.id}`).set("Authorization", `Bearer ${staff}`).send({ quotedTotal: 4100 }).expect(200);
+        const mismatch = await http().post(`/quotes/${quote.body.id}/order`).set("Authorization", `Bearer ${staff}`).send({ lines: [{ lineItemId: lineId, unitPrice: 300 }], deliveryFee: 450 }).expect(400);
+        expect(mismatch.body.message).toMatch(/R4050\.00.*R4100\.00/);
+        const made = await http().post(`/quotes/${quote.body.id}/order`).set("Authorization", `Bearer ${staff}`).send({ lines: [{ lineItemId: lineId, unitPrice: 300 }], deliveryFee: 500 }).expect(201);
+        await http().post(`/quotes/${quote.body.id}/order`).set("Authorization", `Bearer ${staff}`).send({ lines: [{ lineItemId: lineId, unitPrice: 300 }], deliveryFee: 500 }).expect(409);
+        const order = await prisma.order.findUniqueOrThrow({ where: { id: made.body.id } });
+        expect(order).toMatchObject({ channel: "QUOTE", status: "PENDING", contactEmail: `qoguest-${run}@example.com`, quoteId: quote.body.id, userId: null });
+        expect(Number(order.total)).toBe(4100);
+        expect((await prisma.quote.findUniqueOrThrow({ where: { id: quote.body.id } })).status).toBe("ACCEPTED");
+        const link = await http().post(`/payments/orders/${order.id}/links`).set("Authorization", `Bearer ${staff}`).send({ kind: "FULL" }).expect(201);
+        expect(link.body).toMatchObject({ amount: 4100, kind: "FULL" });
+        await prisma.order.delete({ where: { id: order.id } });
+        await prisma.quote.delete({ where: { id: quote.body.id } });
       });
     });
 

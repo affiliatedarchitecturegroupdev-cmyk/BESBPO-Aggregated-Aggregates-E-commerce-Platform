@@ -74,7 +74,7 @@ export class OrdersController {
   @Roles("STAFF", "ADMIN")
   @Patch(":id/status")
   async updateStatus(@Param("id") id: string, @Body() dto: UpdateOrderStatusDto, @CurrentUser() user: AuthUser) {
-    return forViewer(await this.ordersService.updateStatus(id, dto), user);
+    return forViewer(await this.ordersService.updateStatus(id, dto, { staffId: user.id }), user);
   }
 
   /** Staff: AA 60/120 — accept (starts the prep and 120-minute clock) or decline. */

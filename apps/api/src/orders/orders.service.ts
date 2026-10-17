@@ -213,12 +213,40 @@ export class OrdersService {
     return orders.map((o) => withExpress(o, this.clock()));
   }
 
-  /** Staff: confirm, dispatch (with carrier and tracking), deliver or cancel. */
-  async updateStatus(id: string, dto: UpdateOrderStatusDto) {
+  /**
+   * Staff: confirm, dispatch (with carrier and tracking), deliver or cancel.
+   * `fromPayment` is set when a payment in the ledger confirms the order (a
+   * gateway, a deposit, a recorded EFT); a staff confirmation without one
+   * records the outstanding amount as paid by EFT/purchase order, as before.
+   */
+  async updateStatus(id: string, dto: UpdateOrderStatusDto, opts: { fromPayment?: boolean; staffId?: string } = {}) {
     const order = await this.prisma.order.findUnique({ where: { id }, include: { shipment: true } });
     if (!order) throw new NotFoundException("Order not found.");
     if (order.status !== dto.status && !NEXT_STATUSES[order.status].includes(dto.status)) {
       throw new BadRequestException(`An order that is ${order.status} can't move to ${dto.status}.`);
+    }
+    // Deposits (docs/payments.md): the balance is paid before the load leaves the supplier.
+    const outstanding = Math.round((Number(order.total) - Number(order.amountPaid)) * 100) / 100;
+    if ((dto.status === "IN_TRANSIT" || dto.status === "DELIVERED") && order.status !== dto.status && outstanding > 0.01) {
+      throw new BadRequestException(`R${outstanding.toFixed(2)} is still to be paid on this order — take the balance (send a payment link or record the EFT) before dispatch.`);
+    }
+    if (dto.status === "CONFIRMED" && order.status === "PENDING" && !opts.fromPayment && outstanding > 0.01) {
+      // Staff confirming payment by hand: the ledger records it as EFT / purchase order for the outstanding amount.
+      await this.prisma.$transaction([
+        this.prisma.payment.create({
+          data: {
+            orderId: id,
+            kind: Number(order.amountPaid) > 0 ? "BALANCE" : "FULL",
+            amount: outstanding,
+            methodKey: dto.paymentMethod ?? order.paymentMethod ?? "EFT_PO",
+            gateway: "MANUAL_EFT",
+            status: "PAID",
+            paidAt: new Date(),
+            recordedById: opts.staffId ?? null,
+          },
+        }),
+        this.prisma.order.update({ where: { id }, data: { amountPaid: order.total } }),
+      ]);
     }
     if (dto.status === "IN_TRANSIT" && !dto.carrier && !order.shipment) {
       throw new BadRequestException("Say who is delivering (Besfleet or an external partner) when dispatching.");
@@ -260,13 +288,11 @@ export class OrdersService {
       },
       include: { shipment: true },
     });
-    // An issued invoice follows the order: paid once payment is confirmed, void if cancelled.
-    if (order.status !== dto.status && (dto.status === "CONFIRMED" || dto.status === "CANCELLED")) {
-      await this.prisma.invoice.updateMany({
-        where: { orderId: id, status: dto.status === "CONFIRMED" ? "UNPAID" : { not: "VOID" } },
-        data: dto.status === "CONFIRMED" ? { status: "PAID", paidAt: now } : { status: "VOID" },
-      });
+    // An issued invoice follows the order: paid once the order is paid in full, void if cancelled.
+    if (order.status !== dto.status && dto.status === "CANCELLED") {
+      await this.prisma.invoice.updateMany({ where: { orderId: id, status: { not: "VOID" } }, data: { status: "VOID" } });
     }
+    if (order.status !== dto.status && dto.status === "CONFIRMED") await this.settleInvoiceIfPaid(id);
     // Only a real status change is news to the customer (tracking edits aren't).
     if (order.status !== dto.status) await this.notifications.order(STATUS_EVENT[dto.status], id);
     // A paid AA 60/120 order: sales confirms a supplier by phone or email, then accepts it here.
@@ -274,6 +300,14 @@ export class OrdersService {
       await this.notifications.order("EXPRESS_PAID", id);
     }
     return withExpress(updated, this.clock());
+  }
+
+  /** Marks an issued invoice paid once the ledger covers the order total. */
+  async settleInvoiceIfPaid(orderId: string) {
+    const order = await this.prisma.order.findUnique({ where: { id: orderId }, select: { total: true, amountPaid: true } });
+    if (order && Number(order.amountPaid) >= Number(order.total) - 0.01) {
+      await this.prisma.invoice.updateMany({ where: { orderId, status: "UNPAID" }, data: { status: "PAID", paidAt: new Date() } });
+    }
   }
 
   /**

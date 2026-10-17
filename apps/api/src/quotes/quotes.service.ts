@@ -1,10 +1,10 @@
-import { ConflictException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ConflictException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { Prisma, QuoteStatus } from "@aggregates/database";
 import { STAFF_ROLES, type AuthUser } from "../common/auth/auth-user";
 import { PrismaService } from "../common/prisma.service";
 import { NotificationsService } from "../notifications/notifications.service";
 import { CustomerTierName, PricingService } from "../pricing/pricing.service";
-import { CreateQuoteDto, RespondToQuoteDto, UpdateQuoteDto } from "./dto/create-quote.dto";
+import { CreateQuoteDto, QuoteToOrderDto, RespondToQuoteDto, UpdateQuoteDto } from "./dto/create-quote.dto";
 import { quoteReasonCode, quoteReference } from "./quote-reason";
 
 import { unitOfSale } from "../pricing/units";
@@ -13,6 +13,7 @@ const QUOTE_INCLUDE = {
   lineItems: { include: { product: { select: { name: true, sku: true, slug: true } } } },
   company: { select: { id: true, name: true } },
   user: { select: { id: true, email: true, name: true } },
+  order: { select: { id: true, orderNumber: true, status: true, total: true, amountPaid: true } },
 } satisfies Prisma.QuoteInclude;
 
 /**
@@ -151,6 +152,67 @@ export class QuotesService {
     });
     await this.notifications.quote(dto.decision === "ACCEPT" ? "QUOTE_ACCEPTED" : "QUOTE_DECLINED", id);
     return updated;
+  }
+
+  /**
+   * Staff: the order for a priced (or accepted) quote, at the prices agreed —
+   * staff enter each line's unit price and the delivery fee, and they must add
+   * up to the quoted total the customer saw. The order is then paid like any
+   * other: online, by deposit, by payment link, or by EFT (docs/payments.md).
+   */
+  async toOrder(id: string, dto: QuoteToOrderDto) {
+    const quote = await this.prisma.quote.findUnique({ where: { id }, include: { ...QUOTE_INCLUDE, company: { select: { id: true, name: true, tier: { select: { name: true } } } } } });
+    if (!quote) throw new NotFoundException("Quote not found.");
+    if (quote.order) throw new ConflictException(`Order ${quote.order.orderNumber} was already made from this quote.`);
+    if (quote.status !== QuoteStatus.QUOTED && quote.status !== QuoteStatus.ACCEPTED) throw new BadRequestException("Price the quote first — only a quoted or accepted quote can become an order.");
+    const prices = new Map(dto.lines.map((l) => [l.lineItemId, l.unitPrice]));
+    const missing = quote.lineItems.find((l) => !prices.has(l.id));
+    if (missing) throw new BadRequestException(`Enter a unit price for ${missing.product.name}.`);
+    if (dto.lines.some((l) => !quote.lineItems.some((q) => q.id === l.lineItemId))) throw new BadRequestException("A line doesn't belong to this quote.");
+    const round = (n: number) => Math.round(n * 100) / 100;
+    const lines = quote.lineItems.map((l) => ({ line: l, unitPrice: prices.get(l.id)!, lineTotal: round(prices.get(l.id)! * l.quantity) }));
+    const subtotal = round(lines.reduce((n, l) => n + l.lineTotal, 0));
+    const total = round(subtotal + dto.deliveryFee);
+    if (quote.quotedTotal !== null && Math.abs(total - Number(quote.quotedTotal)) > 0.01) {
+      throw new BadRequestException(`The lines and delivery add up to R${total.toFixed(2)}, but the quote the customer saw is R${Number(quote.quotedTotal).toFixed(2)}. Adjust the prices, or re-quote first.`);
+    }
+    const order = await this.prisma.order.create({
+      data: {
+        orderNumber: `AA-${Date.now()}`,
+        channel: "QUOTE",
+        quoteId: quote.id,
+        userId: quote.userId,
+        companyId: quote.companyId,
+        contactEmail: quote.contactEmail,
+        contactPhone: quote.contactPhone,
+        whatsappUpdates: quote.whatsappUpdates,
+        status: "PENDING",
+        subtotal,
+        deliveryFee: dto.deliveryFee,
+        total,
+        deliveryAddress: quote.deliveryAddress,
+        deliveryProvince: quote.deliveryProvince,
+        deliveryDistanceKm: quote.deliveryDistanceKm,
+        distanceSource: quote.deliveryDistanceKm !== null ? "CUSTOMER" : null,
+        notes: [quote.projectName ? `Project: ${quote.projectName}` : null, `From quote ${quote.reference}`, quote.notes].filter(Boolean).join(" · "),
+        customerTier: quote.company?.tier.name ?? "RETAIL",
+        lineItems: {
+          create: lines.map(({ line, unitPrice, lineTotal }) => ({
+            productId: line.productId,
+            unitOfSale: line.unitOfSale,
+            quantity: line.quantity,
+            unitPrice,
+            lineTotal,
+            // The platform's own estimate at the requester's tier, as the list reference (no cost snapshot for hand-priced lines).
+            listUnitPrice: line.estimatedUnitPrice,
+          })),
+        },
+      },
+      select: { id: true, orderNumber: true, total: true },
+    });
+    if (quote.status === QuoteStatus.QUOTED) await this.prisma.quote.update({ where: { id }, data: { status: QuoteStatus.ACCEPTED, respondedAt: quote.respondedAt ?? new Date() } });
+    await this.notifications.order("ORDER_PLACED", order.id);
+    return order;
   }
 
   private isOwner(quote: { userId: string | null; companyId: string | null }, user: AuthUser) {
