@@ -5,6 +5,7 @@ import { MASONRY_PRODUCTS } from "@/data/masonry";
 import { PACKAGED_PRODUCTS } from "@/data/packaged";
 import { READY_MIX_PRODUCTS } from "@/data/ready-mix";
 import { ROOFING_PRODUCTS } from "@/data/roofing";
+import { SUPPLIES_PRODUCTS } from "@/data/supplies";
 import { STEEL_PRODUCTS } from "@/data/steel";
 import { UNIT_LABELS } from "@/lib/pricing";
 
@@ -71,7 +72,7 @@ export const PRODUCT_INDEX: IndexedProduct[] = [
     entry(p, p.units.map((u) => ({ label: u.label, retail: u.prices?.RETAIL })), { keywords: [p.steelFamily, p.steelGrade, p.sectionSize, p.summary] }),
   ),
   ...MASONRY_PRODUCTS.map((p) => entry(p, p.units.map((u) => ({ label: u.label, retail: u.prices?.RETAIL })), { keywords: [p.masonryClass, p.unitSize, p.summary] })),
-  ...ROOFING_PRODUCTS.map((p) => entry(p, p.units.map((u) => ({ label: u.label, retail: u.prices?.RETAIL })), { keywords: [p.categorySlug.replace(/-/g, " "), p.summary] })),
+  ...[...ROOFING_PRODUCTS, ...SUPPLIES_PRODUCTS].map((p) => entry(p, p.units.map((u) => ({ label: u.label, retail: u.prices?.RETAIL })), { keywords: [p.categorySlug.replace(/-/g, " "), p.summary] })),
 ];
 
 const norm = (s: string) =>

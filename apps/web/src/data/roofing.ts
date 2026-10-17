@@ -45,6 +45,8 @@ export type RoofingUnit = {
 };
 
 export type RoofingProduct = {
+  /** The roofing line, or building supplies (CAT-32..42), which share this product shape and the merchant's flatbed. */
+  line: "roofing" | "supplies";
   sku: string;
   slug: string;
   name: string;
@@ -72,7 +74,34 @@ export type RoofingProduct = {
 
 export const ROOFING_CATEGORY_CODES: Record<string, string> = Object.fromEntries(catalogue.categories.map((c) => [c.slug, c.code]));
 
-export const ROOFING_PRODUCTS: RoofingProduct[] = catalogue.products.map((p) => ({
+/** The fields of a flatbed-line catalogue product the storefront reads (roofing and building supplies share them). */
+type FlatbedSourceProduct = {
+  sku: string;
+  slug: string;
+  name: string;
+  category_slug: string;
+  grading_standard: string | null;
+  description: string;
+  unit_size: string | null;
+  roof_profile: string | null;
+  thickness_mm: number | null;
+  coating: string | null;
+  cover_width_mm: number | null;
+  list_price_per_metre: number | null;
+  section: string | null;
+  timber_grade: string | null;
+  timber_treatment: string | null;
+  timber_finish: string | null;
+  typical_uses: string[];
+  handling_notes: string;
+  units: { unit: string; unit_label: string; weight_kg: number | null; pricing_status: string; list_price_per_unit: number | null; markup_percent: number }[];
+};
+
+/** Maps a flatbed-line catalogue (roofing, or building supplies) to storefront products, priced in its own family. */
+export function flatbedProducts(source: { products: FlatbedSourceProduct[] }, line: RoofingProduct["line"]): RoofingProduct[] {
+  const family = line === "supplies" ? "SUPPLIES" : "ROOFING";
+  return source.products.map((p) => ({
+  line,
   sku: p.sku,
   slug: p.slug,
   name: p.name,
@@ -99,10 +128,13 @@ export const ROOFING_PRODUCTS: RoofingProduct[] = catalogue.products.map((p) => 
     pricingStatus: u.pricing_status,
     prices:
       u.pricing_status === READY && u.list_price_per_unit !== null
-        ? (Object.fromEntries(CUSTOMER_TIERS.map((t) => [t.name, tierPrice(u.list_price_per_unit as number, u.markup_percent / 100, "ROOFING", t.name)])) as TierPrices)
+        ? (Object.fromEntries(CUSTOMER_TIERS.map((t) => [t.name, tierPrice(u.list_price_per_unit as number, u.markup_percent / 100, family, t.name)])) as TierPrices)
         : null,
   })),
-}));
+  }));
+}
+
+export const ROOFING_PRODUCTS: RoofingProduct[] = flatbedProducts(catalogue, "roofing");
 
 export function findRoofingProduct(slug: string) {
   return ROOFING_PRODUCTS.find((p) => p.slug === slug);

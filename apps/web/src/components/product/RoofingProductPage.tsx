@@ -12,19 +12,26 @@ import { SaveToProject } from "@/components/projects/SaveToProject";
 import { TimberVariantPicker } from "@/components/product/TimberVariantPicker";
 import { SocialShareButtons } from "@/components/social/SocialShareButtons";
 import { CATEGORIES } from "@/data/categories";
+import { departmentOf } from "@/data/departments";
 import { CUT_TO_LENGTH, ROOFING_CATEGORY_CODES, ROOFING_PRODUCTS } from "@/data/roofing";
+import { SUPPLIES_CATEGORY_CODES, SUPPLIES_PRODUCTS } from "@/data/supplies";
 import type { MerchandisedRoofingProduct } from "@/lib/cms";
 import { formatZAR, unpricedLabel } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
 /**
  * Product page for the roofing line, CAT-26..28: sheets in standard lengths or cut to length, flashings and fixings,
- * insulation and rainwater goods — and roof & structural timber with its connectors, CAT-30/31.
+ * insulation and rainwater goods — and roof & structural timber with its connectors, CAT-30/31. Building supplies
+ * (CAT-32..42: doors and windows, fencing, water and plumbing, ceilings, tools and PPE, waterproofing and paint) share
+ * the page, with their own department, delivery and advice.
  */
 export async function RoofingProductPage({ product }: { product: MerchandisedRoofingProduct }) {
   const category = CATEGORIES.find((c) => c.slug === product.categorySlug)!;
   const sheet = product.roofProfile !== null;
   const timber = product.timberGrade !== null;
+  const supplies = product.line === "supplies";
+  const department = departmentOf(product.categorySlug);
+  const lineProducts = supplies ? SUPPLIES_PRODUCTS : ROOFING_PRODUCTS;
   // Cut-to-length is quoted through its own cutting-list form, never added to the cart from the unit buttons.
   const stockUnits = { ...product, units: product.units.filter((u) => u.unit !== "METRE") };
   const priced = stockUnits.units.filter((u) => u.prices !== null);
@@ -32,7 +39,7 @@ export async function RoofingProductPage({ product }: { product: MerchandisedRoo
   const related = (
     timber
       ? ROOFING_PRODUCTS.filter((p) => p.timberGrade === product.timberGrade && p.timberTreatment === product.timberTreatment && p.timberFinish === product.timberFinish && p.sku !== product.sku)
-      : ROOFING_PRODUCTS.filter((p) => p.categorySlug === product.categorySlug && p.sku !== product.sku)
+      : lineProducts.filter((p) => p.categorySlug === product.categorySlug && p.sku !== product.sku)
   ).slice(0, 4);
   const url = `${SITE_URL}/products/${product.slug}`;
 
@@ -77,7 +84,7 @@ export async function RoofingProductPage({ product }: { product: MerchandisedRoo
       ["Lengths", timber ? "3.0, 3.6, 4.2, 4.8, 6.0 and 6.6 m" : null],
       ["Lengths", sheet ? `3.0, 3.6, 4.2, 4.8, 6.0 and 6.6 m in stock lengths; ${CUT_TO_LENGTH.min_m}–${CUT_TO_LENGTH.max_m} m cut to length` : null],
       ["Size", product.unitSize],
-      ["Category code", ROOFING_CATEGORY_CODES[product.categorySlug] ?? null],
+      ["Category code", ROOFING_CATEGORY_CODES[product.categorySlug] ?? SUPPLIES_CATEGORY_CODES[product.categorySlug] ?? null],
     ] as [string, string | null][]
   ).filter(([, value]) => value);
 
@@ -85,7 +92,8 @@ export async function RoofingProductPage({ product }: { product: MerchandisedRoo
     <div className="mx-auto max-w-6xl px-4 py-10">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
       <nav className="font-mono text-xs text-slate" aria-label="Breadcrumb">
-        <Link href="/" className="hover:text-seam-blue">Home</Link> / <Link href="/roofing" className="hover:text-seam-blue">Roofing</Link> /{" "}
+        <Link href="/" className="hover:text-seam-blue">Home</Link> /{" "}
+        <Link href={supplies ? (department?.href ?? "/departments") : "/roofing"} className="hover:text-seam-blue">{supplies ? (department?.name ?? "Departments") : "Roofing"}</Link> /{" "}
         <Link href={`/products?category=${category.slug}`} className="hover:text-seam-blue">{category.name}</Link> / {product.name}
       </nav>
       <div className="mt-6 grid gap-10 md:grid-cols-2">
@@ -178,7 +186,9 @@ export async function RoofingProductPage({ product }: { product: MerchandisedRoo
             ))}
           </ul>
           <p className="mt-3 font-body text-xs text-slate">
-            {sheet
+            {supplies
+              ? "Sizes, ratings and the build-up come from your drawings and the maker's installation guide; plumbing, geysers and electrical work need a registered installer."
+              : sheet
               ? "The minimum pitch, purlin spacing and fixing pattern for a profile and gauge come from the maker's tables; your truss design and drawings govern."
               : timber
                 ? "Member sizes, spans and the grade come from your truss design, the SANS 10400-L span tables or your engineer — S7 only where it is specified."
@@ -192,7 +202,12 @@ export async function RoofingProductPage({ product }: { product: MerchandisedRoo
         <section className="rounded-sm border border-basalt/10 bg-white p-6">
           <h2 className="font-mono text-[10px] uppercase tracking-widest text-seam-blue">Delivery &amp; Returns</h2>
           <p className="mt-3 font-body text-sm text-basalt">
-            {timber ? (
+            {supplies ? (
+              <>
+                Building supplies come on the merchant&apos;s own vehicle: we confirm stock, make and finish where the quote says so, the delivery slot and any delivery
+                charge with you before dispatch. See the{" "}
+              </>
+            ) : timber ? (
               <>Timber comes on the merchant&apos;s flatbed: we confirm the grade and treatment, stock, the delivery slot and any delivery charge with you before dispatch. See the </>
             ) : (
               <>

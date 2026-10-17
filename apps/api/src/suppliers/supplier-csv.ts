@@ -14,7 +14,7 @@ import { SupplierTier } from "@aggregates/database";
  * not a qualified partner.
  */
 
-/** CAT-01..CAT-09 map onto the nine core categories; CAT-10/11 onto the B2B packaged-goods ones; CAT-12 is ready-mix; CAT-15..18 are steel; CAT-19..25 masonry, paving, retaining, drainage and membranes; CAT-26..28 roofing; CAT-29 concrete roof tiles. */
+/** CAT-01..CAT-09 map onto the nine core categories; CAT-10/11 onto the B2B packaged-goods ones; CAT-12 is ready-mix; CAT-15..18 are steel; CAT-19..25 masonry, paving, retaining, drainage and membranes; CAT-26..28 roofing; CAT-29 concrete roof tiles; CAT-30/31 timber; CAT-32..42 building supplies. */
 export const CATEGORY_CODES: Record<string, string> = {
   "CAT-01": "sub-base-base-course",
   "CAT-02": "crushed-stone",
@@ -48,6 +48,18 @@ export const CATEGORY_CODES: Record<string, string> = {
   "CAT-29": "concrete-roof-tiles",
   "CAT-30": "structural-timber",
   "CAT-31": "timber-connectors",
+  // Building supplies (BUILDING_SUPPLIES_CATALOGUE.md)
+  "CAT-32": "doors-frames",
+  "CAT-33": "windows-frames",
+  "CAT-34": "fencing-wire-posts",
+  "CAT-35": "gates-security",
+  "CAT-36": "water-tanks-geysers",
+  "CAT-37": "water-supply-soil-pipe",
+  "CAT-38": "ceilings-drywall",
+  "CAT-39": "site-tools",
+  "CAT-40": "ppe-site-safety",
+  "CAT-41": "waterproofing-sealants",
+  "CAT-42": "paint-coatings",
 };
 const CODE_BY_SLUG = Object.fromEntries(Object.entries(CATEGORY_CODES).map(([code, slug]) => [slug, code]));
 

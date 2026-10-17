@@ -9,7 +9,7 @@
  */
 import type { CustomerTierName } from "@/data/catalogue";
 
-export type PricingFamily = "AGGREGATE" | "CEMENT_BAGGED" | "CEMENT_BULK" | "READY_MIX" | "STEEL" | "MASONRY" | "ROOFING";
+export type PricingFamily = "AGGREGATE" | "CEMENT_BAGGED" | "CEMENT_BULK" | "READY_MIX" | "STEEL" | "MASONRY" | "ROOFING" | "SUPPLIES";
 
 export const MIN_MARGIN = 0.03;
 export const STOREFRONT_MARKUP = 0.08;
@@ -25,6 +25,8 @@ export const SCHEDULE: Record<PricingFamily, Record<CustomerTierName, number | n
   MASONRY: { RETAIL: 0, CONTRACTOR_TRADE: 0.04, VOLUME_CIVIL_BULK: null },
   // Trade 4% approved by the owner, 11 Oct 2026.
   ROOFING: { RETAIL: 0, CONTRACTOR_TRADE: 0.04, VOLUME_CIVIL_BULK: null },
+  // Building supplies: trade 4%, decided under the owner's directive of 17 Oct 2026, for review.
+  SUPPLIES: { RETAIL: 0, CONTRACTOR_TRADE: 0.04, VOLUME_CIVIL_BULK: null },
 };
 
 const cents = (value: number) => Math.round(value * 100 + 1e-9) / 100;
@@ -56,7 +58,8 @@ const STEEL_UNITS = ["LENGTH_6M", "LENGTH_12M", "TONNE", "SHEET", "ROLL", "COIL"
  * for trade and volume; steel, masonry and roofing are their own families.
  * Masonry and roofing share units with steel (item, roll, pack), so pass the product's line.
  */
-export function packagedFamily(unit: string, line?: "packaged" | "steel" | "masonry" | "roofing"): PricingFamily {
+export function packagedFamily(unit: string, line?: "packaged" | "steel" | "masonry" | "roofing" | "supplies"): PricingFamily {
+  if (line === "supplies") return "SUPPLIES";
   if (line === "masonry") return "MASONRY";
   if (line === "roofing") return "ROOFING";
   if (line === "steel" || STEEL_UNITS.includes(unit)) return "STEEL";
@@ -77,5 +80,5 @@ export function tierBreakdown(tier: CustomerTierName): string {
     const d = pct(family);
     return d === null ? `${name} quoted` : `${Math.round(d * 100)}% off ${name}`;
   };
-  return `${part("AGGREGATE", "aggregates")} · ${part("CEMENT_BAGGED", "bagged cement")} · ${part("READY_MIX", "ready-mix")} · ${part("STEEL", "steel")} · ${part("MASONRY", "bricks, paving & drainage")} · ${part("ROOFING", "roofing")}. Never below our margin floor.`;
+  return `${part("AGGREGATE", "aggregates")} · ${part("CEMENT_BAGGED", "bagged cement")} · ${part("READY_MIX", "ready-mix")} · ${part("STEEL", "steel")} · ${part("MASONRY", "bricks, paving & drainage")} · ${part("ROOFING", "roofing")} · ${part("SUPPLIES", "building supplies")}. Never below our margin floor.`;
 }

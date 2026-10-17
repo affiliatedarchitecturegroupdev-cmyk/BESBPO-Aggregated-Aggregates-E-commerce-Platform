@@ -1,0 +1,2911 @@
+{
+ "_source": "Building supplies line (BUILDING_SUPPLIES_CATALOGUE.md): CAT-32..42 across six departments approved by the owner on 17 Oct 2026 — doors, windows & frames; fencing & security; water storage & plumbing; ceilings, drywall & insulation; site tools, PPE & consumables; waterproofing, sealants & paint. A unit is live only where two SA retailers list the same product at a regular price (list = lowest x 1.08); everything else is quoted with the supplier.",
+ "categories": [
+  {
+   "slug": "doors-frames",
+   "name": "Doors & Door Frames",
+   "code": "CAT-32"
+  },
+  {
+   "slug": "windows-frames",
+   "name": "Windows & Window Frames",
+   "code": "CAT-33"
+  },
+  {
+   "slug": "fencing-wire-posts",
+   "name": "Fencing, Wire & Posts",
+   "code": "CAT-34"
+  },
+  {
+   "slug": "gates-security",
+   "name": "Gates & Security",
+   "code": "CAT-35"
+  },
+  {
+   "slug": "water-tanks-geysers",
+   "name": "Water Tanks & Geysers",
+   "code": "CAT-36"
+  },
+  {
+   "slug": "water-supply-soil-pipe",
+   "name": "Water Supply & Soil Pipe",
+   "code": "CAT-37"
+  },
+  {
+   "slug": "ceilings-drywall",
+   "name": "Ceilings, Drywall & Cornice",
+   "code": "CAT-38"
+  },
+  {
+   "slug": "site-tools",
+   "name": "Site Tools & Consumables",
+   "code": "CAT-39"
+  },
+  {
+   "slug": "ppe-site-safety",
+   "name": "PPE & Site Safety",
+   "code": "CAT-40"
+  },
+  {
+   "slug": "waterproofing-sealants",
+   "name": "Waterproofing & Sealants",
+   "code": "CAT-41"
+  },
+  {
+   "slug": "paint-coatings",
+   "name": "Paint & Coatings",
+   "code": "CAT-42"
+  }
+ ],
+ "products": [
+  {
+   "sku": "AA-DOR-HC-813",
+   "slug": "hollow-core-interior-door-813-x-2032-mm",
+   "name": "Hollow-Core Interior Door 813 × 2032 mm",
+   "category_slug": "doors-frames",
+   "grading_standard": "Standard interior door, 813 × 2032 × 40 mm",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Hollow-core interior door in the standard 813 × 2032 × 40 mm size, hardboard faces on a timber frame — for bedrooms, bathrooms and cupboards. Supplied unhung, without a frame or ironmongery; finish (pre-primed, foil or veneer print) is confirmed on the quote.",
+   "typical_uses": [
+    "Bedrooms, bathrooms and internal passages",
+    "Rental units and RDP-style housing",
+    "Replacement doors in standard frames"
+   ],
+   "handling_notes": "Store doors flat on bearers or upright against a wall, out of the sun and rain, and seal all six faces (top and bottom edges too) before hanging — unsealed doors swell and warp.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-DOR-FL-813",
+   "slug": "framed-and-ledged-exterior-door-813-x-2032-mm",
+   "name": "Framed & Ledged Exterior Door 813 × 2032 mm",
+   "category_slug": "doors-frames",
+   "grading_standard": "Exterior door, 813 × 2032 × 40 mm",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Framed, ledged and braced timber door for outside openings, 813 × 2032 mm — the hard-wearing back, kitchen or outbuilding door. Timber species (pine, mixed or hardwood) and open- or closed-back are confirmed on the quote.",
+   "typical_uses": [
+    "Back and kitchen doors",
+    "Outbuildings, stores and garages",
+    "Farm and site buildings"
+   ],
+   "handling_notes": "Store doors flat on bearers or upright against a wall, out of the sun and rain, and seal all six faces (top and bottom edges too) before hanging — unsealed doors swell and warp.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-DOR-8P-813",
+   "slug": "8-panel-exterior-door-813-x-2032-mm",
+   "name": "8-Panel Exterior Door 813 × 2032 mm",
+   "category_slug": "doors-frames",
+   "grading_standard": "Exterior door, 813 × 2032 × 40 mm",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Solid 8-panel timber exterior door, 813 × 2032 mm — the classic front door. Timber (pine, meranti-type hardwood or mixed) and a standard or stable (split) leaf are confirmed on the quote.",
+   "typical_uses": [
+    "Front and main entrance doors",
+    "Stable-door options for kitchens and farmhouses"
+   ],
+   "handling_notes": "Store doors flat on bearers or upright against a wall, out of the sun and rain, and seal all six faces (top and bottom edges too) before hanging — unsealed doors swell and warp.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-DOR-SLD-ALU-1800",
+   "slug": "aluminium-sliding-door-1800-x-2100-mm",
+   "name": "Aluminium Sliding Door 1800 × 2100 mm",
+   "category_slug": "doors-frames",
+   "grading_standard": "Two-panel aluminium sliding door, safety glass",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Two-panel aluminium sliding patio door, about 1800 × 2100 mm, with safety glass and lockset. Bronze or charcoal, and the exact opening size, are confirmed on the quote.",
+   "typical_uses": [
+    "Patio and garden openings",
+    "Lounges opening onto a stoep or braai area"
+   ],
+   "handling_notes": "Keep the frame in its protective film and the glass panels upright on edge until fitting. Fit into a square, plumb opening with a level threshold.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-DOR-FRM-STL-115",
+   "slug": "steel-door-frame-813-x-2032-mm-half-brick-115-mm",
+   "name": "Steel Door Frame 813 × 2032 mm (Half-Brick, 115 mm)",
+   "category_slug": "doors-frames",
+   "grading_standard": "Pressed-steel door frame, red oxide primed",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Pressed-steel door frame for an 813 × 2032 mm door in a half-brick (115 mm) wall, red-oxide primed, with hinges welded on. Left- or right-hand opening is chosen on the quote.",
+   "typical_uses": [
+    "Internal doors in half-brick walls",
+    "New builds and alterations"
+   ],
+   "handling_notes": "Steel frames are built into the brickwork as the walls go up: brace them plumb and square with a spreader, and fill the frame with mortar as you build. Prime any scratches in the red oxide before painting.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-DOR-FRM-STL-230",
+   "slug": "steel-door-frame-813-x-2032-mm-full-brick-230-mm",
+   "name": "Steel Door Frame 813 × 2032 mm (Full-Brick, 230 mm)",
+   "category_slug": "doors-frames",
+   "grading_standard": "Pressed-steel door frame, red oxide primed",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Heavy-duty pressed-steel door frame for an 813 × 2032 mm door in a full-brick (230 mm) external wall, red-oxide primed. Left- or right-hand, and standard or stable, are chosen on the quote.",
+   "typical_uses": [
+    "External doors in full-brick walls",
+    "Kitchen and back doors"
+   ],
+   "handling_notes": "Steel frames are built into the brickwork as the walls go up: brace them plumb and square with a spreader, and fill the frame with mortar as you build. Prime any scratches in the red oxide before painting.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-WIN-STL-NE1",
+   "slug": "steel-window-frame-ne1-f7",
+   "name": "Steel Window Frame NE1 F7",
+   "category_slug": "windows-frames",
+   "grading_standard": "SANS 727 steel window, F7 profile, red oxide primed",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": "about 508 × 629 mm",
+   "specialist_characteristics": [],
+   "description": "Standard NE1 steel window in the F7 profile, about 508 × 629 mm, red-oxide primed and ready to build in. A single small pane — toilets, pantries and stores. Glazing is by your glazier or on the quote.",
+   "typical_uses": [
+    "Houses, outbuildings and site buildings",
+    "Standard-size openings in brick and block walls"
+   ],
+   "handling_notes": "Build steel windows into the wall as it rises, plumb and square, and bed them in mortar; protect the glass and sills from mortar splashes. Keep aluminium windows in their protective film until the plastering is done.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 279.72,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-WIN-STL-NE2-L",
+   "slug": "steel-window-frame-ne2-f7-left-hand",
+   "name": "Steel Window Frame NE2 F7 Left Hand",
+   "category_slug": "windows-frames",
+   "grading_standard": "SANS 727 steel window, F7 profile, red oxide primed",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": "about 1022 × 629 mm",
+   "specialist_characteristics": [],
+   "description": "Standard NE2 steel window in the F7 profile, about 1022 × 629 mm, red-oxide primed and ready to build in. Two panes with an opening casement. Glazing is by your glazier or on the quote.",
+   "typical_uses": [
+    "Houses, outbuildings and site buildings",
+    "Standard-size openings in brick and block walls"
+   ],
+   "handling_notes": "Build steel windows into the wall as it rises, plumb and square, and bed them in mortar; protect the glass and sills from mortar splashes. Keep aluminium windows in their protective film until the plastering is done.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 410.35,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-WIN-STL-NE4",
+   "slug": "steel-window-frame-ne4-f7",
+   "name": "Steel Window Frame NE4 F7",
+   "category_slug": "windows-frames",
+   "grading_standard": "SANS 727 steel window, F7 profile, red oxide primed",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": "about 1022 × 949 mm",
+   "specialist_characteristics": [],
+   "description": "Standard NE4 steel window in the F7 profile, about 1022 × 949 mm, red-oxide primed and ready to build in. Four panes with opening casements. Glazing is by your glazier or on the quote.",
+   "typical_uses": [
+    "Houses, outbuildings and site buildings",
+    "Standard-size openings in brick and block walls"
+   ],
+   "handling_notes": "Build steel windows into the wall as it rises, plumb and square, and bed them in mortar; protect the glass and sills from mortar splashes. Keep aluminium windows in their protective film until the plastering is done.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 666.31,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-WIN-STL-NC2-L",
+   "slug": "steel-window-frame-nc2-f7-left-hand",
+   "name": "Steel Window Frame NC2 F7 Left Hand",
+   "category_slug": "windows-frames",
+   "grading_standard": "SANS 727 steel window, F7 profile, red oxide primed",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": "about 1022 × 949 mm",
+   "specialist_characteristics": [],
+   "description": "Standard NC2 steel window in the F7 profile, about 1022 × 949 mm, red-oxide primed and ready to build in. Two panes, side-hung casement. Glazing is by your glazier or on the quote.",
+   "typical_uses": [
+    "Houses, outbuildings and site buildings",
+    "Standard-size openings in brick and block walls"
+   ],
+   "handling_notes": "Build steel windows into the wall as it rises, plumb and square, and bed them in mortar; protect the glass and sills from mortar splashes. Keep aluminium windows in their protective film until the plastering is done.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 452.52,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-WIN-STL-NC2F-L",
+   "slug": "steel-window-frame-nc2f-f7-left-hand",
+   "name": "Steel Window Frame NC2F F7 Left Hand",
+   "category_slug": "windows-frames",
+   "grading_standard": "SANS 727 steel window, F7 profile, red oxide primed",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": "about 1022 × 949 mm with fanlight",
+   "specialist_characteristics": [],
+   "description": "Standard NC2F steel window in the F7 profile, about 1022 × 949 mm with fanlight, red-oxide primed and ready to build in. Casement with a fanlight above. Glazing is by your glazier or on the quote.",
+   "typical_uses": [
+    "Houses, outbuildings and site buildings",
+    "Standard-size openings in brick and block walls"
+   ],
+   "handling_notes": "Build steel windows into the wall as it rises, plumb and square, and bed them in mortar; protect the glass and sills from mortar splashes. Keep aluminium windows in their protective film until the plastering is done.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 636.12,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-WIN-STL-NC4F",
+   "slug": "steel-window-frame-nc4f-f7",
+   "name": "Steel Window Frame NC4F F7",
+   "category_slug": "windows-frames",
+   "grading_standard": "SANS 727 steel window, F7 profile, red oxide primed",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": "1511 × 949 mm",
+   "specialist_characteristics": [],
+   "description": "Standard NC4F steel window in the F7 profile, 1511 × 949 mm, red-oxide primed and ready to build in. The common bedroom window: casements with fanlights. Glazing is by your glazier or on the quote.",
+   "typical_uses": [
+    "Houses, outbuildings and site buildings",
+    "Standard-size openings in brick and block walls"
+   ],
+   "handling_notes": "Build steel windows into the wall as it rises, plumb and square, and bed them in mortar; protect the glass and sills from mortar splashes. Keep aluminium windows in their protective film until the plastering is done.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 862.92,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-WIN-STL-ND4F",
+   "slug": "steel-window-frame-nd4f-f7",
+   "name": "Steel Window Frame ND4F F7",
+   "category_slug": "windows-frames",
+   "grading_standard": "SANS 727 steel window, F7 profile, red oxide primed",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": "1511 × 1245 mm",
+   "specialist_characteristics": [],
+   "description": "Standard ND4F steel window in the F7 profile, 1511 × 1245 mm, red-oxide primed and ready to build in. Taller lounge and bedroom window with fanlights. Glazing is by your glazier or on the quote.",
+   "typical_uses": [
+    "Houses, outbuildings and site buildings",
+    "Standard-size openings in brick and block walls"
+   ],
+   "handling_notes": "Build steel windows into the wall as it rises, plumb and square, and bed them in mortar; protect the glass and sills from mortar splashes. Keep aluminium windows in their protective film until the plastering is done.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 1078.92,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-WIN-ALU-1212",
+   "slug": "aluminium-window-1200-x-1200-mm-bronze",
+   "name": "Aluminium Window 1200 × 1200 mm (Bronze)",
+   "category_slug": "windows-frames",
+   "grading_standard": "Aluminium window, bronze anodised, clear glass",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Aluminium top-hung or side-hung window about 1200 × 1200 mm, bronze, glazed with clear glass. The series (economy 28 mm or heavier), opening configuration and glass are confirmed on the quote.",
+   "typical_uses": [
+    "Lounges and bedrooms",
+    "Alterations where steel windows are being replaced"
+   ],
+   "handling_notes": "Build steel windows into the wall as it rises, plumb and square, and bed them in mortar; protect the glass and sills from mortar splashes. Keep aluminium windows in their protective film until the plastering is done.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-WIN-ALU-1515",
+   "slug": "aluminium-window-1500-x-1500-mm-bronze",
+   "name": "Aluminium Window 1500 × 1500 mm (Bronze)",
+   "category_slug": "windows-frames",
+   "grading_standard": "Aluminium window, bronze anodised, clear glass",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Aluminium window about 1500 × 1500 mm, bronze, glazed with clear glass — the larger lounge window. Series and configuration are confirmed on the quote.",
+   "typical_uses": [
+    "Lounges and dining rooms",
+    "Offices and classrooms"
+   ],
+   "handling_notes": "Build steel windows into the wall as it rises, plumb and square, and bed them in mortar; protect the glass and sills from mortar splashes. Keep aluminium windows in their protective film until the plastering is done.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-FEN-DMESH-1200",
+   "slug": "diamond-mesh-fencing-1-2-m-x-30-m",
+   "name": "Diamond Mesh Fencing 1.2 m × 30 m",
+   "category_slug": "fencing-wire-posts",
+   "grading_standard": "Galvanised diamond mesh, 75 mm aperture",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Galvanised diamond (chain-link) mesh, 1.2 m high, 30 m roll, 75 mm aperture. Wire gauge (light or heavy) is confirmed on the quote.",
+   "typical_uses": [
+    "Garden and boundary fencing",
+    "Animal enclosures and site fencing"
+   ],
+   "handling_notes": "Keep wire coils and mesh rolls off the ground and dry until use. Wear gloves and eye protection when tensioning or cutting — a cut strand under tension whips back.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "30 m roll",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-FEN-DMESH-1800",
+   "slug": "diamond-mesh-fencing-1-8-m-x-30-m",
+   "name": "Diamond Mesh Fencing 1.8 m × 30 m",
+   "category_slug": "fencing-wire-posts",
+   "grading_standard": "Galvanised diamond mesh, 75 mm aperture",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Galvanised diamond (chain-link) mesh, 1.8 m high, 30 m roll, 75 mm aperture — the standard security-height boundary fence. Wire gauge is confirmed on the quote.",
+   "typical_uses": [
+    "Boundary and security fencing",
+    "Sports fields and yards"
+   ],
+   "handling_notes": "Keep wire coils and mesh rolls off the ground and dry until use. Wear gloves and eye protection when tensioning or cutting — a cut strand under tension whips back.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "30 m roll",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-FEN-GW-315-2",
+   "slug": "galvanised-wire-3-15-mm-x-2-kg",
+   "name": "Galvanised Wire 3.15 mm × 2 kg",
+   "category_slug": "fencing-wire-posts",
+   "grading_standard": "Galvanised mild-steel wire, 3.15 mm (10 gauge)",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Galvanised fencing wire, 3.15 mm (10 gauge), 2 kg coil — line wire for straining, tying off and repairs.",
+   "typical_uses": [
+    "Line and straining wire on farm and boundary fences",
+    "Tying mesh to posts"
+   ],
+   "handling_notes": "Keep wire coils and mesh rolls off the ground and dry until use. Wear gloves and eye protection when tensioning or cutting — a cut strand under tension whips back.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "2 kg coil",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 105.79,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-FEN-GW-4-2",
+   "slug": "galvanised-wire-4-mm-x-2-kg",
+   "name": "Galvanised Wire 4 mm × 2 kg",
+   "category_slug": "fencing-wire-posts",
+   "grading_standard": "Galvanised mild-steel wire, 4 mm (8 gauge)",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Galvanised fencing wire, 4 mm (8 gauge), 2 kg coil — heavy line and straining wire.",
+   "typical_uses": [
+    "Straining wire for mesh fences",
+    "Stays and corner ties"
+   ],
+   "handling_notes": "Keep wire coils and mesh rolls off the ground and dry until use. Wear gloves and eye protection when tensioning or cutting — a cut strand under tension whips back.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "2 kg coil",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 100.39,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-FEN-GW-4-5",
+   "slug": "galvanised-wire-4-mm-x-5-kg",
+   "name": "Galvanised Wire 4 mm × 5 kg",
+   "category_slug": "fencing-wire-posts",
+   "grading_standard": "Galvanised mild-steel wire, 4 mm (8 gauge)",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Galvanised fencing wire, 4 mm (8 gauge), 5 kg coil (about 50 m).",
+   "typical_uses": [
+    "Straining and line wire on longer fence runs"
+   ],
+   "handling_notes": "Keep wire coils and mesh rolls off the ground and dry until use. Wear gloves and eye protection when tensioning or cutting — a cut strand under tension whips back.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "5 kg coil",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 199.75,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-FEN-GW-2-5",
+   "slug": "galvanised-wire-2-mm-x-5-kg",
+   "name": "Galvanised Wire 2 mm × 5 kg",
+   "category_slug": "fencing-wire-posts",
+   "grading_standard": "Galvanised mild-steel wire, 2 mm (14 gauge)",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Galvanised tie and binding wire, 2 mm (14 gauge), 5 kg coil (about 200 m).",
+   "typical_uses": [
+    "Tying mesh to straining wires",
+    "General site tying"
+   ],
+   "handling_notes": "Keep wire coils and mesh rolls off the ground and dry until use. Wear gloves and eye protection when tensioning or cutting — a cut strand under tension whips back.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "5 kg coil",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 199.75,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-FEN-RAZOR-500-15",
+   "slug": "razor-wire-flat-wrap-500-mm-x-15-m",
+   "name": "Razor Wire Flat Wrap 500 mm × 15 m",
+   "category_slug": "fencing-wire-posts",
+   "grading_standard": "Galvanised flat-wrap razor wire, 500 mm",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Flat-wrap galvanised razor wire, 500 mm high, 15 m coil — fixed to the top of walls and fences.",
+   "typical_uses": [
+    "Wall-top and fence-top security",
+    "Industrial yards and sites"
+   ],
+   "handling_notes": "Handle only with cut-resistant gloves, sleeves and eye protection, and keep the coil strapped until it is fixed. Never stretch razor wire by hand.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "15 m coil",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 367.15,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-FEN-BARB-SS",
+   "slug": "barbed-wire-single-strand",
+   "name": "Barbed Wire (Single Strand)",
+   "category_slug": "fencing-wire-posts",
+   "grading_standard": "Galvanised single-strand barbed wire",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Galvanised single-strand barbed wire for farm and boundary fences. Roll length and mass are confirmed on the quote.",
+   "typical_uses": [
+    "Farm and grazing fences",
+    "Top strands on boundary fences"
+   ],
+   "handling_notes": "Keep wire coils and mesh rolls off the ground and dry until use. Wear gloves and eye protection when tensioning or cutting — a cut strand under tension whips back.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-FEN-YSTD-1850",
+   "slug": "y-standard-fence-post-1-85-m",
+   "name": "Y-Standard Fence Post 1.85 m",
+   "category_slug": "fencing-wire-posts",
+   "grading_standard": "Steel Y-standard (star picket), with holes",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Steel Y-standard fence post, 1.85 m, punched for wire — the line post for mesh and wire fences.",
+   "typical_uses": [
+    "Line posts for diamond-mesh and wire fences",
+    "Temporary site fencing"
+   ],
+   "handling_notes": "Keep wire coils and mesh rolls off the ground and dry until use. Wear gloves and eye protection when tensioning or cutting — a cut strand under tension whips back.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 156.55,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-FEN-YSTD-2400",
+   "slug": "y-standard-fence-post-2-4-m",
+   "name": "Y-Standard Fence Post 2.4 m",
+   "category_slug": "fencing-wire-posts",
+   "grading_standard": "Steel Y-standard (star picket), with holes",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Steel Y-standard fence post, 2.4 m, punched for wire — for 1.8 m security-height fences.",
+   "typical_uses": [
+    "Line posts for 1.8 m mesh fences"
+   ],
+   "handling_notes": "Keep wire coils and mesh rolls off the ground and dry until use. Wear gloves and eye protection when tensioning or cutting — a cut strand under tension whips back.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 208.39,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-FEN-DROP-1800",
+   "slug": "steel-fence-dropper-1-8-m",
+   "name": "Steel Fence Dropper 1.8 m",
+   "category_slug": "fencing-wire-posts",
+   "grading_standard": "Steel fence dropper",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Steel dropper, 1.8 m, clipped to the wires between posts to keep their spacing.",
+   "typical_uses": [
+    "Wire and mesh fences between Y-standards"
+   ],
+   "handling_notes": "Keep wire coils and mesh rolls off the ground and dry until use. Wear gloves and eye protection when tensioning or cutting — a cut strand under tension whips back.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 36.67,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-FEN-PAL-POST-76",
+   "slug": "palisade-post-square-76-mm-x-2-4-m",
+   "name": "Palisade Post Square 76 mm × 2.4 m",
+   "category_slug": "fencing-wire-posts",
+   "grading_standard": "Square steel palisade post, 76 × 1.6 mm wall",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Square steel palisade post, 76 mm, 1.6 mm wall, 2.4 m long — concreted in to carry palisade panels.",
+   "typical_uses": [
+    "Palisade fencing",
+    "Gate posts on light gates"
+   ],
+   "handling_notes": "Keep wire coils and mesh rolls off the ground and dry until use. Wear gloves and eye protection when tensioning or cutting — a cut strand under tension whips back.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 323.95,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-FEN-PAL-1830",
+   "slug": "palisade-fence-panel-1-8-x-3-0-m",
+   "name": "Palisade Fence Panel 1.8 × 3.0 m",
+   "category_slug": "fencing-wire-posts",
+   "grading_standard": "Steel palisade panel",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Steel palisade fence panel, 1.8 m high and 3.0 m wide — bolted to square palisade posts. Pale profile and coating (primed or galvanised) are confirmed on the quote.",
+   "typical_uses": [
+    "Security fencing for homes, schools and industrial sites"
+   ],
+   "handling_notes": "Keep wire coils and mesh rolls off the ground and dry until use. Wear gloves and eye protection when tensioning or cutting — a cut strand under tension whips back.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-GATE-DM-0918",
+   "slug": "diamond-mesh-gate-single-0-9-x-1-8-m",
+   "name": "Diamond Mesh Gate Single 0.9 × 1.8 m",
+   "category_slug": "gates-security",
+   "grading_standard": "Galvanised tube frame, diamond mesh infill",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Single-leaf pedestrian gate, 0.9 m wide and 1.8 m high, galvanised tube frame with diamond-mesh infill, hinges and latch.",
+   "typical_uses": [
+    "Pedestrian gates in mesh fences"
+   ],
+   "handling_notes": "Keep wire coils and mesh rolls off the ground and dry until use. Wear gloves and eye protection when tensioning or cutting — a cut strand under tension whips back.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-GATE-DM-3018",
+   "slug": "diamond-mesh-gate-double-3-0-x-1-8-m",
+   "name": "Diamond Mesh Gate Double 3.0 × 1.8 m",
+   "category_slug": "gates-security",
+   "grading_standard": "Galvanised tube frame, diamond mesh infill",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Double-leaf vehicle gate, 3.0 m wide and 1.8 m high, galvanised tube frame with diamond-mesh infill.",
+   "typical_uses": [
+    "Driveway and yard gates in mesh fences"
+   ],
+   "handling_notes": "Keep wire coils and mesh rolls off the ground and dry until use. Wear gloves and eye protection when tensioning or cutting — a cut strand under tension whips back.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-GATE-SEC-DOOR",
+   "slug": "security-gate-for-doorways-single",
+   "name": "Security Gate for Doorways (Single)",
+   "category_slug": "gates-security",
+   "grading_standard": "Steel security gate for a standard doorway",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Hinged steel security gate for a standard doorway (about 770 × 1950 mm), white powder-coated, with lock. Make, size and fitting are confirmed on the quote.",
+   "typical_uses": [
+    "Front and back doors",
+    "Flats and townhouses"
+   ],
+   "handling_notes": "Fit to a sound frame or reveal with the fixings supplied; the locking side needs solid masonry.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-TNK-AT-5000",
+   "slug": "vertical-water-tank-5-000-l-africa-tanks",
+   "name": "Vertical Water Tank 5,000 L (Africa Tanks)",
+   "category_slug": "water-tanks-geysers",
+   "grading_standard": "Rotomoulded polyethylene tank, food-grade, UV-stabilised",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Africa Tanks",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Africa Tanks 5,000 litre vertical water storage tank, rotomoulded UV-stabilised polyethylene — rainwater harvesting and backup storage. Colour is confirmed when ordering.",
+   "typical_uses": [
+    "Rainwater harvesting",
+    "Backup water for homes, schools and sites"
+   ],
+   "handling_notes": "Stand the tank on a level, compacted base or concrete slab at least as wide as the tank — never on bricks or loose soil. Fit the outlet before filling and keep the lid closed against mosquitoes and algae.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 6007.99,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-TNK-JJ-2400",
+   "slug": "jojo-vertical-water-tank-2-400-l",
+   "name": "JoJo Vertical Water Tank 2,400 L",
+   "category_slug": "water-tanks-geysers",
+   "grading_standard": "Rotomoulded polyethylene tank, food-grade, UV-stabilised",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "JoJo",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "JoJo 2,400 litre vertical water tank — the common household size for rainwater and backup storage.",
+   "typical_uses": [
+    "Rainwater harvesting off a house roof",
+    "Backup water during outages"
+   ],
+   "handling_notes": "Stand the tank on a level, compacted base or concrete slab at least as wide as the tank — never on bricks or loose soil. Fit the outlet before filling and keep the lid closed against mosquitoes and algae.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-TNK-JJ-4750",
+   "slug": "jojo-vertical-water-tank-4-750-l",
+   "name": "JoJo Vertical Water Tank 4,750 L",
+   "category_slug": "water-tanks-geysers",
+   "grading_standard": "Rotomoulded polyethylene tank, food-grade, UV-stabilised",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "JoJo",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "JoJo 4,750 litre vertical water tank for larger households, schools and sites.",
+   "typical_uses": [
+    "Rainwater harvesting",
+    "Site and farm water storage"
+   ],
+   "handling_notes": "Stand the tank on a level, compacted base or concrete slab at least as wide as the tank — never on bricks or loose soil. Fit the outlet before filling and keep the lid closed against mosquitoes and algae.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-GEY-150-600",
+   "slug": "electric-geyser-150-l-600-kpa",
+   "name": "Electric Geyser 150 L, 600 kPa",
+   "category_slug": "water-tanks-geysers",
+   "grading_standard": "SANS 151 electric storage water heater",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "150 litre electric geyser rated for 600 kPa mains pressure — the standard household size. Make and energy rating are confirmed on the quote; installation must be by a registered plumber and comes with a certificate of compliance.",
+   "typical_uses": [
+    "New homes and geyser replacements"
+   ],
+   "handling_notes": "Keep upright and in the carton until installed. Installation, the drip tray, valves and the certificate of compliance are a registered plumber's job under SANS 10254.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-PLB-POLYCOP-15-6",
+   "slug": "polycop-pipe-15-mm-x-6-m",
+   "name": "Polycop Pipe 15 mm × 6 m",
+   "category_slug": "water-supply-soil-pipe",
+   "grading_standard": "Polybutylene hot- and cold-water pipe (Polycop)",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "MacNeil (Polycop)",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Polycop polybutylene water pipe, 15 mm, 6 m length — for hot and cold water supply inside the house, joined with compatible push-fit or compression fittings.",
+   "typical_uses": [
+    "Hot and cold water supply",
+    "Geyser and tap connections"
+   ],
+   "handling_notes": "Store pipe supported along its length, out of direct sun. Cut square and deburr, and use the fittings and jointing method the maker specifies.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 37.75,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-PLB-POLYCOP-15-25",
+   "slug": "polycop-pipe-15-mm-x-25-m-roll",
+   "name": "Polycop Pipe 15 mm × 25 m Roll",
+   "category_slug": "water-supply-soil-pipe",
+   "grading_standard": "Polybutylene hot- and cold-water pipe (Polycop)",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "MacNeil (Polycop)",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Polycop polybutylene water pipe, 15 mm, 25 m roll.",
+   "typical_uses": [
+    "Hot and cold water supply on new builds",
+    "Long runs with fewer joints"
+   ],
+   "handling_notes": "Store pipe supported along its length, out of direct sun. Cut square and deburr, and use the fittings and jointing method the maker specifies.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "25 m roll",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 134.95,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-PLB-POLYCOP-22-6",
+   "slug": "polycop-pipe-22-mm-x-6-m",
+   "name": "Polycop Pipe 22 mm × 6 m",
+   "category_slug": "water-supply-soil-pipe",
+   "grading_standard": "Polybutylene hot- and cold-water pipe (Polycop)",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "MacNeil (Polycop)",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Polycop polybutylene water pipe, 22 mm, 6 m length — for hot and cold water supply inside the house, joined with compatible push-fit or compression fittings.",
+   "typical_uses": [
+    "Hot and cold water supply",
+    "Geyser and tap connections"
+   ],
+   "handling_notes": "Store pipe supported along its length, out of direct sun. Cut square and deburr, and use the fittings and jointing method the maker specifies.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 64.75,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-PLB-POLYCOP-22-25",
+   "slug": "polycop-pipe-22-mm-x-25-m-roll",
+   "name": "Polycop Pipe 22 mm × 25 m Roll",
+   "category_slug": "water-supply-soil-pipe",
+   "grading_standard": "Polybutylene hot- and cold-water pipe (Polycop)",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "MacNeil (Polycop)",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Polycop polybutylene water pipe, 22 mm, 25 m roll.",
+   "typical_uses": [
+    "Hot and cold water supply on new builds",
+    "Long runs with fewer joints"
+   ],
+   "handling_notes": "Store pipe supported along its length, out of direct sun. Cut square and deburr, and use the fittings and jointing method the maker specifies.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "25 m roll",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 259.15,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-PLB-SV-110-6",
+   "slug": "soil-and-vent-pipe-110-mm-x-6-m",
+   "name": "Soil & Vent Pipe 110 mm × 6 m",
+   "category_slug": "water-supply-soil-pipe",
+   "grading_standard": "uPVC soil and vent pipe, SANS 967",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "uPVC soil and vent pipe, 110 mm, 6 m length — the above-ground pipe from the toilet to the drain and up the vent stack.",
+   "typical_uses": [
+    "Toilet stacks and vent pipes",
+    "Above-ground drainage on houses"
+   ],
+   "handling_notes": "Store pipe supported along its length, out of direct sun. Cut square and deburr, and use the fittings and jointing method the maker specifies.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 462.19,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-PLB-COPPER-15",
+   "slug": "copper-pipe-15-mm-x-5-5-m-class-0",
+   "name": "Copper Pipe 15 mm × 5.5 m (Class 0)",
+   "category_slug": "water-supply-soil-pipe",
+   "grading_standard": "SANS 460 copper tube",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "SANS 460 copper water tube, 15 mm, 5.5 m length — the traditional hot- and cold-water pipe, soldered or with compression fittings. Wall class is confirmed on the quote.",
+   "typical_uses": [
+    "Hot and cold water supply",
+    "Geyser connections and exposed runs"
+   ],
+   "handling_notes": "Store pipe supported along its length, out of direct sun. Cut square and deburr, and use the fittings and jointing method the maker specifies.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "5.5 m length",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-CLG-RHINO-64-900-3000",
+   "slug": "rhinoboard-ceiling-board-6-4-mm-900-x-3000-mm",
+   "name": "Rhinoboard Ceiling Board 6.4 mm 900 × 3000 mm",
+   "category_slug": "ceilings-drywall",
+   "grading_standard": "Gypsum plasterboard, 6.4 mm (Gyproc RhinoBoard)",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Gyproc (Saint-Gobain)",
+   "unit_size": "900 × 3000 × 6.4 mm",
+   "specialist_characteristics": [],
+   "description": "Gyproc RhinoBoard 6.4 mm gypsum ceiling board, 900 × 3000 mm — nailed or screwed to 38 × 38 mm brandering and skimmed with RhinoLite.",
+   "typical_uses": [
+    "Ceilings under pitched roofs",
+    "Replacing old ceiling boards"
+   ],
+   "handling_notes": "Store boards flat on bearers in the dry — never on edge or on the ground — and carry them on edge. Fix to brandering at the centres in the maker's guide and leave to acclimatise before jointing.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Board",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 215.95,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-CLG-RHINO-64-900-3600",
+   "slug": "rhinoboard-ceiling-board-6-4-mm-900-x-3600-mm",
+   "name": "Rhinoboard Ceiling Board 6.4 mm 900 × 3600 mm",
+   "category_slug": "ceilings-drywall",
+   "grading_standard": "Gypsum plasterboard, 6.4 mm (Gyproc RhinoBoard)",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Gyproc (Saint-Gobain)",
+   "unit_size": "900 × 3600 × 6.4 mm",
+   "specialist_characteristics": [],
+   "description": "Gyproc RhinoBoard 6.4 mm gypsum ceiling board, 900 × 3600 mm — nailed or screwed to 38 × 38 mm brandering and skimmed with RhinoLite.",
+   "typical_uses": [
+    "Ceilings under pitched roofs",
+    "Replacing old ceiling boards"
+   ],
+   "handling_notes": "Store boards flat on bearers in the dry — never on edge or on the ground — and carry them on edge. Fix to brandering at the centres in the maker's guide and leave to acclimatise before jointing.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Board",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 259.15,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-CLG-RHINO-64-1200-3000",
+   "slug": "rhinoboard-ceiling-board-6-4-mm-1200-x-3000-mm",
+   "name": "Rhinoboard Ceiling Board 6.4 mm 1200 × 3000 mm",
+   "category_slug": "ceilings-drywall",
+   "grading_standard": "Gypsum plasterboard, 6.4 mm (Gyproc RhinoBoard)",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Gyproc (Saint-Gobain)",
+   "unit_size": "1200 × 3000 × 6.4 mm",
+   "specialist_characteristics": [],
+   "description": "Gyproc RhinoBoard 6.4 mm gypsum ceiling board, 1200 × 3000 mm — nailed or screwed to 38 × 38 mm brandering and skimmed with RhinoLite.",
+   "typical_uses": [
+    "Ceilings under pitched roofs",
+    "Replacing old ceiling boards"
+   ],
+   "handling_notes": "Store boards flat on bearers in the dry — never on edge or on the ground — and carry them on edge. Fix to brandering at the centres in the maker's guide and leave to acclimatise before jointing.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Board",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 225.72,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-CLG-RHINO-64-1200-3600",
+   "slug": "rhinoboard-ceiling-board-6-4-mm-1200-x-3600-mm",
+   "name": "Rhinoboard Ceiling Board 6.4 mm 1200 × 3600 mm",
+   "category_slug": "ceilings-drywall",
+   "grading_standard": "Gypsum plasterboard, 6.4 mm (Gyproc RhinoBoard)",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Gyproc (Saint-Gobain)",
+   "unit_size": "1200 × 3600 × 6.4 mm",
+   "specialist_characteristics": [],
+   "description": "Gyproc RhinoBoard 6.4 mm gypsum ceiling board, 1200 × 3600 mm — nailed or screwed to 38 × 38 mm brandering and skimmed with RhinoLite.",
+   "typical_uses": [
+    "Ceilings under pitched roofs",
+    "Replacing old ceiling boards"
+   ],
+   "handling_notes": "Store boards flat on bearers in the dry — never on edge or on the ground — and carry them on edge. Fix to brandering at the centres in the maker's guide and leave to acclimatise before jointing.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Board",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 268.92,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-CLG-COVE-75-3000",
+   "slug": "rhino-cove-cornice-75-mm-x-3-0-m",
+   "name": "Rhino Cove Cornice 75 mm × 3.0 m",
+   "category_slug": "ceilings-drywall",
+   "grading_standard": "Gypsum cove cornice, 75 mm",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Gyproc (Saint-Gobain)",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Gypsum cove cornice, 75 mm, 3.0 m length — the plain curved joint between wall and ceiling, fixed with cornice adhesive.",
+   "typical_uses": [
+    "Wall-to-ceiling joints in plastered rooms"
+   ],
+   "handling_notes": "Store flat and dry; cut mitres with a fine saw and mitre box, and fix with cornice adhesive on clean, dust-free surfaces.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "3.0 m length",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 63.72,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-CLG-COVE-75-3600",
+   "slug": "rhino-cove-cornice-75-mm-x-3-6-m",
+   "name": "Rhino Cove Cornice 75 mm × 3.6 m",
+   "category_slug": "ceilings-drywall",
+   "grading_standard": "Gypsum cove cornice, 75 mm",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Gyproc (Saint-Gobain)",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Gypsum cove cornice, 75 mm, 3.6 m length — the plain curved joint between wall and ceiling, fixed with cornice adhesive.",
+   "typical_uses": [
+    "Wall-to-ceiling joints in plastered rooms"
+   ],
+   "handling_notes": "Store flat and dry; cut mitres with a fine saw and mitre box, and fix with cornice adhesive on clean, dust-free surfaces.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "3.6 m length",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 85.32,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-CLG-RHINOLITE-10",
+   "slug": "rhinolite-skimming-plaster-10-kg",
+   "name": "RhinoLite Skimming Plaster 10 kg",
+   "category_slug": "ceilings-drywall",
+   "grading_standard": "Gypsum skimming plaster",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Gyproc (Saint-Gobain)",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Gyproc RhinoLite gypsum skimming plaster, 10 kg bag — a thin smooth coat over ceiling boards and walls.",
+   "typical_uses": [
+    "Skimming RhinoBoard ceilings",
+    "Patching and smoothing plaster"
+   ],
+   "handling_notes": "Keep bags sealed, off the floor and dry; mix only what you can apply in the working time.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "10 kg bag",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 172.75,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-CLG-RHINOLITE-40",
+   "slug": "rhinolite-skimming-plaster-40-kg",
+   "name": "RhinoLite Skimming Plaster 40 kg",
+   "category_slug": "ceilings-drywall",
+   "grading_standard": "Gypsum skimming plaster",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Gyproc (Saint-Gobain)",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Gyproc RhinoLite gypsum skimming plaster, 40 kg bag — the contractor size.",
+   "typical_uses": [
+    "Skimming ceilings and walls on larger jobs"
+   ],
+   "handling_notes": "Keep bags sealed, off the floor and dry; mix only what you can apply in the working time.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "40 kg bag",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-CLG-PVC-6-300",
+   "slug": "pvc-ceiling-board-6-x-300-mm-x-3-9-m-matt-white",
+   "name": "PVC Ceiling Board 6 × 300 mm × 3.9 m (Matt White)",
+   "category_slug": "ceilings-drywall",
+   "grading_standard": "PVC tongue-and-groove ceiling panel, 6 mm",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "PVC tongue-and-groove ceiling panel, 6 mm thick, 300 mm wide, 3.9 m long, matt white — washable and moisture-proof, fixed to brandering with clips or staples.",
+   "typical_uses": [
+    "Bathrooms, kitchens and stoeps",
+    "Low-maintenance ceilings"
+   ],
+   "handling_notes": "Store flat, out of the sun; leave a small gap at the walls for expansion and finish with the matching trims.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "3.9 m panel",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 91.75,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-CLG-CORNICE-ADH-5",
+   "slug": "cornice-adhesive-5-kg",
+   "name": "Cornice Adhesive 5 kg",
+   "category_slug": "ceilings-drywall",
+   "grading_standard": "Acrylic cornice adhesive and filler",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Ready-mixed acrylic cornice adhesive and filler, 5 kg tub — fixes gypsum and polystyrene cornice and fills the joints.",
+   "typical_uses": [
+    "Fixing cornice and ceiling roses"
+   ],
+   "handling_notes": "Keep the lid on and protect from frost; apply to clean, dust-free surfaces.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "5 kg tub",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-TL-BOLSTER-100",
+   "slug": "brick-bolster-100-mm-lasher",
+   "name": "Brick Bolster 100 mm (Lasher)",
+   "category_slug": "site-tools",
+   "grading_standard": "Hardened steel brick bolster",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Lasher",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Lasher brick bolster, 100 mm blade — for cutting bricks and blocks with a club hammer.",
+   "typical_uses": [
+    "Cutting bricks and blocks",
+    "Chasing and trimming masonry"
+   ],
+   "handling_notes": "Clean tools at the end of every day — set mortar and plaster ruin trowels and floats — and store them dry. Wear eye protection when cutting.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 268.92,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-TL-BOLSTER-55",
+   "slug": "electrician-s-bolster-55-mm-lasher",
+   "name": "Electrician's Bolster 55 mm (Lasher)",
+   "category_slug": "site-tools",
+   "grading_standard": "Hardened steel bolster",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Lasher",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Lasher electrician's bolster, 55 mm blade — for chasing walls for conduit and lifting floorboards.",
+   "typical_uses": [
+    "Chasing walls for conduit",
+    "Small cutting work"
+   ],
+   "handling_notes": "Clean tools at the end of every day — set mortar and plaster ruin trowels and floats — and store them dry. Wear eye protection when cutting.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 193.32,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-TL-LEVEL-1200",
+   "slug": "spirit-level-1200-mm-ross",
+   "name": "Spirit Level 1200 mm (Ross)",
+   "category_slug": "site-tools",
+   "grading_standard": "Aluminium spirit level",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Ross",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Ross aluminium spirit level, 1200 mm — the bricklayer's level for plumbing and levelling courses.",
+   "typical_uses": [
+    "Bricklaying and blockwork",
+    "Setting frames, posts and shuttering"
+   ],
+   "handling_notes": "Keep it clean and don't use it as a straight edge for screeding — a dropped or bent level reads false.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 268.92,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-TL-LEVEL-600",
+   "slug": "spirit-level-600-mm-ross",
+   "name": "Spirit Level 600 mm (Ross)",
+   "category_slug": "site-tools",
+   "grading_standard": "Aluminium spirit level",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Ross",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Ross aluminium spirit level, 600 mm.",
+   "typical_uses": [
+    "Frames, lintels and general levelling"
+   ],
+   "handling_notes": "Keep it clean and dry; check it against a known level now and then.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 171.72,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-TL-LINE-100",
+   "slug": "builder-s-line-1-0-mm-x-100-m",
+   "name": "Builder's Line 1.0 mm × 100 m",
+   "category_slug": "site-tools",
+   "grading_standard": "Nylon builder's line, 1.0 mm (90 lb)",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Nylon builder's line, 1.0 mm (about 90 lb), 100 m — for setting out and keeping brick courses straight.",
+   "typical_uses": [
+    "Setting out foundations",
+    "Bricklaying and paving lines"
+   ],
+   "handling_notes": "Wind it back on the reel when you're done; replace a line that has frayed.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "100 m reel",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 43.19,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-TL-WHEELBARROW-65",
+   "slug": "concrete-wheelbarrow-65-l",
+   "name": "Concrete Wheelbarrow 65 L",
+   "category_slug": "site-tools",
+   "grading_standard": "Steel-pan builder's wheelbarrow",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Heavy-duty builder's wheelbarrow with a 65 litre steel pan for concrete, mortar and rubble. Make and wheel (pneumatic or puncture-free) are confirmed on the quote.",
+   "typical_uses": [
+    "Moving concrete, mortar, sand and rubble on site"
+   ],
+   "handling_notes": "Wash the pan out before concrete sets in it and keep the tyre pumped.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-TL-SHOVEL-RN",
+   "slug": "round-nose-shovel",
+   "name": "Round-Nose Shovel",
+   "category_slug": "site-tools",
+   "grading_standard": "Steel round-nose shovel",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Round-nose shovel for digging and moving sand, stone and soil. Make is confirmed on the quote.",
+   "typical_uses": [
+    "Mixing concrete and mortar",
+    "Moving sand, stone and soil"
+   ],
+   "handling_notes": "Clean tools at the end of every day — set mortar and plaster ruin trowels and floats — and store them dry.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-TL-SPADE",
+   "slug": "digging-spade",
+   "name": "Digging Spade",
+   "category_slug": "site-tools",
+   "grading_standard": "Steel digging spade",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Square-blade digging spade for trenches and footings. Make is confirmed on the quote.",
+   "typical_uses": [
+    "Digging foundations and trenches",
+    "Edging and garden work"
+   ],
+   "handling_notes": "Clean tools at the end of every day — set mortar and plaster ruin trowels and floats — and store them dry.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-TL-TROWEL-BRICK",
+   "slug": "brick-trowel-280-mm",
+   "name": "Brick Trowel 280 mm",
+   "category_slug": "site-tools",
+   "grading_standard": "Forged steel brick trowel",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Brick trowel with a 280 mm blade for laying bricks and blocks. Make and handle are confirmed on the quote.",
+   "typical_uses": [
+    "Bricklaying and blockwork"
+   ],
+   "handling_notes": "Clean tools at the end of every day — set mortar and plaster ruin trowels and floats — and store them dry.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-TL-CLUB-18",
+   "slug": "club-hammer-1-8-kg",
+   "name": "Club Hammer 1.8 kg",
+   "category_slug": "site-tools",
+   "grading_standard": "Steel club (lump) hammer",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Club hammer, 1.8 kg, for driving bolsters and chisels and light demolition. Make and handle are confirmed on the quote.",
+   "typical_uses": [
+    "Cutting bricks with a bolster",
+    "Driving pegs and chisels"
+   ],
+   "handling_notes": "Clean tools at the end of every day — set mortar and plaster ruin trowels and floats — and store them dry.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-PPE-BARRIER-100",
+   "slug": "barrier-tape-red-white-75-mm-x-100-m",
+   "name": "Barrier Tape Red/White 75 mm × 100 m",
+   "category_slug": "ppe-site-safety",
+   "grading_standard": "Polyethylene barrier tape",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Red and white barrier tape, 75 mm wide, 100 m roll — to cordon off excavations, wet concrete and hazards.",
+   "typical_uses": [
+    "Cordoning off trenches and excavations",
+    "Marking out no-go areas on site"
+   ],
+   "handling_notes": "Tie off to stakes or barriers; tape marks a hazard but doesn't stop a fall — open excavations need proper barriers.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "100 m roll",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 48.55,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-PPE-HARDHAT",
+   "slug": "hard-hat",
+   "name": "Hard Hat",
+   "category_slug": "ppe-site-safety",
+   "grading_standard": "Industrial safety helmet (SANS 1397)",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Industrial hard hat with adjustable harness. Colour and make are confirmed on the quote.",
+   "typical_uses": [
+    "Compulsory head protection on building sites"
+   ],
+   "handling_notes": "PPE only protects when it fits and is worn: replace hard hats after an impact or when the shell is cracked or chalky, and anything torn or worn through.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-PPE-VEST",
+   "slug": "reflective-vest",
+   "name": "Reflective Vest",
+   "category_slug": "ppe-site-safety",
+   "grading_standard": "High-visibility reflective vest",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "High-visibility reflective vest, lime or orange. Size and make are confirmed on the quote.",
+   "typical_uses": [
+    "Site workers, flagmen and delivery receivers"
+   ],
+   "handling_notes": "PPE only protects when it fits and is worn: replace hard hats after an impact or when the shell is cracked or chalky, and anything torn or worn through.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-PPE-BOOTS",
+   "slug": "safety-boots-steel-toe",
+   "name": "Safety Boots, Steel Toe",
+   "category_slug": "ppe-site-safety",
+   "grading_standard": "Steel-toecap safety boot (SANS 20345)",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Steel-toecap safety boots. Size and make are confirmed on the quote.",
+   "typical_uses": [
+    "Foot protection on site"
+   ],
+   "handling_notes": "PPE only protects when it fits and is worn: replace hard hats after an impact or when the shell is cracked or chalky, and anything torn or worn through.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Pair",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-PPE-GLOVES-LEATHER",
+   "slug": "chrome-leather-work-gloves",
+   "name": "Chrome Leather Work Gloves",
+   "category_slug": "ppe-site-safety",
+   "grading_standard": "Chrome leather gloves",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Chrome leather work gloves for handling bricks, steel and wire. Cuff length and make are confirmed on the quote.",
+   "typical_uses": [
+    "Handling bricks, blocks, steel and wire"
+   ],
+   "handling_notes": "PPE only protects when it fits and is worn: replace hard hats after an impact or when the shell is cracked or chalky, and anything torn or worn through.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Pair",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-PPE-GLASSES",
+   "slug": "safety-glasses",
+   "name": "Safety Glasses",
+   "category_slug": "ppe-site-safety",
+   "grading_standard": "Impact-resistant safety spectacles",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Clear, impact-resistant safety glasses. Make is confirmed on the quote.",
+   "typical_uses": [
+    "Cutting, grinding, chasing and drilling"
+   ],
+   "handling_notes": "PPE only protects when it fits and is worn: replace hard hats after an impact or when the shell is cracked or chalky, and anything torn or worn through.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-PPE-DUSTMASK-FFP1",
+   "slug": "dust-masks-ffp1-pack",
+   "name": "Dust Masks FFP1 (Pack)",
+   "category_slug": "ppe-site-safety",
+   "grading_standard": "FFP1 disposable dust mask",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "FFP1 disposable dust masks for nuisance dust. Pack size is confirmed on the quote. Cutting or grinding concrete, brick and stone gives off silica dust — use FFP2 or better for that.",
+   "typical_uses": [
+    "Sweeping and general dusty work"
+   ],
+   "handling_notes": "PPE only protects when it fits and is worn: replace hard hats after an impact or when the shell is cracked or chalky, and anything torn or worn through.",
+   "units": [
+    {
+     "unit": "PACK",
+     "unit_label": "Pack",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-SEAL-ALC-SIL-300-C",
+   "slug": "alcolin-silicone-sealant-300-ml-clear",
+   "name": "Alcolin Silicone Sealant 300 ml (Clear)",
+   "category_slug": "waterproofing-sealants",
+   "grading_standard": "Silicone sealant cartridge",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Alcolin",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Alcolin silicone sealant, 300 ml cartridge, clear — a flexible, waterproof seal around baths, basins, showers, windows and frames. Not paintable.",
+   "typical_uses": [
+    "Sealing baths, basins, showers and splashbacks",
+    "Window and frame perimeters"
+   ],
+   "handling_notes": "Apply to clean, dry, dust-free surfaces within the temperature range on the pack, and keep cartridges and tins closed and out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "300 ml cartridge",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 132.79,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-SEAL-ALC-SIL-300-W",
+   "slug": "alcolin-silicone-sealant-300-ml-white",
+   "name": "Alcolin Silicone Sealant 300 ml (White)",
+   "category_slug": "waterproofing-sealants",
+   "grading_standard": "Silicone sealant cartridge",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Alcolin",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Alcolin silicone sealant, 300 ml cartridge, white — a flexible, waterproof seal around baths, basins, showers, windows and frames. Not paintable.",
+   "typical_uses": [
+    "Sealing baths, basins, showers and splashbacks",
+    "Window and frame perimeters"
+   ],
+   "handling_notes": "Apply to clean, dry, dust-free surfaces within the temperature range on the pack, and keep cartridges and tins closed and out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "300 ml cartridge",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 132.79,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-SEAL-ALC-ACR-280-G",
+   "slug": "alcolin-acrylic-sealant-280-ml-grey",
+   "name": "Alcolin Acrylic Sealant 280 ml (Grey)",
+   "category_slug": "waterproofing-sealants",
+   "grading_standard": "Paintable acrylic sealant cartridge",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Alcolin",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Alcolin acrylic sealant, 280 ml cartridge, grey — a paintable gap filler for cracks and joints between frames, skirtings and walls.",
+   "typical_uses": [
+    "Filling gaps around frames and skirtings before painting",
+    "Interior and sheltered exterior joints"
+   ],
+   "handling_notes": "Apply to clean, dry, dust-free surfaces within the temperature range on the pack, and keep cartridges and tins closed and out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "280 ml cartridge",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 59.35,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-SEAL-ALC-FOAM-750",
+   "slug": "alcolin-filla-foam-750-ml",
+   "name": "Alcolin Filla Foam 750 ml",
+   "category_slug": "waterproofing-sealants",
+   "grading_standard": "Polyurethane expanding foam",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Alcolin",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Alcolin Filla Foam polyurethane expanding foam, 750 ml — fills and seals gaps around frames, pipes and service penetrations.",
+   "typical_uses": [
+    "Gaps around door and window frames",
+    "Pipe and cable penetrations"
+   ],
+   "handling_notes": "Apply to clean, dry, dust-free surfaces within the temperature range on the pack, and keep cartridges and tins closed and out of the sun. Wear gloves — uncured foam sticks to skin.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "750 ml can",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-WP-LAYKOLD-20",
+   "slug": "a-b-e-super-laykold-20-l",
+   "name": "a.b.e. Super Laykold 20 L",
+   "category_slug": "waterproofing-sealants",
+   "grading_standard": "Bitumen-rubber emulsion waterproofing",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "a.b.e. (Chryso)",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "a.b.e. Super Laykold bitumen-rubber emulsion, 20 L — brushed on with membrane reinforcement to waterproof flat roofs, parapets, foundations and retaining walls.",
+   "typical_uses": [
+    "Flat roofs and parapets (with membrane)",
+    "Foundations and below-ground walls"
+   ],
+   "handling_notes": "Apply to clean, dry, dust-free surfaces within the temperature range on the pack, and keep cartridges and tins closed and out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "20 L tin",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-WP-TORCHON-3",
+   "slug": "torch-on-waterproofing-membrane-3-mm-x-1-m-x-10-m",
+   "name": "Torch-On Waterproofing Membrane 3 mm × 1 m × 10 m",
+   "category_slug": "waterproofing-sealants",
+   "grading_standard": "APP/SBS modified bitumen membrane, 3 mm",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Torch-on modified-bitumen waterproofing membrane, 3 mm, 1 m × 10 m roll, for flat concrete roofs and balconies. Make and finish (sanded or mineral) are confirmed on the quote; torch-on should be laid by an experienced applicator.",
+   "typical_uses": [
+    "Flat concrete roofs and balconies",
+    "Box gutters and parapets"
+   ],
+   "handling_notes": "Store rolls upright, out of the sun. Torching is hot work: follow the maker's guide, keep an extinguisher at hand and never torch over timber.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "10 m roll",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-WP-MEMBRANE-200",
+   "slug": "waterproofing-membrane-strip-200-mm",
+   "name": "Waterproofing Membrane Strip 200 mm",
+   "category_slug": "waterproofing-sealants",
+   "grading_standard": "Polyester reinforcing membrane",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Polyester reinforcing membrane, 200 mm wide, used with liquid waterproofing over joints, cracks and flashings. Roll length and make are confirmed on the quote.",
+   "typical_uses": [
+    "Reinforcing liquid waterproofing at joints and corners",
+    "Flashings at parapets and roof penetrations"
+   ],
+   "handling_notes": "Apply to clean, dry, dust-free surfaces within the temperature range on the pack, and keep cartridges and tins closed and out of the sun.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-PNT-DUR-MATT-20-W",
+   "slug": "duram-matt-acrylic-20-l-white",
+   "name": "Duram Matt Acrylic 20 L (White)",
+   "category_slug": "paint-coatings",
+   "grading_standard": "Water-based matt acrylic wall paint",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Duram",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Duram Matt Acrylic water-based wall paint, 20 L, white — for interior walls and ceilings.",
+   "typical_uses": [
+    "Interior walls and ceilings",
+    "Rental and new-build repaints"
+   ],
+   "handling_notes": "Stir well, keep the lid on, and store above freezing and out of the sun. Prepare the surface — clean, sound and primed — as the tin says; most paint failures are surface failures.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "20 L tin",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 863.95,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-PNT-DUR-MATT-5-W",
+   "slug": "duram-matt-acrylic-5-l-white",
+   "name": "Duram Matt Acrylic 5 L (White)",
+   "category_slug": "paint-coatings",
+   "grading_standard": "Water-based matt acrylic wall paint",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Duram",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Duram Matt Acrylic water-based wall paint, 5 L, white.",
+   "typical_uses": [
+    "Interior walls and ceilings"
+   ],
+   "handling_notes": "Stir well, keep the lid on, and store above freezing and out of the sun. Prepare the surface — clean, sound and primed — as the tin says; most paint failures are surface failures.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "5 L tin",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 302.35,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-PNT-DUR-SHEEN-5-W",
+   "slug": "duram-durasheen-low-sheen-5-l-white",
+   "name": "Duram Durasheen Low Sheen 5 L (White)",
+   "category_slug": "paint-coatings",
+   "grading_standard": "Water-based low-sheen acrylic",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Duram",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Duram Durasheen low-sheen acrylic, 5 L, white — washable finish for interior and exterior walls.",
+   "typical_uses": [
+    "Kitchens, passages and children's rooms",
+    "Exterior walls"
+   ],
+   "handling_notes": "Stir well, keep the lid on, and store above freezing and out of the sun. Prepare the surface — clean, sound and primed — as the tin says; most paint failures are surface failures.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "5 L tin",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 356.35,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-PNT-DUR-ARMA-5-NS",
+   "slug": "duram-armaguard-5-l-natural-stone",
+   "name": "Duram Armaguard 5 L (Natural Stone)",
+   "category_slug": "paint-coatings",
+   "grading_standard": "Exterior elastomeric acrylic",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": "Duram",
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Duram Armaguard exterior acrylic, 5 L, Natural Stone — a flexible, weather-resistant coating that bridges hairline cracks.",
+   "typical_uses": [
+    "Exterior walls",
+    "Boundary walls"
+   ],
+   "handling_notes": "Stir well, keep the lid on, and store above freezing and out of the sun. Prepare the surface — clean, sound and primed — as the tin says; most paint failures are surface failures.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "5 L tin",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": 399.55,
+     "pricing_status": "Ready — benchmarked"
+    }
+   ]
+  },
+  {
+   "sku": "AA-PNT-ROOF-20",
+   "slug": "roof-paint-20-l",
+   "name": "Roof Paint 20 L",
+   "category_slug": "paint-coatings",
+   "grading_standard": "Water-based acrylic roof paint",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Water-based acrylic roof paint, 20 L, for galvanised and fibre-cement roofs and concrete tiles. Make and colour are confirmed on the quote.",
+   "typical_uses": [
+    "Repainting tiled and sheeted roofs"
+   ],
+   "handling_notes": "Stir well, keep the lid on, and store above freezing and out of the sun. Prepare the surface — clean, sound and primed — as the tin says; most paint failures are surface failures. New galvanised sheeting needs weathering or an etch primer first.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "20 L tin",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-PNT-PRIMER-20",
+   "slug": "plaster-primer-20-l",
+   "name": "Plaster Primer 20 L",
+   "category_slug": "paint-coatings",
+   "grading_standard": "Water-based plaster primer",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Water-based plaster primer, 20 L — seals new or bare plaster before the topcoat. Make is confirmed on the quote.",
+   "typical_uses": [
+    "Priming new plaster and RhinoLite skims"
+   ],
+   "handling_notes": "Stir well, keep the lid on, and store above freezing and out of the sun. Prepare the surface — clean, sound and primed — as the tin says; most paint failures are surface failures.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "20 L tin",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  },
+  {
+   "sku": "AA-PNT-ENAMEL-5",
+   "slug": "quick-dry-enamel-5-l",
+   "name": "Quick-Dry Enamel 5 L",
+   "category_slug": "paint-coatings",
+   "grading_standard": "Solvent-based gloss enamel",
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "manufacturer": null,
+   "unit_size": null,
+   "specialist_characteristics": [],
+   "description": "Gloss enamel, 5 L, for steel windows, doors, frames and gates. Make and colour are confirmed on the quote.",
+   "typical_uses": [
+    "Steel windows, frames and gates",
+    "Doors and trim"
+   ],
+   "handling_notes": "Stir well, keep the lid on, and store above freezing and out of the sun. Prepare the surface — clean, sound and primed — as the tin says; most paint failures are surface failures. Use a metal primer on bare steel first.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "5 L tin",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ]
+  }
+ ]
+}

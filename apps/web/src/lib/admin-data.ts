@@ -3,6 +3,7 @@ import { PRODUCTS } from "@/data/catalogue";
 import { PACKAGED_PRODUCTS } from "@/data/packaged";
 import { MASONRY_PRODUCTS } from "@/data/masonry";
 import { ROOFING_PRODUCTS } from "@/data/roofing";
+import { SUPPLIES_PRODUCTS } from "@/data/supplies";
 import { READY_MIX_PRODUCTS } from "@/data/ready-mix";
 import { STEEL_PRODUCTS } from "@/data/steel";
 import { formatZAR, UNIT_LABELS } from "@/lib/pricing";
@@ -95,7 +96,7 @@ export async function adminCatalogue(): Promise<AdminProduct[] | null> {
       packaged: true,
       ...overlay(p.sku),
     })),
-    ...ROOFING_PRODUCTS.map((p) => ({
+    ...[...ROOFING_PRODUCTS, ...SUPPLIES_PRODUCTS].map((p) => ({
       sku: p.sku,
       slug: p.slug,
       name: p.name,

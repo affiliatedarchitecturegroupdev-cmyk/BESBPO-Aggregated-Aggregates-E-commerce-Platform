@@ -81,8 +81,8 @@ export function Header() {
       {/*
         Desktop navigation in two tiers, so nothing is cut off at any width:
         a slim top line with "All departments", the services and "Check
-        delivery"; below it, the eight departments spread across the full
-        width (they wrap onto a second line rather than scroll on a narrow window).
+        delivery"; below it, the departments, centred and wrapping onto a second
+        line rather than scrolling on a narrower window.
       */}
       <nav aria-label="Departments" className="hidden border-t border-basalt/10 bg-white/70 md:block">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-1 border-b border-basalt/5 px-4 py-1.5 font-body text-xs">
@@ -104,7 +104,7 @@ export function Header() {
             </Link>
           </div>
         </div>
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4 py-2 font-body text-[13px] text-basalt lg:text-sm">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-5 gap-y-1 px-4 py-2 font-body text-[13px] text-basalt lg:text-sm">
           {DEPARTMENTS.map((d) => (
             <Link key={d.slug} href={d.href} className="whitespace-nowrap hover:text-seam-blue">
               {d.shortName}

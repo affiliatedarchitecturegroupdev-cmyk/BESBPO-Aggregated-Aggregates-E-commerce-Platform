@@ -73,7 +73,7 @@ export function PackagedUnitSelector({ product, initialQuantity }: { product: Pa
           >
             {CUSTOMER_TIERS.map((t) => (
               <option key={t.name} value={t.name}>
-                {tierOptionLabel(packagedFamily(unit.unit, product.kind), t.name, t.label)}
+                {tierOptionLabel(packagedFamily(unit.unit, product.kind === "roofing" && product.line === "supplies" ? "supplies" : product.kind), t.name, t.label)}
               </option>
             ))}
           </select>
@@ -102,7 +102,7 @@ export function PackagedUnitSelector({ product, initialQuantity }: { product: Pa
                 : masonry
                   ? "Delivered palletised on the supplier's flatbed or crane truck — we confirm the slot, any delivery charge and the yard's minimum load before dispatch."
                   : roofing
-                    ? "Delivered on the merchant's flatbed — we confirm the slot and any delivery charge with you before dispatch."
+                    ? `Delivered on the merchant's ${product.line === "supplies" ? "own vehicle" : "flatbed"} — we confirm the slot and any delivery charge with you before dispatch.`
                   : "Delivery is added at checkout, per our bagged-goods rates."}
             </span>
           </div>
@@ -116,7 +116,7 @@ export function PackagedUnitSelector({ product, initialQuantity }: { product: Pa
               : masonry
                 ? "Volume / Civil Bulk masonry, paving and precast is priced per project — request a quote and we confirm your price with the supplier."
               : roofing
-                ? "Volume / Civil Bulk roofing is priced per project — request a quote and we confirm your price with the merchant."
+                ? `Volume / Civil Bulk ${product.line === "supplies" ? "building supplies are" : "roofing is"} priced per project — request a quote and we confirm your price with the merchant.`
               : tierName === "VOLUME_CIVIL_BULK"
                 ? "Volume / Civil Bulk cement is priced per project — request a quote and we confirm your price with the supplier."
                 : "Trade pricing on bulk-bag and tanker cement is quoted with the supplier."}

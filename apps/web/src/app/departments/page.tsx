@@ -9,7 +9,7 @@ import { PRODUCT_INDEX } from "@/lib/product-index";
 export const metadata: Metadata = {
   title: "All Departments",
   description:
-    "Every department in one place: aggregates and sand, cement and concrete, steel, bricks and blocks, paving, drainage, roofing and timber — plus plant hire, services and design.",
+    "Every department in one place: aggregates and sand, cement and concrete, steel, bricks and blocks, paving, drainage, roofing, timber, doors and windows, fencing, water and plumbing, ceilings, tools and PPE, and waterproofing and paint — plus plant hire, services and design.",
   alternates: { canonical: "/departments" },
 };
 

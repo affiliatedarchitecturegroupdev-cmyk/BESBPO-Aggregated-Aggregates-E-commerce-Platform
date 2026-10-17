@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CategoryCarousel, type CategoryCard, type CategoryPage } from "@/components/merchandising/CategoryCarousel";
-import { CORE_CATEGORIES, CATEGORIES, MASONRY_CATEGORIES, ROOFING_CATEGORIES, type Category } from "@/data/categories";
+import { CORE_CATEGORIES, CATEGORIES, MASONRY_CATEGORIES, ROOFING_CATEGORIES, SUPPLIES_CATEGORIES, type Category } from "@/data/categories";
 import { ROOF_TILE_CATEGORIES } from "@/data/masonry";
 import { PLANT, SERVICES } from "@/data/plant-services";
 import { QUOTABLE } from "@/data/quotable";
@@ -70,6 +70,7 @@ export async function CategoryGrid() {
 
   const walling = MASONRY_CATEGORIES.filter((c) => !ROOF_TILE_CATEGORIES.includes(c.slug)).map(categoryCard);
   const roofing = [...ROOFING_CATEGORIES, ...MASONRY_CATEGORIES.filter((c) => ROOF_TILE_CATEGORIES.includes(c.slug))].map(categoryCard);
+  const supplies = SUPPLIES_CATEGORIES.map(categoryCard);
 
   // Each tile shows the first photographed product in its category (ProductThumb's photos).
   const withCovers = (cards: CategoryCard[]) =>
@@ -79,6 +80,7 @@ export async function CategoryGrid() {
     { label: "Cement, concrete, steel & hire", summary: "Cement, ready-mix, reinforcing and structural steel, plus plant hire and site services for the same job.", cards: withCovers(more) },
     { label: "Walls, paving & drainage", summary: "Bricks, blocks, lintels and DPC; pavers, kerbs and retaining; pipes, precast drainage and membranes.", cards: withCovers(walling) },
     { label: "Roofing", summary: "IBR, corrugated and concealed-fix sheeting in stock lengths or cut to length, concrete roof tiles, flashings, insulation and gutters.", cards: withCovers(roofing) },
+    { label: "Building supplies", summary: "Doors and windows, fencing and security, water tanks and plumbing, ceilings, tools and PPE, waterproofing and paint.", cards: withCovers(supplies) },
   ];
 
   return (
@@ -89,7 +91,7 @@ export async function CategoryGrid() {
           All products →
         </Link>
       </div>
-      <CategoryCarousel pages={pages} total={aggregates.length + more.length + walling.length + roofing.length} />
+      <CategoryCarousel pages={pages} total={aggregates.length + more.length + walling.length + roofing.length + supplies.length} />
     </section>
   );
 }

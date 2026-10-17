@@ -11,6 +11,7 @@ import { PACKAGED_PRODUCTS } from "./packaged";
 import { READY_MIX_PRODUCTS } from "./ready-mix";
 import { MASONRY_PRODUCTS } from "./masonry";
 import { ROOFING_PRODUCTS } from "./roofing";
+import { SUPPLIES_PRODUCTS } from "./supplies";
 import { STEEL_PRODUCTS } from "./steel";
 
 export type QuotableUnit = { code: string; label: string; retailPrice: number | null };
@@ -73,7 +74,7 @@ export const QUOTABLE: Quotable[] = [
     gradingStandard: p.gradingStandard,
     units: p.units.map((u) => ({ code: u.unit, label: u.label, retailPrice: u.prices?.RETAIL ?? null })),
   })),
-  ...ROOFING_PRODUCTS.map((p) => ({
+  ...[...ROOFING_PRODUCTS, ...SUPPLIES_PRODUCTS].map((p) => ({
     sku: p.sku,
     slug: p.slug,
     name: p.name,

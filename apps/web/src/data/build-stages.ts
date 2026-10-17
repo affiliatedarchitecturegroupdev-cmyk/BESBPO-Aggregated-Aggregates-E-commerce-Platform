@@ -36,7 +36,7 @@ const SHOP: StageShop[] = [
       { sku: "AA-REC-01", role: "Recycled fill" },
       { sku: "AA-SND-04", role: "Filling sand" },
     ],
-    categories: ["sub-base-base-course", "recycled-sustainable", "crusher-run-road-building"],
+    categories: ["sub-base-base-course", "recycled-sustainable", "crusher-run-road-building", "fencing-wire-posts", "site-tools", "ppe-site-safety"],
     hire: ["AA-SVC-CLEAR", "AA-PLT-TLB-4X4", "AA-PLT-ROL-PAD", "AA-PLT-WATER-TRUCK", "AA-SVC-SKIP-6M3"],
     tools: [
       { label: "Project estimator", href: "/estimator" },
@@ -91,7 +91,7 @@ const SHOP: StageShop[] = [
       { sku: "AA-MAS-DPC-110", role: "Damp-proof course" },
       { sku: "AA-STL-BRICKFORCE-150", role: "Brickforce" },
     ],
-    categories: ["bricks-blocks", "lintels-dpc-wall-accessories", "sand-fine-aggregates", "cement-hydraulic-binders", "mesh-brickforce"],
+    categories: ["bricks-blocks", "lintels-dpc-wall-accessories", "sand-fine-aggregates", "cement-hydraulic-binders", "mesh-brickforce", "doors-frames", "windows-frames"],
     hire: ["AA-PLT-SITE-DUMPER", "AA-SVC-SKIP-6M3"],
     tools: [{ label: "Wall calculator", href: "/bricks-blocks" }],
   },
@@ -107,7 +107,7 @@ const SHOP: StageShop[] = [
       { sku: "AA-ROF-INSUL-GLASSWOOL-135", role: "Ceiling insulation", unit: "ROLL" },
       { sku: "AA-ROF-DOWNPIPE-PVC-3M", role: "Downpipes" },
     ],
-    categories: ["structural-timber", "roof-sheeting", "concrete-roof-tiles", "roof-flashings-fixings", "roof-insulation-rainwater", "timber-connectors", "structural-steel"],
+    categories: ["structural-timber", "roof-sheeting", "concrete-roof-tiles", "roof-flashings-fixings", "roof-insulation-rainwater", "timber-connectors", "structural-steel", "ceilings-drywall", "waterproofing-sealants"],
     hire: ["AA-SVC-SKIP-6M3"],
     tools: [
       { label: "Roof calculator", href: "/roofing#roof-calculator" },
@@ -141,7 +141,7 @@ const SHOP: StageShop[] = [
       { sku: "AA-GEO-NONWOVEN-A2", role: "Geotextile wrap", unit: "ROLL" },
       { sku: "AA-PRC-CHANNEL-DRAIN-1M", role: "Channel drain" },
     ],
-    categories: ["pipes-fittings", "drainage-filter", "precast-drainage", "geosynthetics-membranes", "retaining-erosion-control"],
+    categories: ["pipes-fittings", "drainage-filter", "precast-drainage", "geosynthetics-membranes", "retaining-erosion-control", "water-supply-soil-pipe", "water-tanks-geysers"],
     hire: ["AA-PLT-EXC-1-7T", "AA-PLT-TLB-4X4", "AA-SVC-RUBBLE-6M3"],
     tools: [
       { label: "French drain calculator", href: "/drainage" },

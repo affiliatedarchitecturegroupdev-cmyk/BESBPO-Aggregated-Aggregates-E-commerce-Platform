@@ -3,7 +3,7 @@ export type Category = {
   name: string;
   description: string;
   /** core = the aggregate catalogue (pricing framework workbook); b2b-bulk = packaged cement, binders and chemicals; ready-mix = CAT-12 concrete. */
-  catalogueGroup: "core" | "b2b-bulk" | "ready-mix" | "steel" | "masonry" | "roofing";
+  catalogueGroup: "core" | "b2b-bulk" | "ready-mix" | "steel" | "masonry" | "roofing" | "supplies";
 };
 
 // The nine core categories of the pricing framework workbook (Category Markup
@@ -51,6 +51,18 @@ export const CATEGORIES: Category[] = [
   // CAT-30/31 — roof & structural timber, sold with roofing (ROOFING_CATALOGUE.md).
   { slug: "structural-timber", name: "Roof & Structural Timber", description: "SA pine from 38 × 38 mm brandering to 50 × 228 mm beams — S5 or S7, H2 or H3, sized or rough-sawn, in lengths from 3.0 to 6.6 m.", catalogueGroup: "roofing" },
   { slug: "timber-connectors", name: "Timber Connectors & Accessories", description: "Truss and joist hangers, truss clips, hoop iron, galvanised nails and bolts, cut-end preservative and fibre-cement fascia.", catalogueGroup: "roofing" },
+  // CAT-32..42 — building supplies, six departments (BUILDING_SUPPLIES_CATALOGUE.md).
+  { slug: "doors-frames", name: "Doors & Door Frames", description: "Interior and exterior doors in the standard 813 × 2032 mm size, aluminium sliding doors, and steel door frames for half- and full-brick walls.", catalogueGroup: "supplies" },
+  { slug: "windows-frames", name: "Windows & Window Frames", description: "SANS 727 steel windows in the F7 profile — NE, NC and ND types — and bronze aluminium windows.", catalogueGroup: "supplies" },
+  { slug: "fencing-wire-posts", name: "Fencing, Wire & Posts", description: "Diamond mesh, galvanised and barbed wire, razor wire, Y-standards, droppers, and palisade posts and panels.", catalogueGroup: "supplies" },
+  { slug: "gates-security", name: "Gates & Security", description: "Diamond-mesh pedestrian and driveway gates, and doorway security gates.", catalogueGroup: "supplies" },
+  { slug: "water-tanks-geysers", name: "Water Tanks & Geysers", description: "Vertical polyethylene water tanks from 2,400 to 5,000 L, and 150 L geysers.", catalogueGroup: "supplies" },
+  { slug: "water-supply-soil-pipe", name: "Water Supply & Soil Pipe", description: "Polycop hot- and cold-water pipe, copper tube, and 110 mm soil and vent pipe.", catalogueGroup: "supplies" },
+  { slug: "ceilings-drywall", name: "Ceilings, Drywall & Cornice", description: "Gyproc RhinoBoard, cove cornice, RhinoLite skimming plaster, PVC ceiling boards and cornice adhesive.", catalogueGroup: "supplies" },
+  { slug: "site-tools", name: "Site Tools & Consumables", description: "Bolsters, spirit levels, builder's line, trowels, hammers, shovels, spades and wheelbarrows.", catalogueGroup: "supplies" },
+  { slug: "ppe-site-safety", name: "PPE & Site Safety", description: "Hard hats, reflective vests, safety boots, gloves, glasses, dust masks and barrier tape.", catalogueGroup: "supplies" },
+  { slug: "waterproofing-sealants", name: "Waterproofing & Sealants", description: "Silicone and acrylic sealants, expanding foam, bitumen waterproofing, torch-on and reinforcing membrane.", catalogueGroup: "supplies" },
+  { slug: "paint-coatings", name: "Paint & Coatings", description: "Interior and exterior acrylics, roof paint, plaster primer and enamel.", catalogueGroup: "supplies" },
 ];
 
 export const CORE_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "core");
@@ -59,3 +71,4 @@ export const READY_MIX_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup ==
 export const STEEL_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "steel");
 export const MASONRY_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "masonry");
 export const ROOFING_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "roofing");
+export const SUPPLIES_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "supplies");

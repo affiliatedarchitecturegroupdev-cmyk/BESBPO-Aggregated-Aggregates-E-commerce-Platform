@@ -418,7 +418,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
       const served = await http().get(`/merchandising/images/${image.body.id}`).expect(200);
       expect(served.headers["content-type"]).toBe("image/png");
       const overlay = await http().get("/merchandising/products").expect(200);
-      expect(overlay.body).toHaveLength(313); // 51 aggregates + 42 cement and other packaged goods + 7 ready-mix grades + 43 steel + 58 masonry & precast (incl. roof tiles) + 30 roofing + 82 roof timber & connectors
+      expect(overlay.body).toHaveLength(395); // 51 aggregates + 42 cement and other packaged goods + 7 ready-mix grades + 43 steel + 58 masonry & precast (incl. roof tiles) + 30 roofing + 82 roof timber & connectors + 82 building supplies
       expect(overlay.body.find((p: { sku: string }) => p.sku === sku)).toMatchObject({
         featuredRank: 2,
         images: expect.arrayContaining([expect.objectContaining({ id: image.body.id, altText: "Filter media stockpile" })]),
@@ -547,6 +547,25 @@ describe("Aggregated Aggregates API (e2e)", () => {
   });
 
   describe("orders", () => {
+    it("sells building supplies at list, delivered by the merchant, in the SUPPLIES family", async () => {
+      const token = await register("suppliesbuyer");
+      const board = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-CLG-RHINO-64-1200-3000" }, include: { category: true } });
+      expect(board.category).toMatchObject({ slug: "ceilings-drywall", catalogueGroup: "supplies" });
+      const res = await http()
+        .post("/orders")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ deliveryDistanceKm: 20, lineItems: [{ productId: board.id, unitOfSale: "SHEET", quantity: 10 }] })
+        .expect(201);
+      expect(Number(res.body.subtotal)).toBe(2257.2); // 10 x R225.72
+      expect(Number(res.body.deliveryFee)).toBe(0); // the merchant's own vehicle, never the tipper bands
+      const line = await prisma.orderLineItem.findFirstOrThrow({ where: { orderId: res.body.id } });
+      expect(line.pricingFamily).toBe("SUPPLIES");
+      // A product without a two-retailer price goes to a quote.
+      const door = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-DOR-HC-813" } });
+      await http().post("/orders").set("Authorization", `Bearer ${token}`).send({ deliveryDistanceKm: 20, lineItems: [{ productId: door.id, unitOfSale: "EACH", quantity: 2 }] }).expect(400);
+      await prisma.order.delete({ where: { id: res.body.id } });
+    });
+
     it("ignores a companyId in the body and prices at the caller's own tier", async () => {
       const token = await register("orderer");
       const volumeCompany = await prisma.company.findFirst({ where: { tier: { name: "VOLUME_CIVIL_BULK" } } });
