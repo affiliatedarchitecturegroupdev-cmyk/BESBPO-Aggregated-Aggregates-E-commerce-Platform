@@ -67,6 +67,23 @@ technical error.
 - If no online method is available for your order, our sales team will
   arrange payment by EFT. An order is confirmed once payment has been
   received, or accepted against an agreed purchase order.
+- **Deposits.** Larger orders can be secured with a deposit, shown at
+  checkout with the amount to pay now and the balance. Paying the deposit
+  confirms the order at the prices on it. The balance must be paid before
+  the order is dispatched; we do not dispatch an order with a balance
+  outstanding. Deposits are not offered on AA 60/120 express orders, which
+  are paid in full.
+- **Lay-by.** Where offered, you can pay for an order over time with
+  LayUp, a lay-by provider, on its own terms (including what happens if a
+  plan is cancelled or not completed). The order is held at the prices on it
+  and dispatched once the plan is paid in full.
+- **Payment links and proformas.** Our team may send you a secure link to
+  pay an order, a deposit or a balance without signing in, together with a
+  proforma invoice. A proforma is not a tax invoice; the tax invoice is
+  issued once the order is paid.
+- If an order paid by deposit or lay-by is cancelled, our
+  [Returns & Refunds Policy](/legal/returns-refunds) applies, including that
+  materials cut or made to your specification can't be refunded once cut.
 - Invoices are issued under Besbpo Group's company VAT registration, as
   Aggregated Aggregates operates as a division of the Group rather than a
   separately VAT-registered entity.

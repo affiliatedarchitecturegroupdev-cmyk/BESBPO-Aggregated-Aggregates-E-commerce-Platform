@@ -1,10 +1,11 @@
 "use client";
 
+import { ProductThumb } from "@/components/product/ProductThumb";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 
-type Suggestion = { kind: "product" | "category" | "department" | "page"; href: string; label: string; detail?: string };
+type Suggestion = { kind: "product" | "category" | "department" | "page"; href: string; label: string; detail?: string; sku?: string; categorySlug?: string };
 
 /**
  * The storefront search bar: always visible in the header on desktop and
@@ -132,10 +133,13 @@ export function SearchBar({ id, className = "" }: { id: string; className?: stri
                 go(s.href);
               }}
               onMouseEnter={() => setActive(i)}
-              className={`cursor-pointer px-3 py-2 ${i === active ? "bg-limestone" : ""}`}
+              className={`flex cursor-pointer items-center gap-3 px-3 py-2 ${i === active ? "bg-limestone" : ""}`}
             >
-              <span className="block font-body text-sm text-basalt">{s.label}</span>
-              {s.detail && <span className="block font-body text-xs text-slate">{s.detail}</span>}
+              {s.sku && s.categorySlug && <ProductThumb sku={s.sku} categorySlug={s.categorySlug} className="h-10 w-10 shrink-0 rounded-sm" grains={12} />}
+              <span className="min-w-0">
+                <span className="block font-body text-sm text-basalt">{s.label}</span>
+                {s.detail && <span className="block font-body text-xs text-slate">{s.detail}</span>}
+              </span>
             </li>
           ))}
           <li

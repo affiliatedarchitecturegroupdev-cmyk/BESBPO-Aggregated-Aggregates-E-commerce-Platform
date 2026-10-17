@@ -1,5 +1,7 @@
 "use client";
 
+import { ProductThumb } from "@/components/product/ProductThumb";
+import { findQuotable } from "@/data/quotable";
 import { MessageCircle, Send, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -35,10 +37,15 @@ function Card({ card }: { card: AssistantCard }) {
   const [added, setAdded] = useState(false);
   return (
     <li className="rounded-sm border border-basalt/10 bg-white p-3">
-      <Link href={card.href} className="font-body text-sm font-semibold text-basalt hover:text-seam-blue hover:underline">
-        {card.name}
-      </Link>
-      {card.note && <p className="mt-0.5 font-body text-xs text-slate">{card.note}</p>}
+      <div className="flex items-start gap-3">
+        <ProductThumb sku={card.sku} categorySlug={findQuotable(card.sku)?.categorySlug ?? ""} name={card.name} className="h-12 w-12 shrink-0 rounded-sm" grains={14} />
+        <div className="min-w-0">
+          <Link href={card.href} className="font-body text-sm font-semibold text-basalt hover:text-seam-blue hover:underline">
+            {card.name}
+          </Link>
+          {card.note && <p className="mt-0.5 font-body text-xs text-slate">{card.note}</p>}
+        </div>
+      </div>
       <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
         <span className="font-mono text-xs text-seam-blue">{card.price ?? "Price on request"}</span>
         {card.add ? (

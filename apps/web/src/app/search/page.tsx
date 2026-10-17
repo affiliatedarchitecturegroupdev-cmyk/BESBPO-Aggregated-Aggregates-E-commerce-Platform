@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ProductThumb } from "@/components/product/ProductThumb";
 import { CATEGORIES } from "@/data/categories";
 import { INDUSTRIES } from "@/data/industries";
 import { getPublishedPosts } from "@/lib/blog";
@@ -28,15 +29,18 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
   const pages = words.length ? SITE_PAGES.filter((p) => matches(`${p.title} ${p.keywords}`, words)) : [];
   const total = products.length + departments.length + categories.length + industries.length + articles.length + pages.length;
 
-  const section = (title: string, items: { href: string; label: string; detail?: string }[]) =>
+  const section = (title: string, items: { href: string; label: string; detail?: string; thumb?: { sku: string; categorySlug: string } }[]) =>
     items.length > 0 && (
       <section className="mt-8">
         <h2 className="font-mono text-xs uppercase tracking-widest text-seam-blue">{title}</h2>
         <ul className="mt-2 divide-y divide-basalt/5 rounded-sm border border-basalt/10 bg-white">
           {items.map((item) => (
-            <li key={item.href} className="px-4 py-3">
-              <Link href={item.href} className="font-body text-sm font-semibold text-basalt hover:text-seam-blue">{item.label}</Link>
-              {item.detail && <p className="font-body text-xs text-slate">{item.detail}</p>}
+            <li key={item.href} className="flex items-center gap-3 px-4 py-3">
+              {item.thumb && <ProductThumb sku={item.thumb.sku} categorySlug={item.thumb.categorySlug} name={item.label} className="h-12 w-12 shrink-0 rounded-sm" grains={16} />}
+              <div className="min-w-0">
+                <Link href={item.href} className="font-body text-sm font-semibold text-basalt hover:text-seam-blue">{item.label}</Link>
+                {item.detail && <p className="font-body text-xs text-slate">{item.detail}</p>}
+              </div>
             </li>
           ))}
         </ul>
@@ -61,6 +65,7 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
         products.map((p) => ({
           href: `/products/${p.slug}`,
           label: p.name,
+          thumb: { sku: p.sku, categorySlug: p.categorySlug },
           detail: `${p.categoryName} · ${p.fromPrice !== null ? `from ${formatZAR(p.fromPrice)} / ${p.fromUnit} — buy online` : "price on quote"}`,
         })),
       )}

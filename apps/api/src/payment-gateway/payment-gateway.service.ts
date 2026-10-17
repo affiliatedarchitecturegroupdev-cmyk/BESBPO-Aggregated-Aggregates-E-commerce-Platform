@@ -1,12 +1,12 @@
 import { BadRequestException, Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { PaymentGateway, PaymentMethodKey, Prisma } from "@aggregates/database";
-import { STAFF_ROLES, type AuthUser } from "../common/auth/auth-user";
+import type { AuthUser } from "../common/auth/auth-user";
 import { PrismaService } from "../common/prisma.service";
 import type { CustomerTierName } from "../pricing/pricing.service";
 import { PaymentGatewayAdapterFactory } from "./adapters/adapter.factory";
-import { eligiblePaymentMethods, isMethodEligible, PAYFAST_VISIBILITY_KEY } from "./eligibility";
-import type { UpdateOrderStatusDto } from "../orders/dto/create-order.dto";
-import { OrdersService } from "../orders/orders.service";
+import { eligiblePaymentMethods, PAYFAST_VISIBILITY_KEY } from "./eligibility";
+import { GatewayHealthService } from "./gateway-health.service";
+import { PaymentsService, type PaymentChoice } from "./payments.service";
 import { confirmWithPayfast, isPayfastSource, parseNotification, payfastConfig, signatureMatches } from "./payfast/payfast";
 import { UpdatePaymentMethodDto } from "./payment-gateway.dto";
 
@@ -27,7 +27,8 @@ export class PaymentGatewayService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly adapters: PaymentGatewayAdapterFactory,
-    private readonly orders: OrdersService,
+    private readonly payments: PaymentsService,
+    private readonly health: GatewayHealthService,
   ) {}
 
   /** Public: the enabled tiles, without routing details. */
@@ -44,62 +45,20 @@ export class PaymentGatewayService {
     return { recommended: strip(result.recommended), available: strip(result.available) };
   }
 
-  async initiate(orderId: string, methodKey: PaymentMethodKey, user: AuthUser) {
-    const order = await this.prisma.order.findUnique({ where: { id: orderId } });
-    const isOwner = order && (order.userId === user.id || (order.companyId !== null && order.companyId === user.companyId));
-    if (!order || !(isOwner || STAFF_ROLES.includes(user.role))) throw new NotFoundException("Order not found.");
-    if (order.status !== "PENDING") throw new BadRequestException("This order isn't awaiting payment.");
-
-    const configs = await this.prisma.paymentMethodConfig.findMany();
-    const config = configs.find((c) => c.methodKey === methodKey);
-    const input = {
-      orderTotal: Number(order.total),
-      customerTier: await this.tierOf(order.companyId),
-      isQuoteOnly: false,
-      isExpress: order.expressFee !== null && Number(order.expressFee) > 0 && !order.expressDeclinedAt,
-    };
-    if (!config || !isMethodEligible(configs, methodKey, input)) {
-      throw new BadRequestException(`${config?.displayName ?? methodKey} isn't available for this order.`);
-    }
-
-    const webUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://aaggregates.store").replace(/\/+$/, "");
-    // Gateways call the API on its own Render address, so Cloudflare (in front of the storefront) can't block them.
-    const apiUrl = (process.env.RENDER_EXTERNAL_URL ?? process.env.NEXT_PUBLIC_APP_URL ?? webUrl).replace(/\/+$/, "");
-    const request = {
-      orderId: order.id,
-      orderNumber: order.orderNumber,
-      amount: Number(order.total),
-      methodKey,
-      customerEmail: user.email,
-      returnUrl: `${webUrl}/orders/${order.id}/confirmation?payment=returned`,
-      cancelUrl: `${webUrl}/orders/${order.id}/confirmation?payment=cancelled`,
-      notifyUrl: `${apiUrl}/api/v1/payment-methods/notify/${config.activeGateway.toLowerCase()}`,
-    };
-    // If an admin has set PayFast to staff only, customers are asked to choose another method.
-    if (config.activeGateway === "PAYFAST" && !STAFF_ROLES.includes(user.role) && !(await this.payfastIsPublic())) {
-      return {
-        isLive: false,
-        note: `Online payment for this method isn't switched on yet, so order ${order.orderNumber} hasn't been charged. Choose another method, or contact sales and we'll help you pay.`,
-        method: config.displayName,
-        wasFailover: false,
-      };
-    }
-    // Record the method chosen, for sales-by-payment-method reporting (staff can correct it on confirmation).
-    await this.prisma.order.update({ where: { id: order.id }, data: { paymentMethod: methodKey } });
-    const primary = await this.adapters.get(config.activeGateway).initiate(request);
-    // One level of automatic failover while the primary gateway isn't live.
-    if (!primary.isLive && config.fallbackGateway) {
-      const fallback = await this.adapters.get(config.fallbackGateway).initiate(request);
-      if (fallback.isLive) return { ...fallback, method: config.displayName, wasFailover: true };
-    }
-    return { ...primary, method: config.displayName, wasFailover: false };
+  /** Starts paying an order — in full, a deposit, or the balance — with the chosen tile (PaymentsService routes it). */
+  initiate(orderId: string, methodKey: PaymentMethodKey, user: AuthUser, plan: PaymentChoice = "FULL") {
+    return this.payments.startForUser(orderId, methodKey, plan, user);
   }
 
   /** Admin: full routing table plus which gateways have credentials configured. */
   async routing() {
     const configs = await this.prisma.paymentMethodConfig.findMany({ orderBy: { sortOrder: "asc" } });
-    const gateways = Object.values(PaymentGateway).map((gateway) => ({ gateway, ...this.adapters.get(gateway).status() }));
-    return { configs, gateways, payfastPublic: await this.payfastIsPublic() };
+    const health = await this.health.overview();
+    const gateways = Object.values(PaymentGateway).map((gateway) => {
+      const h = health.gateways.find((g) => g.gateway === gateway)!;
+      return { gateway, ...this.adapters.get(gateway).status(), label: h.label, down: h.down, incident: h.incident, recentErrors: h.recentErrors };
+    });
+    return { configs, gateways, incidents: health.history, trip: health.trip, payfastPublic: await this.payfastIsPublic() };
   }
 
   async payfastIsPublic(): Promise<boolean> {
@@ -136,8 +95,16 @@ export class PaymentGatewayService {
   async payfastNotification(rawBody: string, sourceIp: string): Promise<NotificationOutcome> {
     const fields = parseNotification(rawBody);
     const get = (key: string) => fields.find(([k]) => k === key)?.[1] ?? "";
-    const orderId = get("m_payment_id");
-    const order = orderId ? await this.prisma.order.findUnique({ where: { id: orderId } }) : null;
+    const reference = get("m_payment_id");
+    // The reference is the Payment (ledger) ID; checkouts started before the ledger used the order ID.
+    let payment = reference ? await this.prisma.payment.findUnique({ where: { id: reference } }) : null;
+    // A retried notification for a pre-ledger checkout: the payment it already recorded.
+    if (!payment && get("pf_payment_id")) payment = await this.prisma.payment.findFirst({ where: { gateway: "PAYFAST", providerReference: get("pf_payment_id"), orderId: reference } });
+    const order = payment
+      ? await this.prisma.order.findUnique({ where: { id: payment.orderId } })
+      : reference
+        ? await this.prisma.order.findUnique({ where: { id: reference } })
+        : null;
     const amount = Number(get("amount_gross"));
     const record = (outcome: NotificationOutcome, reason: string | null) =>
       this.prisma.paymentNotification
@@ -161,25 +128,31 @@ export class PaymentGatewayService {
     if (!signatureMatches(fields, config.passphrase)) return record("REJECTED", "Signature didn't match — check AGG_PAYFAST_PASSPHRASE against the PayFast dashboard.");
     if (!(await this.isFromPayfast(sourceIp))) return record("REJECTED", `Not sent from a PayFast server (${sourceIp || "unknown address"}).`);
     if (get("merchant_id") !== config.merchantId) return record("REJECTED", "Merchant ID doesn't match this store's.");
-    if (!order) return record("REJECTED", "No order with that reference.");
-    if (!Number.isFinite(amount) || Math.abs(amount - Number(order.total)) > 0.01) return record("REJECTED", `Amount R${get("amount_gross")} doesn't match the order total R${Number(order.total).toFixed(2)}.`);
+    if (!order || (payment && payment.gateway !== "PAYFAST")) return record("REJECTED", "No PayFast payment or order with that reference.");
+    // What this payment was for: the ledger row's amount, or (a pre-ledger checkout) what's outstanding on the order.
+    const expected = payment ? Number(payment.amount) : Math.round((Number(order.total) - Number(order.amountPaid)) * 100) / 100;
+    if (!Number.isFinite(amount) || Math.abs(amount - expected) > 0.01) {
+      return record("REJECTED", `Amount R${get("amount_gross")} doesn't match the R${expected.toFixed(2)} this payment was for.`);
+    }
     if (!(await this.payfastConfirms(config, fields))) return record("REJECTED", "PayFast didn't confirm the notification as valid.");
 
     const status = get("payment_status");
-    if (status !== "COMPLETE") return record("NOT_PAID", `Payment status ${status || "missing"} — the order stays awaiting payment.`);
-    if (order.status !== "PENDING") {
-      if (!order.paymentReference) await this.prisma.order.update({ where: { id: order.id }, data: { paymentReference: get("pf_payment_id") || null } });
-      return record(
-        "ALREADY_PAID",
-        order.status === "CANCELLED" ? "The order had been cancelled — refund this payment from the PayFast dashboard." : `Order was already ${order.status}.`,
-      );
+    if (status !== "COMPLETE") {
+      if (payment && status === "CANCELLED") await this.prisma.payment.updateMany({ where: { id: payment.id, status: "INITIATED" }, data: { status: "CANCELLED" } });
+      return record("NOT_PAID", `Payment status ${status || "missing"} — nothing recorded as paid.`);
     }
-    await this.prisma.order.update({ where: { id: order.id }, data: { paymentReference: get("pf_payment_id") || null } });
-    // The same path as staff confirming payment: paid date, invoice marked paid, customer notified.
-    const confirm: UpdateOrderStatusDto = { status: "CONFIRMED" };
-    await this.orders.updateStatus(order.id, confirm);
-    this.logger.log(`PayFast payment ${get("pf_payment_id")} confirmed order ${order.orderNumber}.`);
-    return record("PAID", null);
+    if (payment?.status === "PAID" || (!payment && expected <= 0.01)) return record("ALREADY_PAID", `Payment was already recorded on order ${order.orderNumber}.`);
+    if (order.status === "CANCELLED") {
+      if (payment) await this.prisma.payment.update({ where: { id: payment.id }, data: { status: "PAID", paidAt: new Date(), providerReference: get("pf_payment_id") || null, failureReason: "Paid after the order was cancelled — refund it." } });
+      return record("ALREADY_PAID", "The order had been cancelled — refund this payment from the PayFast dashboard.");
+    }
+    payment ??= await this.prisma.payment.create({
+      data: { orderId: order.id, kind: Number(order.amountPaid) > 0 ? "BALANCE" : "FULL", amount: expected, methodKey: order.paymentMethod ?? "CARD", gateway: "PAYFAST", status: "INITIATED" },
+    });
+    // The same path for every gateway: ledger, then the order confirmed (or the balance receipted).
+    const outcome = await this.payments.markPaid(payment.id, { providerReference: get("pf_payment_id") || null, amount });
+    this.logger.log(`PayFast payment ${get("pf_payment_id")} ${outcome} on order ${order.orderNumber}.`);
+    return record(outcome === "PAID" ? "PAID" : outcome === "ALREADY_PAID" ? "ALREADY_PAID" : "REJECTED", outcome === "PAID" ? null : outcome);
   }
 
   /** Separate methods so tests can stand in for PayFast's servers. */

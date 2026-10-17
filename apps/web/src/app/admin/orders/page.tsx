@@ -144,6 +144,7 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
                 ))}
               </ul>
               {order.notes && <p className="mt-2 rounded-sm bg-limestone p-2 text-slate">{order.notes}</p>}
+              <PaymentLine order={order} />
               {order.express && <ExpressPanel order={order} />}
               {order.shipment && (
                 <p className="mt-2 font-mono text-[11px] text-slate">
@@ -258,6 +259,23 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
         </ul>
       )}
     </section>
+  );
+}
+
+/** What's been paid, what's owed (a deposit leaves a balance due before dispatch), and the way to the ledger. */
+function PaymentLine({ order }: { order: StaffOrder }) {
+  const paid = Number(order.amountPaid ?? 0);
+  const balance = Math.round((Number(order.total) - paid) * 100) / 100;
+  const plan = order.paymentPlan === "DEPOSIT" ? `Deposit${order.depositPercent ? ` ${order.depositPercent}%` : ""}` : order.paymentPlan === "LAYBY" ? "Lay-by (LayUp)" : null;
+  return (
+    <p className="mt-2 flex flex-wrap items-center gap-x-3 font-mono text-[11px] text-slate">
+      {plan && <span className="rounded-sm bg-seam-blue/10 px-1.5 py-0.5 text-seam-blue">{plan}</span>}
+      <span>
+        Paid {formatZAR(paid)}
+        {balance > 0.01 && order.status !== "CANCELLED" ? <strong className="text-ochre-gold"> · {formatZAR(balance)} to pay{order.status === "CONFIRMED" ? " before dispatch" : ""}</strong> : null}
+      </span>
+      <Link href={`/admin/orders/${order.id}/payments`} className="text-seam-blue hover:underline">Payments, links &amp; EFT →</Link>
+    </p>
   );
 }
 

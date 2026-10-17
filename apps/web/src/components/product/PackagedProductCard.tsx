@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MaterialSwatch } from "@/components/product/MaterialSwatch";
+import { ProductThumb } from "@/components/product/ProductThumb";
 import { PendingPhotoTag } from "@/components/product/PendingPhotoTag";
 import type { PackagedProduct, TierPrices } from "@/data/packaged";
 import type { ReadyMixProduct } from "@/data/ready-mix";
@@ -23,7 +23,7 @@ export function PackagedProductCard({ product }: { product: (PackagedProduct | R
           // eslint-disable-next-line @next/next/no-img-element -- served and cached by our own image route
           <img src={photo.src} alt={photo.alt} loading="lazy" className="h-28 w-full rounded-sm object-cover" />
         ) : (
-          <MaterialSwatch sku={product.sku} categorySlug={product.categorySlug} />
+          <ProductThumb sku={product.sku} categorySlug={product.categorySlug} name={product.name} />
         )}
       </Link>
       <Link href={href} className="mt-3 font-body text-sm font-semibold text-basalt hover:text-seam-blue">

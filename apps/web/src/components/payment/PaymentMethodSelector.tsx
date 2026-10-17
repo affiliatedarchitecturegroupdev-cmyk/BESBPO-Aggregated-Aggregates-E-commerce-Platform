@@ -3,18 +3,29 @@
 import { useState, useTransition } from "react";
 import { PAYMENT_METHODS } from "@/data/payment-methods";
 import { PaymentLogo } from "@/components/payment/PaymentLogo";
-import { payForOrder } from "@/app/account/actions";
+import { payByLink, payForOrder } from "@/app/account/actions";
 
 export type EligibleMethods = { recommended: { methodKey: string }[]; available: { methodKey: string }[] };
 
 const BY_KEY = new Map(PAYMENT_METHODS.map((m) => [m.key, m]));
 
 /**
- * Payment tiles for one order. Which tiles appear comes from the API
- * (GET /payment-methods/eligible at the buyer's own tier) and the choice is
- * re-checked server-side when paying — this component only renders.
+ * Payment tiles for one payment on an order: in full, a deposit, the balance,
+ * or what a payment link asks for. Which tiles appear comes from the API (at
+ * the buyer's own tier, for that amount) and the choice — and the amount — is
+ * worked out again server-side when paying; this component only renders.
  */
-export function PaymentMethodSelector({ orderId, eligible }: { orderId: string; eligible: EligibleMethods }) {
+export function PaymentMethodSelector({
+  orderId,
+  eligible,
+  plan = "FULL",
+  linkToken,
+}: {
+  orderId?: string;
+  eligible: EligibleMethods;
+  plan?: "FULL" | "DEPOSIT" | "BALANCE";
+  linkToken?: string;
+}) {
   const [chosen, setChosen] = useState<string | null>(null);
   const [result, setResult] = useState<{ ok: boolean; message: string } | null>(null);
   const [pending, start] = useTransition();
@@ -23,7 +34,7 @@ export function PaymentMethodSelector({ orderId, eligible }: { orderId: string; 
     setChosen(methodKey);
     setResult(null);
     start(async () => {
-      const response = await payForOrder(orderId, methodKey);
+      const response = linkToken ? await payByLink(linkToken, methodKey) : await payForOrder(orderId!, methodKey, plan);
       if (response.ok && response.form) {
         // Hosted checkout reached by form POST (PayFast): build the signed form and submit it.
         const form = document.createElement("form");

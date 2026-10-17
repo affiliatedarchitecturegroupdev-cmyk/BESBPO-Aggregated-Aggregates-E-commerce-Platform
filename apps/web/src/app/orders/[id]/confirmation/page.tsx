@@ -3,11 +3,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { orderDocuments } from "@/components/account/OrderCard";
 import { ReorderButton } from "@/components/account/ReorderButton";
-import { PaymentMethodSelector, type EligibleMethods } from "@/components/payment/PaymentMethodSelector";
+import { ProductThumb } from "@/components/product/ProductThumb";
+import { findQuotable } from "@/data/quotable";
+import { OrderPaymentPanel } from "@/components/payment/OrderPaymentPanel";
 import { RefreshWhilePending } from "@/components/payment/RefreshWhilePending";
 import { ExpressStatusCard } from "@/components/orders/ExpressStatusCard";
 import { api } from "@/lib/api";
-import { UNIT_LABEL, type OrderRecord } from "@/lib/account-types";
+import { UNIT_LABEL, type OrderPayments, type OrderRecord } from "@/lib/account-types";
 import { formatZAR } from "@/lib/pricing";
 import { requireSession, sessionToken } from "@/lib/session";
 
@@ -20,6 +22,10 @@ export const metadata: Metadata = { title: "Your order", robots: { index: false 
 export default async function OrderConfirmationPage({ params, searchParams }: { params: { id: string }; searchParams: { payment?: string } }) {
   await requireSession(`/orders/${params.id}/confirmation`);
   const token = sessionToken();
+  // Back from a gateway's page: ask the gateways how the payment stands first (Peach, Stitch and LayUp are checked directly).
+  const returned = searchParams.payment === "returned";
+  const cancelled = searchParams.payment === "cancelled";
+  const payments = await api<OrderPayments>(`/payments/orders/${encodeURIComponent(params.id)}${returned ? "/refresh" : ""}`, { method: returned ? "POST" : "GET", token });
   const result = await api<OrderRecord>(`/orders/${encodeURIComponent(params.id)}`, { token });
   if (!result.ok) {
     if (result.status === 404) notFound();
@@ -27,14 +33,10 @@ export default async function OrderConfirmationPage({ params, searchParams }: { 
   }
   const order = result.data;
   const awaitingPayment = order.status === "PENDING";
-  // AA 60/120 is paid by card or PayFast only (the API re-checks this on payment).
-  const isExpress = Boolean(order.express && order.express.outcome !== "DECLINED");
-  // Back from PayFast: the payment is confirmed by PayFast's notification, which can arrive a few seconds after the shopper.
-  const returned = searchParams.payment === "returned";
-  const cancelled = searchParams.payment === "cancelled";
-  const eligible = awaitingPayment
-    ? await api<EligibleMethods>(`/payment-methods/eligible?orderTotal=${Number(order.total)}${isExpress ? "&express=true" : ""}`, { token })
-    : null;
+  const summary = payments.ok ? payments.data : null;
+  const balanceDue = summary ? summary.balance > 0.01 && summary.amountPaid > 0 : false;
+  const onLayby = summary?.layby.active?.status === "INITIATED";
+  const showPayments = summary && order.status !== "CANCELLED" && (summary.choices.full || summary.choices.deposit || summary.choices.balance || summary.amountPaid > 0 || onLayby);
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
@@ -43,17 +45,17 @@ export default async function OrderConfirmationPage({ params, searchParams }: { 
           ✓
         </div>
         <h1 className="mt-4 font-display text-2xl font-bold text-basalt">
-          {awaitingPayment ? "Order placed — choose how to pay" : "Order confirmed"}
+          {onLayby ? "On lay-by — we deliver once it's paid off" : awaitingPayment ? "Order placed — choose how to pay" : balanceDue ? "Order confirmed — balance due before delivery" : "Order confirmed"}
         </h1>
         <p className="mt-2 font-body text-sm text-slate">
           Order reference <span className="font-mono text-basalt">{order.orderNumber}</span>
         </p>
       </div>
 
-      {returned && awaitingPayment && (
+      {returned && awaitingPayment && !onLayby && (
         <p role="status" className="mt-6 rounded-sm border border-seam-blue/30 bg-seam-blue/5 p-4 text-center font-body text-sm text-seam-blue">
-          Thanks — PayFast is confirming your payment. This page updates by itself once it does, usually within a minute. If you paid with SCode, it
-          updates once you&apos;ve paid in store.
+          Thanks — your payment provider is confirming your payment. This page updates by itself once it does, usually within a minute. If you paid with
+          SCode, it updates once you&apos;ve paid in store.
           <RefreshWhilePending />
         </p>
       )}
@@ -73,9 +75,14 @@ export default async function OrderConfirmationPage({ params, searchParams }: { 
       <div className="mt-8 rounded-sm border border-basalt/10 bg-white p-5 font-body text-sm">
         <ul className="divide-y divide-basalt/5">
           {order.lineItems.map((line, i) => (
-            <li key={line.id ?? i} className="flex justify-between gap-4 py-2">
-              <span>
-                {line.quantity} {line.unitOfSale ? UNIT_LABEL[line.unitOfSale] : ""} — {line.product.name}
+            <li key={line.id ?? i} className="flex items-center justify-between gap-4 py-2">
+              <span className="flex min-w-0 items-center gap-3">
+                {line.product.sku && (
+                  <ProductThumb sku={line.product.sku} categorySlug={findQuotable(line.product.sku)?.categorySlug ?? ""} name={line.product.name} className="h-10 w-10 shrink-0 rounded-sm" grains={12} />
+                )}
+                <span>
+                  {line.quantity} {line.unitOfSale ? UNIT_LABEL[line.unitOfSale] : ""} — {line.product.name}
+                </span>
               </span>
               {line.lineTotal && <span>{formatZAR(Number(line.lineTotal))}</span>}
             </li>
@@ -110,14 +117,13 @@ export default async function OrderConfirmationPage({ params, searchParams }: { 
         </dl>
       </div>
 
-      {awaitingPayment && (
+      {showPayments && summary && (
         <section className="mt-8" aria-label="Payment">
-          {eligible?.ok ? (
-            <PaymentMethodSelector orderId={order.id} eligible={eligible.data} />
-          ) : (
-            <p className="font-body text-sm text-slate">Payment options couldn&apos;t be loaded — please try again shortly.</p>
-          )}
+          <OrderPaymentPanel payments={summary} />
         </section>
+      )}
+      {!summary && (awaitingPayment || order.status === "CONFIRMED") && (
+        <p className="mt-8 font-body text-sm text-slate">Payment options couldn&apos;t be loaded — please try again shortly.</p>
       )}
 
       <section className="mt-8 rounded-sm border border-basalt/10 bg-white p-5 font-body text-sm" aria-labelledby="order-documents">

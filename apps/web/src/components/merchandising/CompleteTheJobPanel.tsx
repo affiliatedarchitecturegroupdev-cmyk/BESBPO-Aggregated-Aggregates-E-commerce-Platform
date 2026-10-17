@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { MaterialSwatch } from "@/components/product/MaterialSwatch";
+import { ProductThumb } from "@/components/product/ProductThumb";
 import { SaveStageToProject } from "@/components/projects/SaveStageToProject";
 import type { CompleteTheJobView } from "@/data/complete-the-job";
 import { isWholeUnit } from "@/data/quotable";
@@ -47,7 +47,7 @@ export function CompleteTheJobPanel({ job }: { job: CompleteTheJobView }) {
           const isPriced = c.price !== null;
           return (
             <li key={c.sku} className="flex overflow-hidden rounded-sm border border-basalt/10 bg-white">
-              <MaterialSwatch sku={c.sku} categorySlug={c.categorySlug} className="w-14 shrink-0 rounded-none" grains={24} />
+              <ProductThumb sku={c.sku} categorySlug={c.categorySlug} className="w-14 shrink-0 rounded-none" grains={24} />
               <div className="flex min-w-0 flex-1 flex-col p-3">
                 <p className="font-body text-xs text-slate">{c.why}</p>
                 <Link href={`/products/${c.slug}`} className="mt-0.5 font-body text-sm font-semibold text-basalt hover:text-seam-blue">

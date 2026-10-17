@@ -192,17 +192,43 @@ describe("notification templates", () => {
     }
   });
 
+  const paymentOrder = {
+    ...order,
+    status: "CONFIRMED",
+    amountPaid: "2739.94",
+    lastPayment: { amount: "2739.94", kind: "DEPOSIT", paidAt: new Date("2026-10-15T09:00:00Z"), method: "Stitch", reference: "pir_1" },
+    payLink: { url: "https://aaggregates.store/pay/tok", amount: "6393.18", kind: "BALANCE", expiresAt: new Date("2026-10-22T09:00:00Z"), note: null },
+  };
+
+  it("receipts a deposit with the balance due, a balance payment, and a payment link", () => {
+    const deposit = customerOrderEmail("ORDER_CONFIRMED", paymentOrder)!;
+    expect(deposit.text).toMatch(/Deposit paid: R2,739\.94/);
+    expect(deposit.text).toMatch(/Balance due before delivery: R6,393\.18/);
+    expect(deposit.text).toMatch(/received your deposit/);
+    const part = customerOrderEmail("PAYMENT_RECEIVED", paymentOrder)!;
+    expect(part.text).toMatch(/R6,393\.18 is still to be paid/);
+    const full = customerOrderEmail("PAYMENT_RECEIVED", { ...paymentOrder, amountPaid: "9133.12", lastPayment: { ...paymentOrder.lastPayment, amount: "6393.18", kind: "BALANCE" } })!;
+    expect(full.text).toMatch(/now paid in full/);
+    expect(full.text).toMatch(/Balance: Paid in full/);
+    expect(staffOrderEmail("PAYMENT_RECEIVED", { ...paymentOrder, amountPaid: "9133.12" })!.subject).toMatch(/\(paid in full\)$/);
+    const link = customerOrderEmail("PAYMENT_LINK_SENT", paymentOrder)!;
+    expect(link.subject).toBe("Pay for order AA-100 — R6,393.18");
+    expect(link.text).toContain("https://aaggregates.store/pay/tok");
+    expect(link.text).toMatch(/balance of R6,393\.18/);
+  });
+
   it("has a message for every channel an event is allowed to use", () => {
     for (const event of Object.values(NotificationEvent)) {
       const channels = EVENT_CHANNELS[event];
-      const order = event.startsWith("EXPRESS_") ? expressOrder : event === "INVOICE_ISSUED" ? invoicedOrder : baseOrder;
+      const order = event.startsWith("EXPRESS_") ? expressOrder : event === "INVOICE_ISSUED" ? invoicedOrder : event.startsWith("PAYMENT_") ? paymentOrder : baseOrder;
       const customerEmail = customerOrderEmail(event, order) ?? customerQuoteEmail(event, quote) ?? customerCompanyEmail(event, company) ?? customerEnquiryEmail(event, enquiry) ?? customerBookingEmail(event, booking) ?? customerScheduleEmail(event, schedule);
       const customerWhatsApp = customerOrderWhatsApp(event, order) ?? customerQuoteWhatsApp(event, quote);
       const staffEmail = staffOrderEmail(event, order) ?? staffQuoteEmail(event, quote) ?? staffCompanyEmail(event, company) ?? staffEnquiryEmail(event, enquiry) ?? staffBookingEmail(event, booking) ?? staffScheduleEmail(event, schedule);
       expect([event, customerEmail !== null]).toEqual([event, channels.customerEmail]);
       expect([event, customerWhatsApp !== null]).toEqual([event, channels.customerWhatsApp]);
       // The weekly insights email is built from report data (insights/digest.ts), not from one record.
-      if (event !== "WEEKLY_INSIGHTS") expect([event, staffEmail !== null]).toEqual([event, channels.staffEmail]);
+      // These are built from report or health data (insights/digest.ts, gateway-health.service.ts), not from one record.
+      if (event !== "WEEKLY_INSIGHTS" && event !== "GATEWAY_DEGRADED") expect([event, staffEmail !== null]).toEqual([event, channels.staffEmail]);
     }
   });
 

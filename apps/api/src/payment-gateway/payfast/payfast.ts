@@ -71,7 +71,8 @@ export function signature(fields: [string, string][], passphrase: string, kind: 
 }
 
 export type CheckoutInput = {
-  orderId: string;
+  /** Payment.id — PayFast echoes it back as m_payment_id, so one order can take several payments (deposit, balance). */
+  reference: string;
   orderNumber: string;
   amount: number;
   customerEmail: string;
@@ -94,7 +95,7 @@ export function checkoutForm(config: PayFastConfig, input: CheckoutInput): { act
     ["cancel_url", input.cancelUrl],
     ["notify_url", input.notifyUrl],
     ["email_address", input.customerEmail],
-    ["m_payment_id", input.orderId],
+    ["m_payment_id", input.reference],
     ["amount", input.amount.toFixed(2)],
     ["item_name", `Aggregated Aggregates order ${input.orderNumber}`.slice(0, 100)],
   ];

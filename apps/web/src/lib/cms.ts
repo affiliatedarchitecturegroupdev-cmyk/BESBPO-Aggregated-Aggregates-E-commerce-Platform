@@ -106,6 +106,25 @@ const photos = (o: Overlay | undefined, name: string): ProductPhoto[] =>
       : {}),
   }));
 
+/** A product's lead photo, for thumbnails anywhere on the site (ProductThumb). */
+export type LeadPhoto = { src: string; alt: string };
+
+/**
+ * Every product's lead (first) cleared photo, keyed by SKU — the one place
+ * thumbnails get their pictures, so recently viewed, recommendations, search,
+ * cart and checkout show the same photo as the product page. Cached like the
+ * rest of the catalogue; photos awaiting permission are never included.
+ */
+export const getLeadPhotos = cache(async (): Promise<Record<string, LeadPhoto>> => {
+  const overlays = (await apiCached<Overlay[]>("/merchandising/products")) ?? [];
+  const map: Record<string, LeadPhoto> = {};
+  for (const o of overlays) {
+    const img = o.images.find((i) => i.licence !== "PERMISSION_PENDING");
+    if (img && o.isActive) map[o.sku] = { src: `/api/product-images/${img.id}`, alt: img.altText ?? "" };
+  }
+  return map;
+});
+
 export type MerchandisedPackagedProduct = PackagedProduct & {
   description: string | null;
   featuredRank: number | null;

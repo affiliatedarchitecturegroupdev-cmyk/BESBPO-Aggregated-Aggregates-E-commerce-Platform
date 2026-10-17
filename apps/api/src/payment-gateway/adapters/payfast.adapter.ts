@@ -12,7 +12,7 @@ import type { GatewayStatus, InitiatePaymentRequest, InitiatePaymentResult, Paym
  * they choose among the methods enabled on the merchant account. PayFast
  * then confirms the payment by a server-to-server notification (ITN),
  * handled in PaymentGatewayService.payfastNotification —
- * docs/payments-payfast.md.
+ * docs/payments-payfast.md. The merchant reference is the Payment (ledger) ID.
  */
 @Injectable()
 export class PayFastAdapter implements PaymentGatewayAdapter {
@@ -34,7 +34,7 @@ export class PayFastAdapter implements PaymentGatewayAdapter {
     return {
       isLive: true,
       form: checkoutForm(config, {
-        orderId: request.orderId,
+        reference: request.paymentId,
         orderNumber: request.orderNumber,
         amount: request.amount,
         customerEmail: request.customerEmail,

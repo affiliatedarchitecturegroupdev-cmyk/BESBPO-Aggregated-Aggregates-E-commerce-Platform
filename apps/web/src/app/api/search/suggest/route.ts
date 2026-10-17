@@ -5,7 +5,7 @@ import { getHiddenSkus } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
 import { PRODUCT_INDEX, searchProducts } from "@/lib/product-index";
 
-export type Suggestion = { kind: "product" | "category" | "department" | "page"; href: string; label: string; detail?: string };
+export type Suggestion = { kind: "product" | "category" | "department" | "page"; href: string; label: string; detail?: string; sku?: string; categorySlug?: string };
 
 /**
  * Search-as-you-type for the header search bar: up to 8 products (priced ones
@@ -21,6 +21,8 @@ export async function GET(request: Request) {
 
   const products: Suggestion[] = searchProducts(q, PRODUCT_INDEX.filter((p) => !hidden.has(p.sku))).map((p) => ({
     kind: "product",
+    sku: p.sku,
+    categorySlug: p.categorySlug,
     href: `/products/${p.slug}`,
     label: p.name,
     detail: p.fromPrice !== null ? `From ${formatZAR(p.fromPrice)} / ${p.fromUnit} · ${p.categoryName}` : `${p.categoryName} · price on quote`,

@@ -80,3 +80,20 @@ export class ListQuotesQuery {
   @IsIn(Object.values(QuoteStatus))
   status?: QuoteStatus;
 }
+
+class QuoteOrderLineDto {
+  @IsString() lineItemId!: string;
+  /** VAT-inclusive unit price staff agreed with the customer. */
+  @IsNumber({ maxDecimalPlaces: 2 }) @Min(0) unitPrice!: number;
+}
+
+/** Staff: turn a priced quote into an order the customer can pay (in full, by deposit, or by link). */
+export class QuoteToOrderDto {
+  @ValidateNested({ each: true })
+  @Type(() => QuoteOrderLineDto)
+  @ArrayMinSize(1)
+  @ArrayMaxSize(30)
+  lines!: QuoteOrderLineDto[];
+
+  @IsNumber({ maxDecimalPlaces: 2 }) @Min(0) deliveryFee!: number;
+}

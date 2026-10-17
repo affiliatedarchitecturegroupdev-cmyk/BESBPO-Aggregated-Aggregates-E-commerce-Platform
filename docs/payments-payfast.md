@@ -30,7 +30,9 @@ Aggregated Aggregates merchant account was approved in October 2026.
 1. **The shopper chooses a PayFast method** on the order page. The API
    re-checks eligibility.
 2. **The API builds a signed checkout form.** It contains merchant ID and
-   key, return, cancel and notify URLs, email, order ID (`m_payment_id`),
+   key, return, cancel and notify URLs, email, the payment ID (`m_payment_id`
+   — the ledger row, so one order can take a deposit and a balance; see
+   [payments.md](payments.md)),
    amount and item name, and the signature is the MD5 of the fields plus
    the passphrase. No `payment_method` is sent, so PayFast shows every
    method enabled on the merchant account.
@@ -49,7 +51,8 @@ Aggregated Aggregates merchant account was approved in October 2026.
      passphrase;
    - the sender is PayFast: its published address ranges, or the addresses
      of www/sandbox/w1w/w2w.payfast.co.za;
-   - the merchant ID is ours and the gross amount equals the order total;
+   - the merchant ID is ours and the gross amount equals the payment it is
+     for (the full amount, the deposit or the balance);
    - PayFast's validate service answers `VALID` for the notification.
 6. **Status `COMPLETE`.** The order is confirmed through the same path as
    staff confirming payment:
@@ -93,7 +96,7 @@ Before relying on it:
 |---|---|
 | Rejected — "Signature didn't match" | `AGG_PAYFAST_PASSPHRASE` differs from the dashboard passphrase (spaces and capitals count) |
 | Rejected — "Not sent from a PayFast server" | Someone other than PayFast called the endpoint, or PayFast's addresses changed — check PayFast's published list |
-| Rejected — amount | The amount paid doesn't match the order total; don't release the order |
+| Rejected — amount | The amount paid doesn't match the payment it was for; don't release the order |
 | Already handled — "order had been cancelled" | The customer paid a cancelled order: refund it from the PayFast dashboard |
 | Nothing arrives | The PayFast page showed an error, or the notify URL isn't reachable: check that the API is up |
 | PayFast page: "This merchant account is currently not able to receive payments" | PayFast hasn't finished clearing the account (website and policy pages under review). Nothing to change on our side |

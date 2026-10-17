@@ -7,7 +7,7 @@ import { formatZAR } from "@/lib/pricing";
 
 export const metadata: Metadata = {
   title: "Ways to Pay",
-  description: "Card, instant EFT, wallets, QR, pay in store (SCode), buy-now-pay-later, Lulapay trade credit and EFT / purchase order — every way to pay, with terms.",
+  description: "Card, instant EFT and pay by bank, wallets, QR, pay in store (SCode), buy-now-pay-later, lay-by, deposits, Lulapay trade credit and EFT / purchase order — every way to pay, with terms.",
   alternates: { canonical: "/ways-to-pay" },
 };
 
@@ -78,7 +78,30 @@ export default async function WaysToPayPage() {
         ))}
       </div>
 
-      <p className="mt-12 rounded-sm bg-white p-4 font-body text-xs text-slate">
+      <section className="mt-12 grid gap-4 sm:grid-cols-3" aria-label="Paying for large orders">
+        <div className="rounded-sm border border-basalt/10 bg-white p-5">
+          <h2 className="font-body text-sm font-semibold text-basalt">Secure it with a deposit</h2>
+          <p className="mt-1 font-body text-xs text-slate">
+            On larger orders, pay a deposit to confirm the order at today&apos;s prices, and the balance before delivery. The deposit and balance are shown
+            when you pay.
+          </p>
+        </div>
+        <div className="rounded-sm border border-basalt/10 bg-white p-5">
+          <h2 className="font-body text-sm font-semibold text-basalt">Pay by bank, no card limit</h2>
+          <p className="mt-1 font-body text-xs text-slate">
+            Instant EFT straight from your bank account suits big orders that run past a card&apos;s limit — confirmed in minutes, not days.
+          </p>
+        </div>
+        <div className="rounded-sm border border-basalt/10 bg-white p-5">
+          <h2 className="font-body text-sm font-semibold text-basalt">Payment links and proformas</h2>
+          <p className="mt-1 font-body text-xs text-slate">
+            For quoted and site orders, our team can send a secure payment link — for the full amount, a deposit or a balance — with a proforma invoice for
+            your accounts team.
+          </p>
+        </div>
+      </section>
+
+      <p className="mt-6 rounded-sm bg-white p-4 font-body text-xs text-slate">
         The methods offered depend on your order value and account tier. Quote-only orders (Volume/Civil Bulk orders of
         10m³ or more, or delivery beyond 100km) are invoiced by EFT / purchase order. Instalment terms are the
         providers&apos; own and subject to their approval.{" "}

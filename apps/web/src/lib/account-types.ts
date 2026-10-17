@@ -29,6 +29,8 @@ export type QuoteRecord = {
     estimatedUnitPrice: string | null;
     product: { name: string; sku: string };
   }[];
+  /** The order staff made from this quote, if any (payable by link, deposit or EFT). */
+  order?: { id: string; orderNumber: string; status: string; total: string; amountPaid: string } | null;
 };
 
 export type CompanyDashboard = {
@@ -67,6 +69,10 @@ export type OrderRecord = {
   total: string;
   createdAt: string;
   paidAt?: string | null;
+  /** Payments ledger: paid so far, and FULL / DEPOSIT / LAYBY. */
+  amountPaid?: string;
+  paymentPlan?: "FULL" | "DEPOSIT" | "LAYBY";
+  depositPercent?: number | null;
   lineItems: { id?: string; quantity?: number; unitOfSale?: keyof typeof UNIT_LABEL; lineTotal?: string; product: { name: string; sku?: string; slug?: string } }[];
   shipment?: { carrier: string; externalPartnerName: string | null; trackingRef: string | null; dispatchedAt: string | null; deliveredAt: string | null } | null;
   documents: DocumentSummary[];
@@ -210,3 +216,36 @@ export const DOCUMENT_TYPE_LABEL: Record<DocumentSummary["documentType"], string
 export function formatBytes(bytes: number) {
   return bytes < 1024 * 1024 ? `${Math.max(1, Math.round(bytes / 1024))} KB` : `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 }
+
+/** GET /payments/orders/:id — what's owed on an order and the tiles for each way to pay. */
+export type PaymentTile = { methodKey: string; displayName: string };
+export type PaymentTiles = { recommended: PaymentTile[]; available: PaymentTile[] };
+export type LedgerPayment = {
+  id: string;
+  kind: "FULL" | "DEPOSIT" | "BALANCE" | "INSTALMENT";
+  amount: number;
+  methodKey: string;
+  gateway: string;
+  status: "INITIATED" | "PAID" | "FAILED" | "CANCELLED" | "EXPIRED";
+  paidSoFar: number | null;
+  providerReference: string | null;
+  createdAt: string;
+  paidAt: string | null;
+};
+export type OrderPayments = {
+  orderId: string;
+  orderNumber: string;
+  status: OrderRecord["status"];
+  total: number;
+  amountPaid: number;
+  balance: number;
+  overpaid: number;
+  paymentPlan: "FULL" | "DEPOSIT" | "LAYBY";
+  depositPercent: number | null;
+  deposit: { available: true; percent: number; amount: number; balance: number } | { available: false; reason: string };
+  layby: { terms: { depositPercent: number; maxMonths: number }; active: { status: string; paidSoFar: number; startedAt: string } | null };
+  payments: LedgerPayment[];
+  choices: { full: PaymentTiles | null; deposit: PaymentTiles | null; balance: PaymentTiles | null };
+};
+
+export const PAYMENT_KIND_LABEL: Record<LedgerPayment["kind"], string> = { FULL: "Payment in full", DEPOSIT: "Deposit", BALANCE: "Balance", INSTALMENT: "Part payment" };

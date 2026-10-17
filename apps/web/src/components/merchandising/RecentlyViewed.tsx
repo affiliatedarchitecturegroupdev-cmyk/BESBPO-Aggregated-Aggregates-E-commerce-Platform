@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import { MaterialSwatch } from "@/components/product/MaterialSwatch";
+import { ProductThumb } from "@/components/product/ProductThumb";
 import { findQuotable } from "@/data/quotable";
 import { formatZAR } from "@/lib/pricing";
 import { recentlyViewed, useRecentlyViewed } from "@/lib/recently-viewed";
@@ -44,7 +44,7 @@ export function RecentlyViewed({ current, hiddenSkus = [], className = "mt-16" }
               href={`/products/${p.slug}`}
               className="group flex h-full overflow-hidden rounded-sm border border-basalt/10 bg-white transition hover:border-seam-blue hover:shadow-sm"
             >
-              <MaterialSwatch sku={p.sku} categorySlug={p.categorySlug} className="w-14 shrink-0 rounded-none" grains={24} />
+              <ProductThumb sku={p.sku} categorySlug={p.categorySlug} name={p.name} className="w-14 shrink-0 rounded-none" grains={24} />
               <div className="flex min-w-0 flex-1 flex-col p-3">
                 <p className="font-body text-sm font-semibold text-basalt group-hover:text-seam-blue">{p.name}</p>
                 <p className="mt-auto pt-2 font-body text-xs text-slate">

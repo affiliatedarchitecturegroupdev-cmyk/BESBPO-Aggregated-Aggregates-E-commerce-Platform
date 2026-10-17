@@ -365,18 +365,39 @@ export type PaymentForm = { action: string; fields: [string, string][] };
 
 /** Gateways a payment form may be posted to — PayFast's hosted checkout only. */
 const FORM_ACTIONS = ["https://www.payfast.co.za/eng/process", "https://sandbox.payfast.co.za/eng/process"];
+/** Hosted pages the customer may be sent to: Peach, Stitch and LayUp (and PayFast). */
+const REDIRECT_HOSTS = ["peachpayments.com", "stitch.money", "layup.co.za", "payfast.co.za"];
 
-/** Starts paying an order with the chosen method; the API re-checks eligibility and routes it to its gateway. */
-export async function payForOrder(orderId: string, methodKey: string): Promise<{ ok: boolean; message: string; redirectUrl?: string; form?: PaymentForm }> {
+type PayResult = { ok: boolean; message: string; redirectUrl?: string; form?: PaymentForm };
+
+function checkedRedirect(data: { isLive: boolean; note: string; redirectUrl?: string; form?: PaymentForm }): PayResult {
+  let redirect: string | undefined;
+  try {
+    const url = data.redirectUrl ? new URL(data.redirectUrl) : null;
+    if (url && url.protocol === "https:" && REDIRECT_HOSTS.some((h) => url.hostname === h || url.hostname.endsWith(`.${h}`))) redirect = url.toString();
+  } catch {
+    redirect = undefined;
+  }
+  const form = data.form && FORM_ACTIONS.includes(data.form.action) ? data.form : undefined;
+  return { ok: data.isLive, message: data.note, redirectUrl: redirect, form };
+}
+
+/** Starts paying an order — in full, a deposit, or the balance — with the chosen method; the API works out the amount and routes it. */
+export async function payForOrder(orderId: string, methodKey: string, plan: "FULL" | "DEPOSIT" | "BALANCE" = "FULL"): Promise<PayResult> {
   const result = await api<{ isLive: boolean; note: string; redirectUrl?: string; form?: PaymentForm }>("/payment-methods/initiate", {
     method: "POST",
     token: sessionToken(),
-    body: { orderId, methodKey },
+    body: { orderId, methodKey, plan },
   });
   if (!result.ok) return { ok: false, message: result.message };
-  const redirect = result.data.redirectUrl && /^https:\/\//.test(result.data.redirectUrl) ? result.data.redirectUrl : undefined;
-  const form = result.data.form && FORM_ACTIONS.includes(result.data.form.action) ? result.data.form : undefined;
-  return { ok: result.data.isLive, message: result.data.note, redirectUrl: redirect, form };
+  return checkedRedirect(result.data);
+}
+
+/** Pays what a payment link asks for — no sign-in needed. */
+export async function payByLink(token: string, methodKey: string): Promise<PayResult> {
+  const result = await api<{ isLive: boolean; note: string; redirectUrl?: string; form?: PaymentForm }>(`/payment-links/${encodeURIComponent(token)}/pay`, { method: "POST", body: { methodKey } });
+  if (!result.ok) return { ok: false, message: result.message };
+  return checkedRedirect(result.data);
 }
 
 /** Admin: open PayFast checkout to customers, or back to staff only. */
