@@ -1,7 +1,7 @@
 import { apiRaw } from "@/lib/api";
 import { sessionToken } from "@/lib/session";
 
-const KINDS = new Set(["confirmation", "delivery-note", "invoice"]);
+const KINDS = new Set(["confirmation", "proforma", "delivery-note", "invoice"]);
 
 /**
  * Streams an order's PDF (order confirmation, delivery note or tax invoice)

@@ -21,6 +21,7 @@ import { CATEGORIES } from "@/data/categories";
 import { formatZAR } from "@/lib/pricing";
 import { sessionToken } from "@/lib/session";
 import { deleteComplianceDocument, priceQuote, reviewApplication, uploadComplianceDocument } from "@/app/account/actions";
+import { orderFromQuote } from "@/app/admin/payments/actions";
 
 /**
  * Admin sections for trade applications, quote requests and compliance
@@ -150,6 +151,36 @@ export async function Quotes({ status = "SUBMITTED" }: { status?: string }) {
                 </label>
                 <SubmitButton>Save</SubmitButton>
               </ActionForm>
+              {quote.order ? (
+                <p className="mt-3 font-mono text-[11px] text-slate">
+                  Order <Link href={`/admin/orders/${quote.order.id}/payments`} className="text-seam-blue hover:underline">{quote.order.orderNumber}</Link> ·{" "}
+                  {formatZAR(Number(quote.order.amountPaid))} of {formatZAR(Number(quote.order.total))} paid
+                </p>
+              ) : (
+                (quote.status === "QUOTED" || quote.status === "ACCEPTED") &&
+                quote.quotedTotal && (
+                  <details className="mt-3 rounded-sm border border-basalt/10 p-3">
+                    <summary className="cursor-pointer font-body text-xs font-semibold text-seam-blue">Make the order (to send a payment or deposit link)</summary>
+                    <ActionForm action={orderFromQuote} className="mt-3 space-y-3">
+                      <input type="hidden" name="quoteId" value={quote.id} />
+                      <p className="font-body text-xs text-slate">
+                        Unit prices incl. VAT, as agreed. Lines plus delivery must add up to the quoted {formatZAR(Number(quote.quotedTotal))}.
+                      </p>
+                      {quote.lineItems.map((line) => (
+                        <label key={line.id} className="grid items-center gap-2 sm:grid-cols-[2fr_1fr]">
+                          <span className="font-body text-xs text-basalt">{line.quantity} {UNIT_LABEL[line.unitOfSale]} — {line.product.name}</span>
+                          <input name={`price_${line.id}`} type="number" step="0.01" min="0" required defaultValue={line.estimatedUnitPrice ?? ""} className={inputClass} aria-label={`Unit price for ${line.product.name}`} />
+                        </label>
+                      ))}
+                      <label className="grid items-center gap-2 sm:grid-cols-[2fr_1fr]">
+                        <span className="font-body text-xs text-basalt">Delivery (R)</span>
+                        <input name="deliveryFee" type="number" step="0.01" min="0" required className={inputClass} />
+                      </label>
+                      <SubmitButton>Create order</SubmitButton>
+                    </ActionForm>
+                  </details>
+                )
+              )}
             </li>
           ))}
         </ul>

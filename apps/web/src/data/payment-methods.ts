@@ -86,4 +86,15 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
     instalments: "Up to 6 months to repay, no early-repayment penalties, no joining/account/monthly fees.",
   },
   { key: "EFT_PO", displayName: "EFT / Purchase Order", category: "manual", logoAssetPath: "generic/eft-po.svg", tradeOnly: true },
+  {
+    key: "LAYUP",
+    displayName: "LayUp lay-by",
+    category: "bnpl",
+    // A generic lay-by badge: no LayUp logo is used until its brand assets are licensed to us.
+    logoAssetPath: "generic/layby.svg",
+    tradeOnly: false,
+    minOrderValue: 500,
+    maxOrderValue: 150000,
+    instalments: "Lay-by: at least 20% down, the rest over up to 3 months, no interest. Today's price is locked; we deliver once it's paid off.",
+  },
 ];

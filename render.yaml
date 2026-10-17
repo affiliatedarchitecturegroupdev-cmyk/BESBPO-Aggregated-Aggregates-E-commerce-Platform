@@ -94,6 +94,42 @@ services:
         sync: false
       - key: AGG_PAYFAST_MODE
         sync: false
+      # Peach Payments (docs/payments.md): card fallback, PayJustNow, Happy Pay,
+      # Float. From the Peach dashboard; MODE is "live" or "sandbox". Webhook URL:
+      # https://<api>/api/v1/payment-methods/notify/peach
+      - key: PEACH_CLIENT_ID
+        sync: false
+      - key: PEACH_CLIENT_SECRET
+        sync: false
+      - key: PEACH_MERCHANT_ID
+        sync: false
+      - key: PEACH_ENTITY_ID
+        sync: false
+      - key: PEACH_SECRET_TOKEN
+        sync: false
+      - key: PEACH_MODE
+        sync: false
+      # Stitch pay-by-bank (docs/payments.md): client credentials, the account
+      # payments are paid into (bank ID e.g. "fnb"), and the webhook signing
+      # secret (whsec_…) for https://<api>/api/v1/payment-methods/notify/stitch
+      - key: STITCH_CLIENT_ID
+        sync: false
+      - key: STITCH_CLIENT_SECRET
+        sync: false
+      - key: STITCH_BENEFICIARY_NAME
+        sync: false
+      - key: STITCH_BENEFICIARY_BANK
+        sync: false
+      - key: STITCH_BENEFICIARY_ACCOUNT
+        sync: false
+      - key: STITCH_WEBHOOK_SECRET
+        sync: false
+      # LayUp lay-by (docs/payments.md): API key from the LayUp merchant portal;
+      # MODE is "live" or "sandbox". Plans are checked with LayUp every hour.
+      - key: LAYUP_API_KEY
+        sync: false
+      - key: LAYUP_MODE
+        sync: false
       # Compliance documents live in a private Supabase Storage bucket; the API
       # serves them, applying each document's visibility rules.
       - key: SUPABASE_URL

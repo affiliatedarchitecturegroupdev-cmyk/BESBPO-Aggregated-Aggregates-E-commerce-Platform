@@ -88,7 +88,7 @@ export function FormMessage({ state }: { state: FormState }) {
       </p>
     );
   }
-  return <p className="rounded-sm border border-seam-blue/30 bg-seam-blue/5 p-3 font-body text-sm text-seam-blue">{state.success}</p>;
+  return <p className="rounded-sm border border-seam-blue/30 bg-seam-blue/5 p-3 font-body text-sm text-seam-blue [overflow-wrap:anywhere]">{state.success}</p>;
 }
 
 /** A form bound to a server action, showing the action's error or success message above its fields. */

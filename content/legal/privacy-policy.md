@@ -157,6 +157,19 @@ decisions about you.
 Card and payment details are processed directly by our third-party payment
 partners under their own security and privacy practices. We do not store full card numbers on our systems.
 
+- When you pay by bank (instant EFT), you sign in to your bank on the
+  payment partner's or your bank's own page; we never see your banking
+  login, only confirmation of the payment.
+- When you choose lay-by, we send LayUp the products, amounts and order
+  reference it needs to set up your plan; your details on LayUp's side are
+  handled under LayUp's own privacy policy. We receive how much of the plan
+  has been paid.
+- For each payment we keep its amount, method, status and the payment
+  partner's reference, as part of the order's financial record.
+- A payment link our team sends you shows the order's products and amounts
+  (not your address or contact details) to anyone who has it, so please
+  don't forward it. Links expire, and our team can cancel one at any time.
+
 ## 7. Data retention
 
 We retain personal information for as long as necessary to fulfil the
