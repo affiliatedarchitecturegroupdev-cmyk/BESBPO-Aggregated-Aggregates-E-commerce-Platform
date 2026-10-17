@@ -92,6 +92,55 @@ export const DEPARTMENTS: Department[] = [
     href: "/roofing#roof-timber",
     categorySlugs: ["structural-timber", "timber-connectors"],
   },
+  // Building supplies (CAT-32..42, BUILDING_SUPPLIES_CATALOGUE.md) — approved by the owner, 17 Oct 2026.
+  {
+    slug: "doors-windows",
+    shortName: "Doors & Windows",
+    name: "Doors, Windows & Frames",
+    blurb: "Interior and exterior doors, steel door frames, F7 steel windows and aluminium windows and sliding doors.",
+    href: "/doors-windows",
+    categorySlugs: ["doors-frames", "windows-frames"],
+  },
+  {
+    slug: "fencing-security",
+    shortName: "Fencing",
+    name: "Fencing & Security",
+    blurb: "Diamond mesh, galvanised, barbed and razor wire, Y-standards, droppers, palisade, and mesh and security gates.",
+    href: "/fencing-security",
+    categorySlugs: ["fencing-wire-posts", "gates-security"],
+  },
+  {
+    slug: "water-plumbing",
+    shortName: "Water & Plumbing",
+    name: "Water Storage & Plumbing",
+    blurb: "Water tanks from 2,400 to 5,000 L, geysers, Polycop and copper water pipe, and soil and vent pipe.",
+    href: "/water-plumbing",
+    categorySlugs: ["water-tanks-geysers", "water-supply-soil-pipe"],
+  },
+  {
+    slug: "ceilings-drywall",
+    shortName: "Ceilings",
+    name: "Ceilings, Drywall & Insulation",
+    blurb: "RhinoBoard, cove cornice, RhinoLite, PVC ceilings and adhesive — with ceiling insulation from roofing.",
+    href: "/ceilings-drywall",
+    categorySlugs: ["ceilings-drywall"],
+  },
+  {
+    slug: "tools-ppe",
+    shortName: "Tools & PPE",
+    name: "Site Tools, PPE & Consumables",
+    blurb: "Bolsters, levels, builder's line, trowels, wheelbarrows and shovels — hard hats, boots, gloves and barrier tape.",
+    href: "/tools-ppe",
+    categorySlugs: ["site-tools", "ppe-site-safety"],
+  },
+  {
+    slug: "paint-waterproofing",
+    shortName: "Paint & Waterproofing",
+    name: "Waterproofing, Sealants & Paint",
+    blurb: "Silicone and acrylic sealants, bitumen and torch-on waterproofing, and interior, exterior and roof paint.",
+    href: "/paint-waterproofing",
+    categorySlugs: ["waterproofing-sealants", "paint-coatings"],
+  },
 ];
 
 /** Services sit beside the material departments in navigation, not in the product index. */

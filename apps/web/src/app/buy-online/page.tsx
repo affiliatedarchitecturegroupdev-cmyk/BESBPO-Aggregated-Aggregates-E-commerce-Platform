@@ -8,7 +8,7 @@ import { PRODUCT_INDEX } from "@/lib/product-index";
 
 export const metadata: Metadata = {
   title: "Buy Online — Priced Products",
-  description: "Every product with a confirmed online price, ready to add to your cart: aggregates, cement, steel, bricks, paving, drainage, roofing and timber.",
+  description: "Every product with a confirmed online price, ready to add to your cart: aggregates, cement, steel, bricks, paving, drainage, roofing, timber and building supplies.",
   alternates: { canonical: "/buy-online" },
 };
 

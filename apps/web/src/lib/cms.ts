@@ -6,6 +6,7 @@ import { DEFAULT_SLIDES, MEDIA_BY_ID } from "@/data/media";
 import { PACKAGED_PRODUCTS, type PackagedProduct } from "@/data/packaged";
 import { MASONRY_PRODUCTS, type MasonryProduct } from "@/data/masonry";
 import { ROOFING_PRODUCTS, type RoofingProduct } from "@/data/roofing";
+import { SUPPLIES_PRODUCTS } from "@/data/supplies";
 import { STEEL_PRODUCTS, type SteelProduct } from "@/data/steel";
 import { READY_MIX_PRODUCTS, type ReadyMixProduct } from "@/data/ready-mix";
 import { api, apiCached } from "./api";
@@ -26,7 +27,7 @@ export type SlideshowContent = { enabled: boolean; intervalSeconds: number; slid
 export type SiteContent = { announcement: AnnouncementContent; hero: HeroContent; promo: PromoContent; slideshow: SlideshowContent };
 
 // Every product family on the storefront (the hero quotes the total).
-const PRODUCT_COUNT = PRODUCTS.length + PACKAGED_PRODUCTS.length + READY_MIX_PRODUCTS.length + STEEL_PRODUCTS.length + MASONRY_PRODUCTS.length + ROOFING_PRODUCTS.length;
+const PRODUCT_COUNT = PRODUCTS.length + PACKAGED_PRODUCTS.length + READY_MIX_PRODUCTS.length + STEEL_PRODUCTS.length + MASONRY_PRODUCTS.length + ROOFING_PRODUCTS.length + SUPPLIES_PRODUCTS.length;
 
 export const DEFAULT_CONTENT: SiteContent = {
   announcement: { enabled: false, message: "" },
@@ -205,6 +206,15 @@ export const getRoofingCatalogue = cache(async (): Promise<MerchandisedRoofingPr
   });
 });
 
+/** Building supplies (CAT-32..42), visible ones only, with descriptions and photography — the roofing product shape. */
+export const getSuppliesCatalogue = cache(async (): Promise<MerchandisedRoofingProduct[]> => {
+  const bySku = await getOverlay();
+  return SUPPLIES_PRODUCTS.filter((p) => bySku.get(p.sku)?.isActive ?? true).map((p) => {
+    const o = bySku.get(p.sku);
+    return { ...p, description: o?.description ?? null, featuredRank: o?.featuredRank ?? null, images: photos(o, p.name) };
+  });
+});
+
 /** The visible catalogue: workbook products minus hidden ones, with descriptions and photography. */
 export const getCatalogue = cache(async (): Promise<MerchandisedProduct[]> => {
   const bySku = await getOverlay();
@@ -225,8 +235,8 @@ export async function getProduct(slug: string) {
 
 /** SKUs staff have hidden — for client components that list products (calculators, quote form). */
 export async function getHiddenSkus(): Promise<string[]> {
-  const visible = new Set([...(await getCatalogue()), ...(await getPackagedCatalogue()), ...(await getReadyMixCatalogue()), ...(await getSteelCatalogue()), ...(await getMasonryCatalogue()), ...(await getRoofingCatalogue())].map((p) => p.sku));
-  return [...PRODUCTS, ...PACKAGED_PRODUCTS, ...READY_MIX_PRODUCTS, ...STEEL_PRODUCTS, ...MASONRY_PRODUCTS, ...ROOFING_PRODUCTS].filter((p) => !visible.has(p.sku)).map((p) => p.sku);
+  const visible = new Set([...(await getCatalogue()), ...(await getPackagedCatalogue()), ...(await getReadyMixCatalogue()), ...(await getSteelCatalogue()), ...(await getMasonryCatalogue()), ...(await getRoofingCatalogue()), ...(await getSuppliesCatalogue())].map((p) => p.sku));
+  return [...PRODUCTS, ...PACKAGED_PRODUCTS, ...READY_MIX_PRODUCTS, ...STEEL_PRODUCTS, ...MASONRY_PRODUCTS, ...ROOFING_PRODUCTS, ...SUPPLIES_PRODUCTS].filter((p) => !visible.has(p.sku)).map((p) => p.sku);
 }
 
 /** The live slides: enabled ones whose photo is in the media library, in the saved order. */

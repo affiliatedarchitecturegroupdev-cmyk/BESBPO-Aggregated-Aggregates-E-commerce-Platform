@@ -14,6 +14,7 @@ import { PLANT, SERVICES } from "@/data/plant-services";
 import { findQuotable, QUOTABLE, type Quotable, type QuotableUnit } from "@/data/quotable";
 import { READY_MIX_PRODUCTS } from "@/data/ready-mix";
 import { ROOFING_PRODUCTS } from "@/data/roofing";
+import { SUPPLIES_PRODUCTS } from "@/data/supplies";
 import { SITE_PAGES } from "@/data/site-pages";
 import { STEEL_PRODUCTS } from "@/data/steel";
 import { technicalSpec } from "@/data/technical-specs";
@@ -31,7 +32,7 @@ const EXTRA: Record<string, { uses: string[]; summary: string | null; unitsPerM2
   ...READY_MIX_PRODUCTS.map((p) => [p.sku, { uses: p.typicalUses, summary: null }]),
   ...STEEL_PRODUCTS.map((p) => [p.sku, { uses: p.typicalUses, summary: p.summary }]),
   ...MASONRY_PRODUCTS.map((p) => [p.sku, { uses: p.typicalUses, summary: p.summary, unitsPerM2: p.unitsPerM2 }]),
-  ...ROOFING_PRODUCTS.map((p) => [p.sku, { uses: p.typicalUses, summary: p.summary }]),
+  ...[...ROOFING_PRODUCTS, ...SUPPLIES_PRODUCTS].map((p) => [p.sku, { uses: p.typicalUses, summary: p.summary }]),
 ]);
 const DENSITY = Object.fromEntries(PRODUCTS.map((p) => [p.sku, p.bulkDensityKgPerM3]));
 

@@ -34,8 +34,9 @@ PACKAGED_RAW, CEMENT_PACKAGED = packaged_goods.load()
 STEEL_RAW, STEEL = packaged_goods.load_steel()
 MASONRY_RAW, MASONRY = packaged_goods.load_masonry()
 ROOFING_RAW, ROOFING = packaged_goods.load_roofing()
-# Steel, masonry and roofing are priced like packaged goods (their own STEEL / MASONRY / ROOFING families), so one lookup serves them all.
-PACKAGED = {**CEMENT_PACKAGED, **STEEL, **MASONRY, **ROOFING}
+SUPPLIES_RAW, SUPPLIES = packaged_goods.load_supplies()
+# Steel, masonry, roofing and building supplies are priced like packaged goods (their own families), so one lookup serves them all.
+PACKAGED = {**CEMENT_PACKAGED, **STEEL, **MASONRY, **ROOFING, **SUPPLIES}
 READY_MIX_RAW, READY_MIX, PUMPS = ready_mix.load()
 PLANT_SERVICES = rental.load()
 
@@ -81,6 +82,12 @@ def list_masonry_products():
 def list_roofing_products():
     """CAT-26..28 roof sheeting, flashings, ridges & fixings, and insulation, underlay & rainwater goods; CAT-30/31 roof & structural timber and connectors."""
     return ROOFING_RAW["products"]
+
+
+@app.get("/products/supplies")
+def list_supplies_products():
+    """CAT-32..42 building supplies: doors & windows, fencing & security, water & plumbing, ceilings & drywall, tools & PPE, waterproofing & paint."""
+    return SUPPLIES_RAW["products"]
 
 
 @app.get("/products/ready-mix")

@@ -16,6 +16,7 @@ PAIRS = {
     "steel_catalogue.json": "steel-catalogue.json",
     "masonry_catalogue.json": "masonry-catalogue.json",
     "roofing_catalogue.json": "roofing-catalogue.json",
+    "supplies_catalogue.json": "supplies-catalogue.json",
     "pricing_framework.json": "pricing-framework.json",
 }
 # Internal: competitor names and prices, benchmark prices, costs and cost bases.

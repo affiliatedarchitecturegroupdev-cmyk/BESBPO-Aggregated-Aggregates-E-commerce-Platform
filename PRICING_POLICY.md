@@ -36,7 +36,14 @@ and quotes are always re-priced by the pricing service.
   and profile. Retail "CCA treated" structural pine counts as H2 (owner,
   12 Oct 2026). Live: S5 H2 sized 38 × 76, 38 × 114 and 38 × 228 mm;
   everything else quoted (`ROOFING_CATALOGUE.md`).
-- **Cost proxy:** for cement, ready-mix, steel, masonry and roofing the cost is assumed to be the
+- **Building supplies (Oct 2026):** the same two-retailer rule, per item,
+  board, roll or pack, for the same make and size — or, for commodity items
+  (steel windows by SANS 727 code, galvanised wire by gauge and mass, PVC
+  ceiling boards by size and finish), the same specification. Promotions
+  are excluded. Where only one retailer lists a product, the makes differ, or
+  a listing doesn't state the size, it is quoted
+  (`BUILDING_SUPPLIES_CATALOGUE.md`).
+- **Cost proxy:** for cement, ready-mix, steel, masonry, roofing and building supplies the cost is assumed to be the
   benchmark itself (`costBasisPercent` 100) until real supplier
   cost/commission terms are known — the biggest open commercial item.
 
@@ -69,6 +76,7 @@ site:
 | Steel (rebar, mesh, brickforce, accessories, sections) | list | 4% (approved Oct 2026) | quoted |
 | Masonry & precast (bricks, blocks, lintels, DPC, air bricks; pavers, kerbs, retaining, gabions; pipes, precast drainage, membranes; concrete roof tiles) | list | 4% (approved Oct 2026) | quoted |
 | Roofing (sheeting, flashings, fixings, insulation, underlay, rainwater goods; roof & structural timber and connectors) | list | 4% (approved Oct 2026; timber 12 Oct 2026) | quoted |
+| Building supplies (doors & windows, fencing & security, water & plumbing, ceilings & drywall, tools & PPE, waterproofing & paint) | list | 4% (set 17 Oct 2026 under the owner's directive — for review) | quoted |
 
 "Quoted" means the tier has no self-serve price for that family: the cart
 or quote goes to a person, who confirms it with the supplier.

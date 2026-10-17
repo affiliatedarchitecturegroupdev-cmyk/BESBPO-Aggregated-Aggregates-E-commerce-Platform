@@ -31,6 +31,18 @@ const PALETTES: Record<string, { base: string; grains: string[] }> = {
   "structural-timber": { base: "#D8BE8C", grains: ["#C4A472", "#E6D2A8", "#9FAE7E"] },
   "timber-connectors": { base: "#B0B5B8", grains: ["#D8BE8C", "#8E9497", "#C9CED0"] },
   "concrete-roof-tiles": { base: "#9C4A32", grains: ["#7F3A26", "#B65E43", "#5C5A57"] },
+  // Building supplies: timber doors and steel frames, galvanised wire, tank green, gypsum white, safety yellow, paint.
+  "doors-frames": { base: "#B98F5E", grains: ["#9A7246", "#D2AE80", "#6B4F35"] },
+  "windows-frames": { base: "#7A5446", grains: ["#9C6E5C", "#B9C7CF", "#5A3D33"] },
+  "fencing-wire-posts": { base: "#9FA5A8", grains: ["#7F8588", "#C3C8CA", "#4A4F52"] },
+  "gates-security": { base: "#8C9294", grains: ["#6C7275", "#F2F2F0", "#B0B6B8"] },
+  "water-tanks-geysers": { base: "#4E6B4A", grains: ["#3D5739", "#6B8A66", "#E9ECEB"] },
+  "water-supply-soil-pipe": { base: "#E4E1DA", grains: ["#B87333", "#C9C5BC", "#8E8A82"] },
+  "ceilings-drywall": { base: "#EEEBE4", grains: ["#DAD5CB", "#F8F7F3", "#C4BEB2"] },
+  "site-tools": { base: "#6E6A64", grains: ["#E07A1F", "#4F4C47", "#A39E96"] },
+  "ppe-site-safety": { base: "#D9C531", grains: ["#E8B931", "#F2F2F0", "#E07A1F"] },
+  "waterproofing-sealants": { base: "#3B3D3F", grains: ["#55585B", "#9C4A32", "#F2F2F0"] },
+  "paint-coatings": { base: "#E6E1D6", grains: ["#2C4A5E", "#C08A34", "#9C4A32"] },
   "ready-mix-concrete": { base: "#A7A49E", grains: ["#8D8A84", "#C2BFB9", "#75726C"] },
   // Plant hire and site services: machine yellow and safety orange on site soil.
   "plant-hire": { base: "#8A7458", grains: ["#D9A521", "#6E5B44", "#E8B931"] },

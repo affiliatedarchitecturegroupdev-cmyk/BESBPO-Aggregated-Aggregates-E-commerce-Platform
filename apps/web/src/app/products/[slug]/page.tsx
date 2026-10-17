@@ -25,13 +25,14 @@ import { PACKAGED_PRODUCTS } from "@/data/packaged";
 import { READY_MIX_PRODUCTS } from "@/data/ready-mix";
 import { MASONRY_PRODUCTS } from "@/data/masonry";
 import { ROOFING_PRODUCTS } from "@/data/roofing";
+import { SUPPLIES_PRODUCTS } from "@/data/supplies";
 import { STEEL_PRODUCTS } from "@/data/steel";
-import { getCatalogue, getPackagedCatalogue, getProduct, getReadyMixCatalogue, getSteelCatalogue, getMasonryCatalogue, getRoofingCatalogue } from "@/lib/cms";
+import { getCatalogue, getPackagedCatalogue, getProduct, getReadyMixCatalogue, getSteelCatalogue, getMasonryCatalogue, getRoofingCatalogue, getSuppliesCatalogue } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
-  return [...PRODUCTS, ...PACKAGED_PRODUCTS, ...READY_MIX_PRODUCTS, ...STEEL_PRODUCTS, ...MASONRY_PRODUCTS, ...ROOFING_PRODUCTS].map((p) => ({ slug: p.slug }));
+  return [...PRODUCTS, ...PACKAGED_PRODUCTS, ...READY_MIX_PRODUCTS, ...STEEL_PRODUCTS, ...MASONRY_PRODUCTS, ...ROOFING_PRODUCTS, ...SUPPLIES_PRODUCTS].map((p) => ({ slug: p.slug }));
 }
 
 async function getPackaged(slug: string) {
@@ -47,7 +48,7 @@ async function getMasonry(slug: string) {
 }
 
 async function getRoofing(slug: string) {
-  return (await getRoofingCatalogue()).find((p) => p.slug === slug);
+  return (await getRoofingCatalogue()).find((p) => p.slug === slug) ?? (await getSuppliesCatalogue()).find((p) => p.slug === slug);
 }
 
 async function getReadyMix(slug: string) {
@@ -90,7 +91,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       const unit = roofing.units.find((u) => u.prices);
       return {
         title: roofing.name,
-        description: `${roofing.name}${unit ? ` from ${formatZAR(unit.prices!.RETAIL)} per ${unit.label.toLowerCase()}` : ""}${roofing.roofProfile ? " — standard lengths or cut to length from 1 to 14 m" : ""}, delivered by flatbed across South Africa.`,
+        description: `${roofing.name}${unit ? ` from ${formatZAR(unit.prices!.RETAIL)} per ${unit.label.toLowerCase()}` : ""}${roofing.roofProfile ? " — standard lengths or cut to length from 1 to 14 m" : ""}, delivered ${roofing.line === "supplies" ? "by the merchant" : "by flatbed"} across South Africa.`,
         alternates: { canonical: `/products/${roofing.slug}` },
       };
     }

@@ -19,6 +19,7 @@ export const PACKAGED_UNITS = [
   "EACH",
   // Masonry (CAT-19/20): bricks per 1,000 — blocks, lintels and DPC reuse EACH and ROLL.
   "THOUSAND",
+  // Building supplies (CAT-32..42) reuse EACH, PACK, ROLL and SHEET.
   // Roofing (CAT-26..28): roof sheets in the six standard lengths; flashings, screws and rolls reuse EACH, PACK and ROLL.
   "SHEET_3_0M",
   "SHEET_3_6M",

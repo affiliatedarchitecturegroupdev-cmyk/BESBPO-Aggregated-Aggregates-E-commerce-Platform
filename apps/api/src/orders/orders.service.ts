@@ -387,7 +387,7 @@ export class OrdersService {
    * The delivery's cost to us, ex VAT. Staff's actual figure wins; otherwise
    * the standard rate for the carrier, distance band and load. Ready-mix-only
    * orders travel in the plant's mixer (no separate delivery cost); steel,
-   * masonry and roofing go on the supplier's flatbed, so the tipper rates don't apply and staff enter
+   * masonry, roofing and building supplies go on the supplier's own vehicle, so the tipper rates don't apply and staff enter
    * the actual cost. No rate means no cost is recorded — it's never guessed.
    */
   private async deliveryCost(
@@ -400,7 +400,7 @@ export class OrdersService {
     }
     if (order.shipment?.deliveryCost != null) return null; // already recorded — keep it
     const lines = await this.prisma.orderLineItem.findMany({ where: { orderId: order.id }, select: { pricingFamily: true } });
-    if (lines.length > 0 && lines.every((l) => l.pricingFamily === "READY_MIX" || l.pricingFamily === "STEEL" || l.pricingFamily === "MASONRY" || l.pricingFamily === "ROOFING")) return null;
+    if (lines.length > 0 && lines.every((l) => l.pricingFamily === "READY_MIX" || l.pricingFamily === "STEEL" || l.pricingFamily === "MASONRY" || l.pricingFamily === "ROOFING" || l.pricingFamily === "SUPPLIES")) return null;
     if (order.deliveryDistanceKm === null) return null;
     const band = await this.prisma.deliveryBand.findFirst({
       where: { minKm: { lte: order.deliveryDistanceKm }, OR: [{ maxKm: null }, { maxKm: { gt: order.deliveryDistanceKm } }] },

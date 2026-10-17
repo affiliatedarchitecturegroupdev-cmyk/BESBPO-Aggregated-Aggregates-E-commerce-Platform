@@ -45,6 +45,12 @@ ROOFING_DELIVERY_NOTE = (
     "any delivery charge and any cut-to-length lead time with you before dispatch. Long sheets need clear access for the truck."
 )
 
+# Doors, windows, fencing, tanks, boards, tools and paint come on the merchant's own vehicle.
+SUPPLIES_DELIVERY_NOTE = (
+    "Building supplies (doors, windows, fencing, tanks, boards, tools and paint) are delivered by the merchant's own vehicle: "
+    "we confirm stock, the delivery slot and any delivery charge with you before dispatch."
+)
+
 
 @dataclass(frozen=True)
 class OrderLine:
@@ -137,13 +143,15 @@ def price_order(
                         if packaged_product.line == "masonry"
                         else "Volume / Civil Bulk roofing is quoted per project."
                         if packaged_product.line == "roofing"
+                        else "Volume / Civil Bulk building supplies are quoted per project."
+                        if packaged_product.line == "supplies"
                         else "Trade and volume pricing for cement in bulk, and volume pricing for all cement, is quoted individually."
                     )
             elif not result.is_priced and PRICE_ON_REQUEST not in extra_codes:
                 extra_codes.append(PRICE_ON_REQUEST)
                 extra_reasons.append("Some items have no confirmed price yet — our team confirms them with the supplier.")
             if packaged_product.own_transport:
-                note = {"steel": STEEL_DELIVERY_NOTE, "roofing": ROOFING_DELIVERY_NOTE}.get(packaged_product.line, MASONRY_DELIVERY_NOTE)
+                note = {"steel": STEEL_DELIVERY_NOTE, "roofing": ROOFING_DELIVERY_NOTE, "supplies": SUPPLIES_DELIVERY_NOTE}.get(packaged_product.line, MASONRY_DELIVERY_NOTE)
                 if note not in notes:
                     notes.append(note)
             elif line.unit in BAG_UNITS:

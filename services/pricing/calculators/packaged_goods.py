@@ -34,13 +34,14 @@ from decimal import Decimal
 from pathlib import Path
 from typing import Optional
 
-from calculators.discount_floor import CEMENT_BAGGED, CEMENT_BULK, MASONRY, ROOFING, STEEL, STOREFRONT_MARKUP, TierQuoteOnly, tier_price
+from calculators.discount_floor import CEMENT_BAGGED, CEMENT_BULK, MASONRY, ROOFING, STEEL, STOREFRONT_MARKUP, SUPPLIES, TierQuoteOnly, tier_price
 from calculators.tonnage_volume import to_cents
 
 DATA_PATH = Path(__file__).parent.parent / "data" / "b2b_packaged_catalogue.json"
 STEEL_DATA_PATH = Path(__file__).parent.parent / "data" / "steel_catalogue.json"
 MASONRY_DATA_PATH = Path(__file__).parent.parent / "data" / "masonry_catalogue.json"
 ROOFING_DATA_PATH = Path(__file__).parent.parent / "data" / "roofing_catalogue.json"
+SUPPLIES_DATA_PATH = Path(__file__).parent.parent / "data" / "supplies_catalogue.json"
 READY_STATUS = "Ready — benchmarked"
 CEMENT_UNITS = ("BAG_25KG", "BAG_50KG", "BULK_BAG_1_5T", "BULK_TANKER_PER_TON", "DRUM_210L", "IBC_TOTE_1000L")
 # Steel: stock lengths, tonnes, mesh sheets, brickforce rolls, wire coils, packs and single items.
@@ -53,9 +54,11 @@ SHEET_LENGTH_UNITS = ("SHEET_3_0M", "SHEET_3_6M", "SHEET_4_2M", "SHEET_4_8M", "S
 # Roof & structural timber (CAT-30): SA pine in the same six standard lengths, one unit each.
 TIMBER_LENGTH_UNITS = ("TIMBER_3_0M", "TIMBER_3_6M", "TIMBER_4_2M", "TIMBER_4_8M", "TIMBER_6_0M", "TIMBER_6_6M")
 ROOFING_UNITS = SHEET_LENGTH_UNITS + TIMBER_LENGTH_UNITS + ("METRE", "EACH", "PACK", "ROLL")
+# Building supplies (CAT-32..42): doors, windows, posts and tins per item; boards per sheet; wire, mesh and tape per roll; masks per pack.
+SUPPLIES_UNITS = ("EACH", "PACK", "ROLL", "SHEET")
 PACKAGED_UNITS = CEMENT_UNITS + STEEL_UNITS + ("THOUSAND",) + SHEET_LENGTH_UNITS + TIMBER_LENGTH_UNITS + ("METRE",)
 # Lines that travel on the supplier's own flatbed or crane truck, never in the tipper bands.
-OWN_TRANSPORT_LINES = ("steel", "masonry", "roofing")
+OWN_TRANSPORT_LINES = ("steel", "masonry", "roofing", "supplies")
 BAGGED_UNITS = ("BAG_25KG", "BAG_50KG")
 TIER_QUOTE_STATUS = "Quoted for your tier"
 
@@ -68,6 +71,8 @@ def family_for(product: "PackagedProduct", unit: str) -> str:
         return MASONRY
     if product.line == "roofing":
         return ROOFING
+    if product.line == "supplies":
+        return SUPPLIES
     return CEMENT_BAGGED if unit in BAGGED_UNITS else CEMENT_BULK
 
 
@@ -100,7 +105,7 @@ class PackagedProduct:
     name: str
     category_slug: str
     units: dict[str, PackagedUnit]
-    line: str = "cement"  # "cement" (CAT-10/11), "steel" (CAT-15..18), "masonry" (masonry & precast, CAT-19..25, 29) or "roofing" (CAT-26..28, 30, 31)
+    line: str = "cement"  # "cement" (CAT-10/11), "steel" (CAT-15..18), "masonry" (masonry & precast, CAT-19..25, 29) "roofing" (CAT-26..28, 30, 31) or "supplies" (CAT-32..42)
 
     @property
     def is_steel(self) -> bool:
@@ -157,6 +162,12 @@ def load_roofing(path: Path = ROOFING_DATA_PATH) -> tuple[dict, dict[str, Packag
     """The roofing catalogue (CAT-26..28, with timber CAT-30/31) — priced like packaged goods, in the ROOFING family."""
     raw = json.loads(path.read_text(encoding="utf-8"))
     return raw, _products(raw, ROOFING_UNITS, "roofing")
+
+
+def load_supplies(path: Path = SUPPLIES_DATA_PATH) -> tuple[dict, dict[str, PackagedProduct]]:
+    """The building-supplies catalogue (CAT-32..42) — priced like packaged goods, in the SUPPLIES family."""
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    return raw, _products(raw, SUPPLIES_UNITS, "supplies")
 
 
 @dataclass

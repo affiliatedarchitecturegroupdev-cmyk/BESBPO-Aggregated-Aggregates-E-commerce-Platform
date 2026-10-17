@@ -5,8 +5,8 @@ import { PromoSlot } from "@/components/merchandising/PromoSlot";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { ProductCard } from "@/components/product/ProductCard";
 import { GRADING_STANDARDS, type Product } from "@/data/catalogue";
-import { getCatalogue, getPackagedCatalogue, getReadyMixCatalogue, getSteelCatalogue, getMasonryCatalogue, getRoofingCatalogue, type MerchandisedMasonryProduct, type MerchandisedRoofingProduct, type MerchandisedPackagedProduct, type MerchandisedProduct, type MerchandisedReadyMixProduct, type MerchandisedSteelProduct } from "@/lib/cms";
-import { B2B_CATEGORIES, CATEGORIES, CORE_CATEGORIES, MASONRY_CATEGORIES, READY_MIX_CATEGORIES, ROOFING_CATEGORIES, STEEL_CATEGORIES } from "@/data/categories";
+import { getCatalogue, getPackagedCatalogue, getReadyMixCatalogue, getSteelCatalogue, getMasonryCatalogue, getRoofingCatalogue, getSuppliesCatalogue, type MerchandisedMasonryProduct, type MerchandisedRoofingProduct, type MerchandisedPackagedProduct, type MerchandisedProduct, type MerchandisedReadyMixProduct, type MerchandisedSteelProduct } from "@/lib/cms";
+import { B2B_CATEGORIES, CATEGORIES, CORE_CATEGORIES, MASONRY_CATEGORIES, READY_MIX_CATEGORIES, ROOFING_CATEGORIES, STEEL_CATEGORIES, SUPPLIES_CATEGORIES } from "@/data/categories";
 import { ROOF_TILE_CATEGORIES } from "@/data/masonry";
 import { PACKAGED_PRODUCTS } from "@/data/packaged";
 import { INDUSTRIES } from "@/data/industries";
@@ -67,6 +67,7 @@ function inScope(categorySlug: string, { category, industry, group }: SearchPara
   if (group === "steel") return STEEL_CATEGORIES.some((c) => c.slug === categorySlug);
   if (group === "masonry") return MASONRY_CATEGORIES.some((c) => c.slug === categorySlug);
   if (group === "roofing") return ROOFING_CATEGORIES.some((c) => c.slug === categorySlug) || ROOF_TILE_CATEGORIES.includes(categorySlug);
+  if (group === "supplies") return SUPPLIES_CATEGORIES.some((c) => c.slug === categorySlug);
   return true;
 }
 
@@ -128,13 +129,14 @@ function filterRoofing(catalogue: MerchandisedRoofingProduct[], params: SearchPa
 }
 
 export default async function ProductListingPage({ searchParams }: { searchParams: SearchParams }) {
-  const [catalogue, packagedCatalogue, readyMixCatalogue, steelCatalogue, masonryCatalogue, roofingCatalogue, promotions] = await Promise.all([
+  const [catalogue, packagedCatalogue, readyMixCatalogue, steelCatalogue, masonryCatalogue, roofingCatalogue, suppliesCatalogue, promotions] = await Promise.all([
     getCatalogue(),
     getPackagedCatalogue(),
     getReadyMixCatalogue(),
     getSteelCatalogue(),
     getMasonryCatalogue(),
     getRoofingCatalogue(),
+    getSuppliesCatalogue(),
     getActivePromotions({ category: searchParams.category, industry: searchParams.industry }),
   ]);
   const products = filterProducts(catalogue, searchParams);
@@ -143,7 +145,9 @@ export default async function ProductListingPage({ searchParams }: { searchParam
   const steel = filterSteel(steelCatalogue, searchParams);
   const masonry = filterMasonry(masonryCatalogue, searchParams);
   const roofing = filterRoofing(roofingCatalogue, searchParams);
-  const total = products.length + packaged.length + readyMix.length + steel.length + masonry.length + roofing.length;
+  // Building supplies share the roofing product shape (and so its filter and card).
+  const supplies = filterRoofing(suppliesCatalogue, searchParams);
+  const total = products.length + packaged.length + readyMix.length + steel.length + masonry.length + roofing.length + supplies.length;
   const category = CATEGORIES.find((c) => c.slug === searchParams.category);
   const industry = category ? undefined : INDUSTRIES.find((i) => i.slug === searchParams.industry);
   const coreGroup = !category && !industry && searchParams.group === "core";
@@ -224,6 +228,11 @@ export default async function ProductListingPage({ searchParams }: { searchParam
                 </optgroup>
                 <optgroup label="Roofing">
                   {ROOFING_CATEGORIES.map((c) => (
+                    <option key={c.slug} value={c.slug}>{c.name}</option>
+                  ))}
+                </optgroup>
+                <optgroup label="Building supplies">
+                  {SUPPLIES_CATEGORIES.map((c) => (
                     <option key={c.slug} value={c.slug}>{c.name}</option>
                   ))}
                 </optgroup>
@@ -330,6 +339,9 @@ export default async function ProductListingPage({ searchParams }: { searchParam
                 <PackagedProductCard key={product.sku} product={product} />
               ))}
               {roofing.map((product) => (
+                <PackagedProductCard key={product.sku} product={product} />
+              ))}
+              {supplies.map((product) => (
                 <PackagedProductCard key={product.sku} product={product} />
               ))}
             </div>
