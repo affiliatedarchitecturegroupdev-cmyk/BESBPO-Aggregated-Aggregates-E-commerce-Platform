@@ -23,9 +23,9 @@ def test_catalogue_shape_and_counts():
     by_cat = {}
     for p in RAW["products"]:
         by_cat[p["category_slug"]] = by_cat.get(p["category_slug"], 0) + 1
-    assert by_cat == {"bricks-blocks": 9, "lintels-dpc-wall-accessories": 12, "paving-kerbs-edging": 9, "retaining-erosion-control": 5, "pipes-fittings": 7, "precast-drainage": 8, "geosynthetics-membranes": 4, "concrete-roof-tiles": 4}
+    assert by_cat == {"bricks-blocks": 26, "lintels-dpc-wall-accessories": 55, "paving-kerbs-edging": 34, "retaining-erosion-control": 17, "pipes-fittings": 33, "precast-drainage": 29, "geosynthetics-membranes": 12, "concrete-roof-tiles": 16}
     assert [c["code"] for c in RAW["categories"]] == ["CAT-19", "CAT-20", "CAT-21", "CAT-22", "CAT-23", "CAT-24", "CAT-25", "CAT-29"]
-    assert len({p["slug"] for p in RAW["products"]}) == len({p["sku"] for p in RAW["products"]}) == 58
+    assert len({p["slug"] for p in RAW["products"]}) == len({p["sku"] for p in RAW["products"]}) == 222  # 58 + 164 range depth (docs/pricing/RANGE_DEPTH.md)
     # SKUs never collide with another line's.
     assert not set(MASONRY) & (set(PACKAGED) - set(MASONRY))
 
@@ -94,7 +94,7 @@ def test_masonry_and_steel_travel_by_flatbed_with_no_tipper_fee():
 
 
 def test_whole_units_only_and_endpoints():
-    assert len(client.get("/products/masonry").json()) == 58
+    assert len(client.get("/products/masonry").json()) == 222
     # Pipes are sold by the 6 m length, in the same family.
     body = client.post("/calculate/packaged-goods", json={"sku": "AA-DRN-PIPE-UG-110", "quantity": 4, "unit": "LENGTH_6M"}).json()
     assert body["family"] == "MASONRY" and body["total"] == 1123.0  # 4 x R280.75

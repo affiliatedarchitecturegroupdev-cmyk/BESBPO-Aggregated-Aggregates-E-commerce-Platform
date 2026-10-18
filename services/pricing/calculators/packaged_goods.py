@@ -44,6 +44,9 @@ ROOFING_DATA_PATH = Path(__file__).parent.parent / "data" / "roofing_catalogue.j
 SUPPLIES_DATA_PATH = Path(__file__).parent.parent / "data" / "supplies_catalogue.json"
 READY_STATUS = "Ready — benchmarked"
 CEMENT_UNITS = ("BAG_25KG", "BAG_50KG", "BULK_BAG_1_5T", "BULK_TANKER_PER_TON", "DRUM_210L", "IBC_TOTE_1000L")
+# Mortars, grouts, adhesives and admixtures (CAT-11) also come in other pack sizes — a 20 kg bag of tile adhesive, a 5 L
+# bonding liquid — sold each (docs/pricing/RANGE_DEPTH.md).
+CEMENT_LINE_UNITS = CEMENT_UNITS + ("EACH",)
 # Steel: stock lengths, tonnes, mesh sheets, brickforce rolls, wire coils, packs and single items.
 STEEL_UNITS = ("LENGTH_6M", "LENGTH_12M", "TONNE", "SHEET", "ROLL", "COIL", "PACK", "EACH")
 # Masonry & precast: bricks per 1,000; blocks, pavers, precast and fittings per item; DPC, DPM and fabrics per roll; pipes per 6 m length.
@@ -73,7 +76,8 @@ def family_for(product: "PackagedProduct", unit: str) -> str:
         return ROOFING
     if product.line == "supplies":
         return SUPPLIES
-    return CEMENT_BAGGED if unit in BAGGED_UNITS else CEMENT_BULK
+    # Bags and other packs (EACH) take the bagged rules; bulk formats are quoted for trade and volume.
+    return CEMENT_BAGGED if unit in BAGGED_UNITS or unit == "EACH" else CEMENT_BULK
 
 
 class PricingNotAvailable(ValueError):
@@ -143,7 +147,7 @@ def _products(raw: dict, allowed_units: tuple[str, ...], line: str) -> dict[str,
 def load(path: Path = DATA_PATH) -> tuple[dict, dict[str, PackagedProduct]]:
     """The CAT-10/11 packaged-goods catalogue."""
     raw = json.loads(path.read_text(encoding="utf-8"))
-    return raw, _products(raw, CEMENT_UNITS, "cement")
+    return raw, _products(raw, CEMENT_LINE_UNITS, "cement")
 
 
 def load_steel(path: Path = STEEL_DATA_PATH) -> tuple[dict, dict[str, PackagedProduct]]:

@@ -1662,6 +1662,4742 @@
    ],
    "manufacturer": null,
    "specialist_characteristics": []
+  },
+  {
+   "sku": "AA-MAS-LINTEL-900",
+   "slug": "prestressed-concrete-lintel-0-9-m",
+   "name": "Prestressed Concrete Lintel 0.9 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "0.9 m long",
+   "units_per_m2": null,
+   "description": "Precast prestressed concrete lintel, 0.9 m long, in the standard single-leaf section (about 110 × 75 mm) — one per 110 mm brick leaf, with the end bearing and opening span the maker's span table allows.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Garage and wide openings (longer lengths)"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-2100",
+   "slug": "prestressed-concrete-lintel-2-1-m",
+   "name": "Prestressed Concrete Lintel 2.1 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "2.1 m long",
+   "units_per_m2": null,
+   "description": "Precast prestressed concrete lintel, 2.1 m long, in the standard single-leaf section (about 110 × 75 mm) — one per 110 mm brick leaf, with the end bearing and opening span the maker's span table allows.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Garage and wide openings (longer lengths)"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-2700",
+   "slug": "prestressed-concrete-lintel-2-7-m",
+   "name": "Prestressed Concrete Lintel 2.7 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "2.7 m long",
+   "units_per_m2": null,
+   "description": "Precast prestressed concrete lintel, 2.7 m long, in the standard single-leaf section (about 110 × 75 mm) — one per 110 mm brick leaf, with the end bearing and opening span the maker's span table allows.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Garage and wide openings (longer lengths)"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-3300",
+   "slug": "prestressed-concrete-lintel-3-3-m",
+   "name": "Prestressed Concrete Lintel 3.3 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "3.3 m long",
+   "units_per_m2": null,
+   "description": "Precast prestressed concrete lintel, 3.3 m long, in the standard single-leaf section (about 110 × 75 mm) — one per 110 mm brick leaf, with the end bearing and opening span the maker's span table allows.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Garage and wide openings (longer lengths)"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-3900",
+   "slug": "prestressed-concrete-lintel-3-9-m",
+   "name": "Prestressed Concrete Lintel 3.9 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "3.9 m long",
+   "units_per_m2": null,
+   "description": "Precast prestressed concrete lintel, 3.9 m long, in the standard single-leaf section (about 110 × 75 mm) — one per 110 mm brick leaf, with the end bearing and opening span the maker's span table allows.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Garage and wide openings (longer lengths)"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-4200",
+   "slug": "prestressed-concrete-lintel-4-2-m",
+   "name": "Prestressed Concrete Lintel 4.2 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "4.2 m long",
+   "units_per_m2": null,
+   "description": "Precast prestressed concrete lintel, 4.2 m long, in the standard single-leaf section (about 110 × 75 mm) — one per 110 mm brick leaf, with the end bearing and opening span the maker's span table allows.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Garage and wide openings (longer lengths)"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-4500",
+   "slug": "prestressed-concrete-lintel-4-5-m",
+   "name": "Prestressed Concrete Lintel 4.5 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "4.5 m long",
+   "units_per_m2": null,
+   "description": "Precast prestressed concrete lintel, 4.5 m long, in the standard single-leaf section (about 110 × 75 mm) — one per 110 mm brick leaf, with the end bearing and opening span the maker's span table allows.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Garage and wide openings (longer lengths)"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-4800",
+   "slug": "prestressed-concrete-lintel-4-8-m",
+   "name": "Prestressed Concrete Lintel 4.8 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "4.8 m long",
+   "units_per_m2": null,
+   "description": "Precast prestressed concrete lintel, 4.8 m long, in the standard single-leaf section (about 110 × 75 mm) — one per 110 mm brick leaf, with the end bearing and opening span the maker's span table allows.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Garage and wide openings (longer lengths)"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-5100",
+   "slug": "prestressed-concrete-lintel-5-1-m",
+   "name": "Prestressed Concrete Lintel 5.1 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "5.1 m long",
+   "units_per_m2": null,
+   "description": "Precast prestressed concrete lintel, 5.1 m long, in the standard single-leaf section (about 110 × 75 mm) — one per 110 mm brick leaf, with the end bearing and opening span the maker's span table allows.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Garage and wide openings (longer lengths)"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-5400",
+   "slug": "prestressed-concrete-lintel-5-4-m",
+   "name": "Prestressed Concrete Lintel 5.4 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "5.4 m long",
+   "units_per_m2": null,
+   "description": "Precast prestressed concrete lintel, 5.4 m long, in the standard single-leaf section (about 110 × 75 mm) — one per 110 mm brick leaf, with the end bearing and opening span the maker's span table allows.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Garage and wide openings (longer lengths)"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-6000",
+   "slug": "prestressed-concrete-lintel-6-0-m",
+   "name": "Prestressed Concrete Lintel 6.0 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "6.0 m long",
+   "units_per_m2": null,
+   "description": "Precast prestressed concrete lintel, 6.0 m long, in the standard single-leaf section (about 110 × 75 mm) — one per 110 mm brick leaf, with the end bearing and opening span the maker's span table allows.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Garage and wide openings (longer lengths)"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-6600",
+   "slug": "prestressed-concrete-lintel-6-6-m",
+   "name": "Prestressed Concrete Lintel 6.6 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "6.6 m long",
+   "units_per_m2": null,
+   "description": "Precast prestressed concrete lintel, 6.6 m long, in the standard single-leaf section (about 110 × 75 mm) — one per 110 mm brick leaf, with the end bearing and opening span the maker's span table allows.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Garage and wide openings (longer lengths)"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-MAXI-1200",
+   "slug": "maxi-prestressed-concrete-lintel-140-mm-1-2-m",
+   "name": "Maxi Prestressed Concrete Lintel 140 mm, 1.2 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "1.2 m long, 140 mm wide",
+   "units_per_m2": null,
+   "description": "Prestressed concrete lintel in the wider maxi section (about 140 × 75 mm), 1.2 m long — for walls built in maxi bricks (290 × 140 × 90 mm) and 140 mm blockwork.",
+   "typical_uses": [
+    "Over openings in maxi-brick and 140 mm block walls"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-MAXI-1500",
+   "slug": "maxi-prestressed-concrete-lintel-140-mm-1-5-m",
+   "name": "Maxi Prestressed Concrete Lintel 140 mm, 1.5 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "1.5 m long, 140 mm wide",
+   "units_per_m2": null,
+   "description": "Prestressed concrete lintel in the wider maxi section (about 140 × 75 mm), 1.5 m long — for walls built in maxi bricks (290 × 140 × 90 mm) and 140 mm blockwork.",
+   "typical_uses": [
+    "Over openings in maxi-brick and 140 mm block walls"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-MAXI-1800",
+   "slug": "maxi-prestressed-concrete-lintel-140-mm-1-8-m",
+   "name": "Maxi Prestressed Concrete Lintel 140 mm, 1.8 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "1.8 m long, 140 mm wide",
+   "units_per_m2": null,
+   "description": "Prestressed concrete lintel in the wider maxi section (about 140 × 75 mm), 1.8 m long — for walls built in maxi bricks (290 × 140 × 90 mm) and 140 mm blockwork.",
+   "typical_uses": [
+    "Over openings in maxi-brick and 140 mm block walls"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-MAXI-2100",
+   "slug": "maxi-prestressed-concrete-lintel-140-mm-2-1-m",
+   "name": "Maxi Prestressed Concrete Lintel 140 mm, 2.1 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "2.1 m long, 140 mm wide",
+   "units_per_m2": null,
+   "description": "Prestressed concrete lintel in the wider maxi section (about 140 × 75 mm), 2.1 m long — for walls built in maxi bricks (290 × 140 × 90 mm) and 140 mm blockwork.",
+   "typical_uses": [
+    "Over openings in maxi-brick and 140 mm block walls"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-MAXI-2400",
+   "slug": "maxi-prestressed-concrete-lintel-140-mm-2-4-m",
+   "name": "Maxi Prestressed Concrete Lintel 140 mm, 2.4 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "2.4 m long, 140 mm wide",
+   "units_per_m2": null,
+   "description": "Prestressed concrete lintel in the wider maxi section (about 140 × 75 mm), 2.4 m long — for walls built in maxi bricks (290 × 140 × 90 mm) and 140 mm blockwork.",
+   "typical_uses": [
+    "Over openings in maxi-brick and 140 mm block walls"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-MAXI-2700",
+   "slug": "maxi-prestressed-concrete-lintel-140-mm-2-7-m",
+   "name": "Maxi Prestressed Concrete Lintel 140 mm, 2.7 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "2.7 m long, 140 mm wide",
+   "units_per_m2": null,
+   "description": "Prestressed concrete lintel in the wider maxi section (about 140 × 75 mm), 2.7 m long — for walls built in maxi bricks (290 × 140 × 90 mm) and 140 mm blockwork.",
+   "typical_uses": [
+    "Over openings in maxi-brick and 140 mm block walls"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-MAXI-3000",
+   "slug": "maxi-prestressed-concrete-lintel-140-mm-3-0-m",
+   "name": "Maxi Prestressed Concrete Lintel 140 mm, 3.0 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "3.0 m long, 140 mm wide",
+   "units_per_m2": null,
+   "description": "Prestressed concrete lintel in the wider maxi section (about 140 × 75 mm), 3.0 m long — for walls built in maxi bricks (290 × 140 × 90 mm) and 140 mm blockwork.",
+   "typical_uses": [
+    "Over openings in maxi-brick and 140 mm block walls"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-MAXI-3300",
+   "slug": "maxi-prestressed-concrete-lintel-140-mm-3-3-m",
+   "name": "Maxi Prestressed Concrete Lintel 140 mm, 3.3 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "3.3 m long, 140 mm wide",
+   "units_per_m2": null,
+   "description": "Prestressed concrete lintel in the wider maxi section (about 140 × 75 mm), 3.3 m long — for walls built in maxi bricks (290 × 140 × 90 mm) and 140 mm blockwork.",
+   "typical_uses": [
+    "Over openings in maxi-brick and 140 mm block walls"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-MAXI-3600",
+   "slug": "maxi-prestressed-concrete-lintel-140-mm-3-6-m",
+   "name": "Maxi Prestressed Concrete Lintel 140 mm, 3.6 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "3.6 m long, 140 mm wide",
+   "units_per_m2": null,
+   "description": "Prestressed concrete lintel in the wider maxi section (about 140 × 75 mm), 3.6 m long — for walls built in maxi bricks (290 × 140 × 90 mm) and 140 mm blockwork.",
+   "typical_uses": [
+    "Over openings in maxi-brick and 140 mm block walls"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-MAXI-4200",
+   "slug": "maxi-prestressed-concrete-lintel-140-mm-4-2-m",
+   "name": "Maxi Prestressed Concrete Lintel 140 mm, 4.2 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "4.2 m long, 140 mm wide",
+   "units_per_m2": null,
+   "description": "Prestressed concrete lintel in the wider maxi section (about 140 × 75 mm), 4.2 m long — for walls built in maxi bricks (290 × 140 × 90 mm) and 140 mm blockwork.",
+   "typical_uses": [
+    "Over openings in maxi-brick and 140 mm block walls"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-MAXI-4800",
+   "slug": "maxi-prestressed-concrete-lintel-140-mm-4-8-m",
+   "name": "Maxi Prestressed Concrete Lintel 140 mm, 4.8 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "4.8 m long, 140 mm wide",
+   "units_per_m2": null,
+   "description": "Prestressed concrete lintel in the wider maxi section (about 140 × 75 mm), 4.8 m long — for walls built in maxi bricks (290 × 140 × 90 mm) and 140 mm blockwork.",
+   "typical_uses": [
+    "Over openings in maxi-brick and 140 mm block walls"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-MAXI-5400",
+   "slug": "maxi-prestressed-concrete-lintel-140-mm-5-4-m",
+   "name": "Maxi Prestressed Concrete Lintel 140 mm, 5.4 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "5.4 m long, 140 mm wide",
+   "units_per_m2": null,
+   "description": "Prestressed concrete lintel in the wider maxi section (about 140 × 75 mm), 5.4 m long — for walls built in maxi bricks (290 × 140 × 90 mm) and 140 mm blockwork.",
+   "typical_uses": [
+    "Over openings in maxi-brick and 140 mm block walls"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-MAXI-6000",
+   "slug": "maxi-prestressed-concrete-lintel-140-mm-6-0-m",
+   "name": "Maxi Prestressed Concrete Lintel 140 mm, 6.0 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "6.0 m long, 140 mm wide",
+   "units_per_m2": null,
+   "description": "Prestressed concrete lintel in the wider maxi section (about 140 × 75 mm), 6.0 m long — for walls built in maxi bricks (290 × 140 × 90 mm) and 140 mm blockwork.",
+   "typical_uses": [
+    "Over openings in maxi-brick and 140 mm block walls"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-150-1500",
+   "slug": "wide-prestressed-concrete-lintel-150-mm-1-5-m",
+   "name": "Wide Prestressed Concrete Lintel 150 mm, 1.5 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "1.5 m long, 150 mm wide",
+   "units_per_m2": null,
+   "description": "Prestressed concrete lintel, about 150 × 75 mm, 1.5 m long — the wider section for thicker leaves and heavier loads, to the maker's span table.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Garage and wide openings (longer lengths)"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-150-1800",
+   "slug": "wide-prestressed-concrete-lintel-150-mm-1-8-m",
+   "name": "Wide Prestressed Concrete Lintel 150 mm, 1.8 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "1.8 m long, 150 mm wide",
+   "units_per_m2": null,
+   "description": "Prestressed concrete lintel, about 150 × 75 mm, 1.8 m long — the wider section for thicker leaves and heavier loads, to the maker's span table.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Garage and wide openings (longer lengths)"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-150-2700",
+   "slug": "wide-prestressed-concrete-lintel-150-mm-2-7-m",
+   "name": "Wide Prestressed Concrete Lintel 150 mm, 2.7 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "2.7 m long, 150 mm wide",
+   "units_per_m2": null,
+   "description": "Prestressed concrete lintel, about 150 × 75 mm, 2.7 m long — the wider section for thicker leaves and heavier loads, to the maker's span table.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Garage and wide openings (longer lengths)"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-150-3600",
+   "slug": "wide-prestressed-concrete-lintel-150-mm-3-6-m",
+   "name": "Wide Prestressed Concrete Lintel 150 mm, 3.6 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "3.6 m long, 150 mm wide",
+   "units_per_m2": null,
+   "description": "Prestressed concrete lintel, about 150 × 75 mm, 3.6 m long — the wider section for thicker leaves and heavier loads, to the maker's span table.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Garage and wide openings (longer lengths)"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-150-4200",
+   "slug": "wide-prestressed-concrete-lintel-150-mm-4-2-m",
+   "name": "Wide Prestressed Concrete Lintel 150 mm, 4.2 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "4.2 m long, 150 mm wide",
+   "units_per_m2": null,
+   "description": "Prestressed concrete lintel, about 150 × 75 mm, 4.2 m long — the wider section for thicker leaves and heavier loads, to the maker's span table.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Garage and wide openings (longer lengths)"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-150-5100",
+   "slug": "wide-prestressed-concrete-lintel-150-mm-5-1-m",
+   "name": "Wide Prestressed Concrete Lintel 150 mm, 5.1 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "5.1 m long, 150 mm wide",
+   "units_per_m2": null,
+   "description": "Prestressed concrete lintel, about 150 × 75 mm, 5.1 m long — the wider section for thicker leaves and heavier loads, to the maker's span table.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Garage and wide openings (longer lengths)"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-150-6000",
+   "slug": "wide-prestressed-concrete-lintel-150-mm-6-0-m",
+   "name": "Wide Prestressed Concrete Lintel 150 mm, 6.0 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Prestressed lintel",
+   "unit_size": "6.0 m long, 150 mm wide",
+   "units_per_m2": null,
+   "description": "Prestressed concrete lintel, about 150 × 75 mm, 6.0 m long — the wider section for thicker leaves and heavier loads, to the maker's span table.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Garage and wide openings (longer lengths)"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-BLOCK-1200",
+   "slug": "precast-concrete-block-lintel-140-mm-1-2-m",
+   "name": "Precast Concrete Block Lintel 140 mm, 1.2 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Block lintel",
+   "unit_size": "1.2 m long",
+   "units_per_m2": null,
+   "description": "Precast reinforced concrete lintel made for concrete-block walls, about 140 mm wide, 1.2 m long — sized to sit in the block coursing over doors and windows.",
+   "typical_uses": [
+    "Over openings in concrete-block walls",
+    "Outbuildings, boundary walls and low-cost housing"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-BLOCK-1800",
+   "slug": "precast-concrete-block-lintel-140-mm-1-8-m",
+   "name": "Precast Concrete Block Lintel 140 mm, 1.8 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Block lintel",
+   "unit_size": "1.8 m long",
+   "units_per_m2": null,
+   "description": "Precast reinforced concrete lintel made for concrete-block walls, about 140 mm wide, 1.8 m long — sized to sit in the block coursing over doors and windows.",
+   "typical_uses": [
+    "Over openings in concrete-block walls",
+    "Outbuildings, boundary walls and low-cost housing"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-BLOCK-2100",
+   "slug": "precast-concrete-block-lintel-140-mm-2-1-m",
+   "name": "Precast Concrete Block Lintel 140 mm, 2.1 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Block lintel",
+   "unit_size": "2.1 m long",
+   "units_per_m2": null,
+   "description": "Precast reinforced concrete lintel made for concrete-block walls, about 140 mm wide, 2.1 m long — sized to sit in the block coursing over doors and windows.",
+   "typical_uses": [
+    "Over openings in concrete-block walls",
+    "Outbuildings, boundary walls and low-cost housing"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-BLOCK-2400",
+   "slug": "precast-concrete-block-lintel-140-mm-2-4-m",
+   "name": "Precast Concrete Block Lintel 140 mm, 2.4 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Block lintel",
+   "unit_size": "2.4 m long",
+   "units_per_m2": null,
+   "description": "Precast reinforced concrete lintel made for concrete-block walls, about 140 mm wide, 2.4 m long — sized to sit in the block coursing over doors and windows.",
+   "typical_uses": [
+    "Over openings in concrete-block walls",
+    "Outbuildings, boundary walls and low-cost housing"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-BLOCK-2700",
+   "slug": "precast-concrete-block-lintel-140-mm-2-7-m",
+   "name": "Precast Concrete Block Lintel 140 mm, 2.7 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Block lintel",
+   "unit_size": "2.7 m long",
+   "units_per_m2": null,
+   "description": "Precast reinforced concrete lintel made for concrete-block walls, about 140 mm wide, 2.7 m long — sized to sit in the block coursing over doors and windows.",
+   "typical_uses": [
+    "Over openings in concrete-block walls",
+    "Outbuildings, boundary walls and low-cost housing"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-BLOCK-3000",
+   "slug": "precast-concrete-block-lintel-140-mm-3-0-m",
+   "name": "Precast Concrete Block Lintel 140 mm, 3.0 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Block lintel",
+   "unit_size": "3.0 m long",
+   "units_per_m2": null,
+   "description": "Precast reinforced concrete lintel made for concrete-block walls, about 140 mm wide, 3.0 m long — sized to sit in the block coursing over doors and windows.",
+   "typical_uses": [
+    "Over openings in concrete-block walls",
+    "Outbuildings, boundary walls and low-cost housing"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-BLOCK-3600",
+   "slug": "precast-concrete-block-lintel-140-mm-3-6-m",
+   "name": "Precast Concrete Block Lintel 140 mm, 3.6 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Block lintel",
+   "unit_size": "3.6 m long",
+   "units_per_m2": null,
+   "description": "Precast reinforced concrete lintel made for concrete-block walls, about 140 mm wide, 3.6 m long — sized to sit in the block coursing over doors and windows.",
+   "typical_uses": [
+    "Over openings in concrete-block walls",
+    "Outbuildings, boundary walls and low-cost housing"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-BLOCK-4200",
+   "slug": "precast-concrete-block-lintel-140-mm-4-2-m",
+   "name": "Precast Concrete Block Lintel 140 mm, 4.2 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Block lintel",
+   "unit_size": "4.2 m long",
+   "units_per_m2": null,
+   "description": "Precast reinforced concrete lintel made for concrete-block walls, about 140 mm wide, 4.2 m long — sized to sit in the block coursing over doors and windows.",
+   "typical_uses": [
+    "Over openings in concrete-block walls",
+    "Outbuildings, boundary walls and low-cost housing"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-LINTEL-BLOCK-4800",
+   "slug": "precast-concrete-block-lintel-140-mm-4-8-m",
+   "name": "Precast Concrete Block Lintel 140 mm, 4.8 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "Prestressed concrete lintel — section to the maker's table",
+   "masonry_class": "Block lintel",
+   "unit_size": "4.8 m long",
+   "units_per_m2": null,
+   "description": "Precast reinforced concrete lintel made for concrete-block walls, about 140 mm wide, 4.8 m long — sized to sit in the block coursing over doors and windows.",
+   "typical_uses": [
+    "Over openings in concrete-block walls",
+    "Outbuildings, boundary walls and low-cost housing"
+   ],
+   "handling_notes": "Carry and stack the right way up (the marked top face up), on bearers. Never cut a prestressed lintel.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-DPC-450",
+   "slug": "damp-proof-course-375-um-450-mm-x-40-m",
+   "name": "Damp-Proof Course 375 µm, 450 mm × 40 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "SANS 952 polyolefin damp-proof course (375 µm)",
+   "masonry_class": "Damp-proof course",
+   "unit_size": "450 mm × 40 m roll",
+   "units_per_m2": null,
+   "description": "Embossed polyethylene damp-proof course, 375 µm, 450 mm wide in a 40 m roll — for cavity walls, sills and wide leaves.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Damp-proofing and ventilating brick walls"
+   ],
+   "handling_notes": "Lap joints at least 150 mm and keep the DPC continuous through the wall; don't puncture it.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (40 m)",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-DPC-600",
+   "slug": "damp-proof-course-375-um-600-mm-x-40-m",
+   "name": "Damp-Proof Course 375 µm, 600 mm × 40 m",
+   "category_slug": "lintels-dpc-wall-accessories",
+   "grading_standard": "SANS 952 polyolefin damp-proof course (375 µm)",
+   "masonry_class": "Damp-proof course",
+   "unit_size": "600 mm × 40 m roll",
+   "units_per_m2": null,
+   "description": "Embossed polyethylene damp-proof course, 375 µm, 600 mm wide in a 40 m roll — for cavity walls, sills and wide leaves.",
+   "typical_uses": [
+    "Over door and window openings",
+    "Damp-proofing and ventilating brick walls"
+   ],
+   "handling_notes": "Lap joints at least 150 mm and keep the DPC continuous through the wall; don't puncture it.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (40 m)",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-BRK-FBA",
+   "slug": "clay-face-brick-fba-222-x-106-x-73-mm",
+   "name": "Clay Face Brick (FBA) 222 × 106 × 73 mm",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 227 — FBS (face brick standard)",
+   "masonry_class": "Clay face brick (FBA)",
+   "unit_size": "222 × 106 × 73 mm",
+   "units_per_m2": 52,
+   "description": "Clay face brick in the aesthetic FBA grade — chosen for its texture and colour variation, for feature and boundary walls. Colour range confirmed on the quote.",
+   "typical_uses": [
+    "Face-brick houses, boundary and feature walls"
+   ],
+   "handling_notes": "Stack on a level, firm base, close to where they're laid; keep face bricks covered so they stay clean.",
+   "units": [
+    {
+     "unit": "THOUSAND",
+     "unit_label": "Per 1,000",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-BRK-SATIN",
+   "slug": "clay-satin-face-brick-fbs-222-x-106-x-73-mm",
+   "name": "Clay Satin Face Brick (FBS) 222 × 106 × 73 mm",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 227 — FBS (face brick standard)",
+   "masonry_class": "Clay face brick (FBS)",
+   "unit_size": "222 × 106 × 73 mm",
+   "units_per_m2": 52,
+   "description": "Smooth satin-finish clay face brick, FBS grade, for clean-lined facades. Colour (light, dark, multi-tone) confirmed on the quote.",
+   "typical_uses": [
+    "Face-brick houses, boundary and feature walls"
+   ],
+   "handling_notes": "Stack on a level, firm base, close to where they're laid; keep face bricks covered so they stay clean.",
+   "units": [
+    {
+     "unit": "THOUSAND",
+     "unit_label": "Per 1,000",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-BRK-TRAV",
+   "slug": "clay-travertine-face-brick-fbs-222-x-106-x-73-mm",
+   "name": "Clay Travertine Face Brick (FBS) 222 × 106 × 73 mm",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 227 — FBS (face brick standard)",
+   "masonry_class": "Clay face brick (FBS)",
+   "unit_size": "222 × 106 × 73 mm",
+   "units_per_m2": 52,
+   "description": "Travertine-textured clay face brick, FBS grade — the most common face finish on SA houses. Colour range confirmed on the quote.",
+   "typical_uses": [
+    "Face-brick houses, boundary and feature walls"
+   ],
+   "handling_notes": "Stack on a level, firm base, close to where they're laid; keep face bricks covered so they stay clean.",
+   "units": [
+    {
+     "unit": "THOUSAND",
+     "unit_label": "Per 1,000",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-BRK-RUSTIC",
+   "slug": "clay-rustic-face-brick-fbs-222-x-106-x-73-mm",
+   "name": "Clay Rustic Face Brick (FBS) 222 × 106 × 73 mm",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 227 — FBS (face brick standard)",
+   "masonry_class": "Clay face brick (FBS)",
+   "unit_size": "222 × 106 × 73 mm",
+   "units_per_m2": 52,
+   "description": "Rustic, textured clay face brick for walls left unplastered. Colour range confirmed on the quote.",
+   "typical_uses": [
+    "Face-brick houses, boundary and feature walls"
+   ],
+   "handling_notes": "Stack on a level, firm base, close to where they're laid; keep face bricks covered so they stay clean.",
+   "units": [
+    {
+     "unit": "THOUSAND",
+     "unit_label": "Per 1,000",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-BRK-NFX",
+   "slug": "clay-foundation-brick-nfx-222-x-106-x-73-mm",
+   "name": "Clay Foundation Brick (NFX) 222 × 106 × 73 mm",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 227 — FBS (face brick standard)",
+   "masonry_class": "Clay stock brick (NFX)",
+   "unit_size": "222 × 106 × 73 mm",
+   "units_per_m2": 52,
+   "description": "Non-facing extra (NFX) clay brick — the harder stock brick for foundations, below-ground work and damp conditions.",
+   "typical_uses": [
+    "Foundations, plastered walls and outbuildings"
+   ],
+   "handling_notes": "Stack on a level, firm base, close to where they're laid; keep face bricks covered so they stay clean.",
+   "units": [
+    {
+     "unit": "THOUSAND",
+     "unit_label": "Per 1,000",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-BRK-SEMIFACE",
+   "slug": "clay-semi-face-brick-222-x-106-x-73-mm",
+   "name": "Clay Semi-Face Brick 222 × 106 × 73 mm",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 227 — FBS (face brick standard)",
+   "masonry_class": "Clay semi-face brick",
+   "unit_size": "222 × 106 × 73 mm",
+   "units_per_m2": 52,
+   "description": "Semi-face clay brick — a consistent stock brick neat enough to leave unplastered on outbuildings and boundary walls.",
+   "typical_uses": [
+    "Face-brick houses, boundary and feature walls"
+   ],
+   "handling_notes": "Stack on a level, firm base, close to where they're laid; keep face bricks covered so they stay clean.",
+   "units": [
+    {
+     "unit": "THOUSAND",
+     "unit_label": "Per 1,000",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-BRK-PLASTER",
+   "slug": "clay-plaster-brick-yard-222-x-106-x-73-mm",
+   "name": "Clay Plaster Brick (Yard) 222 × 106 × 73 mm",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 227 — FBS (face brick standard)",
+   "masonry_class": "Clay plaster brick",
+   "unit_size": "222 × 106 × 73 mm",
+   "units_per_m2": 52,
+   "description": "Economical clay plaster brick for walls that will be plastered.",
+   "typical_uses": [
+    "Foundations, plastered walls and outbuildings"
+   ],
+   "handling_notes": "Stack on a level, firm base, close to where they're laid; keep face bricks covered so they stay clean.",
+   "units": [
+    {
+     "unit": "THOUSAND",
+     "unit_label": "Per 1,000",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-BRK-CLADDING",
+   "slug": "clay-brick-cladding-tile-222-x-73-x-9-mm",
+   "name": "Clay Brick Cladding Tile 222 × 73 × 9 mm",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 227 — FBS (face brick standard)",
+   "masonry_class": "Brick cladding",
+   "unit_size": "222 × 9 × 73 mm",
+   "units_per_m2": 51.9,
+   "description": "Thin clay brick slips (about 9 mm) glued to plastered or concrete walls for a face-brick look — feature walls, columns and renovations.",
+   "typical_uses": [
+    "Load-bearing and boundary walls",
+    "Houses, outbuildings and site buildings"
+   ],
+   "handling_notes": "Stack on a level, firm base close to where they'll be laid; keep cement bricks and blocks off wet ground and cover them in rain. Check the delivery against the order before the truck leaves. Order a whole wall's face bricks from one batch so the colour matches.",
+   "units": [
+    {
+     "unit": "THOUSAND",
+     "unit_label": "Per 1,000",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-CEM-STOCK-7MPA",
+   "slug": "cement-stock-brick-7-mpa-222-x-106-x-73-mm",
+   "name": "Cement Stock Brick 7 MPa 222 × 106 × 73 mm",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 1215 concrete masonry units",
+   "masonry_class": "Cement stock brick",
+   "unit_size": "222 × 106 × 73 mm",
+   "units_per_m2": 52,
+   "description": "Concrete (cement) stock brick, 7 MPa nominal strength.",
+   "typical_uses": [
+    "Load-bearing and boundary walls",
+    "Houses, outbuildings and site buildings"
+   ],
+   "handling_notes": "Stack on a level, firm base close to where they'll be laid; keep cement bricks and blocks off wet ground and cover them in rain. Check the delivery against the order before the truck leaves.",
+   "units": [
+    {
+     "unit": "THOUSAND",
+     "unit_label": "Per 1,000",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-CEM-STOCK-14MPA",
+   "slug": "cement-stock-brick-14-mpa-222-x-106-x-73-mm",
+   "name": "Cement Stock Brick 14 MPa 222 × 106 × 73 mm",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 1215 concrete masonry units",
+   "masonry_class": "Cement stock brick",
+   "unit_size": "222 × 106 × 73 mm",
+   "units_per_m2": 52,
+   "description": "Concrete (cement) stock brick, 14 MPa nominal strength — the stronger brick for load-bearing and foundation work.",
+   "typical_uses": [
+    "Load-bearing and boundary walls",
+    "Houses, outbuildings and site buildings"
+   ],
+   "handling_notes": "Stack on a level, firm base close to where they'll be laid; keep cement bricks and blocks off wet ground and cover them in rain. Check the delivery against the order before the truck leaves.",
+   "units": [
+    {
+     "unit": "THOUSAND",
+     "unit_label": "Per 1,000",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-BLOCK-90-HOLLOW",
+   "slug": "hollow-concrete-block-90-mm-390-x-90-x-190-mm",
+   "name": "Hollow Concrete Block 90 mm (390 × 90 × 190 mm)",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 1215 concrete masonry units",
+   "masonry_class": "Hollow concrete block",
+   "unit_size": "390 × 90 × 190 mm",
+   "units_per_m2": 12.5,
+   "description": "Hollow 90 mm concrete block for internal partitions and boundary walls.",
+   "typical_uses": [
+    "Load-bearing and boundary walls",
+    "Houses, outbuildings and site buildings"
+   ],
+   "handling_notes": "Stack on a level, firm base close to where they'll be laid; keep cement bricks and blocks off wet ground and cover them in rain. Check the delivery against the order before the truck leaves.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-BLOCK-140-SOLID",
+   "slug": "solid-concrete-block-140-mm-390-x-140-x-190-mm",
+   "name": "Solid Concrete Block 140 mm (390 × 140 × 190 mm)",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 1215 concrete masonry units",
+   "masonry_class": "Hollow concrete block",
+   "unit_size": "390 × 140 × 190 mm",
+   "units_per_m2": 12.5,
+   "description": "Solid 140 mm concrete block for load-bearing walls and foundations.",
+   "typical_uses": [
+    "Load-bearing and boundary walls",
+    "Houses, outbuildings and site buildings"
+   ],
+   "handling_notes": "Stack on a level, firm base close to where they'll be laid; keep cement bricks and blocks off wet ground and cover them in rain. Check the delivery against the order before the truck leaves.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-BLOCK-190-SOLID",
+   "slug": "solid-concrete-block-190-mm-390-x-190-x-190-mm",
+   "name": "Solid Concrete Block 190 mm (390 × 190 × 190 mm)",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 1215 concrete masonry units",
+   "masonry_class": "Hollow concrete block",
+   "unit_size": "390 × 190 × 190 mm",
+   "units_per_m2": 12.5,
+   "description": "Solid 190 mm concrete block for heavy load-bearing and retaining work.",
+   "typical_uses": [
+    "Load-bearing and boundary walls",
+    "Houses, outbuildings and site buildings"
+   ],
+   "handling_notes": "Stack on a level, firm base close to where they'll be laid; keep cement bricks and blocks off wet ground and cover them in rain. Check the delivery against the order before the truck leaves.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-BLOCK-140-HALF",
+   "slug": "half-concrete-block-140-mm-190-x-140-x-190-mm",
+   "name": "Half Concrete Block 140 mm (190 × 140 × 190 mm)",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 1215 concrete masonry units",
+   "masonry_class": "Hollow concrete block",
+   "unit_size": "190 × 140 × 190 mm",
+   "units_per_m2": 25.0,
+   "description": "Half-length 140 mm block to finish courses at corners, ends and openings without cutting.",
+   "typical_uses": [
+    "Load-bearing and boundary walls",
+    "Houses, outbuildings and site buildings"
+   ],
+   "handling_notes": "Stack on a level, firm base close to where they'll be laid; keep cement bricks and blocks off wet ground and cover them in rain. Check the delivery against the order before the truck leaves.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-BLOCK-140-U",
+   "slug": "concrete-lintel-u-block-140-mm",
+   "name": "Concrete Lintel (U) Block 140 mm",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 1215 concrete masonry units",
+   "masonry_class": "Hollow concrete block",
+   "unit_size": "390 × 140 × 190 mm",
+   "units_per_m2": 12.5,
+   "description": "U-shaped 140 mm block that's filled with reinforcement and concrete to form bond beams and lintels in block walls.",
+   "typical_uses": [
+    "Load-bearing and boundary walls",
+    "Houses, outbuildings and site buildings"
+   ],
+   "handling_notes": "Stack on a level, firm base close to where they'll be laid; keep cement bricks and blocks off wet ground and cover them in rain. Check the delivery against the order before the truck leaves.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-BLOCK-190-U",
+   "slug": "concrete-lintel-u-block-190-mm",
+   "name": "Concrete Lintel (U) Block 190 mm",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 1215 concrete masonry units",
+   "masonry_class": "Hollow concrete block",
+   "unit_size": "390 × 190 × 190 mm",
+   "units_per_m2": 12.5,
+   "description": "U-shaped 190 mm block for reinforced bond beams and lintels.",
+   "typical_uses": [
+    "Load-bearing and boundary walls",
+    "Houses, outbuildings and site buildings"
+   ],
+   "handling_notes": "Stack on a level, firm base close to where they'll be laid; keep cement bricks and blocks off wet ground and cover them in rain. Check the delivery against the order before the truck leaves.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-MAS-BLOCK-140-FAIR",
+   "slug": "fair-face-concrete-block-140-mm",
+   "name": "Fair-Face Concrete Block 140 mm",
+   "category_slug": "bricks-blocks",
+   "grading_standard": "SANS 1215 concrete masonry units",
+   "masonry_class": "Hollow concrete block",
+   "unit_size": "390 × 140 × 190 mm",
+   "units_per_m2": 12.5,
+   "description": "Fair-face (smooth, even-coloured) 140 mm block to leave unplastered.",
+   "typical_uses": [
+    "Load-bearing and boundary walls",
+    "Houses, outbuildings and site buildings"
+   ],
+   "handling_notes": "Stack on a level, firm base close to where they'll be laid; keep cement bricks and blocks off wet ground and cover them in rain. Check the delivery against the order before the truck leaves.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-BEVEL-50-CHARCOAL",
+   "slug": "bevel-paver-charcoal-50-mm-200-x-100-mm",
+   "name": "Bevel Paver, Charcoal, 50 mm (200 × 100 mm)",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": "SANS 1058 concrete paving blocks",
+   "masonry_class": "Concrete paver — bevel",
+   "unit_size": "200 × 100 × 50 mm",
+   "units_per_m2": 50,
+   "description": "Bevelled-edge concrete paver, 50 mm, charcoal — patios, paths and light-traffic driveways.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Lay on a compacted base and 25–30 mm of bedding sand; vibrate in and brush jointing sand into the joints.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-BEVEL-50-RED",
+   "slug": "bevel-paver-red-50-mm-200-x-100-mm",
+   "name": "Bevel Paver, Red, 50 mm (200 × 100 mm)",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": "SANS 1058 concrete paving blocks",
+   "masonry_class": "Concrete paver — bevel",
+   "unit_size": "200 × 100 × 50 mm",
+   "units_per_m2": 50,
+   "description": "Bevelled-edge concrete paver, 50 mm, red — patios, paths and light-traffic driveways.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Lay on a compacted base and 25–30 mm of bedding sand; vibrate in and brush jointing sand into the joints.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-BEVEL-50-TERRACOTTA",
+   "slug": "bevel-paver-terracotta-50-mm-200-x-100-mm",
+   "name": "Bevel Paver, Terracotta, 50 mm (200 × 100 mm)",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": "SANS 1058 concrete paving blocks",
+   "masonry_class": "Concrete paver — bevel",
+   "unit_size": "200 × 100 × 50 mm",
+   "units_per_m2": 50,
+   "description": "Bevelled-edge concrete paver, 50 mm, terracotta — patios, paths and light-traffic driveways.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Lay on a compacted base and 25–30 mm of bedding sand; vibrate in and brush jointing sand into the joints.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-BEVEL-50-TAN",
+   "slug": "bevel-paver-tan-50-mm-200-x-100-mm",
+   "name": "Bevel Paver, Tan, 50 mm (200 × 100 mm)",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": "SANS 1058 concrete paving blocks",
+   "masonry_class": "Concrete paver — bevel",
+   "unit_size": "200 × 100 × 50 mm",
+   "units_per_m2": 50,
+   "description": "Bevelled-edge concrete paver, 50 mm, tan — patios, paths and light-traffic driveways.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Lay on a compacted base and 25–30 mm of bedding sand; vibrate in and brush jointing sand into the joints.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-INTERLOCK-60-CHARCOAL",
+   "slug": "interlocking-paver-charcoal-60-mm",
+   "name": "Interlocking Paver, Charcoal, 60 mm",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": "SANS 1058 concrete paving blocks",
+   "masonry_class": "Concrete paver — interlocking",
+   "unit_size": "60 mm thick",
+   "units_per_m2": null,
+   "manufacturer": null,
+   "description": "Interlocking concrete paver, 60 mm, charcoal — driveways and parking for cars.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Lay on a compacted base and 25–30 mm of bedding sand; vibrate in and brush jointing sand into the joints.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-INTERLOCK-60-RED",
+   "slug": "interlocking-paver-red-60-mm",
+   "name": "Interlocking Paver, Red, 60 mm",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": "SANS 1058 concrete paving blocks",
+   "masonry_class": "Concrete paver — interlocking",
+   "unit_size": "60 mm thick",
+   "units_per_m2": null,
+   "manufacturer": null,
+   "description": "Interlocking concrete paver, 60 mm, red — driveways and parking for cars.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Lay on a compacted base and 25–30 mm of bedding sand; vibrate in and brush jointing sand into the joints.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-INTERLOCK-80-CHARCOAL",
+   "slug": "interlocking-paver-charcoal-80-mm-heavy-duty",
+   "name": "Interlocking Paver, Charcoal, 80 mm (heavy duty)",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": "SANS 1058 concrete paving blocks",
+   "masonry_class": "Concrete paver — interlocking",
+   "unit_size": "80 mm thick",
+   "units_per_m2": null,
+   "description": "Heavy-duty 80 mm interlocking concrete paver, charcoal — trucks, loading areas and municipal roads.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Lay on a compacted base and 25–30 mm of bedding sand; vibrate in and brush jointing sand into the joints.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-INTERLOCK-80-RED",
+   "slug": "interlocking-paver-red-80-mm-heavy-duty",
+   "name": "Interlocking Paver, Red, 80 mm (heavy duty)",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": "SANS 1058 concrete paving blocks",
+   "masonry_class": "Concrete paver — interlocking",
+   "unit_size": "80 mm thick",
+   "units_per_m2": null,
+   "description": "Heavy-duty 80 mm interlocking concrete paver, red — trucks, loading areas and municipal roads.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Lay on a compacted base and 25–30 mm of bedding sand; vibrate in and brush jointing sand into the joints.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-CLAY-50",
+   "slug": "clay-paver-50-mm-200-x-100-mm",
+   "name": "Clay Paver 50 mm (200 × 100 mm)",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": "SANS 1058 / clay paver range",
+   "masonry_class": "Clay paver",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Fired clay paver, 50 mm. Colour and finish (smooth, bevelled, rustic) confirmed on the quote.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Lay on a compacted base and 25–30 mm of bedding sand; vibrate in and brush jointing sand into the joints.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-CLAY-73",
+   "slug": "clay-paver-73-mm-200-x-100-mm",
+   "name": "Clay Paver 73 mm (200 × 100 mm)",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": "SANS 1058 / clay paver range",
+   "masonry_class": "Clay paver",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Fired clay paver, 73 mm — heavier duty for driveways. Colour and finish (smooth, bevelled, rustic) confirmed on the quote.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Lay on a compacted base and 25–30 mm of bedding sand; vibrate in and brush jointing sand into the joints.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-SLAB-300-X-300-X-50",
+   "slug": "paving-slab-grey-300-x-300-x-50-mm",
+   "name": "Paving Slab, Grey, 300 × 300 × 50 mm",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": null,
+   "masonry_class": "Precast paving slab",
+   "unit_size": "300 × 300 × 50 mm",
+   "units_per_m2": null,
+   "description": "Concrete paving slab, 300 × 300 × 50 mm — patios, pool surrounds and garden paths.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Lay on a compacted base and 25–30 mm of bedding sand; vibrate in and brush jointing sand into the joints.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-SLAB-400-X-400-X-50",
+   "slug": "paving-slab-grey-400-x-400-x-50-mm",
+   "name": "Paving Slab, Grey, 400 × 400 × 50 mm",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": null,
+   "masonry_class": "Precast paving slab",
+   "unit_size": "400 × 400 × 50 mm",
+   "units_per_m2": null,
+   "description": "Concrete paving slab, 400 × 400 × 50 mm — patios, pool surrounds and garden paths.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Lay on a compacted base and 25–30 mm of bedding sand; vibrate in and brush jointing sand into the joints.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-SLAB-500-X-500-X-50",
+   "slug": "paving-slab-grey-500-x-500-x-50-mm",
+   "name": "Paving Slab, Grey, 500 × 500 × 50 mm",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": null,
+   "masonry_class": "Precast paving slab",
+   "unit_size": "500 × 500 × 50 mm",
+   "units_per_m2": null,
+   "description": "Concrete paving slab, 500 × 500 × 50 mm — patios, pool surrounds and garden paths.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Lay on a compacted base and 25–30 mm of bedding sand; vibrate in and brush jointing sand into the joints.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-SLAB-450-X-450-X-40",
+   "slug": "paving-slab-grey-450-x-450-x-40-non-slip-mm",
+   "name": "Paving Slab, Grey, 450 × 450 × 40 (non-slip) mm",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": null,
+   "masonry_class": "Precast paving slab",
+   "unit_size": "450 × 450 × 40 mm",
+   "units_per_m2": null,
+   "description": "Concrete paving slab, 450 × 450 × 40 (non-slip) mm — patios, pool surrounds and garden paths.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Lay on a compacted base and 25–30 mm of bedding sand; vibrate in and brush jointing sand into the joints.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-GARDEN-225-X-225-X-40",
+   "slug": "garden-paver-225-x-225-x-40-mm",
+   "name": "Garden Paver 225 × 225 × 40 mm",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": null,
+   "masonry_class": "Precast paving slab",
+   "unit_size": "225 × 225 × 40 mm",
+   "units_per_m2": null,
+   "description": "Textured concrete garden paver (flagstone / sandstone finish), 225 × 225 × 40 mm, for paths and patios. Colour confirmed on the quote.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Lay on a compacted base and 25–30 mm of bedding sand; vibrate in and brush jointing sand into the joints.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-GARDEN-300-X-300-X-40",
+   "slug": "garden-paver-300-x-300-x-40-mm",
+   "name": "Garden Paver 300 × 300 × 40 mm",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": null,
+   "masonry_class": "Precast paving slab",
+   "unit_size": "300 × 300 × 40 mm",
+   "units_per_m2": null,
+   "description": "Textured concrete garden paver (flagstone / sandstone finish), 300 × 300 × 40 mm, for paths and patios. Colour confirmed on the quote.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Lay on a compacted base and 25–30 mm of bedding sand; vibrate in and brush jointing sand into the joints.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-GARDEN-450-X-225-X-40",
+   "slug": "garden-paver-450-x-225-x-40-mm",
+   "name": "Garden Paver 450 × 225 × 40 mm",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": null,
+   "masonry_class": "Precast paving slab",
+   "unit_size": "450 × 225 × 40 mm",
+   "units_per_m2": null,
+   "description": "Textured concrete garden paver (flagstone / sandstone finish), 450 × 225 × 40 mm, for paths and patios. Colour confirmed on the quote.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Lay on a compacted base and 25–30 mm of bedding sand; vibrate in and brush jointing sand into the joints.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-GARDEN-330-X-330-X-50",
+   "slug": "garden-paver-330-x-330-x-50-mm",
+   "name": "Garden Paver 330 × 330 × 50 mm",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": null,
+   "masonry_class": "Precast paving slab",
+   "unit_size": "330 × 330 × 50 mm",
+   "units_per_m2": null,
+   "description": "Textured concrete garden paver (flagstone / sandstone finish), 330 × 330 × 50 mm, for paths and patios. Colour confirmed on the quote.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Lay on a compacted base and 25–30 mm of bedding sand; vibrate in and brush jointing sand into the joints.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-COBBLE",
+   "slug": "cobble-paver-old-world-finish",
+   "name": "Cobble Paver (Old-World Finish)",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": null,
+   "masonry_class": "Precast paving slab",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Tumbled, aged-look concrete cobble paver for driveways and courtyards. Size and colour confirmed on the quote.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Lay on a compacted base and 25–30 mm of bedding sand; vibrate in and brush jointing sand into the joints.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-STEPPING",
+   "slug": "stepping-stone-round-or-square",
+   "name": "Stepping Stone (Round or Square)",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": null,
+   "masonry_class": "Precast paving slab",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Concrete stepping stone for lawns and gardens. Shape, size and finish confirmed on the quote.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Lay on a compacted base and 25–30 mm of bedding sand; vibrate in and brush jointing sand into the joints.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-KERB-MOUNT",
+   "slug": "concrete-kerb-mountable-1-000-mm",
+   "name": "Concrete Kerb, Mountable, 1,000 mm",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": "SANS 927 precast concrete kerbs",
+   "masonry_class": "Road kerb",
+   "unit_size": "1,000 mm long",
+   "units_per_m2": null,
+   "description": "Mountable (rollover) precast concrete kerb for driveway crossings and residential roads.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Set on a concrete bed and haunch the back; joint with mortar.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-KERB-SEMI",
+   "slug": "concrete-kerb-semi-mountable-1-000-mm",
+   "name": "Concrete Kerb, Semi-Mountable, 1,000 mm",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": "SANS 927 precast concrete kerbs",
+   "masonry_class": "Road kerb",
+   "unit_size": "1,000 mm long",
+   "units_per_m2": null,
+   "description": "Semi-mountable precast concrete kerb for estate roads and parking islands.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Set on a concrete bed and haunch the back; joint with mortar.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-KERB-CHANNEL",
+   "slug": "concrete-channel-gutter-block-1-000-mm",
+   "name": "Concrete Channel (Gutter) Block, 1,000 mm",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": "SANS 927 precast concrete kerbs",
+   "masonry_class": "Road kerb",
+   "unit_size": "1,000 mm long",
+   "units_per_m2": null,
+   "description": "Precast concrete channel laid against the kerb to carry road stormwater.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Set on a concrete bed and haunch the back; joint with mortar.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-KERB-GARDEN-500",
+   "slug": "garden-edging-concrete-500-mm",
+   "name": "Garden Edging, Concrete, 500 mm",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": "SANS 927 precast concrete kerbs",
+   "masonry_class": "Road kerb",
+   "unit_size": "500 mm long",
+   "units_per_m2": null,
+   "description": "Short concrete garden edging for lawns, beds and paving edges.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Set on a concrete bed and haunch the back; joint with mortar.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PAV-KERB-GARDEN-150",
+   "slug": "concrete-garden-kerb-1000-x-65-75-x-150-mm",
+   "name": "Concrete Garden Kerb 1000 × 65/75 × 150 mm",
+   "category_slug": "paving-kerbs-edging",
+   "grading_standard": "SANS 927 precast concrete kerbs",
+   "masonry_class": "Road kerb",
+   "unit_size": "1,000 mm long",
+   "units_per_m2": null,
+   "description": "Light concrete kerb for paths, driveways and paving edges.",
+   "typical_uses": [
+    "Driveways, patios and paths",
+    "Estate roads and parking areas"
+   ],
+   "handling_notes": "Set on a concrete bed and haunch the back; joint with mortar.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-RET-L11",
+   "slug": "terraforce-l11-retaining-block",
+   "name": "Terraforce L11 Retaining Block",
+   "category_slug": "retaining-erosion-control",
+   "grading_standard": "Terraforce licensed design — made by licensed manufacturers",
+   "masonry_class": "Plantable retaining block",
+   "unit_size": null,
+   "units_per_m2": null,
+   "manufacturer": null,
+   "description": "Terraforce L11 open-face concrete retaining block, the smaller sibling of the L22, for lower plantable walls and terraces.",
+   "typical_uses": [
+    "Retaining walls and terraces",
+    "Slope and channel protection"
+   ],
+   "handling_notes": "Build on a compacted, drained foundation; backfill with free-draining material as you go.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-RET-4X4",
+   "slug": "terraforce-4x4-retaining-block",
+   "name": "Terraforce 4x4 Retaining Block",
+   "category_slug": "retaining-erosion-control",
+   "grading_standard": "Terraforce licensed design — made by licensed manufacturers",
+   "masonry_class": "Plantable retaining block",
+   "unit_size": null,
+   "units_per_m2": null,
+   "manufacturer": null,
+   "description": "Terraforce 4x4 trapezoidal retaining block for steeper, closed-face walls.",
+   "typical_uses": [
+    "Retaining walls and terraces",
+    "Slope and channel protection"
+   ],
+   "handling_notes": "Build on a compacted, drained foundation; backfill with free-draining material as you go.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-RET-VR18-SMOOTH",
+   "slug": "gravity-retaining-block-smooth-face-about-300-x-175-x-180-mm",
+   "name": "Gravity Retaining Block, Smooth Face (about 300 × 175 × 180 mm)",
+   "category_slug": "retaining-erosion-control",
+   "grading_standard": "Terraforce licensed design — made by licensed manufacturers",
+   "masonry_class": "Plantable retaining block",
+   "unit_size": null,
+   "units_per_m2": null,
+   "manufacturer": null,
+   "description": "Solid concrete gravity retaining-wall block with a smooth face, built dry and stepped back. Colour confirmed on the quote.",
+   "typical_uses": [
+    "Retaining walls and terraces",
+    "Slope and channel protection"
+   ],
+   "handling_notes": "Build on a compacted, drained foundation; backfill with free-draining material as you go.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-RET-VR18-ROCK",
+   "slug": "gravity-retaining-block-rock-face-about-300-x-175-x-180-mm",
+   "name": "Gravity Retaining Block, Rock Face (about 300 × 175 × 180 mm)",
+   "category_slug": "retaining-erosion-control",
+   "grading_standard": "Terraforce licensed design — made by licensed manufacturers",
+   "masonry_class": "Plantable retaining block",
+   "unit_size": null,
+   "units_per_m2": null,
+   "manufacturer": null,
+   "description": "Solid concrete gravity retaining-wall block with a split rock face. Colour confirmed on the quote.",
+   "typical_uses": [
+    "Retaining walls and terraces",
+    "Slope and channel protection"
+   ],
+   "handling_notes": "Build on a compacted, drained foundation; backfill with free-draining material as you go.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-RET-GABION-1-X-1-X-1-M",
+   "slug": "gabion-basket-1-x-1-x-1-m",
+   "name": "Gabion Basket 1 × 1 × 1 m",
+   "category_slug": "retaining-erosion-control",
+   "grading_standard": "Galvanised (or PVC-coated) steel mesh gabion",
+   "masonry_class": "Gabion",
+   "unit_size": "1 × 1 × 1 m",
+   "units_per_m2": null,
+   "description": "Galvanised (or PVC-coated) woven-mesh gabion basket, 1 × 1 × 1 m, filled on site with rock. Mesh and wire coating confirmed on the quote.",
+   "typical_uses": [
+    "Retaining walls and terraces",
+    "Slope and channel protection"
+   ],
+   "handling_notes": "Lace baskets together before filling; fill in layers with internal bracing wires.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-RET-GABION-1-5-X-1-X-1-M",
+   "slug": "gabion-basket-1-5-x-1-x-1-m",
+   "name": "Gabion Basket 1.5 × 1 × 1 m",
+   "category_slug": "retaining-erosion-control",
+   "grading_standard": "Galvanised (or PVC-coated) steel mesh gabion",
+   "masonry_class": "Gabion",
+   "unit_size": "1.5 × 1 × 1 m",
+   "units_per_m2": null,
+   "description": "Galvanised (or PVC-coated) woven-mesh gabion basket, 1.5 × 1 × 1 m, filled on site with rock. Mesh and wire coating confirmed on the quote.",
+   "typical_uses": [
+    "Retaining walls and terraces",
+    "Slope and channel protection"
+   ],
+   "handling_notes": "Lace baskets together before filling; fill in layers with internal bracing wires.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-RET-GABION-2-X-1-X-0-5-M",
+   "slug": "gabion-basket-2-x-1-x-0-5-m",
+   "name": "Gabion Basket 2 × 1 × 0.5 m",
+   "category_slug": "retaining-erosion-control",
+   "grading_standard": "Galvanised (or PVC-coated) steel mesh gabion",
+   "masonry_class": "Gabion",
+   "unit_size": "2 × 1 × 0.5 m",
+   "units_per_m2": null,
+   "description": "Galvanised (or PVC-coated) woven-mesh gabion basket, 2 × 1 × 0.5 m, filled on site with rock. Mesh and wire coating confirmed on the quote.",
+   "typical_uses": [
+    "Retaining walls and terraces",
+    "Slope and channel protection"
+   ],
+   "handling_notes": "Lace baskets together before filling; fill in layers with internal bracing wires.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-RET-GABION-3-X-1-X-1-M",
+   "slug": "gabion-basket-3-x-1-x-1-m",
+   "name": "Gabion Basket 3 × 1 × 1 m",
+   "category_slug": "retaining-erosion-control",
+   "grading_standard": "Galvanised (or PVC-coated) steel mesh gabion",
+   "masonry_class": "Gabion",
+   "unit_size": "3 × 1 × 1 m",
+   "units_per_m2": null,
+   "description": "Galvanised (or PVC-coated) woven-mesh gabion basket, 3 × 1 × 1 m, filled on site with rock. Mesh and wire coating confirmed on the quote.",
+   "typical_uses": [
+    "Retaining walls and terraces",
+    "Slope and channel protection"
+   ],
+   "handling_notes": "Lace baskets together before filling; fill in layers with internal bracing wires.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-RET-GABION-4-X-1-X-1-M",
+   "slug": "gabion-basket-4-x-1-x-1-m",
+   "name": "Gabion Basket 4 × 1 × 1 m",
+   "category_slug": "retaining-erosion-control",
+   "grading_standard": "Galvanised (or PVC-coated) steel mesh gabion",
+   "masonry_class": "Gabion",
+   "unit_size": "4 × 1 × 1 m",
+   "units_per_m2": null,
+   "description": "Galvanised (or PVC-coated) woven-mesh gabion basket, 4 × 1 × 1 m, filled on site with rock. Mesh and wire coating confirmed on the quote.",
+   "typical_uses": [
+    "Retaining walls and terraces",
+    "Slope and channel protection"
+   ],
+   "handling_notes": "Lace baskets together before filling; fill in layers with internal bracing wires.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-RET-RENO-3-X-2-X-0-23-M",
+   "slug": "gabion-mattress-reno-3-x-2-x-0-23-m",
+   "name": "Gabion Mattress (Reno) 3 × 2 × 0.23 m",
+   "category_slug": "retaining-erosion-control",
+   "grading_standard": "Galvanised (or PVC-coated) steel mesh gabion",
+   "masonry_class": "Gabion",
+   "unit_size": "3 × 2 × 0.23 m",
+   "units_per_m2": null,
+   "description": "Woven-mesh gabion mattress, 3 × 2 × 0.23 m, for channel and slope protection.",
+   "typical_uses": [
+    "Retaining walls and terraces",
+    "Slope and channel protection"
+   ],
+   "handling_notes": "Lace mattresses together before filling; overfill slightly and close the lids tight.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-RET-RENO-4-X-2-X-0-3-M",
+   "slug": "gabion-mattress-reno-4-x-2-x-0-3-m",
+   "name": "Gabion Mattress (Reno) 4 × 2 × 0.3 m",
+   "category_slug": "retaining-erosion-control",
+   "grading_standard": "Galvanised (or PVC-coated) steel mesh gabion",
+   "masonry_class": "Gabion",
+   "unit_size": "4 × 2 × 0.3 m",
+   "units_per_m2": null,
+   "description": "Woven-mesh gabion mattress, 4 × 2 × 0.3 m, for channel and slope protection.",
+   "typical_uses": [
+    "Retaining walls and terraces",
+    "Slope and channel protection"
+   ],
+   "handling_notes": "Lace mattresses together before filling; overfill slightly and close the lids tight.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-RET-RENO-6-X-2-X-0-3-M",
+   "slug": "gabion-mattress-reno-6-x-2-x-0-3-m",
+   "name": "Gabion Mattress (Reno) 6 × 2 × 0.3 m",
+   "category_slug": "retaining-erosion-control",
+   "grading_standard": "Galvanised (or PVC-coated) steel mesh gabion",
+   "masonry_class": "Gabion",
+   "unit_size": "6 × 2 × 0.3 m",
+   "units_per_m2": null,
+   "description": "Woven-mesh gabion mattress, 6 × 2 × 0.3 m, for channel and slope protection.",
+   "typical_uses": [
+    "Retaining walls and terraces",
+    "Slope and channel protection"
+   ],
+   "handling_notes": "Lace mattresses together before filling; overfill slightly and close the lids tight.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-PIPE-110-CL34",
+   "slug": "upvc-sewer-pipe-110-mm-x-6-m-class-34",
+   "name": "uPVC Sewer Pipe 110 mm × 6 m (Class 34)",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground sewer & drain pipe (100 kPa)",
+   "masonry_class": "uPVC underground pipe",
+   "unit_size": "110 mm × 6 m",
+   "units_per_m2": null,
+   "description": "Solid-wall uPVC underground sewer pipe, 110 mm, Class 34 — the standard house drain.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-PIPE-160-CL34",
+   "slug": "upvc-sewer-pipe-160-mm-x-6-m-class-34",
+   "name": "uPVC Sewer Pipe 160 mm × 6 m (Class 34)",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground sewer & drain pipe (100 kPa)",
+   "masonry_class": "uPVC underground pipe",
+   "unit_size": "160 mm × 6 m",
+   "units_per_m2": null,
+   "description": "uPVC underground sewer pipe, 160 mm, Class 34 — main drains and connections to the municipal sewer.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-PIPE-200-CL34",
+   "slug": "upvc-sewer-pipe-200-mm-x-6-m-class-34",
+   "name": "uPVC Sewer Pipe 200 mm × 6 m (Class 34)",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground sewer & drain pipe (100 kPa)",
+   "masonry_class": "uPVC underground pipe",
+   "unit_size": "200 mm × 6 m",
+   "units_per_m2": null,
+   "description": "uPVC underground sewer pipe, 200 mm, for estate and complex reticulation.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-PIPE-250-CL34",
+   "slug": "upvc-sewer-pipe-250-mm-x-6-m-class-34",
+   "name": "uPVC Sewer Pipe 250 mm × 6 m (Class 34)",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground sewer & drain pipe (100 kPa)",
+   "masonry_class": "uPVC underground pipe",
+   "unit_size": "250 mm × 6 m",
+   "units_per_m2": null,
+   "description": "uPVC underground sewer pipe, 250 mm, for bulk sewer lines.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-PIPE-160-PERF",
+   "slug": "perforated-subsoil-drain-pipe-160-mm-x-6-m",
+   "name": "Perforated Subsoil Drain Pipe 160 mm × 6 m",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground sewer & drain pipe (100 kPa)",
+   "masonry_class": "uPVC underground pipe",
+   "unit_size": "160 mm × 6 m",
+   "units_per_m2": null,
+   "description": "Perforated subsoil drainage pipe, 160 mm, for larger French drains and field drainage.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-PIPE-110-FLEX-PERF",
+   "slug": "flexible-perforated-drain-pipe-110-mm-coil",
+   "name": "Flexible Perforated Drain Pipe 110 mm (coil)",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground sewer & drain pipe (100 kPa)",
+   "masonry_class": "uPVC underground pipe",
+   "unit_size": "coil",
+   "units_per_m2": null,
+   "description": "Corrugated flexible perforated drain pipe in a coil, wrapped or unwrapped in geotextile — garden and retaining-wall drainage.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-FIT-110-BEND-11",
+   "slug": "underground-bend-11-25-deg-110-mm",
+   "name": "Underground Bend 11.25° 110 mm",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "uPVC underground drainage fitting, bend 11.25°, 110 mm, to match Class 34 sewer pipe.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-FIT-110-BEND-22",
+   "slug": "underground-bend-22-5-deg-110-mm",
+   "name": "Underground Bend 22.5° 110 mm",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "uPVC underground drainage fitting, bend 22.5°, 110 mm, to match Class 34 sewer pipe.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-FIT-110-JUNC-87",
+   "slug": "underground-junction-87-5-deg-110-mm",
+   "name": "Underground Junction 87.5° 110 mm",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "uPVC underground drainage fitting, junction 87.5°, 110 mm, to match Class 34 sewer pipe.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-FIT-110-COUPLER",
+   "slug": "underground-coupler-double-socket-110-mm",
+   "name": "Underground Coupler (double socket) 110 mm",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "uPVC underground drainage fitting, coupler (double socket), 110 mm, to match Class 34 sewer pipe.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-FIT-110-IE",
+   "slug": "underground-inspection-eye-access-fitting-110-mm",
+   "name": "Underground Inspection Eye (access fitting) 110 mm",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "uPVC underground drainage fitting, inspection eye (access fitting), 110 mm, to match Class 34 sewer pipe.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-FIT-110-PLUG",
+   "slug": "underground-end-plug-110-mm",
+   "name": "Underground End Plug 110 mm",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "uPVC underground drainage fitting, end plug, 110 mm, to match Class 34 sewer pipe.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-FIT-160-BEND-11",
+   "slug": "underground-bend-11-25-deg-160-mm",
+   "name": "Underground Bend 11.25° 160 mm",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "uPVC underground drainage fitting, bend 11.25°, 160 mm, to match Class 34 sewer pipe.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-FIT-160-BEND-22",
+   "slug": "underground-bend-22-5-deg-160-mm",
+   "name": "Underground Bend 22.5° 160 mm",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "uPVC underground drainage fitting, bend 22.5°, 160 mm, to match Class 34 sewer pipe.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-FIT-160-JUNC-87",
+   "slug": "underground-junction-87-5-deg-160-mm",
+   "name": "Underground Junction 87.5° 160 mm",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "uPVC underground drainage fitting, junction 87.5°, 160 mm, to match Class 34 sewer pipe.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-FIT-160-COUPLER",
+   "slug": "underground-coupler-double-socket-160-mm",
+   "name": "Underground Coupler (double socket) 160 mm",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "uPVC underground drainage fitting, coupler (double socket), 160 mm, to match Class 34 sewer pipe.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-FIT-160-IE",
+   "slug": "underground-inspection-eye-access-fitting-160-mm",
+   "name": "Underground Inspection Eye (access fitting) 160 mm",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "uPVC underground drainage fitting, inspection eye (access fitting), 160 mm, to match Class 34 sewer pipe.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-FIT-160-PLUG",
+   "slug": "underground-end-plug-160-mm",
+   "name": "Underground End Plug 160 mm",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "uPVC underground drainage fitting, end plug, 160 mm, to match Class 34 sewer pipe.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-FIT-160-BEND-45",
+   "slug": "underground-bend-160-mm-x-45-deg",
+   "name": "Underground Bend 160 mm × 45°",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "uPVC underground bend, 160 mm × 45°.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-FIT-160-BEND-87",
+   "slug": "underground-bend-160-mm-x-87-5-deg",
+   "name": "Underground Bend 160 mm × 87.5°",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "uPVC underground bend, 160 mm × 87.5°.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-FIT-160-JUNC-45",
+   "slug": "underground-junction-160-mm-x-45-deg",
+   "name": "Underground Junction 160 mm × 45°",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "uPVC underground junction, 160 mm × 45°.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-FIT-160X110-REDUCER",
+   "slug": "underground-reducer-160-x-110-mm",
+   "name": "Underground Reducer 160 × 110 mm",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "uPVC reducer to join a 110 mm branch to a 160 mm drain.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-FIT-110-GULLY",
+   "slug": "gully-yard-trap-110-mm",
+   "name": "Gully (Yard Trap) 110 mm",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "uPVC gully with a water-seal trap to take sink, shower and yard water into the drain.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-FIT-110-GULLY-HEAD",
+   "slug": "gully-head-and-grid-110-mm",
+   "name": "Gully Head & Grid 110 mm",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Raising piece and grid for a 110 mm gully.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-FIT-110-VENT-VALVE",
+   "slug": "air-admittance-vent-valve-110-mm",
+   "name": "Air Admittance (Vent) Valve 110 mm",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Air admittance valve that ventilates a drain stack inside the roof space.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-DRN-FIT-110-SADDLE",
+   "slug": "saddle-junction-160-x-110-mm",
+   "name": "Saddle Junction 160 × 110 mm",
+   "category_slug": "pipes-fittings",
+   "grading_standard": "SABS-marked uPVC underground fitting",
+   "masonry_class": "Underground fitting",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Saddle fitting to connect a new 110 mm branch to an existing 160 mm drain.",
+   "typical_uses": [
+    "House and site drainage",
+    "Connections to municipal sewers and stormwater"
+   ],
+   "handling_notes": "Bed and surround the pipe in selected bedding material, lay to the drawn fall and test before backfilling.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-CONC-375",
+   "slug": "concrete-pipe-375-mm",
+   "name": "Concrete Pipe 375 mm",
+   "category_slug": "precast-drainage",
+   "grading_standard": "SANS 677 concrete non-pressure pipes",
+   "masonry_class": "Precast concrete pipe",
+   "unit_size": "375 mm diameter",
+   "units_per_m2": null,
+   "description": "Precast concrete stormwater / culvert pipe, 375 mm internal diameter. Class (load rating), joint type and length confirmed on the quote.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-CONC-525",
+   "slug": "concrete-pipe-525-mm",
+   "name": "Concrete Pipe 525 mm",
+   "category_slug": "precast-drainage",
+   "grading_standard": "SANS 677 concrete non-pressure pipes",
+   "masonry_class": "Precast concrete pipe",
+   "unit_size": "525 mm diameter",
+   "units_per_m2": null,
+   "description": "Precast concrete stormwater / culvert pipe, 525 mm internal diameter. Class (load rating), joint type and length confirmed on the quote.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-CONC-750",
+   "slug": "concrete-pipe-750-mm",
+   "name": "Concrete Pipe 750 mm",
+   "category_slug": "precast-drainage",
+   "grading_standard": "SANS 677 concrete non-pressure pipes",
+   "masonry_class": "Precast concrete pipe",
+   "unit_size": "750 mm diameter",
+   "units_per_m2": null,
+   "description": "Precast concrete stormwater / culvert pipe, 750 mm internal diameter. Class (load rating), joint type and length confirmed on the quote.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-CONC-900",
+   "slug": "concrete-pipe-900-mm",
+   "name": "Concrete Pipe 900 mm",
+   "category_slug": "precast-drainage",
+   "grading_standard": "SANS 677 concrete non-pressure pipes",
+   "masonry_class": "Precast concrete pipe",
+   "unit_size": "900 mm diameter",
+   "units_per_m2": null,
+   "description": "Precast concrete stormwater / culvert pipe, 900 mm internal diameter. Class (load rating), joint type and length confirmed on the quote.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-CONC-1050",
+   "slug": "concrete-pipe-1050-mm",
+   "name": "Concrete Pipe 1050 mm",
+   "category_slug": "precast-drainage",
+   "grading_standard": "SANS 677 concrete non-pressure pipes",
+   "masonry_class": "Precast concrete pipe",
+   "unit_size": "1050 mm diameter",
+   "units_per_m2": null,
+   "description": "Precast concrete stormwater / culvert pipe, 1050 mm internal diameter. Class (load rating), joint type and length confirmed on the quote.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-CONC-1200",
+   "slug": "concrete-pipe-1200-mm",
+   "name": "Concrete Pipe 1200 mm",
+   "category_slug": "precast-drainage",
+   "grading_standard": "SANS 677 concrete non-pressure pipes",
+   "masonry_class": "Precast concrete pipe",
+   "unit_size": "1200 mm diameter",
+   "units_per_m2": null,
+   "description": "Precast concrete stormwater / culvert pipe, 1200 mm internal diameter. Class (load rating), joint type and length confirmed on the quote.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-MH-RING-750",
+   "slug": "manhole-ring-750-mm",
+   "name": "Manhole Ring 750 mm",
+   "category_slug": "precast-drainage",
+   "grading_standard": "Precast concrete manhole chamber section",
+   "masonry_class": "Manhole",
+   "unit_size": "750 mm diameter",
+   "units_per_m2": null,
+   "description": "Precast concrete manhole ring, 750 mm internal diameter. Height confirmed on the quote.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-MH-RING-1250",
+   "slug": "manhole-ring-1-250-mm",
+   "name": "Manhole Ring 1,250 mm",
+   "category_slug": "precast-drainage",
+   "grading_standard": "Precast concrete manhole chamber section",
+   "masonry_class": "Manhole",
+   "unit_size": "1,250 mm diameter",
+   "units_per_m2": null,
+   "description": "Precast concrete manhole ring, 1,250 mm internal diameter. Height confirmed on the quote.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-MH-RING-1500",
+   "slug": "manhole-ring-1-500-mm",
+   "name": "Manhole Ring 1,500 mm",
+   "category_slug": "precast-drainage",
+   "grading_standard": "Precast concrete manhole chamber section",
+   "masonry_class": "Manhole",
+   "unit_size": "1,500 mm diameter",
+   "units_per_m2": null,
+   "description": "Precast concrete manhole ring, 1,500 mm internal diameter. Height confirmed on the quote.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-MH-COVER-LD",
+   "slug": "manhole-cover-and-frame-light-duty-pedestrian",
+   "name": "Manhole Cover & Frame, Light Duty (pedestrian)",
+   "category_slug": "precast-drainage",
+   "grading_standard": null,
+   "masonry_class": "Manhole",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Light-duty manhole cover and frame for gardens and footpaths. Material (concrete, composite or cast iron) confirmed on the quote.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-MH-COVER-HD",
+   "slug": "manhole-cover-and-frame-heavy-duty-traffic",
+   "name": "Manhole Cover & Frame, Heavy Duty (traffic)",
+   "category_slug": "precast-drainage",
+   "grading_standard": null,
+   "masonry_class": "Manhole",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Heavy-duty manhole cover and frame rated for vehicle traffic.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-MH-COVER-SLAB",
+   "slug": "manhole-cover-slab",
+   "name": "Manhole Cover Slab",
+   "category_slug": "precast-drainage",
+   "grading_standard": null,
+   "masonry_class": "Manhole",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Precast reinforced concrete cover slab with an access opening, to top a manhole ring.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-MH-BASE",
+   "slug": "manhole-base-benching-unit",
+   "name": "Manhole Base / Benching Unit",
+   "category_slug": "precast-drainage",
+   "grading_standard": null,
+   "masonry_class": "Manhole",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Precast manhole base so the chamber needn't be cast in situ.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-SUMP",
+   "slug": "precast-catch-pit-sump",
+   "name": "Precast Catch Pit / Sump",
+   "category_slug": "precast-drainage",
+   "grading_standard": null,
+   "masonry_class": "Manhole",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Precast concrete catch pit to collect stormwater and silt.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-KERB-INLET",
+   "slug": "kerb-inlet-unit",
+   "name": "Kerb Inlet Unit",
+   "category_slug": "precast-drainage",
+   "grading_standard": null,
+   "masonry_class": "Manhole",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Precast kerb inlet that takes road stormwater into the drain.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-GRID-INLET",
+   "slug": "grid-inlet-with-grating",
+   "name": "Grid Inlet with Grating",
+   "category_slug": "precast-drainage",
+   "grading_standard": null,
+   "masonry_class": "Manhole",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Precast inlet with a grating for parking areas and yards.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-CHANNEL-HD",
+   "slug": "channel-drain-with-grate-heavy-duty-1-m",
+   "name": "Channel Drain with Grate, Heavy Duty, 1 m",
+   "category_slug": "precast-drainage",
+   "grading_standard": null,
+   "masonry_class": "Manhole",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Heavy-duty channel drain with a ductile-iron or galvanised grate for driveways and loading areas.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-CHANNEL-150",
+   "slug": "channel-drain-150-mm-wide-with-grate-1-m",
+   "name": "Channel Drain 150 mm Wide with Grate, 1 m",
+   "category_slug": "precast-drainage",
+   "grading_standard": null,
+   "masonry_class": "Manhole",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Wider 150 mm channel drain for larger paved areas.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-CHANNEL-PIT",
+   "slug": "channel-drain-sump-outlet-unit",
+   "name": "Channel Drain Sump / Outlet Unit",
+   "category_slug": "precast-drainage",
+   "grading_standard": null,
+   "masonry_class": "Manhole",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Outlet pit that connects a channel-drain run to the underground drain.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-U-DRAIN",
+   "slug": "precast-u-drain-section",
+   "name": "Precast U-Drain Section",
+   "category_slug": "precast-drainage",
+   "grading_standard": null,
+   "masonry_class": "Manhole",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Open precast U-channel for site and farm stormwater.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-PRC-HEADWALL",
+   "slug": "precast-culvert-headwall",
+   "name": "Precast Culvert Headwall",
+   "category_slug": "precast-drainage",
+   "grading_standard": null,
+   "masonry_class": "Manhole",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Precast headwall for the inlet or outlet of a pipe culvert.",
+   "typical_uses": [
+    "Site and road stormwater",
+    "Sewer and stormwater manholes"
+   ],
+   "handling_notes": "Lift with suitable equipment; lay on a prepared bed to the engineer's levels and joint as specified.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GEO-NW-A4",
+   "slug": "nonwoven-geotextile-medium-grade-a4-type",
+   "name": "Nonwoven Geotextile, Medium Grade (A4-type)",
+   "category_slug": "geosynthetics-membranes",
+   "grading_standard": "Needle-punched nonwoven polyester geotextile",
+   "masonry_class": "Geotextile",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Medium-weight nonwoven needle-punched geotextile for separation and filtration under roads and drains.",
+   "typical_uses": [
+    "Roads, drains and retaining walls",
+    "Under floor slabs and on site"
+   ],
+   "handling_notes": "Keep rolls dry and out of the sun until laid; lap joints as the maker specifies.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (1.76 × 100 m)",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GEO-NW-A6",
+   "slug": "nonwoven-geotextile-heavy-grade-a6-type",
+   "name": "Nonwoven Geotextile, Heavy Grade (A6-type)",
+   "category_slug": "geosynthetics-membranes",
+   "grading_standard": "Needle-punched nonwoven polyester geotextile",
+   "masonry_class": "Geotextile",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Heavy-weight nonwoven geotextile for protection layers and heavy-duty separation.",
+   "typical_uses": [
+    "Roads, drains and retaining walls",
+    "Under floor slabs and on site"
+   ],
+   "handling_notes": "Keep rolls dry and out of the sun until laid; lap joints as the maker specifies.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (1.76 × 100 m)",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GEO-WOVEN",
+   "slug": "woven-geotextile-stabilisation",
+   "name": "Woven Geotextile (Stabilisation)",
+   "category_slug": "geosynthetics-membranes",
+   "grading_standard": "Needle-punched nonwoven polyester geotextile",
+   "masonry_class": "Geotextile",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Woven polypropylene geotextile for ground stabilisation under fill and roads.",
+   "typical_uses": [
+    "Roads, drains and retaining walls",
+    "Under floor slabs and on site"
+   ],
+   "handling_notes": "Keep rolls dry and out of the sun until laid; lap joints as the maker specifies.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (1.76 × 100 m)",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GEO-GEOCELL",
+   "slug": "geocell-cellular-confinement",
+   "name": "Geocell (Cellular Confinement)",
+   "category_slug": "geosynthetics-membranes",
+   "grading_standard": null,
+   "masonry_class": "Geogrid",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Expanding honeycomb cells filled with soil or stone to stabilise slopes and access roads.",
+   "typical_uses": [
+    "Roads, drains and retaining walls",
+    "Under floor slabs and on site"
+   ],
+   "handling_notes": "Keep rolls dry and out of the sun until laid; lap joints as the maker specifies.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GEO-EROSION",
+   "slug": "erosion-control-blanket",
+   "name": "Erosion Control Blanket",
+   "category_slug": "geosynthetics-membranes",
+   "grading_standard": null,
+   "masonry_class": "Geogrid",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Biodegradable or synthetic blanket that holds topsoil and seed on slopes until grass takes.",
+   "typical_uses": [
+    "Roads, drains and retaining walls",
+    "Under floor slabs and on site"
+   ],
+   "handling_notes": "Keep rolls dry and out of the sun until laid; lap joints as the maker specifies.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GEO-DRAIN-COMP",
+   "slug": "drainage-composite-cuspated-sheet",
+   "name": "Drainage Composite (Cuspated Sheet)",
+   "category_slug": "geosynthetics-membranes",
+   "grading_standard": null,
+   "masonry_class": "Geogrid",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Dimpled drainage sheet with a filter fabric behind retaining and basement walls.",
+   "typical_uses": [
+    "Roads, drains and retaining walls",
+    "Under floor slabs and on site"
+   ],
+   "handling_notes": "Keep rolls dry and out of the sun until laid; lap joints as the maker specifies.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GEO-DPM-375",
+   "slug": "damp-proof-membrane-375-um",
+   "name": "Damp-Proof Membrane 375 µm",
+   "category_slug": "geosynthetics-membranes",
+   "grading_standard": "SANS 952 polyolefin film — under-surface-bed damp-proof membrane (250 µm)",
+   "masonry_class": "Damp-proof membrane",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Heavier 375 µm polyethylene damp-proof membrane under surface beds. Roll size confirmed on the quote.",
+   "typical_uses": [
+    "Roads, drains and retaining walls",
+    "Under floor slabs and on site"
+   ],
+   "handling_notes": "Keep rolls dry and out of the sun until laid; lap joints as the maker specifies. Tape the laps and don't puncture it when placing mesh and chairs.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (3 × 30 m)",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GEO-DPM-150",
+   "slug": "construction-film-150-um",
+   "name": "Construction Film 150 µm",
+   "category_slug": "geosynthetics-membranes",
+   "grading_standard": "SANS 952 polyolefin film — under-surface-bed damp-proof membrane (250 µm)",
+   "masonry_class": "Damp-proof membrane",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Lighter polyethylene sheeting for covering, curing and protection on site.",
+   "typical_uses": [
+    "Roads, drains and retaining walls",
+    "Under floor slabs and on site"
+   ],
+   "handling_notes": "Keep rolls dry and out of the sun until laid; lap joints as the maker specifies. Tape the laps and don't puncture it when placing mesh and chairs.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (3 × 30 m)",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-TIL-DR-BLACK",
+   "slug": "concrete-roof-tile-double-roman-black",
+   "name": "Concrete Roof Tile, Double Roman — Black",
+   "category_slug": "concrete-roof-tiles",
+   "grading_standard": "SANS 542 concrete roofing tiles",
+   "masonry_class": "Concrete roof tile (Double Roman)",
+   "unit_size": "About 420 × 330 mm",
+   "units_per_m2": 10,
+   "description": "Double Roman concrete roof tile in black.",
+   "typical_uses": [
+    "Pitched tiled roofs",
+    "Re-roofing and extensions"
+   ],
+   "handling_notes": "Stack tiles on edge on a level, firm base near the roof, and lift them to the roof in small batches. Order a whole roof from one batch so the colour matches, plus a few spares for breakages and future repairs.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-TIL-DR-TERRACOTTA",
+   "slug": "concrete-roof-tile-double-roman-terracotta",
+   "name": "Concrete Roof Tile, Double Roman — Terracotta",
+   "category_slug": "concrete-roof-tiles",
+   "grading_standard": "SANS 542 concrete roofing tiles",
+   "masonry_class": "Concrete roof tile (Double Roman)",
+   "unit_size": "About 420 × 330 mm",
+   "units_per_m2": 10,
+   "description": "Double Roman concrete roof tile in terracotta.",
+   "typical_uses": [
+    "Pitched tiled roofs",
+    "Re-roofing and extensions"
+   ],
+   "handling_notes": "Stack tiles on edge on a level, firm base near the roof, and lift them to the roof in small batches. Order a whole roof from one batch so the colour matches, plus a few spares for breakages and future repairs.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-TIL-DR-ANTIQUE",
+   "slug": "concrete-roof-tile-double-roman-antique-finish",
+   "name": "Concrete Roof Tile, Double Roman — Antique Finish",
+   "category_slug": "concrete-roof-tiles",
+   "grading_standard": "SANS 542 concrete roofing tiles",
+   "masonry_class": "Concrete roof tile (Double Roman)",
+   "unit_size": "About 420 × 330 mm",
+   "units_per_m2": 10,
+   "description": "Double Roman concrete roof tile in an antique (aged) finish. Shade confirmed on the quote.",
+   "typical_uses": [
+    "Pitched tiled roofs",
+    "Re-roofing and extensions"
+   ],
+   "handling_notes": "Stack tiles on edge on a level, firm base near the roof, and lift them to the roof in small batches. Order a whole roof from one batch so the colour matches, plus a few spares for breakages and future repairs.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-TIL-SLATE",
+   "slug": "concrete-roof-tile-slate-profile",
+   "name": "Concrete Roof Tile, Slate Profile",
+   "category_slug": "concrete-roof-tiles",
+   "grading_standard": "SANS 542 concrete roofing tiles",
+   "masonry_class": "Concrete roof tile (flat)",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Flat slate-profile concrete roof tile. Colour confirmed on the quote.",
+   "typical_uses": [
+    "Pitched tiled roofs",
+    "Re-roofing and extensions"
+   ],
+   "handling_notes": "Stack tiles on edge on a level, firm base near the roof, and lift them to the roof in small batches. Order a whole roof from one batch so the colour matches, plus a few spares for breakages and future repairs.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-TIL-SLATE-ANTIQUE",
+   "slug": "concrete-roof-tile-slate-profile-antique-finish",
+   "name": "Concrete Roof Tile, Slate Profile — Antique Finish",
+   "category_slug": "concrete-roof-tiles",
+   "grading_standard": "SANS 542 concrete roofing tiles",
+   "masonry_class": "Concrete roof tile (flat)",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Slate-profile concrete roof tile in an antique finish.",
+   "typical_uses": [
+    "Pitched tiled roofs",
+    "Re-roofing and extensions"
+   ],
+   "handling_notes": "Stack tiles on edge on a level, firm base near the roof, and lift them to the roof in small batches. Order a whole roof from one batch so the colour matches, plus a few spares for breakages and future repairs.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-TIL-RIDGE-V",
+   "slug": "concrete-ridge-tile-v-shaped",
+   "name": "Concrete Ridge Tile, V-Shaped",
+   "category_slug": "concrete-roof-tiles",
+   "grading_standard": "SANS 542 concrete roofing tiles — ridge and hip fittings",
+   "masonry_class": "Ridge tile",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "V-shaped concrete ridge tile.",
+   "typical_uses": [
+    "Pitched tiled roofs",
+    "Re-roofing and extensions"
+   ],
+   "handling_notes": "Stack tiles on edge on a level, firm base near the roof, and lift them to the roof in small batches. Order a whole roof from one batch so the colour matches, plus a few spares for breakages and future repairs.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-TIL-RIDGE-TAPER",
+   "slug": "concrete-ridge-tile-tapered-half-round",
+   "name": "Concrete Ridge Tile, Tapered (Half-Round)",
+   "category_slug": "concrete-roof-tiles",
+   "grading_standard": "SANS 542 concrete roofing tiles — ridge and hip fittings",
+   "masonry_class": "Ridge tile",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Tapered half-round concrete ridge tile.",
+   "typical_uses": [
+    "Pitched tiled roofs",
+    "Re-roofing and extensions"
+   ],
+   "handling_notes": "Stack tiles on edge on a level, firm base near the roof, and lift them to the roof in small batches. Order a whole roof from one batch so the colour matches, plus a few spares for breakages and future repairs.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-TIL-HIP-STARTER",
+   "slug": "concrete-hip-starter-tile",
+   "name": "Concrete Hip Starter Tile",
+   "category_slug": "concrete-roof-tiles",
+   "grading_standard": "SANS 542 concrete roofing tiles — ridge and hip fittings",
+   "masonry_class": "Ridge tile",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Hip starter (end) tile that closes the bottom of a hip ridge.",
+   "typical_uses": [
+    "Pitched tiled roofs",
+    "Re-roofing and extensions"
+   ],
+   "handling_notes": "Stack tiles on edge on a level, firm base near the roof, and lift them to the roof in small batches. Order a whole roof from one batch so the colour matches, plus a few spares for breakages and future repairs.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-TIL-RIDGE-END",
+   "slug": "concrete-ridge-end-gable-tile",
+   "name": "Concrete Ridge End (Gable) Tile",
+   "category_slug": "concrete-roof-tiles",
+   "grading_standard": "SANS 542 concrete roofing tiles — ridge and hip fittings",
+   "masonry_class": "Ridge tile",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Closed ridge-end tile for gable ends.",
+   "typical_uses": [
+    "Pitched tiled roofs",
+    "Re-roofing and extensions"
+   ],
+   "handling_notes": "Stack tiles on edge on a level, firm base near the roof, and lift them to the roof in small batches. Order a whole roof from one batch so the colour matches, plus a few spares for breakages and future repairs.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-TIL-VERGE",
+   "slug": "concrete-verge-tile",
+   "name": "Concrete Verge Tile",
+   "category_slug": "concrete-roof-tiles",
+   "grading_standard": "SANS 542 concrete roofing tiles — ridge and hip fittings",
+   "masonry_class": "Ridge tile",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Verge tile that finishes the roof edge at a gable.",
+   "typical_uses": [
+    "Pitched tiled roofs",
+    "Re-roofing and extensions"
+   ],
+   "handling_notes": "Stack tiles on edge on a level, firm base near the roof, and lift them to the roof in small batches. Order a whole roof from one batch so the colour matches, plus a few spares for breakages and future repairs.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-TIL-VENT",
+   "slug": "roof-tile-vent",
+   "name": "Roof Tile Vent",
+   "category_slug": "concrete-roof-tiles",
+   "grading_standard": "SANS 542 concrete roofing tiles — ridge and hip fittings",
+   "masonry_class": "Ridge tile",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Ventilation tile to air the roof space, matched to the tile profile.",
+   "typical_uses": [
+    "Pitched tiled roofs",
+    "Re-roofing and extensions"
+   ],
+   "handling_notes": "Stack tiles on edge on a level, firm base near the roof, and lift them to the roof in small batches. Order a whole roof from one batch so the colour matches, plus a few spares for breakages and future repairs.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-TIL-CLIPS",
+   "slug": "roof-tile-clips-and-nails-box",
+   "name": "Roof Tile Clips & Nails (box)",
+   "category_slug": "concrete-roof-tiles",
+   "grading_standard": "SANS 542 concrete roofing tiles — ridge and hip fittings",
+   "masonry_class": "Ridge tile",
+   "unit_size": null,
+   "units_per_m2": null,
+   "description": "Tile clips and nails that hold tiles down in high-wind areas, matched to the profile.",
+   "typical_uses": [
+    "Pitched tiled roofs",
+    "Re-roofing and extensions"
+   ],
+   "handling_notes": "Stack tiles on edge on a level, firm base near the roof, and lift them to the roof in small batches. Order a whole roof from one batch so the colour matches, plus a few spares for breakages and future repairs.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "_range": "range-depth-2026-10"
   }
  ]
 }

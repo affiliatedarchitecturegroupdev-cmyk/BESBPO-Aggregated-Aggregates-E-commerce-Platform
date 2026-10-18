@@ -1941,6 +1941,3786 @@
      "source_note": "Per-tonne merchant prices are not published — quoted with the merchant."
     }
    ]
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "25 x 25 x 3 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-ANGLE-25X25X3",
+   "slug": "equal-angle-25-x-25-x-3-mm",
+   "name": "Equal Angle 25 x 25 x 3 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel equal angle, 25 x 25 x 3 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "25 x 25 x 5 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-ANGLE-25X25X5",
+   "slug": "equal-angle-25-x-25-x-5-mm",
+   "name": "Equal Angle 25 x 25 x 5 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel equal angle, 25 x 25 x 5 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "30 x 30 x 3 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-ANGLE-30X30X3",
+   "slug": "equal-angle-30-x-30-x-3-mm",
+   "name": "Equal Angle 30 x 30 x 3 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel equal angle, 30 x 30 x 3 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "30 x 30 x 5 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-ANGLE-30X30X5",
+   "slug": "equal-angle-30-x-30-x-5-mm",
+   "name": "Equal Angle 30 x 30 x 5 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel equal angle, 30 x 30 x 5 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "40 x 40 x 5 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-ANGLE-40X40X5",
+   "slug": "equal-angle-40-x-40-x-5-mm",
+   "name": "Equal Angle 40 x 40 x 5 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel equal angle, 40 x 40 x 5 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "40 x 40 x 6 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-ANGLE-40X40X6",
+   "slug": "equal-angle-40-x-40-x-6-mm",
+   "name": "Equal Angle 40 x 40 x 6 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel equal angle, 40 x 40 x 6 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "50 x 50 x 3 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-ANGLE-50X50X3",
+   "slug": "equal-angle-50-x-50-x-3-mm",
+   "name": "Equal Angle 50 x 50 x 3 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel equal angle, 50 x 50 x 3 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "50 x 50 x 5 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-ANGLE-50X50X5",
+   "slug": "equal-angle-50-x-50-x-5-mm",
+   "name": "Equal Angle 50 x 50 x 5 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel equal angle, 50 x 50 x 5 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "50 x 50 x 6 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-ANGLE-50X50X6",
+   "slug": "equal-angle-50-x-50-x-6-mm",
+   "name": "Equal Angle 50 x 50 x 6 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel equal angle, 50 x 50 x 6 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "65 x 65 x 6 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-ANGLE-65X65X6",
+   "slug": "equal-angle-65-x-65-x-6-mm",
+   "name": "Equal Angle 65 x 65 x 6 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel equal angle, 65 x 65 x 6 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "75 x 75 x 6 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-ANGLE-75X75X6",
+   "slug": "equal-angle-75-x-75-x-6-mm",
+   "name": "Equal Angle 75 x 75 x 6 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel equal angle, 75 x 75 x 6 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "75 x 75 x 8 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-ANGLE-75X75X8",
+   "slug": "equal-angle-75-x-75-x-8-mm",
+   "name": "Equal Angle 75 x 75 x 8 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel equal angle, 75 x 75 x 8 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "100 x 100 x 8 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-ANGLE-100X100X8",
+   "slug": "equal-angle-100-x-100-x-8-mm",
+   "name": "Equal Angle 100 x 100 x 8 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel equal angle, 100 x 100 x 8 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "100 x 100 x 10 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-ANGLE-100X100X10",
+   "slug": "equal-angle-100-x-100-x-10-mm",
+   "name": "Equal Angle 100 x 100 x 10 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel equal angle, 100 x 100 x 10 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "50 x 25 x 3 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-UNANGLE-50X25X3",
+   "slug": "unequal-angle-50-x-25-x-3-mm",
+   "name": "Unequal Angle 50 x 25 x 3 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel unequal angle, 50 x 25 x 3 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "75 x 50 x 6 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-UNANGLE-75X50X6",
+   "slug": "unequal-angle-75-x-50-x-6-mm",
+   "name": "Unequal Angle 75 x 50 x 6 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel unequal angle, 75 x 50 x 6 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "100 x 75 x 8 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-UNANGLE-100X75X8",
+   "slug": "unequal-angle-100-x-75-x-8-mm",
+   "name": "Unequal Angle 100 x 75 x 8 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel unequal angle, 100 x 75 x 8 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "20 x 3 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-FLAT-20X3",
+   "slug": "flat-bar-20-x-3-mm",
+   "name": "Flat Bar 20 x 3 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel flat bar, 20 x 3 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "25 x 3 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-FLAT-25X3",
+   "slug": "flat-bar-25-x-3-mm",
+   "name": "Flat Bar 25 x 3 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel flat bar, 25 x 3 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "25 x 5 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-FLAT-25X5",
+   "slug": "flat-bar-25-x-5-mm",
+   "name": "Flat Bar 25 x 5 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel flat bar, 25 x 5 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "30 x 3 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-FLAT-30X3",
+   "slug": "flat-bar-30-x-3-mm",
+   "name": "Flat Bar 30 x 3 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel flat bar, 30 x 3 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "30 x 5 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-FLAT-30X5",
+   "slug": "flat-bar-30-x-5-mm",
+   "name": "Flat Bar 30 x 5 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel flat bar, 30 x 5 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "40 x 3 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-FLAT-40X3",
+   "slug": "flat-bar-40-x-3-mm",
+   "name": "Flat Bar 40 x 3 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel flat bar, 40 x 3 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "40 x 5 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-FLAT-40X5",
+   "slug": "flat-bar-40-x-5-mm",
+   "name": "Flat Bar 40 x 5 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel flat bar, 40 x 5 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "50 x 5 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-FLAT-50X5",
+   "slug": "flat-bar-50-x-5-mm",
+   "name": "Flat Bar 50 x 5 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel flat bar, 50 x 5 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "50 x 6 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-FLAT-50X6",
+   "slug": "flat-bar-50-x-6-mm",
+   "name": "Flat Bar 50 x 6 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel flat bar, 50 x 6 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "75 x 8 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-FLAT-75X8",
+   "slug": "flat-bar-75-x-8-mm",
+   "name": "Flat Bar 75 x 8 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel flat bar, 75 x 8 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "100 x 10 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-FLAT-100X10",
+   "slug": "flat-bar-100-x-10-mm",
+   "name": "Flat Bar 100 x 10 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel flat bar, 100 x 10 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "19 x 19 x 1.6 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-SQTUBE-19X1.6",
+   "slug": "square-tube-19-x-19-x-1-6-mm",
+   "name": "Square Tube 19 x 19 x 1.6 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Square hollow section, 19 x 19 x 1.6 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "25 x 25 x 1.6 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-SQTUBE-25X1.6",
+   "slug": "square-tube-25-x-25-x-1-6-mm",
+   "name": "Square Tube 25 x 25 x 1.6 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Square hollow section, 25 x 25 x 1.6 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "25 x 25 x 2 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-SQTUBE-25X2",
+   "slug": "square-tube-25-x-25-x-2-mm",
+   "name": "Square Tube 25 x 25 x 2 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Square hollow section, 25 x 25 x 2 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "32 x 32 x 1.6 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-SQTUBE-32X1.6",
+   "slug": "square-tube-32-x-32-x-1-6-mm",
+   "name": "Square Tube 32 x 32 x 1.6 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Square hollow section, 32 x 32 x 1.6 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "38 x 38 x 1.6 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-SQTUBE-38X1.6",
+   "slug": "square-tube-38-x-38-x-1-6-mm",
+   "name": "Square Tube 38 x 38 x 1.6 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Square hollow section, 38 x 38 x 1.6 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "40 x 40 x 2 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-SQTUBE-40X2",
+   "slug": "square-tube-40-x-40-x-2-mm",
+   "name": "Square Tube 40 x 40 x 2 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Square hollow section, 40 x 40 x 2 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "40 x 40 x 3 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-SQTUBE-40X3",
+   "slug": "square-tube-40-x-40-x-3-mm",
+   "name": "Square Tube 40 x 40 x 3 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Square hollow section, 40 x 40 x 3 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "50 x 50 x 3 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-SQTUBE-50X3",
+   "slug": "square-tube-50-x-50-x-3-mm",
+   "name": "Square Tube 50 x 50 x 3 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Square hollow section, 50 x 50 x 3 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "76 x 76 x 2 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-SQTUBE-76X2",
+   "slug": "square-tube-76-x-76-x-2-mm",
+   "name": "Square Tube 76 x 76 x 2 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Square hollow section, 76 x 76 x 2 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "76 x 76 x 3 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-SQTUBE-76X3",
+   "slug": "square-tube-76-x-76-x-3-mm",
+   "name": "Square Tube 76 x 76 x 3 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Square hollow section, 76 x 76 x 3 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "100 x 100 x 3 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-SQTUBE-100X3",
+   "slug": "square-tube-100-x-100-x-3-mm",
+   "name": "Square Tube 100 x 100 x 3 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Square hollow section, 100 x 100 x 3 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "50 x 25 x 1.6 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-RECTUBE-50X25X1.6",
+   "slug": "rectangular-tube-50-x-25-x-1-6-mm",
+   "name": "Rectangular Tube 50 x 25 x 1.6 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Rectangular hollow section, 50 x 25 x 1.6 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "50 x 25 x 2 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-RECTUBE-50X25X2",
+   "slug": "rectangular-tube-50-x-25-x-2-mm",
+   "name": "Rectangular Tube 50 x 25 x 2 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Rectangular hollow section, 50 x 25 x 2 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "76 x 38 x 2 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-RECTUBE-76X38X2",
+   "slug": "rectangular-tube-76-x-38-x-2-mm",
+   "name": "Rectangular Tube 76 x 38 x 2 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Rectangular hollow section, 76 x 38 x 2 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "100 x 50 x 2 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-RECTUBE-100X50X2",
+   "slug": "rectangular-tube-100-x-50-x-2-mm",
+   "name": "Rectangular Tube 100 x 50 x 2 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Rectangular hollow section, 100 x 50 x 2 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "100 x 50 x 3 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-RECTUBE-100X50X3",
+   "slug": "rectangular-tube-100-x-50-x-3-mm",
+   "name": "Rectangular Tube 100 x 50 x 3 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Rectangular hollow section, 100 x 50 x 3 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "150 x 50 x 3 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-RECTUBE-150X50X3",
+   "slug": "rectangular-tube-150-x-50-x-3-mm",
+   "name": "Rectangular Tube 150 x 50 x 3 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Rectangular hollow section, 150 x 50 x 3 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "25.4 x 1.6 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-RNDTUBE-25-4X1-6",
+   "slug": "round-tube-25-4-x-1-6-mm",
+   "name": "Round Tube 25.4 x 1.6 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Round tube, 25.4 mm outside diameter x 1.6 mm wall, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "31.8 x 1.6 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-RNDTUBE-31-8X1-6",
+   "slug": "round-tube-31-8-x-1-6-mm",
+   "name": "Round Tube 31.8 x 1.6 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Round tube, 31.8 mm outside diameter x 1.6 mm wall, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "38.1 x 1.6 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-RNDTUBE-38-1X1-6",
+   "slug": "round-tube-38-1-x-1-6-mm",
+   "name": "Round Tube 38.1 x 1.6 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Round tube, 38.1 mm outside diameter x 1.6 mm wall, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "50.8 x 2 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-RNDTUBE-50-8X2",
+   "slug": "round-tube-50-8-x-2-mm",
+   "name": "Round Tube 50.8 x 2 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Round tube, 50.8 mm outside diameter x 2 mm wall, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "76.2 x 2 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-RNDTUBE-76-2X2",
+   "slug": "round-tube-76-2-x-2-mm",
+   "name": "Round Tube 76.2 x 2 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Round tube, 76.2 mm outside diameter x 2 mm wall, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "101.6 x 3 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-RNDTUBE-101-6X3",
+   "slug": "round-tube-101-6-x-3-mm",
+   "name": "Round Tube 101.6 x 3 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Round tube, 101.6 mm outside diameter x 3 mm wall, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "10 mm round",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-RNDBAR-10",
+   "slug": "round-bar-10-mm",
+   "name": "Round Bar 10 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel round bar, 10 mm, 6 m length (not rebar).",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "12 mm round",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-RNDBAR-12",
+   "slug": "round-bar-12-mm",
+   "name": "Round Bar 12 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel round bar, 12 mm, 6 m length (not rebar).",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "16 mm round",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-RNDBAR-16",
+   "slug": "round-bar-16-mm",
+   "name": "Round Bar 16 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel round bar, 16 mm, 6 m length (not rebar).",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "20 mm round",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-RNDBAR-20",
+   "slug": "round-bar-20-mm",
+   "name": "Round Bar 20 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel round bar, 20 mm, 6 m length (not rebar).",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "25 mm round",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-RNDBAR-25",
+   "slug": "round-bar-25-mm",
+   "name": "Round Bar 25 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel round bar, 25 mm, 6 m length (not rebar).",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "10 mm square",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-SQBAR-10",
+   "slug": "square-bar-10-mm",
+   "name": "Square Bar 10 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel square bar, 10 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "12 mm square",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-SQBAR-12",
+   "slug": "square-bar-12-mm",
+   "name": "Square Bar 12 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel square bar, 12 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "16 mm square",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-SQBAR-16",
+   "slug": "square-bar-16-mm",
+   "name": "Square Bar 16 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel square bar, 16 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "IPE 100",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-IPE-100",
+   "slug": "ipe-100-i-beam",
+   "name": "IPE 100 I-Beam",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Parallel-flange IPE 100 I-beam. Length (6, 9 or 12 m) confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "IPE 120",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-IPE-120",
+   "slug": "ipe-120-i-beam",
+   "name": "IPE 120 I-Beam",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Parallel-flange IPE 120 I-beam. Length (6, 9 or 12 m) confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "IPE 140",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-IPE-140",
+   "slug": "ipe-140-i-beam",
+   "name": "IPE 140 I-Beam",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Parallel-flange IPE 140 I-beam. Length (6, 9 or 12 m) confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "IPE 160",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-IPE-160",
+   "slug": "ipe-160-i-beam",
+   "name": "IPE 160 I-Beam",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Parallel-flange IPE 160 I-beam. Length (6, 9 or 12 m) confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "IPE 180",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-IPE-180",
+   "slug": "ipe-180-i-beam",
+   "name": "IPE 180 I-Beam",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Parallel-flange IPE 180 I-beam. Length (6, 9 or 12 m) confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "IPE 200",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-IPE-200",
+   "slug": "ipe-200-i-beam",
+   "name": "IPE 200 I-Beam",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Parallel-flange IPE 200 I-beam. Length (6, 9 or 12 m) confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "IPE 240",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-IPE-240",
+   "slug": "ipe-240-i-beam",
+   "name": "IPE 240 I-Beam",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Parallel-flange IPE 240 I-beam. Length (6, 9 or 12 m) confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "IPE 270",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-IPE-270",
+   "slug": "ipe-270-i-beam",
+   "name": "IPE 270 I-Beam",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Parallel-flange IPE 270 I-beam. Length (6, 9 or 12 m) confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "IPE 300",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-IPE-300",
+   "slug": "ipe-300-i-beam",
+   "name": "IPE 300 I-Beam",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Parallel-flange IPE 300 I-beam. Length (6, 9 or 12 m) confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "152 x 89 x 16 kg/m",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-UB-152-X-89-X-16",
+   "slug": "universal-beam-152-x-89-x-16-kg-m",
+   "name": "Universal Beam 152 x 89 x 16 kg/m",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Universal beam (I-section) 152 x 89 x 16 kg/m. Length confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "203 x 133 x 25 kg/m",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-UB-203-X-133-X-25",
+   "slug": "universal-beam-203-x-133-x-25-kg-m",
+   "name": "Universal Beam 203 x 133 x 25 kg/m",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Universal beam (I-section) 203 x 133 x 25 kg/m. Length confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "254 x 146 x 31 kg/m",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-UB-254-X-146-X-31",
+   "slug": "universal-beam-254-x-146-x-31-kg-m",
+   "name": "Universal Beam 254 x 146 x 31 kg/m",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Universal beam (I-section) 254 x 146 x 31 kg/m. Length confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "305 x 165 x 40 kg/m",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-UB-305-X-165-X-40",
+   "slug": "universal-beam-305-x-165-x-40-kg-m",
+   "name": "Universal Beam 305 x 165 x 40 kg/m",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Universal beam (I-section) 305 x 165 x 40 kg/m. Length confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "356 x 171 x 45 kg/m",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-UB-356-X-171-X-45",
+   "slug": "universal-beam-356-x-171-x-45-kg-m",
+   "name": "Universal Beam 356 x 171 x 45 kg/m",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Universal beam (I-section) 356 x 171 x 45 kg/m. Length confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "406 x 178 x 54 kg/m",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-UB-406-X-178-X-54",
+   "slug": "universal-beam-406-x-178-x-54-kg-m",
+   "name": "Universal Beam 406 x 178 x 54 kg/m",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Universal beam (I-section) 406 x 178 x 54 kg/m. Length confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "152 x 152 x 23 kg/m",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-UC-152-X-152-X-23",
+   "slug": "universal-column-152-x-152-x-23-kg-m",
+   "name": "Universal Column 152 x 152 x 23 kg/m",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Universal column (H-section) 152 x 152 x 23 kg/m. Length confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "152 x 152 x 30 kg/m",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-UC-152-X-152-X-30",
+   "slug": "universal-column-152-x-152-x-30-kg-m",
+   "name": "Universal Column 152 x 152 x 30 kg/m",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Universal column (H-section) 152 x 152 x 30 kg/m. Length confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "203 x 203 x 46 kg/m",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-UC-203-X-203-X-46",
+   "slug": "universal-column-203-x-203-x-46-kg-m",
+   "name": "Universal Column 203 x 203 x 46 kg/m",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Universal column (H-section) 203 x 203 x 46 kg/m. Length confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "254 x 254 x 73 kg/m",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-UC-254-X-254-X-73",
+   "slug": "universal-column-254-x-254-x-73-kg-m",
+   "name": "Universal Column 254 x 254 x 73 kg/m",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Universal column (H-section) 254 x 254 x 73 kg/m. Length confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "100 x 50 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-PFC-100-X-50",
+   "slug": "parallel-flange-channel-pfc-100-x-50-mm",
+   "name": "Parallel-Flange Channel (PFC) 100 x 50 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Hot-rolled parallel-flange channel, 100 x 50 mm. Length confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "140 x 60 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-PFC-140-X-60",
+   "slug": "parallel-flange-channel-pfc-140-x-60-mm",
+   "name": "Parallel-Flange Channel (PFC) 140 x 60 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Hot-rolled parallel-flange channel, 140 x 60 mm. Length confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "160 x 65 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-PFC-160-X-65",
+   "slug": "parallel-flange-channel-pfc-160-x-65-mm",
+   "name": "Parallel-Flange Channel (PFC) 160 x 65 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Hot-rolled parallel-flange channel, 160 x 65 mm. Length confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "180 x 70 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-PFC-180-X-70",
+   "slug": "parallel-flange-channel-pfc-180-x-70-mm",
+   "name": "Parallel-Flange Channel (PFC) 180 x 70 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Hot-rolled parallel-flange channel, 180 x 70 mm. Length confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "200 x 75 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-PFC-200-X-75",
+   "slug": "parallel-flange-channel-pfc-200-x-75-mm",
+   "name": "Parallel-Flange Channel (PFC) 200 x 75 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Hot-rolled parallel-flange channel, 200 x 75 mm. Length confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "260 x 90 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-PFC-260-X-90",
+   "slug": "parallel-flange-channel-pfc-260-x-90-mm",
+   "name": "Parallel-Flange Channel (PFC) 260 x 90 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Hot-rolled parallel-flange channel, 260 x 90 mm. Length confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "TONNE",
+     "unit_label": "Tonne",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "75 x 50 x 20 x 2 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-LIPPED-75-X-50-X-20-X-2",
+   "slug": "lipped-channel-75-x-50-x-20-x-2-mm",
+   "name": "Lipped Channel 75 x 50 x 20 x 2 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Cold-formed lipped channel (purlins and girts), 75 x 50 x 20 x 2 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "100 x 50 x 20 x 2 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-LIPPED-100-X-50-X-20-X-2",
+   "slug": "lipped-channel-100-x-50-x-20-x-2-mm",
+   "name": "Lipped Channel 100 x 50 x 20 x 2 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Cold-formed lipped channel (purlins and girts), 100 x 50 x 20 x 2 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "125 x 50 x 20 x 2 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-LIPPED-125-X-50-X-20-X-2",
+   "slug": "lipped-channel-125-x-50-x-20-x-2-mm",
+   "name": "Lipped Channel 125 x 50 x 20 x 2 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Cold-formed lipped channel (purlins and girts), 125 x 50 x 20 x 2 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "150 x 65 x 20 x 2.5 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-LIPPED-150-X-65-X-20-X-2-5",
+   "slug": "lipped-channel-150-x-65-x-20-x-2-5-mm",
+   "name": "Lipped Channel 150 x 65 x 20 x 2.5 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Cold-formed lipped channel (purlins and girts), 150 x 65 x 20 x 2.5 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "200 x 75 x 20 x 2.5 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-LIPPED-200-X-75-X-20-X-2-5",
+   "slug": "lipped-channel-200-x-75-x-20-x-2-5-mm",
+   "name": "Lipped Channel 200 x 75 x 20 x 2.5 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Cold-formed lipped channel (purlins and girts), 200 x 75 x 20 x 2.5 mm, 6 m length.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "LENGTH_6M",
+     "unit_label": "6 m length",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "3 x 2500 x 1200 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-PLATE-3",
+   "slug": "steel-plate-3-mm-2500-x-1200",
+   "name": "Steel Plate 3 mm (2500 x 1200)",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel plate, 3 mm, 2500 x 1200 mm sheet. Grade and cutting confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "4.5 x 2500 x 1200 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-PLATE-4-5",
+   "slug": "steel-plate-4-5-mm-2500-x-1200",
+   "name": "Steel Plate 4.5 mm (2500 x 1200)",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel plate, 4.5 mm, 2500 x 1200 mm sheet. Grade and cutting confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "6 x 2500 x 1200 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-PLATE-6",
+   "slug": "steel-plate-6-mm-2500-x-1200",
+   "name": "Steel Plate 6 mm (2500 x 1200)",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel plate, 6 mm, 2500 x 1200 mm sheet. Grade and cutting confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "8 x 2500 x 1200 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-PLATE-8",
+   "slug": "steel-plate-8-mm-2500-x-1200",
+   "name": "Steel Plate 8 mm (2500 x 1200)",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel plate, 8 mm, 2500 x 1200 mm sheet. Grade and cutting confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "10 x 2500 x 1200 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-PLATE-10",
+   "slug": "steel-plate-10-mm-2500-x-1200",
+   "name": "Steel Plate 10 mm (2500 x 1200)",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel plate, 10 mm, 2500 x 1200 mm sheet. Grade and cutting confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "12 x 2500 x 1200 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-PLATE-12",
+   "slug": "steel-plate-12-mm-2500-x-1200",
+   "name": "Steel Plate 12 mm (2500 x 1200)",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel plate, 12 mm, 2500 x 1200 mm sheet. Grade and cutting confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "16 x 2500 x 1200 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-PLATE-16",
+   "slug": "steel-plate-16-mm-2500-x-1200",
+   "name": "Steel Plate 16 mm (2500 x 1200)",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel plate, 16 mm, 2500 x 1200 mm sheet. Grade and cutting confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "20 x 2500 x 1200 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-PLATE-20",
+   "slug": "steel-plate-20-mm-2500-x-1200",
+   "name": "Steel Plate 20 mm (2500 x 1200)",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel plate, 20 mm, 2500 x 1200 mm sheet. Grade and cutting confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "0.8 x 2450 x 1225 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-SHEET-0-8",
+   "slug": "steel-sheet-0-8-mm-2450-x-1225",
+   "name": "Steel Sheet 0.8 mm (2450 x 1225)",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Cold-rolled or galvanised steel sheet, 0.8 mm, 2450 x 1225 mm.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "1 x 2450 x 1225 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-SHEET-1",
+   "slug": "steel-sheet-1-mm-2450-x-1225",
+   "name": "Steel Sheet 1 mm (2450 x 1225)",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Cold-rolled or galvanised steel sheet, 1 mm, 2450 x 1225 mm.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "1.6 x 2450 x 1225 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-SHEET-1-6",
+   "slug": "steel-sheet-1-6-mm-2450-x-1225",
+   "name": "Steel Sheet 1.6 mm (2450 x 1225)",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Cold-rolled or galvanised steel sheet, 1.6 mm, 2450 x 1225 mm.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "2 x 2450 x 1225 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-SHEET-2",
+   "slug": "steel-sheet-2-mm-2450-x-1225",
+   "name": "Steel Sheet 2 mm (2450 x 1225)",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Cold-rolled or galvanised steel sheet, 2 mm, 2450 x 1225 mm.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "3 mm",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-CHECKER",
+   "slug": "checker-tread-plate-3-mm",
+   "name": "Checker (Tread) Plate 3 mm",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Mild-steel checker plate, 3 mm (on plain), for stair treads and covers. Sheet size confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": "Sheet",
+   "specialist_characteristics": [],
+   "sku": "AA-STL-STR-EXPANDED",
+   "slug": "expanded-metal-mesh-sheet",
+   "name": "Expanded Metal Mesh Sheet",
+   "category_slug": "structural-steel",
+   "grading_standard": "Mild steel",
+   "steel_family": "Structural steel",
+   "description": "Expanded metal mesh sheet for screens, security and walkways. Pattern confirmed on the quote.",
+   "typical_uses": [
+    "Steel structures, frames and fabrication",
+    "Gates, burglar bars and brackets"
+   ],
+   "handling_notes": "Confirm section, grade and length against the engineer's drawings. Cutting, drilling and galvanising are quoted separately.",
+   "units": [
+    {
+     "unit": "SHEET",
+     "unit_label": "Sheet",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-ACC-TIEWIRE-125",
+   "slug": "binding-tie-wire-1-25-mm",
+   "name": "Binding (Tie) Wire 1.25 mm",
+   "category_slug": "steel-fixing-accessories",
+   "grading_standard": null,
+   "steel_family": "Fixing accessory",
+   "description": "Soft annealed tie wire, 1.25 mm, for tying rebar.",
+   "typical_uses": [
+    "Reinforced concrete work",
+    "Fixing and anchoring on site"
+   ],
+   "handling_notes": "Confirm sizes against the engineer's drawings before ordering.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-ACC-RECESS-SPACER",
+   "slug": "wheel-spacers-for-columns-and-walls-bag",
+   "name": "Wheel Spacers for Columns and Walls (bag)",
+   "category_slug": "steel-fixing-accessories",
+   "grading_standard": null,
+   "steel_family": "Fixing accessory",
+   "description": "Plastic wheel spacers that keep column and wall bars at the right cover.",
+   "typical_uses": [
+    "Reinforced concrete work",
+    "Fixing and anchoring on site"
+   ],
+   "handling_notes": "Confirm sizes against the engineer's drawings before ordering.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-ACC-SLAB-CHAIRS-HD",
+   "slug": "heavy-duty-high-chairs-for-slabs-bag",
+   "name": "Heavy-Duty High Chairs for Slabs (bag)",
+   "category_slug": "steel-fixing-accessories",
+   "grading_standard": null,
+   "steel_family": "Fixing accessory",
+   "description": "Tall plastic or steel high chairs for the top mat in thick slabs.",
+   "typical_uses": [
+    "Reinforced concrete work",
+    "Fixing and anchoring on site"
+   ],
+   "handling_notes": "Confirm sizes against the engineer's drawings before ordering.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-ACC-ANCHOR-BOLTS",
+   "slug": "holding-down-anchor-bolts",
+   "name": "Holding-Down (Anchor) Bolts",
+   "category_slug": "steel-fixing-accessories",
+   "grading_standard": null,
+   "steel_family": "Fixing accessory",
+   "description": "Cast-in holding-down bolts for steel baseplates. Size confirmed on the quote.",
+   "typical_uses": [
+    "Reinforced concrete work",
+    "Fixing and anchoring on site"
+   ],
+   "handling_notes": "Confirm sizes against the engineer's drawings before ordering.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "manufacturer": null,
+   "steel_grade": null,
+   "diameter_mm": null,
+   "mass_kg_per_m": null,
+   "section_size": null,
+   "specialist_characteristics": [],
+   "sku": "AA-STL-ACC-CHEMICAL-ANCHOR",
+   "slug": "chemical-anchor-resin-400-ml",
+   "name": "Chemical Anchor (Resin) 400 ml",
+   "category_slug": "steel-fixing-accessories",
+   "grading_standard": null,
+   "steel_family": "Fixing accessory",
+   "description": "Injection resin for anchoring rebar and bolts into concrete.",
+   "typical_uses": [
+    "Reinforced concrete work",
+    "Fixing and anchoring on site"
+   ],
+   "handling_notes": "Confirm sizes against the engineer's drawings before ordering.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "market_benchmark_price": null,
+     "cost_basis_percent": 100,
+     "cost_per_unit": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark",
+     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+    }
+   ],
+   "_range": "range-depth-2026-10"
   }
  ]
 }

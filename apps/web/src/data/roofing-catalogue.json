@@ -7789,6 +7789,1523 @@
    "timber_grade": null,
    "timber_treatment": null,
    "timber_finish": null
+  },
+  {
+   "sku": "AA-ROF-RIDGE-IBR-ZINC",
+   "slug": "ibr-ridge-capping-zincalume",
+   "name": "IBR Ridge Capping, Zincalume®",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Pressed steel flashing",
+   "unit_size": null,
+   "description": "IBR ridge capping in Zincalume®, to match Zincalume® sheeting.",
+   "typical_uses": [
+    "Finishing and fixing sheeted roofs",
+    "Ridges, edges and roof-to-wall junctions"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-RIDGE-IBR-PAINTED",
+   "slug": "ibr-ridge-capping-pre-painted",
+   "name": "IBR Ridge Capping, Pre-Painted",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Pressed steel flashing",
+   "unit_size": null,
+   "description": "Pre-painted IBR ridge capping to match coloured sheeting.",
+   "typical_uses": [
+    "Finishing and fixing sheeted roofs",
+    "Ridges, edges and roof-to-wall junctions"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-RIDGE-CORR-ZINC",
+   "slug": "roll-top-ridge-for-corrugated-zincalume",
+   "name": "Roll-Top Ridge for Corrugated, Zincalume®",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Pressed steel flashing",
+   "unit_size": null,
+   "description": "Roll-top ridge for corrugated Zincalume® sheeting.",
+   "typical_uses": [
+    "Finishing and fixing sheeted roofs",
+    "Ridges, edges and roof-to-wall junctions"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-VALLEY",
+   "slug": "valley-gutter-flashing",
+   "name": "Valley Gutter Flashing",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Pressed steel flashing",
+   "unit_size": null,
+   "description": "Valley flashing where two roof slopes meet. Material and girth confirmed on the quote.",
+   "typical_uses": [
+    "Finishing and fixing sheeted roofs",
+    "Ridges, edges and roof-to-wall junctions"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-APRON",
+   "slug": "apron-wall-flashing",
+   "name": "Apron / Wall Flashing",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Pressed steel flashing",
+   "unit_size": null,
+   "description": "Apron flashing where the roof meets a wall.",
+   "typical_uses": [
+    "Finishing and fixing sheeted roofs",
+    "Ridges, edges and roof-to-wall junctions"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-EAVES-FLASHING",
+   "slug": "eaves-drip-flashing",
+   "name": "Eaves / Drip Flashing",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Pressed steel flashing",
+   "unit_size": null,
+   "description": "Eaves flashing that drips water into the gutter.",
+   "typical_uses": [
+    "Finishing and fixing sheeted roofs",
+    "Ridges, edges and roof-to-wall junctions"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-CONCEALED-RIDGE",
+   "slug": "concealed-fix-ridge-capping",
+   "name": "Concealed-Fix Ridge Capping",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Pressed steel flashing",
+   "unit_size": null,
+   "description": "Ridge capping for concealed-fix (clip-lock) roofs.",
+   "typical_uses": [
+    "Finishing and fixing sheeted roofs",
+    "Ridges, edges and roof-to-wall junctions"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-CLIPS",
+   "slug": "concealed-fix-roof-clips-box",
+   "name": "Concealed-Fix Roof Clips (box)",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Pressed steel flashing",
+   "unit_size": null,
+   "description": "Clips that fix concealed-fix sheeting to the purlins.",
+   "typical_uses": [
+    "Finishing and fixing sheeted roofs",
+    "Ridges, edges and roof-to-wall junctions"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-SCREWS-25",
+   "slug": "roof-tek-screws-5-5-x-25-mm-box-of-100",
+   "name": "Roof Tek Screws 5.5 × 25 mm (box of 100)",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Pressed steel flashing",
+   "unit_size": null,
+   "description": "Self-drilling tek screws, 5.5 × 25 mm, for flashings and side laps.",
+   "typical_uses": [
+    "Finishing and fixing sheeted roofs",
+    "Ridges, edges and roof-to-wall junctions"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-SCREWS-45",
+   "slug": "roof-tek-screws-for-timber-5-5-x-45-mm-box-of-100",
+   "name": "Roof Tek Screws for Timber 5.5 × 45 mm (box of 100)",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Pressed steel flashing",
+   "unit_size": null,
+   "description": "Tek screws for corrugated sheeting on timber.",
+   "typical_uses": [
+    "Finishing and fixing sheeted roofs",
+    "Ridges, edges and roof-to-wall junctions"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-SCREWS-90",
+   "slug": "roof-tek-screws-for-timber-5-5-x-90-mm-box-of-100",
+   "name": "Roof Tek Screws for Timber 5.5 × 90 mm (box of 100)",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Pressed steel flashing",
+   "unit_size": null,
+   "description": "Long tek screws for IBR on timber with insulation.",
+   "typical_uses": [
+    "Finishing and fixing sheeted roofs",
+    "Ridges, edges and roof-to-wall junctions"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-WASHERS",
+   "slug": "roof-sealing-washers-bag",
+   "name": "Roof Sealing Washers (bag)",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Pressed steel flashing",
+   "unit_size": null,
+   "description": "EPDM-bonded sealing washers for roof fixings.",
+   "typical_uses": [
+    "Finishing and fixing sheeted roofs",
+    "Ridges, edges and roof-to-wall junctions"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-FASCIA-150",
+   "slug": "fibre-cement-fascia-board-150-mm-x-3-6-m",
+   "name": "Fibre-Cement Fascia Board, 150 mm × 3.6 m",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Pressed steel flashing",
+   "unit_size": null,
+   "description": "Fibre-cement fascia board, 150 mm × 3.6 m.",
+   "typical_uses": [
+    "Finishing and fixing sheeted roofs",
+    "Ridges, edges and roof-to-wall junctions"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-FASCIA-PVC",
+   "slug": "pvc-fascia-board-225-mm-x-6-m",
+   "name": "PVC Fascia Board, 225 mm × 6 m",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Pressed steel flashing",
+   "unit_size": null,
+   "description": "Maintenance-free PVC fascia and barge board.",
+   "typical_uses": [
+    "Finishing and fixing sheeted roofs",
+    "Ridges, edges and roof-to-wall junctions"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-FASCIA-CONNECTOR",
+   "slug": "fascia-board-connectors-and-corners",
+   "name": "Fascia Board Connectors & Corners",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Pressed steel flashing",
+   "unit_size": null,
+   "description": "Joiners and corners for PVC fascia.",
+   "typical_uses": [
+    "Finishing and fixing sheeted roofs",
+    "Ridges, edges and roof-to-wall junctions"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-POLYCARB-IBR",
+   "slug": "polycarbonate-translucent-sheet-ibr-profile",
+   "name": "Polycarbonate Translucent Sheet, IBR Profile",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Pressed steel flashing",
+   "unit_size": null,
+   "description": "Translucent polycarbonate roof sheet in the IBR profile, for daylight. Length confirmed on the quote.",
+   "typical_uses": [
+    "Finishing and fixing sheeted roofs",
+    "Ridges, edges and roof-to-wall junctions"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-POLYCARB-CORR",
+   "slug": "polycarbonate-translucent-sheet-corrugated",
+   "name": "Polycarbonate Translucent Sheet, Corrugated",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Pressed steel flashing",
+   "unit_size": null,
+   "description": "Translucent polycarbonate sheet in the corrugated profile.",
+   "typical_uses": [
+    "Finishing and fixing sheeted roofs",
+    "Ridges, edges and roof-to-wall junctions"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-WHIRLYBIRD",
+   "slug": "roof-ventilator-whirlybird",
+   "name": "Roof Ventilator (Whirlybird)",
+   "category_slug": "roof-flashings-fixings",
+   "grading_standard": "Pressed steel flashing",
+   "unit_size": null,
+   "description": "Wind-driven roof ventilator to clear hot air from the roof space.",
+   "typical_uses": [
+    "Finishing and fixing sheeted roofs",
+    "Ridges, edges and roof-to-wall junctions"
+   ],
+   "handling_notes": "Store flat and dry with the sheeting; order flashings in the same coating and colour as the roof sheets.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-INSUL-GLASS-100",
+   "slug": "glass-wool-ceiling-insulation-100-mm",
+   "name": "Glass-Wool Ceiling Insulation 100 mm",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "SANS 10400-XA — thermal insulation (glass wool)",
+   "unit_size": null,
+   "description": "Glass-wool insulation, 100 mm. Roll size confirmed on the quote.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Keep rolls dry and off the ground until they're laid; wear gloves, long sleeves and a dust mask when handling glass wool.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (1.2 × 5 m, 6 m²)",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-INSUL-GLASS-50",
+   "slug": "glass-wool-ceiling-insulation-50-mm",
+   "name": "Glass-Wool Ceiling Insulation 50 mm",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "SANS 10400-XA — thermal insulation (glass wool)",
+   "unit_size": null,
+   "description": "Glass-wool insulation, 50 mm, for retrofits and walls.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Keep rolls dry and off the ground until they're laid; wear gloves, long sleeves and a dust mask when handling glass wool.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (1.2 × 5 m, 6 m²)",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-INSUL-POLY-100",
+   "slug": "polyester-ceiling-insulation-100-mm",
+   "name": "Polyester Ceiling Insulation 100 mm",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "SANS 10400-XA — thermal insulation (glass wool)",
+   "unit_size": null,
+   "description": "Polyester insulation, 100 mm.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Keep rolls dry and off the ground until they're laid; wear gloves, long sleeves and a dust mask when handling glass wool.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (1.2 × 5 m, 6 m²)",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-INSUL-POLY-145",
+   "slug": "polyester-ceiling-insulation-145-mm",
+   "name": "Polyester Ceiling Insulation 145 mm",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "SANS 10400-XA — thermal insulation (glass wool)",
+   "unit_size": null,
+   "description": "Polyester insulation, 145 mm, for higher R-values.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Keep rolls dry and off the ground until they're laid; wear gloves, long sleeves and a dust mask when handling glass wool.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (1.2 × 5 m, 6 m²)",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-INSUL-BLANKET-SHEETING",
+   "slug": "roof-insulation-blanket-under-sheeting-foil-faced",
+   "name": "Roof Insulation Blanket under Sheeting (foil-faced)",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "SANS 10400-XA — thermal insulation (glass wool)",
+   "unit_size": null,
+   "description": "Foil-faced insulation blanket laid over purlins under sheet roofs.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Keep rolls dry and off the ground until they're laid; wear gloves, long sleeves and a dust mask when handling glass wool.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (1.2 × 5 m, 6 m²)",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-INSUL-THERMAL-BOARD",
+   "slug": "thermal-insulation-board-polystyrene",
+   "name": "Thermal Insulation Board (Polystyrene)",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "SANS 10400-XA — thermal insulation (glass wool)",
+   "unit_size": null,
+   "description": "Expanded or extruded polystyrene board for walls, slabs and roofs. Thickness confirmed on the quote.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Keep rolls dry and off the ground until they're laid; wear gloves, long sleeves and a dust mask when handling glass wool.",
+   "units": [
+    {
+     "unit": "ROLL",
+     "unit_label": "Roll (1.2 × 5 m, 6 m²)",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-GUTTER-PVC-3M",
+   "slug": "pvc-gutter-3-m-length",
+   "name": "PVC Gutter, 3 m length",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "uPVC rainwater gutter",
+   "unit_size": null,
+   "description": "uPVC eaves gutter, 3 m length.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Store flat and supported along its length, out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each (6 m)",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-GUTTER-PVC-4M",
+   "slug": "pvc-gutter-4-m-length",
+   "name": "PVC Gutter, 4 m length",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "uPVC rainwater gutter",
+   "unit_size": null,
+   "description": "uPVC eaves gutter, 4 m length.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Store flat and supported along its length, out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each (6 m)",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-GUTTER-PVC-45M",
+   "slug": "pvc-gutter-4-5-m-length",
+   "name": "PVC Gutter, 4.5 m length",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "uPVC rainwater gutter",
+   "unit_size": null,
+   "description": "uPVC eaves gutter, 4.5 m length.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Store flat and supported along its length, out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each (6 m)",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-GUTTER-SQUARE-6M",
+   "slug": "pvc-square-box-gutter-6-m",
+   "name": "PVC Square (Box) Gutter, 6 m",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "uPVC rainwater gutter",
+   "unit_size": null,
+   "description": "uPVC square-line high-capacity gutter, 6 m.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Store flat and supported along its length, out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each (6 m)",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-GUTTER-SEAMLESS",
+   "slug": "seamless-aluminium-gutter-per-metre",
+   "name": "Seamless Aluminium Gutter (per metre)",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "uPVC rainwater gutter",
+   "unit_size": null,
+   "description": "Seamless aluminium gutter roll-formed on site, priced per metre. Colour confirmed on the quote.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Store flat and supported along its length, out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each (6 m)",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-GUTTER-GALV",
+   "slug": "galvanised-steel-gutter-6-m",
+   "name": "Galvanised Steel Gutter, 6 m",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "uPVC rainwater gutter",
+   "unit_size": null,
+   "description": "Galvanised steel gutter for industrial and farm buildings.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Store flat and supported along its length, out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each (6 m)",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-DOWNPIPE-SQUARE",
+   "slug": "pvc-square-downpipe-100-x-75-mm-3-m",
+   "name": "PVC Square Downpipe 100 × 75 mm, 3 m",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "uPVC rainwater downpipe",
+   "unit_size": null,
+   "description": "uPVC square downpipe, 100 × 75 mm, 3 m.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Store flat and supported along its length, out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-DOWNPIPE-STEEL",
+   "slug": "galvanised-steel-downpipe-2-7-m",
+   "name": "Galvanised Steel Downpipe, 2.7 m",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "uPVC rainwater downpipe",
+   "unit_size": null,
+   "description": "Galvanised steel downpipe, round or square, 2.7 m.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Store flat and supported along its length, out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-DOWNPIPE-BEND",
+   "slug": "downpipe-offset-bend",
+   "name": "Downpipe Offset Bend",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "uPVC rainwater downpipe",
+   "unit_size": null,
+   "description": "Offset bend to bring a downpipe from the gutter outlet to the wall.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Store flat and supported along its length, out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-DOWNPIPE-SHOE",
+   "slug": "downpipe-shoe",
+   "name": "Downpipe Shoe",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "uPVC rainwater downpipe",
+   "unit_size": null,
+   "description": "Shoe at the foot of a downpipe.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Store flat and supported along its length, out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-DOWNPIPE-BRACKET",
+   "slug": "downpipe-brackets-pack",
+   "name": "Downpipe Brackets (pack)",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "uPVC rainwater downpipe",
+   "unit_size": null,
+   "description": "Wall brackets for downpipes.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Store flat and supported along its length, out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-GUTTER-OUTLET",
+   "slug": "gutter-running-outlet",
+   "name": "Gutter Running Outlet",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "uPVC rainwater downpipe",
+   "unit_size": null,
+   "description": "Running outlet that connects the gutter to a downpipe.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Store flat and supported along its length, out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-GUTTER-STOPEND",
+   "slug": "gutter-stop-end",
+   "name": "Gutter Stop End",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "uPVC rainwater downpipe",
+   "unit_size": null,
+   "description": "Stop end to close the end of a gutter.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Store flat and supported along its length, out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-GUTTER-CORNER",
+   "slug": "gutter-corner-90-deg",
+   "name": "Gutter Corner (90°)",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "uPVC rainwater downpipe",
+   "unit_size": null,
+   "description": "External or internal 90° gutter corner.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Store flat and supported along its length, out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-GUTTER-BRACKET",
+   "slug": "gutter-fascia-brackets-pack",
+   "name": "Gutter Fascia Brackets (pack)",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "uPVC rainwater downpipe",
+   "unit_size": null,
+   "description": "Fascia brackets for gutters.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Store flat and supported along its length, out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-GUTTER-CONNECTOR",
+   "slug": "gutter-connector-union",
+   "name": "Gutter Connector (Union)",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "uPVC rainwater downpipe",
+   "unit_size": null,
+   "description": "Union to join two gutter lengths.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Store flat and supported along its length, out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-ROF-RAIN-ADAPTOR",
+   "slug": "rainwater-tank-downpipe-adaptor",
+   "name": "Rainwater Tank Downpipe Adaptor",
+   "category_slug": "roof-insulation-rainwater",
+   "grading_standard": "uPVC rainwater downpipe",
+   "unit_size": null,
+   "description": "Adaptor to run a downpipe into a water tank inlet.",
+   "typical_uses": [
+    "Roof insulation and rainwater",
+    "New roofs and retrofits"
+   ],
+   "handling_notes": "Store flat and supported along its length, out of the sun.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "weight_kg": null,
+     "markup_percent": 8,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "manufacturer": null,
+   "specialist_characteristics": [],
+   "roof_profile": null,
+   "thickness_mm": null,
+   "coating": null,
+   "cover_width_mm": null,
+   "list_price_per_metre": null,
+   "cut_to_length": null,
+   "section": null,
+   "timber_grade": null,
+   "timber_treatment": null,
+   "timber_finish": null,
+   "_range": "range-depth-2026-10"
   }
  ]
 }
