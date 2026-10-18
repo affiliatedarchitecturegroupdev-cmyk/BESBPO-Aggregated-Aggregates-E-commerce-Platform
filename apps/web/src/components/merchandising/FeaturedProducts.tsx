@@ -3,7 +3,7 @@ import { FeaturedTabs, type FeaturedTab } from "@/components/merchandising/Featu
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { ProductCard } from "@/components/product/ProductCard";
 import { ROOF_TILE_CATEGORIES } from "@/data/masonry";
-import { getCatalogue, getMasonryCatalogue, getPackagedCatalogue, getReadyMixCatalogue, getRoofingCatalogue, getSteelCatalogue } from "@/lib/cms";
+import { getCatalogue, getMasonryCatalogue, getPackagedCatalogue, getReadyMixCatalogue, getRoofingCatalogue, getSteelCatalogue, getSuppliesCatalogue } from "@/lib/cms";
 
 const PER_TAB = 4;
 
@@ -19,6 +19,7 @@ const DEFAULTS = {
   masonry: ["clay-stock-brick-nfp", "hollow-concrete-block-140mm", "bevel-paver-grey-50mm", "upvc-underground-pipe-110mm-x-6m"],
   timber: ["sa-pine-38x114-s5-h2-sized", "sa-pine-38x76-s5-h2-sized", "sa-pine-38x228-s5-h2-sized"],
   roofing: ["ibr-roof-sheet-0-47mm-galvanised-z150", "ibr-roof-sheet-0-50mm-pre-painted", "concrete-roof-tile-double-roman", "glass-wool-ceiling-insulation-135mm"],
+  supplies: ["vertical-water-tank-5-000-l-africa-tanks", "rhinoboard-ceiling-board-6-4-mm-1200-x-3000-mm", "steel-window-frame-ne1-f7", "duram-matt-acrylic-20-l-white"],
 };
 
 /** Staff-ranked products first; otherwise the defaults; never more than PER_TAB, never a hidden product. */
@@ -32,13 +33,14 @@ const grid = "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4";
 
 /** Featured Materials across the whole range — a tab per line, staff-curated from the admin. */
 export async function FeaturedProducts() {
-  const [aggregates, packaged, readyMix, steel, masonryAll, roofingSheets] = await Promise.all([
+  const [aggregates, packaged, readyMix, steel, masonryAll, roofingSheets, supplies] = await Promise.all([
     getCatalogue(),
     getPackagedCatalogue(),
     getReadyMixCatalogue(),
     getSteelCatalogue(),
     getMasonryCatalogue(),
     getRoofingCatalogue(),
+    getSuppliesCatalogue(),
   ]);
   // Concrete roof tiles are masonry products but feature in the roofing tab.
   const masonry = masonryAll.filter((p) => !ROOF_TILE_CATEGORIES.includes(p.categorySlug));
@@ -53,6 +55,7 @@ export async function FeaturedProducts() {
     { tab: { key: "masonry", label: "Bricks, paving & drainage", href: "/products?group=masonry", cta: "All masonry & precast" }, items: pick(masonry, DEFAULTS.masonry), kind: "packaged" as const },
     { tab: { key: "roofing", label: "Roofing", href: "/roofing", cta: "All roofing" }, items: pick(roofing, DEFAULTS.roofing), kind: "packaged" as const },
     { tab: { key: "timber", label: "Timber", href: "/roofing#roof-timber", cta: "All timber" }, items: pick(timber, DEFAULTS.timber), kind: "packaged" as const },
+    { tab: { key: "supplies", label: "Building supplies", href: "/departments", cta: "All departments" }, items: pick(supplies, DEFAULTS.supplies), kind: "packaged" as const },
   ].filter((l) => l.items.length > 0);
   if (lines.length === 0) return null;
 
@@ -70,7 +73,7 @@ export async function FeaturedProducts() {
           <div key={l.tab.key} className={grid}>
             {l.kind === "aggregate"
               ? (l.items as typeof aggregates).map((p) => <ProductCard key={p.sku} product={p} />)
-              : (l.items as (typeof packaged | typeof steel | typeof masonry | typeof readyMix | typeof roofing | typeof timber)[number][]).map((p) => <PackagedProductCard key={p.sku} product={p} />)}
+              : (l.items as (typeof packaged | typeof steel | typeof masonry | typeof readyMix | typeof roofing | typeof timber | typeof supplies)[number][]).map((p) => <PackagedProductCard key={p.sku} product={p} />)}
           </div>
         ))}
       </FeaturedTabs>

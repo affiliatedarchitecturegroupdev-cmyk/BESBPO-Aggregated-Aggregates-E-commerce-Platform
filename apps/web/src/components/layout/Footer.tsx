@@ -109,15 +109,19 @@ export async function Footer() {
             <li><Link href="/testing">Cube & Compaction Testing</Link></li>
             <li><Link href="/partners">Become a Partner</Link></li>
             <li><Link href="/partners/onboarding">Partner Onboarding</Link></li>
+            <li><Link href="/suppliers/portal">Supplier Portal</Link></li>
           </FooterColumn>
           <FooterColumn title="Buy">
             <li><Link href="/quote">Request a Quote</Link></li>
+            <li><Link href="/quote/boq">Upload a Bill of Quantities</Link></li>
             <li><Link href="/aa-60-120">AA 60/120 Express Delivery</Link></li>
             <li><Link href="/coverage">Where We Deliver</Link></li>
             <li><Link href="/delivery-areas">Delivery Areas & Charges</Link></li>
             <li><Link href="/suppliers">Partner Network</Link></li>
             <li><Link href="/ways-to-pay">Ways to Pay</Link></li>
             <li><Link href="/trade-accounts">Trade Accounts</Link></li>
+            <li><Link href="/trade-accounts#trade-credit">Trade Credit</Link></li>
+            <li><Link href="/trade-accounts#deliveries">Phased Deliveries</Link></li>
             <li><Link href="/account/dashboard">My Account</Link></li>
           </FooterColumn>
           <FooterColumn title="Company">

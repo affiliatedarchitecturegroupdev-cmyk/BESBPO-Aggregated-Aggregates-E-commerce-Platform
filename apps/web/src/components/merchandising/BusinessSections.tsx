@@ -83,6 +83,10 @@ export function PartnerCta() {
           <span className="font-mono text-xs uppercase tracking-widest text-ochre-gold">Partner network</span>
           <h2 className="mt-2 font-display text-2xl font-bold md:text-3xl">Own plant, tippers or skips?</h2>
           <p className="mt-2 max-w-xl font-body text-sm text-limestone/80">Join our vetted partner network and receive work from contractors near you.</p>
+          <p className="mt-2 max-w-xl font-body text-xs text-limestone/70">
+            Already supplying us? See the orders to load and confirm dates in the{" "}
+            <Link href="/suppliers/portal" className="font-semibold text-ochre-gold hover:underline">supplier portal</Link>.
+          </p>
         </div>
         <Link href="/partners" className="shrink-0 rounded-sm bg-ochre-gold px-6 py-3 font-body text-sm font-semibold text-basalt hover:bg-limestone">
           Become a partner →

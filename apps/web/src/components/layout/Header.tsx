@@ -58,6 +58,7 @@ export function Header() {
                 { href: "/aa-60-120", label: "AA 60/120 — delivered within 2 hours" },
                 { href: "/buy-online", label: "Buy online — priced products" },
                 { href: "/coverage", label: "Check delivery to your area" },
+                { href: "/quote/boq", label: "Upload a bill of quantities" },
                 ...NAV_LINKS.filter((l) => !["/products", "/reinforcing-steel"].includes(l.href)),
                 { href: "/cart", label: "Cart" },
                 { href: "/quote", label: "Get a Quote" },

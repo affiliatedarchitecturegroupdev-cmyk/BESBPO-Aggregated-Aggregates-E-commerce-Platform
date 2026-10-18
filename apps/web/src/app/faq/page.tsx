@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { FAQS } from "@/data/faqs";
+import { FAQS, PROJECT_FAQS } from "@/data/faqs";
 import { HIRE_FAQS } from "@/data/hire-faqs";
 
 export const metadata: Metadata = {
   title: "FAQ",
-  description: "Delivery, pricing tiers, units of sale, payment, WhatsApp ordering, compliance documents, plant hire and site services — answered.",
+  description: "Delivery, pricing tiers, units of sale, payment, trade credit, BOQ quotes, phased deliveries, compliance documents, plant hire and site services — answered.",
   alternates: { canonical: "/faq" },
 };
 
@@ -13,7 +13,7 @@ export default function FaqPage() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: [...FAQS, ...HIRE_FAQS].map((faq) => ({ "@type": "Question", name: faq.question, acceptedAnswer: { "@type": "Answer", text: faq.answer } })),
+    mainEntity: [...FAQS, ...PROJECT_FAQS, ...HIRE_FAQS].map((faq) => ({ "@type": "Question", name: faq.question, acceptedAnswer: { "@type": "Answer", text: faq.answer } })),
   };
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
@@ -23,6 +23,7 @@ export default function FaqPage() {
       </nav>
       <h1 className="mt-4 font-display text-3xl font-bold text-basalt">Frequently Asked Questions</h1>
       <FaqList id="materials" title="Materials, delivery & payment" faqs={FAQS} />
+      <FaqList id="trade-projects" title="Trade credit, projects & deliveries" faqs={PROJECT_FAQS} />
       <FaqList id="plant-hire" title="Plant hire & site services" faqs={HIRE_FAQS} />
       <p className="mt-4 font-body text-sm text-slate">
         The full step-by-step is on <Link href="/plant-hire/how-it-works" className="text-seam-blue hover:underline">how hire bookings work</Link>, and the

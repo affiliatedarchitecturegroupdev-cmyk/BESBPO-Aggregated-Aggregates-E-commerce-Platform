@@ -46,6 +46,9 @@ export function PlanYourBuild() {
             <Link href="/calculators" className="font-body text-sm font-semibold text-limestone underline-offset-4 hover:underline">
               Size it with the calculators →
             </Link>
+            <Link href="/quote/boq" className="font-body text-sm font-semibold text-limestone underline-offset-4 hover:underline">
+              Already have a BOQ? Upload it →
+            </Link>
           </div>
         </div>
         <YourProjectCard />
