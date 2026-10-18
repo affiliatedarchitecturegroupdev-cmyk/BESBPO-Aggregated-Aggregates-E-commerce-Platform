@@ -11,7 +11,7 @@ export function TrustBadges({ partnerSuppliers, liveProvinces }: { partnerSuppli
         ? `${partnerSuppliers} approved partner suppliers across ${liveProvinces.length > 0 ? `${liveProvinces.length} provinces` : "all nine provinces"}`
         : "Approved partner suppliers across all nine provinces",
     },
-    { label: "Trade Accounts Available", detail: `Contractor/Trade up to ${pct("CONTRACTOR_TRADE")}% and Volume/Civil Bulk up to ${pct("VOLUME_CIVIL_BULK")}% off list` },
+    { label: "Trade Accounts & Credit", detail: `Up to ${pct("CONTRACTOR_TRADE")}% (Contractor/Trade) or ${pct("VOLUME_CIVIL_BULK")}% (Volume/Civil Bulk) off list, and credit on account once approved` },
     { label: "Besbpo Group Division", detail: "Delivered by Besfleet and 15+ tipper-truck partners" },
   ];
   return (

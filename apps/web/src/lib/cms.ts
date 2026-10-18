@@ -35,13 +35,13 @@ export const DEFAULT_CONTENT: SiteContent = {
   hero: {
     eyebrow: "Foundations to Roof · SANS Graded",
     headline: "Every Layer Starts Here.",
-    body: `Aggregates and sand, cement and ready-mix, steel, bricks and blocks, paving, drainage, roofing and timber — ${PRODUCT_COUNT} products, many priced to buy online and the rest quoted fast, delivered from the approved partner supplier nearest your site, anywhere in South Africa.`,
+    body: `Aggregates and sand, cement and ready-mix, steel, bricks and blocks, paving, drainage, roofing and timber, and the building supplies that finish the job — ${PRODUCT_COUNT} products, many priced to buy online and the rest quoted fast, delivered from the approved partner supplier nearest your site, anywhere in South Africa.`,
     primaryCta: { label: "Shop All Departments", href: "/departments" },
     secondaryCta: { label: "Request a Bulk Quote", href: "/quote" },
   },
   promo: {
     title: "Contractor or civil buyer?",
-    body: "Register a trade account for up to 8% (Contractor/Trade) or 15% (Volume/Civil Bulk) off list pricing, plus standing delivery addresses and PO-based billing.",
+    body: "Register a trade account for up to 8% (Contractor/Trade) or 15% (Volume/Civil Bulk) off list pricing, standing delivery addresses, and trade credit on account once approved.",
     cta: { label: "Open a Trade Account", href: "/account/apply" },
   },
   slideshow: { enabled: true, intervalSeconds: 6, slides: DEFAULT_SLIDES.map((slide) => ({ ...slide, enabled: true })) },

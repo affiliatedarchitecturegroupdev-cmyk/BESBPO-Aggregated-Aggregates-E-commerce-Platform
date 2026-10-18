@@ -6,7 +6,7 @@
 import { PRODUCTS } from "@/data/catalogue";
 import { CATEGORIES } from "@/data/categories";
 import { DESIGN_SERVICES } from "@/data/design-services";
-import { FAQS } from "@/data/faqs";
+import { FAQS, PROJECT_FAQS } from "@/data/faqs";
 import { HIRE_FAQS } from "@/data/hire-faqs";
 import { MASONRY_PRODUCTS } from "@/data/masonry";
 import { PACKAGED_PRODUCTS } from "@/data/packaged";
@@ -153,7 +153,7 @@ const docOf = <T,>(item: T, title: string, body: string): TextDoc<T> => {
 };
 
 const PAGE_DOCS = SITE_PAGES.map((p) => docOf(p, p.title, p.keywords));
-const FAQ_DOCS = [...FAQS, ...HIRE_FAQS].map((f) => docOf(f, f.question, f.answer));
+const FAQ_DOCS = [...FAQS, ...PROJECT_FAQS, ...HIRE_FAQS].map((f) => docOf(f, f.question, f.answer));
 const DESIGN_DOCS = DESIGN_SERVICES.map((s) => docOf(s, s.name, `${s.summary} ${s.whenNeeded.join(" ")} ${s.deliverables.join(" ")}`));
 type HireItem = { name: string; href: string; kind: "plant" | "service" };
 const HIRE_DOCS: TextDoc<HireItem>[] = [
@@ -176,5 +176,5 @@ export const searchDesign = (words: string[], limit = 3) => rank(DESIGN_DOCS, wo
 export const searchHire = (words: string[], limit = 3) => rank(HIRE_DOCS, words, 3, limit);
 
 export function faq(questionStart: string) {
-  return [...FAQS, ...HIRE_FAQS].find((f) => f.question.startsWith(questionStart));
+  return [...FAQS, ...PROJECT_FAQS, ...HIRE_FAQS].find((f) => f.question.startsWith(questionStart));
 }

@@ -1,20 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CUSTOMER_TIERS, findProduct } from "@/data/catalogue";
+import { PROJECT_TOOLS } from "@/components/merchandising/ProjectTools";
 import { formatZAR } from "@/lib/pricing";
 import { SALES_EMAIL } from "@/lib/site";
 import { tierBreakdown, tierHeadline } from "@/lib/tier-pricing";
 
 export const metadata: Metadata = {
   title: "Trade Accounts",
-  description: "Contractor/Trade (up to 8% off) and Volume/Civil Bulk (up to 15% off) accounts with standing addresses and PO billing.",
+  description: "Contractor/Trade (up to 8% off) and Volume/Civil Bulk (up to 15% off) accounts with trade credit on account, BOQ quotes, phased deliveries and signed proof of delivery.",
 };
 
 // Payment Strategy section of the platform spec, by tier.
 const PAYMENT_OPTIONS: Record<string, string> = {
   RETAIL: "Card or instant EFT via PayFast; PayJustNow instalments",
-  CONTRACTOR_TRADE: "PayFast, plus Lulapay buy-now-pay-later for trade",
-  VOLUME_CIVIL_BULK: "EFT against purchase order on net terms, with monthly statements",
+  CONTRACTOR_TRADE: "Every online method, Lulapay for trade, and trade credit on account once approved",
+  VOLUME_CIVIL_BULK: "EFT against purchase order, or trade credit on account once approved",
 };
 
 const BENEFITS = [
@@ -22,6 +23,14 @@ const BENEFITS = [
   { title: "Standing supply agreements", body: "Volume accounts can lock in supply for a project or season." },
   { title: "PO-based billing", body: "Volume/Civil Bulk accounts settle by purchase order and statement, not card." },
   { title: "One VAT-registered supplier", body: "Invoices are issued under Besbpo Group's company VAT registration." },
+];
+
+// docs/trade-credit.md
+const CREDIT_STEPS = [
+  { title: "Apply", body: "Tell us the limit and terms you need (7, 14, 30 or 60 days), with two trade references and an accounts contact." },
+  { title: "We decide", body: "We may check your references, then approve a limit and terms or decline — by email either way." },
+  { title: "Order on account", body: "At checkout, choose Trade account. The order is confirmed and delivered now; the due date is on your confirmation." },
+  { title: "Pay by the due date", body: "By EFT quoting the order number, or from the order page. Part payments count, and what you owe shows on your account page." },
 ];
 
 export default function TradeAccountsPage() {
@@ -71,6 +80,46 @@ export default function TradeAccountsPage() {
           </div>
         ))}
       </div>
+
+      <section id="trade-credit" aria-labelledby="trade-credit-heading" className="mt-16 scroll-mt-24 grid gap-8 rounded-sm border border-basalt/10 bg-white p-8 lg:grid-cols-[1fr_1.2fr]">
+        <div>
+          <p className="font-mono text-[11px] uppercase tracking-widest text-seam-blue">Trade credit</p>
+          <h2 id="trade-credit-heading" className="mt-2 font-display text-2xl font-bold text-basalt">Order now, pay on your terms</h2>
+          <p className="mt-3 font-body text-sm text-slate">
+            Once your trade account is approved, your company&apos;s account administrator can apply for credit from{" "}
+            <Link href="/account/credit" className="text-seam-blue hover:underline">My account → Trade credit</Link>. We review every application and set
+            a limit and terms; terms are in section 4A of our{" "}
+            <Link href="/legal/terms-and-conditions" className="text-seam-blue hover:underline">Terms &amp; Conditions</Link>.
+          </p>
+        </div>
+        <ol className="grid gap-4 sm:grid-cols-2">
+          {CREDIT_STEPS.map((step, i) => (
+            <li key={step.title} className="flex gap-3">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-seam-blue/50 font-mono text-xs text-seam-blue">{i + 1}</span>
+              <div>
+                <p className="font-body text-sm font-semibold text-basalt">{step.title}</p>
+                <p className="mt-0.5 font-body text-xs text-slate">{step.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section id="deliveries" aria-labelledby="project-tools-heading" className="mt-16 scroll-mt-24">
+        <p className="font-mono text-[11px] uppercase tracking-widest text-seam-blue">For projects</p>
+        <h2 id="project-tools-heading" className="mt-2 font-display text-2xl font-bold text-basalt">From the BOQ to the last delivery</h2>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {PROJECT_TOOLS.filter((t) => !t.href.startsWith("/trade-accounts#trade-credit")).map((tool) => (
+            <div key={tool.title} className="rounded-sm border border-basalt/10 bg-white p-5">
+              <p className="font-body text-sm font-semibold text-basalt">{tool.title}</p>
+              <p className="mt-1 font-body text-sm text-slate">{tool.body}</p>
+              {!tool.href.startsWith("/trade-accounts") && (
+                <Link href={tool.href} className="mt-3 inline-block font-body text-xs font-semibold text-seam-blue hover:underline">{tool.cta} →</Link>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
 
       <div className="mt-12 flex flex-col items-start justify-between gap-4 rounded-sm bg-basalt p-8 sm:flex-row sm:items-center">
         <div>

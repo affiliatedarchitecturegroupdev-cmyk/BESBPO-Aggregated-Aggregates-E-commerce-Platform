@@ -11,6 +11,7 @@ import { CoverageStrip } from "@/components/merchandising/CoverageStrip";
 import { DeliveryBand } from "@/components/merchandising/DeliveryBand";
 import { DepartmentTiles } from "@/components/merchandising/DepartmentTiles";
 import { ExpressBand } from "@/components/merchandising/ExpressBand";
+import { FinishTheBuild } from "@/components/merchandising/FinishTheBuild";
 import { FeaturedProducts } from "@/components/merchandising/FeaturedProducts";
 import { RecentlyViewed } from "@/components/merchandising/RecentlyViewed";
 import { GroupCrossSell } from "@/components/merchandising/GroupCrossSell";
@@ -18,6 +19,7 @@ import { HeroBanner } from "@/components/merchandising/HeroBanner";
 import { HeroSlideshow } from "@/components/merchandising/HeroSlideshow";
 import { IndustriesWeServe } from "@/components/merchandising/IndustriesWeServe";
 import { PlanYourBuild } from "@/components/merchandising/PlanYourBuild";
+import { ProjectTools } from "@/components/merchandising/ProjectTools";
 import { PromoSlot } from "@/components/merchandising/PromoSlot";
 import { PromoStrip } from "@/components/merchandising/PromoStrip";
 import { QuarryToSite } from "@/components/merchandising/QuarryToSite";
@@ -33,8 +35,9 @@ import { getActivePromotions } from "@/lib/promotions";
 
 /**
  * Section order (Oct 2026): hero, the delivery checker and departments first —
- * find it, check delivery, shop — then AA 60/120 express, featured products and tools, the wider
- * business (plant, services, B2B bulk), and the why-us sections together.
+ * find it, check delivery, shop — then AA 60/120 express, featured products and tools, building
+ * supplies, the project tools (BOQ, credit, phased deliveries), the wider business (plant, services,
+ * B2B bulk), and the why-us sections together.
  */
 export default async function HomePage() {
   const [content, hiddenSkus, promotions, coverage, network] = await Promise.all([
@@ -65,8 +68,12 @@ export default async function HomePage() {
       <CategoryGrid />
       <ShopByStage hiddenSkus={hiddenSkus} />
       <SteelSpotlight hiddenSkus={hiddenSkus} />
+      {/* The building-supplies departments: what finishes the job. */}
+      <FinishTheBuild hiddenSkus={hiddenSkus} />
       <CalculatorsStrip hiddenSkus={hiddenSkus} />
       <PlanYourBuild />
+      {/* BOQ upload, trade credit, phased deliveries, proof of delivery, ways to pay, lead times. */}
+      <ProjectTools />
       <BulkVsBagged />
       <BusinessLinesCarousel />
       <PlantAndServicesSection />
