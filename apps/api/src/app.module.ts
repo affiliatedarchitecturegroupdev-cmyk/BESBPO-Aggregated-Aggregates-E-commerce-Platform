@@ -32,6 +32,9 @@ import { FinanceModule } from "./finance/finance.module";
 import { InsightsModule } from "./insights/insights.module";
 import { CutAndBendModule } from "./cut-and-bend/cut-and-bend.module";
 import { ProjectListsModule } from "./project-lists/project-lists.module";
+import { CreditModule } from "./credit/credit.module";
+import { DeliveriesModule } from "./deliveries/deliveries.module";
+import { BoqModule } from "./boq/boq.module";
 
 @Module({
   imports: [
@@ -67,6 +70,9 @@ import { ProjectListsModule } from "./project-lists/project-lists.module";
     InsightsModule,
     CutAndBendModule,
     ProjectListsModule,
+    CreditModule,
+    DeliveriesModule,
+    BoqModule,
   ],
 })
 export class AppModule {}

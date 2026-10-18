@@ -2,6 +2,8 @@ import { BadRequestException, Injectable, Logger, NotFoundException, OnModuleDes
 import { PaymentGateway, PaymentKind, PaymentMethodKey, Prisma, type Payment, type PaymentLink } from "@aggregates/database";
 import { createHash, randomBytes } from "node:crypto";
 import { STAFF_ROLES, type AuthUser } from "../common/auth/auth-user";
+import { accountDueDate } from "../credit/credit";
+import { CreditService } from "../credit/credit.service";
 import { PrismaService } from "../common/prisma.service";
 import { verifySvixSignature } from "../common/svix";
 import { OrderDocumentsService } from "../documents/order-documents.service";
@@ -63,6 +65,7 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
     private readonly orders: OrdersService,
     private readonly notifications: NotificationsService,
     private readonly documents: OrderDocumentsService,
+    private readonly credit: CreditService,
   ) {}
 
   onModuleInit() {
@@ -136,8 +139,10 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
     const summary = await this.summary(order);
     const configs = await this.prisma.paymentMethodConfig.findMany({ orderBy: { sortOrder: "asc" } });
     const tier = await this.tierOf(order.companyId);
+    // Trade credit: only a whole new order goes on account, and only within the company's available credit.
+    const onAccount = order.status === "PENDING" && Number(order.amountPaid) === 0 && (await this.credit.canCharge(order.companyId, Number(order.total)));
     const tiles = (amount: number, withLayby: boolean) => {
-      const { recommended, available } = eligiblePaymentMethods(configs, { orderTotal: amount, customerTier: tier, isQuoteOnly: false, isExpress: this.isExpress(order) });
+      const { recommended, available } = eligiblePaymentMethods(configs, { orderTotal: amount, customerTier: tier, isQuoteOnly: false, isExpress: this.isExpress(order), onAccount: withLayby && onAccount });
       const strip = (list: typeof configs) =>
         list
           .filter((c) => withLayby || c.methodKey !== "LAYUP")
@@ -153,7 +158,7 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
       choices: {
         full: firstPayment ? tiles(summary.total, true) : null,
         deposit: firstPayment && summary.deposit.available ? tiles(summary.deposit.amount, false) : null,
-        balance: summary.amountPaid > 0 && summary.balance > 0.01 && !["CANCELLED", "DELIVERED"].includes(order.status) ? tiles(summary.balance, false) : null,
+        balance: (summary.amountPaid > 0 || order.paymentPlan === "ACCOUNT") && summary.balance > 0.01 && !["CANCELLED", "DELIVERED"].includes(order.status) ? tiles(summary.balance, false) : null,
       },
     };
   }
@@ -188,7 +193,8 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
       kind = "DEPOSIT";
       amount = summary.deposit.amount;
       depositPercent = summary.deposit.percent;
-    } else if (paid > 0) {
+    } else if (paid > 0 || order.paymentPlan === "ACCOUNT") {
+      // An order on account is paid off (in one go or in parts) after it's confirmed.
       kind = "BALANCE";
       amount = balance;
     } else {
@@ -205,6 +211,8 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
     if (laybyOpen && !isLayby && Number(laybyOpen.paidSoFar ?? 0) > 0) {
       throw new BadRequestException("This order is being paid on lay-by with LayUp — keep paying your plan there.");
     }
+
+    if (methodKey === "ON_ACCOUNT") return this.chargeToAccount(order, kind, payer);
 
     const configs = await this.prisma.paymentMethodConfig.findMany();
     const config = configs.find((c) => c.methodKey === methodKey);
@@ -267,6 +275,37 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
       return { ...result, method: config.displayName, wasFailover: index > 0, paymentId: payment.id, amount, kind };
     }
     return { isLive: false, note: firstNote ?? `${config.displayName} isn't available right now.`, method: config.displayName, wasFailover: false, paymentId: null, amount, kind };
+  }
+
+  /**
+   * Trade credit (docs/trade-credit.md): the whole order goes on the
+   * company's account. Nothing is charged now; the order is confirmed (and can
+   * be delivered) and is due within the company's terms. Payments made later
+   * (EFT, a payment link) go on the ledger as usual.
+   */
+  private async chargeToAccount(order: LoadedOrder, kind: PaymentKind, payer: Payer) {
+    if (payer.kind !== "user") throw new BadRequestException("A payment link can't be charged to an account.");
+    if (kind !== "FULL" || Number(order.amountPaid) > 0 || order.status !== "PENDING") throw new BadRequestException("Only a whole new order can go on account.");
+    if (this.isExpress(order)) throw new BadRequestException("AA 60/120 orders are paid there and then — they can't go on account.");
+    const isStaff = STAFF_ROLES.includes(payer.user.role);
+    if (!isStaff && payer.user.companyId !== order.companyId) throw new BadRequestException("Only your company's own orders can go on its account.");
+    const { termsDays } = await this.credit.assertCanCharge(order.companyId, Number(order.total));
+    const config = await this.prisma.paymentMethodConfig.findUnique({ where: { methodKey: "ON_ACCOUNT" } });
+    if (!config?.isEnabled) throw new BadRequestException("Paying on account isn't switched on right now — choose another way to pay.");
+    const dueAt = accountDueDate(new Date(), termsDays);
+    await this.prisma.order.update({ where: { id: order.id }, data: { paymentPlan: "ACCOUNT", paymentMethod: "ON_ACCOUNT", depositPercent: null, accountDueAt: dueAt } });
+    await this.orders.updateStatus(order.id, { status: "CONFIRMED", paymentMethod: "ON_ACCOUNT" }, { fromPayment: true });
+    const due = dueAt.toLocaleDateString("en-ZA", { day: "numeric", month: "long", year: "numeric", timeZone: "Africa/Johannesburg" });
+    return {
+      isLive: true,
+      note: `Order ${order.orderNumber} is on your trade account and confirmed. Payment of R${Number(order.total).toFixed(2)} is due by ${due} (${termsDays}-day terms).`,
+      method: config.displayName,
+      wasFailover: false,
+      paymentId: null,
+      amount: Number(order.total),
+      kind,
+      onAccount: { dueAt, termsDays },
+    };
   }
 
   private request(order: LoadedOrder, paymentId: string, amount: number, methodKey: PaymentMethodKey, email: string, back: string, api: string, gateway: PaymentGateway) {
@@ -356,7 +395,7 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
     if (balance <= 0.01) throw new BadRequestException("This order is already paid in full.");
     const amount = round(dto.amount);
     if (!(amount > 0) || amount > balance + 0.01) throw new BadRequestException(`Enter an amount between R0.01 and the outstanding R${balance.toFixed(2)}.`);
-    const kind: PaymentKind = Number(order.amountPaid) > 0 ? "BALANCE" : Math.abs(amount - Number(order.total)) <= 0.01 ? "FULL" : "DEPOSIT";
+    const kind: PaymentKind = Number(order.amountPaid) > 0 || order.paymentPlan === "ACCOUNT" ? "BALANCE" : Math.abs(amount - Number(order.total)) <= 0.01 ? "FULL" : "DEPOSIT";
     const payment = await this.prisma.payment.create({
       data: { orderId, kind, amount, methodKey: dto.methodKey ?? order.paymentMethod ?? "EFT_PO", gateway: "MANUAL_EFT", status: "INITIATED", recordedById: staff.id, providerReference: dto.reference?.trim() || null },
     });
@@ -621,10 +660,16 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
   /** Staff: orders with money still owed after a deposit, and lay-by plans in progress. */
   async outstanding() {
     const orders = await this.prisma.order.findMany({
-      where: { status: { in: ["PENDING", "CONFIRMED"] }, OR: [{ paymentPlan: { in: ["DEPOSIT", "LAYBY"] } }, { amountPaid: { gt: 0 } }] },
+      where: {
+        OR: [
+          { status: { in: ["PENDING", "CONFIRMED"] }, OR: [{ paymentPlan: { in: ["DEPOSIT", "LAYBY"] } }, { amountPaid: { gt: 0 } }] },
+          // On account: owed until paid, wherever the delivery is.
+          { paymentPlan: "ACCOUNT", status: { not: "CANCELLED" } },
+        ],
+      },
       orderBy: { createdAt: "desc" },
       take: 200,
-      select: { id: true, orderNumber: true, status: true, total: true, amountPaid: true, paymentPlan: true, depositPercent: true, createdAt: true, user: { select: { name: true, email: true } }, company: { select: { name: true } } },
+      select: { id: true, orderNumber: true, status: true, total: true, amountPaid: true, paymentPlan: true, depositPercent: true, accountDueAt: true, createdAt: true, user: { select: { name: true, email: true } }, company: { select: { name: true } } },
     });
     return orders
       .map((o) => ({ ...o, total: Number(o.total), amountPaid: Number(o.amountPaid), balance: round(Number(o.total) - Number(o.amountPaid)) }))

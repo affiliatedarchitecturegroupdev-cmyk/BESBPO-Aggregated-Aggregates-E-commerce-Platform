@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { CartLeadTimes } from "@/components/delivery/CartLeadTimes";
+import { getLeadTimes } from "@/lib/cms";
 import { CartView } from "@/components/cart/CartView";
 import { GroupServiceBanner } from "@/components/merchandising/GroupServiceBanner";
 import { RecentlyViewedRow } from "@/components/merchandising/RecentlyViewedRow";
@@ -17,6 +19,7 @@ export default async function CartPage() {
       <h1 className="mt-3 font-display text-3xl font-bold text-basalt">Your Cart</h1>
       <div className="mt-6">
         <CartView signedIn={Boolean(user)} />
+        <CartLeadTimes leadTimes={[...(await getLeadTimes()).values()]} />
       </div>
       <RecentlyViewedRow className="mt-12" />
       <div className="mt-10">

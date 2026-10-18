@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LeadTimeNote } from "@/components/delivery/LeadTimeNote";
 import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
 import { ProductReviews } from "@/components/reviews/ProductReviews";
 import { RatingSummaryLink } from "@/components/reviews/RatingSummaryLink";
@@ -119,6 +120,7 @@ export async function MasonryProductPage({ product }: { product: MerchandisedMas
             <p className="mt-1 font-body text-xs text-slate">That&apos;s {formatZAR(priced[0].prices!.RETAIL / 1000)} a brick — bricks are sold per 1,000.</p>
           )}
           <p className="mt-4 whitespace-pre-line font-body text-sm text-slate">{product.description ?? product.summary}</p>
+          <LeadTimeNote categorySlug={product.categorySlug} />
           <div className="mt-6">
             <PackagedUnitSelector product={product} />
           </div>

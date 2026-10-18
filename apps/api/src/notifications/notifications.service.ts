@@ -20,6 +20,7 @@ import {
   staffOrderEmail,
   staffQuoteEmail,
   staffScheduleEmail,
+  supplierOrderEmail,
   whatsappNumber,
   type CompanyData,
   type EmailMessage,
@@ -105,7 +106,7 @@ export class NotificationsService implements OnModuleDestroy {
    * the account holder, or to the contact email of an order made from a
    * guest's quote.
    */
-  async order(event: NotificationEvent, orderId: string, extra: { paymentId?: string; payLink?: OrderData["payLink"] } = {}) {
+  async order(event: NotificationEvent, orderId: string, extra: { paymentId?: string; payLink?: OrderData["payLink"]; dropId?: string; proofId?: string } = {}) {
     await this.safely(event, async () => {
       const order = await this.prisma.order.findUnique({
         where: { id: orderId },
@@ -114,7 +115,9 @@ export class NotificationsService implements OnModuleDestroy {
           shipment: true,
           invoice: { select: { invoiceNumber: true, amountDue: true } },
           user: { select: { email: true, name: true } },
-          company: { select: { name: true } },
+          company: { select: { name: true, paymentTermsDays: true } },
+          drops: { where: { status: { not: "CANCELLED" } }, orderBy: { sequence: "asc" }, select: { id: true, sequence: true, scheduledFor: true, carrier: true, trackingRef: true, lines: true } },
+          fulfilledBySupplier: { select: { id: true, name: true, users: { select: { email: true } } } },
         },
       });
       if (!order) return;
@@ -148,6 +151,9 @@ export class NotificationsService implements OnModuleDestroy {
           : null,
         payLink: extra.payLink ?? null,
         invoice: order.invoice,
+        account: order.paymentPlan === "ACCOUNT" && order.accountDueAt ? { dueAt: order.accountDueAt, termsDays: order.company?.paymentTermsDays ?? null } : null,
+        drop: await this.dropData(order, extra.dropId),
+        proof: extra.proofId ? await this.prisma.proofOfDelivery.findUnique({ where: { id: extra.proofId }, select: { receivedBy: true, capturedAt: true, exceptions: true, dropId: true } }) : null,
         express:
           order.expressFee !== null
             ? { fee: order.expressFee, acceptedAt: order.expressAcceptedAt, dueAt: order.expressDueAt, declinedAt: order.expressDeclinedAt, note: order.expressNote }
@@ -162,8 +168,32 @@ export class NotificationsService implements OnModuleDestroy {
       if (message) out.push({ audience: "CUSTOMER", channel: "WHATSAPP", recipient: phone!, whatsapp: message });
       const staff = setting.staffEmail ? staffOrderEmail(event, data) : null;
       if (staff) out.push(...(await this.staffRecipients()).map((recipient) => ({ audience: "STAFF" as const, channel: "EMAIL" as const, recipient, email: staff })));
+      // The supplier portal (docs/supplier-portal.md): the order to load goes to the supplier's own portal logins.
+      if (event === "SUPPLIER_ORDER" && order.fulfilledBySupplier) {
+        const message = supplierOrderEmail(data, order.fulfilledBySupplier.name);
+        const recipients = [...new Set(order.fulfilledBySupplier.users.map((u) => u.email.toLowerCase()).filter((e) => EMAIL_PATTERN.test(e)))];
+        out.push(...recipients.map((recipient) => ({ audience: "SUPPLIER" as const, channel: "EMAIL" as const, recipient, email: message })));
+      }
       await this.enqueue(event, out, { orderId: order.id, companyId: order.companyId ?? undefined });
     });
+  }
+
+  private async dropData(
+    order: { lineItems: { id: string; quantity: number; unitOfSale: OrderData["lines"][number]["unitOfSale"]; product: { name: string } }[]; drops: { id: string; sequence: number; scheduledFor: Date; carrier: string | null; trackingRef: string | null; lines: Prisma.JsonValue }[] },
+    dropId?: string,
+  ): Promise<OrderData["drop"]> {
+    const drop = dropId ? order.drops.find((d) => d.id === dropId) : undefined;
+    if (!drop) return null;
+    const items = new Map(order.lineItems.map((l) => [l.id, l]));
+    return {
+      sequence: drop.sequence,
+      of: order.drops.length,
+      scheduledFor: drop.scheduledFor,
+      carrier: drop.carrier,
+      trackingRef: drop.trackingRef,
+      lines: (drop.lines as { lineItemId: string; quantity: number }[]).map((l) => ({ name: items.get(l.lineItemId)?.product.name ?? "—", quantity: l.quantity, unitOfSale: items.get(l.lineItemId)?.unitOfSale ?? null, lineTotal: null })),
+      next: order.drops.find((d) => d.sequence === drop.sequence + 1)?.scheduledFor ?? null,
+    };
   }
 
   async quote(event: NotificationEvent, quoteId: string) {
@@ -219,6 +249,13 @@ export class NotificationsService implements OnModuleDestroy {
         tierLabel: TIER_LABEL[company.tier.name] ?? company.tier.name,
         requestedTierLabel: company.requestedTier ? (TIER_LABEL[company.requestedTier.name] ?? company.requestedTier.name) : null,
         reviewNotes: company.reviewNotes,
+        credit: {
+          status: company.creditStatus,
+          limit: company.creditLimit,
+          termsDays: company.paymentTermsDays,
+          notes: company.creditNotes,
+          requested: (company.creditApplication as { requestedLimit?: number; requestedTermsDays?: number } | null) ?? null,
+        },
       };
       const setting = await this.setting(event);
       const out: Outgoing[] = [];

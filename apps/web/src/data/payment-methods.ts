@@ -97,4 +97,12 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
     maxOrderValue: 150000,
     instalments: "Lay-by: at least 20% down, the rest over up to 3 months, no interest. Today's price is locked; we deliver once it's paid off.",
   },
+  {
+    key: "ON_ACCOUNT",
+    displayName: "Trade account (pay on terms)",
+    category: "b2b",
+    logoAssetPath: "generic/on-account.svg",
+    tradeOnly: true,
+    note: "For companies with approved trade credit: confirmed and delivered now, paid within your account's terms.",
+  },
 ];

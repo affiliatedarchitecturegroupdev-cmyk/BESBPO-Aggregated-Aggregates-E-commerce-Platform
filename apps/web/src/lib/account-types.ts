@@ -18,6 +18,8 @@ export type QuoteRecord = {
   deliveryProvince: string | null;
   deliveryDistanceKm: number | null;
   notes: string | null;
+  /** A bill of quantities the request was built from (docs/boq-upload.md). */
+  boqFileName?: string | null;
   estimatedSubtotal: string | null;
   quotedTotal: string | null;
   staffNotes: string | null;
@@ -71,8 +73,12 @@ export type OrderRecord = {
   paidAt?: string | null;
   /** Payments ledger: paid so far, and FULL / DEPOSIT / LAYBY. */
   amountPaid?: string;
-  paymentPlan?: "FULL" | "DEPOSIT" | "LAYBY";
+  paymentPlan?: "FULL" | "DEPOSIT" | "LAYBY" | "ACCOUNT";
   depositPercent?: number | null;
+  /** Trade credit: when an order on account is due (docs/trade-credit.md). */
+  accountDueAt?: string | null;
+  /** Delivered in dated drops (docs/deliveries.md). */
+  isPhased?: boolean;
   lineItems: { id?: string; quantity?: number; unitOfSale?: keyof typeof UNIT_LABEL; lineTotal?: string; product: { name: string; sku?: string; slug?: string } }[];
   shipment?: { carrier: string; externalPartnerName: string | null; trackingRef: string | null; dispatchedAt: string | null; deliveredAt: string | null } | null;
   documents: DocumentSummary[];
@@ -240,7 +246,7 @@ export type OrderPayments = {
   amountPaid: number;
   balance: number;
   overpaid: number;
-  paymentPlan: "FULL" | "DEPOSIT" | "LAYBY";
+  paymentPlan: "FULL" | "DEPOSIT" | "LAYBY" | "ACCOUNT";
   depositPercent: number | null;
   deposit: { available: true; percent: number; amount: number; balance: number } | { available: false; reason: string };
   layby: { terms: { depositPercent: number; maxMonths: number }; active: { status: string; paidSoFar: number; startedAt: string } | null };

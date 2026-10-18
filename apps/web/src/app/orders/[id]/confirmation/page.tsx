@@ -9,7 +9,9 @@ import { OrderPaymentPanel } from "@/components/payment/OrderPaymentPanel";
 import { RefreshWhilePending } from "@/components/payment/RefreshWhilePending";
 import { ExpressStatusCard } from "@/components/orders/ExpressStatusCard";
 import { api } from "@/lib/api";
-import { UNIT_LABEL, type OrderPayments, type OrderRecord } from "@/lib/account-types";
+import { formatDate, UNIT_LABEL, type OrderPayments, type OrderRecord } from "@/lib/account-types";
+import { getLeadTimes } from "@/lib/cms";
+import { leadTimeLabel } from "@/lib/phase4";
 import { formatZAR } from "@/lib/pricing";
 import { requireSession, sessionToken } from "@/lib/session";
 
@@ -36,6 +38,11 @@ export default async function OrderConfirmationPage({ params, searchParams }: { 
   const summary = payments.ok ? payments.data : null;
   const balanceDue = summary ? summary.balance > 0.01 && summary.amountPaid > 0 : false;
   const onLayby = summary?.layby.active?.status === "INITIATED";
+  const onAccount = order.paymentPlan === "ACCOUNT";
+  // The usual lead time: the longest of the order's categories, shown only when staff have set one for each.
+  const leadTimes = await getLeadTimes();
+  const slugs = [...new Set(order.lineItems.flatMap((l) => (l.product.sku ? (findQuotable(l.product.sku)?.categorySlug ?? []) : [])))];
+  const lead = slugs.length && slugs.every((s) => leadTimes.has(s)) ? slugs.map((s) => leadTimes.get(s)!).reduce((a, b) => (b.maxDays > a.maxDays ? b : a)) : null;
   const showPayments = summary && order.status !== "CANCELLED" && (summary.choices.full || summary.choices.deposit || summary.choices.balance || summary.amountPaid > 0 || onLayby);
 
   return (
@@ -45,7 +52,7 @@ export default async function OrderConfirmationPage({ params, searchParams }: { 
           ✓
         </div>
         <h1 className="mt-4 font-display text-2xl font-bold text-basalt">
-          {onLayby ? "On lay-by — we deliver once it's paid off" : awaitingPayment ? "Order placed — choose how to pay" : balanceDue ? "Order confirmed — balance due before delivery" : "Order confirmed"}
+          {onAccount ? "Order confirmed on your trade account" : onLayby ? "On lay-by — we deliver once it's paid off" : awaitingPayment ? "Order placed — choose how to pay" : balanceDue ? "Order confirmed — balance due before delivery" : "Order confirmed"}
         </h1>
         <p className="mt-2 font-body text-sm text-slate">
           Order reference <span className="font-mono text-basalt">{order.orderNumber}</span>
@@ -71,6 +78,20 @@ export default async function OrderConfirmationPage({ params, searchParams }: { 
       )}
 
       <ExpressStatusCard order={order} />
+
+      {onAccount && order.accountDueAt && (
+        <p className="mt-6 rounded-sm border border-seam-blue/30 bg-seam-blue/5 p-4 text-center font-body text-sm text-seam-blue">
+          Charged to your company&apos;s trade account — payment of {formatZAR(Number(order.total))} is due by {formatDate(order.accountDueAt)}. Pay by EFT with the
+          order number as the reference, or below.
+        </p>
+      )}
+      {!awaitingPayment && order.status !== "CANCELLED" && order.status !== "DELIVERED" && (
+        <p className="mt-6 text-center font-body text-sm text-slate">
+          {lead ? <>Usual lead time: {leadTimeLabel(lead)} from confirmation. </> : null}
+          {order.isPhased ? "This order is delivered in stages — " : "Need it delivered in stages? "}
+          <Link href={`/orders/${order.id}/tracking#deliveries`} className="text-seam-blue hover:underline">{order.isPhased ? "see your delivery plan" : "plan phased deliveries"}</Link>.
+        </p>
+      )}
 
       <div className="mt-8 rounded-sm border border-basalt/10 bg-white p-5 font-body text-sm">
         <ul className="divide-y divide-basalt/5">

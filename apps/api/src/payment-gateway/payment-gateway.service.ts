@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, Logger, NotFoundException } from "@nes
 import { PaymentGateway, PaymentMethodKey, Prisma } from "@aggregates/database";
 import type { AuthUser } from "../common/auth/auth-user";
 import { PrismaService } from "../common/prisma.service";
+import { CreditService } from "../credit/credit.service";
 import type { CustomerTierName } from "../pricing/pricing.service";
 import { PaymentGatewayAdapterFactory } from "./adapters/adapter.factory";
 import { eligiblePaymentMethods, PAYFAST_VISIBILITY_KEY } from "./eligibility";
@@ -29,6 +30,7 @@ export class PaymentGatewayService {
     private readonly adapters: PaymentGatewayAdapterFactory,
     private readonly payments: PaymentsService,
     private readonly health: GatewayHealthService,
+    private readonly credit: CreditService,
   ) {}
 
   /** Public: the enabled tiles, without routing details. */
@@ -39,7 +41,8 @@ export class PaymentGatewayService {
   /** Eligible tiles for an order total, at the caller's own tier (from the session, never the request). */
   async eligible(orderTotal: number, isQuoteOnly: boolean, user?: AuthUser, isExpress = false) {
     const configs = await this.prisma.paymentMethodConfig.findMany({ select: { ...PUBLIC_FIELDS, activeGateway: true }, orderBy: { sortOrder: "asc" } });
-    const result = eligiblePaymentMethods(configs, { orderTotal, isQuoteOnly, isExpress, customerTier: await this.tierOf(user?.companyId ?? null) });
+    const onAccount = !isQuoteOnly && !isExpress && (await this.credit.canCharge(user?.companyId ?? null, orderTotal));
+    const result = eligiblePaymentMethods(configs, { orderTotal, isQuoteOnly, isExpress, onAccount, customerTier: await this.tierOf(user?.companyId ?? null) });
     // Routing stays private: the gateway is only used to decide eligibility.
     const strip = (list: typeof configs) => list.map(({ activeGateway: _gateway, ...rest }) => rest);
     return { recommended: strip(result.recommended), available: strip(result.available) };

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { CartLeadTimes } from "@/components/delivery/CartLeadTimes";
+import { getLeadTimes } from "@/lib/cms";
 import { CheckoutForm } from "@/components/cart/CheckoutForm";
 import type { SavedAddress } from "@/lib/account-types";
 import { api } from "@/lib/api";
@@ -19,6 +21,7 @@ export default async function CheckoutPage() {
       <h1 className="mt-3 font-display text-3xl font-bold text-basalt">Checkout</h1>
       <div className="mt-6">
         <CheckoutForm addresses={addresses} email={user.email} />
+        <CartLeadTimes leadTimes={[...(await getLeadTimes()).values()]} />
       </div>
     </div>
   );

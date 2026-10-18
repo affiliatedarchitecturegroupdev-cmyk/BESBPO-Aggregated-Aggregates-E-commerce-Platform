@@ -73,12 +73,26 @@ export class SlideshowContent {
   @IsArray() @ArrayMinSize(1) @ArrayMaxSize(20) @ValidateNested({ each: true }) @Type(() => Slide) slides!: Slide[];
 }
 
+/** One category's usual time from confirmation to delivery, in working days (docs/lead-times.md). */
+export class LeadTime {
+  @IsString() @Matches(/^[a-z0-9-]{2,60}$/) categorySlug!: string;
+  @IsInt() @Min(0) @Max(60) minDays!: number;
+  @IsInt() @Min(0) @Max(90) maxDays!: number;
+  @IsOptional() @IsString() @MaxLength(160) note?: string;
+}
+
+/** Lead times staff set per category. Nothing is shown for a category without one — no defaults are guessed. */
+export class LeadTimesContent {
+  @IsArray() @ArrayMaxSize(80) @ValidateNested({ each: true }) @Type(() => LeadTime) items!: LeadTime[];
+}
+
 /** Every editable content key and the shape its JSON must have. */
 export const CONTENT_SCHEMAS = {
   announcement: AnnouncementContent,
   hero: HeroContent,
   promo: PromoContent,
   slideshow: SlideshowContent,
+  "lead-times": LeadTimesContent,
 } as const;
 
 export type ContentKey = keyof typeof CONTENT_SCHEMAS;

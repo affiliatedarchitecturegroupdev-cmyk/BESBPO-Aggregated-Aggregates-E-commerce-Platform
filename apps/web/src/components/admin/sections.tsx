@@ -115,6 +115,12 @@ export async function Quotes({ status = "SUBMITTED" }: { status?: string }) {
                 {quote.deliveryProvince && `, ${quote.deliveryProvince}`}
                 {quote.deliveryDistanceKm !== null && ` · ~${quote.deliveryDistanceKm}km from supplier`}
               </p>
+              {quote.boqFileName && (
+                <p className="mt-1">
+                  <a href={`/api/boq/${quote.id}`} className="text-seam-blue hover:underline">Bill of quantities: {quote.boqFileName}</a>
+                  <span className="text-slate"> — unmatched lines are in the notes below</span>
+                </p>
+              )}
               <table className="mt-3 w-full text-left">
                 <tbody>
                   {quote.lineItems.map((line) => (
@@ -131,7 +137,7 @@ export async function Quotes({ status = "SUBMITTED" }: { status?: string }) {
                 {" · "}
                 {quote.reasons.length > 0 ? quote.reasons.join(" ") : "Customer asked for a quote (priceable at checkout)."}
               </p>
-              {quote.notes && <p className="mt-2 rounded-sm bg-limestone p-2 text-slate">{quote.notes}</p>}
+              {quote.notes && <p className="mt-2 whitespace-pre-line rounded-sm bg-limestone p-2 text-slate">{quote.notes}</p>}
               <ActionForm action={priceQuote} className="mt-4 grid gap-3 sm:grid-cols-[1fr_1fr_2fr_auto] sm:items-end">
                 <input type="hidden" name="id" value={quote.id} />
                 <label className="block">

@@ -8,6 +8,8 @@ export type EligibilityInput = {
   isQuoteOnly: boolean;
   /** AA 60/120 orders must be paid there and then: Card, or a method PayFast processes. */
   isExpress?: boolean;
+  /** The buyer's company has trade credit covering this amount (docs/trade-credit.md) — the only way ON_ACCOUNT shows. */
+  onAccount?: boolean;
 };
 
 /** SiteContent key for the PayFast checkout switch (open to customers unless an admin sets it to staff only). */
@@ -44,6 +46,7 @@ export function eligiblePaymentMethods<T extends Config>(configs: T[], input: El
     if (method.minOrderValue != null && input.orderTotal < Number(method.minOrderValue)) return false;
     if (method.maxOrderValue != null && input.orderTotal > Number(method.maxOrderValue)) return false;
     if (input.isExpress && !isExpressMethod(method)) return false;
+    if (method.methodKey === "ON_ACCOUNT" && !input.onAccount) return false;
     return true;
   });
   return {

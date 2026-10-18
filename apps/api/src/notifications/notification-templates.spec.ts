@@ -9,6 +9,7 @@ import {
   customerQuoteWhatsApp,
   customerScheduleEmail,
   EVENT_CHANNELS,
+  supplierOrderEmail,
   formatZAR,
   staffCompanyEmail,
   partnerBookingEmail,
@@ -46,6 +47,14 @@ const order: OrderData = {
 
 const baseOrder = order;
 
+/** Delivery 2 of 3 of a phased order, signed for with a shortage noted. */
+const phasedOrder: OrderData = {
+  ...order,
+  status: "IN_TRANSIT",
+  drop: { sequence: 2, of: 3, scheduledFor: new Date("2026-11-03T00:00:00Z"), carrier: "BESFLEET", trackingRef: "BF-9", lines: [{ name: "19mm Crushed Stone", quantity: 6, unitOfSale: "BULK_TON", lineTotal: null }], next: new Date("2026-11-10T00:00:00Z") },
+  proof: { receivedBy: "J. Naidoo", capturedAt: new Date("2026-11-03T08:15:00Z"), exceptions: "One bag torn", dropId: "drop_2" },
+};
+
 const invoicedOrder: OrderData = { ...order, invoice: { invoiceNumber: "AAI-000042", amountDue: "9133.12" } };
 
 /** An AA 60/120 order, accepted at 10:00 SAST — due at 12:20. */
@@ -78,6 +87,7 @@ const company: CompanyData = {
   tierLabel: "Contractor/Trade",
   requestedTierLabel: "Contractor/Trade",
   reviewNotes: null,
+  credit: { status: "APPROVED", limit: "150000.00", termsDays: 30, notes: null, requested: { requestedLimit: 200000, requestedTermsDays: 30 } },
 };
 
 const enquiry: EnquiryData = {
@@ -217,10 +227,44 @@ describe("notification templates", () => {
     expect(link.text).toMatch(/balance of R6,393\.18/);
   });
 
+  it("confirms an order on account with its due date, not a receipt", () => {
+    const email = customerOrderEmail("ORDER_CONFIRMED", { ...order, status: "CONFIRMED", companyName: "Coastal Civils", account: { dueAt: new Date("2026-11-16T10:00:00Z"), termsDays: 30 } })!;
+    expect(email.subject).toBe("Order AA-100 confirmed on your trade account");
+    expect(email.text).toContain("Amount on account: R9,133.12");
+    expect(email.text).toContain("Terms: 30 days");
+    expect(email.text).not.toMatch(/receipt/i);
+  });
+
+  it("tells the customer which drop is coming and what was signed for", () => {
+    const dispatched = customerOrderEmail("DROP_DISPATCHED", phasedOrder)!;
+    expect(dispatched.subject).toBe("Order AA-100: delivery 2 of 3 is on its way");
+    expect(dispatched.text).toContain("6 ton — 19mm Crushed Stone");
+    expect(dispatched.text).toMatch(/next delivery is planned for/);
+    const signed = customerOrderEmail("DELIVERY_SIGNED", phasedOrder)!;
+    expect(signed.text).toContain("Signed by: J. Naidoo");
+    expect(signed.text).toContain("Noted on delivery: One bag torn");
+    expect(staffOrderEmail("DELIVERY_SIGNED", phasedOrder)!.subject).toBe("Delivery EXCEPTION — drop 2 of 3 on AA-100");
+  });
+
+  it("sends the supplier what to load without the customer's details or prices", () => {
+    const email = supplierOrderEmail(order, "Hilton Quarry");
+    expect(email.subject).toBe("Order to load: AA-100");
+    expect(email.text).toContain("12 ton — 19mm Crushed Stone");
+    expect(email.text).not.toContain("Thandi");
+    expect(email.text).not.toContain("R9,133.12");
+    expect(email.text).not.toContain("Quarry Rd");
+  });
+
+  it("announces trade credit decisions", () => {
+    expect(customerCompanyEmail("CREDIT_DECIDED", company)!.text).toContain("Credit limit: R150,000.00");
+    expect(customerCompanyEmail("CREDIT_DECIDED", { ...company, credit: { ...company.credit!, status: "DECLINED" } })!.subject).toBe("Your trade credit application — Coastal Civils");
+    expect(staffCompanyEmail("CREDIT_APPLIED", company)!.text).toContain("R200,000.00 on 30-day terms");
+  });
+
   it("has a message for every channel an event is allowed to use", () => {
     for (const event of Object.values(NotificationEvent)) {
       const channels = EVENT_CHANNELS[event];
-      const order = event.startsWith("EXPRESS_") ? expressOrder : event === "INVOICE_ISSUED" ? invoicedOrder : event.startsWith("PAYMENT_") ? paymentOrder : baseOrder;
+      const order = event.startsWith("EXPRESS_") ? expressOrder : event === "INVOICE_ISSUED" ? invoicedOrder : event.startsWith("PAYMENT_") ? paymentOrder : event === "DROP_DISPATCHED" || event === "DELIVERY_SIGNED" ? phasedOrder : baseOrder;
       const customerEmail = customerOrderEmail(event, order) ?? customerQuoteEmail(event, quote) ?? customerCompanyEmail(event, company) ?? customerEnquiryEmail(event, enquiry) ?? customerBookingEmail(event, booking) ?? customerScheduleEmail(event, schedule);
       const customerWhatsApp = customerOrderWhatsApp(event, order) ?? customerQuoteWhatsApp(event, quote);
       const staffEmail = staffOrderEmail(event, order) ?? staffQuoteEmail(event, quote) ?? staffCompanyEmail(event, company) ?? staffEnquiryEmail(event, enquiry) ?? staffBookingEmail(event, booking) ?? staffScheduleEmail(event, schedule);
@@ -228,7 +272,8 @@ describe("notification templates", () => {
       expect([event, customerWhatsApp !== null]).toEqual([event, channels.customerWhatsApp]);
       // The weekly insights email is built from report data (insights/digest.ts), not from one record.
       // These are built from report or health data (insights/digest.ts, gateway-health.service.ts), not from one record.
-      if (event !== "WEEKLY_INSIGHTS" && event !== "GATEWAY_DEGRADED") expect([event, staffEmail !== null]).toEqual([event, channels.staffEmail]);
+      // The supplier's answer (SUPPLIER_ORDER) and the uptime monitor (SERVICE_DOWN) are staff alerts too.
+      if (!["WEEKLY_INSIGHTS", "GATEWAY_DEGRADED", "SUPPLIER_ORDER", "SERVICE_DOWN"].includes(event)) expect([event, staffEmail !== null]).toEqual([event, channels.staffEmail]);
     }
   });
 

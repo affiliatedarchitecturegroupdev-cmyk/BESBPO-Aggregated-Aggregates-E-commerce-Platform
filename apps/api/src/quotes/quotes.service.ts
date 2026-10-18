@@ -31,7 +31,8 @@ export class QuotesService {
     private readonly notifications: NotificationsService,
   ) {}
 
-  async create(dto: CreateQuoteDto, user?: AuthUser) {
+  /** `boq`: a bill of quantities the request was built from (docs/boq-upload.md), already stored. */
+  async create(dto: CreateQuoteDto, user?: AuthUser, boq?: { fileName: string; storageKey: string }) {
     const company = user?.companyId
       ? await this.prisma.company.findUnique({ where: { id: user.companyId }, include: { tier: true } })
       : null;
@@ -69,6 +70,8 @@ export class QuotesService {
       deliveryProvince: dto.deliveryProvince?.trim() || null,
       deliveryDistanceKm: dto.deliveryDistanceKm ?? null,
       notes: dto.notes?.trim() || null,
+      boqFileName: boq?.fileName ?? null,
+      boqStorageKey: boq?.storageKey ?? null,
       estimatedSubtotal: priced.subtotal,
       lineItems: {
         create: dto.lines.map((line, index) => ({

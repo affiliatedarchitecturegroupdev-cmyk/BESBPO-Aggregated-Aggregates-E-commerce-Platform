@@ -219,15 +219,20 @@ export class OrdersService {
    * gateway, a deposit, a recorded EFT); a staff confirmation without one
    * records the outstanding amount as paid by EFT/purchase order, as before.
    */
-  async updateStatus(id: string, dto: UpdateOrderStatusDto, opts: { fromPayment?: boolean; staffId?: string } = {}) {
+  async updateStatus(id: string, dto: UpdateOrderStatusDto, opts: { fromPayment?: boolean; staffId?: string; fromDrops?: boolean } = {}) {
     const order = await this.prisma.order.findUnique({ where: { id }, include: { shipment: true } });
     if (!order) throw new NotFoundException("Order not found.");
     if (order.status !== dto.status && !NEXT_STATUSES[order.status].includes(dto.status)) {
       throw new BadRequestException(`An order that is ${order.status} can't move to ${dto.status}.`);
     }
+    // Phased deliveries (docs/deliveries.md): the order follows its drops, each released and paid for on its own.
+    if (order.isPhased && !opts.fromDrops && order.status !== dto.status && (dto.status === "IN_TRANSIT" || dto.status === "DELIVERED")) {
+      throw new BadRequestException("This order is delivered in drops — dispatch and deliver each drop on the order's delivery plan.");
+    }
     // Deposits (docs/payments.md): the balance is paid before the load leaves the supplier.
     const outstanding = Math.round((Number(order.total) - Number(order.amountPaid)) * 100) / 100;
-    if ((dto.status === "IN_TRANSIT" || dto.status === "DELIVERED") && order.status !== dto.status && outstanding > 0.01) {
+    // Trade credit (docs/trade-credit.md): an order on account is delivered first and paid within its terms.
+    if ((dto.status === "IN_TRANSIT" || dto.status === "DELIVERED") && order.status !== dto.status && outstanding > 0.01 && order.paymentPlan !== "ACCOUNT" && !opts.fromDrops) {
       throw new BadRequestException(`R${outstanding.toFixed(2)} is still to be paid on this order — take the balance (send a payment link or record the EFT) before dispatch.`);
     }
     if (dto.status === "CONFIRMED" && order.status === "PENDING" && !opts.fromPayment && outstanding > 0.01) {
@@ -291,10 +296,12 @@ export class OrdersService {
     // An issued invoice follows the order: paid once the order is paid in full, void if cancelled.
     if (order.status !== dto.status && dto.status === "CANCELLED") {
       await this.prisma.invoice.updateMany({ where: { orderId: id, status: { not: "VOID" } }, data: { status: "VOID" } });
+      await this.prisma.deliveryDrop.updateMany({ where: { orderId: id, status: { in: ["PLANNED", "CONFIRMED"] } }, data: { status: "CANCELLED" } });
     }
     if (order.status !== dto.status && dto.status === "CONFIRMED") await this.settleInvoiceIfPaid(id);
     // Only a real status change is news to the customer (tracking edits aren't).
-    if (order.status !== dto.status) await this.notifications.order(STATUS_EVENT[dto.status], id);
+    // A phased order's first drop sends its own "on its way" email (DROP_DISPATCHED), not the order's.
+    if (order.status !== dto.status && !(opts.fromDrops && dto.status === "IN_TRANSIT")) await this.notifications.order(STATUS_EVENT[dto.status], id);
     // A paid AA 60/120 order: sales confirms a supplier by phone or email, then accepts it here.
     if (statusChanged && dto.status === "CONFIRMED" && order.expressFee !== null && !order.expressDeclinedAt) {
       await this.notifications.order("EXPRESS_PAID", id);

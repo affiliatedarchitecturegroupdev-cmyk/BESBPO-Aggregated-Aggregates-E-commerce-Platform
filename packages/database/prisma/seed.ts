@@ -591,6 +591,8 @@ const PAYMENT_METHODS: {
   { methodKey: "EFT_PO", displayName: "EFT / Purchase Order", activeGateway: "MANUAL_EFT", tradeOnly: true },
   // Lay-by: pay off over up to 3 months, goods released once fully paid (docs/payments.md).
   { methodKey: "LAYUP", displayName: "LayUp lay-by", activeGateway: "LAYUP", minOrderValue: 500, maxOrderValue: 150000 },
+  // Trade credit (docs/trade-credit.md): approved trade accounts only; checked against the company's limit when used.
+  { methodKey: "ON_ACCOUNT", displayName: "Trade account (pay on terms)", activeGateway: "MANUAL_EFT", tradeOnly: true },
 ];
 
 async function seedPaymentMethods() {

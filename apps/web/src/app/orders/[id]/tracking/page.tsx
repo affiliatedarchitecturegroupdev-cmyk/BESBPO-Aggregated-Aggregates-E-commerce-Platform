@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExpressStatusCard } from "@/components/orders/ExpressStatusCard";
+import { DeliveryPlanEditor } from "@/components/delivery/DeliveryPlanEditor";
+import { DropList, ProofSummary } from "@/components/delivery/DropList";
+import type { Deliveries } from "@/lib/phase4";
 import { api } from "@/lib/api";
 import { formatDate, type OrderRecord } from "@/lib/account-types";
 import { formatZAR } from "@/lib/pricing";
@@ -25,6 +28,8 @@ export default async function OrderTrackingPage({ params }: { params: { id: stri
     return <p className="mx-auto max-w-2xl px-4 py-12 font-body text-sm text-slate">{result.message}</p>;
   }
   const order = result.data;
+  const plan = await api<Deliveries>(`/deliveries/orders/${encodeURIComponent(params.id)}`, { token: sessionToken() });
+  const deliveries = plan.ok ? plan.data : null;
   const current = STAGES.findIndex((s) => s.key === order.status);
   return (
     <div className="mx-auto max-w-2xl px-4 py-12">
@@ -69,6 +74,31 @@ export default async function OrderTrackingPage({ params }: { params: { id: stri
           )}
         </p>
       )}
+      {deliveries && order.status !== "CANCELLED" && (
+        <section id="deliveries" className="mt-8 scroll-mt-24 rounded-sm border border-basalt/10 bg-white p-5" aria-labelledby="deliveries-heading">
+          <h2 id="deliveries-heading" className="font-body text-sm font-semibold text-basalt">
+            {deliveries.isPhased ? `Delivery plan — ${deliveries.drops.filter((d) => d.status !== "CANCELLED").length} drops` : "Delivery"}
+          </h2>
+          {deliveries.isPhased && <div className="mt-3"><DropList deliveries={deliveries} /></div>}
+          {!deliveries.isPhased && deliveries.proof && <ProofSummary proof={deliveries.proof} />}
+          {deliveries.canPlan ? (
+            <details className="mt-4">
+              <summary className="cursor-pointer font-body text-sm text-seam-blue">
+                {deliveries.isPhased ? "Change the delivery plan" : "Deliver in stages instead — plan phased deliveries"}
+              </summary>
+              <p className="mt-2 font-body text-xs text-slate">
+                Split your order into dated drops — for example, bricks for each stage of the build. Dates are from tomorrow up to a year ahead; we confirm
+                each one with the supplier. Each drop leaves once what you&apos;ve paid covers it (the delivery fee with the first drop), or straight away on a trade
+                account. Extra drops may carry their own delivery charge, which we&apos;d agree with you first.
+              </p>
+              <div className="mt-3"><DeliveryPlanEditor deliveries={deliveries} /></div>
+            </details>
+          ) : (
+            deliveries.planBlockedReason && deliveries.isPhased && <p className="mt-3 font-body text-xs text-slate">{deliveries.planBlockedReason}</p>
+          )}
+        </section>
+      )}
+
       <p className="mt-4 font-mono text-[11px] text-slate">
         Delivery is dispatched by Besfleet or one of our 15+ tipper partners depending on route and load; a tracking
         reference appears here once dispatched.
