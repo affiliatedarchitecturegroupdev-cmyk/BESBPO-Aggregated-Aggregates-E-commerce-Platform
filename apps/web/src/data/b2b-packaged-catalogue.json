@@ -1634,6 +1634,606 @@
      "pricing_status": "Quote-only — no retail benchmark"
     }
    ]
+  },
+  {
+   "sku": "AA-GRT-TILE-ADH-CERAMIC",
+   "slug": "ceramic-tile-adhesive-20-kg",
+   "name": "Ceramic Tile Adhesive 20 kg",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Tiling, plastering, screeds and concrete work",
+    "Repairs and specialist concrete"
+   ],
+   "handling_notes": "Mix and apply to the maker's technical data sheet; keep bags dry and use within the shelf life.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "20 kg bag",
+     "markup_percent": 22,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "description": "Cement-based adhesive for ceramic wall and floor tiles.",
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GRT-TILE-ADH-PORCELAIN",
+   "slug": "porcelain-tile-adhesive-20-kg",
+   "name": "Porcelain Tile Adhesive 20 kg",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Tiling, plastering, screeds and concrete work",
+    "Repairs and specialist concrete"
+   ],
+   "handling_notes": "Mix and apply to the maker's technical data sheet; keep bags dry and use within the shelf life.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "20 kg bag",
+     "markup_percent": 22,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "description": "Polymer-modified adhesive for porcelain and large-format tiles.",
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GRT-TILE-ADH-FLEX",
+   "slug": "flexible-tile-adhesive-20-kg",
+   "name": "Flexible Tile Adhesive 20 kg",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Tiling, plastering, screeds and concrete work",
+    "Repairs and specialist concrete"
+   ],
+   "handling_notes": "Mix and apply to the maker's technical data sheet; keep bags dry and use within the shelf life.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "20 kg bag",
+     "markup_percent": 22,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "description": "Flexible adhesive for tile-on-tile, underfloor heating and slight movement.",
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GRT-TILE-ADH-RAPID",
+   "slug": "rapid-set-tile-adhesive-20-kg",
+   "name": "Rapid-Set Tile Adhesive 20 kg",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Tiling, plastering, screeds and concrete work",
+    "Repairs and specialist concrete"
+   ],
+   "handling_notes": "Mix and apply to the maker's technical data sheet; keep bags dry and use within the shelf life.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "20 kg bag",
+     "markup_percent": 22,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "description": "Fast-setting tile adhesive for quick turnaround.",
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GRT-TILE-GROUT-5",
+   "slug": "wall-and-floor-tile-grout-5-kg",
+   "name": "Wall & Floor Tile Grout 5 kg",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Tiling, plastering, screeds and concrete work",
+    "Repairs and specialist concrete"
+   ],
+   "handling_notes": "Mix and apply to the maker's technical data sheet; keep bags dry and use within the shelf life.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "5 kg bag",
+     "markup_percent": 22,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "description": "Cement-based tile grout. Colour confirmed on the quote.",
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GRT-TILE-GROUT-20",
+   "slug": "wall-and-floor-tile-grout-20-kg",
+   "name": "Wall & Floor Tile Grout 20 kg",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Tiling, plastering, screeds and concrete work",
+    "Repairs and specialist concrete"
+   ],
+   "handling_notes": "Mix and apply to the maker's technical data sheet; keep bags dry and use within the shelf life.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "20 kg bag",
+     "markup_percent": 22,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "description": "Cement-based tile grout, 20 kg.",
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GRT-EPOXY-GROUT",
+   "slug": "epoxy-tile-grout-5-kg",
+   "name": "Epoxy Tile Grout 5 kg",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Tiling, plastering, screeds and concrete work",
+    "Repairs and specialist concrete"
+   ],
+   "handling_notes": "Mix and apply to the maker's technical data sheet; keep bags dry and use within the shelf life.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "5 kg kit",
+     "markup_percent": 22,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "description": "Stain- and chemical-resistant epoxy grout for kitchens, showers and pools.",
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GRT-BONDING-LIQUID-5",
+   "slug": "bonding-liquid-5-l",
+   "name": "Bonding Liquid 5 L",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Tiling, plastering, screeds and concrete work",
+    "Repairs and specialist concrete"
+   ],
+   "handling_notes": "Mix and apply to the maker's technical data sheet; keep bags dry and use within the shelf life.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "5 L",
+     "markup_percent": 22,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "description": "PVA bonding liquid to improve plaster and screed adhesion.",
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GRT-SBR-5",
+   "slug": "sbr-bonding-and-waterproofing-additive-5-l",
+   "name": "SBR Bonding & Waterproofing Additive 5 L",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Tiling, plastering, screeds and concrete work",
+    "Repairs and specialist concrete"
+   ],
+   "handling_notes": "Mix and apply to the maker's technical data sheet; keep bags dry and use within the shelf life.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "5 L",
+     "markup_percent": 22,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "description": "Styrene-butadiene rubber additive for bonding coats, repairs and water-resistant mortars.",
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GRT-LATEX-ADDITIVE",
+   "slug": "latex-additive-for-tile-adhesive-5-l",
+   "name": "Latex Additive for Tile Adhesive 5 L",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Tiling, plastering, screeds and concrete work",
+    "Repairs and specialist concrete"
+   ],
+   "handling_notes": "Mix and apply to the maker's technical data sheet; keep bags dry and use within the shelf life.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "5 L",
+     "markup_percent": 22,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "description": "Latex additive that makes adhesive and grout more flexible and water-resistant.",
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GRT-PREMIX-PLASTER",
+   "slug": "premixed-plaster-40-kg",
+   "name": "Premixed Plaster 40 kg",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Tiling, plastering, screeds and concrete work",
+    "Repairs and specialist concrete"
+   ],
+   "handling_notes": "Mix and apply to the maker's technical data sheet; keep bags dry and use within the shelf life.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "40 kg bag",
+     "markup_percent": 22,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "description": "Ready-blended plaster — just add water.",
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GRT-PREMIX-SCREED",
+   "slug": "premixed-screed-40-kg",
+   "name": "Premixed Screed 40 kg",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Tiling, plastering, screeds and concrete work",
+    "Repairs and specialist concrete"
+   ],
+   "handling_notes": "Mix and apply to the maker's technical data sheet; keep bags dry and use within the shelf life.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "40 kg bag",
+     "markup_percent": 22,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "description": "Ready-blended screed for floors.",
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GRT-SELF-LEVEL",
+   "slug": "self-levelling-screed-25-kg",
+   "name": "Self-Levelling Screed 25 kg",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Tiling, plastering, screeds and concrete work",
+    "Repairs and specialist concrete"
+   ],
+   "handling_notes": "Mix and apply to the maker's technical data sheet; keep bags dry and use within the shelf life.",
+   "units": [
+    {
+     "unit": "BAG_25KG",
+     "unit_label": "25 kg bag",
+     "markup_percent": 22,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "description": "Self-levelling underlayment for flat floors before vinyl, laminate or tiles.",
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GRT-REPAIR-MORTAR",
+   "slug": "concrete-repair-mortar-25-kg",
+   "name": "Concrete Repair Mortar 25 kg",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Tiling, plastering, screeds and concrete work",
+    "Repairs and specialist concrete"
+   ],
+   "handling_notes": "Mix and apply to the maker's technical data sheet; keep bags dry and use within the shelf life.",
+   "units": [
+    {
+     "unit": "BAG_25KG",
+     "unit_label": "25 kg bag",
+     "markup_percent": 22,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "description": "Polymer-modified repair mortar for spalled concrete and edges.",
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GRT-WATERPROOF-ADD",
+   "slug": "waterproofing-admixture-for-mortar-and-concrete",
+   "name": "Waterproofing Admixture for Mortar & Concrete",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Tiling, plastering, screeds and concrete work",
+    "Repairs and specialist concrete"
+   ],
+   "handling_notes": "Mix and apply to the maker's technical data sheet; keep bags dry and use within the shelf life.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "markup_percent": 22,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "description": "Integral waterproofing admixture for plaster, mortar and concrete.",
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GRT-MORTAR-PLAST",
+   "slug": "mortar-plasticiser",
+   "name": "Mortar Plasticiser",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Tiling, plastering, screeds and concrete work",
+    "Repairs and specialist concrete"
+   ],
+   "handling_notes": "Mix and apply to the maker's technical data sheet; keep bags dry and use within the shelf life.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Each",
+     "markup_percent": 22,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "description": "Plasticiser that improves workability of brick mortar and plaster in place of lime.",
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GRT-CURING",
+   "slug": "concrete-curing-compound-20-l",
+   "name": "Concrete Curing Compound 20 L",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Tiling, plastering, screeds and concrete work",
+    "Repairs and specialist concrete"
+   ],
+   "handling_notes": "Mix and apply to the maker's technical data sheet; keep bags dry and use within the shelf life.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "20 L",
+     "markup_percent": 22,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "description": "Spray-on curing membrane that slows water loss from fresh concrete.",
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GRT-RELEASE",
+   "slug": "shutter-release-agent-20-l",
+   "name": "Shutter Release Agent 20 L",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Tiling, plastering, screeds and concrete work",
+    "Repairs and specialist concrete"
+   ],
+   "handling_notes": "Mix and apply to the maker's technical data sheet; keep bags dry and use within the shelf life.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "20 L",
+     "markup_percent": 22,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "description": "Release agent for formwork so concrete strips cleanly.",
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GRT-FIBRES",
+   "slug": "polypropylene-concrete-fibres-bag",
+   "name": "Polypropylene Concrete Fibres (bag)",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Tiling, plastering, screeds and concrete work",
+    "Repairs and specialist concrete"
+   ],
+   "handling_notes": "Mix and apply to the maker's technical data sheet; keep bags dry and use within the shelf life.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "Bag",
+     "markup_percent": 22,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "description": "Micro-fibres added to concrete and screeds to control plastic shrinkage cracking.",
+   "_range": "range-depth-2026-10"
+  },
+  {
+   "sku": "AA-GRT-EPOXY-ANCHOR",
+   "slug": "epoxy-bonding-agent-new-to-old-concrete-1-kg",
+   "name": "Epoxy Bonding Agent (new-to-old concrete) 1 kg",
+   "category_slug": "mortars-grouts-admixtures",
+   "grading_standard": null,
+   "manufacturer": null,
+   "brand": null,
+   "cement_family": null,
+   "cement_class": null,
+   "cement_type": null,
+   "region_note": null,
+   "specialist_characteristics": [],
+   "typical_uses": [
+    "Tiling, plastering, screeds and concrete work",
+    "Repairs and specialist concrete"
+   ],
+   "handling_notes": "Mix and apply to the maker's technical data sheet; keep bags dry and use within the shelf life.",
+   "units": [
+    {
+     "unit": "EACH",
+     "unit_label": "1 kg kit",
+     "markup_percent": 22,
+     "list_price_per_unit": null,
+     "pricing_status": "Quote-only — no retail benchmark"
+    }
+   ],
+   "description": "Epoxy bonding agent for joining new concrete to old.",
+   "_range": "range-depth-2026-10"
   }
  ]
 }

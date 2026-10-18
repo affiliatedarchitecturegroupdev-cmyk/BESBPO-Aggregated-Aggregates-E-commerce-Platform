@@ -23,8 +23,8 @@ def test_catalogue_shape_and_counts():
     by_cat = {}
     for p in RAW["products"]:
         by_cat[p["category_slug"]] = by_cat.get(p["category_slug"], 0) + 1
-    assert by_cat == {"reinforcing-bar": 12, "mesh-brickforce": 10, "steel-fixing-accessories": 10, "structural-steel": 11}
-    assert len({p["slug"] for p in RAW["products"]}) == len({p["sku"] for p in RAW["products"]}) == 43
+    assert by_cat == {"reinforcing-bar": 12, "mesh-brickforce": 10, "steel-fixing-accessories": 15, "structural-steel": 114}
+    assert len({p["slug"] for p in RAW["products"]}) == len({p["sku"] for p in RAW["products"]}) == 151  # 43 + 108 range depth
     for p in RAW["products"]:
         assert len({u["unit"] for u in p["units"]}) == len(p["units"]), p["sku"]
 
@@ -88,7 +88,7 @@ def test_steel_only_order_needs_no_tipper_and_carries_the_flatbed_note():
 
 
 def test_endpoints_list_and_price_steel():
-    assert len(client.get("/products/steel").json()) == 43
+    assert len(client.get("/products/steel").json()) == 151
     body = client.post("/calculate/packaged-goods", json={"sku": "AA-STL-MESH-100", "quantity": 3, "unit": "SHEET"}).json()
     assert body["total"] == 1020.6
     assert client.post("/calculate/packaged-goods", json={"sku": "AA-STL-Y12", "quantity": 1, "unit": "BAG_50KG"}).status_code == 422

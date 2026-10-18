@@ -24,9 +24,9 @@ def test_catalogue_shape_and_counts():
     by_cat = {}
     for p in RAW["products"]:
         by_cat[p["category_slug"]] = by_cat.get(p["category_slug"], 0) + 1
-    assert by_cat == {"roof-sheeting": 15, "roof-flashings-fixings": 8, "roof-insulation-rainwater": 7, "structural-timber": 72, "timber-connectors": 10}
+    assert by_cat == {"roof-sheeting": 15, "roof-flashings-fixings": 26, "roof-insulation-rainwater": 30, "structural-timber": 72, "timber-connectors": 10}
     assert [c["code"] for c in RAW["categories"]] == ["CAT-26", "CAT-27", "CAT-28", "CAT-30", "CAT-31"]
-    assert len({p["slug"] for p in RAW["products"]}) == len({p["sku"] for p in RAW["products"]}) == 112
+    assert len({p["slug"] for p in RAW["products"]}) == len({p["sku"] for p in RAW["products"]}) == 153  # 112 + 41 range depth
     assert RAW["standard_lengths_m"] == [3.0, 3.6, 4.2, 4.8, 6.0, 6.6]
     assert RAW["cut_to_length"] == {"min_m": 1.0, "max_m": 14.0}
     # SKUs never collide with another line's.
@@ -117,7 +117,7 @@ def test_roofing_and_tiles_travel_by_flatbed_with_no_tipper_fee():
 
 
 def test_whole_units_only_and_endpoints():
-    assert len(client.get("/products/roofing").json()) == 112
+    assert len(client.get("/products/roofing").json()) == 153
     body = client.post("/calculate/packaged-goods", json={"sku": "AA-ROF-IBR-040-GALV", "quantity": 20, "unit": "SHEET_6_6M"}).json()
     assert body["family"] == "ROOFING" and body["total"] == 12978.6  # 20 x 648.93
     assert client.post("/calculate/packaged-goods", json={"sku": "AA-ROF-IBR-040-GALV", "quantity": 2.5, "unit": "SHEET_6_6M"}).status_code == 422
