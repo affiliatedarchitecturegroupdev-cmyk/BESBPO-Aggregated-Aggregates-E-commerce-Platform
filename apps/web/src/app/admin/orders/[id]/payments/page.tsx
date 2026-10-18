@@ -20,7 +20,7 @@ const STATUS_TONE: Record<LedgerPayment["status"], string> = {
   CANCELLED: "text-slate",
   EXPIRED: "text-slate",
 };
-const PLAN_LABEL = { FULL: "Paying in full", DEPOSIT: "Deposit, balance before delivery", LAYBY: "Lay-by (LayUp)" };
+const PLAN_LABEL = { FULL: "Paying in full", DEPOSIT: "Deposit, balance before delivery", LAYBY: "Lay-by (LayUp)", ACCOUNT: "On trade account (pay on terms)" };
 
 /** Staff: an order's payments ledger — record an EFT, send a payment link, see every attempt. */
 export default async function OrderPaymentsPage({ params }: { params: { id: string } }) {

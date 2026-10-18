@@ -43,6 +43,12 @@ export type OrderData = {
   payLink?: { url: string; amount: Money; kind: string; expiresAt: Date; note: string | null } | null;
   /** The tax invoice, once issued (INVOICE_ISSUED). */
   invoice?: { invoiceNumber: string; amountDue: Money } | null;
+  /** Trade credit (docs/trade-credit.md): the order is on the company's account, due by this date. */
+  account?: { dueAt: Date; termsDays: number | null } | null;
+  /** Phased deliveries (DROP_DISPATCHED, DELIVERY_SIGNED): the drop this message is about. */
+  drop?: { sequence: number; of: number; scheduledFor: Date; carrier: string | null; trackingRef: string | null; lines: OrderData["lines"]; next: Date | null } | null;
+  /** Proof of delivery (DELIVERY_SIGNED). */
+  proof?: { receivedBy: string; capturedAt: Date; exceptions: string | null; dropId: string | null } | null;
   /** AA 60/120: the fee (0 once declined before payment), when sales accepted it and when it's due. */
   express?: { fee: Money; acceptedAt: Date | null; dueAt: Date | null; declinedAt: Date | null; note: string | null } | null;
 };
@@ -70,6 +76,8 @@ export type CompanyData = {
   tierLabel: string;
   requestedTierLabel: string | null;
   reviewNotes: string | null;
+  /** Trade credit (CREDIT_APPLIED, CREDIT_DECIDED). */
+  credit?: { status: string; limit: Money | null; termsDays: number | null; notes: string | null; requested: { requestedLimit?: number; requestedTermsDays?: number } | null };
 };
 
 export type EnquiryData = {
@@ -289,6 +297,18 @@ export function customerOrderEmail(event: NotificationEvent, o: OrderData): Emai
         { kind: "cta", label: "Pay for your order", href: `${site}/orders/${o.id}/confirmation` },
       ]);
     case "ORDER_CONFIRMED": {
+      if (o.account) {
+        // On account: nothing paid yet — a confirmation with the due date, not a receipt.
+        return email(`Order ${o.orderNumber} confirmed on your trade account`, [
+          hi,
+          { kind: "p", text: `Order ${o.orderNumber} is confirmed and charged to ${o.companyName ?? "your company"}'s trade account. The partner supplier nearest your site is preparing your load, and we'll let you know when it's dispatched.` },
+          { kind: "rows", rows: [["Order", o.orderNumber], ["Amount on account", formatZAR(o.total)], ["Payment due by", formatDateZA(o.account.dueAt)], ...(o.account.termsDays ? ([["Terms", `${o.account.termsDays} days`]] as [string, string][]) : [])] },
+          { kind: "h", text: "Your order" },
+          ...orderSummary(o),
+          { kind: "p", text: "Pay by EFT using the order number as the reference, or from your order page. Your tax invoice follows by email once our team issues it." },
+          { kind: "cta", label: "View the order", href: `${site}/orders/${o.id}/confirmation` },
+        ]);
+      }
       // The payment receipt: what was paid, when and how, then the order. A deposit confirms the order too.
       const p = o.lastPayment ?? (o.payment ? { ...o.payment, amount: o.total, kind: "FULL" } : null);
       const balance = balanceOf(o);
@@ -373,6 +393,31 @@ export function customerOrderEmail(event: NotificationEvent, o: OrderData): Emai
         { kind: "p", text: `Your load is out for delivery${s ? ` with ${carrierName(s)}` : ""}.${s?.trackingRef ? ` Tracking reference: ${s.trackingRef}.` : ""}` },
         ...(o.deliveryAddress ? [{ kind: "p" as const, text: `Delivering to ${o.deliveryAddress}${o.deliveryProvince ? `, ${o.deliveryProvince}` : ""}. Please make sure the site is accessible for a tipper truck.` }] : []),
         track,
+      ]);
+    }
+    case "DROP_DISPATCHED": {
+      const d = o.drop;
+      if (!d) return null;
+      const carrier = d.carrier === "BESFLEET" ? "Besfleet" : d.carrier ? "our delivery partner" : null;
+      return email(`Order ${o.orderNumber}: delivery ${d.sequence} of ${d.of} is on its way`, [
+        hi,
+        { kind: "p", text: `Delivery ${d.sequence} of ${d.of} for order ${o.orderNumber} has left${carrier ? ` with ${carrier}` : ""}.${d.trackingRef ? ` Tracking reference: ${d.trackingRef}.` : ""}` },
+        { kind: "list", items: d.lines.map(lineText) },
+        ...(o.deliveryAddress ? [{ kind: "p" as const, text: `Delivering to ${o.deliveryAddress}${o.deliveryProvince ? `, ${o.deliveryProvince}` : ""}. Please have someone on site to receive and sign for it.` }] : []),
+        ...(d.next ? [{ kind: "p" as const, text: `Your next delivery is planned for ${formatDateZA(d.next)}.` }] : []),
+        track,
+      ]);
+    }
+    case "DELIVERY_SIGNED": {
+      const p = o.proof;
+      if (!p) return null;
+      const which = o.drop ? `Delivery ${o.drop.sequence} of ${o.drop.of} for order ${o.orderNumber}` : `Order ${o.orderNumber}`;
+      return email(`${which} signed for`, [
+        hi,
+        { kind: "p", text: `${which} was received and signed for on site.` },
+        { kind: "rows", rows: [["Signed by", p.receivedBy], ["When", `${formatDateZA(p.capturedAt)} ${formatTimeZA(p.capturedAt)}`], ...(p.exceptions ? ([["Noted on delivery", p.exceptions]] as [string, string][]) : [])] },
+        { kind: "p", text: p.exceptions ? "Our team will be in touch about what was noted on delivery." : "The signature and delivery photo are on your order page." },
+        { kind: "cta", label: "View the proof of delivery", href: `${site}/orders/${o.id}/tracking` },
       ]);
     }
     case "ORDER_DELIVERED":
@@ -466,6 +511,42 @@ export function customerCompanyEmail(event: NotificationEvent, c: CompanyData): 
         ...(c.reviewNotes ? [{ kind: "p" as const, text: c.reviewNotes }] : []),
         { kind: "cta", label: "Start ordering", href: `${site}/products` },
       ]);
+    case "CREDIT_APPLIED": {
+      const r = c.credit?.requested;
+      return email(`Trade credit application received — ${c.name}`, [
+        hi,
+        { kind: "p", text: `Thanks — we've received ${c.name}'s application for trade credit${r?.requestedLimit ? ` of ${formatZAR(r.requestedLimit)}` : ""}${r?.requestedTermsDays ? ` on ${r.requestedTermsDays}-day terms` : ""}. Our team reviews applications within three business days and may contact your trade references. Until then, orders are paid as usual.` },
+        { kind: "cta", label: "Your trade account", href: `${site}/account/credit` },
+      ]);
+    }
+    case "CREDIT_DECIDED": {
+      const cr = c.credit;
+      if (!cr) return null;
+      if (cr.status === "APPROVED") {
+        return email(`Trade credit approved — ${c.name}`, [
+          hi,
+          { kind: "p", text: `${c.name} can now order on account. At checkout, choose "Trade account (pay on terms)": the order is confirmed and delivered, and each order is due within your terms.` },
+          { kind: "rows", rows: [["Credit limit", cr.limit !== null ? formatZAR(cr.limit) : "—"], ["Payment terms", cr.termsDays ? `${cr.termsDays} days from confirmation` : "—"]] },
+          ...(cr.notes ? [{ kind: "p" as const, text: cr.notes }] : []),
+          { kind: "p", text: "If an order on account becomes overdue, new orders can't go on account until it's paid." },
+          { kind: "cta", label: "Your trade account", href: `${site}/account/credit` },
+        ]);
+      }
+      if (cr.status === "SUSPENDED") {
+        return email(`Trade credit suspended — ${c.name}`, [
+          hi,
+          { kind: "p", text: `New orders for ${c.name} can't go on account for now. Orders already on account are still due on their terms, and you can keep ordering and paying as usual.` },
+          ...(cr.notes ? [{ kind: "p" as const, text: `Note from our team: ${cr.notes}` }] : []),
+          { kind: "p", text: "Questions? Reply to this email and our team will help." },
+        ]);
+      }
+      if (cr.status !== "DECLINED") return null;
+      return email(`Your trade credit application — ${c.name}`, [
+        hi,
+        { kind: "p", text: `We weren't able to offer ${c.name} trade credit at this stage. Your trade pricing is unchanged, and you can keep ordering and paying as usual — including by deposit on larger orders.` },
+        ...(cr.notes ? [{ kind: "p" as const, text: `Note from our team: ${cr.notes}` }] : []),
+      ]);
+    }
     case "TRADE_APPLICATION_DECLINED":
       return email(`Your trade account application — ${c.name}`, [
         hi,
@@ -500,6 +581,13 @@ export function staffOrderEmail(event: NotificationEvent, o: OrderData): EmailMe
         text: `${who} paid ${formatZAR(o.lastPayment.amount)} on order ${o.orderNumber}${o.lastPayment.method ? ` by ${o.lastPayment.method}` : ""}. ${balance > 0.01 ? `${formatZAR(balance)} is still outstanding — it must be paid before dispatch.` : "It's paid in full and can be dispatched."}`,
       },
       { kind: "cta", label: "Open in admin", href: `${siteUrl()}/admin/orders` },
+    ]);
+  }
+  if (event === "DELIVERY_SIGNED" && o.proof) {
+    const which = o.drop ? `drop ${o.drop.sequence} of ${o.drop.of} on ${o.orderNumber}` : o.orderNumber;
+    return email(`${o.proof.exceptions ? "Delivery EXCEPTION — " : "Signed for — "}${which}`, [
+      { kind: "p", text: `${o.proof.receivedBy} signed for ${which} (${who}) at ${formatTimeZA(o.proof.capturedAt)}.${o.proof.exceptions ? ` They noted: ${o.proof.exceptions}` : ""}` },
+      { kind: "cta", label: "Open the deliveries", href: `${siteUrl()}/admin/orders/${o.id}/deliveries` },
     ]);
   }
   if (event !== "ORDER_PLACED") return null;
@@ -550,7 +638,36 @@ export function staffQuoteEmail(event: NotificationEvent, q: QuoteData): EmailMe
   }
 }
 
+/** The supplier portal: an order assigned to the supplier to load. No customer contact details or prices. */
+export function supplierOrderEmail(o: OrderData, supplierName: string): EmailMessage {
+  const site = siteUrl();
+  return email(`Order to load: ${o.orderNumber}`, [
+    { kind: "p", text: `Hi ${supplierName} team,` },
+    { kind: "p", text: `Aggregated Aggregates has an order for you to load: ${o.orderNumber}${o.deliveryProvince ? `, delivering in ${o.deliveryProvince}` : ""}. Please confirm in the supplier portal whether you can load it, and from when.` },
+    { kind: "list", items: o.lines.map(lineText) },
+    { kind: "cta", label: "Open the supplier portal", href: `${site}/suppliers/portal/orders/${o.id}` },
+    { kind: "p", text: "Questions about the order go to our team — reply to this email." },
+  ], "You're receiving this as a partner supplier of Aggregated Aggregates (aaggregates.store).");
+}
+
+/** Staff: the uptime monitor found a dependency failing, or recovered. */
+export function serviceDownEmail(s: { down: string[]; recovered: string[]; detail: [string, string][]; at: Date }): EmailMessage {
+  const subject = s.down.length ? `Site check FAILING: ${s.down.join(", ")}` : `Site check recovered: ${s.recovered.join(", ")}`;
+  return email(subject, [
+    { kind: "p", text: s.down.length ? `At ${formatTimeZA(s.at)} the API's health check found ${s.down.join(", ")} not working. Customers may not be able to order or pay until it's fixed.` : `At ${formatTimeZA(s.at)} ${s.recovered.join(", ")} ${s.recovered.length === 1 ? "is" : "are"} working again.` },
+    { kind: "rows", rows: s.detail },
+    { kind: "p", text: "Check the service's logs and status on Render (and Supabase for storage). This email repeats only when something changes." },
+  ]);
+}
+
 export function staffCompanyEmail(event: NotificationEvent, c: CompanyData): EmailMessage | null {
+  if (event === "CREDIT_APPLIED") {
+    const r = c.credit?.requested;
+    return email(`Trade credit application — ${c.name}`, [
+      { kind: "p", text: `${c.applicantName ?? c.applicantEmail ?? "A company admin"} applied for trade credit for ${c.name}${r?.requestedLimit ? `: ${formatZAR(r.requestedLimit)}` : ""}${r?.requestedTermsDays ? ` on ${r.requestedTermsDays}-day terms` : ""}. Check the trade references before approving a limit.` },
+      { kind: "cta", label: "Review the application", href: `${siteUrl()}/admin/credit` },
+    ]);
+  }
   if (event !== "TRADE_APPLICATION_RECEIVED") return null;
   return email(`Trade account application — ${c.name}`, [
     { kind: "p", text: `${c.applicantName ?? c.applicantEmail ?? "A customer"} applied for a ${c.requestedTierLabel ?? "trade"} account for ${c.name}.` },
@@ -881,6 +998,12 @@ export const EVENT_CHANNELS: Record<NotificationEvent, { customerEmail: boolean;
   PAYMENT_RECEIVED: { customerEmail: true, customerWhatsApp: false, staffEmail: true },
   PAYMENT_LINK_SENT: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
   GATEWAY_DEGRADED: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
+  DROP_DISPATCHED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
+  DELIVERY_SIGNED: { customerEmail: true, customerWhatsApp: false, staffEmail: true },
+  CREDIT_APPLIED: { customerEmail: true, customerWhatsApp: false, staffEmail: true },
+  CREDIT_DECIDED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
+  SUPPLIER_ORDER: { customerEmail: false, customerWhatsApp: false, staffEmail: true }, // the supplier's email is always sent; staff hear its answer
+  SERVICE_DOWN: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
 };
 
 /** Events that also email the partner (always on — offers can't wait for a setting). */
@@ -923,6 +1046,12 @@ export const EVENT_LABEL: Record<NotificationEvent, string> = {
   PAYMENT_RECEIVED: "Payment received on a confirmed order (balance, payment link)",
   PAYMENT_LINK_SENT: "Payment link sent to a customer",
   GATEWAY_DEGRADED: "Payment gateway failing — fallback in use",
+  DROP_DISPATCHED: "Phased order: a delivery is on its way",
+  DELIVERY_SIGNED: "Proof of delivery signed (staff: flagged if anything was noted)",
+  CREDIT_APPLIED: "Trade credit application received",
+  CREDIT_DECIDED: "Trade credit approved, declined or suspended",
+  SUPPLIER_ORDER: "Order sent to a supplier (supplier email); staff hear its answer",
+  SERVICE_DOWN: "Site check failing or recovered (uptime monitor)",
 };
 
 /** A South African or international number in the digits-only form WhatsApp expects, or null. */

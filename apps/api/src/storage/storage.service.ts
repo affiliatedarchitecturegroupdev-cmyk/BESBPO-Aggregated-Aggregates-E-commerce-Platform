@@ -149,4 +149,9 @@ export class StorageService {
   remove(key: string) {
     return this.require().remove(key);
   }
+
+  /** Health check: storage answers (a missing object is a normal answer). Throws if it doesn't. */
+  async probe(): Promise<void> {
+    await this.require().get("health/probe");
+  }
 }

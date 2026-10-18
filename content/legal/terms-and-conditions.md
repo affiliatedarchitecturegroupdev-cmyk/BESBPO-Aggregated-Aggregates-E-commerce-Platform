@@ -63,7 +63,8 @@ technical error.
   and are subject to the provider's approval.
 - Trade accounts may pay by EFT against a purchase order or invoice, quoting
   the order reference. Volume/Civil Bulk accounts with a standing agreement
-  may do so on the net terms in that agreement.
+  may do so on the net terms in that agreement. Approved trade companies may
+  also order on account, as set out in section 4A.
 - If no online method is available for your order, our sales team will
   arrange payment by EFT. An order is confirmed once payment has been
   received, or accepted against an agreed purchase order.
@@ -88,6 +89,32 @@ technical error.
   Aggregated Aggregates operates as a division of the Group rather than a
   separately VAT-registered entity.
 
+## 4A. Trade credit
+
+- A company with an approved trade account may apply for trade credit from
+  its account page. The application is made by the company's account
+  administrator, who confirms they are authorised to apply for the company.
+  We may check the trade references given and ask for more information.
+  Whether to grant credit, the credit limit and the payment terms are at our
+  discretion; we tell you our decision by email.
+- If we approve trade credit, you can choose "Trade account (pay on terms)"
+  at checkout. The order is then confirmed and delivered without payment
+  upfront, and must be paid in full within the payment terms shown on your
+  account (7, 14, 30 or 60 days from confirmation). The due date is shown on
+  your order confirmation and on your account page.
+- An order can go on account only while the amount owed on all your orders
+  on account, including that order, stays within your credit limit, and no
+  order on account is overdue. AA 60/120 express orders can't go on account.
+- Pay by EFT quoting the order number, or from the order page. Part payments
+  are credited to the order.
+- We may change your credit limit or terms, or suspend trade credit, by
+  telling you by email — for example if a payment is overdue. Suspension
+  stops new orders on account; orders already on account remain payable on
+  their terms.
+- Delivering an order on account before payment doesn't change our other
+  terms: the order is still subject to these terms and our
+  [Returns & Refunds Policy](/legal/returns-refunds).
+
 ## 5. Delivery
 
 - Delivery is calculated on a distance-banded basis from the nearest
@@ -99,6 +126,19 @@ technical error.
 - Estimated delivery windows are provided at checkout or in your quote,
   but are not guaranteed delivery times. We are not liable for delays
   caused by circumstances beyond our reasonable control.
+- **Phased deliveries.** You can ask for an order to be delivered in
+  stages, on dates you choose, from your order's tracking page. The dates
+  are requests: we confirm each one with the partner supplier and may agree
+  a different date with you. Each delivery leaves once what you've paid
+  covers the materials on it and on the deliveries before it (with the
+  delivery fee paid with the first), or straight away on a trade account.
+  Additional deliveries may carry a delivery charge, which we agree with you
+  before it applies.
+- **Proof of delivery.** The person who receives a delivery on site may be
+  asked to sign for it on the driver's phone, give their name, and note any
+  shortage or damage. A photo of the delivery and the phone's location may
+  be recorded with the signature. This record is our proof of delivery for
+  that order or drop.
 - Full details are set out in our [Shipping & Delivery Policy](/legal/shipping-delivery).
 
 ## 6. Returns and cancellations

@@ -28,6 +28,7 @@ enum UserRole {
   STAFF
   ADMIN
   PARTNER // a plant-hire / site-services partner's portal login (hirePartnerId)
+  SUPPLIER // a partner supplier's portal login (supplierLocationId) — docs/supplier-portal.md
 }
 
 enum OAuthProvider {
@@ -39,29 +40,31 @@ enum OAuthProvider {
 }
 
 model User {
-  id                String            @id @default(cuid())
-  email             String            @unique
-  name              String?
-  mobileNumber      String? // international form, e.g. +27821234567 — asked at email sign-up; social sign-ins add it in Settings
-  passwordHash      String? // null for OAuth-only users (Email/Google/Microsoft SSO)
-  emailVerifiedAt   DateTime? // the address was proven: a verification link, a password reset, or a provider that verifies email
-  sessionsValidFrom DateTime? // sessions issued before this (a password reset) no longer work
-  emailTokens       EmailToken[]
-  role              UserRole          @default(CUSTOMER)
-  companyId         String?
-  company           Company?          @relation(fields: [companyId], references: [id])
-  oauthAccounts     OAuthAccount[]
-  quotes            Quote[]
-  orders            Order[]
-  deliveryAddresses DeliveryAddress[]
-  hirePartnerId     String?
-  hirePartner       HirePartner?      @relation(fields: [hirePartnerId], references: [id], onDelete: SetNull)
-  bookings          Booking[]
-  insightsViews     InsightsView[]
-  projectLists      ProjectList[]
-  productReviews    ProductReview[]
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
+  id                 String            @id @default(cuid())
+  email              String            @unique
+  name               String?
+  mobileNumber       String? // international form, e.g. +27821234567 — asked at email sign-up; social sign-ins add it in Settings
+  passwordHash       String? // null for OAuth-only users (Email/Google/Microsoft SSO)
+  emailVerifiedAt    DateTime? // the address was proven: a verification link, a password reset, or a provider that verifies email
+  sessionsValidFrom  DateTime? // sessions issued before this (a password reset) no longer work
+  emailTokens        EmailToken[]
+  role               UserRole          @default(CUSTOMER)
+  companyId          String?
+  company            Company?          @relation(fields: [companyId], references: [id])
+  oauthAccounts      OAuthAccount[]
+  quotes             Quote[]
+  orders             Order[]
+  deliveryAddresses  DeliveryAddress[]
+  hirePartnerId      String?
+  hirePartner        HirePartner?      @relation(fields: [hirePartnerId], references: [id], onDelete: SetNull)
+  supplierLocationId String?
+  supplierLocation   SupplierLocation? @relation(fields: [supplierLocationId], references: [id], onDelete: SetNull)
+  bookings           Booking[]
+  insightsViews      InsightsView[]
+  projectLists       ProjectList[]
+  productReviews     ProductReview[]
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
 }
 
 enum EmailTokenPurpose {
@@ -124,6 +127,14 @@ enum CompanyStatus {
   DECLINED
 }
 
+enum CreditStatus {
+  NONE
+  APPLIED
+  APPROVED
+  DECLINED
+  SUSPENDED
+}
+
 model Company {
   id                   String            @id @default(cuid())
   name                 String
@@ -139,6 +150,14 @@ model Company {
   reviewNotes          String?
   reviewedAt           DateTime?
   standingAgreementRef String? // e.g. "KZN Civil — active"
+  // Trade credit (docs/trade-credit.md): buy on account up to a limit, pay within the terms.
+  creditStatus         CreditStatus      @default(NONE)
+  creditLimit          Decimal?          @db.Decimal(12, 2)
+  paymentTermsDays     Int?
+  creditApplication    Json? // what the company asked for and told us (limit, terms, years trading, references)
+  creditAppliedAt      DateTime?
+  creditReviewedAt     DateTime?
+  creditNotes          String? // staff's note to the company (shown to them)
   deliveryAddresses    DeliveryAddress[]
   users                User[]
   quotes               Quote[]
@@ -440,6 +459,7 @@ model SupplierLocation {
   updatedAt         DateTime     @default(now()) @updatedAt
 
   fulfilledOrders Order[]
+  users           User[] // supplier portal logins
 
   @@index([province])
 }
@@ -538,6 +558,8 @@ model Quote {
   updatedAt          DateTime        @updatedAt
   respondedAt        DateTime? // when the customer accepted or declined
   order              Order? // the order staff turned this quote into (payable by link, deposit or EFT)
+  boqFileName        String? // a bill of quantities the customer uploaded (docs/boq-upload.md)
+  boqStorageKey      String?
 }
 
 model QuoteLineItem {
@@ -628,6 +650,17 @@ model Order {
   quoteId               String?               @unique
   quote                 Quote?                @relation(fields: [quoteId], references: [id], onDelete: SetNull)
   contactEmail          String? // for orders made from a guest's quote (no account): where order emails go
+  accountDueAt          DateTime? // on account: when payment is due (the order's confirmation + the company's terms)
+  // Phased deliveries and proof of delivery (docs/deliveries.md).
+  isPhased              Boolean               @default(false)
+  drops                 DeliveryDrop[]
+  podTokenHash          String?               @unique // the driver's proof-of-delivery link for a single delivery
+  proofs                ProofOfDelivery[]
+  // The supplier's answer in the supplier portal (docs/supplier-portal.md).
+  supplierAckAt         DateTime?
+  supplierReadyAt       DateTime?
+  supplierDeclinedAt    DateTime?
+  supplierNote          String?
   // AA 60/120 express delivery (docs/express-delivery.md). Null fee = standard delivery.
   expressFee            Decimal?              @db.Decimal(10, 2) // VAT-inclusive, on top of the delivery fee
   expressAcceptedAt     DateTime? // sales confirmed a supplier can load it; prep starts
@@ -636,6 +669,57 @@ model Order {
   expressNote           String? // why it was declined, or a dispatch note for the customer
 
   @@index([expressDueAt])
+}
+
+enum DropStatus {
+  PLANNED
+  CONFIRMED
+  DISPATCHED
+  DELIVERED
+  CANCELLED
+}
+
+/// One delivery of a phased order: some of the order's lines, on a date (docs/deliveries.md).
+model DeliveryDrop {
+  id              String           @id @default(cuid())
+  orderId         String
+  order           Order            @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  sequence        Int
+  scheduledFor    DateTime         @db.Date
+  status          DropStatus       @default(PLANNED)
+  lines           Json // [{ lineItemId, quantity }]
+  value           Decimal          @db.Decimal(12, 2) // the materials on this drop at the order's prices
+  notes           String?
+  supplierReadyAt DateTime?
+  carrier         Carrier?
+  trackingRef     String?
+  dispatchedAt    DateTime?
+  deliveredAt     DateTime?
+  podTokenHash    String?          @unique
+  proof           ProofOfDelivery?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@unique([orderId, sequence])
+}
+
+/// Signed for on site: who received it, their signature, a photo and where (docs/deliveries.md).
+model ProofOfDelivery {
+  id           String        @id @default(cuid())
+  orderId      String
+  order        Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  dropId       String?       @unique
+  drop         DeliveryDrop? @relation(fields: [dropId], references: [id], onDelete: Cascade)
+  receivedBy   String
+  signatureKey String? // storage key of the signature PNG
+  photoKey     String? // storage key of the delivery photo
+  latitude     Float?
+  longitude    Float?
+  exceptions   String? // shortages, damage or notes the receiver recorded
+  capturedVia  String // DRIVER_LINK | STAFF | SUPPLIER
+  capturedAt   DateTime      @default(now())
+
+  @@index([orderId])
 }
 
 /// Confirmed orders — unit-of-sale (bulk/bag) and quantity recorded per line.
@@ -877,6 +961,7 @@ enum PaymentMethodKey {
   LULAPAY
   EFT_PO
   LAYUP // lay-by: pay off over time, goods released when paid (LayUp)
+  ON_ACCOUNT // trade credit: charged to the company's account (docs/trade-credit.md)
 }
 
 enum PaymentGateway {
@@ -892,6 +977,7 @@ enum PaymentGateway {
 enum PaymentPlan {
   FULL
   DEPOSIT // a deposit now, the balance before dispatch
+  ACCOUNT // charged to the company's trade account, paid within its terms
   LAYBY // LayUp: instalments, goods released once fully paid
 }
 
@@ -1083,6 +1169,12 @@ enum NotificationEvent {
   PAYMENT_RECEIVED // a deposit, balance or lay-by payment (not the first full payment — that's ORDER_CONFIRMED)
   PAYMENT_LINK_SENT // staff sent a link to pay an order
   GATEWAY_DEGRADED // staff: a payment gateway is failing; its methods are on their fallback
+  DROP_DISPATCHED // a phased order's delivery is on its way
+  DELIVERY_SIGNED // proof of delivery captured: who signed, when, and any exceptions
+  CREDIT_APPLIED // staff: a company applied for trade credit
+  CREDIT_DECIDED // the company: trade credit approved, declined or suspended
+  SUPPLIER_ORDER // the supplier: an order to load (supplier portal)
+  SERVICE_DOWN // staff: a dependency (database, pricing service) is failing — uptime monitor
 }
 
 enum NotificationChannel {
@@ -1094,6 +1186,7 @@ enum NotificationAudience {
   CUSTOMER
   STAFF
   PARTNER
+  SUPPLIER
 }
 
 enum NotificationStatus {

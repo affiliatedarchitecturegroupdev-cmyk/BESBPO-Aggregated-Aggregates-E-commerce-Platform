@@ -2,6 +2,7 @@
   "about": "Version history of every public legal page, newest first. The legal pages show the latest date as 'Last updated' and the one before it as 'Previously updated', with this list as the change history. Add an entry at the top whenever a page's wording changes; the page's Markdown carries no date of its own. See content/legal/README.md.",
   "policies": {
     "terms-and-conditions.md": [
+      { "date": "2026-10-18", "changes": "New section 4A on trade credit: applying, the credit limit and payment terms, ordering on account, and suspension. Section 5 now covers phased deliveries and proof of delivery." },
       { "date": "2026-10-17", "changes": "Section 4 now covers deposits (the balance is paid before dispatch), lay-by with LayUp, and payment links and proforma invoices." },
       { "date": "2026-10-13", "changes": "New section 6A: ratings and reviews \u2014 written reviews only from paid purchases, and the rules reviews must follow." },
       { "date": "2026-10-12", "changes": "Our website and email addresses moved to the aaggregates.store domain." },
@@ -10,6 +11,7 @@
       { "date": "2026-09-26", "changes": "First published." }
     ],
     "privacy-policy.md": [
+      { "date": "2026-10-18", "changes": "Covers trade credit applications, proof-of-delivery records (signature, name, notes, photo and location), bill of quantities uploads and supplier portal users; section 5 sets out what the supplier loading an order and the driver see; section 7 covers how long these records are kept." },
       { "date": "2026-10-17", "changes": "Section 6 explains paying by bank, what we share with LayUp when you choose lay-by, the payment records we keep, and what a payment link shows." },
       { "date": "2026-10-16", "changes": "Newsletter sign-ups are now confirmed by email before we send anything, and unconfirmed sign-ups are deleted after 30 days. We keep whether our emails were delivered, bounced or reported as spam, so we stop emailing addresses that can't or don't want to receive them. Names Resend, our email delivery provider outside South Africa, and Listmonk, our self-hosted newsletter system." },
       { "date": "2026-10-13", "changes": "New section 3B on product ratings and reviews: what we keep, and that reviews show only your first name and initial." },
@@ -37,6 +39,7 @@
       { "date": "2026-10-12", "changes": "First published." }
     ],
     "shipping-delivery-policy.md": [
+      { "date": "2026-10-18", "changes": "Section 4 explains the usual lead times we show. New section 4A covers phased deliveries (planned dated drops, and when each drop is released) and proof of delivery signed on the driver's phone." },
       { "date": "2026-10-14", "changes": "New section 7 sets out AA 60/120 express delivery: what qualifies, the 30 km radius, ordering hours, payment, the 120-minute delivery clock, and when the express fee is refunded. Section 4 refers to it, and Contact is now section 8." },
       { "date": "2026-10-12", "changes": "Our website and email addresses moved to the aaggregates.store domain." },
       { "date": "2026-10-03", "changes": "Section 6 now says we deliver across all nine provinces, and how a site that isn't listed, or is more than 100 km from the nearest partner supplier, is quoted." },

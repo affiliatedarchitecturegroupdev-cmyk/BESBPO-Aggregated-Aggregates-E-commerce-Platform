@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LeadTimeNote } from "@/components/delivery/LeadTimeNote";
 import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
 import { ProductReviews } from "@/components/reviews/ProductReviews";
 import { RatingSummaryLink } from "@/components/reviews/RatingSummaryLink";
@@ -91,6 +92,7 @@ export async function ReadyMixProductPage({ product }: { product: MerchandisedRe
             )}
           </p>
           <p className="mt-4 whitespace-pre-line font-body text-sm text-slate">{product.description ?? category.description}</p>
+          <LeadTimeNote categorySlug={product.categorySlug} />
           <div id="calculator" className="mt-6 scroll-mt-24">
             <ReadyMixCalculator product={product} />
           </div>

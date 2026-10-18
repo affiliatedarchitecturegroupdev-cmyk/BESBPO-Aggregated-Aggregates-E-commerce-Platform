@@ -155,7 +155,8 @@ export function QuoteRequestForm({
     <div className="mx-auto max-w-4xl px-4 py-10">
       <h1 className="font-display text-2xl font-bold text-basalt">RFQ / Bulk Quote Request</h1>
       <p className="mt-1 font-body text-sm text-slate">
-        For civil bulk orders, deliveries beyond 100km, or any load you&apos;d like priced delivered.
+        For civil bulk orders, deliveries beyond 100km, or any load you&apos;d like priced delivered. Have a bill of quantities?{" "}
+        <a href="/quote/boq" className="text-seam-blue hover:underline">Upload your BOQ instead</a>.
       </p>
 
       <ol className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-4">

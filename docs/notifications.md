@@ -42,6 +42,13 @@ Code: `apps/api/src/notifications/` (message texts live in
 | Payment received (balance, payment link, EFT recorded) | ✓ amount, paid so far, balance or "paid in full" ([payments.md](payments.md)) | — | ✓ "can be dispatched" once paid in full |
 | Payment link sent | ✓ amount, what it's for, the secure link and its expiry | — | — |
 | Payment gateway failing | — | — | ✓ which tiles moved to which fallback |
+| Order confirmed on a trade account | ✓ amount on account and the due date, not a receipt ([trade-credit.md](trade-credit.md)) | (as order confirmed) | — |
+| Phased order: a drop is on its way | ✓ which drop, what's on it, the next date ([deliveries.md](deliveries.md)) | — | — |
+| Proof of delivery signed | ✓ who signed, when, anything noted | — | ✓ flagged "Delivery EXCEPTION" when something was noted |
+| Trade credit application received | ✓ acknowledgement | — | ✓ with the limit and terms asked for |
+| Trade credit approved / declined / suspended | ✓ limit and terms, or the reason | — | — |
+| Order to load (supplier portal) | — (the supplier's portal logins are emailed, always) ([supplier-portal.md](supplier-portal.md)) | — | ✓ when the supplier answers |
+| Site check failing / recovered | — | — | ✓ which part of the site, after two failed checks in a row ([uptime.md](uptime.md)) |
 
 ¹ Only to buyers who ticked "send updates on WhatsApp" at checkout or on the
 quote form, and only for events an admin has switched on (off by default —

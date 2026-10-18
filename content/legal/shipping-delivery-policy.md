@@ -36,11 +36,33 @@ best positioned to fulfil your order reliably.
 
 ## 4. Delivery windows
 
-Estimated delivery windows are shown at checkout or in your quote. These
-are estimates, not guaranteed delivery times. Delivery of bulk tipper loads
+Estimated delivery windows are shown at checkout or in your quote. Where
+we show a usual lead time for a product category, it is the time from order
+confirmation to delivery that our partner suppliers usually need, in working
+days. Lead times and delivery windows are estimates, not guaranteed delivery
+times. Delivery of bulk tipper loads
 can be affected by factors including weather, site access, and load
 scheduling at the partner-supplier location. AA 60/120 express orders
 have a delivery time commitment, set out in section 7.
+
+## 4A. Phased deliveries and proof of delivery
+
+You can ask for an order to be delivered in stages — for example, materials
+for each stage of a build — by planning dated deliveries ("drops") on your
+order's tracking page, from the day after you plan them up to a year ahead.
+Between them, the drops must deliver everything on the order once. We
+confirm each date with the partner supplier and email you as each drop
+leaves. Each drop is released once what you've paid covers the materials on
+it and on the drops before it, with the delivery fee paid with the first
+drop; orders on a trade account aren't held for payment. Once a drop has
+left, ask our team to change the remaining dates. Additional drops may carry
+a delivery charge, which we agree with you before it applies.
+
+When a delivery arrives, the person receiving it may be asked to sign on the
+driver's phone, give their name, and note any shortage or damage; a photo of
+the delivery and the phone's location may be recorded too. You can see the
+signature and any notes on your order's tracking page. If something was
+noted on delivery, our team follows it up with you.
 
 ## 5. Site access and offloading
 

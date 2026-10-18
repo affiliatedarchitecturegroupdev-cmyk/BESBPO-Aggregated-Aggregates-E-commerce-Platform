@@ -26,6 +26,12 @@ export class ContentService {
       });
       throw new BadRequestException(messages);
     }
+    if (key === "lead-times") {
+      const items = (instance as { items: { categorySlug: string; minDays: number; maxDays: number }[] }).items;
+      const bad = items.find((i) => i.maxDays < i.minDays);
+      if (bad) throw new BadRequestException(`${bad.categorySlug}: the longest lead time can't be shorter than the shortest.`);
+      if (new Set(items.map((i) => i.categorySlug)).size !== items.length) throw new BadRequestException("Each category can have one lead time.");
+    }
     // Store exactly the validated shape (no stray properties survive).
     const data = JSON.parse(JSON.stringify(instance)) as Prisma.InputJsonValue;
     return this.prisma.siteContent.upsert({

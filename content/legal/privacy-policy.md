@@ -27,7 +27,19 @@ POPIA.
   delivery distance, and payment confirmation (we do not store full card
   numbers — see Section 6).
 - **Communications**: messages sent through our contact form, RFQ/quote
-  requests, and related correspondence.
+  requests (including any bill of quantities file you upload), and related
+  correspondence.
+- **Trade credit applications**: the credit limit and terms your company
+  asks for, years trading, estimated spend, trade references, an accounts
+  contact, who applied and when they accepted the trade credit terms, our
+  decision, and the payment position of orders on account.
+- **Proof of delivery**: the name of the person who received a delivery,
+  their signature, any shortage or damage they noted, and, where recorded, a
+  photo of the delivery and the location of the driver's phone when it was
+  signed for.
+- **Supplier portal users**: for people at our partner suppliers who use
+  the supplier portal — their account details, and their answers on the
+  orders given to their supplier.
 - **Enquiries and bookings**: what you ask for through our plant hire,
   site services, job pack, estimator, design brief and other request forms
   (including the site address, province, dates and any erf number), and, for bookings, the quote you
@@ -110,7 +122,13 @@ balanced against your rights under POPIA.
 We share personal information with:
 
 - **Partner suppliers** in our approved network, to fulfil delivery of
-  your order.
+  your order. Through the supplier portal, the supplier loading your order
+  sees the products and quantities, the delivery address and province, any
+  delivery note on the order, the delivery dates, and who signed for each
+  delivery — not your name, email address, phone number or what you paid.
+- **Drivers**, through the proof-of-delivery link for a delivery: the order
+  number and the products and quantities on it, so the receiver can sign
+  for them. The link doesn't show your name, address or contact details.
 - **Plant hire and site service partners**, for a booking: the job, dates,
   site address and site notes, and your first name. We don't give partners
   your surname, email address or phone number. Once a partner accepts your
@@ -182,7 +200,10 @@ unsubscribe; a newsletter sign-up that is never confirmed is deleted after
 60 minutes and 48 hours respectively. Enquiries and booking records are kept while they're needed
 to deliver and support the job, and then for as long as the related
 financial records must be kept; you can ask us to delete an enquiry that
-didn't lead to a booking.
+didn't lead to a booking. Proof-of-delivery records (including signatures
+and photos), trade credit applications and the bill of quantities attached
+to a quote request are kept with the order, account or quote they belong
+to, for as long as those records are kept.
 
 ## 8. Your rights under POPIA
 

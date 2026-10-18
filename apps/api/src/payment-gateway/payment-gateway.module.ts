@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { CreditModule } from "../credit/credit.module";
 import { NotificationsModule } from "../notifications/notifications.module";
 import { OrdersModule } from "../orders/orders.module";
 import { PaymentGatewayAdapterFactory } from "./adapters/adapter.factory";
@@ -16,7 +17,7 @@ import { PaymentLinksController, PaymentsController } from "./payments.controlle
 import { PaymentsService } from "./payments.service";
 
 @Module({
-  imports: [OrdersModule, NotificationsModule],
+  imports: [OrdersModule, NotificationsModule, CreditModule],
   controllers: [PaymentGatewayController, PaymentsController, PaymentLinksController],
   providers: [
     PaymentGatewayService,

@@ -10,6 +10,7 @@ import { SUPPLIES_PRODUCTS } from "@/data/supplies";
 import { STEEL_PRODUCTS, type SteelProduct } from "@/data/steel";
 import { READY_MIX_PRODUCTS, type ReadyMixProduct } from "@/data/ready-mix";
 import { api, apiCached } from "./api";
+import type { LeadTime } from "./phase4";
 import { sessionToken } from "./session";
 
 /**
@@ -49,6 +50,12 @@ export const DEFAULT_CONTENT: SiteContent = {
 export const getSiteContent = cache(async (): Promise<SiteContent> => {
   const saved = (await apiCached<Partial<SiteContent>>("/content")) ?? {};
   return { ...DEFAULT_CONTENT, ...saved };
+});
+
+/** Lead times staff set per category (SiteContent "lead-times"). Empty when none are set — nothing is guessed. */
+export const getLeadTimes = cache(async (): Promise<Map<string, LeadTime>> => {
+  const saved = await apiCached<{ "lead-times"?: { items?: LeadTime[] } }>("/content");
+  return new Map((saved?.["lead-times"]?.items ?? []).map((t) => [t.categorySlug, t]));
 });
 
 type Overlay = {

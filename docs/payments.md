@@ -39,7 +39,9 @@ change them without a deploy.
   alert where relevant. A later payment sends a receipt with the balance
   left, and marks an issued tax invoice paid once the order is paid in full.
 - **Dispatch waits for the balance.** Moving an order to *Out for delivery*
-  or *Delivered* is refused while anything is owed.
+  or *Delivered* is refused while anything is owed — except on a trade
+  account (docs/trade-credit.md); phased orders release each drop as it's
+  paid for (docs/deliveries.md).
 - A payment is only ever marked paid on the gateway's word (a verified
   notification or a direct status check) — never because the browser came
   back from the gateway's page. The amount must match the payment.
@@ -193,8 +195,10 @@ These were decided during the build, as asked, and are all changeable:
 
 1. **Deposit bands** as in the table above, inside the 15–50% band; 50% for
    anything cut to length; nothing below R10,000.
-2. **Balance before dispatch** — enforced by the system, no exceptions.
-   (Trade credit, when it comes, will be the way to deliver before payment.)
+2. **Balance before dispatch** — enforced by the system. The exceptions are
+   orders on a trade account ([trade-credit.md](trade-credit.md)), and phased
+   deliveries, where each drop is released as payments cover it
+   ([deliveries.md](deliveries.md)).
 3. **Lay-by terms**: 20% minimum deposit, 3 months maximum, R500 – R150,000,
    goods released only when paid off, price locked at order.
 4. **Gateway roles**: Peach as card fallback and for PayJustNow, Happy Pay

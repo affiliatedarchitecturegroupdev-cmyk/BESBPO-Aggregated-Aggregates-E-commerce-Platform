@@ -1,0 +1,45 @@
+# Outside uptime check (docs/uptime.md): every 15 minutes, the storefront and
+# the API's deep health check (database, pricing service, file storage). A
+# failed run is emailed by GitHub to whoever is set to receive Actions
+# notifications. The addresses come from repository variables (Settings →
+# Secrets and variables → Actions → Variables), not from this file:
+#   SITE_URL        e.g. https://aaggregates.store
+#   API_HEALTH_URL  the API's /api/v1/health/deep address on Render
+# The API also checks itself every five minutes and emails staff
+# (SERVICE_DOWN) — this workflow covers the API being down altogether.
+name: Uptime
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Storefront
+        if: ${{ vars.SITE_URL != '' }}
+        run: |
+          for i in 1 2 3; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" -m 20 "${{ vars.SITE_URL }}/") && [ "$code" = "200" ] && exit 0
+            echo "Attempt $i: HTTP $code"; sleep 20
+          done
+          echo "::error::The storefront isn't answering (${{ vars.SITE_URL }})"; exit 1
+      - name: API deep health
+        if: ${{ vars.API_HEALTH_URL != '' }}
+        run: |
+          for i in 1 2 3; do
+            body=$(curl -s -m 20 -w "\n%{http_code}" "${{ vars.API_HEALTH_URL }}") || true
+            code=$(echo "$body" | tail -n1)
+            [ "$code" = "200" ] && exit 0
+            echo "Attempt $i: HTTP $code $(echo "$body" | head -n -1)"; sleep 20
+          done
+          echo "::error::The API health check is failing"; exit 1
+      - name: Not configured
+        if: ${{ vars.SITE_URL == '' && vars.API_HEALTH_URL == '' }}
+        run: echo "::notice::Set the SITE_URL and API_HEALTH_URL repository variables to turn the uptime check on."

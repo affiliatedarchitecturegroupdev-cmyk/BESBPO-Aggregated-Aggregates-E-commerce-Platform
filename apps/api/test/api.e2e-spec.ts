@@ -1091,7 +1091,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
   describe("payments", () => {
     it("shows tiles without routing, and eligibility at the caller's own tier", async () => {
       const tiles = await http().get("/payment-methods").expect(200);
-      expect(tiles.body).toHaveLength(20); // SCode and LayUp joined in Oct 2026
+      expect(tiles.body).toHaveLength(21); // SCode and LayUp joined in Oct 2026; Trade account (on terms) with Phase 4
       expect(tiles.body[0].activeGateway).toBeUndefined();
 
       const anonymous = await http().get("/payment-methods/eligible?orderTotal=20000").expect(200);
@@ -3439,6 +3439,272 @@ describe("Aggregated Aggregates API (e2e)", () => {
 
       await prisma.productReview.deleteMany({ where: { user: { email: { endsWith: `-${run}@example.com` } } } });
       await prisma.order.delete({ where: { id: order.body.id } });
+    });
+  });
+  describe("phase 4: trade credit, phased deliveries, proof of delivery, supplier portal, BOQ, lead times, uptime", () => {
+    const bearer = (token: string) => ({ Authorization: `Bearer ${token}` });
+    const PNG = Buffer.concat([Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]), Buffer.alloc(64, 1)]);
+    let staff: string;
+    let productId: string;
+    const orders: string[] = [];
+    const placeOrder = async (token: string, quantity = 6) => {
+      const res = await http().post("/orders").set(bearer(token)).send({ deliveryDistanceKm: 20, lineItems: [{ productId, unitOfSale: "BULK_M3", quantity }] }).expect(201);
+      orders.push(res.body.id);
+      return res.body as { id: string; orderNumber: string; total: string; lineItems: { id: string; quantity: number }[] };
+    };
+
+    beforeAll(async () => {
+      staff = await register("p4staff");
+      await prisma.user.update({ where: { email: `p4staff-${run}@example.com` }, data: { role: "ADMIN" } });
+      productId = (await prisma.product.findUniqueOrThrow({ where: { sku: "AA-SBC-05" } })).id;
+    });
+
+    afterAll(async () => {
+      await prisma.order.deleteMany({ where: { id: { in: orders } } });
+      await prisma.quote.deleteMany({ where: { contactEmail: { endsWith: `-${run}@example.com` } } });
+      await prisma.company.deleteMany({ where: { name: { startsWith: `P4 Civils ${run}` } } });
+      await prisma.supplierLocation.deleteMany({ where: { name: { startsWith: `P4 Quarry ${run}` } } });
+      await prisma.siteContent.deleteMany({ where: { key: "lead-times" } });
+    });
+
+    it("trade credit: apply, approve, order on account, deliver before payment, and stop at the limit or when overdue", async () => {
+      const buyer = await register("p4credit");
+      await http().post("/credit/apply").set(bearer(buyer)).send({ requestedLimit: 50000, requestedTermsDays: 30, yearsTrading: 6, tradeReferences: "Ref One (Pty) Ltd — 031 000 0000", acceptTerms: true }).expect(403);
+      const company = await http().post("/trade-accounts/apply").set(bearer(buyer)).send({ companyName: `P4 Civils ${run}`, requestedTier: "CONTRACTOR_TRADE" }).expect(201);
+      const application = { requestedLimit: 50000, requestedTermsDays: 30, yearsTrading: 6, tradeReferences: "Ref One (Pty) Ltd — 031 000 0000; Ref Two CC — 033 000 0000", acceptTerms: true };
+      // Credit is for approved trade accounts only, and the terms must be accepted.
+      await http().post("/credit/apply").set(bearer(buyer)).send(application).expect(400);
+      await http().post(`/trade-accounts/applications/${company.body.id}/review`).set(bearer(staff)).send({ decision: "APPROVE" }).expect(201);
+      await http().post("/credit/apply").set(bearer(buyer)).send({ ...application, acceptTerms: false }).expect(400);
+      await http().post("/credit/apply").set(bearer(buyer)).send({ ...application, requestedTermsDays: 45 }).expect(400);
+      const applied = await http().post("/credit/apply").set(bearer(buyer)).send(application).expect(201);
+      expect(applied.body).toMatchObject({ creditStatus: "APPLIED", canApply: false });
+      await http().post("/credit/apply").set(bearer(buyer)).send(application).expect(400);
+
+      // Not on account yet: no tile.
+      const first = await placeOrder(buyer);
+      const tilesBefore = await http().get(`/payments/orders/${first.id}`).set(bearer(buyer)).expect(200);
+      expect(JSON.stringify(tilesBefore.body.choices.full)).not.toContain("ON_ACCOUNT");
+      await http().post("/payment-methods/initiate").set(bearer(buyer)).send({ orderId: first.id, methodKey: "ON_ACCOUNT" }).expect(400);
+
+      await http().post(`/credit/accounts/${company.body.id}/decide`).set(bearer(buyer)).send({ decision: "APPROVE" }).expect(403);
+      const listed = await http().get("/credit/accounts?status=APPLIED").set(bearer(staff)).expect(200);
+      expect(listed.body.find((c: { id: string }) => c.id === company.body.id).creditApplication).toMatchObject({ requestedLimit: 50000 });
+      const total = Number(first.total);
+      const limit = Math.ceil(total * 1.5);
+      await http().post(`/credit/accounts/${company.body.id}/decide`).set(bearer(staff)).send({ decision: "APPROVE", limit, termsDays: 30 }).expect(201);
+
+      const tiles = await http().get(`/payments/orders/${first.id}`).set(bearer(buyer)).expect(200);
+      expect(JSON.stringify(tiles.body.choices.full)).toContain("ON_ACCOUNT");
+      const charged = await http().post("/payment-methods/initiate").set(bearer(buyer)).send({ orderId: first.id, methodKey: "ON_ACCOUNT" }).expect(201);
+      expect(charged.body).toMatchObject({ isLive: true, onAccount: { termsDays: 30 } });
+      const confirmed = await prisma.order.findUniqueOrThrow({ where: { id: first.id } });
+      expect(confirmed).toMatchObject({ status: "CONFIRMED", paymentPlan: "ACCOUNT", paymentMethod: "ON_ACCOUNT" });
+      expect(Number(confirmed.amountPaid)).toBe(0);
+      expect(Math.round((confirmed.accountDueAt!.getTime() - Date.now()) / 86_400_000)).toBe(30);
+
+      // Delivered before it's paid — that's what an account is for.
+      await http().patch(`/orders/${first.id}/status`).set(bearer(staff)).send({ status: "IN_TRANSIT", carrier: "BESFLEET" }).expect(200);
+      const mine = await http().get("/credit/me").set(bearer(buyer)).expect(200);
+      expect(mine.body.position).toMatchObject({ status: "APPROVED", limit, used: total, overdue: 0 });
+      expect(mine.body.orders[0]).toMatchObject({ id: first.id, balance: total, overdue: false });
+
+      // The second order would take it over the limit.
+      const second = await placeOrder(buyer);
+      await http().post("/payment-methods/initiate").set(bearer(buyer)).send({ orderId: second.id, methodKey: "ON_ACCOUNT" }).expect(400);
+
+      // Paying part of the account order frees credit; it's recorded as a balance payment.
+      await http().post(`/payments/orders/${first.id}/record`).set(bearer(staff)).send({ amount: Math.round(total * 0.8 * 100) / 100, reference: "EFT-1" }).expect(201);
+      const payment = await prisma.payment.findFirstOrThrow({ where: { orderId: first.id } });
+      expect(payment.kind).toBe("BALANCE");
+      expect((await prisma.order.findUniqueOrThrow({ where: { id: first.id } })).paymentPlan).toBe("ACCOUNT");
+
+      // Overdue stops new orders on account.
+      await prisma.order.update({ where: { id: first.id }, data: { accountDueAt: new Date(Date.now() - 86_400_000) } });
+      const refused = await http().post("/payment-methods/initiate").set(bearer(buyer)).send({ orderId: second.id, methodKey: "ON_ACCOUNT" }).expect(400);
+      expect(refused.body.message).toMatch(/overdue/);
+      const receivables = await http().get("/credit/receivables").set(bearer(staff)).expect(200);
+      expect(receivables.body.find((r: { id: string }) => r.id === first.id)).toMatchObject({ overdue: true });
+
+      // Suspending needs a reason; the customer is told.
+      await http().post(`/credit/accounts/${company.body.id}/decide`).set(bearer(staff)).send({ decision: "SUSPEND" }).expect(400);
+      await http().post(`/credit/accounts/${company.body.id}/decide`).set(bearer(staff)).send({ decision: "SUSPEND", notes: "Overdue account" }).expect(201);
+      const events = await prisma.notification.findMany({ where: { companyId: company.body.id, event: { in: ["CREDIT_APPLIED", "CREDIT_DECIDED"] } }, select: { event: true, audience: true, subject: true } });
+      expect(events.some((e) => e.event === "CREDIT_APPLIED" && e.audience === "CUSTOMER")).toBe(true);
+      expect(events.some((e) => e.event === "CREDIT_DECIDED" && /suspended/.test(e.subject ?? ""))).toBe(true);
+    });
+
+    it("phased deliveries: plan, release each drop as it's paid for, sign on the driver's phone, deliver the order", async () => {
+      const buyer = await register("p4phased");
+      const other = await register("p4other");
+      const order = await placeOrder(buyer);
+      const line = order.lineItems[0];
+      const day = (n: number) => new Date(Date.now() + 2 * 3_600_000 + n * 86_400_000).toISOString().slice(0, 10);
+      const plan = { drops: [{ scheduledFor: day(14), lines: [{ lineItemId: line.id, quantity: 2 }] }, { scheduledFor: day(3), lines: [{ lineItemId: line.id, quantity: 4 }] }] };
+
+      await http().put(`/deliveries/orders/${order.id}/plan`).set(bearer(other)).send(plan).expect(404);
+      const short = await http().put(`/deliveries/orders/${order.id}/plan`).set(bearer(buyer)).send({ drops: [plan.drops[0], { ...plan.drops[1], lines: [{ lineItemId: line.id, quantity: 3 }] }] }).expect(400);
+      expect(short.body.message).toMatch(/add up to 5, but 6 is ordered/);
+      const planned = await http().put(`/deliveries/orders/${order.id}/plan`).set(bearer(buyer)).send(plan).expect(200);
+      expect(planned.body.isPhased).toBe(true);
+      expect(planned.body.drops.map((d: { sequence: number; scheduledFor: string }) => [d.sequence, d.scheduledFor])).toEqual([[1, day(3)], [2, day(14)]]);
+      const [drop1, drop2] = planned.body.drops as { id: string; value: number }[];
+      const total = Number(order.total);
+      expect(drop1.value + drop2.value).toBeLessThanOrEqual(total); // any delivery fee rides with the first drop
+
+      // A deposit that covers only part of the first drop: it waits.
+      await http().post(`/payments/orders/${order.id}/record`).set(bearer(staff)).send({ amount: Math.round((total - drop1.value - drop2.value + drop1.value / 2) * 100) / 100 }).expect(201);
+      const held = await http().patch(`/deliveries/drops/${drop1.id}`).set(bearer(staff)).send({ status: "DISPATCHED", carrier: "BESFLEET" }).expect(400);
+      expect(held.body.message).toMatch(/more must be paid before this drop leaves/);
+      // The order can't go out for delivery around its drops.
+      await http().patch(`/orders/${order.id}/status`).set(bearer(staff)).send({ status: "IN_TRANSIT", carrier: "BESFLEET" }).expect(400);
+      // Nor can the plan change once anything has left (checked below); the customer can still change it now.
+      const ledger = await http().get(`/payments/orders/${order.id}/ledger`).set(bearer(staff)).expect(200);
+      await http().post(`/payments/orders/${order.id}/record`).set(bearer(staff)).send({ amount: Math.round((ledger.body.balance - drop2.value) * 100) / 100 }).expect(201);
+      await http().patch(`/deliveries/drops/${drop1.id}`).set(bearer(staff)).send({ status: "DISPATCHED" }).expect(400); // who's delivering?
+      await http().patch(`/deliveries/drops/${drop1.id}`).set(bearer(staff)).send({ status: "DISPATCHED", carrier: "BESFLEET", trackingRef: "BF-1" }).expect(200);
+      expect((await prisma.order.findUniqueOrThrow({ where: { id: order.id } })).status).toBe("IN_TRANSIT");
+      await http().put(`/deliveries/orders/${order.id}/plan`).set(bearer(buyer)).send(plan).expect(400);
+      // Drop 2 isn't paid for yet.
+      await http().patch(`/deliveries/drops/${drop2.id}`).set(bearer(staff)).send({ status: "DISPATCHED", carrier: "BESFLEET" }).expect(400);
+
+      // The driver's link: only staff (or the supplier) can make one; it shows what's delivered and nothing about the customer.
+      await http().post(`/deliveries/drops/${drop1.id}/pod-link`).set(bearer(buyer)).expect(403);
+      const link = await http().post(`/deliveries/drops/${drop1.id}/pod-link`).set(bearer(staff)).expect(201);
+      const token = String(link.body.url).split("/pod/")[1];
+      const view = await http().get(`/pod/${token}`).expect(200);
+      expect(view.body).toMatchObject({ orderNumber: order.orderNumber, drop: { sequence: 1, of: 2 }, ready: true, lines: [{ quantity: 4 }] });
+      expect(JSON.stringify(view.body)).not.toMatch(/p4phased|example\.com|deliveryAddress/);
+      await http().post(`/pod/${token}`).field("receivedBy", "Site Foreman").attach("signature", Buffer.from("GIF89a-not-png"), "sig.png").expect(400);
+      await http().post(`/pod/${token}`).field("receivedBy", "Site Foreman").expect(400);
+      const signed = await http()
+        .post(`/pod/${token}`)
+        .field("receivedBy", "Site Foreman")
+        .field("exceptions", "One bag torn")
+        .field("latitude", "-29.6")
+        .field("longitude", "30.38")
+        .attach("signature", PNG, { filename: "signature.png", contentType: "image/png" })
+        .expect(201);
+      expect(signed.body).toMatchObject({ recorded: true, receivedBy: "Site Foreman" });
+      await http().post(`/pod/${token}`).field("receivedBy", "Again").attach("signature", PNG, "s.png").expect(404); // single use
+
+      const after = await http().get(`/deliveries/orders/${order.id}`).set(bearer(buyer)).expect(200);
+      expect(after.body.drops[0]).toMatchObject({ status: "DELIVERED", proof: { receivedBy: "Site Foreman", exceptions: "One bag torn", hasSignature: true, hasPhoto: false, location: { latitude: -29.6, longitude: 30.38 } } });
+      const proofId = after.body.drops[0].proof.id;
+      const image = await http().get(`/deliveries/proofs/${proofId}/signature`).set(bearer(buyer)).expect(200);
+      expect(image.headers["content-type"]).toBe("image/png");
+      await http().get(`/deliveries/proofs/${proofId}/signature`).set(bearer(other)).expect(404);
+      await http().get(`/deliveries/orders/${order.id}`).set(bearer(other)).expect(404);
+
+      // Pay the rest, send drop 2, staff mark it delivered: the order is delivered.
+      await http().post(`/payments/orders/${order.id}/record`).set(bearer(staff)).send({ amount: drop2.value }).expect(201);
+      await http().patch(`/deliveries/drops/${drop2.id}`).set(bearer(staff)).send({ status: "DELIVERED" }).expect(400);
+      await http().patch(`/deliveries/drops/${drop2.id}`).set(bearer(staff)).send({ status: "DISPATCHED", carrier: "EXTERNAL_PARTNER", externalPartnerName: "Tugela Tippers" }).expect(200);
+      await http().patch(`/deliveries/drops/${drop2.id}`).set(bearer(staff)).send({ status: "DELIVERED" }).expect(200);
+      expect((await prisma.order.findUniqueOrThrow({ where: { id: order.id } })).status).toBe("DELIVERED");
+      const sent = await prisma.notification.findMany({ where: { orderId: order.id }, select: { event: true, audience: true } });
+      expect(sent.filter((n) => n.event === "DROP_DISPATCHED" && n.audience === "CUSTOMER")).toHaveLength(2);
+      expect(sent.some((n) => n.event === "ORDER_DISPATCHED")).toBe(false);
+      expect(sent.some((n) => n.event === "DELIVERY_SIGNED" && n.audience === "CUSTOMER")).toBe(true);
+      expect(sent.some((n) => n.event === "ORDER_DELIVERED")).toBe(true);
+      const upcoming = await http().get("/deliveries/upcoming").set(bearer(staff)).expect(200);
+      expect(upcoming.body.some((d: { order: { id: string } }) => d.order.id === order.id)).toBe(false);
+    });
+
+    it("proof of delivery on a single delivery, captured by the link the supplier makes", async () => {
+      const buyer = await register("p4single");
+      const supplierUser = await register("p4supplier");
+      const otherSupplierUser = await register("p4supplier2");
+      const supplier = await prisma.supplierLocation.create({ data: { name: `P4 Quarry ${run}`, province: "KwaZulu-Natal", city: "Hilton", categorySlugs: ["sand"] } });
+      const supplier2 = await prisma.supplierLocation.create({ data: { name: `P4 Quarry ${run} two`, province: "Gauteng", city: "Midrand", categorySlugs: ["sand"] } });
+      const order = await placeOrder(buyer);
+
+      // Staff link the supplier's logins; staff accounts can't be linked.
+      await http().post(`/supplier-portal/suppliers/${supplier.id}/logins`).set(bearer(buyer)).send({ email: `p4supplier-${run}@example.com` }).expect(403);
+      await http().post(`/supplier-portal/suppliers/${supplier.id}/logins`).set(bearer(staff)).send({ email: `p4staff-${run}@example.com` }).expect(400);
+      const logins = await http().post(`/supplier-portal/suppliers/${supplier.id}/logins`).set(bearer(staff)).send({ email: `p4supplier-${run}@example.com` }).expect(201);
+      expect(logins.body).toHaveLength(1);
+      await http().post(`/supplier-portal/suppliers/${supplier2.id}/logins`).set(bearer(staff)).send({ email: `p4supplier2-${run}@example.com` }).expect(201);
+
+      const assigned = await http().post(`/supplier-portal/orders/${order.id}/assign`).set(bearer(staff)).send({ supplierId: supplier.id }).expect(201);
+      expect(assigned.body).toMatchObject({ assigned: true, portalLogins: 1, emailed: true });
+      const supplierMail = await prisma.notification.findFirstOrThrow({ where: { orderId: order.id, event: "SUPPLIER_ORDER", audience: "SUPPLIER" } });
+      expect(supplierMail.recipient).toBe(`p4supplier-${run}@example.com`);
+      expect(supplierMail.body).not.toMatch(/R\d/);
+
+      const list = await http().get("/supplier-portal/orders").set(bearer(supplierUser)).expect(200);
+      expect(list.body.map((o: { id: string }) => o.id)).toContain(order.id);
+      const seen = JSON.stringify(list.body);
+      expect(seen).not.toMatch(/lineTotal|unitPrice|"total"|p4single|contactPhone/);
+      expect((await http().get("/supplier-portal/orders").set(bearer(otherSupplierUser)).expect(200)).body).toEqual([]);
+      await http().get(`/supplier-portal/orders/${order.id}`).set(bearer(otherSupplierUser)).expect(404);
+      await http().get("/supplier-portal/orders").set(bearer(buyer)).expect(403);
+
+      await http().post(`/supplier-portal/orders/${order.id}/respond`).set(bearer(supplierUser)).send({ decision: "DECLINE" }).expect(400);
+      const answered = await http().post(`/supplier-portal/orders/${order.id}/respond`).set(bearer(supplierUser)).send({ decision: "ACCEPT", readyAt: new Date(Date.now() + 3 * 86_400_000).toISOString().slice(0, 10) }).expect(201);
+      expect(answered.body.supplierAckAt).toBeTruthy();
+      expect(answered.body.canLoad).toBe(false); // not paid yet
+
+      // Pay, dispatch; the supplier makes the driver's link; the order is delivered on signature.
+      await http().post(`/payments/orders/${order.id}/record`).set(bearer(staff)).send({ amount: Number(order.total) }).expect(201);
+      await http().post(`/deliveries/orders/${order.id}/pod-link`).set(bearer(otherSupplierUser)).expect(404);
+      const link = await http().post(`/deliveries/orders/${order.id}/pod-link`).set(bearer(supplierUser)).expect(201);
+      const token = String(link.body.url).split("/pod/")[1];
+      expect((await http().get(`/pod/${token}`).expect(200)).body).toMatchObject({ ready: false, drop: null });
+      await http().post(`/pod/${token}`).field("receivedBy", "Too Early").attach("signature", PNG, "s.png").expect(400);
+      await http().patch(`/orders/${order.id}/status`).set(bearer(staff)).send({ status: "IN_TRANSIT", carrier: "BESFLEET" }).expect(200);
+      await http().post(`/pod/${token}`).field("receivedBy", "Thandi M").attach("signature", PNG, "s.png").attach("photo", Buffer.from([0xff, 0xd8, 0xff, 0xe0, 1, 2, 3]), "p.jpg").expect(201);
+      expect((await prisma.order.findUniqueOrThrow({ where: { id: order.id } })).status).toBe("DELIVERED");
+      const view = await http().get(`/deliveries/orders/${order.id}`).set(bearer(supplierUser)).expect(200);
+      expect(view.body.proof).toMatchObject({ receivedBy: "Thandi M", hasPhoto: true, capturedVia: "DRIVER_LINK" });
+      await http().get(`/deliveries/proofs/${view.body.proof.id}/photo`).set(bearer(supplierUser)).expect(200);
+
+      // Unlinking ends the supplier's access.
+      const userId = (await prisma.user.findUniqueOrThrow({ where: { email: `p4supplier-${run}@example.com` } })).id;
+      await http().delete(`/supplier-portal/suppliers/${supplier.id}/logins/${userId}`).set(bearer(staff)).expect(200);
+      await http().get("/supplier-portal/orders").set(bearer(supplierUser)).expect(403);
+      await prisma.order.update({ where: { id: order.id }, data: { fulfilledBySupplierId: null } });
+    });
+
+    it("BOQ upload: reads a spreadsheet, suggests products, and sends the confirmed lines as a quote with the file", async () => {
+      const buyer = await register("p4boq");
+      const product = await prisma.product.findUniqueOrThrow({ where: { sku: "AA-SBC-05" } });
+      const csv = `Item;Description;Unit;Qty\n1;${product.name};m3;24\n2;Engineered roof trusses;no;14\n;Total;;38\n`;
+      await http().post("/boq/parse").attach("file", Buffer.from("%PDF-1.4 fake"), "boq.pdf").expect(400);
+      const parsed = await http().post("/boq/parse").attach("file", Buffer.from(csv), "boq.csv").expect(200);
+      expect(parsed.body.items).toHaveLength(2);
+      expect(parsed.body.items[0]).toMatchObject({ description: product.name, quantity: 24, unit: "m3" });
+      expect(parsed.body.items[0].matches[0]).toMatchObject({ sku: "AA-SBC-05", unit: "m3" });
+      expect(parsed.body.items[1].matches).toEqual([]);
+
+      const payload = {
+        contactName: "BOQ Buyer",
+        contactEmail: `p4boq-${run}@example.com`,
+        deliveryAddress: "Erf 12, Hilton",
+        lines: [{ sku: "AA-SBC-05", unit: "m3", quantity: 24 }],
+        unmatched: [{ description: "Engineered roof trusses", quantity: 14, unit: "no" }],
+      };
+      await http().post("/boq/submit").set(bearer(buyer)).field("payload", JSON.stringify({ ...payload, lines: [] })).attach("file", Buffer.from(csv), "boq.csv").expect(400);
+      const quote = await http().post("/boq/submit").set(bearer(buyer)).field("payload", JSON.stringify(payload)).attach("file", Buffer.from(csv), "Erf 12 BOQ.csv").expect(201);
+      expect(quote.body).toMatchObject({ boqFileName: "Erf 12 BOQ.csv", status: "SUBMITTED" });
+      expect(quote.body.notes).toContain("Engineered roof trusses — 14 no");
+      const file = await http().get(`/boq/quotes/${quote.body.id}/file`).set(bearer(buyer)).expect(200);
+      expect(file.headers["content-disposition"]).toContain("Erf 12 BOQ.csv");
+      const other = await register("p4boqother");
+      await http().get(`/boq/quotes/${quote.body.id}/file`).set(bearer(other)).expect(404);
+      await http().get(`/boq/quotes/${quote.body.id}/file`).set(bearer(staff)).expect(200);
+    });
+
+    it("lead times: set per category by staff, never guessed, and checked", async () => {
+      await http().put("/content/lead-times").set(bearer(staff)).send({ items: [{ categorySlug: "sand", minDays: 3, maxDays: 1 }] }).expect(400);
+      await http().put("/content/lead-times").set(bearer(staff)).send({ items: [{ categorySlug: "sand", minDays: 1, maxDays: 2 }, { categorySlug: "sand", minDays: 1, maxDays: 2 }] }).expect(400);
+      await http().put("/content/lead-times").set(bearer(staff)).send({ items: [{ categorySlug: "sand", minDays: 1, maxDays: 2, note: "Ex quarry, weekdays" }] }).expect(200);
+      expect((await http().get("/content").expect(200)).body["lead-times"]).toEqual({ items: [{ categorySlug: "sand", minDays: 1, maxDays: 2, note: "Ex quarry, weekdays" }] });
+    });
+
+    it("deep health: database, pricing and storage, without error details", async () => {
+      const res = await http().get("/health/deep").expect(200);
+      expect(res.body).toMatchObject({ status: "ok", checks: { database: { ok: true }, pricing: { ok: true } } });
     });
   });
 });
