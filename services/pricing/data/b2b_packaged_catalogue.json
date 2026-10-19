@@ -316,13 +316,13 @@
     {
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
-     "market_benchmark_price": null,
+     "market_benchmark_price": 85.0,
      "cost_basis_percent": 100,
-     "cost_per_unit": null,
+     "cost_per_unit": 85.0,
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier",
-     "source_note": "Only one retail source found (Oct 2026) — below the 2-retailer threshold for a live price. Confirm current price with supplier before publishing."
+     "list_price_per_unit": 91.8,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Builders PPC Surecem 32.5N Cement (50kg) R85.00; Chamberlains PPC Surecem Cement 32.5R 50kg (collection price) R103.00. Benchmark = lowest regular price (Builders) R85.00, list = x 1.08. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
     },
     {
      "unit": "BULK_BAG_1_5T",
@@ -2177,13 +2177,13 @@
     {
      "unit": "EACH",
      "unit_label": "5 kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 55,
-     "cost_per_unit": null,
-     "markup_percent": 22,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+     "market_benchmark_price": 90.9,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 90.9,
+     "markup_percent": 8,
+     "list_price_per_unit": 98.17,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Leroy Merlin TAL Tile Grout White 5kg R90.90; Chamberlains TAL Wall & Floor Grout White 5kg R90.90. Benchmark = lowest regular price (Leroy Merlin) R90.90, list = x 1.08. Basis: TAL Wall & Floor Grout 5 kg (same make and size at both). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
     }
    ],
    "description": "Cement-based tile grout. Colour confirmed on the quote.",
@@ -2211,13 +2211,13 @@
     {
      "unit": "EACH",
      "unit_label": "20 kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 55,
-     "cost_per_unit": null,
-     "markup_percent": 22,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+     "market_benchmark_price": 285.0,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 285.0,
+     "markup_percent": 8,
+     "list_price_per_unit": 307.8,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Leroy Merlin Tile Grout TAL White 20kg R285.00; Chamberlains TAL Wall & Floor Grout White 20kg R285.00. Benchmark = lowest regular price (Leroy Merlin) R285.00, list = x 1.08. Basis: TAL Wall & Floor Grout 20 kg (same make and size). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
     }
    ],
    "description": "Cement-based tile grout, 20 kg.",
@@ -2245,13 +2245,13 @@
     {
      "unit": "EACH",
      "unit_label": "5 kg kit",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 55,
-     "cost_per_unit": null,
-     "markup_percent": 22,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+     "market_benchmark_price": 879.0,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 879.0,
+     "markup_percent": 8,
+     "list_price_per_unit": 949.32,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Builders TAL Epoxy Grout White 5 kg R879.00; Chamberlains TAL Water Based Epoxy Wall and Floor Grout White 5kg R899.00. Benchmark = lowest regular price (Builders) R879.00, list = x 1.08. Basis: TAL water-based epoxy grout 5 kg (same make and size). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
     }
    ],
    "description": "Stain- and chemical-resistant epoxy grout for kitchens, showers and pools.",
@@ -2279,13 +2279,13 @@
     {
      "unit": "EACH",
      "unit_label": "5 L",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 55,
-     "cost_per_unit": null,
-     "markup_percent": 22,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+     "market_benchmark_price": 359.95,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 359.95,
+     "markup_percent": 8,
+     "list_price_per_unit": 388.75,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Cashbuild Duram Bonding Liquid 5L White R359.95; Chamberlains Duram Bonding Liquid 5L 421-60-005 R399.00. Benchmark = lowest regular price (Cashbuild) R359.95, list = x 1.08. Basis: same make and size (Duram Bonding Liquid 5 L) at both retailers. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
     }
    ],
    "description": "PVA bonding liquid to improve plaster and screed adhesion.",
@@ -2381,13 +2381,13 @@
     {
      "unit": "EACH",
      "unit_label": "40 kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 55,
-     "cost_per_unit": null,
-     "markup_percent": 22,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+     "market_benchmark_price": 38.0,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 38.0,
+     "markup_percent": 8,
+     "list_price_per_unit": 41.04,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Leroy Merlin Plaster Mix 40Kg R38.00; Builders Builders Plaster Mix 40 kg R49.95; Chamberlains ChamberValue Plaster Mix 40kg R57.90. Benchmark = lowest regular price (Leroy Merlin) R38.00, list = x 1.08. Basis: commodity 40 kg premixed plaster (sand and cement), compared by specification. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
     }
    ],
    "description": "Ready-blended plaster — just add water.",
@@ -2415,13 +2415,13 @@
     {
      "unit": "EACH",
      "unit_label": "40 kg bag",
-     "market_benchmark_price": null,
-     "cost_basis_percent": 55,
-     "cost_per_unit": null,
-     "markup_percent": 22,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark",
-     "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+     "market_benchmark_price": 38.0,
+     "cost_basis_percent": 100,
+     "cost_per_unit": 38.0,
+     "markup_percent": 8,
+     "list_price_per_unit": 41.04,
+     "pricing_status": "Ready — benchmarked",
+     "source_note": "Leroy Merlin Screed Mix 40Kg R38.00; Builders Builders Screeding Mix 40 kg R40.00; Chamberlains ChamberValue Screed Mix 40kg R57.90. Benchmark = lowest regular price (Leroy Merlin) R38.00, list = x 1.08. Basis: commodity 40 kg premixed screed, compared by specification. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
     }
    ],
    "description": "Ready-blended screed for floors.",

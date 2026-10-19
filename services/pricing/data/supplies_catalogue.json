@@ -19083,13 +19083,13 @@
           "unit": "ROLL",
           "unit_label": "Roll (20 m)",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 512.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 512.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 552.96,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Leroy Merlin Surfix cable white 2X1.5mm x 20m + E R512.00; Chamberlains Black Surfix 1.5mm x 20m R539.00; Builders Proton Prepack Surfix 1.5 mm 2 Core and E 20 m Black R605.00. Benchmark = lowest regular price (Leroy Merlin) R512.00, list = x 1.08. Basis: Surfix 2-core & earth 1.5 mm², 20 m roll. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -19124,13 +19124,13 @@
           "unit": "ROLL",
           "unit_label": "Roll (100 m)",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 1649.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 1649.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 1780.92,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains White Surfix 1.5mm 100m R1,649.00; Builders Proton Prepack Surfix 1.5 mm 2 Core and E 100 m Roll Black R2,179.00; Cashbuild Surfix 2Core+E 1.5X1M White R21.95 x 100 = R2,195.00. Benchmark = lowest regular price (Chamberlains) R1,649.00, list = x 1.08. Basis: Surfix 2-core & earth 1.5 mm², 100 m roll; Cashbuild sells it per metre (x 100). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -19165,13 +19165,13 @@
           "unit": "ROLL",
           "unit_label": "Roll (20 m)",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 769.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 769.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 830.52,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Black Surfix 2.5mm x 20m R769.00; Leroy Merlin Surfix cable white 2X2.5mm + E 20m long R799.00. Benchmark = lowest regular price (Chamberlains) R769.00, list = x 1.08. Basis: Surfix 2-core & earth 2.5 mm², 20 m roll. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -19206,13 +19206,13 @@
           "unit": "ROLL",
           "unit_label": "Roll (100 m)",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 2599.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 2599.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 2806.92,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains White Surfix 2.5mm 100m R2,599.00; Cashbuild Surfix 2Core+E 2.5X1M White R31.95 x 100 = R3,195.00; Builders Aberdare Cables Surfix 2 Core Cable with Earth White 2.5 mm Price Per Meter R40.00 x 100 = R4,000.00. Benchmark = lowest regular price (Chamberlains) R2,599.00, list = x 1.08. Basis: Surfix 2-core & earth 2.5 mm², 100 m roll; per-metre listings x 100. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -19288,13 +19288,13 @@
           "unit": "ROLL",
           "unit_label": "Roll (100 m)",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 4299.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 4299.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 4642.92,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains White Surfix 4mm x 100m R4,299.00; Leroy Merlin Surfix cable white 4mm x 10m R503.00 x 10 = R5,030.00. Benchmark = lowest regular price (Chamberlains) R4,299.00, list = x 1.08. Basis: Surfix 4 mm², 100 m roll; Leroy Merlin sells a 10 m roll (x 10). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -19411,13 +19411,13 @@
           "unit": "ROLL",
           "unit_label": "Roll (100 m)",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 535.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 535.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 577.8,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Proton Prepack House Wire 1.5 mm 100 m Roll Green R535.00; Chamberlains White House Wire 1.5mm x 100m R569.00; Builders Aberdare Cables House Wire Cable Black 100 m GPSC1.5C01ESBBGC1 R749.00. Benchmark = lowest regular price (Builders) R535.00, list = x 1.08. Basis: house wire 1.5 mm², 100 m roll (colour on the quote). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -19452,13 +19452,13 @@
           "unit": "ROLL",
           "unit_label": "Roll (100 m)",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 875.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 875.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 945.0,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Aberdare Cables GPSC2.5C01ESCCGC1 House Wire Cable Roll Blue 100 m R875.00; Chamberlains Black House Wire 2.5mm 100m R899.00; Leroy Merlin House wire blue 2.5mm x 50m R629.00 x 2 = R1,258.00. Benchmark = lowest regular price (Builders) R875.00, list = x 1.08. Basis: house wire 2.5 mm², 100 m roll; Leroy Merlin 50 m roll x 2. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -19493,13 +19493,13 @@
           "unit": "ROLL",
           "unit_label": "Roll (100 m)",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 1495.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 1495.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 1614.6,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Leroy Merlin Housewire green 4mm x 20m R299.00 x 5 = R1,495.00; Builders Waco House Wire Red 4 mm Per Meter R20.00 x 100 = R2,000.00. Benchmark = lowest regular price (Leroy Merlin) R1,495.00, list = x 1.08. Basis: house wire 4 mm²; Leroy Merlin 20 m roll x 5, Builders per metre x 100. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -19534,13 +19534,13 @@
           "unit": "ROLL",
           "unit_label": "Roll (100 m)",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 2895.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 2895.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 3126.6,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Leroy Merlin Housewire black 6mm x 20m R579.00 x 5 = R2,895.00; Builders Waco House Wire Black 6 mm R29.00 x 100 = R2,900.00. Benchmark = lowest regular price (Leroy Merlin) R2,895.00, list = x 1.08. Basis: house wire 6 mm²; Leroy Merlin 20 m roll x 5, Builders per metre x 100. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -19862,13 +19862,13 @@
           "unit": "ROLL",
           "unit_label": "Roll (100 m)",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 2295.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 2295.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 2478.6,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Cabtyre 3Core 1.5X1M Blk R22.95 x 100 = R2,295.00; Builders Cabtyre Waco 3 Core R1 Cable White 1.5mm Per Meter R25.00 x 100 = R2,500.00. Benchmark = lowest regular price (Cashbuild) R2,295.00, list = x 1.08. Basis: 3-core 1.5 mm² flexible cord (cabtyre), per metre x 100. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -19944,13 +19944,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 19.9,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 19.9,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 21.49,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Leroy Merlin PVC Conduit pipe 20mmx4m R19.90; Chamberlains PVC Conduit Tube 20mm x 4m R19.90. Benchmark = lowest regular price (Leroy Merlin) R19.90, list = x 1.08. Basis: PVC conduit 20 mm x 4 m length. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -20067,13 +20067,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 27.9,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 27.9,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 30.13,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains PVC Conduit Tube 25mm x 4m R27.90; Leroy Merlin conduit 25mm 4m pvc wh R42.90; Builders PVC Conduit 25 mm 4 m Length R49.00. Benchmark = lowest regular price (Chamberlains) R27.90, list = x 1.08. Basis: PVC conduit 25 mm x 4 m length. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -20190,13 +20190,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 64.9,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 64.9,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 70.09,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains PVC Conduit Tube 32mm x 4m R64.90; Leroy Merlin conduit 32mm 4m pvc wh R64.90; Builders PVC Conduit 32 mm 4 m Length R109.00. Benchmark = lowest regular price (Chamberlains) R64.90, list = x 1.08. Basis: PVC conduit 32 mm x 4 m length. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -20354,13 +20354,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 8.9,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 8.9,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 9.61,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains PVC Conduit 1-Way Box 20mm H101 R8.90; Leroy Merlin JUNCTION BOX 1 SPOUT 20MM R13.90. Benchmark = lowest regular price (Chamberlains) R8.90, list = x 1.08. Basis: PVC conduit junction box 20 mm, 1-way (other ways on the quote). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -20436,13 +20436,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 6.6,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 6.6,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 7.13,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Wall Box SABS Metal 4x2 R6.60; Chamberlains White Steel Surface Wall Box 4x2 EB42 R14.90. Benchmark = lowest regular price (Cashbuild) R6.60, list = x 1.08. Basis: metal wall box 4 x 2. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -20477,13 +20477,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 8.9,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 8.9,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 9.61,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Galvanized Flush Wall Box 4x4 FEB-10106-L R8.90; Cashbuild Wall Box SABS Metal 4x4 R9.50. Benchmark = lowest regular price (Chamberlains) R8.90, list = x 1.08. Basis: metal wall box 4 x 4. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -20641,13 +20641,13 @@
           "unit": "PACK",
           "unit_label": "Pack (100)",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 69.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 69.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 74.52,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Eureka Black Cable Ties 200 x 4.8mm - 100 Pack T2Z872 R69.00; Cashbuild EUREKA CABLE TIE 4.8X200mm BLACK Quantity:100 R77.95. Benchmark = lowest regular price (Chamberlains) R69.00, list = x 1.08. Basis: same make and size (Eureka cable ties 200 x 4.8 mm, 100). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -20682,13 +20682,13 @@
           "unit": "PACK",
           "unit_label": "Pack (10)",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 155.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 155.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 167.4,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild PVC Insulation Tape 20m Green (0.13mm X 18mm) R15.50 x 10 = R155.00; Builders Insulation Tape Black 20 m R19.00 x 10 = R190.00. Benchmark = lowest regular price (Cashbuild) R155.00, list = x 1.08. Basis: PVC insulation tape 18 mm x 20 m, single roll x 10. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -20764,13 +20764,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 190.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 190.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 205.2,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Lesco MDB20-SUN-08W-PS-T 8 Way Empty Surface DB Board White R190.00; Leroy Merlin DB Board Surface Mini Rail 8 Way R199.00. Benchmark = lowest regular price (Builders) R190.00, list = x 1.08. Basis: empty 8-way surface-mount distribution board. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -20805,13 +20805,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 215.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 215.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 232.2,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Leroy Merlin DB Board Surface Mini Rail 12 Way R215.00; Builders Lesco Empty 12 Way Surface Distribution Board White 280 x 225 x 85 mm R279.00. Benchmark = lowest regular price (Leroy Merlin) R215.00, list = x 1.08. Basis: empty 12-way surface-mount distribution board. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -20928,13 +20928,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 279.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 279.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 301.32,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Lesco Empty 12 Way Flush DB Board White 280 x 225 x 85 mm R279.00; Leroy Merlin DB Board Flush Mini Rail 12 Way R329.00; Leroy Merlin Distribution Board CBI ELECTRIC Flush Mounted Unpopulated 12 way R357.00. Benchmark = lowest regular price (Builders) R279.00, list = x 1.08. Basis: empty 12-way flush-mount distribution board. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -21092,13 +21092,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 49.9,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 49.9,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 53.89,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Nur Breaker Circuit Mini 10A F103P R49.90; Cashbuild Circuit Breaker Mini Rail 10a R94.95. Benchmark = lowest regular price (Chamberlains) R49.90, list = x 1.08. Basis: single-pole mini-rail circuit breaker 10 A. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -21133,13 +21133,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 74.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 74.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 80.95,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Circuit Breaker Mini Rail 16a R74.95; Chamberlains Lear 1-Pole 16A Circuit Breaker 13mm BLC13-1/16A R94.90. Benchmark = lowest regular price (Cashbuild) R74.95, list = x 1.08. Basis: single-pole mini-rail circuit breaker 16 A. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -21174,13 +21174,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 94.9,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 94.9,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 102.49,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Lear 1-Pole 20A Circuit Breaker 13mm BLC13-1/20A R94.90; Cashbuild Circuit Breaker Mini Rail 20a R94.95. Benchmark = lowest regular price (Chamberlains) R94.90, list = x 1.08. Basis: single-pole mini-rail circuit breaker 20 A. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -21215,13 +21215,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 94.9,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 94.9,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 102.49,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Lear 1-Pole 32A Circuit Breaker 13mm BLC13-1/32A R94.90; Cashbuild Circuit Breaker Mini Rail 32a R94.95. Benchmark = lowest regular price (Chamberlains) R94.90, list = x 1.08. Basis: single-pole mini-rail circuit breaker 32 A. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -21256,13 +21256,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 94.9,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 94.9,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 102.49,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Lear 40A Single Pole 13mm Mini Circuit Breaker BLE26-1/40A R94.90; Cashbuild Circuit Breaker Mini Rail 40a R94.95. Benchmark = lowest regular price (Chamberlains) R94.90, list = x 1.08. Basis: single-pole mini-rail circuit breaker 40 A. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -21379,13 +21379,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 359.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 359.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 387.72,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Nur Earth Leakage Mini No Overload 63A F128P R359.00; Builders Earth Leakage Dp 63 amp Mini Rail R420.00; Cashbuild Earth Leakage Mini Rail 63a Double Pole R619.95. Benchmark = lowest regular price (Chamberlains) R359.00, list = x 1.08. Basis: mini-rail double-pole earth leakage 63 A. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -21543,13 +21543,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 159.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 159.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 171.72,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Leroy Merlin ISOLATOR 2X4 30A WHITE CRABTREE R159.00; Chamberlains Crabtree Classic White 30A Geyser Isolator Switch 2x4 CT18110/101P R175.00. Benchmark = lowest regular price (Leroy Merlin) R159.00, list = x 1.08. Basis: same make (Crabtree 30 A geyser isolator, 2 x 4). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -21584,13 +21584,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 119.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 119.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 128.52,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Leroy Merlin Stove Isolator LESCO pipelli 50A 4x4 white R119.00; Chamberlains Lesco White Switch Isolator 50A 2P 4X4 7LP44SW0 R139.00. Benchmark = lowest regular price (Leroy Merlin) R119.00, list = x 1.08. Basis: same make (Lesco 50 A stove isolator, 4 x 4). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -21625,13 +21625,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 115.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 115.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 124.2,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Leroy Merlin Earth spike & clamp 1,2 M R115.00; Chamberlains SRU Earth Spike & Clamp 1.2m PPES02 R119.00. Benchmark = lowest regular price (Leroy Merlin) R115.00, list = x 1.08. Basis: earth spike 1.2 m with clamp. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -21707,13 +21707,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 42.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 42.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 46.39,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Light Switch 1 Lever Crabtree 1 Way R42.95; Builders Crabtree Classic 1 Lever 1 Way Light Switch with Cover Plate 4x2 White R59.00. Benchmark = lowest regular price (Cashbuild) R42.95, list = x 1.08. Basis: same make (Crabtree 1-lever 1-way, 4 x 2). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -21748,13 +21748,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 31.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 31.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 34.51,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Waco Premium Switch 2lever 1way R31.95; Leroy Merlin Wall switch WACO white 2 lever 1 way 2x4 R50.00. Benchmark = lowest regular price (Cashbuild) R31.95, list = x 1.08. Basis: same make (Waco 2-lever 1-way, 4 x 2). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -21789,13 +21789,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 64.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 64.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 70.15,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Light Switch 1 Lever CBI 2 Way R64.95; Leroy Merlin Switch CBI ELECTRIC silver 1 lever 2 way 2x4 R71.00. Benchmark = lowest regular price (Cashbuild) R64.95, list = x 1.08. Basis: same make (CBI 1-lever 2-way, 4 x 2). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -22211,13 +22211,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 32.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 32.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 35.59,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Osram Led A60 7W E27 6500K R32.95; Leroy Merlin Osram Led Light Bulb A60 7W E27 Daylight R39.90. Benchmark = lowest regular price (Cashbuild) R32.95, list = x 1.08. Basis: same make (Osram LED A60 7 W, E27). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         },
         {
           "unit": "PACK",
@@ -22264,13 +22264,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 19.5,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 19.5,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 21.06,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Radiant LED A60 E27 Globe Daylight 9 W R19.50; Chamberlains Radiant LED Lamp 9W E27 Cool Daylight RLL316ES R59.90. Benchmark = lowest regular price (Builders) R19.50, list = x 1.08. Basis: same make (Radiant LED A60 9 W, E27). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         },
         {
           "unit": "PACK",
@@ -22452,13 +22452,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 21.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 21.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 23.71,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Globe Led Gu10 5W Rad R21.95; Chamberlains Radiant 5W Cool White GU10 LED Downlight Lamp LED0127 R22.90. Benchmark = lowest regular price (Cashbuild) R21.95, list = x 1.08. Basis: same make (Radiant GU10 5 W). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -22616,13 +22616,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 189.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 189.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 205.15,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Floodlight Led 50W Radiant R189.95; Chamberlains Radiant Black LED Floodlight 50W RFS51 R229.00. Benchmark = lowest regular price (Cashbuild) R189.95, list = x 1.08. Basis: same make (Radiant LED floodlight 50 W). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -22657,13 +22657,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 399.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 399.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 430.92,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Eurolux LED Floodlight 4000K Black 100 W R399.00; Chamberlains Eurolux Black LED Floodlights 100W FS281 R469.00. Benchmark = lowest regular price (Builders) R399.00, list = x 1.08. Basis: same make (Eurolux LED floodlight 100 W). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -23272,13 +23272,13 @@
           "unit": "ROLL",
           "unit_label": "Roll (100 m)",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 1699.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 1699.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 1834.92,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Black Solar Cable 6mm x 100m R1,699.00; Leroy Merlin SOLAR CABLE BLACK SOLAR CABLE /20M 6MM R679.00 x 5 = R3,395.00. Benchmark = lowest regular price (Chamberlains) R1,699.00, list = x 1.08. Basis: solar PV cable 6 mm², 100 m; Leroy Merlin 20 m roll x 5. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -23313,13 +23313,13 @@
           "unit": "PACK",
           "unit_label": "Pair",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 54.9,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 54.9,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 59.29,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Solar Male & Female Connector 4-6mm MC4-6 R54.90; Leroy Merlin Mc4 connector set R59.00. Benchmark = lowest regular price (Chamberlains) R54.90, list = x 1.08. Basis: MC4 connector pair (male + female, 4-6 mm²). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -23395,13 +23395,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 399.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 399.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 430.92,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains 63A 2 Pole DIN Changeover Switch CSCOS2P63A R399.00; Chamberlains Lear 63A 2 Pole DIN Changeover Switch SAS-3SK8-2P R429.00; Leroy Merlin Changeover Switch Din 2P 63A R500.00. Benchmark = lowest regular price (Chamberlains) R399.00, list = x 1.08. Basis: 63 A 2-pole DIN changeover switch. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -24543,13 +24543,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 49.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 49.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 52.92,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Falcon Tiling Aluminium Round Edge Trim Silver 2500 x 12 mm R49.00; Cashbuild Falcon Aluminuim Round Edge Trim 12mm X 2.5m R54.95. Benchmark = lowest regular price (Builders) R49.00, list = x 1.08. Basis: same make and size (Falcon aluminium round edge trim 12 mm x 2.5 m). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -24707,13 +24707,13 @@
           "unit": "PACK",
           "unit_label": "Pack",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 18.9,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 18.9,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 20.41,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Leroy Merlin Falcon Tile Spacers 3mm 120 Pieces R18.90; Builders Falcon Tiling 120 x Tile Spacers - White (3mm) R19.00. Benchmark = lowest regular price (Leroy Merlin) R18.90, list = x 1.08. Basis: same make and pack (Falcon 3 mm tile spacers, 120). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -24994,13 +24994,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 179.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 179.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 193.32,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains TFC Grout Seal 1L GS01 R179.00; Builders TFC Grout Seal GS01 1 L R249.00. Benchmark = lowest regular price (Chamberlains) R179.00, list = x 1.08. Basis: same make and size (TFC Grout Seal 1 L). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -26347,13 +26347,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 42.9,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 42.9,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 46.33,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Braided Flexi Connector F/M 10 x 15 x 300mm CHFBC300A R42.90; Cashbuild Braided Connector Female 15mm X Male 10mm X 300mm R57.95. Benchmark = lowest regular price (Chamberlains) R42.90, list = x 1.08. Basis: braided flexible connector 15 mm F x 10 mm M x 300 mm. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -26429,13 +26429,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 895.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 895.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 966.6,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Leroy Merlin Pressure Control valve 600kpa KWIKOT mono 22mm PRV, PCV R895.00; Builders Kwikot KHN3-114 CXC Mono Pressure Control Valve (22mm) R969.00. Benchmark = lowest regular price (Leroy Merlin) R895.00, list = x 1.08. Basis: same make and size (Kwikot mono pressure control valve 22 mm). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -26470,13 +26470,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 89.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 89.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 96.12,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Kwikot KH4.150CX Relief Valve Vacuum Breaker R89.00; Chamberlains Kwikot Vacuum Breaker C/C 15mm KHN4-150CX R99.90. Benchmark = lowest regular price (Builders) R89.00, list = x 1.08. Basis: same make and size (Kwikot KHN4-150CX vacuum breaker 15 mm). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -26511,13 +26511,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 249.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 249.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 268.92,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Dutton Plastics FP049 Kleenflo Bent Bottom Inlet Valve R249.00; Cashbuild Kleenflo Bent Bottom Inlet Valve 1/2Inch R312.95. Benchmark = lowest regular price (Builders) R249.00, list = x 1.08. Basis: same make (Kleenflo bent bottom inlet valve 1/2 inch). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -27167,13 +27167,13 @@
           "unit": "PACK",
           "unit_label": "Box (5 kg)",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 325.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 325.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 351.0,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Eureka 40 mm Wire Nails 1 kg R65.00 x 5 = R325.00; Chamberlains Wire Nails 2 x 40mm 1kg R86.90 x 5 = R434.50. Benchmark = lowest regular price (Builders) R325.00, list = x 1.08. Basis: round wire nails 40 mm, 5 kg: 1 kg packs x 5. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -27208,13 +27208,13 @@
           "unit": "PACK",
           "unit_label": "Box (5 kg)",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 255.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 255.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 275.4,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Eureka Flat Head Wire Nails 50mm - 1kg Pack T6A570 R51.00 x 5 = R255.00; Builders Eureka 50 mm Wire Nails 1 kg R65.00 x 5 = R325.00. Benchmark = lowest regular price (Chamberlains) R255.00, list = x 1.08. Basis: same make (Eureka wire nails 50 mm, 1 kg) x 5. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -27249,13 +27249,13 @@
           "unit": "PACK",
           "unit_label": "Box (5 kg)",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 145.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 145.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 156.6,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Wire Nails 3.55 x 75mm - 5kg Pack R145.00; Cashbuild Round Wire Nails 75 mm X 1Kg R35.95 x 5 = R179.75; Builders Eureka 75 mm Wire Nails 1 kg R55.00 x 5 = R275.00. Benchmark = lowest regular price (Chamberlains) R145.00, list = x 1.08. Basis: round wire nails 75 mm, 5 kg; 1 kg packs x 5. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -27290,13 +27290,13 @@
           "unit": "PACK",
           "unit_label": "Box (5 kg)",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 145.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 145.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 156.6,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Wire Nails 4 x 100mm - 5kg Pack R145.00; Cashbuild Round Wire Nails 100mm X 1Kg R35.95 x 5 = R179.75; Builders Eureka 100 mm Wire Nails 1 kg R55.00 x 5 = R275.00. Benchmark = lowest regular price (Chamberlains) R145.00, list = x 1.08. Basis: round wire nails 100 mm, 5 kg; 1 kg packs x 5. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -27331,13 +27331,13 @@
           "unit": "PACK",
           "unit_label": "Box (5 kg)",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 145.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 145.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 156.6,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Wire Nails 5 x 125mm 5kg R145.00; Builders Eureka 125 mm Wire Nails 1 kg R55.00 x 5 = R275.00. Benchmark = lowest regular price (Chamberlains) R145.00, list = x 1.08. Basis: round wire nails 125 mm, 5 kg; 1 kg pack x 5. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -29258,13 +29258,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 31.9,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 31.9,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 34.45,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains FIT White Econo Drawer Runners 450mm 801450ECO R31.90; Leroy Merlin Drawer Runner econo1.0mm450mmwht25kg R31.90; Builders Builders 2 x Drawer Runners White 450 x 35 x 10 mm R44.00. Benchmark = lowest regular price (Chamberlains) R31.90, list = x 1.08. Basis: white economy drawer runners 450 mm, pair. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -29340,13 +29340,13 @@
           "unit": "SHEET",
           "unit_label": "Sheet",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 589.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 589.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 636.12,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Plain Shutterply Pine Board 18/20 x 1220 x 2440mm R589.00; Leroy Merlin Pine Shutterply Board C+C Grade T18mm x W1220mm x L2440mm R599.00; Cashbuild Shutterply Untreated 2.440X1.220 18mm R734.95. Benchmark = lowest regular price (Chamberlains) R589.00, list = x 1.08. Basis: plain pine shutterply 1220 x 2440 x 18 mm. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -29381,13 +29381,13 @@
           "unit": "SHEET",
           "unit_label": "Sheet",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 799.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 799.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 862.92,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Leroy Merlin Pine Shutterply Board C+/C Grade T21mm x W1220mm x L2440mm R799.00; Builders Builders Board ShutterPly 1220 x 2440 x 21 mm R839.00. Benchmark = lowest regular price (Leroy Merlin) R799.00, list = x 1.08. Basis: plain pine shutterply 1220 x 2440 x 21 mm. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"
@@ -29873,13 +29873,13 @@
           "unit": "SHEET",
           "unit_label": "Sheet",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 222.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 222.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Services & fit-out range: a type and size South African builders' merchants stock (Builders product search, checked 2026-10-19). Make, finish, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 240.79,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Masonite Standard Brown 3.2mm 2.440 X 1.220 R222.95; Builders Masonite Standard Brown 2440 x 1220 x 3.2 mm R229.00; Chamberlains 3.2mm Brown Hardboard 1220 x 2440mm R239.00. Benchmark = lowest regular price (Cashbuild) R222.95, list = x 1.08. Basis: standard brown hardboard 2440 x 1220 x 3.2 mm. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_line": "fitout-2026-10"

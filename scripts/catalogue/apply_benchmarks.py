@@ -10,6 +10,9 @@ Each evidence item names one unit of one product and the listings that back it:
                   {"retailer": "Chamberlains", "name": "...", "price": 19.9, "url": "..."}],
      "factor": 1, "basis": "optional: how a listing converts to our unit, e.g. 'per metre x 100'"}
 
+A listing can carry its own "factor" when retailers sell the same thing in different packs (one sells the 100 m
+roll, another sells it per metre): its price x its factor is what is compared. The item's "factor" applies to all.
+
 The rule is checked here, not trusted: at least two different retailers, regular prices only (promotions are
 never recorded), benchmark = lowest listing x factor, list = benchmark x 1.08. A unit that is already priced is
 left alone unless the item says "replace": true. Retailer names and prices go only into the internal source note,
@@ -55,15 +58,25 @@ def main(evidence_path):
         retailers = {l["retailer"] for l in listings}
         if len(retailers) < 2:
             sys.exit(f"{item['sku']}: needs two different retailers, got {sorted(retailers)}")
+        if any(Decimal(str(l["price"])) <= 0 for l in listings):
+            sys.exit(f"{item['sku']}: a listing has no price")
         if any(l.get("promo") for l in listings):
             sys.exit(f"{item['sku']}: a promotional price was recorded — promotions are excluded")
         if unit.get("list_price_per_unit") is not None and not item.get("replace"):
             skipped.append(item["sku"])
             continue
         factor = Decimal(str(item.get("factor", 1)))
-        lowest = min(listings, key=lambda l: Decimal(str(l["price"])))
-        bench = Decimal(str(lowest["price"])) * factor
-        seen = "; ".join(f"{l['retailer']} {l['name']} R{Decimal(str(l['price'])):,.2f}" for l in sorted(listings, key=lambda l: l["price"]))
+
+        def unit_price(l):
+            return Decimal(str(l["price"])) * Decimal(str(l.get("factor", 1))) * factor
+
+        def shown(l):
+            each = f"R{Decimal(str(l['price'])):,.2f}"
+            return each if "factor" not in l else f"{each} x {l['factor']} = R{money(Decimal(str(l['price'])) * Decimal(str(l['factor']))):,.2f}"
+
+        lowest = min(listings, key=unit_price)
+        bench = unit_price(lowest)
+        seen = "; ".join(f"{l['retailer']} {l['name']} {shown(l)}" for l in sorted(listings, key=unit_price))
         basis = f" Basis: {item['basis']}." if item.get("basis") else ""
         unit["market_benchmark_price"] = money(bench)
         unit["cost_basis_percent"] = 100

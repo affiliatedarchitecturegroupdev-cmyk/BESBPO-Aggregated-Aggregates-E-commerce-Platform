@@ -273,8 +273,8 @@
      "unit": "BAG_50KG",
      "unit_label": "50kg bag",
      "markup_percent": 8,
-     "list_price_per_unit": null,
-     "pricing_status": "Provisional — confirm w/ supplier"
+     "list_price_per_unit": 91.8,
+     "pricing_status": "Ready — benchmarked"
     },
     {
      "unit": "BULK_BAG_1_5T",
@@ -1777,9 +1777,9 @@
     {
      "unit": "EACH",
      "unit_label": "5 kg bag",
-     "markup_percent": 22,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "markup_percent": 8,
+     "list_price_per_unit": 98.17,
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "description": "Cement-based tile grout. Colour confirmed on the quote.",
@@ -1807,9 +1807,9 @@
     {
      "unit": "EACH",
      "unit_label": "20 kg bag",
-     "markup_percent": 22,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "markup_percent": 8,
+     "list_price_per_unit": 307.8,
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "description": "Cement-based tile grout, 20 kg.",
@@ -1837,9 +1837,9 @@
     {
      "unit": "EACH",
      "unit_label": "5 kg kit",
-     "markup_percent": 22,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "markup_percent": 8,
+     "list_price_per_unit": 949.32,
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "description": "Stain- and chemical-resistant epoxy grout for kitchens, showers and pools.",
@@ -1867,9 +1867,9 @@
     {
      "unit": "EACH",
      "unit_label": "5 L",
-     "markup_percent": 22,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "markup_percent": 8,
+     "list_price_per_unit": 388.75,
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "description": "PVA bonding liquid to improve plaster and screed adhesion.",
@@ -1957,9 +1957,9 @@
     {
      "unit": "EACH",
      "unit_label": "40 kg bag",
-     "markup_percent": 22,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "markup_percent": 8,
+     "list_price_per_unit": 41.04,
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "description": "Ready-blended plaster — just add water.",
@@ -1987,9 +1987,9 @@
     {
      "unit": "EACH",
      "unit_label": "40 kg bag",
-     "markup_percent": 22,
-     "list_price_per_unit": null,
-     "pricing_status": "Quote-only — no retail benchmark"
+     "markup_percent": 8,
+     "list_price_per_unit": 41.04,
+     "pricing_status": "Ready — benchmarked"
     }
    ],
    "description": "Ready-blended screed for floors.",

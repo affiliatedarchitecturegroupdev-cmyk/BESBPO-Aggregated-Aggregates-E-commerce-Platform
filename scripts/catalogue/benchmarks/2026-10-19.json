@@ -1,0 +1,1409 @@
+{
+ "checked": "2026-10-19",
+ "items": [
+  {
+   "line": "packaged",
+   "sku": "AA-CEM-PPC-SURECEM-325N",
+   "unit": "BAG_50KG",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "PPC Surecem 32.5N Cement (50kg)",
+     "price": 85.0,
+     "url": "https://www.builders.co.za/Building-Materials/Cements/Cement/PPC-Surecem-32-5N-Cement--50kg-/p/000000000000662279"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "PPC Surecem Cement 32.5R 50kg (collection price)",
+     "price": 103.0,
+     "url": "https://www.chamberlains.co.za/our-range/ppc-surecem-cement-32-5r-50kg-collection-1072634"
+    }
+   ]
+  },
+  {
+   "line": "packaged",
+   "sku": "AA-GRT-TILE-GROUT-5",
+   "unit": "EACH",
+   "basis": "TAL Wall & Floor Grout 5 kg (same make and size at both)",
+   "listings": [
+    {
+     "retailer": "Leroy Merlin",
+     "name": "TAL Tile Grout White 5kg",
+     "price": 90.9,
+     "url": "https://leroymerlin.co.za/grout-white-tal-5kg-81411901"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "TAL Wall & Floor Grout White 5kg",
+     "price": 90.9,
+     "url": "https://www.chamberlains.co.za/our-range/tal-wall-floor-grout-white-5kg-tfwfg18802-1078568"
+    }
+   ]
+  },
+  {
+   "line": "packaged",
+   "sku": "AA-GRT-TILE-GROUT-20",
+   "unit": "EACH",
+   "basis": "TAL Wall & Floor Grout 20 kg (same make and size)",
+   "listings": [
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Tile Grout TAL White 20kg",
+     "price": 285.0,
+     "url": "https://leroymerlin.co.za/tile-grout-tal-white-20kg-81427761"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "TAL Wall & Floor Grout White 20kg",
+     "price": 285.0,
+     "url": "https://www.chamberlains.co.za/our-range/tal-wall-floor-grout-white-20kg-tfwfg18803-1078569"
+    }
+   ]
+  },
+  {
+   "line": "packaged",
+   "sku": "AA-GRT-EPOXY-GROUT",
+   "unit": "EACH",
+   "basis": "TAL water-based epoxy grout 5 kg (same make and size)",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "TAL Epoxy Grout White 5 kg",
+     "price": 879.0,
+     "url": "https://www.builders.co.za/Tiles-and-Flooring/Tiles-Accessories/Tile-Grouts/TAL-Epoxy-Grout-White-5-kg/p/000000000000293420"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "TAL Water Based Epoxy Wall and Floor Grout White 5kg",
+     "price": 899.0,
+     "url": "https://www.chamberlains.co.za/our-range/tal-water-based-epoxy-wall-and-floor-grout-white-5kg-bfwbg00660-1098686"
+    }
+   ]
+  },
+  {
+   "line": "packaged",
+   "sku": "AA-GRT-PREMIX-PLASTER",
+   "unit": "EACH",
+   "basis": "commodity 40 kg premixed plaster (sand and cement), compared by specification",
+   "listings": [
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Plaster Mix 40Kg",
+     "price": 38.0,
+     "url": "https://leroymerlin.co.za/plaster-mix-40kg-81506554"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Builders Plaster Mix 40 kg",
+     "price": 49.95,
+     "url": "https://www.builders.co.za/Building-Materials/Stones-Sands-and-Premix/Premixes/Builders-Plaster-Mix-40-kg/p/000000000000643520"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "ChamberValue Plaster Mix 40kg",
+     "price": 57.9,
+     "url": "https://www.chamberlains.co.za/our-range/chambervalue-plaster-mix-40kg-1054132"
+    }
+   ]
+  },
+  {
+   "line": "packaged",
+   "sku": "AA-GRT-PREMIX-SCREED",
+   "unit": "EACH",
+   "basis": "commodity 40 kg premixed screed, compared by specification",
+   "listings": [
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Screed Mix 40Kg",
+     "price": 38.0,
+     "url": "https://leroymerlin.co.za/screed-mix-40kg-81506561"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Builders Screeding Mix 40 kg",
+     "price": 40.0,
+     "url": "https://www.builders.co.za/Building-Materials/Stones-Sands-and-Premix/Premixes/Builders-Screeding-Mix-40-kg-643521---Exclusive-to-Builders/p/000000000000643521"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "ChamberValue Screed Mix 40kg",
+     "price": 57.9,
+     "url": "https://www.chamberlains.co.za/our-range/chambervalue-screed-mix-40kg-1054134"
+    }
+   ]
+  },
+  {
+   "line": "packaged",
+   "sku": "AA-GRT-BONDING-LIQUID-5",
+   "unit": "EACH",
+   "basis": "same make and size (Duram Bonding Liquid 5 L) at both retailers",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Duram Bonding Liquid 5L White",
+     "price": 359.95,
+     "url": "https://www.cashbuild.co.za/bonding-liquid/321611-duram-bonding-liquid-5l-white"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Duram Bonding Liquid 5L 421-60-005",
+     "price": 399.0,
+     "url": "https://www.chamberlains.co.za/our-range/duram-bonding-liquid-5l-421-60-005-1083089"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-SURFIX-15-20",
+   "unit": "ROLL",
+   "basis": "Surfix 2-core & earth 1.5 mm², 20 m roll",
+   "listings": [
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Surfix cable white 2X1.5mm x 20m + E",
+     "price": 512.0,
+     "url": "https://leroymerlin.co.za/surfix-cable-white-2x1-5mm-x-20m-e-81414082"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Black Surfix 1.5mm x 20m",
+     "price": 539.0,
+     "url": "https://www.chamberlains.co.za/our-range/black-surfix-1-5mm-x-20m-1087559"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Proton Prepack Surfix 1.5 mm 2 Core and E 20 m Black",
+     "price": 605.0,
+     "url": "https://www.builders.co.za/Electrical-and-Electronics/Wiring/Pre-Cut-Cables/Proton-Prepack-Surfix-1-5-mm-2-Core-and-E-20-m-Black/p/000000000000035226"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-SURFIX-15-100",
+   "unit": "ROLL",
+   "basis": "Surfix 2-core & earth 1.5 mm², 100 m roll; Cashbuild sells it per metre (x 100)",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "White Surfix 1.5mm 100m",
+     "price": 1649.0,
+     "url": "https://www.chamberlains.co.za/our-range/white-surfix-1-5mm-100m-1004751"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Proton Prepack Surfix 1.5 mm 2 Core and E 100 m Roll Black",
+     "price": 2179.0,
+     "url": "https://www.builders.co.za/Electrical-and-Electronics/Wiring/Pre-Cut-Cables/Proton-Prepack-Surfix-1-5-mm-2-Core-and-E-100-m-Roll-Black/p/000000000000391260"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Surfix 2Core+E 1.5X1M White",
+     "price": 21.95,
+     "url": "https://www.cashbuild.co.za/surfix/326579-surfix-2coree-15x1m-white",
+     "factor": 100
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-SURFIX-25-20",
+   "unit": "ROLL",
+   "basis": "Surfix 2-core & earth 2.5 mm², 20 m roll",
+   "listings": [
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Surfix cable white 2X2.5mm + E 20m long",
+     "price": 799.0,
+     "url": "https://leroymerlin.co.za/surfix-cable-white-2x2-5mm-e-20m-long-81413963"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Black Surfix 2.5mm x 20m",
+     "price": 769.0,
+     "url": "https://www.chamberlains.co.za/our-range/black-surfix-2-5mm-x-20m-1087563"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-SURFIX-25-100",
+   "unit": "ROLL",
+   "basis": "Surfix 2-core & earth 2.5 mm², 100 m roll; per-metre listings x 100",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "White Surfix 2.5mm 100m",
+     "price": 2599.0,
+     "url": "https://www.chamberlains.co.za/our-range/white-surfix-2-5mm-100m-1004756"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Surfix 2Core+E 2.5X1M White",
+     "price": 31.95,
+     "url": "https://www.cashbuild.co.za/surfix/326580-surfix-2coree-25x1m-white",
+     "factor": 100
+    },
+    {
+     "retailer": "Builders",
+     "name": "Aberdare Cables Surfix 2 Core Cable with Earth White 2.5 mm Price Per Meter",
+     "price": 40.0,
+     "url": "https://www.builders.co.za/Electrical-and-Electronics/Wiring/Pre-Cut-Cables/Aberdare-Cables-Surfix-2-Core-Cable-with-Earth-White-2-5-mm-Price-Per-Meter/p/000000000000606116",
+     "factor": 100
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-SURFIX-4-100",
+   "unit": "ROLL",
+   "basis": "Surfix 4 mm², 100 m roll; Leroy Merlin sells a 10 m roll (x 10)",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "White Surfix 4mm x 100m",
+     "price": 4299.0,
+     "url": "https://www.chamberlains.co.za/our-range/white-surfix-4mm-x-100m-1083624"
+    },
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Surfix cable white 4mm x 10m",
+     "price": 503.0,
+     "url": "https://leroymerlin.co.za/surfix-cable-white-4mm-x-10m-81441252",
+     "factor": 10
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-HW-15",
+   "unit": "ROLL",
+   "basis": "house wire 1.5 mm², 100 m roll (colour on the quote)",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Proton Prepack House Wire 1.5 mm 100 m Roll Green",
+     "price": 535.0,
+     "url": "https://www.builders.co.za/Electrical-and-Electronics/Wiring/Pre-Cut-Cables/Proton-Prepack-House-Wire-1-5-mm-100-m-Roll-Green/p/000000000000383127"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "White House Wire 1.5mm x 100m",
+     "price": 569.0,
+     "url": "https://www.chamberlains.co.za/our-range/white-house-wire-1-5mm-x-100m-1083629"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Aberdare Cables House Wire Cable Black 100 m GPSC1.5C01ESBBGC1",
+     "price": 749.0,
+     "url": "https://www.builders.co.za/Electrical-and-Electronics/Wiring/Pre-Cut-Cables/Aberdare-Cables-House-Wire-Cable-Black-100-m-GPSC1-5C01ESBBGC1/p/000000000000383125"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-HW-25",
+   "unit": "ROLL",
+   "basis": "house wire 2.5 mm², 100 m roll; Leroy Merlin 50 m roll x 2",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Aberdare Cables GPSC2.5C01ESCCGC1 House Wire Cable Roll Blue 100 m",
+     "price": 875.0,
+     "url": "https://www.builders.co.za/Electrical-and-Electronics/Wiring/Pre-Cut-Cables/Aberdare-Cables-GPSC2-5C01ESCCGC1-House-Wire-Cable-Roll-Blue-100-m/p/000000000000383262"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Black House Wire 2.5mm 100m",
+     "price": 899.0,
+     "url": "https://www.chamberlains.co.za/our-range/black-house-wire-2-5mm-100m-1004659"
+    },
+    {
+     "retailer": "Leroy Merlin",
+     "name": "House wire blue 2.5mm x 50m",
+     "price": 629.0,
+     "url": "https://leroymerlin.co.za/house-wire-blue-2-5mm-x-50m-81438151",
+     "factor": 2
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-HW-4",
+   "unit": "ROLL",
+   "basis": "house wire 4 mm²; Leroy Merlin 20 m roll x 5, Builders per metre x 100",
+   "listings": [
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Housewire green 4mm x 20m",
+     "price": 299.0,
+     "url": "https://leroymerlin.co.za/housewire-green-4mm-x-20m-81441253",
+     "factor": 5
+    },
+    {
+     "retailer": "Builders",
+     "name": "Waco House Wire Red 4 mm Per Meter",
+     "price": 20.0,
+     "url": "https://www.builders.co.za/Electrical-and-Electronics/Wiring/Pre-Cut-Cables/Waco-House-Wire-Red-4-mm-Per-Meter/p/000000000850011916",
+     "factor": 100
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-HW-6",
+   "unit": "ROLL",
+   "basis": "house wire 6 mm²; Leroy Merlin 20 m roll x 5, Builders per metre x 100",
+   "listings": [
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Housewire black 6mm x 20m",
+     "price": 579.0,
+     "url": "https://leroymerlin.co.za/housewire-black-6mm-x-20m-81441256",
+     "factor": 5
+    },
+    {
+     "retailer": "Builders",
+     "name": "Waco House Wire Black 6 mm",
+     "price": 29.0,
+     "url": "https://www.builders.co.za/Electrical-and-Electronics/Wiring/Pre-Cut-Cables/Waco-House-Wire-Black-6-mm/p/000000000850011880",
+     "factor": 100
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-CONDUIT-20",
+   "unit": "EACH",
+   "basis": "PVC conduit 20 mm x 4 m length",
+   "listings": [
+    {
+     "retailer": "Leroy Merlin",
+     "name": "PVC Conduit pipe 20mmx4m",
+     "price": 19.9,
+     "url": "https://leroymerlin.co.za/pvc-conduit-pipe-20mmx4m-81410889"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "PVC Conduit Tube 20mm x 4m",
+     "price": 19.9,
+     "url": "https://www.chamberlains.co.za/our-range/pvc-conduit-tube-20mm-x-4m-1005953"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-CONDUIT-25",
+   "unit": "EACH",
+   "basis": "PVC conduit 25 mm x 4 m length",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "PVC Conduit Tube 25mm x 4m",
+     "price": 27.9,
+     "url": "https://www.chamberlains.co.za/our-range/pvc-conduit-tube-25mm-x-4m-1005954"
+    },
+    {
+     "retailer": "Leroy Merlin",
+     "name": "conduit 25mm 4m pvc wh",
+     "price": 42.9,
+     "url": "https://leroymerlin.co.za/conduit-25mm-4m-pvc-wh-81447192"
+    },
+    {
+     "retailer": "Builders",
+     "name": "PVC Conduit 25 mm 4 m Length",
+     "price": 49.0,
+     "url": "https://www.builders.co.za/Electrical-and-Electronics/Cable-Organising/PVC-Conduit/PVC-Conduit-25-mm-4-m-Length/p/000000000000024070"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-CONDUIT-32",
+   "unit": "EACH",
+   "basis": "PVC conduit 32 mm x 4 m length",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "PVC Conduit Tube 32mm x 4m",
+     "price": 64.9,
+     "url": "https://www.chamberlains.co.za/our-range/pvc-conduit-tube-32mm-x-4m-1075880"
+    },
+    {
+     "retailer": "Leroy Merlin",
+     "name": "conduit 32mm 4m pvc wh",
+     "price": 64.9,
+     "url": "https://leroymerlin.co.za/conduit-32mm-4m-pvc-wh-81447195"
+    },
+    {
+     "retailer": "Builders",
+     "name": "PVC Conduit 32 mm 4 m Length",
+     "price": 109.0,
+     "url": "https://www.builders.co.za/Electrical-and-Electronics/Cable-Organising/PVC-Conduit/PVC-Conduit-32-mm-4-m-Length/p/000000000000036049"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-JBOX-20",
+   "unit": "EACH",
+   "basis": "PVC conduit junction box 20 mm, 1-way (other ways on the quote)",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "PVC Conduit 1-Way Box 20mm H101",
+     "price": 8.9,
+     "url": "https://www.chamberlains.co.za/our-range/pvc-conduit-1-way-box-20mm-h101-1062850"
+    },
+    {
+     "retailer": "Leroy Merlin",
+     "name": "JUNCTION BOX 1 SPOUT 20MM",
+     "price": 13.9,
+     "url": "https://leroymerlin.co.za/junction-box-1-spout-20mm-81458139"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-WALLBOX-4X2",
+   "unit": "EACH",
+   "basis": "metal wall box 4 x 2",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Wall Box SABS Metal 4x2",
+     "price": 6.6,
+     "url": "https://www.cashbuild.co.za/wall-boxes/884301-wall-box"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "White Steel Surface Wall Box 4x2 EB42",
+     "price": 14.9,
+     "url": "https://www.chamberlains.co.za/our-range/white-steel-surface-wall-box-4x2-eb42-1003771"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-WALLBOX-4X4",
+   "unit": "EACH",
+   "basis": "metal wall box 4 x 4",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "Galvanized Flush Wall Box 4x4 FEB-10106-L",
+     "price": 8.9,
+     "url": "https://www.chamberlains.co.za/our-range/galvanized-flush-wall-box-4x4-feb-10106-l-1003769"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Wall Box SABS Metal 4x4",
+     "price": 9.5,
+     "url": "https://www.cashbuild.co.za/wall-boxes/884302-wall-box"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-CABLE-TIES",
+   "unit": "PACK",
+   "basis": "same make and size (Eureka cable ties 200 x 4.8 mm, 100)",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "Eureka Black Cable Ties 200 x 4.8mm - 100 Pack T2Z872",
+     "price": 69.0,
+     "url": "https://www.chamberlains.co.za/our-range/eureka-black-cable-ties-200-x-4-8mm-100-pack-t2z872-1072225"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "EUREKA CABLE TIE 4.8X200mm BLACK Quantity:100",
+     "price": 77.95,
+     "url": "https://www.cashbuild.co.za/cable-ties/307769-eureka-cable-tie-48x200mm-black-quantity-100"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-INSULATION-TAPE",
+   "unit": "PACK",
+   "basis": "PVC insulation tape 18 mm x 20 m, single roll x 10",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "PVC Insulation Tape 20m Green (0.13mm X 18mm)",
+     "price": 15.5,
+     "url": "https://www.cashbuild.co.za/insulation-tape/307414-pvc-insulation-tape-20m-green-013mm-x-18mm",
+     "factor": 10
+    },
+    {
+     "retailer": "Builders",
+     "name": "Insulation Tape Black 20 m",
+     "price": 19.0,
+     "url": "https://www.builders.co.za/Electrical-and-Electronics/Cable-Organising/Saddles/Insulation-Tape-Black-20-m/p/000000000850032653",
+     "factor": 10
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-FLEX-3C-15",
+   "unit": "ROLL",
+   "basis": "3-core 1.5 mm² flexible cord (cabtyre), per metre x 100",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Cabtyre 3Core 1.5X1M Blk",
+     "price": 22.95,
+     "url": "https://www.cashbuild.co.za/cabtyre/326573-cabtyre-3core-15x1m-blk",
+     "factor": 100
+    },
+    {
+     "retailer": "Builders",
+     "name": "Cabtyre Waco 3 Core R1 Cable White 1.5mm Per Meter",
+     "price": 25.0,
+     "url": "https://www.builders.co.za/Electrical-and-Electronics/Wiring/Pre-Cut-Cables/Cabtyre-Waco-3-Core-R1-Cable-White-1-5mm-Per-Meter/p/000000000850011938",
+     "factor": 100
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-DB-8-S",
+   "unit": "EACH",
+   "basis": "empty 8-way surface-mount distribution board",
+   "listings": [
+    {
+     "retailer": "Leroy Merlin",
+     "name": "DB Board Surface Mini Rail 8 Way",
+     "price": 199.0,
+     "url": "https://leroymerlin.co.za/db-board-surface-mini-rail-8-way-81489097"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Lesco MDB20-SUN-08W-PS-T 8 Way Empty Surface DB Board White",
+     "price": 190.0,
+     "url": "https://www.builders.co.za/Electrical-and-Electronics/Plugs--Sockets-and-Switches/Wall-Boxes/Lesco-MDB20-SUN-08W-PS-T-8-Way-Empty-Surface-DB-Board-White/p/000000000000660904"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-DB-12-S",
+   "unit": "EACH",
+   "basis": "empty 12-way surface-mount distribution board",
+   "listings": [
+    {
+     "retailer": "Leroy Merlin",
+     "name": "DB Board Surface Mini Rail 12 Way",
+     "price": 215.0,
+     "url": "https://leroymerlin.co.za/db-board-surface-mini-rail-12-way-81489094"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Lesco Empty 12 Way Surface Distribution Board White 280 x 225 x 85 mm",
+     "price": 279.0,
+     "url": "https://www.builders.co.za/Electrical-and-Electronics/Plugs--Sockets-and-Switches/Wall-Boxes/Lesco-Empty-12-Way-Surface-Distribution-Board-White-280-x-225-x-85-mm/p/000000000000660929"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-DB-12-F",
+   "unit": "EACH",
+   "basis": "empty 12-way flush-mount distribution board",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Lesco Empty 12 Way Flush DB Board White 280 x 225 x 85 mm",
+     "price": 279.0,
+     "url": "https://www.builders.co.za/Electrical-and-Electronics/Plugs--Sockets-and-Switches/Wall-Boxes/Lesco-Empty-12-Way-Flush-DB-Board-White-280-x-225-x-85-mm/p/000000000000660908"
+    },
+    {
+     "retailer": "Leroy Merlin",
+     "name": "DB Board Flush Mini Rail 12 Way",
+     "price": 329.0,
+     "url": "https://leroymerlin.co.za/db-board-flush-mini-rail-12-way-81489098"
+    },
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Distribution Board CBI ELECTRIC Flush Mounted Unpopulated 12 way",
+     "price": 357.0,
+     "url": "https://leroymerlin.co.za/distribution-board-cbi-electric-flush-mounted-unpopulated-12-way-81424591"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-MCB-10",
+   "unit": "EACH",
+   "basis": "single-pole mini-rail circuit breaker 10 A",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "Nur Breaker Circuit Mini 10A F103P",
+     "price": 49.9,
+     "url": "https://www.chamberlains.co.za/our-range/nur-breaker-circuit-mini-10a-f103p-1101158"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Circuit Breaker Mini Rail 10a",
+     "price": 94.95,
+     "url": "https://www.cashbuild.co.za/circuit-breakers/307393-circuit-breaker-mini-rail-10a"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-MCB-16",
+   "unit": "EACH",
+   "basis": "single-pole mini-rail circuit breaker 16 A",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Circuit Breaker Mini Rail 16a",
+     "price": 74.95,
+     "url": "https://www.cashbuild.co.za/circuit-breakers/307394-circuit-breaker-mini-rail-16a"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Lear 1-Pole 16A Circuit Breaker 13mm BLC13-1/16A",
+     "price": 94.9,
+     "url": "https://www.chamberlains.co.za/our-range/lear-1-pole-16a-circuit-breaker-13mm-blc13-1-16a-1056018"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-MCB-20",
+   "unit": "EACH",
+   "basis": "single-pole mini-rail circuit breaker 20 A",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Circuit Breaker Mini Rail 20a",
+     "price": 94.95,
+     "url": "https://www.cashbuild.co.za/circuit-breakers/307395-circuit-breaker-mini-rail-20a"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Lear 1-Pole 20A Circuit Breaker 13mm BLC13-1/20A",
+     "price": 94.9,
+     "url": "https://www.chamberlains.co.za/our-range/lear-1-pole-20a-circuit-breaker-13mm-blc13-1-20a-1056019"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-MCB-32",
+   "unit": "EACH",
+   "basis": "single-pole mini-rail circuit breaker 32 A",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Circuit Breaker Mini Rail 32a",
+     "price": 94.95,
+     "url": "https://www.cashbuild.co.za/circuit-breakers/307397-circuit-breaker-mini-rail-32a"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Lear 1-Pole 32A Circuit Breaker 13mm BLC13-1/32A",
+     "price": 94.9,
+     "url": "https://www.chamberlains.co.za/our-range/lear-1-pole-32a-circuit-breaker-13mm-blc13-1-32a-1056021"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-MCB-40",
+   "unit": "EACH",
+   "basis": "single-pole mini-rail circuit breaker 40 A",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Circuit Breaker Mini Rail 40a",
+     "price": 94.95,
+     "url": "https://www.cashbuild.co.za/circuit-breakers/307398-circuit-breaker-mini-rail-40a"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Lear 40A Single Pole 13mm Mini Circuit Breaker BLE26-1/40A",
+     "price": 94.9,
+     "url": "https://www.chamberlains.co.za/our-range/lear-40a-single-pole-13mm-mini-circuit-breaker-ble26-1-40a-1101145"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-ELCB-63",
+   "unit": "EACH",
+   "basis": "mini-rail double-pole earth leakage 63 A",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "Nur Earth Leakage Mini No Overload 63A F128P",
+     "price": 359.0,
+     "url": "https://www.chamberlains.co.za/our-range/nur-earth-leakage-mini-no-overload-63a-f128p-1101165"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Earth Leakage Dp 63 amp Mini Rail",
+     "price": 420.0,
+     "url": "https://www.builders.co.za/Electrical-and-Electronics/Plugs--Sockets-and-Switches/Smart-Electrical/Earth-Leakage-Dp-63-amp-Mini-Rail/p/000000000000576181"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Earth Leakage Mini Rail 63a Double Pole",
+     "price": 619.95,
+     "url": "https://www.cashbuild.co.za/circuit-breakers/307401-earth-leakage-mini-rail-63a-double-pole"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-ISOL-GEYSER",
+   "unit": "EACH",
+   "basis": "same make (Crabtree 30 A geyser isolator, 2 x 4)",
+   "listings": [
+    {
+     "retailer": "Leroy Merlin",
+     "name": "ISOLATOR 2X4 30A WHITE CRABTREE",
+     "price": 159.0,
+     "url": "https://leroymerlin.co.za/isolator-2x4-30a-white-crabtree-81465372"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Crabtree Classic White 30A Geyser Isolator Switch 2x4 CT18110/101P",
+     "price": 175.0,
+     "url": "https://www.chamberlains.co.za/our-range/crabtree-classic-white-30a-geyser-isolator-switch-2x4-ct18110-101p-1063960"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-ISOL-STOVE",
+   "unit": "EACH",
+   "basis": "same make (Lesco 50 A stove isolator, 4 x 4)",
+   "listings": [
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Stove Isolator LESCO pipelli 50A 4x4 white",
+     "price": 119.0,
+     "url": "https://leroymerlin.co.za/stove-isolator-lesco-pipelli-50a-4x4-white-81437316"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Lesco White Switch Isolator 50A 2P 4X4 7LP44SW0",
+     "price": 139.0,
+     "url": "https://www.chamberlains.co.za/our-range/lesco-white-switch-isolator-50a-2p-4x4-7lp44sw0-1082563"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-EARTH-SPIKE",
+   "unit": "EACH",
+   "basis": "earth spike 1.2 m with clamp",
+   "listings": [
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Earth spike & clamp 1,2 M",
+     "price": 115.0,
+     "url": "https://leroymerlin.co.za/earth-spike-clamp-1-2-m-81414798"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "SRU Earth Spike & Clamp 1.2m PPES02",
+     "price": 119.0,
+     "url": "https://www.chamberlains.co.za/our-range/sru-earth-spike-clamp-1-2m-ppes02-1077787"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-LIGHT-SWITCH-1-LEVER-1-WAY-4",
+   "unit": "EACH",
+   "basis": "same make (Crabtree 1-lever 1-way, 4 x 2)",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Light Switch 1 Lever Crabtree 1 Way",
+     "price": 42.95,
+     "url": "https://www.cashbuild.co.za/wall-light-switches/8861501-light-switch-1-lever-crabtree"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Crabtree Classic 1 Lever 1 Way Light Switch with Cover Plate 4x2 White",
+     "price": 59.0,
+     "url": "https://www.builders.co.za/Electrical-and-Electronics/Plugs--Sockets-and-Switches/Sockets/Crabtree-Classic-1-Lever-1-Way-Light-Switch-with-Cover-Plate-4x2-White/p/000000000000416870"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-LIGHT-SWITCH-2-LEVER-1-WAY-4",
+   "unit": "EACH",
+   "basis": "same make (Waco 2-lever 1-way, 4 x 2)",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Waco Premium Switch 2lever 1way",
+     "price": 31.95,
+     "url": "https://www.cashbuild.co.za/wall-light-switches/308683-waco-premium-switch-2lev-1way"
+    },
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Wall switch WACO white 2 lever 1 way 2x4",
+     "price": 50.0,
+     "url": "https://leroymerlin.co.za/wall-switch-waco-white-2-lever-1-way-2x4-81444676"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-LIGHT-SWITCH-1-LEVER-2-WAY-4",
+   "unit": "EACH",
+   "basis": "same make (CBI 1-lever 2-way, 4 x 2)",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Light Switch 1 Lever CBI 2 Way",
+     "price": 64.95,
+     "url": "https://www.cashbuild.co.za/wall-light-switches/302077-light-switch-1-lever-cbi"
+    },
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Switch CBI ELECTRIC silver 1 lever 2 way 2x4",
+     "price": 71.0,
+     "url": "https://leroymerlin.co.za/switch-cbi-electric-silver-1-lever-2-way-2x4-81424538"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-LED-A60-7",
+   "unit": "EACH",
+   "basis": "same make (Osram LED A60 7 W, E27)",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Osram Led A60 7W E27 6500K",
+     "price": 32.95,
+     "url": "https://www.cashbuild.co.za/globes/327044-osram-led-a60-7w-e27-6500k"
+    },
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Osram Led Light Bulb A60 7W E27 Daylight",
+     "price": 39.9,
+     "url": "https://leroymerlin.co.za/osram-led-light-bulb-a60-7w-e27-daylight-81470096"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-LED-A60-9",
+   "unit": "EACH",
+   "basis": "same make (Radiant LED A60 9 W, E27)",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Radiant LED A60 E27 Globe Daylight 9 W",
+     "price": 19.5,
+     "url": "https://www.builders.co.za/c/Radiant-LED-A60-E27-Globe-Daylight-9-W/p/000000000850004158"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Radiant LED Lamp 9W E27 Cool Daylight RLL316ES",
+     "price": 59.9,
+     "url": "https://www.chamberlains.co.za/our-range/radiant-led-lamp-9w-e27-cool-daylight-rll316es-1096164"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-LED-GU10-LAMP-5-W",
+   "unit": "EACH",
+   "basis": "same make (Radiant GU10 5 W)",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Globe Led Gu10 5W Rad",
+     "price": 21.95,
+     "url": "https://www.cashbuild.co.za/globes/317323-globe-led-gu10-5w-rad"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Radiant 5W Cool White GU10 LED Downlight Lamp LED0127",
+     "price": 22.9,
+     "url": "https://www.chamberlains.co.za/our-range/radiant-5w-cool-white-gu10-led-downlight-lamp-led0127-1078132"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-LED-FLOODLIGHT-50-W-IP65",
+   "unit": "EACH",
+   "basis": "same make (Radiant LED floodlight 50 W)",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Floodlight Led 50W Radiant",
+     "price": 189.95,
+     "url": "https://www.cashbuild.co.za/outdoor-lighting/324809-floodlight-led-50w-radiant"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Radiant Black LED Floodlight 50W RFS51",
+     "price": 229.0,
+     "url": "https://www.chamberlains.co.za/our-range/radiant-black-led-floodlight-50w-rfs51-1082186"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-ELE-LED-FLOODLIGHT-100-W-IP65",
+   "unit": "EACH",
+   "basis": "same make (Eurolux LED floodlight 100 W)",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Eurolux LED Floodlight 4000K Black 100 W",
+     "price": 399.0,
+     "url": "https://www.builders.co.za/Security-and-Smart-Home/Perimeter-Security/Security-Lights/Eurolux-LED-Floodlight-4000K-Black-100-W/p/000000000850022642"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Eurolux Black LED Floodlights 100W FS281",
+     "price": 469.0,
+     "url": "https://www.chamberlains.co.za/our-range/eurolux-black-led-floodlights-100w-fs281-1077824"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-SOL-MC4",
+   "unit": "PACK",
+   "basis": "MC4 connector pair (male + female, 4-6 mm²)",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "Solar Male & Female Connector 4-6mm MC4-6",
+     "price": 54.9,
+     "url": "https://www.chamberlains.co.za/our-range/solar-male-female-connector-4-6mm-mc4-6-1096336"
+    },
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Mc4 connector set",
+     "price": 59.0,
+     "url": "https://leroymerlin.co.za/mc4-connector-set-81494724"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-SOL-PV-CABLE-6",
+   "unit": "ROLL",
+   "basis": "solar PV cable 6 mm², 100 m; Leroy Merlin 20 m roll x 5",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "Black Solar Cable 6mm x 100m",
+     "price": 1699.0,
+     "url": "https://www.chamberlains.co.za/our-range/black-solar-cable-6mm-x-100m-1091039"
+    },
+    {
+     "retailer": "Leroy Merlin",
+     "name": "SOLAR CABLE BLACK SOLAR CABLE /20M 6MM",
+     "price": 679.0,
+     "url": "https://leroymerlin.co.za/solar-cable-black-solar-cable-20m-6mm-81476861",
+     "factor": 5
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-SOL-CHANGEOVER",
+   "unit": "EACH",
+   "basis": "63 A 2-pole DIN changeover switch",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "63A 2 Pole DIN Changeover Switch CSCOS2P63A",
+     "price": 399.0,
+     "url": "https://www.chamberlains.co.za/our-range/63a-2-pole-din-changeover-switch-cscos2p63a-1090599"
+    },
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Changeover Switch Din 2P 63A",
+     "price": 500.0,
+     "url": "https://leroymerlin.co.za/changeover-switch-din-2p-63a-81487330"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Lear 63A 2 Pole DIN Changeover Switch SAS-3SK8-2P",
+     "price": 429.0,
+     "url": "https://www.chamberlains.co.za/our-range/lear-63a-2-pole-din-changeover-switch-sas-3sk8-2p-1090017"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-TLA-TILE-SPACERS-3-MM-PACK",
+   "unit": "PACK",
+   "basis": "same make and pack (Falcon 3 mm tile spacers, 120)",
+   "listings": [
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Falcon Tile Spacers 3mm 120 Pieces",
+     "price": 18.9,
+     "url": "https://leroymerlin.co.za/tile-spacers-falcon-3mm-120-pieces-81438283"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Falcon Tiling 120 x Tile Spacers - White (3mm)",
+     "price": 19.0,
+     "url": "https://www.builders.co.za/Tiles-and-Flooring/Tiles-Accessories/Tile-Trims/Falcon-Tiling-120-x-Tile-Spacers---White--3mm-/p/000000000000032311"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-TLA-TILE-GROUT-SEALER-1-L",
+   "unit": "EACH",
+   "basis": "same make and size (TFC Grout Seal 1 L)",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "TFC Grout Seal 1L GS01",
+     "price": 179.0,
+     "url": "https://www.chamberlains.co.za/our-range/tfc-grout-seal-1l-gs01-1023424"
+    },
+    {
+     "retailer": "Builders",
+     "name": "TFC Grout Seal GS01 1 L",
+     "price": 249.0,
+     "url": "https://www.builders.co.za/Paint/Preparation-and-Finishing/Sealers/TFC-Grout-Seal-GS01-1-L/p/000000000000019377"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-TLA-ALUMINIUM-TILE-TRIM-ROUND-EDGE-2",
+   "unit": "EACH",
+   "basis": "same make and size (Falcon aluminium round edge trim 12 mm x 2.5 m)",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Falcon Tiling Aluminium Round Edge Trim Silver 2500 x 12 mm",
+     "price": 49.0,
+     "url": "https://www.builders.co.za/Tiles-and-Flooring/Tiles-Accessories/Tile-Trims/Falcon-Tiling-Aluminium-Round-Edge-Trim-Silver-2500-x-12-mm/p/000000000000153019"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Falcon Aluminuim Round Edge Trim 12mm X 2.5m",
+     "price": 54.95,
+     "url": "https://www.cashbuild.co.za/tilling-accessories/308020-falcon-round-edge-trim"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-TAP-FLEXIBLE-CONNECTOR-15-MM-X-300",
+   "unit": "EACH",
+   "basis": "braided flexible connector 15 mm F x 10 mm M x 300 mm",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "Braided Flexi Connector F/M 10 x 15 x 300mm CHFBC300A",
+     "price": 42.9,
+     "url": "https://www.chamberlains.co.za/our-range/braided-flexi-connector-f-m-10-x-15-x-300mm-chfbc300a-1074699"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Braided Connector Female 15mm X Male 10mm X 300mm",
+     "price": 57.95,
+     "url": "https://www.cashbuild.co.za/mixer-connector/305375-braided-connector"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-TAP-PRESSURE-REDUCING-VALVE-22-MM",
+   "unit": "EACH",
+   "basis": "same make and size (Kwikot mono pressure control valve 22 mm)",
+   "listings": [
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Pressure Control valve 600kpa KWIKOT mono 22mm PRV, PCV",
+     "price": 895.0,
+     "url": "https://leroymerlin.co.za/pressure-control-valve-600kpa-kwikot-mono-22mm-prv-pcv-81424738"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Kwikot KHN3-114 CXC Mono Pressure Control Valve (22mm)",
+     "price": 969.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Geysers-and-Water-Heaters/Geyser-Accessories/Kwikot-KHN3-114-CXC-Mono-Pressure-Control-Valve--22mm-/p/000000000000003133"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-TAP-VACUUM-BREAKER-15-MM-22-MM",
+   "unit": "EACH",
+   "basis": "same make and size (Kwikot KHN4-150CX vacuum breaker 15 mm)",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Kwikot KH4.150CX Relief Valve Vacuum Breaker",
+     "price": 89.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Geysers-and-Water-Heaters/Geyser-Accessories/Kwikot-KH4-150CX-Relief-Valve-Vacuum-Breaker/p/000000000000027118"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Kwikot Vacuum Breaker C/C 15mm KHN4-150CX",
+     "price": 99.9,
+     "url": "https://www.chamberlains.co.za/our-range/kwikot-vacuum-breaker-c-c-15mm-khn4-150cx-1064512"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-TAP-TOILET-CISTERN-INLET-VALVE",
+   "unit": "EACH",
+   "basis": "same make (Kleenflo bent bottom inlet valve 1/2 inch)",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Dutton Plastics FP049 Kleenflo Bent Bottom Inlet Valve",
+     "price": 249.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Toilets-and-Accessories/Toilet-Valves/Dutton-Plastics-FP049-Kleenflo-Bent-Bottom-Inlet-Valve/p/000000000000501462"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Kleenflo Bent Bottom Inlet Valve 1/2Inch",
+     "price": 312.95,
+     "url": "https://www.cashbuild.co.za/cistern-fittings/305374-kleenflo-bent-bottom-inlet-valve-1-2inch"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-FIX-WIRE-NAILS-40",
+   "unit": "PACK",
+   "basis": "round wire nails 40 mm, 5 kg: 1 kg packs x 5",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Eureka 40 mm Wire Nails 1 kg",
+     "price": 65.0,
+     "url": "https://www.builders.co.za/Fasteners-and-Adhesives/Nails/Nails/Eureka-40-mm-Wire-Nails-1-kg/p/000000000000682059",
+     "factor": 5
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Wire Nails 2 x 40mm 1kg",
+     "price": 86.9,
+     "url": "https://www.chamberlains.co.za/our-range/wire-nails-2-x-40mm-1kg-1016740",
+     "factor": 5
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-FIX-WIRE-NAILS-50",
+   "unit": "PACK",
+   "basis": "same make (Eureka wire nails 50 mm, 1 kg) x 5",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "Eureka Flat Head Wire Nails 50mm - 1kg Pack T6A570",
+     "price": 51.0,
+     "url": "https://www.chamberlains.co.za/our-range/eureka-flat-head-wire-nails-50mm-1kg-pack-t6a570-1056273",
+     "factor": 5
+    },
+    {
+     "retailer": "Builders",
+     "name": "Eureka 50 mm Wire Nails 1 kg",
+     "price": 65.0,
+     "url": "https://www.builders.co.za/Fasteners-and-Adhesives/Nails/Nails/Eureka-50-mm-Wire-Nails-1-kg/p/000000000000682060",
+     "factor": 5
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-FIX-WIRE-NAILS-75",
+   "unit": "PACK",
+   "basis": "round wire nails 75 mm, 5 kg; 1 kg packs x 5",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "Wire Nails 3.55 x 75mm - 5kg Pack",
+     "price": 145.0,
+     "url": "https://www.chamberlains.co.za/our-range/wire-nails-3-55-x-75mm-5kg-pack-1016753"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Round Wire Nails 75 mm X 1Kg",
+     "price": 35.95,
+     "url": "https://www.cashbuild.co.za/nails/324107-round-wire-nails-75-mm-x-1kg",
+     "factor": 5
+    },
+    {
+     "retailer": "Builders",
+     "name": "Eureka 75 mm Wire Nails 1 kg",
+     "price": 55.0,
+     "url": "https://www.builders.co.za/Fasteners-and-Adhesives/Nails/Nails/Eureka-75-mm-Wire-Nails-1-kg/p/000000000000682061",
+     "factor": 5
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-FIX-WIRE-NAILS-100",
+   "unit": "PACK",
+   "basis": "round wire nails 100 mm, 5 kg; 1 kg packs x 5",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "Wire Nails 4 x 100mm - 5kg Pack",
+     "price": 145.0,
+     "url": "https://www.chamberlains.co.za/our-range/wire-nails-4-x-100mm-5kg-pack-1016759"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Round Wire Nails 100mm X 1Kg",
+     "price": 35.95,
+     "url": "https://www.cashbuild.co.za/nails/324108-round-wire-nails-100mm-x-1kg",
+     "factor": 5
+    },
+    {
+     "retailer": "Builders",
+     "name": "Eureka 100 mm Wire Nails 1 kg",
+     "price": 55.0,
+     "url": "https://www.builders.co.za/Fasteners-and-Adhesives/Nails/Nails/Eureka-100-mm-Wire-Nails-1-kg/p/000000000000682062",
+     "factor": 5
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-FIX-WIRE-NAILS-125",
+   "unit": "PACK",
+   "basis": "round wire nails 125 mm, 5 kg; 1 kg pack x 5",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "Wire Nails 5 x 125mm 5kg",
+     "price": 145.0,
+     "url": "https://www.chamberlains.co.za/our-range/wire-nails-5-x-125mm-5kg-1016763"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Eureka 125 mm Wire Nails 1 kg",
+     "price": 55.0,
+     "url": "https://www.builders.co.za/Fasteners-and-Adhesives/Nails/Nails/Eureka-125-mm-Wire-Nails-1-kg/p/000000000000682063",
+     "factor": 5
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-LCK-DRAWER-RUNNERS-450-MM-PAIR",
+   "unit": "EACH",
+   "basis": "white economy drawer runners 450 mm, pair",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "FIT White Econo Drawer Runners 450mm 801450ECO",
+     "price": 31.9,
+     "url": "https://www.chamberlains.co.za/our-range/fit-white-econo-drawer-runners-450mm-801450eco-1062438"
+    },
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Drawer Runner econo1.0mm450mmwht25kg",
+     "price": 31.9,
+     "url": "https://leroymerlin.co.za/drawer-runner-econo1-0mm450mmwht25kg-81444525"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Builders 2 x Drawer Runners White 450 x 35 x 10 mm",
+     "price": 44.0,
+     "url": "https://www.builders.co.za/Decor-Furniture-and-Home-Living/Kitchen-Accessories/Handles-Hinges-and-Cabinet-Hardware/Builders-2-x-Drawer-Runners-White-450-x-35-x-10-mm/p/000000000000551208"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-BRD-SHUTTERPLY-1220-X-2440-X-18-MM",
+   "unit": "SHEET",
+   "basis": "plain pine shutterply 1220 x 2440 x 18 mm",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "Plain Shutterply Pine Board 18/20 x 1220 x 2440mm",
+     "price": 589.0,
+     "url": "https://www.chamberlains.co.za/our-range/plain-shutterply-pine-board-18-20-x-1220-x-2440mm-1024261"
+    },
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Pine Shutterply Board C+C Grade T18mm x W1220mm x L2440mm",
+     "price": 599.0,
+     "url": "https://leroymerlin.co.za/pine-shutterply-board-c-c-grade-t18mm-x-w1220mm-x-l2440mm-81477431"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Shutterply Untreated 2.440X1.220 18mm",
+     "price": 734.95,
+     "url": "https://www.cashbuild.co.za/boards-sheeting/235002-shutterply-18mm"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-BRD-SHUTTERPLY-1220-X-2440-X-21-MM",
+   "unit": "SHEET",
+   "basis": "plain pine shutterply 1220 x 2440 x 21 mm",
+   "listings": [
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Pine Shutterply Board C+/C Grade T21mm x W1220mm x L2440mm",
+     "price": 799.0,
+     "url": "https://leroymerlin.co.za/pine-shutterply-board-c-c-grade-t21mm-x-w1220mm-x-l2440mm-81477413"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Builders Board ShutterPly 1220 x 2440 x 21 mm",
+     "price": 839.0,
+     "url": "https://www.builders.co.za/Building-Materials/Boards-and-Sheeting/Boards-and-Shelving/Builders-Board-ShutterPly-1220-x-2440-x-21-mm/p/000000000000299082"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-BRD-MASONITE-HARDBOARD-1220-X-2440",
+   "unit": "SHEET",
+   "basis": "standard brown hardboard 2440 x 1220 x 3.2 mm",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Masonite Standard Brown 3.2mm 2.440 X 1.220",
+     "price": 222.95,
+     "url": "https://www.cashbuild.co.za/boards-sheeting/273-masonite-standard-brown-32mm-2440-x-1220"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Masonite Standard Brown 2440 x 1220 x 3.2 mm",
+     "price": 229.0,
+     "url": "https://www.builders.co.za/Building-Materials/Boards-and-Sheeting/Boards-and-Shelving/Masonite-Standard-Brown-2440-x-1220-x-3-2-mm/p/000000000000034125"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "3.2mm Brown Hardboard 1220 x 2440mm",
+     "price": 239.0,
+     "url": "https://www.chamberlains.co.za/our-range/3-2mm-brown-hardboard-1220-x-2440mm-1011826"
+    }
+   ]
+  }
+ ]
+}
