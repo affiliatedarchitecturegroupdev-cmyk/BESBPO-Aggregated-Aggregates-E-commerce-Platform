@@ -20,13 +20,16 @@ def test_counts_by_category():
     assert min(counts.values()) >= 13
 
 
-def test_every_unit_is_quote_only_and_uses_a_supplies_unit():
+def test_every_unit_uses_a_supplies_unit_and_is_quoted_or_benchmarked():
     for p in FITOUT:
         assert p["manufacturer"] is None
         for u in p["units"]:
             assert u["unit"] in ("EACH", "PACK", "ROLL", "SHEET"), p["sku"]
-            assert u["list_price_per_unit"] is None and u["market_benchmark_price"] is None, p["sku"]
-            assert u["pricing_status"].startswith("Quote-only"), p["sku"]
+            if u["list_price_per_unit"] is None:
+                assert u["market_benchmark_price"] is None and u["pricing_status"].startswith("Quote-only"), p["sku"]
+            else:  # priced by scripts/catalogue/apply_benchmarks.py: two retailers, lowest x 1.08
+                assert u["pricing_status"] == "Ready — benchmarked", p["sku"]
+                assert round(u["market_benchmark_price"] * 1.08, 2) == u["list_price_per_unit"], p["sku"]
 
 
 def test_electrical_and_solar_carry_the_compliance_note():

@@ -16,12 +16,17 @@ def test_counts():
     assert {f: len(added(f)) for f in FILES} == {"masonry": 164, "supplies": 394, "roofing": 41, "steel": 108, "b2b_packaged": 20}
 
 
-def test_every_added_unit_is_quote_only():
+def test_every_added_unit_is_quote_only_or_benchmarked_by_two_retailers():
+    """Range-depth units start quote-only; scripts/catalogue/apply_benchmarks.py prices them only with two retailers."""
     for f in FILES:
         for p in added(f):
             for u in p["units"]:
-                assert u["pricing_status"].startswith("Quote-only"), p["sku"]
-                assert u.get("list_price_per_unit") is None and u.get("market_benchmark_price") is None, p["sku"]
+                if u.get("list_price_per_unit") is None:
+                    assert u["pricing_status"].startswith("Quote-only") and u.get("market_benchmark_price") is None, p["sku"]
+                else:
+                    assert u["pricing_status"] == "Ready — benchmarked", p["sku"]
+                    assert round(u["market_benchmark_price"] * 1.08, 2) == u["list_price_per_unit"], p["sku"]
+                    assert u["source_note"].count(" R") >= 2, p["sku"]
 
 
 def test_skus_and_slugs_unique_across_catalogues():
