@@ -12,6 +12,9 @@ RAW, SUPPLIES_PRODUCTS = packaged_goods.load_supplies()
 client = TestClient(app)
 
 
+RETAILERS = ("Builders", "Cashbuild", "Chamberlains", "Leroy Merlin")
+
+
 def test_catalogue_shape():
     codes = [c["code"] for c in RAW["categories"]]
     assert codes == [f"CAT-{n}" for n in range(32, 57)]
@@ -31,7 +34,7 @@ def test_priced_units_are_lowest_regular_price_times_1_08():
                 bench = Decimal(str(u["market_benchmark_price"]))
                 assert Decimal(str(u["list_price_per_unit"])) == (bench * Decimal("1.08")).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP), p["sku"]
                 # Two retailers back every live price.
-                assert "Cashbuild" in u["source_note"] and "Builders" in u["source_note"], p["sku"]
+                assert sum(r in u["source_note"] for r in RETAILERS) >= 2, p["sku"]
             else:
                 assert u["list_price_per_unit"] is None and u["market_benchmark_price"] is None, p["sku"]
     assert priced >= 40

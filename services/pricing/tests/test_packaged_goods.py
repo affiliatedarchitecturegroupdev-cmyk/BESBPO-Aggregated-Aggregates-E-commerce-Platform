@@ -21,6 +21,10 @@ def cents(v: Decimal) -> Decimal:
     return v.quantize(CENT, rounding=ROUND_HALF_UP)
 
 
+def priced_by_evidence(unit):
+    return "on retailer product and category pages within robots.txt" in (unit.get("source_note") or "")
+
+
 def test_every_published_price_reconciles_with_its_benchmark_and_markup():
     """List = ROUND(ROUND(benchmark x cost basis) x (1 + markup)) — the workbook's own formula."""
     priced = 0
@@ -34,8 +38,12 @@ def test_every_published_price_reconciles_with_its_benchmark_and_markup():
             assert cost == Decimal(str(unit["cost_per_unit"]))
             assert cents(cost * (1 + Decimal(str(unit["markup_percent"])) / 100)) == Decimal(str(unit["list_price_per_unit"]))
             priced += 1
-    # Nine bagged cements with >=2 retailer benchmarks (CEMENT_MASTER_CATALOGUE.md) and the non-shrink grout.
-    assert priced == 10
+            if priced_by_evidence(unit):
+                retailers = ("Builders", "Cashbuild", "Chamberlains", "Leroy Merlin")
+                assert sum(r in unit["source_note"] for r in retailers) >= 2, product["sku"]
+    # Nine bagged cements with >=2 retailer benchmarks (CEMENT_MASTER_CATALOGUE.md), the non-shrink grout,
+    # and the units priced from scripts/catalogue/benchmarks (docs/pricing/BENCHMARKS.md).
+    assert priced >= 10
 
 
 def test_the_cement_master_catalogue_is_complete_and_deduplicated():

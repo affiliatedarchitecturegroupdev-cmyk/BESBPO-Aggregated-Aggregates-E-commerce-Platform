@@ -43,6 +43,10 @@ and quotes are always re-priced by the pricing service.
   are excluded. Where only one retailer lists a product, the makes differ, or
   a listing doesn't state the size, it is quoted
   (`BUILDING_SUPPLIES_CATALOGUE.md`).
+- **Quote-only products, re-checked (Oct 2026 onwards):** the same rule,
+  applied from dated evidence files by `scripts/catalogue/apply_benchmarks.py`,
+  which refuses fewer than two retailers or a promotional price
+  (`docs/pricing/BENCHMARKS.md`).
 - **Cost proxy:** for cement, ready-mix, steel, masonry, roofing and building supplies the cost is assumed to be the
   benchmark itself (`costBasisPercent` 100) until real supplier
   cost/commission terms are known — the biggest open commercial item.
