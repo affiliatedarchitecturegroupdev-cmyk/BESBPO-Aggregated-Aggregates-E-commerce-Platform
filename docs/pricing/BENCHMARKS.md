@@ -73,4 +73,16 @@ Timber City, Brights and Makro.
 
 | File | Units priced | Lines |
 |---|---|---|
-| `2026-10-19.json` | 64 | cement and mortars (batch A); electrical, solar, tiling, plumbing fittings, fixings and boards (batch B) |
+| `2026-10-19.json` | 103 | cement and mortars (batch A); electrical, solar, tiling, plumbing fittings, fixings and boards (batch B); steel windows, door frames, fencing, geyser parts, copper and Polycop pipe and fittings, valves, soil fittings, ceilings, PPE and waterproofing (batch C) |
+
+The October 2026 round ended with 195 of the 1,343 merchant-line products
+priced. The batch C collection stopped at the background-job time limit after
+328 of 433 supplies products. Tools, most PPE, paint and the rest of
+waterproofing were matched against the Cashbuild crawl and earlier results
+only.
+
+Batch D (masonry, roofing, timber and steel) priced nothing new. Its remaining
+products were found at only one retailer, or the listings disagreed too much
+to trust. Concrete lintels are an example: Cashbuild lists 1.2 m at R179.95,
+while Builders lists an unbranded 1200 mm one at R28.48. Those products stay
+quote-only until a second source confirms them.

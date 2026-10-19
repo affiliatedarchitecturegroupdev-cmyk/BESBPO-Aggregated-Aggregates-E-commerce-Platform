@@ -315,13 +315,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 545.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 545.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Cashbuild doesn't state the wall width, so the listings can't be matched; quoted with the supplier. Seen: Cashbuild Steel Door Frame Left Hand (wall width not stated) R303.95; Builders Robmeg Left Hand Steel Door Frame 813 x 2032 x 115mm R589.00 (checked 2026-10-17 on Cashbuild category listings and the Builders product search (regular prices only; promotions excluded))."
+          "list_price_per_unit": 588.6,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Steel Door Frame 115mm Left Hand 813 x 1.2 x 2032mm  8131151.2L R545.00; Builders Robmeg Left Hand Steel Door Frame 813 x 2032 x 115mm R589.00. Benchmark = lowest regular price (Chamberlains) R545.00, list = x 1.08. Basis: pressed-steel door frame 813 x 2032 x 115 mm. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ]
     },
@@ -744,13 +744,13 @@
           "unit": "ROLL",
           "unit_label": "30 m roll",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 834.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 834.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "no two SA retailers list the same product at a regular price — quoted with the supplier. Seen: Builders African Gate and Fence Diamond Mesh L/G 1200 x 75 x 30 m x 1.8 mm R1,299.00 (checked 2026-10-17 on Cashbuild category listings and the Builders product search (regular prices only; promotions excluded))."
+          "list_price_per_unit": 901.75,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Diamond Mesh Ordinary 1.2m x 30m R834.95; Builders African Gate and Fence Diamond Mesh L/G 1200 x 75 x 30 m x 1.8 mm R1,299.00. Benchmark = lowest regular price (Cashbuild) R834.95, list = x 1.08. Basis: galvanised diamond mesh 1.2 m x 30 m. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ]
     },
@@ -783,13 +783,13 @@
           "unit": "ROLL",
           "unit_label": "30 m roll",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 1049.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 1049.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "no two SA retailers list the same product at a regular price — quoted with the supplier. Seen: Builders African Gate and Fence Diamond Mesh L/G 1800 x 75 x 1.8 mm x 30 m R1,599.00 (checked 2026-10-17 on Cashbuild category listings and the Builders product search (regular prices only; promotions excluded))."
+          "list_price_per_unit": 1133.95,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Diamond Mesh Ordinary 1.8m x 30m R1,049.95; Builders African Gate and Fence Diamond Mesh L/G 1800 x 75 x 1.8 mm x 30 m R1,599.00. Benchmark = lowest regular price (Cashbuild) R1,049.95, list = x 1.08. Basis: galvanised diamond mesh 1.8 m x 30 m. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ]
     },
@@ -1440,13 +1440,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 5349.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 5349.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "no two SA retailers list the same product at a regular price — quoted with the supplier. Seen: Cashbuild Jojo 4750lt Vertical Water Tank R5,349.95 (checked 2026-10-17 on Cashbuild category listings and the Builders product search (regular prices only; promotions excluded))."
+          "list_price_per_unit": 5777.95,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Jojo 4750lt Vertical Water Tank R5,349.95; Builders JoJo Tank 4750 L Vertical Water Storage Tank Cloudy Grey R6,899.00. Benchmark = lowest regular price (Cashbuild) R5,349.95, list = x 1.08. Basis: same make and size (JoJo 4,750 L vertical). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ]
     },
@@ -1712,13 +1712,13 @@
           "unit": "EACH",
           "unit_label": "5.5 m length",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 354.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 354.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "no two SA retailers list the same product at a regular price — quoted with the supplier. Seen: Builders Saffer 15 mm Copper Pipe 460/2 5.5 m R1,205.00 (checked 2026-10-17 on Cashbuild category listings and the Builders product search (regular prices only; promotions excluded))."
+          "list_price_per_unit": 383.35,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Copper Tube Econo 15mm X 5.5M R354.95; Builders Saffer 15 mm SABS Copper Tubing 460/0 5.5 m R445.00. Benchmark = lowest regular price (Cashbuild) R354.95, list = x 1.08. Basis: copper tube 15 mm x 5.5 m. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ]
     },
@@ -2098,13 +2098,13 @@
           "unit": "EACH",
           "unit_label": "5 kg tub",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 250.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 250.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Different makes; quoted with the supplier. Seen: Cashbuild Acrylic Adhesive & Filler 5kg R309.95; Builders Alcolin Cornice Adhesive White 5 kg R467.00 (checked 2026-10-17 on Cashbuild category listings and the Builders product search (regular prices only; promotions excluded))."
+          "list_price_per_unit": 270.0,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Design House Cornice Adhesive 5 kg R250.00; Chamberlains ChamberValue Cornice Adhesive 5kg 158909 R279.00. Benchmark = lowest regular price (Builders) R250.00, list = x 1.08. Basis: cornice adhesive 5 kg. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ]
     },
@@ -2369,13 +2369,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 315.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 315.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "no two SA retailers list the same product at a regular price — quoted with the supplier. Seen: Builders Lasher Shovel Round Nose MB2 MHSS R359.00 (checked 2026-10-17 on Cashbuild category listings and the Builders product search (regular prices only; promotions excluded))."
+          "list_price_per_unit": 340.2,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Lasher Round Nose Steel Shaft Shovel FG00415 R315.00; Cashbuild Lasher Round Nose Shovel R322.95; Builders Lasher Shovel Round Nose MB2 MHSS R359.00. Benchmark = lowest regular price (Chamberlains) R315.00, list = x 1.08. Basis: same make (Lasher round-nose shovel). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ]
     },
@@ -2600,13 +2600,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 57.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 57.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Different makes; quoted with the supplier. Seen: Cashbuild Reflective Vest Large R57.95; Builders Watt Econo Reflective Vest Lime and Silver R79.00 (checked 2026-10-17 on Cashbuild category listings and the Builders product search (regular prices only; promotions excluded))."
+          "list_price_per_unit": 62.59,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Reflective Vest Large R57.95; Builders Pioneer Reflective Vest with Zip and ID Pouch Lime Medium R69.00. Benchmark = lowest regular price (Cashbuild) R57.95, list = x 1.08. Basis: reflective safety vest (size on the quote). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ]
     },
@@ -2638,13 +2638,13 @@
           "unit": "EACH",
           "unit_label": "Pair",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 344.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 344.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Different makes; quoted with the supplier. Seen: Cashbuild Safety Boots Steel Toe Size 8 R344.95; Builders Builders Safety Boots Size 7 R359.00 (checked 2026-10-17 on Cashbuild category listings and the Builders product search (regular prices only; promotions excluded))."
+          "list_price_per_unit": 372.55,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Safety Boots Steel Toe Size 8 R344.95; Builders Builders Safety Boots Size 10 R359.00. Benchmark = lowest regular price (Cashbuild) R344.95, list = x 1.08. Basis: steel-toe safety boots (size on the quote). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ]
     },
@@ -2714,13 +2714,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 16.9,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 16.9,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Different makes; quoted with the supplier. Seen: Cashbuild Safety Spectacles R29.95; Builders Robust Anti-Scratch Safety Glasses Clear (promotion) R29.00 (checked 2026-10-17 on Cashbuild category listings and the Builders product search (regular prices only; promotions excluded))."
+          "list_price_per_unit": 18.25,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Grange Clear Anti-Scratch Euro Safety Glasses SP7033C R16.90; Builders Evrigard Euro Anti Scratch Safety Glasses Clear R29.00; Cashbuild Safety Spectacles R29.95. Benchmark = lowest regular price (Chamberlains) R16.90, list = x 1.08. Basis: clear anti-scratch safety glasses. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ]
     },
@@ -2947,13 +2947,13 @@
           "unit": "EACH",
           "unit_label": "20 L tin",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 1329.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 1329.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "The Builders price was a promotion, so only one regular price was found; quoted with the supplier. Seen: Cashbuild Abe Super Laykold 20L R1,299.95; Builders a.b.e Super Laykold Black 20 L (promotion) R1,279.00 (checked 2026-10-17 on Cashbuild category listings and the Builders product search (regular prices only; promotions excluded))."
+          "list_price_per_unit": 1436.35,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Abe Super Laykold 20L R1,329.95; Chamberlains ABE Super Laykold Black 20L 201020 R1,449.00. Benchmark = lowest regular price (Cashbuild) R1,329.95, list = x 1.08. Basis: same make and size (a.b.e. Super Laykold 20 L). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ]
     },
@@ -3334,13 +3334,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 355.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 355.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 383.4,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Robmeg NC1 F7 Right Hand Steel Window Frame R355.00; Chamberlains Steel FX7 NC1 Window Frame 533 x 949mm R425.00. Benchmark = lowest regular price (Builders) R355.00, list = x 1.08. Basis: steel window NC1 FX7 (SANS 727 code). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -3374,13 +3374,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 419.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 419.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 452.52,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Robmeg F7 NC2 LH P Window Frame R419.00; Cashbuild Window Frame Steel Nc2 F7 Left Hand R456.95. Benchmark = lowest regular price (Builders) R419.00, list = x 1.08. Basis: steel window NC2 FX7 (SANS 727 code). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -3654,13 +3654,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 800.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 800.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 864.0,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Robmeg Cliscoes ND4 Steel Window 1511 x 1245 mm R800.00; Chamberlains Steel FX7 ND4 Window Frame 1511 x 1245mm R1,104.00. Benchmark = lowest regular price (Builders) R800.00, list = x 1.08. Basis: steel window ND4 FX7 (SANS 727 code). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -3734,13 +3734,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 1065.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 1065.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 1150.2,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Robmeg F7 ND11F P Window R1,065.00; Cashbuild Window Frame Steel Nd11f F7 R1,204.95. Benchmark = lowest regular price (Builders) R1,065.00, list = x 1.08. Basis: steel window ND11F FX7 (SANS 727 code). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -8334,13 +8334,13 @@
           "unit": "EACH",
           "unit_label": "2 kg coil",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 97.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 97.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 105.79,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Galvanised Wire 2kg 16gge 1.6mm R97.95; Builders African Gate and Fence Galvanised Wire 1.6 mm x 5 kg R269.00 x 0.4 = R107.60. Benchmark = lowest regular price (Cashbuild) R97.95, list = x 1.08. Basis: galvanised wire 1.6 mm, 2 kg; Builders 5 kg coil x 0.4. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -10562,13 +10562,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 205.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 205.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 221.4,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Geyser Element 2kw Boss W/Pock R205.00; Chamberlains Geyser Element Boss 2kW With Pocket 624204 R299.00. Benchmark = lowest regular price (Builders) R205.00, list = x 1.08. Basis: geyser element 2 kW, Boss flange with pocket. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -10602,13 +10602,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 255.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 255.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 275.4,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Geyser Element 3kw Boss W/ Pock R255.00; Chamberlains Geyser Boss Element 3kW With Pocket 524206 R355.00. Benchmark = lowest regular price (Builders) R255.00, list = x 1.08. Basis: geyser element 3 kW, Boss flange with pocket. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -10642,13 +10642,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 489.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 489.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 528.12,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Geyser Element Boss W/Pock 4kw R489.00; Chamberlains Geyser Boss Element 4kW With Pocket 524190 R655.00. Benchmark = lowest regular price (Builders) R489.00, list = x 1.08. Basis: geyser element 4 kW, Boss flange with pocket. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -10682,13 +10682,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 239.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 239.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 259.15,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Thermostat Kwiktherm 11*20 Amps R239.95; Builders Kwikot Kwiktherm TH-208 Thermostat 270 mm R289.00. Benchmark = lowest regular price (Cashbuild) R239.95, list = x 1.08. Basis: same make (Kwikot Kwiktherm geyser thermostat). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -10722,13 +10722,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 179.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 179.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 194.35,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Geyser Drip Tray Black 150l to 200l Kwikot R179.95; Builders Kwikot DRT1600 Horizontal Drip Tray 1600 x 600 mm R229.00. Benchmark = lowest regular price (Cashbuild) R179.95, list = x 1.08. Basis: same make (Kwikot geyser drip tray, 150-200 L). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -10802,13 +10802,13 @@
           "unit": "ROLL",
           "unit_label": "25 m roll",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 249.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 249.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 269.95,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Polycop Pipe 15mm x 50m R249.95; Builders MacNeil Polycop Pipe 15 mm x 50 m Roll R385.00; Chamberlains Polycop Pipe 15mm x 50m LTP1550A R499.00. Benchmark = lowest regular price (Cashbuild) R249.95, list = x 1.08. Basis: Polycop 15 mm x 50 m roll. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -10842,13 +10842,13 @@
           "unit": "ROLL",
           "unit_label": "25 m roll",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 499.9,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 499.9,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 539.89,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Polycop Pipe 15mm x 50m R249.95 x 2 = R499.90; Builders MacNeil Polycop Pipe 15 mm x 50 m Roll R385.00 x 2 = R770.00; Chamberlains Polycop Pipe 15mm x 50m LTP1550A R499.00 x 2 = R998.00. Benchmark = lowest regular price (Cashbuild) R499.90, list = x 1.08. Basis: Polycop 15 mm, 100 m; 50 m rolls x 2. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -10882,13 +10882,13 @@
           "unit": "ROLL",
           "unit_label": "25 m roll",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 939.9,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 939.9,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 1015.09,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Polycop Pipe 22mm x 50m R469.95 x 2 = R939.90; Builders MacNeil Polycop Pipe 22 mm x 100 m Roll R1,569.00; Chamberlains Polycop Pipe 22mm x 100m LTP0107A R1,849.00. Benchmark = lowest regular price (Cashbuild) R939.90, list = x 1.08. Basis: Polycop 22 mm x 100 m; Cashbuild 50 m roll x 2. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -10922,13 +10922,13 @@
           "unit": "EACH",
           "unit_label": "5.5 m length",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 674.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 674.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 728.95,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Copper Tube Econo 22mm X 5.5M R674.95; Builders Saffer 22 mm SABS Copper Tubing 460/0 5.5 m R775.00. Benchmark = lowest regular price (Cashbuild) R674.95, list = x 1.08. Basis: copper tube 22 mm x 5.5 m. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -11002,13 +11002,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 6.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 6.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 6.48,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Builders Copper Elbow 90d 15 mm R6.00; Cashbuild Solder Cxc Elbow 90 15mmx1 SABS R7.95. Benchmark = lowest regular price (Builders) R6.00, list = x 1.08. Basis: copper capillary elbow 90° 15 mm. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -11042,13 +11042,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 9.9,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 9.9,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 10.69,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Copper Equal Tee 15mm BG5130A/1 R9.90; Builders Builders Copper Tee Equal 15 mm R13.00; Cashbuild Solder Cxcxc Equal Tee 15mmx1 SABS R15.95. Benchmark = lowest regular price (Chamberlains) R9.90, list = x 1.08. Basis: copper capillary equal tee 15 mm. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -11082,13 +11082,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 3.9,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 3.9,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 4.21,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Copper Straight Coupler C/C 15mm BG5270A/1 R3.90; Cashbuild Solder Cxc Str Coupler 15mmx1 SABS R5.95. Benchmark = lowest regular price (Chamberlains) R3.90, list = x 1.08. Basis: copper capillary straight coupler 15 mm. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -11202,13 +11202,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 43.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 43.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 47.47,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild Compression Cxc Elbow 90 15mmx1 SABS R43.95; Builders Cobra CxC Elbow Compression 15 mm R65.00. Benchmark = lowest regular price (Cashbuild) R43.95, list = x 1.08. Basis: copper compression elbow 15 mm. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -11282,13 +11282,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 16.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 16.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 17.28,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Builders Copper Elbow 90d 22 mm R16.00; Cashbuild Solder Cxc Elbow 90 22mmx1 SABS R21.95. Benchmark = lowest regular price (Builders) R16.00, list = x 1.08. Basis: copper capillary elbow 90° 22 mm. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -11322,13 +11322,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 29.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 29.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 31.32,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Builders Copper Tee Equal 22 mm R29.00; Chamberlains Copper Equal Tee C/C/C 22mm BG5130B/1 R29.90; Cashbuild Solder Cxcxc Equal Tee 22mmx1 SABS R41.95. Benchmark = lowest regular price (Builders) R29.00, list = x 1.08. Basis: copper capillary equal tee 22 mm. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -11362,13 +11362,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 14.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 14.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 15.12,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Builders Copper Coupler Straight 22 mm R14.00; Cashbuild Solder Cxc Str Coupler 22mmx1 SABS R15.95. Benchmark = lowest regular price (Builders) R14.00, list = x 1.08. Basis: copper capillary straight coupler 22 mm. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -11562,13 +11562,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 139.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 139.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 150.12,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Builders Female To Female RB Gate Valve 15 mm R139.00; Chamberlains Cobra Brass Gate Valve F/F 15mm 018711 R169.00. Benchmark = lowest regular price (Builders) R139.00, list = x 1.08. Basis: brass gate valve 15 mm, female x female. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -11722,13 +11722,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 159.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 159.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 171.72,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Gio Bella Lever-Type Ball Valve 15mm 3110 R159.00; Leroy Merlin GIO 15MM LEVER BALL VALVE CXC DZR R159.00; Builders ISM 3110 Brass Lever Ball Valve 15 mm R175.00. Benchmark = lowest regular price (Chamberlains) R159.00, list = x 1.08. Basis: same model (lever ball valve 15 mm, 3110). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -11762,13 +11762,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 169.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 169.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 182.52,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders ISM 3127 Brass Lever Ball Valve 22 mm R169.00; Leroy Merlin GIO 22MM LEVER BALL VALVE CXC DZR R169.00; Chamberlains Gio Bella Lever-Type Ball Valve 22mm 3127 R219.00. Benchmark = lowest regular price (Builders) R169.00, list = x 1.08. Basis: same model (lever ball valve 22 mm, 3127). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -12802,13 +12802,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 54.9,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 54.9,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 59.29,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Chamberlains Wirquin Straight Pan Connector 110mm  RA372 71150000 R54.90; Leroy Merlin RA372 STR PAN CONNECTOR 110MM R64.90; Builders Wirquin Straight Pan Connector R65.00. Benchmark = lowest regular price (Chamberlains) R54.90, list = x 1.08. Basis: same make (Wirquin straight pan connector 110 mm). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -12842,13 +12842,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 46.9,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 46.9,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 50.65,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Leroy Merlin Airvent cowl MARLEY 110mm pvc R46.90; Chamberlains Marley PVC Soil & Vent Airvent Cowl 110mm SV42 R56.90; Builders Marley Pipes PVC Soil and Vent Cowl Vent 110 mm R79.00. Benchmark = lowest regular price (Leroy Merlin) R46.90, list = x 1.08. Basis: same make (Marley PVC vent cowl 110 mm). Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -13802,13 +13802,13 @@
           "unit": "EACH",
           "unit_label": "3.9 m panel",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 84.95,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 84.95,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 91.75,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Cashbuild PVC Ceiling White Gloss 6mmx300mmx3.9M R84.95; Chamberlains PVC Ceiling Board High Gloss White 300 x 3900mm - 14 Pack R1,999.00 x 0.0714286 = R142.79. Benchmark = lowest regular price (Cashbuild) R84.95, list = x 1.08. Basis: PVC ceiling board gloss white 300 mm x 3.9 m; Chamberlains 14-pack / 14. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"
@@ -16762,13 +16762,13 @@
           "unit": "EACH",
           "unit_label": "Each",
           "weight_kg": null,
-          "market_benchmark_price": null,
+          "market_benchmark_price": 19.0,
           "cost_basis_percent": 100,
-          "cost_per_unit": null,
+          "cost_per_unit": 19.0,
           "markup_percent": 8,
-          "list_price_per_unit": null,
-          "pricing_status": "Quote-only — no retail benchmark",
-          "source_note": "Range depth: a size or type South African builders' merchants stock (Builders catalogue and product search, Cashbuild listings, checked 2026-10-18). Make, price and availability are confirmed with the supplier on the quote."
+          "list_price_per_unit": 20.52,
+          "pricing_status": "Ready — benchmarked",
+          "source_note": "Builders Fragram Safety Goggles Clear R19.00; Cashbuild Safety Goggles Clear R27.95. Benchmark = lowest regular price (Builders) R19.00, list = x 1.08. Basis: clear safety goggles. Checked 2026-10-19 on retailer product and category pages within robots.txt (regular prices only; promotions excluded)."
         }
       ],
       "_range": "range-depth-2026-10"

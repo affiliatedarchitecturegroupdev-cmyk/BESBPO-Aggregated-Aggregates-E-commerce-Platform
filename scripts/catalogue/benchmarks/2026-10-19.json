@@ -1404,6 +1404,858 @@
      "url": "https://www.chamberlains.co.za/our-range/3-2mm-brown-hardboard-1220-x-2440mm-1011826"
     }
    ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-WIN-STL-NC1",
+   "unit": "EACH",
+   "basis": "steel window NC1 FX7 (SANS 727 code)",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Robmeg NC1 F7 Right Hand Steel Window Frame",
+     "price": 355.0,
+     "url": "https://www.builders.co.za/Doors-and-Windows/Windows/Steel-Windows/Robmeg-NC1-F7-Right-Hand-Steel-Window-Frame/p/000000000000520307"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Steel FX7 NC1 Window Frame 533 x 949mm",
+     "price": 425.0,
+     "url": "https://www.chamberlains.co.za/our-range/steel-fx7-nc1-window-frame-533-x-949mm-1029029"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-WIN-STL-NC2",
+   "unit": "EACH",
+   "basis": "steel window NC2 FX7 (SANS 727 code)",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Robmeg F7 NC2 LH P Window Frame",
+     "price": 419.0,
+     "url": "https://www.builders.co.za/Doors-and-Windows/Windows/Steel-Windows/Robmeg-F7-NC2-LH-P-Window-Frame/p/000000000000426640"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Window Frame Steel Nc2 F7 Left Hand",
+     "price": 456.95,
+     "url": "https://www.cashbuild.co.za/window-frames-steel/123021-steel-window-frame-side-hung"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-WIN-STL-ND4",
+   "unit": "EACH",
+   "basis": "steel window ND4 FX7 (SANS 727 code)",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Robmeg Cliscoes ND4 Steel Window 1511 x 1245 mm",
+     "price": 800.0,
+     "url": "https://www.builders.co.za/Doors-and-Windows/Windows/Steel-Windows/Robmeg-Cliscoes-ND4-Steel-Window-1511-x-1245-mm/p/000000000000126940"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Steel FX7 ND4 Window Frame 1511 x 1245mm",
+     "price": 1104.0,
+     "url": "https://www.chamberlains.co.za/our-range/steel-fx7-nd4-window-frame-1511-x-1245mm-1029045"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-WIN-STL-ND11F",
+   "unit": "EACH",
+   "basis": "steel window ND11F FX7 (SANS 727 code)",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Robmeg F7 ND11F P Window",
+     "price": 1065.0,
+     "url": "https://www.builders.co.za/Doors-and-Windows/Windows/Steel-Windows/Robmeg-F7-ND11F-P-Window/p/000000000000369431"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Window Frame Steel Nd11f F7",
+     "price": 1204.95,
+     "url": "https://www.cashbuild.co.za/window-frames-steel/123048-w-frame-steel-nd11f-f7"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-DOR-FRM-STL-115",
+   "unit": "EACH",
+   "basis": "pressed-steel door frame 813 x 2032 x 115 mm",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "Steel Door Frame 115mm Left Hand 813 x 1.2 x 2032mm  8131151.2L",
+     "price": 545.0,
+     "url": "https://www.chamberlains.co.za/our-range/steel-door-frame-115mm-left-hand-813-x-1-2-x-2032mm-8131151-2l-1010483"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Robmeg Left Hand Steel Door Frame 813 x 2032 x 115mm",
+     "price": 589.0,
+     "url": "https://www.builders.co.za/Doors-and-Windows/Doors/Door-Frames/Robmeg-Left-Hand-Steel-Door-Frame-813-x-2032-x-115mm/p/000000000000033542"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-FEN-DMESH-1200",
+   "unit": "ROLL",
+   "basis": "galvanised diamond mesh 1.2 m x 30 m",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Diamond Mesh Ordinary 1.2m x 30m",
+     "price": 834.95,
+     "url": "https://www.cashbuild.co.za/reinforcing-mesh/400-diamond-mesh-1200-x-75-x-30m-ordinary"
+    },
+    {
+     "retailer": "Builders",
+     "name": "African Gate and Fence Diamond Mesh L/G 1200 x 75 x 30 m x 1.8 mm",
+     "price": 1299.0,
+     "url": "https://www.builders.co.za/Security-and-Smart-Home/Perimeter-Security/Fencing-and-Gates/African-Gate-and-Fence-Diamond-Mesh-L-G-1200-x-75-x-30-m-x-1-8-mm/p/000000000000005247"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-FEN-DMESH-1800",
+   "unit": "ROLL",
+   "basis": "galvanised diamond mesh 1.8 m x 30 m",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Diamond Mesh Ordinary 1.8m x 30m",
+     "price": 1049.95,
+     "url": "https://www.cashbuild.co.za/reinforcing-mesh/401-diamond-mesh-1800-x-75-x-30m-ordinary"
+    },
+    {
+     "retailer": "Builders",
+     "name": "African Gate and Fence Diamond Mesh L/G 1800 x 75 x 1.8 mm x 30 m",
+     "price": 1599.0,
+     "url": "https://www.builders.co.za/Security-and-Smart-Home/Perimeter-Security/Fencing-and-Gates/African-Gate-and-Fence-Diamond-Mesh-L-G-1800-x-75-x-1-8-mm-x-30-m/p/000000000000005243"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-FEN-WIRE-16",
+   "unit": "EACH",
+   "basis": "galvanised wire 1.6 mm, 2 kg; Builders 5 kg coil x 0.4",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Galvanised Wire 2kg 16gge 1.6mm",
+     "price": 97.95,
+     "url": "https://www.cashbuild.co.za/fencing-wire/4105-galvanised-wire-2kg-16gge-16mm"
+    },
+    {
+     "retailer": "Builders",
+     "name": "African Gate and Fence Galvanised Wire 1.6 mm x 5 kg",
+     "price": 269.0,
+     "url": "https://www.builders.co.za/Security-and-Smart-Home/Perimeter-Security/Fencing-and-Gates/African-Gate-and-Fence-Galvanised-Wire-1-6-mm-x-5-kg/p/000000000000005198",
+     "factor": 0.4
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-TNK-JJ-4750",
+   "unit": "EACH",
+   "basis": "same make and size (JoJo 4,750 L vertical)",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Jojo 4750lt Vertical Water Tank",
+     "price": 5349.95,
+     "url": "https://www.cashbuild.co.za/watertanks/305449-jojo-4750lt-vertical-water-tank"
+    },
+    {
+     "retailer": "Builders",
+     "name": "JoJo Tank 4750 L Vertical Water Storage Tank Cloudy Grey",
+     "price": 6899.0,
+     "url": "https://www.builders.co.za/Decor-Furniture-and-Home-Living/Bathroom-Accessories/Freestanding-Bathroom-Accessories/JoJo-Tank-4750-L-Vertical-Water-Storage-Tank-Cloudy-Grey/p/000000000000787657"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-GEY-ELEMENT-2KW",
+   "unit": "EACH",
+   "basis": "geyser element 2 kW, Boss flange with pocket",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Geyser Element 2kw Boss W/Pock",
+     "price": 205.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Geysers-and-Water-Heaters/Geyser-Accessories/Geyser-Element-2kw-Boss-W-Pock/p/000000000000411441"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Geyser Element Boss 2kW With Pocket 624204",
+     "price": 299.0,
+     "url": "https://www.chamberlains.co.za/our-range/geyser-element-boss-2kw-with-pocket-624204-1079375"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-GEY-ELEMENT-3KW",
+   "unit": "EACH",
+   "basis": "geyser element 3 kW, Boss flange with pocket",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Geyser Element 3kw Boss W/ Pock",
+     "price": 255.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Geysers-and-Water-Heaters/Geyser-Accessories/Geyser-Element-3kw-Boss-W--Pock/p/000000000000411443"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Geyser Boss Element 3kW With Pocket 524206",
+     "price": 355.0,
+     "url": "https://www.chamberlains.co.za/our-range/geyser-boss-element-3kw-with-pocket-524206-1079376"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-GEY-ELEMENT-4KW",
+   "unit": "EACH",
+   "basis": "geyser element 4 kW, Boss flange with pocket",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Geyser Element Boss W/Pock 4kw",
+     "price": 489.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Geysers-and-Water-Heaters/Geyser-Accessories/Geyser-Element-Boss-W-Pock-4kw/p/000000000000415209"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Geyser Boss Element 4kW With Pocket 524190",
+     "price": 655.0,
+     "url": "https://www.chamberlains.co.za/our-range/geyser-boss-element-4kw-with-pocket-524190-1079377"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-GEY-THERMOSTAT",
+   "unit": "EACH",
+   "basis": "same make (Kwikot Kwiktherm geyser thermostat)",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Thermostat Kwiktherm 11*20 Amps",
+     "price": 239.95,
+     "url": "https://www.cashbuild.co.za/geysers-accessories/301273-thermostat-kwiktherm-1120-amps"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Kwikot Kwiktherm TH-208 Thermostat 270 mm",
+     "price": 289.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Geysers-and-Water-Heaters/Geyser-Accessories/Kwikot-Kwiktherm-TH-208-Thermostat-270-mm/p/000000000000002908"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-GEY-DRIPTRAY",
+   "unit": "EACH",
+   "basis": "same make (Kwikot geyser drip tray, 150-200 L)",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Geyser Drip Tray Black 150l to 200l Kwikot",
+     "price": 179.95,
+     "url": "https://www.cashbuild.co.za/geysers-accessories/305714-geyser-drip-tray-black-150l-to-200l-kwikot"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Kwikot DRT1600 Horizontal Drip Tray 1600 x 600 mm",
+     "price": 229.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Geysers-and-Water-Heaters/Geyser-Accessories/Kwikot-DRT1600-Horizontal-Drip-Tray-1600-x-600-mm/p/000000000000046733"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PLB-COPPER-15",
+   "unit": "EACH",
+   "basis": "copper tube 15 mm x 5.5 m",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Copper Tube Econo 15mm X 5.5M",
+     "price": 354.95,
+     "url": "https://www.cashbuild.co.za/copper-pipe/323382-copper-tube-eco-15mm-x-55m"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Saffer 15 mm SABS Copper Tubing 460/0 5.5 m",
+     "price": 445.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Pipes-and-Fittings/Copper-Pipes-and-Fittings/Saffer-15-mm-SABS-Copper-Tubing-460-0-5-5-m/p/000000000000016705"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PLB-COPPER-22",
+   "unit": "EACH",
+   "basis": "copper tube 22 mm x 5.5 m",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Copper Tube Econo 22mm X 5.5M",
+     "price": 674.95,
+     "url": "https://www.cashbuild.co.za/copper-pipe/323383-copper-tube-eco-22mm-x-55m"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Saffer 22 mm SABS Copper Tubing 460/0 5.5 m",
+     "price": 775.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Pipes-and-Fittings/Copper-Pipes-and-Fittings/Saffer-22-mm-SABS-Copper-Tubing-460-0-5-5-m/p/000000000000016691"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PLB-POLYCOP-15-50",
+   "unit": "ROLL",
+   "basis": "Polycop 15 mm x 50 m roll",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Polycop Pipe 15mm x 50m",
+     "price": 249.95,
+     "url": "https://www.cashbuild.co.za/polycop-pipe/54423-polycop-pipe-15mm-x-50m"
+    },
+    {
+     "retailer": "Builders",
+     "name": "MacNeil Polycop Pipe 15 mm x 50 m Roll",
+     "price": 385.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Pipes-and-Fittings/Polycop-Pipesand-Fittings/MacNeil-Polycop-Pipe-15-mm-x-50-m-Roll/p/000000000000289848"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Polycop Pipe 15mm x 50m LTP1550A",
+     "price": 499.0,
+     "url": "https://www.chamberlains.co.za/our-range/polycop-pipe-15mm-x-50m-ltp1550a-1018005"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PLB-POLYCOP-15-100",
+   "unit": "ROLL",
+   "basis": "Polycop 15 mm, 100 m; 50 m rolls x 2",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Polycop Pipe 15mm x 50m",
+     "price": 249.95,
+     "url": "https://www.cashbuild.co.za/polycop-pipe/54423-polycop-pipe-15mm-x-50m",
+     "factor": 2
+    },
+    {
+     "retailer": "Builders",
+     "name": "MacNeil Polycop Pipe 15 mm x 50 m Roll",
+     "price": 385.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Pipes-and-Fittings/Polycop-Pipesand-Fittings/MacNeil-Polycop-Pipe-15-mm-x-50-m-Roll/p/000000000000289848",
+     "factor": 2
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Polycop Pipe 15mm x 50m LTP1550A",
+     "price": 499.0,
+     "url": "https://www.chamberlains.co.za/our-range/polycop-pipe-15mm-x-50m-ltp1550a-1018005",
+     "factor": 2
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PLB-POLYCOP-22-100",
+   "unit": "ROLL",
+   "basis": "Polycop 22 mm x 100 m; Cashbuild 50 m roll x 2",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "MacNeil Polycop Pipe 22 mm x 100 m Roll",
+     "price": 1569.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Pipes-and-Fittings/Polycop-Pipesand-Fittings/MacNeil-Polycop-Pipe-22-mm-x-100-m-Roll/p/000000000000289853"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Polycop Pipe 22mm x 100m LTP0107A",
+     "price": 1849.0,
+     "url": "https://www.chamberlains.co.za/our-range/polycop-pipe-22mm-x-100m-ltp0107a-1018010"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Polycop Pipe 22mm x 50m",
+     "price": 469.95,
+     "url": "https://www.cashbuild.co.za/polycop-pipe/54427-polycop-pipe-22mm-x-50m",
+     "factor": 2
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PLB-CU-ELBOW-15",
+   "unit": "EACH",
+   "basis": "copper capillary elbow 90° 15 mm",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Builders Copper Elbow 90d 15 mm",
+     "price": 6.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Pipes-and-Fittings/Copper-Pipes-and-Fittings/Builders-Copper-Elbow-90d-15-mm/p/000000000000152055"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Solder Cxc Elbow 90 15mmx1 SABS",
+     "price": 7.95,
+     "url": "https://www.cashbuild.co.za/copper-fittings/300272-solder-cxc-elbow-90-15mmx1-sabs"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PLB-CU-TEE-15",
+   "unit": "EACH",
+   "basis": "copper capillary equal tee 15 mm",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "Copper Equal Tee 15mm BG5130A/1",
+     "price": 9.9,
+     "url": "https://www.chamberlains.co.za/our-range/copper-equal-tee-15mm-bg5130a-1-1006270"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Builders Copper Tee Equal 15 mm",
+     "price": 13.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Pipes-and-Fittings/Copper-Pipes-and-Fittings/Builders-Copper-Tee-Equal-15-mm/p/000000000000152063"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Solder Cxcxc Equal Tee 15mmx1 SABS",
+     "price": 15.95,
+     "url": "https://www.cashbuild.co.za/copper-fittings/300283-solder-cxcxc-equal-tee-15mmx1-sabs"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PLB-CU-COUPLER-15",
+   "unit": "EACH",
+   "basis": "copper capillary straight coupler 15 mm",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "Copper Straight Coupler C/C 15mm BG5270A/1",
+     "price": 3.9,
+     "url": "https://www.chamberlains.co.za/our-range/copper-straight-coupler-c-c-15mm-bg5270a-1-1006173"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Solder Cxc Str Coupler 15mmx1 SABS",
+     "price": 5.95,
+     "url": "https://www.cashbuild.co.za/copper-fittings/300285-solder-cxc-str-coupler-15mmx1-sabs"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PLB-CU-ELBOW-22",
+   "unit": "EACH",
+   "basis": "copper capillary elbow 90° 22 mm",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Builders Copper Elbow 90d 22 mm",
+     "price": 16.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Pipes-and-Fittings/Copper-Pipes-and-Fittings/Builders-Copper-Elbow-90d-22-mm/p/000000000000152056"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Solder Cxc Elbow 90 22mmx1 SABS",
+     "price": 21.95,
+     "url": "https://www.cashbuild.co.za/copper-fittings/300273-solder-cxc-elbow-90-22mmx1-sabs"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PLB-CU-TEE-22",
+   "unit": "EACH",
+   "basis": "copper capillary equal tee 22 mm",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Builders Copper Tee Equal 22 mm",
+     "price": 29.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Pipes-and-Fittings/Copper-Pipes-and-Fittings/Builders-Copper-Tee-Equal-22-mm/p/000000000000160063"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Copper Equal Tee C/C/C 22mm BG5130B/1",
+     "price": 29.9,
+     "url": "https://www.chamberlains.co.za/our-range/copper-equal-tee-c-c-c-22mm-bg5130b-1-1006274"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Solder Cxcxc Equal Tee 22mmx1 SABS",
+     "price": 41.95,
+     "url": "https://www.cashbuild.co.za/copper-fittings/300284-solder-cxcxc-equal-tee-22mmx1-sabs"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PLB-CU-COUPLER-22",
+   "unit": "EACH",
+   "basis": "copper capillary straight coupler 22 mm",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Builders Copper Coupler Straight 22 mm",
+     "price": 14.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Pipes-and-Fittings/Copper-Pipes-and-Fittings/Builders-Copper-Coupler-Straight-22-mm/p/000000000000152047"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Solder Cxc Str Coupler 22mmx1 SABS",
+     "price": 15.95,
+     "url": "https://www.cashbuild.co.za/copper-fittings/300286-solder-cxc-str-coupler-22mmx1-sabs"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PLB-CU-COMP-ELBOW-15",
+   "unit": "EACH",
+   "basis": "copper compression elbow 15 mm",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Compression Cxc Elbow 90 15mmx1 SABS",
+     "price": 43.95,
+     "url": "https://www.cashbuild.co.za/copper-fittings/300253-compression-cxc-elbow-90-15mmx1-sabs"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Cobra CxC Elbow Compression 15 mm",
+     "price": 65.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Pipes-and-Fittings/Compression-Pipe-and-Fittings/Cobra-CxC-Elbow-Compression-15-mm/p/000000000000439707"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PLB-GATE-VALVE-15",
+   "unit": "EACH",
+   "basis": "brass gate valve 15 mm, female x female",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Builders Female To Female RB Gate Valve 15 mm",
+     "price": 139.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Isolated-Valves/Builders-Female-To-Female-RB-Gate-Valve-15-mm/p/000000000000023839"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Cobra Brass Gate Valve F/F 15mm 018711",
+     "price": 169.0,
+     "url": "https://www.chamberlains.co.za/our-range/cobra-brass-gate-valve-f-f-15mm-018711-1028673"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PLB-BALL-VALVE-15",
+   "unit": "EACH",
+   "basis": "same model (lever ball valve 15 mm, 3110)",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "Gio Bella Lever-Type Ball Valve 15mm 3110",
+     "price": 159.0,
+     "url": "https://www.chamberlains.co.za/our-range/gio-bella-lever-type-ball-valve-15mm-3110-1059982"
+    },
+    {
+     "retailer": "Builders",
+     "name": "ISM 3110 Brass Lever Ball Valve 15 mm",
+     "price": 175.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Isolated-Valves/ISM-3110-Brass-Lever-Ball-Valve-15-mm/p/000000000000513386"
+    },
+    {
+     "retailer": "Leroy Merlin",
+     "name": "GIO 15MM LEVER BALL VALVE CXC DZR",
+     "price": 159.0,
+     "url": "https://leroymerlin.co.za/gio-15mm-lever-ball-valve-cxc-dzr-81461439"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PLB-BALL-VALVE-22",
+   "unit": "EACH",
+   "basis": "same model (lever ball valve 22 mm, 3127)",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "ISM 3127 Brass Lever Ball Valve 22 mm",
+     "price": 169.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Isolated-Valves/ISM-3127-Brass-Lever-Ball-Valve-22-mm/p/000000000000513385"
+    },
+    {
+     "retailer": "Leroy Merlin",
+     "name": "GIO 22MM LEVER BALL VALVE CXC DZR",
+     "price": 169.0,
+     "url": "https://leroymerlin.co.za/gio-22mm-lever-ball-valve-cxc-dzr-81461438"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Gio Bella Lever-Type Ball Valve 22mm 3127",
+     "price": 219.0,
+     "url": "https://www.chamberlains.co.za/our-range/gio-bella-lever-type-ball-valve-22mm-3127-1055912"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PLB-SOIL-VENT-COWL",
+   "unit": "EACH",
+   "basis": "same make (Marley PVC vent cowl 110 mm)",
+   "listings": [
+    {
+     "retailer": "Leroy Merlin",
+     "name": "Airvent cowl MARLEY 110mm pvc",
+     "price": 46.9,
+     "url": "https://leroymerlin.co.za/airvent-cowl-marley-110mm-pvc-81410691"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "Marley PVC Soil & Vent Airvent Cowl 110mm SV42",
+     "price": 56.9,
+     "url": "https://www.chamberlains.co.za/our-range/marley-pvc-soil-vent-airvent-cowl-110mm-sv42-1019986"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Marley Pipes PVC Soil and Vent Cowl Vent 110 mm",
+     "price": 79.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Pipes-and-Fittings/PVC-Pipes-and-Fittings/Marley-Pipes-PVC-Soil-and-Vent-Cowl-Vent-110-mm/p/000000000000018911"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PLB-SOIL-PAN-CONN",
+   "unit": "EACH",
+   "basis": "same make (Wirquin straight pan connector 110 mm)",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "Wirquin Straight Pan Connector 110mm  RA372 71150000",
+     "price": 54.9,
+     "url": "https://www.chamberlains.co.za/our-range/wirquin-straight-pan-connector-110mm-ra372-71150000-1103035"
+    },
+    {
+     "retailer": "Leroy Merlin",
+     "name": "RA372 STR PAN CONNECTOR 110MM",
+     "price": 64.9,
+     "url": "https://leroymerlin.co.za/ra372-str-pan-connector-110mm-81470326"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Wirquin Straight Pan Connector",
+     "price": 65.0,
+     "url": "https://www.builders.co.za/Plumbing-Bathroom-and-Kitchen/Toilets-and-Accessories/Toilet-Valves/Wirquin-Straight-Pan-Connector/p/000000000000367246"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-CLG-PVC-GLOSS-WHITE",
+   "unit": "EACH",
+   "basis": "PVC ceiling board gloss white 300 mm x 3.9 m; Chamberlains 14-pack / 14",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "PVC Ceiling White Gloss 6mmx300mmx3.9M",
+     "price": 84.95,
+     "url": "https://www.cashbuild.co.za/pvc-ceiling-panels/324340-pvc-ceiling-white-gloss-6mmx300mmx39m"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "PVC Ceiling Board High Gloss White 300 x 3900mm - 14 Pack",
+     "price": 1999.0,
+     "url": "https://www.chamberlains.co.za/our-range/pvc-ceiling-board-high-gloss-white-300-x-3900mm-14-pack-1068428",
+     "factor": 0.0714286
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-CLG-CORNICE-ADH-5",
+   "unit": "EACH",
+   "basis": "cornice adhesive 5 kg",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Design House Cornice Adhesive 5 kg",
+     "price": 250.0,
+     "url": "https://www.builders.co.za/Fasteners-and-Adhesives/Adhesives/Cornice-Adhesive/Design-House-Cornice-Adhesive-5-kg/p/000000000850014978"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "ChamberValue Cornice Adhesive 5kg 158909",
+     "price": 279.0,
+     "url": "https://www.chamberlains.co.za/our-range/chambervalue-cornice-adhesive-5kg-158909-1089076"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-TL-SHOVEL-RN",
+   "unit": "EACH",
+   "basis": "same make (Lasher round-nose shovel)",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "Lasher Round Nose Steel Shaft Shovel FG00415",
+     "price": 315.0,
+     "url": "https://www.chamberlains.co.za/our-range/lasher-round-nose-steel-shaft-shovel-fg00415-1024110"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Lasher Round Nose Shovel",
+     "price": 322.95,
+     "url": "https://www.cashbuild.co.za/shovel/881-lasher-round-nose-shovel"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Lasher Shovel Round Nose MB2 MHSS",
+     "price": 359.0,
+     "url": "https://www.builders.co.za/Outdoor-Garden-and-Patio/Gardening-Tools/Garden-Hand-Tools/Lasher-Shovel-Round-Nose-MB2-MHSS/p/000000000000011621"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PPE-VEST",
+   "unit": "EACH",
+   "basis": "reflective safety vest (size on the quote)",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Reflective Vest Large",
+     "price": 57.95,
+     "url": "https://www.cashbuild.co.za/conti-suits/303425-reflective-vests-large"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Pioneer Reflective Vest with Zip and ID Pouch Lime Medium",
+     "price": 69.0,
+     "url": "https://www.builders.co.za/Safety-and-Protective-Wear/Site-Safety/Reflector-Vest-and-Jackets/Pioneer-Reflective-Vest-with-Zip-and-ID-Pouch-Lime-Medium/p/000000000000605119"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PPE-BOOTS",
+   "unit": "EACH",
+   "basis": "steel-toe safety boots (size on the quote)",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Safety Boots Steel Toe Size 8",
+     "price": 344.95,
+     "url": "https://www.cashbuild.co.za/boots/303320-safety-boots-steel-toe-size-8"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Builders Safety Boots Size 10",
+     "price": 359.0,
+     "url": "https://www.builders.co.za/Safety-and-Protective-Wear/Footwear/Safety-Boots/Builders-Safety-Boots-Size-10/p/000000000000611490"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PPE-GLASSES",
+   "unit": "EACH",
+   "basis": "clear anti-scratch safety glasses",
+   "listings": [
+    {
+     "retailer": "Chamberlains",
+     "name": "Grange Clear Anti-Scratch Euro Safety Glasses SP7033C",
+     "price": 16.9,
+     "url": "https://www.chamberlains.co.za/our-range/grange-clear-anti-scratch-euro-safety-glasses-sp7033c-1046748"
+    },
+    {
+     "retailer": "Builders",
+     "name": "Evrigard Euro Anti Scratch Safety Glasses Clear",
+     "price": 29.0,
+     "url": "https://www.builders.co.za/Safety-and-Protective-Wear/Safety-Equipment/Eye-Protection/Evrigard-Euro-Anti-Scratch-Safety-Glasses-Clear/p/000000000000570295"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Safety Spectacles",
+     "price": 29.95,
+     "url": "https://www.cashbuild.co.za/conti-suits/316616-safety-spectacles"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-PPE-GOGGLES",
+   "unit": "EACH",
+   "basis": "clear safety goggles",
+   "listings": [
+    {
+     "retailer": "Builders",
+     "name": "Fragram Safety Goggles Clear",
+     "price": 19.0,
+     "url": "https://www.builders.co.za/Safety-and-Protective-Wear/Safety-Equipment/Eye-Protection/Fragram-Safety-Goggles-Clear/p/000000000000224015"
+    },
+    {
+     "retailer": "Cashbuild",
+     "name": "Safety Goggles Clear",
+     "price": 27.95,
+     "url": "https://www.cashbuild.co.za/welding/9783011-trade-weld-safety-goggles-clear"
+    }
+   ]
+  },
+  {
+   "line": "supplies",
+   "sku": "AA-WP-LAYKOLD-20",
+   "unit": "EACH",
+   "basis": "same make and size (a.b.e. Super Laykold 20 L)",
+   "listings": [
+    {
+     "retailer": "Cashbuild",
+     "name": "Abe Super Laykold 20L",
+     "price": 1329.95,
+     "url": "https://www.cashbuild.co.za/water-proofing/316092-abe-super-laykold-20l"
+    },
+    {
+     "retailer": "Chamberlains",
+     "name": "ABE Super Laykold Black 20L 201020",
+     "price": 1449.0,
+     "url": "https://www.chamberlains.co.za/our-range/abe-super-laykold-black-20l-201020-1028431"
+    }
+   ]
   }
  ]
 }
