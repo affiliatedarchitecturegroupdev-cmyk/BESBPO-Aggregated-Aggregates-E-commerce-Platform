@@ -1905,6 +1905,8 @@ enum BuildStage {
   SLABS
   WALLS
   ROOFING
+  SERVICES // electrical and plumbing first and second fix (docs/pricing/FITOUT_CATALOGUE.md)
+  FINISHES // tiling, flooring, sanitaryware, ironmongery and paint
   PAVING_ROADS
   DRAINAGE
   LANDSCAPING

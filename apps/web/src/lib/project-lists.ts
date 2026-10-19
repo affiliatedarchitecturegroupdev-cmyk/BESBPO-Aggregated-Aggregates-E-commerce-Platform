@@ -12,7 +12,7 @@ import { PRODUCTS } from "@/data/catalogue";
 import { findQuotable, isWholeUnit } from "@/data/quotable";
 import { STEEL_PRODUCTS } from "@/data/steel";
 
-export type BuildStage = "SITE_PREP" | "FOUNDATIONS" | "SLABS" | "WALLS" | "ROOFING" | "PAVING_ROADS" | "DRAINAGE" | "LANDSCAPING" | "OTHER";
+export type BuildStage = "SITE_PREP" | "FOUNDATIONS" | "SLABS" | "WALLS" | "ROOFING" | "SERVICES" | "FINISHES" | "PAVING_ROADS" | "DRAINAGE" | "LANDSCAPING" | "OTHER";
 
 /** In build order, so a list reads like the job. */
 export const STAGES: { value: BuildStage; label: string; hint: string }[] = [
@@ -21,6 +21,8 @@ export const STAGES: { value: BuildStage; label: string; hint: string }[] = [
   { value: "SLABS", label: "Surface beds & slabs", hint: "Floors, suspended slabs, screeds" },
   { value: "WALLS", label: "Walls & superstructure", hint: "Brickwork, columns, lintels" },
   { value: "ROOFING", label: "Roofing", hint: "Roof timber, sheeting or tiles, flashings, insulation, gutters" },
+  { value: "SERVICES", label: "Electrical & plumbing", hint: "Wiring, boards, solar, water supply, geysers" },
+  { value: "FINISHES", label: "Finishes & fit-out", hint: "Ceilings, tiles, floors, bathrooms, doors, paint" },
   { value: "PAVING_ROADS", label: "Paving, driveways & roads", hint: "Base course, bedding, kerbs" },
   { value: "DRAINAGE", label: "Drainage & services", hint: "Pipe bedding, French drains" },
   { value: "LANDSCAPING", label: "Landscaping", hint: "Decorative stone, garden beds" },
@@ -59,6 +61,32 @@ const CATEGORY_STAGE: Record<string, BuildStage> = {
   "drainage-filter": "DRAINAGE",
   "decorative-landscaping": "LANDSCAPING",
   "agricultural-industrial": "OTHER",
+  // Building supplies and services & fit-out (BUILDING_SUPPLIES_CATALOGUE.md, docs/pricing/FITOUT_CATALOGUE.md)
+  "doors-frames": "WALLS",
+  "windows-frames": "WALLS",
+  "fencing-wire-posts": "SITE_PREP",
+  "gates-security": "LANDSCAPING",
+  "water-tanks-geysers": "SERVICES",
+  "water-supply-soil-pipe": "SERVICES",
+  "ceilings-drywall": "FINISHES",
+  "site-tools": "OTHER",
+  "ppe-site-safety": "SITE_PREP",
+  "waterproofing-sealants": "FINISHES",
+  "paint-coatings": "FINISHES",
+  "electrical-cable-conduit": "SERVICES",
+  "electrical-distribution": "SERVICES",
+  "switches-sockets-lighting": "SERVICES",
+  "solar-backup-power": "SERVICES",
+  "floor-wall-tiles": "FINISHES",
+  "flooring-skirting": "FINISHES",
+  "tiling-accessories": "FINISHES",
+  "sanitaryware": "FINISHES",
+  "taps-mixers-valves": "FINISHES",
+  "kitchen-sinks-waste": "FINISHES",
+  "fasteners-fixings": "OTHER",
+  "locks-ironmongery": "FINISHES",
+  "boards-sheets": "SLABS",
+  "formwork-scaffolding": "SLABS",
 };
 export function defaultStage(categorySlug: string): BuildStage {
   return CATEGORY_STAGE[categorySlug] ?? "OTHER";
