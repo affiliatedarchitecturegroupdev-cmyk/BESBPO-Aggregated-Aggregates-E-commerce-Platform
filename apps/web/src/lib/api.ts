@@ -47,6 +47,9 @@ export async function api<T>(
  * pick up the live data when they revalidate.
  */
 export async function apiCached<T>(path: string, revalidateSeconds = 60, tags: string[] = ["cms"]): Promise<T | null> {
+  // Don't even try during `next build`: on Render the private network isn't
+  // there, and a timeout on every page pushed the build past Render's limit.
+  if (process.env.NEXT_PHASE === "phase-production-build") return null;
   try {
     const response = await fetch(`${API_BASE}${path}`, {
       next: { revalidate: revalidateSeconds, tags },

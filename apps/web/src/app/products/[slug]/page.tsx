@@ -22,18 +22,15 @@ import { RoofingProductPage } from "@/components/product/RoofingProductPage";
 import { SteelProductPage } from "@/components/product/SteelProductPage";
 import { pricePoints, PRODUCTS } from "@/data/catalogue";
 import { CATEGORIES } from "@/data/categories";
-import { PACKAGED_PRODUCTS } from "@/data/packaged";
-import { READY_MIX_PRODUCTS } from "@/data/ready-mix";
-import { MASONRY_PRODUCTS } from "@/data/masonry";
-import { ROOFING_PRODUCTS } from "@/data/roofing";
-import { SUPPLIES_PRODUCTS } from "@/data/supplies";
-import { STEEL_PRODUCTS } from "@/data/steel";
 import { getCatalogue, getPackagedCatalogue, getProduct, getReadyMixCatalogue, getSteelCatalogue, getMasonryCatalogue, getRoofingCatalogue, getSuppliesCatalogue } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
+// Only the core aggregates pages are prerendered. The other ~1,350 product
+// pages render on first request and are cached (revalidate, layout.tsx), so the
+// build stays within the Render build instance's memory.
 export function generateStaticParams() {
-  return [...PRODUCTS, ...PACKAGED_PRODUCTS, ...READY_MIX_PRODUCTS, ...STEEL_PRODUCTS, ...MASONRY_PRODUCTS, ...ROOFING_PRODUCTS, ...SUPPLIES_PRODUCTS].map((p) => ({ slug: p.slug }));
+  return PRODUCTS.map((p) => ({ slug: p.slug }));
 }
 
 async function getPackaged(slug: string) {
