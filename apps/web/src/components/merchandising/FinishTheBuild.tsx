@@ -3,7 +3,7 @@ import { DEPARTMENTS } from "@/data/departments";
 import { formatZAR } from "@/lib/pricing";
 import { PRODUCT_INDEX } from "@/lib/product-index";
 
-/** The building-supplies departments (CAT-32..42), with what each is deepest in. */
+/** The building-supplies and fit-out departments (CAT-32..56), with what each is deepest in. */
 const SUPPLIES: { slug: string; points: string[] }[] = [
   { slug: "doors-windows", points: ["Steel windows, full FX7 schedule", "Wooden windows and sidelights", "Garage, sliding and security doors"] },
   { slug: "fencing-security", points: ["Mesh 0.9 to 2.4 m high", "Palisade and clear-view panels", "Gates, motors and burglar bars"] },
@@ -11,10 +11,15 @@ const SUPPLIES: { slug: string; points: string[] }[] = [
   { slug: "ceilings-drywall", points: ["Gypsum: standard, moisture and fire", "Fibre-cement and PVC ceilings", "Cornices, studs and tracks"] },
   { slug: "tools-ppe", points: ["Bricklaying and plastering tools", "Boots, hard hats and harnesses", "First aid and site signage"] },
   { slug: "paint-waterproofing", points: ["Torch-on and liquid membranes", "Sealants and primers", "Wall, roof, floor and metal paint"] },
+  { slug: "electrical", points: ["Surfix, house wire and conduit", "DB boards, breakers and earth leakage", "LED lighting, solar and backup power"] },
+  { slug: "tiles-flooring", points: ["Ceramic and porcelain tiles", "Laminate and vinyl flooring", "Trims, levelling and skirting"] },
+  { slug: "bathroom-kitchen", points: ["Toilets, basins, baths and showers", "Taps, mixers and valves", "Kitchen sinks, traps and wastes"] },
+  { slug: "hardware-fasteners", points: ["Nails, screws and anchors", "Bolts and threaded rod", "Locks, hinges and door hardware"] },
+  { slug: "boards-formwork", points: ["Shutterply and shutterboard", "Plywood, OSB, MDF and Masonite", "Props and scaffolding"] },
 ];
 
 /**
- * Finish the build: the six building-supplies departments on the homepage —
+ * Finish the build: the building-supplies and fit-out departments on the homepage —
  * product counts from the catalogue, and a line on what each is deepest in.
  */
 export function FinishTheBuild({ hiddenSkus = [] }: { hiddenSkus?: string[] }) {
@@ -37,8 +42,8 @@ export function FinishTheBuild({ hiddenSkus = [] }: { hiddenSkus?: string[] }) {
             Finish the build with the same order
           </h2>
           <p className="mt-2 max-w-2xl font-body text-sm text-slate">
-            Doors and windows, fencing, water and plumbing, ceilings, tools and PPE, waterproofing and paint — {total} products, delivered with your
-            bulk materials or quoted to your schedule.
+            Doors and windows, fencing, plumbing and bathrooms, electrical and solar, ceilings, tiles and flooring, hardware, boards and formwork,
+            tools, PPE and paint — {total} products, delivered with your bulk materials or quoted to your schedule.
           </p>
         </div>
         <Link href="/departments" className="shrink-0 font-body text-sm text-seam-blue hover:underline">

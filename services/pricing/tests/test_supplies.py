@@ -1,4 +1,4 @@
-"""CAT-32..42 building supplies: priced like packaged goods in the SUPPLIES family, live only where two retailers list the same product."""
+"""CAT-32..56 building supplies (with the services & fit-out departments, CAT-43..56): priced like packaged goods in the SUPPLIES family, live only where two retailers list the same product."""
 from decimal import ROUND_HALF_UP, Decimal
 
 from fastapi.testclient import TestClient
@@ -14,7 +14,7 @@ client = TestClient(app)
 
 def test_catalogue_shape():
     codes = [c["code"] for c in RAW["categories"]]
-    assert codes == [f"CAT-{n}" for n in range(32, 43)]
+    assert codes == [f"CAT-{n}" for n in range(32, 57)]
     cats = {c["slug"] for c in RAW["categories"]}
     assert {p["category_slug"] for p in RAW["products"]} == cats
     assert len({p["slug"] for p in RAW["products"]}) == len({p["sku"] for p in RAW["products"]}) == len(RAW["products"])

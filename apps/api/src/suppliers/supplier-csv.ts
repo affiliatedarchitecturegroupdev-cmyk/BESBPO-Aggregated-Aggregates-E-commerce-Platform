@@ -60,6 +60,21 @@ export const CATEGORY_CODES: Record<string, string> = {
   "CAT-40": "ppe-site-safety",
   "CAT-41": "waterproofing-sealants",
   "CAT-42": "paint-coatings",
+  // Services & fit-out (docs/pricing/FITOUT_CATALOGUE.md)
+  "CAT-43": "electrical-cable-conduit",
+  "CAT-44": "electrical-distribution",
+  "CAT-45": "switches-sockets-lighting",
+  "CAT-46": "solar-backup-power",
+  "CAT-47": "floor-wall-tiles",
+  "CAT-48": "flooring-skirting",
+  "CAT-49": "tiling-accessories",
+  "CAT-50": "sanitaryware",
+  "CAT-51": "taps-mixers-valves",
+  "CAT-52": "kitchen-sinks-waste",
+  "CAT-53": "fasteners-fixings",
+  "CAT-54": "locks-ironmongery",
+  "CAT-55": "boards-sheets",
+  "CAT-56": "formwork-scaffolding",
 };
 const CODE_BY_SLUG = Object.fromEntries(Object.entries(CATEGORY_CODES).map(([code, slug]) => [slug, code]));
 

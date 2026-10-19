@@ -70,7 +70,9 @@ export async function CategoryGrid() {
 
   const walling = MASONRY_CATEGORIES.filter((c) => !ROOF_TILE_CATEGORIES.includes(c.slug)).map(categoryCard);
   const roofing = [...ROOFING_CATEGORIES, ...MASONRY_CATEGORIES.filter((c) => ROOF_TILE_CATEGORIES.includes(c.slug))].map(categoryCard);
-  const supplies = SUPPLIES_CATEGORIES.map(categoryCard);
+  const FITOUT = ["electrical-cable-conduit", "electrical-distribution", "switches-sockets-lighting", "solar-backup-power", "floor-wall-tiles", "flooring-skirting", "tiling-accessories", "sanitaryware", "taps-mixers-valves", "kitchen-sinks-waste", "fasteners-fixings", "locks-ironmongery", "boards-sheets", "formwork-scaffolding"];
+  const supplies = SUPPLIES_CATEGORIES.filter((c) => !FITOUT.includes(c.slug)).map(categoryCard);
+  const fitout = SUPPLIES_CATEGORIES.filter((c) => FITOUT.includes(c.slug)).map(categoryCard);
 
   // Each tile shows the first photographed product in its category (ProductThumb's photos).
   const withCovers = (cards: CategoryCard[]) =>
@@ -81,6 +83,7 @@ export async function CategoryGrid() {
     { label: "Walls, paving & drainage", summary: "Bricks, blocks, lintels and DPC; pavers, kerbs and retaining; pipes, precast drainage and membranes.", cards: withCovers(walling) },
     { label: "Roofing", summary: "IBR, corrugated and concealed-fix sheeting in stock lengths or cut to length, concrete roof tiles, flashings, insulation and gutters.", cards: withCovers(roofing) },
     { label: "Building supplies", summary: "Doors and windows, fencing and security, water tanks and plumbing, ceilings, tools and PPE, waterproofing and paint.", cards: withCovers(supplies) },
+    { label: "Services & fit-out", summary: "Electrical and solar, tiles and flooring, bathroom and kitchen, hardware and fasteners, and boards and formwork.", cards: withCovers(fitout) },
   ];
 
   return (
@@ -91,7 +94,7 @@ export async function CategoryGrid() {
           All products →
         </Link>
       </div>
-      <CategoryCarousel pages={pages} total={aggregates.length + more.length + walling.length + roofing.length + supplies.length} />
+      <CategoryCarousel pages={pages} total={aggregates.length + more.length + walling.length + roofing.length + supplies.length + fitout.length} />
     </section>
   );
 }

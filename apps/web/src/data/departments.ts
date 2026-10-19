@@ -141,6 +141,47 @@ export const DEPARTMENTS: Department[] = [
     href: "/paint-waterproofing",
     categorySlugs: ["waterproofing-sealants", "paint-coatings"],
   },
+  // Services & fit-out (CAT-43..56, docs/pricing/FITOUT_CATALOGUE.md).
+  {
+    slug: "electrical",
+    shortName: "Electrical",
+    name: "Electrical & Solar",
+    blurb: "Surfix and house wire, conduit, distribution boards and breakers, switches, sockets and LED lighting, and solar panels, inverters and batteries.",
+    href: "/electrical",
+    categorySlugs: ["electrical-cable-conduit", "electrical-distribution", "switches-sockets-lighting", "solar-backup-power"],
+  },
+  {
+    slug: "tiles-flooring",
+    shortName: "Tiles & Flooring",
+    name: "Tiles & Flooring",
+    blurb: "Ceramic and porcelain floor and wall tiles, laminate and vinyl flooring, skirting, tile trims and levelling — with adhesives and grouts from cement.",
+    href: "/tiles-flooring",
+    categorySlugs: ["floor-wall-tiles", "flooring-skirting", "tiling-accessories"],
+  },
+  {
+    slug: "bathroom-kitchen",
+    shortName: "Bathroom & Kitchen",
+    name: "Bathroom & Kitchen",
+    blurb: "Toilets, basins, baths and showers, taps and mixers, valves and connectors, kitchen sinks, traps and wastes.",
+    href: "/bathroom-kitchen",
+    categorySlugs: ["sanitaryware", "taps-mixers-valves", "kitchen-sinks-waste"],
+  },
+  {
+    slug: "hardware-fasteners",
+    shortName: "Hardware",
+    name: "Hardware & Fasteners",
+    blurb: "Nails, screws, wall plugs, anchors, bolts and threaded rod, and locks, hinges, handles, padlocks and door hardware.",
+    href: "/hardware-fasteners",
+    categorySlugs: ["fasteners-fixings", "locks-ironmongery"],
+  },
+  {
+    slug: "boards-formwork",
+    shortName: "Boards & Formwork",
+    name: "Boards & Formwork",
+    blurb: "Shutterply and shutterboard, plywood, OSB, chipboard, MDF and Masonite, and steel props, formwork ties, clamps and scaffolding.",
+    href: "/boards-formwork",
+    categorySlugs: ["boards-sheets", "formwork-scaffolding"],
+  },
 ];
 
 /** Services sit beside the material departments in navigation, not in the product index. */

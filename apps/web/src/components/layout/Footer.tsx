@@ -92,6 +92,11 @@ export async function Footer() {
             <li><Link href="/ceilings-drywall">Ceilings &amp; Drywall</Link></li>
             <li><Link href="/tools-ppe">Site Tools &amp; PPE</Link></li>
             <li><Link href="/paint-waterproofing">Waterproofing &amp; Paint</Link></li>
+            <li><Link href="/electrical">Electrical &amp; Solar</Link></li>
+            <li><Link href="/tiles-flooring">Tiles &amp; Flooring</Link></li>
+            <li><Link href="/bathroom-kitchen">Bathroom &amp; Kitchen</Link></li>
+            <li><Link href="/hardware-fasteners">Hardware &amp; Fasteners</Link></li>
+            <li><Link href="/boards-formwork">Boards &amp; Formwork</Link></li>
             <li><Link href="/departments">All Departments</Link></li>
             <li><Link href="/buy-online">Buy Online — Priced Products</Link></li>
             <li><Link href="/shop-by-stage">Shop by Build Stage</Link></li>
