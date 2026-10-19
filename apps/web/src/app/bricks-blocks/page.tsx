@@ -146,7 +146,7 @@ export default async function BricksBlocksPage() {
             },
             {
               title: "Lintels",
-              text: "Prestressed concrete lintels over doors and windows, one per brick leaf, in lengths from 1.2 to 3.6 m — the maker's span table decides the length.",
+              text: "Prestressed concrete lintels over doors and windows, one per brick leaf, in lengths from 0.9 to 6.6 m, in standard 110 mm, maxi 140 mm and wide 150 mm sections — the maker's span table decides the length.",
               href: "/products?category=lintels-dpc-wall-accessories",
               cta: "Shop lintels →",
             },
