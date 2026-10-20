@@ -90,8 +90,7 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
     key: "LAYUP",
     displayName: "LayUp lay-by",
     category: "bnpl",
-    // A generic lay-by badge: no LayUp logo is used until its brand assets are licensed to us.
-    logoAssetPath: "generic/layby.svg",
+    logoAssetPath: "layup/layup.svg",
     tradeOnly: false,
     minOrderValue: 500,
     maxOrderValue: 150000,
