@@ -368,7 +368,14 @@ export type CompanionView = {
   /** Ticked for the cart to start with — not a full truck of ready-mix, which the customer opts into. */
   preselected: boolean;
 };
-export type CompleteTheJobView = { title: string; stage: BuildStage; stageLabel: string; companions: CompanionView[] };
+export type CompleteTheJobView = {
+  title: string;
+  stage: BuildStage;
+  stageLabel: string;
+  companions: CompanionView[];
+  /** Order pairings or staff pins lead the list (Best With) — not only the job's checklist. */
+  bestWith?: boolean;
+};
 
 /** The job a product belongs to, with its companions resolved against the catalogue — plain data for a client component. */
 export function completeTheJob(sku: string, categorySlug: string, hiddenSkus: string[] = []): CompleteTheJobView | null {
@@ -382,8 +389,14 @@ export const JOB_KEYS = Object.keys(JOBS) as JobKey[];
 /** One job's companions resolved against the catalogue, leaving out the given SKUs — for the shopping assistant's "what do I need for…". */
 export function resolveJob(key: JobKey, excludeSkus: string[] = []): CompleteTheJobView | null {
   const job: Job = JOBS[key];
-  const companions = job.companions
-    .filter((c) => !excludeSkus.includes(c.sku))
+  const companions = resolveCompanions(job.companions.filter((c) => !excludeSkus.includes(c.sku)));
+  if (companions.length < 2) return null;
+  const stageLabel = STAGES.find((s) => s.value === job.stage)!.label;
+  return { title: job.title, stage: job.stage, stageLabel, companions };
+}
+
+function resolveCompanions(list: Companion[]): CompanionView[] {
+  return list
     .flatMap((c) => {
       const product = findQuotable(c.sku);
       if (!product) return [];
@@ -404,9 +417,65 @@ export function resolveJob(key: JobKey, excludeSkus: string[] = []): CompleteThe
       ];
     })
     .slice(0, MAX);
-  if (companions.length < 2) return null;
-  const stageLabel = STAGES.find((s) => s.value === job.stage)!.label;
-  return { title: job.title, stage: job.stage, stageLabel, companions };
+}
+
+/** A Best With suggestion from the API (docs/best-with.md): pinned by staff, or bought together in paid orders. */
+export type BestWithSuggestion = { sku: string; source: "PINNED" | "ORDERS"; note: string | null };
+
+/** How a suggestion is explained: staff's note, or that customers buy them together (with the job's reason when there is one). */
+function suggestionWhy(s: BestWithSuggestion, fromJob?: Companion) {
+  if (s.source === "PINNED") return s.note ?? fromJob?.why ?? "Recommended with this product";
+  return fromJob ? `Often bought together · ${fromJob.why}` : "Often bought together";
+}
+
+/**
+ * Best With on a product page: what customers actually buy with it (and
+ * staff's pins) first, then the rest of the job's companions — so it works
+ * before there are orders and gets sharper as they come in.
+ */
+export function bestWith(sku: string, categorySlug: string, hiddenSkus: string[] = [], suggestions: BestWithSuggestion[] = []): CompleteTheJobView | null {
+  const key = jobKeyFor(sku, categorySlug);
+  const exclude = new Set([sku, ...hiddenSkus]);
+  const jobCompanions: Companion[] = key ? (JOBS[key] as Job).companions : [];
+  const picked = new Map<string, Companion>();
+  for (const s of suggestions) {
+    if (exclude.has(s.sku) || picked.has(s.sku) || !findQuotable(s.sku)) continue;
+    const fromJob = jobCompanions.find((c) => c.sku === s.sku);
+    picked.set(s.sku, { sku: s.sku, why: suggestionWhy(s, fromJob), unit: fromJob?.unit });
+  }
+  const fromOrders = picked.size > 0;
+  for (const c of jobCompanions) if (!exclude.has(c.sku) && !picked.has(c.sku)) picked.set(c.sku, c);
+  const companions = resolveCompanions([...picked.values()]);
+  if (companions.length < (fromOrders ? 1 : 2)) return null;
+  const stage: BuildStage = key ? (JOBS[key] as Job).stage : "OTHER";
+  return {
+    title: key ? (JOBS[key] as Job).title : "Often bought with this product",
+    stage,
+    stageLabel: STAGES.find((s) => s.value === stage)!.label,
+    companions,
+    bestWith: fromOrders,
+  };
+}
+
+/**
+ * Best With for a whole cart: order pairings and pins for everything in it,
+ * then the jobs its products belong to. Never suggests what's already in it.
+ */
+export function cartBestWith(cartSkus: string[], hiddenSkus: string[] = [], suggestions: BestWithSuggestion[] = [], max = 4): CompanionView[] {
+  const exclude = new Set([...cartSkus, ...hiddenSkus]);
+  const jobs = [...new Set(cartSkus.flatMap((sku) => {
+    const product = findQuotable(sku);
+    const key = product && jobKeyFor(sku, product.categorySlug);
+    return key ? [key] : [];
+  }))];
+  const jobCompanions = jobs.flatMap((key): Companion[] => (JOBS[key] as Job).companions);
+  const picked = new Map<string, Companion>();
+  for (const s of suggestions) {
+    if (exclude.has(s.sku) || picked.has(s.sku) || !findQuotable(s.sku)) continue;
+    picked.set(s.sku, { sku: s.sku, why: suggestionWhy(s, jobCompanions.find((c) => c.sku === s.sku)), unit: jobCompanions.find((c) => c.sku === s.sku)?.unit });
+  }
+  for (const c of jobCompanions) if (!exclude.has(c.sku) && !picked.has(c.sku)) picked.set(c.sku, c);
+  return resolveCompanions([...picked.values()]).slice(0, max);
 }
 
 /** The job key a product maps to, if any. */

@@ -19,6 +19,7 @@ const NAV = [
   { href: "/admin/hire-partners", label: "Hire partners" },
   { href: "/admin/documents", label: "Compliance documents" },
   { href: "/admin/products", label: "Products" },
+  { href: "/admin/best-with", label: "Best With" },
   { href: "/admin/reviews", label: "Reviews" },
   { href: "/admin/image-permissions", label: "Image permissions" },
   { href: "/admin/suppliers", label: "Suppliers" },
