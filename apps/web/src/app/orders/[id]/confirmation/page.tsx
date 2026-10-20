@@ -125,6 +125,16 @@ export default async function OrderConfirmationPage({ params, searchParams }: { 
             <dt className="text-slate">Delivery</dt>
             <dd>{Number(order.deliveryFee) === 0 ? "Included" : formatZAR(Number(order.deliveryFee))}</dd>
           </div>
+          {Number(order.ddpFee ?? 0) > 0 && (
+            <div className="flex justify-between">
+              <dt className="text-slate">
+                <Link href="/legal/shipping-delivery#2a-distributed-delivery-premium" className="hover:underline">
+                  Distributed delivery premium
+                </Link>
+              </dt>
+              <dd>{formatZAR(Number(order.ddpFee))}</dd>
+            </div>
+          )}
           {Number(order.expressFee ?? 0) > 0 && (
             <div className="flex justify-between">
               <dt className="text-slate">AA 60/120 express</dt>

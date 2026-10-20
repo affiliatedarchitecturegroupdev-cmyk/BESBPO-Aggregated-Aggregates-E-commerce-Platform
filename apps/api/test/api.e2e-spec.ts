@@ -3809,4 +3809,66 @@ describe("Aggregated Aggregates API (e2e)", () => {
       await http().post("/merchandising/best-with/recompute").set(bearer(staff)).expect(200);
     });
   });
+
+  describe("Distributed Delivery Premium: extra supply points on 3+ product orders", () => {
+    const bearer = (t: string) => ({ Authorization: `Bearer ${t}` });
+    const sand = { sku: "AA-SND-01", unit: "m3", quantity: 6 };
+    const cement = { sku: "AA-CEM-AFS-STARBUILD-325N", unit: "BAG_50KG", quantity: 20 };
+    const bricks = { sku: "AA-MAS-CLAY-STOCK", unit: "THOUSAND", quantity: 2 };
+
+    it("charges the owner's rates, consolidates partner suppliers that stock everything, and is admin-controlled", async () => {
+      const buyer = await register("ddpbuyer");
+      const staff = await register("ddpstaff");
+      const admin = await register("ddpadmin");
+      await prisma.user.update({ where: { email: `ddpstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      await prisma.user.update({ where: { email: `ddpadmin-${run}@example.com` }, data: { role: "ADMIN" } });
+      await prisma.siteContent.deleteMany({ where: { key: "ddp-policy" } });
+      expect((await http().get("/orders/delivery-premium/policy").expect(200)).body).toEqual({ enabled: true, minProducts: 3, twoOriginFee: 200, threeOriginFee: 450, extraOriginFee: 225, heavyPerTon: 150 });
+
+      // Two products: never charged.
+      const two = await http().post("/orders/price").send({ deliveryDistanceKm: 20, lines: [sand, cement] }).expect(200);
+      expect(two.body.ddp).toMatchObject({ applies: false, fee: 0 });
+
+      // Quarry + cement + brickyard: R450 for 3 points + R150 for the 1 t of cement after the quarry (the main, heaviest point).
+      const three = await http().post("/orders/price").send({ deliveryDistanceKm: 20, lines: [sand, cement, bricks] }).expect(200);
+      expect(three.body.ddp).toMatchObject({ applies: true, tier: "DISTRIBUTED", originFee: 450, weightFee: 150, fee: 600 });
+      expect(three.body.ddp.origins.map((o: { label: string }) => o.label)).toEqual(["Quarry (aggregates & sand)", "Cement & binders", "Brickyard & precast"]);
+      expect(JSON.stringify(three.body.ddp)).not.toMatch(/supplier:/); // no supplier IDs for shoppers
+      expect(three.body.total).toBeCloseTo(three.body.subtotal + three.body.delivery.fee + 600, 2);
+
+      // The order carries it: total, fee and the assessment.
+      const order = await http().post("/orders").set(bearer(buyer)).send({ deliveryDistanceKm: 20, lines: [sand, cement, bricks] }).expect(201);
+      expect(Number(order.body.ddpFee)).toBe(600);
+      expect(Number(order.body.total)).toBeCloseTo(three.body.total, 2);
+      expect(order.body.ddpDetail).toMatchObject({ tier: "DISTRIBUTED", fee: 600 });
+
+      // A verified partner in the site's province that stocks all three: one supply point, nothing to pay.
+      const province = `E2E Province ${run}`;
+      const supplier = await prisma.supplierLocation.create({
+        data: { name: `DDP Merchant ${run}`, province, city: "Testville", categorySlugs: ["sand-fine-aggregates", "cement-hydraulic-binders", "bricks-blocks"], isVerifiedPartner: true },
+      });
+      const local = await http().post("/orders/price").send({ deliveryDistanceKm: 20, deliveryProvince: province, lines: [sand, cement, bricks] }).expect(200);
+      expect(local.body.ddp).toMatchObject({ applies: false, fee: 0, tier: "CONSOLIDATED" });
+      const localOrder = await http().post("/orders").set(bearer(buyer)).send({ deliveryDistanceKm: 20, deliveryProvince: province, lines: [sand, cement, bricks] }).expect(201);
+      expect(localOrder.body.ddpFee).toBeNull();
+      // A researched lead (not verified) doesn't count.
+      await prisma.supplierLocation.update({ where: { id: supplier.id }, data: { isVerifiedPartner: false } });
+      expect((await http().post("/orders/price").send({ deliveryDistanceKm: 20, deliveryProvince: province, lines: [sand, cement, bricks] }).expect(200)).body.ddp.fee).toBe(600);
+
+      // Admins set the rates; staff can see how it's working but not change it.
+      const rates = { enabled: true, minProducts: 3, twoOriginFee: 250, threeOriginFee: 500, extraOriginFee: 250, heavyPerTon: 120 };
+      await http().put("/orders/delivery-premium/policy").set(bearer(staff)).send(rates).expect(403);
+      await http().put("/orders/delivery-premium/policy").set(bearer(admin)).send({ ...rates, minProducts: 1 }).expect(400);
+      await http().put("/orders/delivery-premium/policy").set(bearer(admin)).send(rates).expect(200);
+      expect((await http().post("/orders/price").send({ deliveryDistanceKm: 20, lines: [sand, cement, bricks] }).expect(200)).body.ddp.fee).toBe(620);
+      await http().put("/orders/delivery-premium/policy").set(bearer(admin)).send({ ...rates, enabled: false }).expect(200);
+      expect((await http().post("/orders/price").send({ deliveryDistanceKm: 20, lines: [sand, cement, bricks] }).expect(200)).body.ddp).toMatchObject({ applies: false, fee: 0 });
+      await http().get("/orders/delivery-premium/stats").set(bearer(buyer)).expect(403);
+      expect((await http().get("/orders/delivery-premium/stats").set(bearer(staff)).expect(200)).body).toMatchObject({ paidOrders: expect.any(Number), premiumCollected: expect.any(Number) });
+
+      await prisma.siteContent.deleteMany({ where: { key: "ddp-policy" } });
+      await prisma.order.deleteMany({ where: { id: { in: [order.body.id, localOrder.body.id] } } });
+      await prisma.supplierLocation.delete({ where: { id: supplier.id } });
+    });
+  });
 });

@@ -519,7 +519,7 @@ export class InsightsService {
       scope.delivery
         ? this.prisma.$queryRaw<{ k: string; fees: unknown; cost: unknown; missing: bigint }[]>`
             SELECT ${lineBucket} AS k,
-              SUM(o."deliveryFee" + COALESCE(o."expressFee", 0)) AS fees,
+              SUM(o."deliveryFee" + COALESCE(o."expressFee", 0) + COALESCE(o."ddpFee", 0)) AS fees,
               SUM(s."deliveryCost") AS cost,
               COUNT(*) FILTER (WHERE s."dispatchedAt" IS NOT NULL AND s."deliveryCost" IS NULL
                 AND EXISTS (SELECT 1 FROM "OrderLineItem" x WHERE x."orderId" = o.id AND x."pricingFamily" IS DISTINCT FROM 'READY_MIX')) AS missing
@@ -666,7 +666,7 @@ export class InsightsService {
     const { divisor } = vatBasis();
     const [r] = await this.prisma.$queryRaw<{ customers: bigint; new_customers: bigint; repeat: bigint; revenue: unknown; new_revenue: unknown }[]>`
       WITH paid AS (
-        SELECT COALESCE(o."companyId", o."userId") AS who, o.id, o.subtotal + o."deliveryFee" + COALESCE(o."expressFee", 0) AS amount
+        SELECT COALESCE(o."companyId", o."userId") AS who, o.id, o.subtotal + o."deliveryFee" + COALESCE(o."expressFee", 0) + COALESCE(o."ddpFee", 0) AS amount
         FROM "Order" o WHERE ${this.orderWhere(q, p)} AND COALESCE(o."companyId", o."userId") IS NOT NULL
       ),
       firsts AS (
@@ -685,7 +685,7 @@ export class InsightsService {
         SUM(amount) FILTER (WHERE first_paid >= ${p.start}) AS new_revenue
       FROM per`;
     const tiers = await this.prisma.$queryRaw<{ tier: string; revenue: unknown; orders: bigint }[]>`
-      SELECT COALESCE(o."customerTier"::text, 'UNKNOWN') AS tier, SUM(o.subtotal + o."deliveryFee" + COALESCE(o."expressFee", 0)) AS revenue, COUNT(*) AS orders
+      SELECT COALESCE(o."customerTier"::text, 'UNKNOWN') AS tier, SUM(o.subtotal + o."deliveryFee" + COALESCE(o."expressFee", 0) + COALESCE(o."ddpFee", 0)) AS revenue, COUNT(*) AS orders
       FROM "Order" o WHERE ${this.orderWhere(q, p)} GROUP BY 1`;
     const customers = num(r?.customers);
     const revenue = num(r?.revenue) / divisor;

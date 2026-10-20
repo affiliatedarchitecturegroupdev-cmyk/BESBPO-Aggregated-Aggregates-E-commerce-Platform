@@ -7,6 +7,7 @@ import {
   IsIn,
   IsLatitude,
   IsLongitude,
+  IsInt,
   IsNumber,
   IsOptional,
   IsPositive,
@@ -47,6 +48,9 @@ export class DeliveryDto {
 
 /** Prices a cart without saving anything — the storefront's cart page. */
 export class PriceCartDto extends DeliveryDto {
+  /** Checkout passes the site's province so the delivery premium counts the partner suppliers there. */
+  @IsOptional() @IsString() @MaxLength(80) deliveryProvince?: string;
+
   @ValidateNested({ each: true })
   @Type(() => QuoteLineDto)
   @ArrayMinSize(1)
@@ -108,4 +112,14 @@ export class ListOrdersQuery {
   @IsOptional() @IsEnum(OrderStatus) status?: OrderStatus;
   /** AA 60/120 orders only (any status unless one is given). */
   @IsOptional() @Transform(({ value }) => value === true || value === "true" || value === "1") @IsBoolean() express?: boolean;
+}
+
+/** Admin: the Distributed Delivery Premium's rates (docs/delivery-premium.md). */
+export class DdpPolicyDto {
+  @IsBoolean() enabled!: boolean;
+  @Type(() => Number) @IsInt() @Min(2) @Max(50) minProducts!: number;
+  @Type(() => Number) @IsNumber() @Min(0) @Max(100000) twoOriginFee!: number;
+  @Type(() => Number) @IsNumber() @Min(0) @Max(100000) threeOriginFee!: number;
+  @Type(() => Number) @IsNumber() @Min(0) @Max(100000) extraOriginFee!: number;
+  @Type(() => Number) @IsNumber() @Min(0) @Max(100000) heavyPerTon!: number;
 }

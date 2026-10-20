@@ -13,6 +13,9 @@ import type { DocSpec } from "./pdf-renderer";
 export const VAT_RATE_PERCENT = 15; // South African standard rate
 
 const hasExpress = (o: { expressFee?: Money | null }) => o.expressFee != null && Number(o.expressFee.toString()) > 0;
+const hasDdp = (o: { ddpFee?: Money | null }) => o.ddpFee != null && Number(o.ddpFee.toString()) > 0;
+/** The Distributed Delivery Premium's line (docs/delivery-premium.md). */
+export const DDP_LABEL = "Distributed delivery premium";
 
 export type OrderDocData = {
   orderNumber: string;
@@ -22,6 +25,8 @@ export type OrderDocData = {
   deliveryFee: Money;
   /** AA 60/120 express fee, VAT-inclusive (null for standard delivery). */
   expressFee?: Money | null;
+  /** Distributed Delivery Premium — extra supply points (null when none applies). */
+  ddpFee?: Money | null;
   total: Money;
   /** Paid so far (the payments ledger) — a deposit leaves a balance. */
   amountPaid?: Money;
@@ -118,6 +123,7 @@ export function orderConfirmationSpec(o: OrderDocData, bankingDetails?: string):
     totals: [
       { label: "Materials", value: formatZAR(o.subtotal) },
       { label: o.deliveryDistanceKm !== null ? `Delivery (${o.deliveryDistanceKm}km)` : "Delivery", value: Number(o.deliveryFee.toString()) === 0 ? "Included" : formatZAR(o.deliveryFee) },
+      ...(hasDdp(o) ? [{ label: DDP_LABEL, value: formatZAR(o.ddpFee!) }] : []),
       ...(hasExpress(o) ? [{ label: "AA 60/120 express delivery", value: formatZAR(o.expressFee!) }] : []),
       { label: "Total", value: formatZAR(o.total), strong: true },
     ],
@@ -225,6 +231,7 @@ export function taxInvoiceSpec(inv: InvoiceDocData, o: OrderDocData, bankingDeta
       rows: [
         ...o.lines.map((l) => [l.name, quantity(l), l.unitPrice !== null ? formatZAR(l.unitPrice) : "—", l.lineTotal !== null ? formatZAR(l.lineTotal) : "—"]),
         ...(Number(o.deliveryFee.toString()) > 0 ? [[`Delivery${o.deliveryDistanceKm !== null ? ` (${o.deliveryDistanceKm}km)` : ""}`, "1", formatZAR(o.deliveryFee), formatZAR(o.deliveryFee)]] : []),
+        ...(hasDdp(o) ? [[DDP_LABEL, "1", formatZAR(o.ddpFee!), formatZAR(o.ddpFee!)]] : []),
         ...(hasExpress(o) ? [["AA 60/120 express delivery", "1", formatZAR(o.expressFee!), formatZAR(o.expressFee!)]] : []),
       ],
     },

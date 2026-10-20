@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { api, apiUpload } from "@/lib/api";
 import { endSession, safeReturnPath, sessionToken, startSession } from "@/lib/session";
 import type { ImportSummary } from "@/lib/suppliers";
+import type { DdpView } from "@/components/cart/DeliveryPremiumRow";
 
 export type FormState = { error?: string; success?: string } | null;
 
@@ -542,6 +543,8 @@ export type CartPricing = {
   distance: { distanceKm: number; source: "LOCATION" | "CUSTOMER"; fromTown: string | null; fromProvince: string | null };
   /** AA 60/120 — decided by the API (lines, 30 km pin, one truck, hours). */
   express?: ExpressQuote;
+  /** Distributed Delivery Premium — already in `total` (docs/delivery-premium.md). */
+  ddp?: DdpView;
 };
 
 export type ExpressQuote = {
@@ -569,11 +572,11 @@ function deliveryBody(delivery: CartInput["delivery"]) {
 }
 
 /** Prices the cart at the shopper's own tier (Retail when signed out). Nothing is saved. */
-export async function priceCart(input: CartInput): Promise<{ ok: true; pricing: CartPricing } | { ok: false; error: string }> {
+export async function priceCart(input: CartInput & { deliveryProvince?: string }): Promise<{ ok: true; pricing: CartPricing } | { ok: false; error: string }> {
   const result = await api<CartPricing>("/orders/price", {
     method: "POST",
     token: sessionToken(),
-    body: { lines: input.lines, ...deliveryBody(input.delivery) },
+    body: { lines: input.lines, ...deliveryBody(input.delivery), ...(input.deliveryProvince ? { deliveryProvince: input.deliveryProvince } : {}) },
   });
   return result.ok ? { ok: true, pricing: result.data } : { ok: false, error: result.message };
 }

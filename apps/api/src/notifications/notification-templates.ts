@@ -24,6 +24,8 @@ export type OrderData = {
   status: string;
   subtotal: Money;
   deliveryFee: Money;
+  /** Distributed Delivery Premium (docs/delivery-premium.md), when one applies. */
+  ddpFee?: Money | null;
   total: Money;
   deliveryAddress: string | null;
   deliveryProvince: string | null;
@@ -255,6 +257,7 @@ function orderSummary(o: OrderData): Block[] {
   const rows: [string, string][] = [
     ["Materials", formatZAR(o.subtotal)],
     ["Delivery", Number(o.deliveryFee.toString()) === 0 ? "Included" : formatZAR(o.deliveryFee)],
+    ...(o.ddpFee != null && Number(o.ddpFee.toString()) > 0 ? ([["Distributed delivery premium", formatZAR(o.ddpFee)]] as [string, string][]) : []),
     ...(o.express && Number(o.express.fee.toString()) > 0 ? ([["AA 60/120 express", formatZAR(o.express.fee)]] as [string, string][]) : []),
     ["Total", formatZAR(o.total)],
   ];

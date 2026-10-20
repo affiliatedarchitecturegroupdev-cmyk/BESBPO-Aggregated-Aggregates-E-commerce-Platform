@@ -22,6 +22,7 @@ type LinkView = {
   subtotal: number;
   deliveryFee: number;
   expressFee: number | null;
+  ddpFee?: number | null;
   lines: { name: string; quantity: number; unitOfSale: keyof typeof UNIT_LABEL; lineTotal: number }[];
   methods: PaymentTiles;
 };
@@ -92,6 +93,12 @@ export default async function PayPage({ params, searchParams }: { params: { toke
             <dt className="text-slate">Delivery</dt>
             <dd>{link.deliveryFee === 0 ? "Included" : formatZAR(link.deliveryFee)}</dd>
           </div>
+          {link.ddpFee != null && link.ddpFee > 0 && (
+            <div className="flex justify-between">
+              <dt className="text-slate">Distributed delivery premium</dt>
+              <dd>{formatZAR(link.ddpFee)}</dd>
+            </div>
+          )}
           {link.expressFee !== null && link.expressFee > 0 && (
             <div className="flex justify-between">
               <dt className="text-slate">AA 60/120 express</dt>

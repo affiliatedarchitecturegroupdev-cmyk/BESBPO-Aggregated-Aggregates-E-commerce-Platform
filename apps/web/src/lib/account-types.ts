@@ -85,6 +85,9 @@ export type OrderRecord = {
   invoice?: InvoiceSummary | null;
   /** AA 60/120: the fee (null = standard delivery; "0.00" once declined before payment) and the clock the API works out. */
   expressFee?: string | null;
+  /** Distributed Delivery Premium (docs/delivery-premium.md). */
+  ddpFee?: string | null;
+  ddpDetail?: { tier: string; origins: { key: string; label: string; products: number; tons: number }[]; originFee: number; weightFee: number; extraHeavyTons: number } | null;
   expressNote?: string | null;
   express?: ExpressStatus | null;
 };

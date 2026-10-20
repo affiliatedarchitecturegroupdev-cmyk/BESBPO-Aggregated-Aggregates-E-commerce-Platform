@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { placeOrder, priceCart, type CartPricing } from "@/app/account/actions";
 import { deliveryInput } from "@/components/cart/CartView";
+import { DeliveryPremiumRow } from "@/components/cart/DeliveryPremiumRow";
 import { ProductThumb } from "@/components/product/ProductThumb";
 import { findQuotable } from "@/data/quotable";
 import { cart, useCart } from "@/lib/cart";
@@ -45,11 +46,12 @@ export function CheckoutForm({ addresses, email }: { addresses: SavedAddress[]; 
   const expressQuote = pricing?.express;
   const expressOn = express && Boolean(expressQuote?.available);
 
-  const key = JSON.stringify({ lines, delivery });
+  // The province counts too: the delivery premium looks for partner suppliers that serve the site.
+  const key = JSON.stringify({ lines, delivery, province });
   useEffect(() => {
     if (lines.length === 0 || !input) return;
     startPricing(async () => {
-      const result = await priceCart({ lines, delivery: input });
+      const result = await priceCart({ lines, delivery: input, deliveryProvince: province });
       if (result.ok) setPricing(result.pricing);
       else setError(result.error);
     });
@@ -167,6 +169,7 @@ export function CheckoutForm({ addresses, email }: { addresses: SavedAddress[]; 
             <dl className="mt-3 space-y-1 border-t border-basalt/10 pt-3">
               <div className="flex justify-between"><dt className="text-slate">Materials</dt><dd className="tabular-nums">{formatZAR(pricing.subtotal)}</dd></div>
               <div className="flex justify-between"><dt className="text-slate">Delivery ({pricing.distance.distanceKm}km)</dt><dd className="tabular-nums">{pricing.delivery.fee === null ? "Quoted" : pricing.delivery.fee === 0 ? "Included" : formatZAR(pricing.delivery.fee)}</dd></div>
+              {!pricing.is_quote_only && <DeliveryPremiumRow ddp={pricing.ddp} />}
               {expressOn && <div className="flex justify-between"><dt className="text-slate">AA 60/120 express</dt><dd className="tabular-nums">{formatZAR(expressQuote!.fee)}</dd></div>}
               {pricing.total !== null && <div className="flex justify-between font-semibold"><dt>Total</dt><dd className="tabular-nums">{formatZAR(pricing.total + (expressOn ? expressQuote!.fee : 0))}</dd></div>}
             </dl>
