@@ -9,6 +9,7 @@ import { eligiblePaymentMethods, PAYFAST_VISIBILITY_KEY } from "./eligibility";
 import { GatewayHealthService } from "./gateway-health.service";
 import { PaymentsService, type PaymentChoice } from "./payments.service";
 import { confirmWithPayfast, isPayfastSource, parseNotification, payfastConfig, signatureMatches } from "./payfast/payfast";
+import { stitchLive } from "./stitch/stitch";
 import { UpdatePaymentMethodDto } from "./payment-gateway.dto";
 
 export type NotificationOutcome = "PAID" | "ALREADY_PAID" | "NOT_PAID" | "REJECTED";
@@ -42,7 +43,7 @@ export class PaymentGatewayService {
   async eligible(orderTotal: number, isQuoteOnly: boolean, user?: AuthUser, isExpress = false) {
     const configs = await this.prisma.paymentMethodConfig.findMany({ select: { ...PUBLIC_FIELDS, activeGateway: true }, orderBy: { sortOrder: "asc" } });
     const onAccount = !isQuoteOnly && !isExpress && (await this.credit.canCharge(user?.companyId ?? null, orderTotal));
-    const result = eligiblePaymentMethods(configs, { orderTotal, isQuoteOnly, isExpress, onAccount, customerTier: await this.tierOf(user?.companyId ?? null) });
+    const result = eligiblePaymentMethods(configs, { orderTotal, isQuoteOnly, isExpress, onAccount, customerTier: await this.tierOf(user?.companyId ?? null) , bankFirst: stitchLive() });
     // Routing stays private: the gateway is only used to decide eligibility.
     const strip = (list: typeof configs) => list.map(({ activeGateway: _gateway, ...rest }) => rest);
     return { recommended: strip(result.recommended), available: strip(result.available) };

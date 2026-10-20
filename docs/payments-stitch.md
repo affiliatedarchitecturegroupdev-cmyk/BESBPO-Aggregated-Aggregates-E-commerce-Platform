@@ -105,6 +105,15 @@ Never put these in the repository or in chat.
   `POST /api/v1/payment/{id}/refund`, scope `client_refund`. We already keep
   Stitch's payment ID on each paid payment. Refunds are recorded by hand for
   now.
-- **Routing:** once live, pay by bank could be suggested first for large
-  orders and deposits, since bank payments have no card limit. Stitch could
-  also back up Card and Capitec Pay if the account has those methods.
+- **Card / Capitec Pay backup:** Stitch can back up those tiles, restricted
+  to that method, if the account has them. Set them as the fallback in the
+  routing table once we know which methods Stitch's page shows.
+
+## Large orders: pay by bank first
+
+From **R30,000** (owner, 20 Oct 2026; `BANK_FIRST_FROM` in
+`apps/api/src/payment-gateway/eligibility.ts`), the Stitch tile is the
+**first recommended** payment option. This applies to the order total, a
+deposit, a balance or a payment link amount. Bank payments have no card
+limit. It applies only once Stitch has **live** keys, so customers are never
+steered to it while it's in test mode. It also needs the Stitch tile enabled.

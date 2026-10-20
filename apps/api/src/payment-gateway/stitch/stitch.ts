@@ -30,6 +30,9 @@ export function stitchConfig(): StitchConfig | null {
   };
 }
 
+/** Live keys are in (customers can pay with Stitch; test keys are staff-only). */
+export const stitchLive = () => stitchConfig()?.mode === "live";
+
 /** Rand to Stitch's cents. */
 export const toCents = (rand: number) => Math.round(rand * 100);
 
