@@ -11,6 +11,7 @@ const NAV = [
   { href: "/admin/applications", label: "Trade applications" },
   { href: "/admin/orders", label: "Orders" },
   { href: "/admin/deliveries", label: "Deliveries" },
+  { href: "/admin/delivery-premium", label: "Delivery premium" },
   { href: "/admin/credit", label: "Trade credit" },
   { href: "/admin/quotes", label: "Quote requests" },
   { href: "/admin/enquiries", label: "Enquiries" },

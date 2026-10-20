@@ -643,6 +643,9 @@ model Order {
   fulfilledBySupplierId String?
   fulfilledBySupplier   SupplierLocation?     @relation(fields: [fulfilledBySupplierId], references: [id], onDelete: SetNull)
   isTest                Boolean               @default(false) // excluded from reporting
+  // Distributed Delivery Premium (docs/delivery-premium.md): extra supply points, charged on top of delivery.
+  ddpFee                Decimal?              @db.Decimal(10, 2)
+  ddpDetail             Json? // the assessment at checkout: tier, supply points, tons, rates applied
   timestampsEstimated   Boolean               @default(false) // paidAt/cancelledAt backfilled for orders placed before they were recorded
   refunds               Refund[]
   // Payments (docs/payments.md): an order can be paid in full, by deposit then balance, or on lay-by (LayUp).

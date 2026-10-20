@@ -9,6 +9,7 @@ import { pricingUnit, unitOfSale } from "../pricing/units";
 import { SuppliersService } from "../suppliers/suppliers.service";
 import { PAYFAST_VISIBILITY_KEY } from "../payment-gateway/eligibility";
 import { CreateOrderDto, DeliveryDto, ExpressDecisionDto, UpdateOrderStatusDto } from "./dto/create-order.dto";
+import { DdpService, publicDdp } from "./ddp.service";
 import { EXPRESS, expressClock, expressOutcome, expressQuote, type ExpressQuote } from "./express";
 
 type Line = { productId: string; sku: string; name: string; categorySlug: string; unit: PricingUnit; quantity: number };
@@ -67,13 +68,14 @@ export class OrdersService {
     private readonly documents: ComplianceDocumentsService,
     private readonly suppliers: SuppliersService,
     private readonly notifications: NotificationsService,
+    private readonly ddp: DdpService,
   ) {}
 
   /** The time AA 60/120 rules are checked against (tests pin it to ordering hours). */
   clock: () => Date = () => new Date();
 
   /** Prices a cart at the caller's tier without saving anything. */
-  async priceCart(dto: { lines: { sku: string; unit: PricingUnit; quantity: number }[] } & DeliveryDto, user?: AuthUser) {
+  async priceCart(dto: { lines: { sku: string; unit: PricingUnit; quantity: number }[]; deliveryProvince?: string } & DeliveryDto, user?: AuthUser) {
     const lines = await this.resolveLines({ lines: dto.lines });
     const delivery = await this.deliveryDistance(dto, lines);
     const priced = await this.pricingService.calculateOrder({
@@ -95,7 +97,18 @@ export class OrdersService {
       unit_label,
       pricing_status,
     }));
-    return { ...priced, lines: publicLines, distance: delivery, express };
+    // Distributed Delivery Premium: extra supply points, on top of delivery (docs/delivery-premium.md).
+    const ddp = await this.assessDdp(lines, priced, dto, dto.deliveryProvince);
+    const total = priced.total === null ? null : Math.round((priced.total + ddp.fee) * 100) / 100;
+    return { ...priced, total, lines: publicLines, distance: delivery, express, ddp: publicDdp(ddp) };
+  }
+
+  private assessDdp(lines: Line[], priced: { lines: { equivalent_tons?: number | null }[] }, site: DeliveryDto, province?: string | null) {
+    return this.ddp.assess(
+      lines,
+      lines.map((_, i) => priced.lines[i]?.equivalent_tons),
+      { latitude: site.deliveryLatitude, longitude: site.deliveryLongitude, province: province?.trim() || null },
+    );
   }
 
   async createOrder(dto: CreateOrderDto, user: AuthUser) {
@@ -120,6 +133,7 @@ export class OrdersService {
       if (!express.available) throw new BadRequestException(`AA 60/120 isn't available for this order: ${express.reasons.join(" ")}`);
     }
     const expressFee = dto.express ? EXPRESS.feeRand : null;
+    const ddp = await this.assessDdp(lines, priced, dto, dto.deliveryProvince);
 
     const order = await this.prisma.order.create({
       data: {
@@ -129,8 +143,10 @@ export class OrdersService {
         status: OrderStatus.PENDING,
         subtotal: priced.subtotal,
         deliveryFee: priced.delivery.fee,
-        total: priced.total + (expressFee ?? 0),
+        total: Math.round((priced.total + (expressFee ?? 0) + ddp.fee) * 100) / 100,
         expressFee,
+        ddpFee: ddp.applies ? ddp.fee : null,
+        ddpDetail: ddp as unknown as Prisma.InputJsonValue,
         deliveryAddress: dto.deliveryAddress?.trim() || null,
         deliveryProvince: dto.deliveryProvince?.trim() || null,
         deliveryDistanceKm: delivery.distanceKm,

@@ -8,6 +8,7 @@ import { cart, useCart, type CartDelivery } from "@/lib/cart";
 import { formatZAR } from "@/lib/pricing";
 import { NumberInput } from "@/components/ui/NumberInput";
 import { ProductThumb } from "@/components/product/ProductThumb";
+import { DeliveryPremiumRow } from "@/components/cart/DeliveryPremiumRow";
 
 const GEOLOCATION_ERRORS: Record<number, string> = {
   1: "Location access was blocked — enter the distance instead.",
@@ -189,6 +190,7 @@ export function CartView({ signedIn }: { signedIn: boolean }) {
                   <dt className="text-slate">Delivery</dt>
                   <dd className="tabular-nums">{pricing.delivery.fee === null ? "Quoted" : pricing.delivery.fee === 0 ? "Included" : formatZAR(pricing.delivery.fee)}</dd>
                 </div>
+                {!pricing.is_quote_only && <DeliveryPremiumRow ddp={pricing.ddp} estimate />}
                 {pricing.total !== null && (
                   <div className="flex justify-between border-t border-basalt/10 pt-2 font-semibold"><dt>Total</dt><dd className="tabular-nums">{formatZAR(pricing.total)}</dd></div>
                 )}

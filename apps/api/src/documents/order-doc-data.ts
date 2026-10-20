@@ -32,6 +32,7 @@ export function toDocData(order: LoadedOrder): OrderDocData {
     subtotal: order.subtotal,
     deliveryFee: order.deliveryFee,
     expressFee: order.expressFee,
+    ddpFee: order.ddpFee,
     total: order.total,
     amountPaid: order.amountPaid,
     deliveryAddress: order.deliveryAddress,

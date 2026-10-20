@@ -28,6 +28,39 @@ Orders that qualify as Volume/Civil Bulk tier (≥10m³ total) are always
 quoted individually, regardless of distance, given the scale and
 variability of civil-scale delivery logistics.
 
+## 2A. Distributed delivery premium
+
+We don't hold stock: each material comes from the partner supplier that
+stocks it. When one order needs materials from several different kinds of
+supplier — for example roof sheets, bricks and plumbing fittings — it has
+to be collected from more than one supply point, and each extra collection
+costs more to arrange and carry.
+
+- **When it applies:** only to orders of **3 or more different products**
+  that come from **more than one supply point**. If one approved partner
+  supplier near your site stocks everything in your order, it counts as one
+  supply point and no premium applies.
+- **How it's worked out:** the delivery fee covers the main supply point
+  (the one with the heaviest part of your order). The premium covers the
+  others:
+  - 2 supply points: R200;
+  - 3 supply points: R450;
+  - each supply point after that: R225 more;
+  - plus R150 per ton, or part of a ton, of heavy goods (aggregates, sand,
+    cement, bricks, steel, roofing and timber) collected from the extra
+    supply points. Light goods such as fittings, tools and paint carry no
+    weight charge.
+- **Before you pay:** the cart and checkout show the premium as its own
+  line, with the supply points your order is collected from. The amount on
+  your order confirmation is final. The cart's figure is an estimate and can
+  only come down at checkout, once we know where your site is.
+- **Avoiding it:** you can order materials from different supply points
+  separately, or ask us to plan a phased delivery (section 4A).
+- **Supplier delivery charges:** the premium covers the extra collections
+  we arrange. Where a supplier delivers on its own flatbed or crane truck
+  (steel, bricks, roofing and building supplies), any charge for that truck
+  is still confirmed with you before dispatch, as set out in section 3.
+
 ## 3. Delivery carriers
 
 Delivery is carried out by Besfleet, Besbpo Group's own trucking division,

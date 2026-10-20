@@ -664,6 +664,7 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
       subtotal: Number(current.subtotal),
       deliveryFee: Number(current.deliveryFee),
       expressFee: current.expressFee !== null ? Number(current.expressFee) : null,
+      ddpFee: current.ddpFee !== null ? Number(current.ddpFee) : null,
       methods: paid ? { recommended: [], available: [] } : { recommended: tiles(recommended), available: tiles(available) },
     };
   }

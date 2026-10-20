@@ -41,7 +41,7 @@ function margin(order: StaffOrder) {
   const cost = lines.reduce((n, l) => n + Number(l.unitCost) * Number(l.quantity), 0);
   const sales = lines.reduce((n, l) => n + Number(l.lineTotal ?? 0), 0);
   const delivery = order.shipment?.deliveryCost != null ? Number(order.shipment.deliveryCost) : null;
-  const gross = sales - cost + Number(order.deliveryFee ?? 0) + Number(order.expressFee ?? 0) - (delivery ?? 0);
+  const gross = sales - cost + Number(order.deliveryFee ?? 0) + Number(order.expressFee ?? 0) + Number(order.ddpFee ?? 0) - (delivery ?? 0);
   return { cost, sales, delivery, gross, estimated: lines.some((l) => l.costSource === "ESTIMATED") };
 }
 
@@ -146,6 +146,7 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
               {order.notes && <p className="mt-2 rounded-sm bg-limestone p-2 text-slate">{order.notes}</p>}
               <PaymentLine order={order} />
               {order.express && <ExpressPanel order={order} />}
+              {Number(order.ddpFee ?? 0) > 0 && order.ddpDetail && <DdpPanel order={order} />}
               {order.shipment && (
                 <p className="mt-2 font-mono text-[11px] text-slate">
                   {order.shipment.carrier === "BESFLEET" ? "Besfleet" : order.shipment.externalPartnerName}
@@ -277,6 +278,29 @@ function PaymentLine({ order }: { order: StaffOrder }) {
       <Link href={`/admin/orders/${order.id}/payments`} className="text-seam-blue hover:underline">Payments, links &amp; EFT →</Link>
       <Link href={`/admin/orders/${order.id}/deliveries`} className="text-seam-blue hover:underline">{order.isPhased ? "Phased deliveries" : "Deliveries"}, POD &amp; supplier →</Link>
     </p>
+  );
+}
+
+/** Distributed Delivery Premium on a staff order: the supply points it was charged for (docs/delivery-premium.md). */
+function DdpPanel({ order }: { order: StaffOrder }) {
+  const d = order.ddpDetail!;
+  return (
+    <div className="mt-3 rounded-sm border border-seam-blue/30 bg-seam-blue/5 p-3 text-xs text-basalt">
+      <p>
+        <span className="font-semibold">Distributed delivery premium {formatZAR(Number(order.ddpFee))}</span>{" "}
+        <span className="text-slate">
+          · {d.origins.length} supply points ({formatZAR(d.originFee)}){d.weightFee > 0 ? ` + ${d.extraHeavyTons} t heavy goods (${formatZAR(d.weightFee)})` : ""}
+        </span>
+      </p>
+      <ul className="mt-1 list-disc pl-4 text-slate">
+        {d.origins.map((o, i) => (
+          <li key={o.key}>
+            {o.label} — {o.products} product{o.products === 1 ? "" : "s"}, {o.tons} t{i === 0 ? " (main point, covered by delivery)" : ""}
+            {o.key.startsWith("supplier:") ? " · one partner supplier stocks these" : ""}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

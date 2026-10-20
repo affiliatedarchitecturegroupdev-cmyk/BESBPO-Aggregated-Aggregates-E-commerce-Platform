@@ -143,6 +143,7 @@ export class NotificationsService implements OnModuleDestroy {
         status: order.status,
         subtotal: order.subtotal,
         deliveryFee: order.deliveryFee,
+        ddpFee: order.ddpFee,
         total: order.total,
         deliveryAddress: order.deliveryAddress,
         deliveryProvince: order.deliveryProvince,
