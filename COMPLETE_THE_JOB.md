@@ -8,6 +8,10 @@ tie wire, screed sand and the ready-mix.
 
 It sits above the existing "More in <category>" row, which stays as it was.
 
+**Best With** (`docs/best-with.md`) leads the same panel: staff pins and the
+products customers actually buy together come first, then this checklist
+fills the rest. When order pairings show, the panel is labelled "Best with".
+
 ## How a product finds its job
 
 The pairings live in `apps/web/src/data/complete-the-job.ts`.

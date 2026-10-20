@@ -32,14 +32,19 @@ export function CompleteTheJobPanel({ job }: { job: CompleteTheJobView }) {
     <div>
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <div>
-          <p className="font-mono text-[11px] uppercase tracking-widest text-seam-blue">Complete the job · {job.stageLabel}</p>
+          <p className="font-mono text-[11px] uppercase tracking-widest text-seam-blue">
+            {job.bestWith ? "Best with" : "Complete the job"}
+            {job.stage !== "OTHER" && ` · ${job.stageLabel}`}
+          </p>
           <h2 id="complete-the-job" className="mt-1 font-display text-xl font-bold text-basalt">
             {job.title}
           </h2>
         </div>
-        <Link href={`/shop-by-stage?stage=${job.stage}`} className="font-body text-sm text-seam-blue hover:underline">
-          Everything for {job.stageLabel.toLowerCase()} →
-        </Link>
+        {job.stage !== "OTHER" && (
+          <Link href={`/shop-by-stage?stage=${job.stage}`} className="font-body text-sm text-seam-blue hover:underline">
+            Everything for {job.stageLabel.toLowerCase()} →
+          </Link>
+        )}
       </div>
 
       <ul className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">

@@ -258,6 +258,10 @@ model Product {
   complianceDocuments       ComplianceDocument[]
   quoteLineItems            QuoteLineItem[]
   orderLineItems            OrderLineItem[]
+  affinities                ProductAffinity[]    @relation("AffinityFrom")
+  affinitiesTo              ProductAffinity[]    @relation("AffinityTo")
+  bestWithRules             BestWithRule[]       @relation("BestWithFrom")
+  bestWithRulesTo           BestWithRule[]       @relation("BestWithTo")
   isActive                  Boolean              @default(true) // staff can hide a product from the storefront
   featuredRank              Int? // set = shown in the homepage's featured row, lowest first
   createdAt                 DateTime             @default(now())
@@ -1978,4 +1982,39 @@ model ProductReview {
   @@unique([productId, userId])
   @@index([productId, status])
   @@index([status, createdAt])
+}
+
+/// Best With (docs/best-with.md): how often two products are bought in the
+/// same paid, non-test order. Rebuilt daily from the orders — never edited.
+/// `confidence` = share of the product's orders that also had the paired one.
+model ProductAffinity {
+  productId       String
+  product         Product  @relation("AffinityFrom", fields: [productId], references: [id], onDelete: Cascade)
+  pairedProductId String
+  pairedProduct   Product  @relation("AffinityTo", fields: [pairedProductId], references: [id], onDelete: Cascade)
+  orders          Int // paid orders with both
+  confidence      Decimal  @db.Decimal(6, 4)
+  lift            Decimal  @db.Decimal(10, 4)
+  computedAt      DateTime @default(now())
+
+  @@id([productId, pairedProductId])
+  @@index([productId, confidence])
+}
+
+enum BestWithAction {
+  PIN // always suggest the paired product on this product (first)
+  HIDE // never suggest it, whatever the orders say
+}
+
+/// Staff's say over Best With: pin a pairing or hide one, per product.
+model BestWithRule {
+  productId       String
+  product         Product        @relation("BestWithFrom", fields: [productId], references: [id], onDelete: Cascade)
+  pairedProductId String
+  pairedProduct   Product        @relation("BestWithTo", fields: [pairedProductId], references: [id], onDelete: Cascade)
+  action          BestWithAction
+  note            String? // shown to customers on a pinned pairing, e.g. "Seals the joints"
+  createdAt       DateTime       @default(now())
+
+  @@id([productId, pairedProductId])
 }

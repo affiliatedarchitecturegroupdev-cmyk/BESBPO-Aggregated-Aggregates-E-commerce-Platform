@@ -24,3 +24,16 @@ export class SetLicenceDto {
 export class SetSourceLicenceDto extends SetLicenceDto {
   @IsString() @MinLength(1) @MaxLength(200) sourceName!: string;
 }
+
+export class BestWithRuleDto {
+  @IsString() @MinLength(1) @MaxLength(80) productSku!: string;
+  @IsString() @MinLength(1) @MaxLength(80) pairedSku!: string;
+  @IsIn(["PIN", "HIDE"]) action!: "PIN" | "HIDE";
+  /** Shown to customers on a pinned pairing. */
+  @IsOptional() @IsString() @MaxLength(120) note?: string;
+}
+
+export class BestWithPairDto {
+  @IsString() @MinLength(1) @MaxLength(80) productSku!: string;
+  @IsString() @MinLength(1) @MaxLength(80) pairedSku!: string;
+}

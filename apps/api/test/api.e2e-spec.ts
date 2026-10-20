@@ -3752,4 +3752,61 @@ describe("Aggregated Aggregates API (e2e)", () => {
       expect(res.body).toMatchObject({ status: "ok", checks: { database: { ok: true }, pricing: { ok: true } } });
     });
   });
+
+  describe("Best With: pairings from paid orders, with staff pins and hides", () => {
+    const bearer = (t: string) => ({ Authorization: `Bearer ${t}` });
+
+    it("suggests what's bought together, never counts test orders, and follows staff rules", async () => {
+      const buyer = await register("bwbuyer");
+      const staff = await register("bwstaff");
+      await prisma.user.update({ where: { email: `bwstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      const orderIds: string[] = [];
+      const paidOrder = async (lines: { sku: string; unit: string; quantity: number }[], isTest = false) => {
+        const res = await http().post("/orders").set(bearer(buyer)).send({ lines, deliveryDistanceKm: 20 }).expect(201);
+        orderIds.push(res.body.id);
+        await prisma.order.update({ where: { id: res.body.id }, data: { status: "CONFIRMED", paidAt: new Date(), isTest } });
+      };
+      const plaster = { sku: "AA-SND-02", unit: "m3", quantity: 6 };
+      for (let i = 0; i < 3; i++) await paidOrder([plaster, { sku: "AA-CRS-04", unit: "ton", quantity: 10 }]);
+      for (let i = 0; i < 3; i++) await paidOrder([plaster, { sku: "AA-SND-03", unit: "m3", quantity: 6 }], true);
+
+      await http().post("/merchandising/best-with/recompute").set(bearer(buyer)).expect(403);
+      const rebuilt = await http().post("/merchandising/best-with/recompute").set(bearer(staff)).expect(200);
+      expect(rebuilt.body.pairings).toBeGreaterThan(0);
+
+      const skus = async (query: string) => (await http().get(`/merchandising/best-with?skus=${query}`).expect(200)).body as { sku: string; source: string; note: string | null }[];
+      const plain = await skus("AA-SND-02");
+      expect(plain).toContainEqual({ sku: "AA-CRS-04", source: "ORDERS", note: null });
+      expect(plain.map((s) => s.sku)).not.toContain("AA-SND-03"); // only test orders paired them
+      expect(JSON.stringify(plain)).not.toMatch(/orders"|confidence|lift/); // no sales numbers in public
+      // A cart: its own products are never suggested back.
+      const cart = (await skus("AA-SND-02,AA-CRS-04")).map((s) => s.sku);
+      expect(cart).not.toContain("AA-SND-02");
+      expect(cart).not.toContain("AA-CRS-04");
+      expect(await skus("")).toEqual([]);
+
+      // Staff see the numbers; customers can't.
+      await http().get("/merchandising/best-with/overview").set(bearer(buyer)).expect(403);
+      const overview = await http().get("/merchandising/best-with/overview").set(bearer(staff)).expect(200);
+      const pairing = overview.body.pairings.find((p: { product: { sku: string }; paired: { sku: string } }) => p.product.sku === "AA-SND-02" && p.paired.sku === "AA-CRS-04");
+      expect(pairing.orders).toBeGreaterThanOrEqual(3);
+
+      // Pin one first (with a note), hide another.
+      await http().put("/merchandising/best-with/rules").set(bearer(buyer)).send({ productSku: "AA-SND-02", pairedSku: "AA-AGR-03", action: "PIN" }).expect(403);
+      await http().put("/merchandising/best-with/rules").set(bearer(staff)).send({ productSku: "AA-SND-02", pairedSku: "AA-SND-02", action: "PIN" }).expect(400);
+      await http().put("/merchandising/best-with/rules").set(bearer(staff)).send({ productSku: "AA-SND-02", pairedSku: "AA-NOPE", action: "PIN" }).expect(404);
+      await http().put("/merchandising/best-with/rules").set(bearer(staff)).send({ productSku: "AA-SND-02", pairedSku: "AA-AGR-03", action: "PIN", note: "Lime makes the plaster workable" }).expect(200);
+      await http().put("/merchandising/best-with/rules").set(bearer(staff)).send({ productSku: "AA-SND-02", pairedSku: "AA-CRS-04", action: "HIDE" }).expect(200);
+      const ruled = await skus("AA-SND-02");
+      expect(ruled[0]).toEqual({ sku: "AA-AGR-03", source: "PINNED", note: "Lime makes the plaster workable" });
+      expect(ruled.map((s) => s.sku)).not.toContain("AA-CRS-04");
+
+      await http().delete("/merchandising/best-with/rules").set(bearer(staff)).send({ productSku: "AA-SND-02", pairedSku: "AA-CRS-04" }).expect(200);
+      await http().delete("/merchandising/best-with/rules").set(bearer(staff)).send({ productSku: "AA-SND-02", pairedSku: "AA-AGR-03" }).expect(200);
+      expect((await skus("AA-SND-02"))[0]).toEqual({ sku: "AA-CRS-04", source: "ORDERS", note: null });
+
+      await prisma.order.deleteMany({ where: { id: { in: orderIds } } });
+      await http().post("/merchandising/best-with/recompute").set(bearer(staff)).expect(200);
+    });
+  });
 });
