@@ -6,16 +6,17 @@ orders can still be paid. Every payment is a row in the **payments ledger**,
 so an order can be paid in full, by deposit then balance, on lay-by, by
 payment link, or by EFT recorded by staff.
 
-PayFast's own setup is in [payments-payfast.md](payments-payfast.md).
+PayFast's own setup is in [payments-payfast.md](payments-payfast.md); Stitch Express's in
+[payments-stitch.md](payments-stitch.md).
 
 ## Who does what
 
 | | PayFast | Peach Payments | Stitch | LayUp |
 |---|---|---|---|---|
-| Role | Main route for most tiles | Card fallback; main route for BNPL it carries | Pay by bank (instant EFT), no card limit | Lay-by |
+| Role | Main route for most tiles | Card fallback; main route for BNPL it carries | Stitch Express: pay by bank (instant EFT, no card limit), plus card / Capitec Pay / wallets where the account has them | Lay-by |
 | Tiles it runs | Card, Instant EFT, Capitec Pay, wallets, SnapScan, Zapper, SCode, Payflex, Mobicred, MoreTyme | PayJustNow, Happy Pay, Float; fallback for Card, Payflex and Ozow | Stitch; fallback for Instant EFT and Zapper | LayUp lay-by |
-| How the customer pays | Signed form post to PayFast's page | Redirect to Peach's hosted checkout (V2) | Redirect to Stitch; customer signs in to their bank | Redirect to LayUp; sets up a plan |
-| How we know it's paid | ITN, checked four ways | Signed webhook, then Peach's status API | Svix-signed webhook, then Stitch's API | Hourly status check (and on return) |
+| How the customer pays | Signed form post to PayFast's page | Redirect to Peach's hosted checkout (V2) | Redirect to a Stitch payment link; back to /payments/return | Redirect to LayUp; sets up a plan |
+| How we know it's paid | ITN, checked four ways | Signed webhook, then Peach's status API | Svix-signed `payment.paid` webhook, then the link's status from Stitch's API | Hourly status check (and on return) |
 | Big orders | Card limits apply | Card limits apply | **Best fit** — bank-to-bank, no card limit | R500 – R150,000 |
 
 The routing table (Admin → Payments → Payment methods) decides which gateway
@@ -162,16 +163,11 @@ Secrets go only in Render's environment settings for **aggregates-store-api**
 
 ### Stitch
 
-1. Complete Stitch onboarding for **pay by bank (payment initiation)**.
-2. Create a client with the `client_paymentrequest` scope; copy the client
-   ID and secret.
-3. Add a webhook endpoint
-   `https://<api service>.onrender.com/api/v1/payment-methods/notify/stitch`
-   and copy its signing secret (`whsec_…`).
-4. Set `STITCH_CLIENT_ID`, `STITCH_CLIENT_SECRET`, `STITCH_WEBHOOK_SECRET`,
-   and the account payments are paid into: `STITCH_BENEFICIARY_NAME`,
-   `STITCH_BENEFICIARY_BANK` (Stitch's bank ID, e.g. `fnb`, `absa`,
-   `standard_bank`, `nedbank`, `capitec`) and `STITCH_BENEFICIARY_ACCOUNT`.
+Stitch Express, step by step: [payments-stitch.md](payments-stitch.md). In short:
+set `STITCH_CLIENT_ID` and `STITCH_CLIENT_SECRET`, then use **Admin → Payments
+→ Stitch Express** to register the return page and the webhook (put the
+signing secret it shows in Render as `STITCH_WEBHOOK_SECRET`), and make a test
+payment as staff. Test keys are staff-only.
 
 ### LayUp
 

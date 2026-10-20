@@ -37,6 +37,12 @@ export class CreatePaymentLinkDto {
   @IsOptional() @IsBoolean() send?: boolean;
 }
 
+/** Back from Stitch on /payments/return: our reference, and whatever IDs Stitch added to the address. */
+export class StitchReturnDto {
+  @IsOptional() @IsString() @MaxLength(100) ref?: string;
+  @IsOptional() @IsArray() @ArrayMaxSize(4) @IsString({ each: true }) @MaxLength(100, { each: true }) linkIds?: string[];
+}
+
 export class PauseGatewayDto {
   @IsOptional() @IsString() @MaxLength(300) reason?: string;
 }

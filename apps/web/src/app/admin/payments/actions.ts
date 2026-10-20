@@ -109,3 +109,21 @@ export async function orderFromQuote(_prev: FormState, form: FormData): Promise<
   revalidatePath("/admin/quotes");
   return { success: `Order ${result.data.orderNumber} created. Send the customer a payment link (or a deposit link) from Admin → Orders → Payments.` };
 }
+
+/** Admin: register the store's return page as a Stitch redirect URL (docs/payments-stitch.md). */
+export async function registerStitchRedirect(_prev: FormState): Promise<FormState> {
+  const result = await api("/payment-methods/stitch/redirect-url", { method: "POST", token: sessionToken() });
+  if (!result.ok) return { error: denied(result.status, "admins") ?? result.message };
+  revalidatePath("/admin/payments");
+  return { success: "Return page registered with Stitch." };
+}
+
+/** Admin: register our webhook with Stitch. Its signing secret is shown here once and not stored. */
+export async function registerStitchWebhook(_prev: FormState): Promise<FormState> {
+  const result = await api<{ url: string; secret: string }>("/payment-methods/stitch/webhook", { method: "POST", token: sessionToken() });
+  if (!result.ok) return { error: denied(result.status, "admins") ?? result.message };
+  revalidatePath("/admin/payments");
+  return {
+    success: `Webhook registered. Copy this signing secret now — Stitch won't show it again: ${result.data.secret} — then in Render add it to aggregates-store-api as STITCH_WEBHOOK_SECRET and save.`,
+  };
+}
