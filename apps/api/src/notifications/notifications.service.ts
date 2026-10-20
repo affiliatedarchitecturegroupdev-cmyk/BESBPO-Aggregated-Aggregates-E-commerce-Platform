@@ -32,10 +32,18 @@ import {
   type WhatsAppMessage,
 } from "./notification-templates";
 import type { SystemEmail } from "./account-emails";
-import { EmailSender, WhatsAppTemplateSender, type SendResult } from "./providers";
+import { EmailSender, WhatsAppTemplateSender, type EmailAttachment, type SendResult } from "./providers";
+import { orderConfirmationPdf, ORDER_INCLUDE, taxInvoicePdf, type OrderPdf } from "../documents/order-doc-data";
 import { DELIVERY_RANK, parseResendEvent, verifyResendSignature, type DeliveryStatus } from "./resend-webhook";
 
 /** Emails a person asks for themselves: always sent, and logged with their one-time link removed, so they can't be resent. */
+/** Customer order emails that carry a PDF copy of an order document. */
+const ATTACHED_DOCUMENT: Partial<Record<NotificationEvent, "confirmation" | "invoice">> = {
+  ORDER_CONFIRMED: "confirmation",
+  PAYMENT_RECEIVED: "confirmation",
+  INVOICE_ISSUED: "invoice",
+};
+
 export const SYSTEM_EVENTS: NotificationEvent[] = ["PASSWORD_RESET", "EMAIL_VERIFICATION", "NEWSLETTER_CONFIRMATION"];
 
 type Setting = { customerEmail: boolean; customerWhatsApp: boolean; staffEmail: boolean };
@@ -690,6 +698,26 @@ export class NotificationsService implements OnModuleDestroy {
     }
   }
 
+  /**
+   * The PDF a customer's order email carries, made fresh when it's sent (and
+   * on a resend), so nothing is stored: the order confirmation with a payment
+   * receipt, the tax invoice with INVOICE_ISSUED. If the PDF can't be made,
+   * the email still goes — the documents are on the order page too.
+   */
+  private async attachments(n: { event: NotificationEvent; audience: NotificationAudience; orderId: string | null }): Promise<EmailAttachment[]> {
+    const kind = n.audience === "CUSTOMER" && n.orderId ? ATTACHED_DOCUMENT[n.event] : undefined;
+    if (!kind) return [];
+    try {
+      const order = await this.prisma.order.findUnique({ where: { id: n.orderId! }, include: ORDER_INCLUDE });
+      if (!order) return [];
+      const file: OrderPdf | null = kind === "invoice" ? await taxInvoicePdf(order) : await orderConfirmationPdf(order);
+      return file ? [{ fileName: file.fileName, content: file.pdf, contentType: "application/pdf" }] : [];
+    } catch (error) {
+      this.logger.warn(`Couldn't attach the ${kind} PDF to ${n.event}: ${(error as Error).message}`);
+      return [];
+    }
+  }
+
   private async deliver(id: string) {
     const n = await this.prisma.notification.update({ where: { id }, data: { attempts: { increment: 1 } } });
     // A hard bounce or spam complaint stops further email to that address (Admin → Notifications can lift it).
@@ -705,7 +733,7 @@ export class NotificationsService implements OnModuleDestroy {
     }
     const result =
       n.channel === "EMAIL"
-        ? await this.emailSender.send({ to: n.recipient, subject: n.subject ?? "", text: n.body, html: n.html ?? n.body })
+        ? await this.emailSender.send({ to: n.recipient, subject: n.subject ?? "", text: n.body, html: n.html ?? n.body, attachments: await this.attachments(n) })
         : await this.whatsappSender.send(n.recipient, n.templateName ?? "", n.templateParams);
     const provider = n.channel === "EMAIL" ? (this.emailSender.status().provider ?? "log") : this.whatsappSender.status().live ? "whatsapp-cloud" : "log";
     return this.prisma.notification.update({

@@ -34,10 +34,11 @@ export function renderPdf(spec: DocSpec): Promise<Buffer> {
     doc.on("end", () => resolve(Buffer.concat(chunks)));
     doc.on("error", reject);
 
-    // Header: brand and seller on the left, title and meta on the right.
-    doc.font("Helvetica-Bold").fontSize(15).fillColor(INK).text(SELLER.tradingName.toUpperCase(), LEFT, 50, { characterSpacing: 0.6 });
+    // Header: the logo and seller on the left, title and meta on the right.
+    drawLogo(doc, LEFT, 48);
     doc.font("Helvetica").fontSize(8.5).fillColor(MUTED);
-    for (const line of spec.sellerLines) doc.text(line, LEFT, doc.y + 1, { width: 250 });
+    doc.text(spec.sellerLines[0] ?? "", LEFT, 92, { width: 250 });
+    for (const line of spec.sellerLines.slice(1)) doc.text(line, LEFT, doc.y + 1, { width: 250 });
     const leftBottom = doc.y;
 
     doc.font("Helvetica-Bold").fontSize(18).fillColor(BRAND).text(spec.title, 320, 48, { width: 225, align: "right" });
@@ -150,6 +151,29 @@ export function renderPdf(spec: DocSpec): Promise<Buffer> {
     }
     doc.end();
   });
+}
+
+/**
+ * The official logo (aggregated-aggregates-logo-primary.svg on the corporate
+ * site), drawn as vectors: the strata mark (Seam Blue courses under an Ochre
+ * Gold top), the wordmark and the division line. About 260 × 36 pt.
+ */
+function drawLogo(doc: PDFKit.PDFDocument, x: number, y: number) {
+  const scale = 0.3;
+  // The mark's courses in the SVG's units (x, y, width), bottom to top; each is 17 tall.
+  const courses: [number, number, number, string][] = [
+    [30, 169, 130, "#2C4A5E"],
+    [41.5, 146, 107, "#2C4A5E"],
+    [53, 123, 84, "#2C4A5E"],
+    [64.5, 100, 61, "#2C4A5E"],
+    [76, 77, 38, "#C08A34"],
+  ];
+  for (const [cx, cy, width, colour] of courses) {
+    doc.roundedRect(x + (cx - 30) * scale, y + (cy - 77) * scale, width * scale, 17 * scale, 0.6).fill(colour);
+  }
+  const textX = x + 130 * scale + 10;
+  doc.font("Helvetica-Bold").fontSize(13).fillColor("#1C1B1A").text(SELLER.tradingName.toUpperCase(), textX, y + 6, { characterSpacing: 0.3, lineBreak: false });
+  doc.font("Courier-Bold").fontSize(5.6).fillColor("#6B6560").text("A SPECIALISED OPERATING DIVISION OF BESBPO GROUP", textX, y + 22, { characterSpacing: 0.5, lineBreak: false });
 }
 
 function rule(doc: PDFKit.PDFDocument, y: number) {

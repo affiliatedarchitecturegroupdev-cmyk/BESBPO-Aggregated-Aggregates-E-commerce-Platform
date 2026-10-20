@@ -28,8 +28,8 @@ New in this release:
 
 | Email | When | Notes |
 |---|---|---|
-| **Payment receipt** | An order is confirmed paid (PayFast ITN or staff) | Amount paid, date, method and gateway reference, then the order. Replaces the old "order confirmed" email. |
-| **Tax invoice ready** | Staff issue the tax invoice | Invoice number, total and a link to download it (sign-in needed). Switchable on Admin → Notifications. |
+| **Payment receipt** | An order is confirmed paid (PayFast ITN or staff) | Amount paid, date, method and gateway reference, then the order, with the **order confirmation PDF attached**. Later payments (a balance, a payment link) send a receipt with the updated PDF too. Replaces the old "order confirmed" email. |
+| **Tax invoice ready** | Staff issue the tax invoice | Invoice number and total, with the **tax invoice PDF attached**. Switchable on Admin → Notifications. |
 | **Confirm your email address** | Email sign-up | Link valid 48 hours; "Send the link again" on the account dashboard (max 3 an hour). |
 | **Reset your password** | "Forgot your password?" on the sign-in page | Link valid 60 minutes, single use, max 3 an hour per account. The page answers the same whether or not the account exists. |
 | **Confirm your newsletter subscription** | Newsletter sign-up | Double opt-in — see below. One per address per 10 minutes. |

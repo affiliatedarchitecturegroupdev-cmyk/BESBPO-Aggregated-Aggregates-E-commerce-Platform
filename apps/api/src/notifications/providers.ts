@@ -9,7 +9,8 @@ import { Injectable, Logger } from "@nestjs/common";
 
 export type SendResult = { delivered: true; providerMessageId: string | null } | { delivered: false; logged: true } | { delivered: false; logged: false; error: string };
 
-export type OutgoingEmail = { to: string; subject: string; text: string; html: string };
+export type EmailAttachment = { fileName: string; content: Buffer; contentType: string };
+export type OutgoingEmail = { to: string; subject: string; text: string; html: string; attachments?: EmailAttachment[] };
 
 export const EMAIL_PROVIDERS = ["resend", "postmark", "sendgrid"] as const;
 type EmailProviderName = (typeof EMAIL_PROVIDERS)[number];
@@ -61,9 +62,18 @@ export class EmailSender {
     const key = process.env.EMAIL_API_KEY!;
     const from = process.env.EMAIL_FROM!;
     const replyTo = process.env.EMAIL_REPLY_TO || undefined;
+    const files = (email.attachments ?? []).map((a) => ({ ...a, base64: a.content.toString("base64") }));
 
     if (provider === "resend") {
-      const response = await post("https://api.resend.com/emails", { Authorization: `Bearer ${key}` }, { from, to: [email.to], subject: email.subject, text: email.text, html: email.html, reply_to: replyTo });
+      const response = await post("https://api.resend.com/emails", { Authorization: `Bearer ${key}` }, {
+        from,
+        to: [email.to],
+        subject: email.subject,
+        text: email.text,
+        html: email.html,
+        reply_to: replyTo,
+        ...(files.length ? { attachments: files.map((f) => ({ filename: f.fileName, content: f.base64, content_type: f.contentType })) } : {}),
+      });
       if (response instanceof Error || !response.ok) return failure(response);
       const body = (await response.json().catch(() => ({}))) as { id?: string };
       return { delivered: true, providerMessageId: body.id ?? null };
@@ -72,7 +82,16 @@ export class EmailSender {
       const response = await post(
         "https://api.postmarkapp.com/email",
         { "X-Postmark-Server-Token": key },
-        { From: from, To: email.to, Subject: email.subject, TextBody: email.text, HtmlBody: email.html, ReplyTo: replyTo, MessageStream: "outbound" },
+        {
+          From: from,
+          To: email.to,
+          Subject: email.subject,
+          TextBody: email.text,
+          HtmlBody: email.html,
+          ReplyTo: replyTo,
+          MessageStream: "outbound",
+          ...(files.length ? { Attachments: files.map((f) => ({ Name: f.fileName, Content: f.base64, ContentType: f.contentType })) } : {}),
+        },
       );
       if (response instanceof Error || !response.ok) return failure(response);
       const body = (await response.json().catch(() => ({}))) as { MessageID?: string };
@@ -90,6 +109,7 @@ export class EmailSender {
           { type: "text/plain", value: email.text },
           { type: "text/html", value: email.html },
         ],
+        ...(files.length ? { attachments: files.map((f) => ({ filename: f.fileName, content: f.base64, type: f.contentType, disposition: "attachment" })) } : {}),
       },
     );
     if (response instanceof Error || !response.ok) return failure(response);

@@ -3,20 +3,13 @@ import { Prisma } from "@aggregates/database";
 import { STAFF_ROLES, type AuthUser } from "../common/auth/auth-user";
 import { PrismaService } from "../common/prisma.service";
 import { NotificationsService } from "../notifications/notifications.service";
-import { deliveryNoteSpec, orderConfirmationSpec, proformaSpec, taxInvoiceSpec, vatBreakdown, VAT_RATE_PERCENT, type OrderDocData } from "./order-documents";
+import { orderConfirmationPdf, ORDER_INCLUDE, taxInvoicePdf, toDocData, type LoadedOrder } from "./order-doc-data";
+import { deliveryNoteSpec, proformaSpec, vatBreakdown, VAT_RATE_PERCENT } from "./order-documents";
 import { renderPdf } from "./pdf-renderer";
 
 export const DOCUMENT_KINDS = ["confirmation", "proforma", "delivery-note", "invoice"] as const;
 export type DocumentKind = (typeof DOCUMENT_KINDS)[number];
 
-const ORDER_INCLUDE = {
-  lineItems: { include: { product: { select: { name: true, sku: true } } } },
-  shipment: true,
-  invoice: true,
-  user: { select: { name: true, email: true } },
-  company: { select: { name: true, vatNumber: true } },
-} satisfies Prisma.OrderInclude;
-type LoadedOrder = Prisma.OrderGetPayload<{ include: typeof ORDER_INCLUDE }>;
 
 /**
  * Downloadable order documents, and tax invoices.
@@ -54,7 +47,7 @@ export class OrderDocumentsService {
     const order = await this.load(id, user);
     const data = toDocData(order);
     if (kind === "confirmation") {
-      return { fileName: `${order.orderNumber}-order-confirmation.pdf`, pdf: await renderPdf(orderConfirmationSpec(data, process.env.EFT_BANKING_DETAILS)) };
+      return orderConfirmationPdf(order);
     }
     if (kind === "proforma") return this.proforma(order);
     if (kind === "delivery-note") {
@@ -63,8 +56,9 @@ export class OrderDocumentsService {
       }
       return { fileName: `${order.orderNumber}-delivery-note.pdf`, pdf: await renderPdf(deliveryNoteSpec(data)) };
     }
-    if (!order.invoice) throw new NotFoundException("No tax invoice has been issued for this order yet.");
-    return { fileName: `${order.invoice.invoiceNumber}.pdf`, pdf: await renderPdf(taxInvoiceSpec(order.invoice, data, process.env.EFT_BANKING_DETAILS)) };
+    const invoice = await taxInvoicePdf(order);
+    if (!invoice) throw new NotFoundException("No tax invoice has been issued for this order yet.");
+    return invoice;
   }
 
   /**
@@ -113,7 +107,7 @@ export class OrderDocumentsService {
           paidAt: paid ? new Date() : null,
         },
       });
-      // The buyer gets an email with a link to download it.
+      // The buyer gets an email with the invoice attached.
       await this.notifications.order("INVOICE_ISSUED", order.id);
       return invoice;
     } catch (error) {
@@ -130,26 +124,4 @@ export class OrderDocumentsService {
     if (!order || !(isOwner || STAFF_ROLES.includes(user.role))) throw new NotFoundException("Order not found.");
     return order;
   }
-}
-
-function toDocData(order: LoadedOrder): OrderDocData {
-  return {
-    orderNumber: order.orderNumber,
-    status: order.status,
-    createdAt: order.createdAt,
-    subtotal: order.subtotal,
-    deliveryFee: order.deliveryFee,
-    expressFee: order.expressFee,
-    total: order.total,
-    amountPaid: order.amountPaid,
-    deliveryAddress: order.deliveryAddress,
-    deliveryProvince: order.deliveryProvince,
-    deliveryDistanceKm: order.deliveryDistanceKm,
-    contactPhone: order.contactPhone,
-    notes: order.notes,
-    customer: order.user,
-    company: order.company,
-    lines: order.lineItems.map((l) => ({ name: l.product.name, sku: l.product.sku, quantity: l.quantity, unitOfSale: l.unitOfSale, unitPrice: l.unitPrice, lineTotal: l.lineTotal })),
-    shipment: order.shipment,
-  };
 }

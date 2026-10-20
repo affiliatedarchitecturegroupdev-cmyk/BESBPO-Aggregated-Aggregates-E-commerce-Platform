@@ -30,6 +30,22 @@ describe("notification providers", () => {
     expect(url).toBe("https://api.resend.com/emails");
     expect(init.headers.Authorization).toBe("Bearer re_test");
     expect(JSON.parse(init.body)).toMatchObject({ to: ["buyer@example.com"], subject: "Order AA-1", html: "<p>Hello</p>", text: "Hello" });
+    expect(JSON.parse(init.body).attachments).toBeUndefined();
+  });
+
+  it("attaches PDFs, base64-encoded, for each provider", async () => {
+    const withPdf = { ...email, attachments: [{ fileName: "AA-1-order-confirmation.pdf", content: Buffer.from("%PDF-1.3"), contentType: "application/pdf" }] };
+    const base64 = Buffer.from("%PDF-1.3").toString("base64");
+    Object.assign(process.env, { EMAIL_API_KEY: "key", EMAIL_FROM: "orders@aaggregates.store" });
+    fetchMock.mockImplementation(async () => new Response("{}", { status: 200 }));
+    for (const provider of ["resend", "postmark", "sendgrid"]) {
+      process.env.EMAIL_PROVIDER = provider;
+      await new EmailSender().send(withPdf);
+    }
+    const bodies = fetchMock.mock.calls.map(([, init]) => JSON.parse(init.body));
+    expect(bodies[0].attachments).toEqual([{ filename: "AA-1-order-confirmation.pdf", content: base64, content_type: "application/pdf" }]);
+    expect(bodies[1].Attachments).toEqual([{ Name: "AA-1-order-confirmation.pdf", Content: base64, ContentType: "application/pdf" }]);
+    expect(bodies[2].attachments).toEqual([{ filename: "AA-1-order-confirmation.pdf", content: base64, type: "application/pdf", disposition: "attachment" }]);
   });
 
   it("splits a display-name sender for SendGrid and records its message id", async () => {

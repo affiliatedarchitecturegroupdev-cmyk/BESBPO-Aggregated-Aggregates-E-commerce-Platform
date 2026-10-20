@@ -331,7 +331,7 @@ export function customerOrderEmail(event: NotificationEvent, o: OrderData): Emai
         { kind: "rows", rows: receipt },
         { kind: "h", text: "Your order" },
         ...orderSummary(o),
-        { kind: "p", text: "This is your payment receipt. Your tax invoice follows by email once our team issues it, and it's always on your order page." },
+        { kind: "p", text: "This is your payment receipt; your order confirmation is attached as a PDF. Your tax invoice follows by email once our team issues it, and both are always on your order page." },
         balance > 0.01 ? { kind: "cta", label: "Pay the balance", href: `${site}/orders/${o.id}/confirmation` } : track,
       ]);
     }
@@ -361,6 +361,7 @@ export function customerOrderEmail(event: NotificationEvent, o: OrderData): Emai
             ["Balance", balance > 0.01 ? formatZAR(balance) : "Paid in full"],
           ],
         },
+        { kind: "p", text: "Your updated order confirmation is attached as a PDF." },
         balance > 0.01 ? { kind: "cta", label: "Pay the balance", href: `${site}/orders/${o.id}/confirmation` } : track,
       ]);
     }
@@ -381,10 +382,10 @@ export function customerOrderEmail(event: NotificationEvent, o: OrderData): Emai
       if (!o.invoice) return null;
       return email(`Tax invoice ${o.invoice.invoiceNumber} — order ${o.orderNumber}`, [
         hi,
-        { kind: "p", text: `Your tax invoice ${o.invoice.invoiceNumber} for order ${o.orderNumber} is ready.` },
+        { kind: "p", text: `Your tax invoice ${o.invoice.invoiceNumber} for order ${o.orderNumber} is attached as a PDF.` },
         { kind: "rows", rows: [["Invoice", o.invoice.invoiceNumber], ["Order", o.orderNumber], ["Total", formatZAR(o.invoice.amountDue)]] },
-        { kind: "cta", label: "Download your tax invoice", href: `${site}/orders/${o.id}/confirmation` },
-        { kind: "p", text: "You'll need to sign in to download it. Keep it for your records — it's also on your order page whenever you need it." },
+        { kind: "cta", label: "View the order", href: `${site}/orders/${o.id}/confirmation` },
+        { kind: "p", text: "Keep it for your records — it's also on your order page whenever you need it." },
       ]);
     case "ORDER_DISPATCHED": {
       const s = o.shipment;
