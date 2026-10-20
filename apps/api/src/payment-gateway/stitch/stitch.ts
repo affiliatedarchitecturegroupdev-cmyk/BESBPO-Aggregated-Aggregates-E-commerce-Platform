@@ -11,7 +11,8 @@ import { GatewayError, type ProviderPaymentStatus } from "../adapters/payment-ga
  * cancellation are only ever read from the API.
  *
  * Env: STITCH_CLIENT_ID and STITCH_CLIENT_SECRET (a `test-` client ID is test
- * mode), STITCH_WEBHOOK_SECRET for the webhook, and optionally STITCH_API_URL.
+ * mode), STITCH_WEBHOOK_SECRET for the webhook, and optionally STITCH_API_URL
+ * and STITCH_METHODS (the methods Stitch has switched on for the account).
  */
 export const STITCH_ENV = ["STITCH_CLIENT_ID", "STITCH_CLIENT_SECRET"] as const;
 
@@ -32,6 +33,42 @@ export function stitchConfig(): StitchConfig | null {
 
 /** Live keys are in (customers can pay with Stitch; test keys are staff-only). */
 export const stitchLive = () => stitchConfig()?.mode === "live";
+
+export const STITCH_METHOD_NAMES = ["CARD", "APPLE_PAY", "GOOGLE_PAY", "CAPITEC", "PAY_BY_BANK"] as const;
+export type StitchMethod = (typeof STITCH_METHOD_NAMES)[number];
+
+/**
+ * The methods Stitch's page offers on our account. Stitch's API doesn't say,
+ * so STITCH_METHODS lists them (comma-separated). Without it: card and Apple
+ * Pay, which is what the page showed in October 2026. Add PAY_BY_BANK or
+ * CAPITEC once Stitch switches them on.
+ */
+export function stitchMethods(): Set<StitchMethod> {
+  const raw = process.env.STITCH_METHODS?.trim();
+  const names = raw ? raw.split(",").map((name) => name.trim().toUpperCase()) : ["CARD", "APPLE_PAY"];
+  return new Set(names.filter((name): name is StitchMethod => (STITCH_METHOD_NAMES as readonly string[]).includes(name)));
+}
+
+/** The Stitch method a tile needs; the Stitch tile itself takes whatever the account has. */
+const TILE_NEEDS: Record<string, StitchMethod> = {
+  CARD: "CARD",
+  APPLE_PAY: "APPLE_PAY",
+  GOOGLE_PAY: "GOOGLE_PAY",
+  CAPITEC_PAY: "CAPITEC",
+  INSTANT_EFT: "PAY_BY_BANK",
+  ZAPPER: "PAY_BY_BANK",
+  OZOW: "PAY_BY_BANK",
+};
+
+/** Stitch can take a payment for this tile: never send an Instant EFT customer to a card-only page. */
+export function stitchServes(methodKey: string, methods = stitchMethods()): boolean {
+  if (methodKey === "STITCH") return methods.size > 0;
+  const needs = TILE_NEEDS[methodKey];
+  return Boolean(needs && methods.has(needs));
+}
+
+/** Pay by bank is live on Stitch, so large amounts suggest it first (BANK_FIRST_FROM). */
+export const stitchBankFirst = () => stitchLive() && stitchMethods().has("PAY_BY_BANK");
 
 /** Rand to Stitch's cents. */
 export const toCents = (rand: number) => Math.round(rand * 100);
@@ -54,11 +91,13 @@ export function merchantReference(value: string): string {
 }
 
 /**
- * Which of Stitch's methods a tile offers. The Stitch tile, Instant EFT and
- * anything else get every method on the account (pay by bank included);
- * a lone wallet isn't allowed, so wallets come with card.
+ * Which of Stitch's methods a tile offers, limited to those on the account.
+ * The Stitch tile and the bank tiles get every method on the account (the
+ * API can't ask for pay by bank alone); a lone wallet isn't allowed, so
+ * wallets come with card.
  */
-export function allowedMethods(methodKey: string): string[] | undefined {
+export function allowedMethods(methodKey: string, methods = stitchMethods()): string[] | undefined {
+  const onAccount = (wanted: StitchMethod[]) => wanted.filter((m) => methods.has(m));
   switch (methodKey) {
     case "CARD":
       return ["CARD"];
@@ -67,7 +106,7 @@ export function allowedMethods(methodKey: string): string[] | undefined {
     case "APPLE_PAY":
     case "GOOGLE_PAY":
     case "SAMSUNG_PAY":
-      return ["CARD", "APPLE_PAY", "GOOGLE_PAY"];
+      return ["CARD", ...onAccount(["APPLE_PAY", "GOOGLE_PAY"])];
     default:
       return undefined;
   }

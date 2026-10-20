@@ -119,6 +119,10 @@ services:
         sync: false
       - key: STITCH_WEBHOOK_SECRET
         sync: false
+      # The methods Stitch's page offers (docs/payments-stitch.md). Add
+      # PAY_BY_BANK and CAPITEC when Stitch switches them on.
+      - key: STITCH_METHODS
+        value: CARD,APPLE_PAY
       # LayUp lay-by (docs/payments.md): API key from the LayUp merchant portal;
       # MODE is "live" or "sandbox". Plans are checked with LayUp every hour.
       - key: LAYUP_API_KEY

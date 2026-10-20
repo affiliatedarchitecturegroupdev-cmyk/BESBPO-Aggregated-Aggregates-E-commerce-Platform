@@ -10,7 +10,7 @@ export type EligibilityInput = {
   isExpress?: boolean;
   /** The buyer's company has trade credit covering this amount (docs/trade-credit.md) — the only way ON_ACCOUNT shows. */
   onAccount?: boolean;
-  /** Stitch is live (not test keys): pay by bank is suggested first on large amounts (BANK_FIRST_FROM). */
+  /** Stitch is live (not test keys) with pay by bank switched on: it is suggested first on large amounts (BANK_FIRST_FROM). */
   bankFirst?: boolean;
 };
 
