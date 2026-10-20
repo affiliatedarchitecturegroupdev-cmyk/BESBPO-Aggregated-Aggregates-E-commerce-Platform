@@ -10,6 +10,8 @@ export type EligibilityInput = {
   isExpress?: boolean;
   /** The buyer's company has trade credit covering this amount (docs/trade-credit.md) — the only way ON_ACCOUNT shows. */
   onAccount?: boolean;
+  /** Stitch is live (not test keys): pay by bank is suggested first on large amounts (BANK_FIRST_FROM). */
+  bankFirst?: boolean;
 };
 
 /** SiteContent key for the PayFast checkout switch (open to customers unless an admin sets it to staff only). */
@@ -31,6 +33,12 @@ export function isExpressMethod(method: Config): boolean {
 export const RECOMMENDED_METHODS = ["INSTANT_EFT", "CAPITEC_PAY", "CARD"];
 
 /**
+ * From this amount, pay by bank through Stitch is the first recommended tile:
+ * bank payments have no card limit (owner, 20 Oct 2026; docs/payments-stitch.md).
+ */
+export const BANK_FIRST_FROM = 30_000;
+
+/**
  * Which payment tiles an order may use — the server-side source of truth.
  * The storefront renders from this, and PaymentGatewayService re-checks it
  * on every payment, so a tampered request can never pick an ineligible or
@@ -49,10 +57,11 @@ export function eligiblePaymentMethods<T extends Config>(configs: T[], input: El
     if (method.methodKey === "ON_ACCOUNT" && !input.onAccount) return false;
     return true;
   });
-  return {
-    recommended: eligible.filter((m) => RECOMMENDED_METHODS.includes(m.methodKey)),
-    available: eligible.filter((m) => !RECOMMENDED_METHODS.includes(m.methodKey)),
-  };
+  const bankFirst = Boolean(input.bankFirst) && input.orderTotal >= BANK_FIRST_FROM && eligible.some((m) => m.methodKey === "STITCH");
+  const isRecommended = (m: T) => RECOMMENDED_METHODS.includes(m.methodKey) || (bankFirst && m.methodKey === "STITCH");
+  const recommended = eligible.filter(isRecommended);
+  if (bankFirst) recommended.sort((a, b) => Number(b.methodKey === "STITCH") - Number(a.methodKey === "STITCH"));
+  return { recommended, available: eligible.filter((m) => !isRecommended(m)) };
 }
 
 export function isMethodEligible(configs: Config[], methodKey: string, input: EligibilityInput): boolean {
