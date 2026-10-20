@@ -166,6 +166,7 @@ export type Application = {
   users: { email: string; name: string | null }[];
 };
 
+/** Every UnitOfSale, matching apps/api/src/common/format.ts (receipts, PDFs and emails use that copy). */
 export const UNIT_LABEL = {
   BULK_TON: "ton",
   BULK_M3: "m³",
@@ -176,6 +177,28 @@ export const UNIT_LABEL = {
   BULK_TANKER_PER_TON: "ton (tanker)",
   DRUM_210L: "× 210L drum",
   IBC_TOTE_1000L: "× 1,000L tote",
+  LENGTH_6M: "× 6 m length",
+  LENGTH_12M: "× 12 m length",
+  TONNE: "tonne",
+  SHEET: "× sheet",
+  ROLL: "× roll",
+  COIL: "× coil",
+  PACK: "× pack",
+  EACH: "× item",
+  THOUSAND: "× 1,000",
+  SHEET_3_0M: "× 3.0 m sheet",
+  SHEET_3_6M: "× 3.6 m sheet",
+  SHEET_4_2M: "× 4.2 m sheet",
+  SHEET_4_8M: "× 4.8 m sheet",
+  SHEET_6_0M: "× 6.0 m sheet",
+  SHEET_6_6M: "× 6.6 m sheet",
+  METRE: "m, cut to length",
+  TIMBER_3_0M: "× 3.0 m length",
+  TIMBER_3_6M: "× 3.6 m length",
+  TIMBER_4_2M: "× 4.2 m length",
+  TIMBER_4_8M: "× 4.8 m length",
+  TIMBER_6_0M: "× 6.0 m length",
+  TIMBER_6_6M: "× 6.6 m length",
 } as const;
 
 export const TIER_LABEL: Record<TierName, string> = {
