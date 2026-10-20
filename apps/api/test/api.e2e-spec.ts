@@ -1365,11 +1365,11 @@ describe("Aggregated Aggregates API (e2e)", () => {
         await prisma.order.delete({ where: { id: order.id } });
       });
 
-      it("confirms a Stitch pay-by-bank payment from its Svix-signed webhook", async () => {
+      it("confirms a Stitch Express payment from its Svix-signed payment.paid webhook, and reports it on the return page", async () => {
         const { order } = await pendingOrder("stitchbuyer");
-        await prisma.payment.create({ data: { orderId: order.id, kind: "FULL", amount: order.total, methodKey: "STITCH", gateway: "STITCH_DIRECT", providerCheckoutId: `pir_${run}` } });
-        const status = jest.spyOn(app.get(StitchAdapter), "checkStatus").mockResolvedValue({ status: "PAID", amount: Number(order.total), providerReference: `pir_${run}` });
-        const body = JSON.stringify({ type: "payment.completed", data: { id: `pir_${run}` } });
+        const payment = await prisma.payment.create({ data: { orderId: order.id, kind: "FULL", amount: order.total, methodKey: "STITCH", gateway: "STITCH_DIRECT", providerCheckoutId: `lnk_${run}` } });
+        const status = jest.spyOn(app.get(StitchAdapter), "checkStatus").mockResolvedValue({ status: "PAID", amount: Number(order.total), providerReference: `pay_${run}` });
+        const body = JSON.stringify({ id: `pay_${run}`, status: "PAID", amount: Math.round(Number(order.total) * 100), type: "LINK", linkId: `lnk_${run}`, consentId: null, subscriptionId: null, terminalSessionId: null });
         const id = `msg_${run}`;
         const timestamp = String(Math.floor(Date.now() / 1000));
         const signature = `v1,${createHmac("sha256", Buffer.from("stitch-key")).update(`${id}.${timestamp}.${body}`).digest("base64")}`;
@@ -1378,8 +1378,53 @@ describe("Aggregated Aggregates API (e2e)", () => {
         expect((await prisma.order.findUniqueOrThrow({ where: { id: order.id } })).status).toBe("PENDING");
         await send(signature);
         expect((await prisma.order.findUniqueOrThrow({ where: { id: order.id } })).status).toBe("CONFIRMED");
+        // A retried delivery changes nothing.
+        await send(signature);
+        expect(await prisma.payment.count({ where: { orderId: order.id, status: "PAID" } })).toBe(1);
+        expect((await prisma.payment.findUniqueOrThrow({ where: { id: payment.id } })).providerReference).toBe(`pay_${run}`);
+
+        // Back on /payments/return: found by our reference or by Stitch's link ID, with no personal details.
+        const byRef = await http().post("/payment-methods/stitch/return").send({ ref: payment.id }).expect(200);
+        expect(byRef.body).toEqual({ status: "PAID", amount: Number(order.total), orderId: order.id, orderNumber: order.orderNumber, orderStatus: "CONFIRMED", viaLink: false });
+        const byLink = await http().post("/payment-methods/stitch/return").send({ linkIds: [`lnk_${run}`] }).expect(200);
+        expect(byLink.body.status).toBe("PAID");
+        await http().post("/payment-methods/stitch/return").send({ ref: "nope" }).expect(404);
+        await http().post("/payment-methods/stitch/return").send({}).expect(404);
         status.mockRestore();
         await prisma.order.delete({ where: { id: order.id } });
+      });
+
+      it("shows Stitch's setup to admins only, and says what's missing", async () => {
+        const adminToken = await register("stitchadmin");
+        await prisma.user.update({ where: { email: `stitchadmin-${run}@example.com` }, data: { role: "ADMIN" } });
+        const buyerToken = await register("stitchbuyer2");
+        await http().get("/payment-methods/stitch/setup").expect(401);
+        await http().get("/payment-methods/stitch/setup").set("Authorization", `Bearer ${buyerToken}`).expect(403);
+        const setup = await http().get("/payment-methods/stitch/setup").set("Authorization", `Bearer ${adminToken}`).expect(200);
+        expect(setup.body).toMatchObject({ configured: false, connected: false, webhookSecretSet: true, missingEnvVars: ["STITCH_CLIENT_ID", "STITCH_CLIENT_SECRET"] });
+        expect(setup.body.returnUrl).toMatch(/\/payments\/return$/);
+        expect(setup.body.webhookUrl).toMatch(/\/api\/v1\/payment-methods\/notify\/stitch$/);
+        await http().post("/payment-methods/stitch/redirect-url").set("Authorization", `Bearer ${adminToken}`).expect(400);
+      });
+
+      it("keeps Stitch test keys to staff, so no customer order is confirmed by a test payment", async () => {
+        Object.assign(process.env, { STITCH_CLIENT_ID: "test-e2e", STITCH_CLIENT_SECRET: "secret" });
+        const initiate = jest.spyOn(app.get(StitchAdapter), "initiate").mockResolvedValue({ isLive: true, redirectUrl: "https://express.stitch.money/x", providerCheckoutId: `lnk_t_${run}`, note: "" });
+        try {
+          const { buyer, order } = await pendingOrder("stitchtestbuyer");
+          const customer = await http().post("/payment-methods/initiate").set("Authorization", `Bearer ${buyer}`).send({ orderId: order.id, methodKey: "STITCH" }).expect(201);
+          expect(customer.body).toMatchObject({ isLive: false });
+          expect(initiate).not.toHaveBeenCalled();
+          const staff = await register("stitchteststaff");
+          await prisma.user.update({ where: { email: `stitchteststaff-${run}@example.com` }, data: { role: "ADMIN" } });
+          const staffPay = await http().post("/payment-methods/initiate").set("Authorization", `Bearer ${staff}`).send({ orderId: order.id, methodKey: "STITCH" }).expect(201);
+          expect(staffPay.body).toMatchObject({ isLive: true, redirectUrl: "https://express.stitch.money/x" });
+          await prisma.order.delete({ where: { id: order.id } });
+        } finally {
+          initiate.mockRestore();
+          delete process.env.STITCH_CLIENT_ID;
+          delete process.env.STITCH_CLIENT_SECRET;
+        }
       });
 
       it("follows a LayUp lay-by plan: progress recorded, the order held until it's paid off", async () => {

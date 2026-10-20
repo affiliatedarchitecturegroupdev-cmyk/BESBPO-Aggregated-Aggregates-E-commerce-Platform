@@ -5,7 +5,7 @@ import { PaymentGateway, PaymentMethodKey } from "@aggregates/database";
 import type { AuthUser } from "../common/auth/auth-user";
 import { Public, Roles } from "../common/auth/decorators";
 import { CurrentUser } from "../common/decorators/current-user.decorator";
-import { DepositPolicyDto, EligibleMethodsQuery, InitiatePaymentDto, PauseGatewayDto, PayfastVisibilityDto, UpdatePaymentMethodDto } from "./payment-gateway.dto";
+import { DepositPolicyDto, EligibleMethodsQuery, InitiatePaymentDto, PauseGatewayDto, PayfastVisibilityDto, StitchReturnDto, UpdatePaymentMethodDto } from "./payment-gateway.dto";
 import { PaymentGatewayService } from "./payment-gateway.service";
 import { GatewayHealthService } from "./gateway-health.service";
 import { PaymentsService } from "./payments.service";
@@ -100,7 +100,7 @@ export class PaymentGatewayController {
     return "OK";
   }
 
-  /** Stitch's webhook (Svix-signed). Always 200; the status is confirmed with Stitch's API. */
+  /** Stitch Express's payment.paid webhook (Svix-signed). Always 200; the status is confirmed with Stitch's API. */
   @Public()
   @Post("notify/stitch")
   @HttpCode(200)
@@ -112,6 +112,36 @@ export class PaymentGatewayController {
   ) {
     await this.ledger.stitchWebhook(req.rawBody?.toString("utf8") ?? "", { id, timestamp, signature }, clientIp(req.headers["x-forwarded-for"] as string | undefined, req.socket.remoteAddress));
     return { received: true };
+  }
+
+  /** The customer is back from Stitch: how their payment stands (no personal details). */
+  @Public()
+  @Post("stitch/return")
+  @HttpCode(200)
+  stitchReturn(@Body() dto: StitchReturnDto) {
+    return this.ledger.stitchReturn(dto.ref, dto.linkIds ?? []);
+  }
+
+  /** Admin → Payments → Stitch: credentials check and what's registered (docs/payments-stitch.md). */
+  @Roles("ADMIN")
+  @Get("stitch/setup")
+  stitchSetup() {
+    return this.ledger.stitchSetup();
+  }
+
+  @Roles("ADMIN")
+  @Post("stitch/redirect-url")
+  @HttpCode(200)
+  registerStitchRedirect() {
+    return this.ledger.registerStitchRedirect();
+  }
+
+  /** Returns Stitch's webhook signing secret once, for the admin to put in Render as STITCH_WEBHOOK_SECRET. */
+  @Roles("ADMIN")
+  @Post("stitch/webhook")
+  @HttpCode(200)
+  registerStitchWebhook() {
+    return this.ledger.registerStitchWebhook();
   }
 
   @Roles("STAFF", "ADMIN")

@@ -27,6 +27,11 @@ export class PaymentGatewayAdapterFactory {
     private readonly layup: LayupAdapter,
   ) {}
 
+  /** The Stitch adapter itself, for the admin setup actions (docs/payments-stitch.md). */
+  stitchAdapter(): StitchAdapter {
+    return this.stitch;
+  }
+
   get(gateway: PaymentGateway): PaymentGatewayAdapter {
     switch (gateway) {
       case "PAYFAST":

@@ -18,7 +18,8 @@ import { eligiblePaymentMethods, isMethodEligible, PAYFAST_VISIBILITY_KEY } from
 import { GatewayHealthService, GATEWAY_LABEL } from "./gateway-health.service";
 import { LAYUP_TERMS } from "./layup/layup";
 import { classifyResultCode, parsePeachWebhook, peachConfig } from "./peach/peach";
-import { stitchWebhookRequestId } from "./stitch/stitch";
+import { stitchReturnUrl } from "./adapters/stitch.adapter";
+import { stitchConfig, stitchWebhookLinkId } from "./stitch/stitch";
 
 export const DEPOSIT_POLICY_KEY = "deposit-policy";
 /** A payment started but not finished is given up on after this (lay-by plans aside). */
@@ -225,7 +226,7 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
 
     const web = siteUrl();
     // Gateways call the API on its own Render address, so Cloudflare (in front of the storefront) can't block them.
-    const api = (process.env.RENDER_EXTERNAL_URL ?? process.env.NEXT_PUBLIC_APP_URL ?? web).replace(/\/+$/, "");
+    const api = apiPublicUrl();
     const back = payer.kind === "link" ? `${web}/pay/${payer.token}` : `${web}/orders/${order.id}/confirmation`;
 
     // The gateways to try, in order: the tile's own, then its fallback.
@@ -233,6 +234,11 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
     let firstNote: string | null = null;
     for (const [index, gateway] of chain.entries()) {
       if (gateway === "PAYFAST" && !isStaff && !(await this.payfastIsPublic())) {
+        firstNote ??= "Online payment for this method isn't switched on yet, so nothing has been charged. Choose another method, or contact sales and we'll help you pay.";
+        continue;
+      }
+      // Stitch test keys report payments as paid with no real money moving: staff only until the live keys are in.
+      if (gateway === "STITCH_DIRECT" && !isStaff && stitchConfig()?.mode === "sandbox") {
         firstNote ??= "Online payment for this method isn't switched on yet, so nothing has been charged. Choose another method, or contact sales and we'll help you pay.";
         continue;
       }
@@ -483,7 +489,11 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
     return this.settle(payment, status, sourceIp, hook.fields);
   }
 
-  /** Stitch's webhook (Svix-signed): which payment request changed. Stitch's API says how it stands. */
+  /**
+   * Stitch Express's `payment.paid` webhook (Svix-signed). It names the
+   * payment link; the link's status from Stitch's API decides the outcome.
+   * Retries are harmless: a payment is only marked paid once.
+   */
   async stitchWebhook(rawBody: string, headers: { id?: string; timestamp?: string; signature?: string }, sourceIp: string) {
     const secret = process.env.STITCH_WEBHOOK_SECRET?.trim();
     if (!secret) return this.log("STITCH_DIRECT", null, "REJECTED", "STITCH_WEBHOOK_SECRET isn't set on the API.", sourceIp, {});
@@ -494,18 +504,70 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
     } catch {
       return this.log("STITCH_DIRECT", null, "REJECTED", "Not JSON.", sourceIp, {});
     }
-    const requestId = stitchWebhookRequestId(payload);
-    const external = (payload as { data?: { externalReference?: unknown } } | null)?.data?.externalReference;
-    const payment = requestId
-      ? await this.prisma.payment.findFirst({ where: { gateway: "STITCH_DIRECT", OR: [{ providerCheckoutId: requestId }, ...(typeof external === "string" ? [{ id: external }] : [])] } })
-      : null;
-    const fields = { requestId: requestId ?? "", externalReference: typeof external === "string" ? external : "" };
-    if (!payment) return this.log("STITCH_DIRECT", null, "REJECTED", "No Stitch payment for that request.", sourceIp, fields);
+    const linkId = stitchWebhookLinkId(payload);
+    const p = payload as { id?: unknown; type?: unknown; amount?: unknown } | null;
+    const fields = { linkId: linkId ?? "", stitchPaymentId: typeof p?.id === "string" ? p.id : "", type: typeof p?.type === "string" ? p.type : "", deliveryId: headers.id ?? "" };
+    if (!linkId) return this.log("STITCH_DIRECT", null, "REJECTED", "Not a payment-link payment (no linkId).", sourceIp, fields);
+    const payment = await this.prisma.payment.findFirst({ where: { gateway: "STITCH_DIRECT", providerCheckoutId: linkId } });
+    if (!payment) return this.log("STITCH_DIRECT", null, "REJECTED", "No Stitch payment for that payment link.", sourceIp, fields);
     const status = await this.adapters
       .get("STITCH_DIRECT")
-      .checkStatus!(payment.providerCheckoutId ?? requestId!, Number(payment.amount))
+      .checkStatus!(linkId, Number(payment.amount))
       .catch((error: Error) => ({ status: "PENDING" as const, detail: `Status check failed: ${error.message}` }));
     return this.settle(payment, status, sourceIp, fields);
+  }
+
+  /**
+   * The customer is back on /payments/return from Stitch. Finds their payment
+   * by our reference or Stitch's link ID, asks Stitch how it stands, and
+   * returns only what the return page shows — no names or addresses.
+   */
+  async stitchReturn(ref: string | undefined, linkIds: string[]) {
+    const ids = linkIds.filter((id) => typeof id === "string" && id.length > 0 && id.length <= 100).slice(0, 4);
+    const or: Prisma.PaymentWhereInput[] = [...(ref ? [{ id: ref }] : []), ...ids.map((id) => ({ providerCheckoutId: id }))];
+    if (!or.length) throw new NotFoundException("We couldn't tell which payment this was.");
+    const found = await this.prisma.payment.findFirst({ where: { gateway: "STITCH_DIRECT", OR: or } });
+    if (!found) throw new NotFoundException("We couldn't find that payment.");
+    const payment = await this.refresh(found);
+    const order = await this.prisma.order.findUniqueOrThrow({ where: { id: payment.orderId }, select: { id: true, orderNumber: true, status: true } });
+    return { status: payment.status, amount: Number(payment.amount), orderId: order.id, orderNumber: order.orderNumber, orderStatus: order.status, viaLink: Boolean(payment.linkId) };
+  }
+
+  /** Admin → Payments → Stitch: are the credentials working, and what's registered with Stitch. */
+  async stitchSetup() {
+    const adapter = this.adapters.stitchAdapter();
+    const stitch = adapter.stitch();
+    const returnUrl = stitchReturnUrl();
+    const webhookUrl = `${apiPublicUrl()}/api/v1/payment-methods/notify/stitch`;
+    const base = { returnUrl, webhookUrl, webhookSecretSet: Boolean(process.env.STITCH_WEBHOOK_SECRET?.trim()), missingEnvVars: adapter.status().missingEnvVars };
+    if (!stitch) return { ...base, configured: false, connected: false, mode: null, redirectUrls: [] as string[], returnUrlRegistered: false, error: null as string | null };
+    try {
+      const redirectUrls = await stitch.redirectUrls();
+      return { ...base, configured: true, connected: true, mode: stitch.mode, redirectUrls, returnUrlRegistered: redirectUrls.includes(returnUrl), error: null };
+    } catch (error) {
+      return { ...base, configured: true, connected: false, mode: stitch.mode, redirectUrls: [], returnUrlRegistered: false, error: (error as Error).message };
+    }
+  }
+
+  async registerStitchRedirect() {
+    const stitch = this.adapters.stitchAdapter().stitch();
+    if (!stitch) throw new BadRequestException("Set STITCH_CLIENT_ID and STITCH_CLIENT_SECRET on the API first.");
+    await stitch.registerRedirectUrl(stitchReturnUrl()).catch((error: Error) => {
+      throw new BadRequestException(error.message);
+    });
+    return this.stitchSetup();
+  }
+
+  /** Registers our webhook with Stitch. The signing secret is shown to the admin once, to put in Render — it isn't stored. */
+  async registerStitchWebhook() {
+    const stitch = this.adapters.stitchAdapter().stitch();
+    if (!stitch) throw new BadRequestException("Set STITCH_CLIENT_ID and STITCH_CLIENT_SECRET on the API first.");
+    const url = `${apiPublicUrl()}/api/v1/payment-methods/notify/stitch`;
+    const secret = await stitch.registerWebhook(url).catch((error: Error) => {
+      const already = /HTTP 409/.test(error.message);
+      throw new BadRequestException(already ? "This webhook is already registered with Stitch. If STITCH_WEBHOOK_SECRET isn't set, ask express-support@stitch.money to remove it, then register again." : error.message);
+    });
+    return { url, secret };
   }
 
   private async settle(payment: Payment, status: ProviderPaymentStatus, sourceIp: string, fields: Record<string, string>) {
@@ -722,3 +784,8 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
   }
 }
 
+
+/** Gateways call the API on its own Render address, so Cloudflare (in front of the storefront) can't block them. */
+export function apiPublicUrl(): string {
+  return (process.env.RENDER_EXTERNAL_URL ?? process.env.NEXT_PUBLIC_APP_URL ?? siteUrl()).replace(/\/+$/, "");
+}

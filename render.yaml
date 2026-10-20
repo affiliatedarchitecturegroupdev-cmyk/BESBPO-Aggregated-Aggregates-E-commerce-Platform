@@ -109,18 +109,13 @@ services:
         sync: false
       - key: PEACH_MODE
         sync: false
-      # Stitch pay-by-bank (docs/payments.md): client credentials, the account
-      # payments are paid into (bank ID e.g. "fnb"), and the webhook signing
-      # secret (whsec_…) for https://<api>/api/v1/payment-methods/notify/stitch
+      # Stitch Express (docs/payments-stitch.md): client ID and secret from
+      # Stitch -> Settings -> Developers (a test- ID is test mode, staff only).
+      # The webhook secret (whsec_…) is shown once when Admin -> Payments
+      # registers the webhook. Viewing the client secret in Stitch replaces it.
       - key: STITCH_CLIENT_ID
         sync: false
       - key: STITCH_CLIENT_SECRET
-        sync: false
-      - key: STITCH_BENEFICIARY_NAME
-        sync: false
-      - key: STITCH_BENEFICIARY_BANK
-        sync: false
-      - key: STITCH_BENEFICIARY_ACCOUNT
         sync: false
       - key: STITCH_WEBHOOK_SECRET
         sync: false

@@ -1,7 +1,8 @@
 import { setPayfastVisibility, updatePaymentRouting } from "@/app/account/actions";
-import { pauseGateway, resumeGateway, saveDepositPolicy, syncPayments } from "@/app/admin/payments/actions";
+import { pauseGateway, registerStitchRedirect, registerStitchWebhook, resumeGateway, saveDepositPolicy, syncPayments } from "@/app/admin/payments/actions";
 import { ActionForm, inputClass, SubmitButton } from "@/components/account/Forms";
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { formatZAR } from "@/lib/pricing";
 import { api } from "@/lib/api";
 import { getSession, sessionToken } from "@/lib/session";
@@ -13,10 +14,23 @@ const GATEWAY_LABEL: Record<string, string> = {
   PAYFAST: "PayFast",
   PEACH: "Peach Payments",
   OZOW_DIRECT: "Ozow (direct)",
-  STITCH_DIRECT: "Stitch (pay by bank)",
+  STITCH_DIRECT: "Stitch Express",
   LULAPAY_DIRECT: "Lulapay (direct)",
   MANUAL_EFT: "Manual EFT / PO",
   LAYUP: "LayUp (lay-by)",
+};
+
+type StitchSetup = {
+  configured: boolean;
+  connected: boolean;
+  mode: "live" | "sandbox" | null;
+  redirectUrls: string[];
+  returnUrl: string;
+  returnUrlRegistered: boolean;
+  webhookUrl: string;
+  webhookSecretSet: boolean;
+  missingEnvVars: string[];
+  error: string | null;
 };
 
 type DepositStep = { fromTotal: number; percent: number };
@@ -76,6 +90,7 @@ export default async function PaymentsPage() {
   ]);
   if (!result.ok) return <p className="font-body text-sm text-slate">{result.message}</p>;
   const canEdit = user?.role === "ADMIN";
+  const stitch = canEdit ? await api<StitchSetup>("/payment-methods/stitch/setup", { token: sessionToken() }) : null;
   const { configs, gateways, payfastPublic, incidents, trip } = result.data;
   const payfast = gateways.find((g) => g.gateway === "PAYFAST");
   return (
@@ -142,6 +157,7 @@ export default async function PaymentsPage() {
           )}
         </section>
       )}
+      {stitch?.ok && <StitchPanel setup={stitch.data} />}
       <section className="rounded-sm border border-basalt/10 bg-white p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
@@ -302,5 +318,67 @@ export default async function PaymentsPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+/**
+ * Stitch Express setup (docs/payments-stitch.md): the credentials check, and
+ * the two things Stitch's checklist wants registered through the API — our
+ * return page and our webhook. Admins only.
+ */
+function StitchPanel({ setup }: { setup: StitchSetup }) {
+  const Step = ({ done, children }: { done: boolean; children: ReactNode }) => (
+    <li className="flex gap-2">
+      <span className={`font-mono ${done ? "text-emerald-700" : "text-ochre-gold"}`}>{done ? "✓" : "○"}</span>
+      <span>{children}</span>
+    </li>
+  );
+  return (
+    <section className="rounded-sm border border-basalt/10 bg-white p-5">
+      <h2 className="font-body text-sm font-semibold text-basalt">Stitch Express</h2>
+      <p className="mt-1 font-mono text-[11px]">
+        {!setup.configured ? (
+          <span className="text-ochre-gold">Not configured — needs {setup.missingEnvVars.join(", ")} on the API</span>
+        ) : setup.connected ? (
+          <span className="text-seam-blue">Connected · {setup.mode === "live" ? "LIVE — real payments" : "test mode (no real money moves)"}</span>
+        ) : (
+          <span className="text-red-700">Can&apos;t connect — {setup.error}</span>
+        )}
+      </p>
+      <p className="mt-2 max-w-2xl font-body text-xs text-slate">
+        Customers pay on Stitch&apos;s page (pay by bank, plus card, Capitec Pay or wallets where your Stitch account has them) and come back to our
+        return page. An order is confirmed only when Stitch confirms the payment. The client ID and secret are read from the API&apos;s environment and
+        never shown here — and viewing the secret in Stitch&apos;s dashboard replaces it.
+      </p>
+      <ol className="mt-4 space-y-2 font-body text-xs text-basalt">
+        <Step done={setup.configured && setup.connected}>Credentials work (STITCH_CLIENT_ID and STITCH_CLIENT_SECRET on the API)</Step>
+        <Step done={setup.returnUrlRegistered}>
+          Return page registered: <span className="font-mono">{setup.returnUrl}</span>
+          {setup.connected && !setup.returnUrlRegistered && (
+            <ActionForm action={registerStitchRedirect} className="mt-2">
+              <SubmitButton>Register the return page</SubmitButton>
+            </ActionForm>
+          )}
+        </Step>
+        <Step done={setup.webhookSecretSet}>
+          Webhook: <span className="font-mono">{setup.webhookUrl}</span>
+          {setup.webhookSecretSet ? (
+            <span className="text-slate"> — signing secret set on the API</span>
+          ) : (
+            setup.connected && (
+              <ActionForm action={registerStitchWebhook} className="mt-2">
+                <SubmitButton>Register the webhook</SubmitButton>
+              </ActionForm>
+            )
+          )}
+        </Step>
+        <Step done={false}>Test payment: switch the Stitch tile on below, place a small order and pay with Stitch</Step>
+      </ol>
+      {setup.redirectUrls.length > 0 && (
+        <p className="mt-3 font-body text-[11px] text-slate">
+          Redirect URLs registered with Stitch: <span className="font-mono">{setup.redirectUrls.join(" · ")}</span>
+        </p>
+      )}
+    </section>
   );
 }
