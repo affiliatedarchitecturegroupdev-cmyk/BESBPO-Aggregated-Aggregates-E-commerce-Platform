@@ -18,15 +18,12 @@ the source for this integration.
    - `skipCheckoutPage: true`, because we already have the order details.
 2. The customer is sent to the link, with `redirect_url` set to our return
    page: `https://aaggregates.store/payments/return?ref=<payment ID>`.
-3. They pay on Stitch's page. The methods offered depend on the tile and on
-   what the account has (`STITCH_METHODS`, below):
-   - The Stitch tile offers every method the account has.
-   - Instant EFT and Zapper use Stitch as their backup **only when pay by
-     bank is on the account**. Otherwise they skip Stitch, so nobody who
-     chose a bank payment lands on a card page.
+3. They pay on Stitch's page. The methods offered depend on the tile:
+   - The Stitch tile, Instant EFT and Zapper offer every method the account
+     has, including pay by bank.
    - Card offers card only.
-   - Capitec Pay offers Capitec Pay only, once Stitch has it.
-   - Wallets offer card plus whichever wallets the account has.
+   - Capitec Pay offers Capitec Pay only.
+   - Wallets offer card plus Apple Pay and Google Pay.
 4. Stitch sends the **`payment.paid` webhook**, signed by Svix, to
    `https://<api>.onrender.com/api/v1/payment-methods/notify/stitch`. The API:
    - checks the signature;
@@ -64,7 +61,6 @@ payment. Mark any orders you pay in test mode as test orders.
 | `STITCH_CLIENT_ID` | From Stitch → Settings → Developers. `test-…` for test mode, the live ID after approval. |
 | `STITCH_CLIENT_SECRET` | From *View Client Secret*. **Viewing it creates a new secret and the old one stops working**, so only click it when you're about to paste it into Render. |
 | `STITCH_WEBHOOK_SECRET` | The `whsec_…` secret shown once when the webhook is registered (below). |
-| `STITCH_METHODS` | The methods Stitch's page offers, comma-separated: `CARD`, `APPLE_PAY`, `GOOGLE_PAY`, `CAPITEC`, `PAY_BY_BANK`. Stitch's API doesn't report them. Our account showed **card and Apple Pay** only (20 Oct 2026), so it's `CARD,APPLE_PAY`. Add `PAY_BY_BANK` or `CAPITEC` when Stitch confirms they're on. |
 | `STITCH_API_URL` | Optional. Only if Stitch gives a different API address. |
 
 Never put these in the repository or in chat.
@@ -109,12 +105,9 @@ Never put these in the repository or in chat.
   `POST /api/v1/payment/{id}/refund`, scope `client_refund`. We already keep
   Stitch's payment ID on each paid payment. Refunds are recorded by hand for
   now.
-- **Card backup:** card is on the account, so Stitch can be the Card tile's
-  fallback in the routing table (Admin → Payments). Capitec Pay can follow
-  once Stitch switches it on.
-- **Pay by bank:** not on the account yet (Oct 2026). Ask
-  express-support@stitch.money to enable it, then add `PAY_BY_BANK` to
-  `STITCH_METHODS`.
+- **Card / Capitec Pay backup:** Stitch can back up those tiles, restricted
+  to that method, if the account has them. Set them as the fallback in the
+  routing table once we know which methods Stitch's page shows.
 
 ## Large orders: pay by bank first
 
@@ -122,6 +115,5 @@ From **R30,000** (owner, 20 Oct 2026; `BANK_FIRST_FROM` in
 `apps/api/src/payment-gateway/eligibility.ts`), the Stitch tile is the
 **first recommended** payment option. This applies to the order total, a
 deposit, a balance or a payment link amount. Bank payments have no card
-limit. It applies only once Stitch has **live** keys and `STITCH_METHODS` includes
-`PAY_BY_BANK`, so customers are never steered to it in test mode or while
-Stitch only offers card. It also needs the Stitch tile enabled.
+limit. It applies only once Stitch has **live** keys, so customers are never
+steered to it while it's in test mode. It also needs the Stitch tile enabled.

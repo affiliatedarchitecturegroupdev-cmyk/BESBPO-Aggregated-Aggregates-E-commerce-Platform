@@ -19,7 +19,7 @@ import { GatewayHealthService, GATEWAY_LABEL } from "./gateway-health.service";
 import { LAYUP_TERMS } from "./layup/layup";
 import { classifyResultCode, parsePeachWebhook, peachConfig } from "./peach/peach";
 import { stitchReturnUrl } from "./adapters/stitch.adapter";
-import { stitchBankFirst, stitchConfig, stitchServes, stitchWebhookLinkId } from "./stitch/stitch";
+import { stitchConfig, stitchLive, stitchWebhookLinkId } from "./stitch/stitch";
 
 export const DEPOSIT_POLICY_KEY = "deposit-policy";
 /** A payment started but not finished is given up on after this (lay-by plans aside). */
@@ -143,7 +143,7 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
     // Trade credit: only a whole new order goes on account, and only within the company's available credit.
     const onAccount = order.status === "PENDING" && Number(order.amountPaid) === 0 && (await this.credit.canCharge(order.companyId, Number(order.total)));
     const tiles = (amount: number, withLayby: boolean) => {
-      const { recommended, available } = eligiblePaymentMethods(configs, { orderTotal: amount, customerTier: tier, isQuoteOnly: false, isExpress: this.isExpress(order), onAccount: withLayby && onAccount, bankFirst: stitchBankFirst() });
+      const { recommended, available } = eligiblePaymentMethods(configs, { orderTotal: amount, customerTier: tier, isQuoteOnly: false, isExpress: this.isExpress(order), onAccount: withLayby && onAccount , bankFirst: stitchLive() });
       const strip = (list: typeof configs) =>
         list
           .filter((c) => withLayby || c.methodKey !== "LAYUP")
@@ -237,8 +237,6 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
         firstNote ??= "Online payment for this method isn't switched on yet, so nothing has been charged. Choose another method, or contact sales and we'll help you pay.";
         continue;
       }
-      // Stitch only takes tiles its page can pay (STITCH_METHODS): an Instant EFT customer never lands on a card-only page.
-      if (gateway === "STITCH_DIRECT" && !stitchServes(methodKey)) continue;
       // Stitch test keys report payments as paid with no real money moving: staff only until the live keys are in.
       if (gateway === "STITCH_DIRECT" && !isStaff && stitchConfig()?.mode === "sandbox") {
         firstNote ??= "Online payment for this method isn't switched on yet, so nothing has been charged. Choose another method, or contact sales and we'll help you pay.";
@@ -648,7 +646,7 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
     const balance = round(Number(current.total) - Number(current.amountPaid));
     const amount = Math.min(Number(fresh.amount), Math.max(balance, 0));
     const configs = await this.prisma.paymentMethodConfig.findMany({ orderBy: { sortOrder: "asc" } });
-    const { recommended, available } = eligiblePaymentMethods(configs, { orderTotal: amount, customerTier: await this.tierOf(current.companyId), isQuoteOnly: false, isExpress: this.isExpress(current), bankFirst: stitchBankFirst() });
+    const { recommended, available } = eligiblePaymentMethods(configs, { orderTotal: amount, customerTier: await this.tierOf(current.companyId), isQuoteOnly: false, isExpress: this.isExpress(current) , bankFirst: stitchLive() });
     const tiles = (list: typeof configs) => list.filter((c) => c.methodKey !== "LAYUP").map((c) => ({ methodKey: c.methodKey, displayName: c.displayName, tradeOnly: c.tradeOnly, minOrderValue: c.minOrderValue, maxOrderValue: c.maxOrderValue, isEnabled: c.isEnabled, sortOrder: c.sortOrder }));
     const paid = Boolean(fresh.paidAt) || balance <= 0.01;
     return {

@@ -2,7 +2,7 @@ import { createHmac } from "node:crypto";
 import { verifySvixSignature } from "../common/svix";
 import { classifyLayupOrder, layupProducts, planEndDate } from "./layup/layup";
 import { classifyResultCode, parsePeachWebhook, peachSignature } from "./peach/peach";
-import { allowedMethods, classifyLinkStatus, stitchBankFirst, stitchMethods, stitchServes, fromCents, merchantReference, payerName, StitchClient, stitchConfig, stitchWebhookLinkId, toCents } from "./stitch/stitch";
+import { allowedMethods, classifyLinkStatus, fromCents, merchantReference, payerName, StitchClient, stitchConfig, stitchWebhookLinkId, toCents } from "./stitch/stitch";
 
 describe("Peach Payments", () => {
   it("reads result codes: paid, paid after review, pending, failed", () => {
@@ -53,34 +53,9 @@ describe("Stitch Express", () => {
   it("restricts card, Capitec Pay and wallet tiles; offers everything (pay by bank too) otherwise", () => {
     expect(allowedMethods("CARD")).toEqual(["CARD"]);
     expect(allowedMethods("CAPITEC_PAY")).toEqual(["CAPITEC"]);
-    expect(allowedMethods("APPLE_PAY", new Set(["CARD", "APPLE_PAY", "GOOGLE_PAY"]))).toEqual(["CARD", "APPLE_PAY", "GOOGLE_PAY"]);
-    expect(allowedMethods("GOOGLE_PAY", new Set(["CARD", "APPLE_PAY"]))).toEqual(["CARD", "APPLE_PAY"]);
+    expect(allowedMethods("APPLE_PAY")).toEqual(["CARD", "APPLE_PAY", "GOOGLE_PAY"]);
     expect(allowedMethods("STITCH")).toBeUndefined();
     expect(allowedMethods("INSTANT_EFT")).toBeUndefined();
-  });
-
-  it("only takes tiles the account's methods can pay (STITCH_METHODS, card and Apple Pay by default)", () => {
-    const saved = { methods: process.env.STITCH_METHODS, id: process.env.STITCH_CLIENT_ID, secret: process.env.STITCH_CLIENT_SECRET };
-    try {
-      delete process.env.STITCH_METHODS;
-      expect([...stitchMethods()]).toEqual(["CARD", "APPLE_PAY"]);
-      expect(["STITCH", "CARD", "APPLE_PAY", "INSTANT_EFT", "ZAPPER", "CAPITEC_PAY", "PAYFLEX"].filter((m) => stitchServes(m))).toEqual(["STITCH", "CARD", "APPLE_PAY"]);
-      process.env.STITCH_CLIENT_ID = "live-id";
-      process.env.STITCH_CLIENT_SECRET = "s";
-      expect(stitchBankFirst()).toBe(false);
-
-      process.env.STITCH_METHODS = " card, pay_by_bank ,capitec, bogus";
-      expect([...stitchMethods()]).toEqual(["CARD", "PAY_BY_BANK", "CAPITEC"]);
-      expect(["INSTANT_EFT", "ZAPPER", "CAPITEC_PAY", "APPLE_PAY"].filter((m) => stitchServes(m))).toEqual(["INSTANT_EFT", "ZAPPER", "CAPITEC_PAY"]);
-      expect(stitchBankFirst()).toBe(true);
-      process.env.STITCH_CLIENT_ID = "test-id";
-      expect(stitchBankFirst()).toBe(false);
-    } finally {
-      for (const [key, value] of [["STITCH_METHODS", saved.methods], ["STITCH_CLIENT_ID", saved.id], ["STITCH_CLIENT_SECRET", saved.secret]] as const) {
-        if (value === undefined) delete process.env[key];
-        else process.env[key] = value;
-      }
-    }
   });
 
   it("reads payment link states and the webhook's link", () => {
