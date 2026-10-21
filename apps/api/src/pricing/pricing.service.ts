@@ -84,6 +84,8 @@ export type PricedLine = {
   /** Cost per unit (list / (1 + markup)) and pricing family — snapshotted on orders, admin-only. */
   unit_cost?: number | null;
   family?: string;
+  /** The product's standard markup, priced or not — sales quotes price supplier costs with it. */
+  markup_percent?: number | null;
 };
 
 export type DeliveryQuote = {

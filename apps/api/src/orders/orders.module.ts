@@ -13,6 +13,6 @@ import { OrdersService } from "./orders.service";
   imports: [ComplianceDocumentsModule, NotificationsModule, PricingModule, SuppliersModule],
   controllers: [OrdersController, DdpController],
   providers: [OrdersService, OrderDocumentsService, DdpService],
-  exports: [OrdersService, OrderDocumentsService],
+  exports: [OrdersService, OrderDocumentsService, DdpService],
 })
 export class OrdersModule {}

@@ -64,12 +64,12 @@ const STATUS_LABEL: Record<string, string> = {
   CANCELLED: "Cancelled",
 };
 
-const quantity = (l: { quantity: number; unitOfSale: UnitOfSale }) => `${l.quantity} ${UNIT_LABEL[l.unitOfSale]}`.replace(/\s+×/, " ×");
+export const quantity = (l: { quantity: number; unitOfSale: UnitOfSale }) => `${l.quantity} ${UNIT_LABEL[l.unitOfSale]}`.replace(/\s+×/, " ×");
 const siteAddress = (o: OrderDocData) => (o.deliveryAddress ? `${o.deliveryAddress}${o.deliveryProvince ? `, ${o.deliveryProvince}` : ""}` : "To be confirmed");
 const customerLines = (o: OrderDocData) =>
   [o.company?.name, o.customer?.name, o.customer?.email, o.company?.vatNumber ? `VAT ${o.company.vatNumber}` : null].filter((l): l is string => Boolean(l));
 const carrier = (s: NonNullable<OrderDocData["shipment"]>) => (s.carrier === "BESFLEET" ? "Besfleet" : (s.externalPartnerName ?? "Delivery partner"));
-const sellerLines = (vatNumber?: string) => [
+export const sellerLines = (vatNumber?: string) => [
   `${SELLER.legalName} T/A ${SELLER.tradingName}`,
   `Reg. no. ${SELLER.registrationNumber}`,
   ...SELLER.addressLines,

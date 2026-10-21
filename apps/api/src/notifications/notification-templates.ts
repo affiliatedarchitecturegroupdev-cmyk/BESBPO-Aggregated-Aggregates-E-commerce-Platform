@@ -498,6 +498,32 @@ export function customerQuoteEmail(event: NotificationEvent, q: QuoteData): Emai
   }
 }
 
+/** A sales quotation (docs/sales-quotes.md), emailed from the admin panel with its PDF attached. */
+export type QuotationEmailData = {
+  quoteNumber: string;
+  contactName: string | null;
+  total: Money;
+  validUntil: Date | null;
+  lines: { name: string; quantity: number; unitOfSale: UnitOfSale }[];
+  url: string;
+  preparedBy: string | null;
+  message: string | null;
+};
+
+export function quotationEmail(q: QuotationEmailData): EmailMessage {
+  const site = siteUrl();
+  return email(`Quotation ${q.quoteNumber} from ${SELLER.tradingName} — ${formatZAR(q.total)}`, [
+    { kind: "p", text: greeting(q.contactName) },
+    { kind: "p", text: `Thank you for your enquiry. Your quotation ${q.quoteNumber} is attached as a PDF.` },
+    ...(q.message ? [{ kind: "p" as const, text: q.message }] : []),
+    { kind: "list", items: q.lines.map(lineText) },
+    { kind: "rows", rows: [["Quotation", q.quoteNumber], ["Total (VAT inclusive, delivered)", formatZAR(q.total)], ...(q.validUntil ? ([["Valid until", formatDateZA(q.validUntil)]] as [string, string][]) : [])] },
+    { kind: "cta", label: "View, accept and pay", href: q.url },
+    { kind: "p", text: `You can accept it and pay online with the button above — no account needed. Prefer to talk first? Reply to this email or call ${SELLER.phone}${q.preparedBy ? ` and ask for ${q.preparedBy}` : ""}.` },
+    { kind: "p", text: `Browse everything else we deliver at ${site}.` },
+  ]);
+}
+
 export function customerCompanyEmail(event: NotificationEvent, c: CompanyData): EmailMessage | null {
   const site = siteUrl();
   const hi = { kind: "p" as const, text: greeting(c.applicantName) };
@@ -974,6 +1000,7 @@ export const EVENT_CHANNELS: Record<NotificationEvent, { customerEmail: boolean;
   QUOTE_PRICED: { customerEmail: true, customerWhatsApp: true, staffEmail: false },
   QUOTE_ACCEPTED: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
   QUOTE_DECLINED: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
+  QUOTATION_SENT: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
   TRADE_APPLICATION_RECEIVED: { customerEmail: true, customerWhatsApp: false, staffEmail: true },
   TRADE_APPLICATION_APPROVED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
   TRADE_APPLICATION_DECLINED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
@@ -1021,6 +1048,7 @@ export const EVENT_LABEL: Record<NotificationEvent, string> = {
   ORDER_CANCELLED: "Order cancelled",
   QUOTE_RECEIVED: "Quote request received",
   QUOTE_PRICED: "Quote priced",
+  QUOTATION_SENT: "Quotation sent (sales)",
   QUOTE_ACCEPTED: "Quote accepted",
   QUOTE_DECLINED: "Quote declined",
   TRADE_APPLICATION_RECEIVED: "Trade application received",

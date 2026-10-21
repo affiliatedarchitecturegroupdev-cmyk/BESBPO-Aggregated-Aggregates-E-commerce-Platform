@@ -68,3 +68,15 @@ def test_order_endpoint_flags_quote_only_orders():
     assert body["is_quote_only"] is True
     assert body["reason_codes"] == ["OVER_MAX_DISTANCE"]
     assert body["total"] is None
+
+
+def test_order_lines_report_the_products_standard_markup_even_when_unpriced():
+    """Sales quotes price a supplier's cost with the product's own markup (docs/sales-quotes.md)."""
+    body = client.post(
+        "/calculate/order",
+        json={"lines": [{"sku": "AA-SND-01", "unit": "m3", "quantity": 6}, {"sku": "AA-CEM-525N-001", "unit": "BAG_50KG", "quantity": 10}], "distance_km": 20},
+    ).json()
+    sand, cement = body["lines"]
+    assert sand["markup_percent"] == 28.0
+    assert cement["unit_price"] is None
+    assert cement["markup_percent"] == 8.0

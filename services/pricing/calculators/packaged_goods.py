@@ -192,6 +192,8 @@ class PackagedLineResult:
     # Cost per unit (list / (1 + markup)) — snapshotted on orders for profit reporting; None when unpriced.
     unit_cost: Optional[Decimal] = None
     family: str = ""
+    # The product's standard markup (fraction) — sales quotes price supplier costs with it (docs/sales-quotes.md).
+    markup: Optional[Decimal] = None
 
     @property
     def is_priced(self) -> bool:
@@ -206,6 +208,7 @@ class PackagedLineResult:
             "unit_label": self.unit_label,
             "unit_cost": money(self.unit_cost),
             "family": self.family,
+            "markup_percent": None if self.markup is None else float(round(self.markup * 100, 2)),
             "quantity": float(self.quantity),
             "equivalent_tons": float(round(self.bagged_kg / 1000, 3)),
             "equivalent_m3": 0.0,
@@ -241,7 +244,7 @@ def calculate(product: PackagedProduct, quantity: Decimal, unit: str, tier: str 
         sku=product.sku, name=product.name, unit=unit, unit_label=packaged.label, quantity=quantity,
         bagged_kg=bagged_kg, pricing_status=status, source_note=packaged.source_note,
         list_unit_price=None, unit_price=None, discount=Decimal(0), subtotal_before_discount=None, total=None,
-        family=family_for(product, unit),
+        family=family_for(product, unit), markup=packaged.markup,
     )
     if not packaged.is_priced:
         if not allow_unpriced:
@@ -263,5 +266,5 @@ def calculate(product: PackagedProduct, quantity: Decimal, unit: str, tier: str 
         bagged_kg=bagged_kg, pricing_status=packaged.pricing_status, source_note=packaged.source_note,
         list_unit_price=list_price, unit_price=priced.unit_price, discount=priced.discount,
         subtotal_before_discount=to_cents(quantity * list_price), total=to_cents(quantity * priced.unit_price),
-        unit_cost=to_cents(packaged.list_price / (1 + packaged.markup)), family=family_for(product, unit),
+        unit_cost=to_cents(packaged.list_price / (1 + packaged.markup)), family=family_for(product, unit), markup=packaged.markup,
     )
