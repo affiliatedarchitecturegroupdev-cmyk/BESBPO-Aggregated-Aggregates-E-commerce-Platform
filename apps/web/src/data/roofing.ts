@@ -23,7 +23,7 @@ import { tierPrice } from "@/lib/tier-pricing";
 
 export type SheetLengthUnit = "SHEET_3_0M" | "SHEET_3_6M" | "SHEET_4_2M" | "SHEET_4_8M" | "SHEET_6_0M" | "SHEET_6_6M";
 export type TimberLengthUnit = "TIMBER_3_0M" | "TIMBER_3_6M" | "TIMBER_4_2M" | "TIMBER_4_8M" | "TIMBER_6_0M" | "TIMBER_6_6M";
-export type RoofingUnitCode = SheetLengthUnit | TimberLengthUnit | "METRE" | "EACH" | "PACK" | "ROLL";
+export type RoofingUnitCode = SheetLengthUnit | TimberLengthUnit | "METRE" | "EACH" | "PACK" | "ROLL" | "SHEET" | "SQUARE_METRE" | "LINEAR_METRE" | "CUBIC_METRE" | "KG" | "BUNDLE";
 
 /** The standard sheet lengths, in metres, by unit. */
 export const SHEET_LENGTHS: Record<SheetLengthUnit, number> = {

@@ -35,6 +35,12 @@ export const PACKAGED_UNITS = [
   "TIMBER_4_8M",
   "TIMBER_6_0M",
   "TIMBER_6_6M",
+  // Range expansion (RANGE_EXPANSION.md): per m², linear metre, m³, kg and bundle.
+  "SQUARE_METRE",
+  "LINEAR_METRE",
+  "CUBIC_METRE",
+  "KG",
+  "BUNDLE",
 ] as const;
 export type PackagedUnit = (typeof PACKAGED_UNITS)[number];
 export type PricingUnit = "ton" | "m3" | "bag" | PackagedUnit;

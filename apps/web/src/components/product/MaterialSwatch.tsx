@@ -1,3 +1,5 @@
+import { RANGE_CATEGORIES } from "@/data/range-index";
+
 /**
  * Stand-in product imagery until photography exists: a texture in the
  * material's colour, generated deterministically from the SKU so server and
@@ -69,6 +71,33 @@ const PALETTES: Record<string, { base: string; grains: string[] }> = {
   "structural-steel": { base: "#4E5357", grains: ["#383C3F", "#6D7276", "#7A5236"] },
 };
 
+/** Range-expansion categories (CAT-57 onwards) take their department's colours. */
+const DEPARTMENT_PALETTES: Record<string, { base: string; grains: string[] }> = {
+  timber: { base: "#C9A878", grains: ["#A88B5C", "#DCC29A", "#7E8F5E"] },
+  "garden-landscaping": { base: "#6E8B4A", grains: ["#55703A", "#8FA866", "#5A4632"] },
+  "outdoor-living": { base: "#8C6F55", grains: ["#3F6F8C", "#B08A66", "#2E2B28"] },
+  "formwork-access": { base: "#7C7A76", grains: ["#E07A1F", "#5E5C58", "#A3A09A"] },
+  "roads-civil": { base: "#3A3A3A", grains: ["#2A2A2A", "#F2F2F0", "#E8B931"] },
+  "precast-concrete": { base: "#A7A49E", grains: ["#8D8A84", "#C2BFB9", "#75726C"] },
+  "construction-chemicals": { base: "#9A9EA2", grains: ["#2C4A5E", "#C8CBCE", "#6F7377"] },
+  "insulation-fire-acoustic": { base: "#E5D9A8", grains: ["#C8352E", "#F1E9C6", "#D3C48C"] },
+  "water-plumbing": { base: "#7E9AA8", grains: ["#5D7A88", "#A6BDC7", "#E07A1F"] },
+  electrical: { base: "#4F5A63", grains: ["#E8B931", "#38424A", "#C8352E"] },
+  "glass-aluminium": { base: "#B9C8CF", grains: ["#9DB0B9", "#DCE6EA", "#8C9295"] },
+  "kitchens-built-ins": { base: "#D9D2C5", grains: ["#B5AB98", "#F2EEE6", "#6B4F2E"] },
+  "hvac-ventilation": { base: "#C8CED2", grains: ["#A9B1B6", "#E6EAEC", "#5E6A70"] },
+  "site-establishment": { base: "#8A7458", grains: ["#E07A1F", "#6E5B44", "#2C4A5E"] },
+  "power-tools-equipment": { base: "#5E6266", grains: ["#E8B931", "#3F4346", "#C8352E"] },
+  "tiles-flooring": { base: "#B8AFA3", grains: ["#9A9085", "#D6CFC5", "#6B5E52"] },
+  "security-access": { base: "#3E4448", grains: ["#2A2E31", "#6D7479", "#C8352E"] },
+  "hardware-fasteners": { base: "#8D8F91", grains: ["#B5B7B9", "#6A6C6E", "#C9A227"] },
+  "paint-waterproofing": { base: "#7A8C94", grains: ["#C8352E", "#E8B931", "#2C4A5E"] },
+  "prefab-structures": { base: "#A9AEB1", grains: ["#C9A878", "#8C9295", "#3E5E4A"] },
+  "agricultural-farm": { base: "#8C7A52", grains: ["#6E8B4A", "#B39461", "#A9AEB1"] },
+  "mining-industrial": { base: "#55524E", grains: ["#3A3734", "#8A5A3C", "#E8B931"] },
+};
+const RANGE_DEPARTMENT = new Map(RANGE_CATEGORIES.map((c) => [c.slug, c.department]));
+
 function seededRandom(seed: string) {
   let h = 2166136261;
   for (const c of seed) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
@@ -90,7 +119,7 @@ export function MaterialSwatch({
   className?: string;
   grains?: number;
 }) {
-  const palette = PALETTES[categorySlug] ?? PALETTES["crushed-stone"];
+  const palette = PALETTES[categorySlug] ?? DEPARTMENT_PALETTES[RANGE_DEPARTMENT.get(categorySlug) ?? ""] ?? PALETTES["crushed-stone"];
   const random = seededRandom(sku);
   const dots = Array.from({ length: grains }, () => ({
     cx: Math.round(random() * 1000) / 10,

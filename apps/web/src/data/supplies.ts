@@ -1,22 +1,17 @@
 /**
- * Building supplies (BUILDING_SUPPLIES_CATALOGUE.md): CAT-32..42 across six
- * departments approved by the owner on 17 Oct 2026 — doors, windows & frames;
- * fencing & security; water storage & plumbing; ceilings, drywall &
- * insulation; site tools, PPE & consumables; waterproofing, sealants & paint.
+ * Everything in the building-supplies line, for server components: the building supplies (CAT-32..56,
+ * ./supplies-line) and the range expansion (CAT-57 onwards, ./range, docs/pricing/RANGE_EXPANSION.md). They
+ * share the roofing product shape, the merchant's own transport and the SUPPLIES pricing family.
  *
- * The products share the roofing line's shape (per item, per board, per roll
- * or per pack) and come on the merchant's own vehicle; they are priced in
- * their own SUPPLIES family. supplies-catalogue.json is the public copy of
- * services/pricing/data/supplies_catalogue.json (internal research removed).
- * A unit shows a price only when two SA retailers list the same product at a
- * regular price; everything else is quoted with the supplier.
+ * The range is large — client components import ./supplies-line and ./range-index instead.
  */
-import catalogue from "./supplies-catalogue.json";
-import { flatbedProducts, type RoofingProduct } from "./roofing";
+import { RANGE_CATEGORY_CODES, RANGE_PRODUCTS } from "./range";
+import type { RoofingProduct } from "./roofing";
+import { SUPPLIES_LINE_CATEGORY_CODES, SUPPLIES_LINE_PRODUCTS } from "./supplies-line";
 
-export const SUPPLIES_CATEGORY_CODES: Record<string, string> = Object.fromEntries(catalogue.categories.map((c) => [c.slug, c.code]));
+export const SUPPLIES_CATEGORY_CODES: Record<string, string> = { ...SUPPLIES_LINE_CATEGORY_CODES, ...RANGE_CATEGORY_CODES };
 
-export const SUPPLIES_PRODUCTS: RoofingProduct[] = flatbedProducts(catalogue, "supplies");
+export const SUPPLIES_PRODUCTS: RoofingProduct[] = [...SUPPLIES_LINE_PRODUCTS, ...RANGE_PRODUCTS];
 
 export function findSuppliesProduct(slug: string) {
   return SUPPLIES_PRODUCTS.find((p) => p.slug === slug);

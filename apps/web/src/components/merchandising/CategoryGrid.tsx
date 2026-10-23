@@ -3,6 +3,7 @@ import { CategoryCarousel, type CategoryCard, type CategoryPage } from "@/compon
 import { CORE_CATEGORIES, CATEGORIES, MASONRY_CATEGORIES, ROOFING_CATEGORIES, SUPPLIES_CATEGORIES, type Category } from "@/data/categories";
 import { ROOF_TILE_CATEGORIES } from "@/data/masonry";
 import { PLANT, SERVICES } from "@/data/plant-services";
+import { RANGE_CATEGORIES } from "@/data/range-index";
 import { QUOTABLE } from "@/data/quotable";
 import { getCatalogue } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
@@ -71,8 +72,19 @@ export async function CategoryGrid() {
   const walling = MASONRY_CATEGORIES.filter((c) => !ROOF_TILE_CATEGORIES.includes(c.slug)).map(categoryCard);
   const roofing = [...ROOFING_CATEGORIES, ...MASONRY_CATEGORIES.filter((c) => ROOF_TILE_CATEGORIES.includes(c.slug))].map(categoryCard);
   const FITOUT = ["electrical-cable-conduit", "electrical-distribution", "switches-sockets-lighting", "solar-backup-power", "floor-wall-tiles", "flooring-skirting", "tiling-accessories", "sanitaryware", "taps-mixers-valves", "kitchen-sinks-waste", "fasteners-fixings", "locks-ironmongery", "boards-sheets", "formwork-scaffolding"];
-  const supplies = SUPPLIES_CATEGORIES.filter((c) => !FITOUT.includes(c.slug)).map(categoryCard);
+  const RANGE = new Set(RANGE_CATEGORIES.map((c) => c.slug));
+  const supplies = SUPPLIES_CATEGORIES.filter((c) => !FITOUT.includes(c.slug) && !RANGE.has(c.slug)).map(categoryCard);
   const fitout = SUPPLIES_CATEGORIES.filter((c) => FITOUT.includes(c.slug)).map(categoryCard);
+  // The range expansion (CAT-57 onwards, RANGE_EXPANSION.md), a page per roadmap wave, by category code.
+  const wave = (from: number, to: number) =>
+    RANGE_CATEGORIES.filter((c) => {
+      const n = Number(c.code.slice(4));
+      return n >= from && n <= to;
+    }).map((c) => categoryCard(SUPPLIES_CATEGORIES.find((s) => s.slug === c.slug)!));
+  const waveA = wave(57, 72);
+  const waveB = wave(73, 95);
+  const waveC = wave(96, 115);
+  const waveD = wave(116, 199);
 
   // Each tile shows the first photographed product in its category (ProductThumb's photos).
   const withCovers = (cards: CategoryCard[]) =>
@@ -84,6 +96,10 @@ export async function CategoryGrid() {
     { label: "Roofing", summary: "IBR, corrugated and concealed-fix sheeting in stock lengths or cut to length, concrete roof tiles, flashings, insulation and gutters.", cards: withCovers(roofing) },
     { label: "Building supplies", summary: "Doors and windows, fencing and security, water tanks and plumbing, ceilings, tools and PPE, waterproofing and paint.", cards: withCovers(supplies) },
     { label: "Services & fit-out", summary: "Electrical and solar, tiles and flooring, bathroom and kitchen, hardware and fasteners, and boards and formwork.", cards: withCovers(fitout) },
+    { label: "Timber, garden & outdoor", summary: "Treated poles, engineered timber, hardwoods and decking; lawn, soils, irrigation and garden tools; braais, shade and pools.", cards: withCovers(waveA) },
+    { label: "Contractor core", summary: "Formwork and access, roads and civil, precast, construction chemicals, insulation and fire, pumps, valves, hot water, lighting and power.", cards: withCovers(waveB) },
+    { label: "Finishes, fit-out & site", summary: "Glass and aluminium, kitchens, HVAC, site establishment, power tools and equipment, flooring, security, fixings and coatings.", cards: withCovers(waveC) },
+    { label: "Prefab, farm & mining", summary: "Wendy houses, steel buildings, light steel frame and modular buildings; farm fencing, water and tunnels; grating, mining and industrial.", cards: withCovers(waveD) },
   ];
 
   return (
@@ -94,7 +110,7 @@ export async function CategoryGrid() {
           All products →
         </Link>
       </div>
-      <CategoryCarousel pages={pages} total={aggregates.length + more.length + walling.length + roofing.length + supplies.length + fitout.length} />
+      <CategoryCarousel pages={pages} total={aggregates.length + more.length + walling.length + roofing.length + supplies.length + fitout.length + waveA.length + waveB.length + waveC.length + waveD.length} />
     </section>
   );
 }

@@ -41,16 +41,16 @@ The aim is a store that is the benchmark for South African building-materials e-
 | — API | 248 files, ~23,000 lines |
 | — pricing engine | 28 files, ~3,600 lines |
 | — database | 48 files, ~5,200 lines, 44 migrations |
-| Automated tests | ~7,800 lines: 236 API unit, 122 end-to-end, 157 pricing |
+| Automated tests | ~7,900 lines: 238 API unit, 122 end-to-end, 162 pricing |
 | Catalogue and pricing data | ~110,000 lines |
 | Documentation | 60 documents, ~7,000 lines |
 | Page templates | 161 |
-| Public pages | ~1,580 |
+| Public pages | ~4,450 |
 | Account, admin and portal pages | ~110 |
 
-The ~1,580 public pages are made up of:
-- 1,401 product pages;
-- 54 category pages;
+The ~4,450 public pages are made up of:
+- 4,247 product pages;
+- 122 category pages;
 - ~47 main and landing pages;
 - 18 plant hire, 11 service and up to 9 province pages;
 - 17 design service pages;
@@ -68,7 +68,8 @@ The ~1,580 public pages are made up of:
 | Masonry | 222 |
 | Roofing & timber | 153 |
 | Building supplies | 755 |
-| **Total** | **1,401** |
+| Range expansion (Phase 2, 23 Oct 2026) | 2,846 |
+| **Total** | **4,247** |
 
 **Supplier network and coverage (verified 23 October 2026):**
 - **314 supplier records, 300 of them verified and active**, across **all 9 provinces**;
@@ -76,11 +77,11 @@ The ~1,580 public pages are made up of:
 
 These are the figures to use in pitches and public copy ("300+ suppliers", "190+ towns and cities"). Re-check them before each use, since the numbers change as suppliers are added.
 
-**Only 250 of the 1,401 products (18%) can be bought online.** The other 1,151 are quote-only. Closing that gap is the single most valuable thing on this roadmap (Phase 1).
+**Only 250 of the 4,247 products (6%) can be bought online.** The other 3,997 are quote-only, including all 2,846 products added by the range expansion. Closing that gap is the single most valuable thing on this roadmap (Phase 1).
 
 ### Built and live (or merged)
 
-- **Catalogue and pricing:** 20 departments, the pricing engine, tier pricing, and the discount floor.
+- **Catalogue and pricing:** 35 departments and 4,247 products (range expansion, `docs/pricing/RANGE_EXPANSION.md`), the pricing engine, tier pricing, and the discount floor.
 - **Checkout:** deposits, lay-by, payment links, proformas, and the AA 60/120 express service.
 - **Payment gateways:** PayFast, Peach and Stitch adapters with failover, and suggesting pay by bank first from R30,000.
 - **Quotes and projects:** RFQ quotes, BOQ upload, project lists, Complete the Job, Best With, calculators, the estimator and the shopping assistant.
@@ -186,8 +187,13 @@ These come first: nothing new reaches customers until they are done.
 **Goal:** the deepest building-materials range in South Africa, built around what **construction companies actually buy**. That means residential builders, commercial and industrial contractors, civil and road contractors, mining and agricultural buyers, and the specialist trades (plumbing, electrical, finishing, landscaping). It is not just what a hardware store stocks.
 
 **Scale target:**
-- from 1,401 products today to **~4,000–5,000** across about **35 departments**;
+- from 1,401 products to **~4,000–5,000** across about **35 departments**;
 - in waves, so each wave ships complete: data, prices or quote-only, photos, calculators, Complete the Job pairings and supplier groups.
+
+**Status (23 October 2026): products, departments and categories built.**
+- **Numbers:** 4,247 products in 35 departments and 122 categories. The range expansion added 2,846 products in CAT-57 to CAT-124, across Waves A–D below (`docs/pricing/RANGE_EXPANSION.md`).
+- **Pricing:** all 2,846 are quote-only.
+- **Still open:** prices, photos, variant grids, unit weights, structural steel sections and plant hire depth.
 
 **Owner priority (23 October 2026):** product and department expansion is the **top priority**. It is driven by the trade-partner pitching programme (target: 2,500 construction companies; 34 in KwaZulu-Natal pitched on the first day) and by what those companies' websites, project lists and tenders show they buy.
 

@@ -10,6 +10,7 @@
  */
 import { PRODUCTS } from "@/data/catalogue";
 import { findQuotable, isWholeUnit } from "@/data/quotable";
+import { RANGE_CATEGORIES } from "@/data/range-index";
 import { STEEL_PRODUCTS } from "@/data/steel";
 
 export type BuildStage = "SITE_PREP" | "FOUNDATIONS" | "SLABS" | "WALLS" | "ROOFING" | "SERVICES" | "FINISHES" | "PAVING_ROADS" | "DRAINAGE" | "LANDSCAPING" | "OTHER";
@@ -88,6 +89,42 @@ const CATEGORY_STAGE: Record<string, BuildStage> = {
   "boards-sheets": "SLABS",
   "formwork-scaffolding": "SLABS",
 };
+/** Range-expansion categories (CAT-57 onwards) take their department's stage, with a few exceptions. */
+const DEPARTMENT_STAGE: Record<string, BuildStage> = {
+  timber: "ROOFING",
+  "garden-landscaping": "LANDSCAPING",
+  "outdoor-living": "LANDSCAPING",
+  "formwork-access": "SLABS",
+  "roads-civil": "PAVING_ROADS",
+  "precast-concrete": "SLABS",
+  "construction-chemicals": "FINISHES",
+  "insulation-fire-acoustic": "FINISHES",
+  "water-plumbing": "SERVICES",
+  electrical: "SERVICES",
+  "hvac-ventilation": "SERVICES",
+  "security-access": "SERVICES",
+  "glass-aluminium": "FINISHES",
+  "kitchens-built-ins": "FINISHES",
+  "tiles-flooring": "FINISHES",
+  "paint-waterproofing": "FINISHES",
+  "site-establishment": "SITE_PREP",
+  "agricultural-farm": "LANDSCAPING",
+};
+const RANGE_STAGE: Record<string, BuildStage> = {
+  "decking-cladding": "FINISHES",
+  "timber-structure-kits": "LANDSCAPING",
+  "survey-setting-out": "SITE_PREP",
+  "erosion-sandbags": "SITE_PREP",
+  "precast-walls-tanks": "WALLS",
+  "road-precast-barriers": "PAVING_ROADS",
+  "waterproofing-systems": "FOUNDATIONS",
+  "anchors-epoxy-grout": "SLABS",
+  "concrete-repair-care": "SLABS",
+};
+for (const c of RANGE_CATEGORIES) {
+  const stage = RANGE_STAGE[c.slug] ?? DEPARTMENT_STAGE[c.department];
+  if (stage) CATEGORY_STAGE[c.slug] = stage;
+}
 export function defaultStage(categorySlug: string): BuildStage {
   return CATEGORY_STAGE[categorySlug] ?? "OTHER";
 }

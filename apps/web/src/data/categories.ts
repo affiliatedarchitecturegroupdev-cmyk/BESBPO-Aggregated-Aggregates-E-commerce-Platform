@@ -1,3 +1,5 @@
+import { RANGE_CATEGORIES } from "./range-index";
+
 export type Category = {
   slug: string;
   name: string;
@@ -78,6 +80,9 @@ export const CATEGORIES: Category[] = [
   { slug: "locks-ironmongery", name: "Locks, Hinges & Door Hardware", description: "Mortice, cylinder and bathroom locksets, door handles, butt and concealed hinges, tower bolts, padbolts and padlocks, door closers and stops, window stays, cupboard handles and sliding door gear.", catalogueGroup: "supplies" },
   { slug: "boards-sheets", name: "Shutterboard, Plywood & Boards", description: "Film-faced shutterply and pine shutterboard, pine and marine plywood, OSB 3, chipboard, melamine, SupaWood (MDF), Masonite and fibre-cement boards — by the sheet.", catalogueGroup: "supplies" },
   { slug: "formwork-scaffolding", name: "Formwork, Props & Scaffolding", description: "Adjustable steel props and fork heads, formwork tie rods and spacers, column clamps, frame and tube scaffolding, boards, couplers, base jacks, castors and mobile towers.", catalogueGroup: "supplies" },
+  // CAT-57 onwards — the range expansion, in the same line (docs/pricing/RANGE_EXPANSION.md); names and
+  // descriptions come from the catalogue, so they're written in one place.
+  ...RANGE_CATEGORIES.map((c): Category => ({ slug: c.slug, name: c.name, description: c.description, catalogueGroup: "supplies" })),
 ];
 
 export const CORE_CATEGORIES = CATEGORIES.filter((c) => c.catalogueGroup === "core");

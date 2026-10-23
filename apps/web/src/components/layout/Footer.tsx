@@ -3,6 +3,7 @@ import { Logo } from "@/components/brand/Logo";
 import { PromoSlot } from "@/components/merchandising/PromoSlot";
 import { CORPORATE_EMAILS, PHONE_LINES, REGISTERED_ADDRESS } from "@/data/corporate-contact";
 import { CORE_CATEGORIES } from "@/data/categories";
+import { DEPARTMENTS } from "@/data/departments";
 import { PAYMENT_METHODS } from "@/data/payment-methods";
 import { PaymentLogo } from "@/components/payment/PaymentLogo";
 import { NewsletterSignup } from "@/components/newsletter/NewsletterSignup";
@@ -78,26 +79,13 @@ export async function Footer() {
                 <Link href={`/products?category=${c.slug}`}>{c.name}</Link>
               </li>
             ))}
-            <li><Link href="/cement">Cement</Link></li>
+            {DEPARTMENTS.filter((d) => d.inBar && d.slug !== "aggregates").map((d) => (
+              <li key={d.slug}>
+                <Link href={d.href}>{d.name}</Link>
+              </li>
+            ))}
             <li><Link href="/ready-mix">Ready-Mix Concrete</Link></li>
-            <li><Link href="/reinforcing-steel">Reinforcing &amp; Structural Steel</Link></li>
-            <li><Link href="/bricks-blocks">Bricks, Blocks &amp; Walling</Link></li>
-            <li><Link href="/paving">Paving &amp; Retaining</Link></li>
-            <li><Link href="/drainage">Drainage &amp; Membranes</Link></li>
-            <li><Link href="/roofing">Roofing</Link></li>
-            <li><Link href="/roofing#roof-timber">Roof &amp; Structural Timber</Link></li>
-            <li><Link href="/doors-windows">Doors, Windows &amp; Frames</Link></li>
-            <li><Link href="/fencing-security">Fencing &amp; Security</Link></li>
-            <li><Link href="/water-plumbing">Water Storage &amp; Plumbing</Link></li>
-            <li><Link href="/ceilings-drywall">Ceilings &amp; Drywall</Link></li>
-            <li><Link href="/tools-ppe">Site Tools &amp; PPE</Link></li>
-            <li><Link href="/paint-waterproofing">Waterproofing &amp; Paint</Link></li>
-            <li><Link href="/electrical">Electrical &amp; Solar</Link></li>
-            <li><Link href="/tiles-flooring">Tiles &amp; Flooring</Link></li>
-            <li><Link href="/bathroom-kitchen">Bathroom &amp; Kitchen</Link></li>
-            <li><Link href="/hardware-fasteners">Hardware &amp; Fasteners</Link></li>
-            <li><Link href="/boards-formwork">Boards &amp; Formwork</Link></li>
-            <li><Link href="/departments">All Departments</Link></li>
+            <li><Link href="/departments">All {DEPARTMENTS.length} Departments</Link></li>
             <li><Link href="/buy-online">Buy Online — Priced Products</Link></li>
             <li><Link href="/shop-by-stage">Shop by Build Stage</Link></li>
             <li><Link href="/products">All products</Link></li>

@@ -17,6 +17,7 @@ PAIRS = {
     "masonry_catalogue.json": "masonry-catalogue.json",
     "roofing_catalogue.json": "roofing-catalogue.json",
     "supplies_catalogue.json": "supplies-catalogue.json",
+    "range_catalogue.json": "range-catalogue.json",
     "pricing_framework.json": "pricing-framework.json",
 }
 # Internal: competitor names and prices, benchmark prices, costs and cost bases.
@@ -39,6 +40,30 @@ def public_copy(src: str, data: dict) -> dict:
         for category in out.get("categories", []):
             category.pop("markup", None)
     return out
+
+
+def range_index(data: dict) -> dict:
+    """The slim copy of the range catalogue that the cart and quote forms load in the browser.
+
+    The range expansion is ~2,800 products, so client components get only the categories and what a cart line
+    needs (name, slug, category and units, with a list price once one is benchmarked); descriptions, uses and
+    handling notes stay in range-catalogue.json, which only server components import (RANGE_EXPANSION.md).
+    """
+    def unit(u):
+        priced = u["list_price_per_unit"] is not None
+        return {"unit": u["unit"], "unit_label": u["unit_label"], **({"list_price_per_unit": u["list_price_per_unit"], "markup_percent": u["markup_percent"], "pricing_status": u["pricing_status"]} if priced else {})}
+
+    return {
+        "categories": [{k: c[k] for k in ("slug", "name", "code", "department", "description")} for c in data["categories"]],
+        "products": [
+            {"sku": p["sku"], "slug": p["slug"], "name": p["name"], "category_slug": p["category_slug"], "grading_standard": p["grading_standard"], "units": [unit(u) for u in p["units"]]}
+            for p in data["products"]
+        ]
+    }
+
+
+# Extra storefront files derived from a catalogue: file in apps/web/src/data -> (source catalogue, builder).
+DERIVED = {"range-index.json": ("range_catalogue.json", range_index)}
 
 
 def render(src: str, data: dict) -> str:

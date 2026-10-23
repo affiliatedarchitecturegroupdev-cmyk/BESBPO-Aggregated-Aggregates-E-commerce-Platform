@@ -35,6 +35,11 @@ export const UNIT_LABEL: Record<UnitOfSale, string> = {
   TIMBER_4_8M: "× 4.8 m length",
   TIMBER_6_0M: "× 6.0 m length",
   TIMBER_6_6M: "× 6.6 m length",
+  SQUARE_METRE: "m²",
+  LINEAR_METRE: "× metre",
+  CUBIC_METRE: "m³",
+  KG: "kg",
+  BUNDLE: "× bundle",
 };
 
 const ZAR = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });

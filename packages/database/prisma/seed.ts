@@ -178,6 +178,28 @@ type RoofingCatalogue = {
 const ROOFING: RoofingCatalogue = JSON.parse(readFileSync(join(__dirname, "../../../services/pricing/data/roofing_catalogue.json"), "utf8"));
 /** CAT-32..42 building supplies — the roofing product shape (BUILDING_SUPPLIES_CATALOGUE.md). */
 const SUPPLIES: RoofingCatalogue = JSON.parse(readFileSync(join(__dirname, "../../../services/pricing/data/supplies_catalogue.json"), "utf8"));
+/**
+ * CAT-57 onwards: the range expansion (docs/pricing/RANGE_EXPANSION.md), in the building-supplies line. Its products
+ * carry only the fields they use, so the roofing-shape fields are filled with nulls here.
+ */
+const RANGE_RAW: { categories: RoofingCatalogue["categories"]; products: (Pick<RoofingCatalogue["products"][number], "sku" | "slug" | "name" | "category_slug" | "grading_standard" | "description" | "unit_size" | "units">)[] } =
+  JSON.parse(readFileSync(join(__dirname, "../../../services/pricing/data/range_catalogue.json"), "utf8"));
+const RANGE: RoofingCatalogue = {
+  categories: RANGE_RAW.categories,
+  products: RANGE_RAW.products.map((p) => ({
+    ...p,
+    manufacturer: null,
+    roof_profile: null,
+    thickness_mm: null,
+    coating: null,
+    cover_width_mm: null,
+    section: null,
+    timber_grade: null,
+    timber_treatment: null,
+    timber_finish: null,
+    specialist_characteristics: [],
+  })),
+};
 
 type ReadyMixCatalogue = {
   category: { slug: string; name: string; code: string };
@@ -457,6 +479,13 @@ async function seedSuppliesCatalogue() {
   await seedFlatbedLine(SUPPLIES, "supplies", after);
 }
 
+/** CAT-57 onwards (RANGE_EXPANSION.md): categories after the building supplies, in the same line and shape. */
+async function seedRangeCatalogue() {
+  const after =
+    FRAMEWORK.categories.length + PACKAGED.categories.length + 1 + STEEL.categories.length + MASONRY.categories.length + ROOFING.categories.length + SUPPLIES.categories.length;
+  await seedFlatbedLine(RANGE, "supplies", after);
+}
+
 async function seedFlatbedLine(catalogue: RoofingCatalogue, catalogueGroup: string, after: number) {
   const categoryIds: Record<string, string> = {};
   for (const [index, category] of catalogue.categories.entries()) {
@@ -704,6 +733,7 @@ async function main() {
   await seedMasonryCatalogue();
   await seedRoofingCatalogue();
   await seedSuppliesCatalogue();
+  await seedRangeCatalogue();
   await seedCustomerTiers();
   await seedDeliveryBands();
   await seedPaymentMethods();
@@ -711,7 +741,7 @@ async function main() {
   await seedBlog();
   console.log(
     `Seed complete: ${FRAMEWORK.products.length} products across ${FRAMEWORK.categories.length} categories, ` +
-      `plus ${PACKAGED.products.length} B2B packaged products, ${READY_MIX.products.length} ready-mix grades, ${STEEL.products.length} steel products, ${MASONRY.products.length} masonry products, ${ROOFING.products.length} roofing products and ${SUPPLIES.products.length} building-supplies products.`,
+      `plus ${PACKAGED.products.length} B2B packaged products, ${READY_MIX.products.length} ready-mix grades, ${STEEL.products.length} steel products, ${MASONRY.products.length} masonry products, ${ROOFING.products.length} roofing products, ${SUPPLIES.products.length} building-supplies products and ${RANGE.products.length} range-expansion products.`,
   );
 }
 

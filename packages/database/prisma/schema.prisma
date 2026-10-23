@@ -535,6 +535,13 @@ enum UnitOfSale {
   TIMBER_4_8M
   TIMBER_6_0M
   TIMBER_6_6M
+  // Range expansion (docs/pricing/RANGE_EXPANSION.md): lawn, glass and insulation per m², decking, cable and
+  // sections per linear metre (not METRE, which is roofing's cut-to-length), soils per m³, nails per kg, timber bundles.
+  SQUARE_METRE
+  LINEAR_METRE
+  CUBIC_METRE
+  KG
+  BUNDLE
 }
 
 /// Captures quote-only orders before they become a priced Order — the RFQ

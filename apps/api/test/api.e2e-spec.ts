@@ -418,7 +418,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
       const served = await http().get(`/merchandising/images/${image.body.id}`).expect(200);
       expect(served.headers["content-type"]).toBe("image/png");
       const overlay = await http().get("/merchandising/products").expect(200);
-      expect(overlay.body).toHaveLength(1401); // 51 aggregates + 62 cement and other packaged goods + 7 ready-mix grades + 151 steel + 222 masonry & precast (incl. roof tiles) + 153 roofing (incl. roof timber & connectors) + 755 building supplies (incl. services & fit-out)
+      expect(overlay.body).toHaveLength(4247); // 51 aggregates + 62 cement and other packaged goods + 7 ready-mix grades + 151 steel + 222 masonry & precast (incl. roof tiles) + 153 roofing (incl. roof timber & connectors) + 755 building supplies (incl. services & fit-out) + 2,846 range expansion (RANGE_EXPANSION.md)
       expect(overlay.body.find((p: { sku: string }) => p.sku === sku)).toMatchObject({
         featuredRank: 2,
         images: expect.arrayContaining([expect.objectContaining({ id: image.body.id, altText: "Filter media stockpile" })]),

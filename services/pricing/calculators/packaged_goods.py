@@ -42,6 +42,7 @@ STEEL_DATA_PATH = Path(__file__).parent.parent / "data" / "steel_catalogue.json"
 MASONRY_DATA_PATH = Path(__file__).parent.parent / "data" / "masonry_catalogue.json"
 ROOFING_DATA_PATH = Path(__file__).parent.parent / "data" / "roofing_catalogue.json"
 SUPPLIES_DATA_PATH = Path(__file__).parent.parent / "data" / "supplies_catalogue.json"
+RANGE_DATA_PATH = Path(__file__).parent.parent / "data" / "range_catalogue.json"
 READY_STATUS = "Ready — benchmarked"
 CEMENT_UNITS = ("BAG_25KG", "BAG_50KG", "BULK_BAG_1_5T", "BULK_TANKER_PER_TON", "DRUM_210L", "IBC_TOTE_1000L")
 # Mortars, grouts, adhesives and admixtures (CAT-11) also come in other pack sizes — a 20 kg bag of tile adhesive, a 5 L
@@ -58,8 +59,10 @@ SHEET_LENGTH_UNITS = ("SHEET_3_0M", "SHEET_3_6M", "SHEET_4_2M", "SHEET_4_8M", "S
 TIMBER_LENGTH_UNITS = ("TIMBER_3_0M", "TIMBER_3_6M", "TIMBER_4_2M", "TIMBER_4_8M", "TIMBER_6_0M", "TIMBER_6_6M")
 ROOFING_UNITS = SHEET_LENGTH_UNITS + TIMBER_LENGTH_UNITS + ("METRE", "EACH", "PACK", "ROLL")
 # Building supplies (CAT-32..42): doors, windows, posts and tins per item; boards per sheet; wire, mesh and tape per roll; masks per pack.
-SUPPLIES_UNITS = ("EACH", "PACK", "ROLL", "SHEET")
-PACKAGED_UNITS = CEMENT_UNITS + STEEL_UNITS + ("THOUSAND",) + SHEET_LENGTH_UNITS + TIMBER_LENGTH_UNITS + ("METRE",)
+# The range expansion (RANGE_EXPANSION.md) adds per m², per linear metre, per m³, per kg and per bundle (and hot-mix asphalt per tonne).
+RANGE_UNITS = ("SQUARE_METRE", "LINEAR_METRE", "CUBIC_METRE", "KG", "BUNDLE")
+SUPPLIES_UNITS = ("EACH", "PACK", "ROLL", "SHEET", "TONNE") + RANGE_UNITS
+PACKAGED_UNITS = CEMENT_UNITS + STEEL_UNITS + ("THOUSAND",) + SHEET_LENGTH_UNITS + TIMBER_LENGTH_UNITS + ("METRE",) + RANGE_UNITS
 # Lines that travel on the supplier's own flatbed or crane truck, never in the tipper bands.
 OWN_TRANSPORT_LINES = ("steel", "masonry", "roofing", "supplies")
 BAGGED_UNITS = ("BAG_25KG", "BAG_50KG")
@@ -170,6 +173,12 @@ def load_roofing(path: Path = ROOFING_DATA_PATH) -> tuple[dict, dict[str, Packag
 
 def load_supplies(path: Path = SUPPLIES_DATA_PATH) -> tuple[dict, dict[str, PackagedProduct]]:
     """The building-supplies catalogue (CAT-32..42) — priced like packaged goods, in the SUPPLIES family."""
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    return raw, _products(raw, SUPPLIES_UNITS, "supplies")
+
+
+def load_range(path: Path = RANGE_DATA_PATH) -> tuple[dict, dict[str, PackagedProduct]]:
+    """The range expansion (CAT-57 onwards, RANGE_EXPANSION.md) — in the building-supplies line and SUPPLIES family."""
     raw = json.loads(path.read_text(encoding="utf-8"))
     return raw, _products(raw, SUPPLIES_UNITS, "supplies")
 

@@ -106,11 +106,14 @@ export function Header() {
           </div>
         </div>
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-5 gap-y-1 px-4 py-2 font-body text-[13px] text-basalt lg:text-sm">
-          {DEPARTMENTS.map((d) => (
+          {DEPARTMENTS.filter((d) => d.inBar).map((d) => (
             <Link key={d.slug} href={d.href} className="whitespace-nowrap hover:text-seam-blue">
               {d.shortName}
             </Link>
           ))}
+          <Link href="/departments" className="whitespace-nowrap font-semibold text-seam-blue hover:text-basalt">
+            All {DEPARTMENTS.length} departments →
+          </Link>
         </div>
       </nav>
     </header>

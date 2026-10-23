@@ -13,7 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "services" / "pricing"))
 
-from public_copy import PAIRS, render  # noqa: E402
+from public_copy import DERIVED, PAIRS, render  # noqa: E402
 
 
 def main():
@@ -21,6 +21,11 @@ def main():
         data = json.loads((ROOT / "services/pricing/data" / src).read_text(encoding="utf-8"))
         out = ROOT / "apps/web/src/data" / dest
         out.write_text(render(src, data), encoding="utf-8")
+        print(f"wrote {out.relative_to(ROOT)}")
+    for dest, (src, build) in DERIVED.items():
+        data = json.loads((ROOT / "services/pricing/data" / src).read_text(encoding="utf-8"))
+        out = ROOT / "apps/web/src/data" / dest
+        out.write_text(json.dumps(build(data), indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
         print(f"wrote {out.relative_to(ROOT)}")
 
 
