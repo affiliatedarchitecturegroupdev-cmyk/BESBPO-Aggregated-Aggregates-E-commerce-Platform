@@ -1,6 +1,6 @@
 # Aggregated Aggregates — Platform Roadmap
 
-*Agreed with the owner on 22 October 2026. This is a planning document: nothing in it is built yet unless it is marked **Done**. Items move to **Done** in this file as they ship, with the PR number.*
+*Agreed with the owner on 22 October 2026; updated 23 October 2026 (range expansion made the top priority, trade-partner programme added). This is a planning document: nothing in it is built yet unless it is marked **Done**. Items move to **Done** in this file as they ship, with the PR number.*
 
 The aim is a store that is the benchmark for South African building-materials e-commerce:
 - the deepest range;
@@ -23,8 +23,9 @@ The aim is a store that is the benchmark for South African building-materials e-
 11. [Phase 8 — Customer experience extras](#phase-8--customer-experience-extras)
 12. [Phase 9 — Delivery and logistics](#phase-9--delivery-and-logistics)
 13. [Phase 10 — Reliability and security](#phase-10--reliability-and-security)
-14. [Rules every phase follows](#rules-every-phase-follows)
-15. [Owner actions and decisions](#owner-actions-and-decisions)
+14. [Commercial — Trade-partner programme](#commercial--trade-partner-programme)
+15. [Rules every phase follows](#rules-every-phase-follows)
+16. [Owner actions and decisions](#owner-actions-and-decisions)
 
 ---
 
@@ -68,6 +69,12 @@ The ~1,580 public pages are made up of:
 | Roofing & timber | 153 |
 | Building supplies | 755 |
 | **Total** | **1,401** |
+
+**Supplier network and coverage (verified 23 October 2026):**
+- **314 supplier records, 300 of them verified and active**, across **all 9 provinces**;
+- delivery coverage of **193 towns and cities** (`apps/web/src/data/coverage-towns.ts`).
+
+These are the figures to use in pitches and public copy ("300+ suppliers", "190+ towns and cities"). Re-check them before each use, since the numbers change as suppliers are added.
 
 **Only 250 of the 1,401 products (18%) can be bought online.** The other 1,151 are quote-only. Closing that gap is the single most valuable thing on this roadmap (Phase 1).
 
@@ -147,11 +154,15 @@ These come first: nothing new reaches customers until they are done.
 | 0.1 | **Fix Render deploys.** Every deploy since 13:27 on 20 Oct 2026 failed within 1–2 seconds, for both the API and the web. That is a Render account or plan problem, not the code. Find the reason in the Render dashboard (Events → failed deploy; Billing / build minutes), clear it, then deploy the **API first** (it applies migrations) and then the web. | Owner (Render dashboard) |
 | 0.2 | **Deploy from `main`.** Today Render deploys the working branch `claude/ecommerce-platform-rivx7o`, so pushes go live before they are approved. Set `branch: main` on each service in `render.yaml` (or in each service's Settings) so that "open the PR and merge" is the only way to release. | Decide, then a small change |
 | 0.3 | **Staging environment.** A second, smaller Render environment that deploys the working branch, so changes can be tested live before merging. | After 0.2 |
-| 0.4 | **Payments live:** Stitch review → live keys and webhook (`docs/payments-stitch.md`); PayFast KYC; Peach KYC and Hosted Checkout V2. After Stitch goes live, confirm which methods its page offers before routing card, Capitec Pay or bank tiles to it. | Owner + gateways |
+| 0.4 | **Payments live:** **Stitch approved the account (23 Oct 2026)**: switch to live keys, register the return page and webhook again, and make a small real payment (`docs/payments-stitch.md`). Then confirm which methods its live page offers before routing card, Capitec Pay or bank tiles to it. PayFast KYC; Peach KYC and Hosted Checkout V2. | Owner + gateways |
 | 0.5 | **Mark test order AA-1792488427457 as a test** so it never counts in reports or Best With. | Owner (Admin → Orders) |
 | 0.6 | **Tax invoices:** set `GROUP_VAT_NUMBER` and `PRICES_INCLUDE_VAT=true` on the API so staff can issue tax invoices. | Owner (Render env) |
 | 0.7 | **Legal review:** the Terms, Privacy Policy and POPIA Notice are still marked "awaiting attorney review" in `content/legal/README.md`. | Owner + attorney |
-| 0.8 | **Merge the pending work:** the LayUp logo and sales quotations. | Owner approval |
+| 0.8 | **Merge the pending work:** the LayUp logo, sales quotations and this roadmap. | Owner approval |
+| 0.9 | **Node.js version (Stitch feedback):** Stitch flagged the Node.js version we run. Update the Node version for the API and web (`package.json` engines, `.nvmrc`/Render `NODE_VERSION`, CI) to the version Stitch asks for, a current LTS, and run the full test suite and build. | When the owner shares Stitch's email |
+| 0.10 | **VAT-neutral labelling until VAT registration:** we may not charge or show VAT before SARS registers the business. One switch, driven by whether `GROUP_VAT_NUMBER` is set: <br>• **Not registered:** neutral labels everywhere ("Total amount payable", "Delivery to site"), and no VAT lines or wording on PDFs (order confirmation, proforma, quotation), emails, the quotation editor and client page, the buy-online page, or the Shipping & Delivery and Handling Fee policies. Today 22 mentions in 13 files. <br>• **Registered:** the VAT-inclusive labels and breakdowns come back automatically. | Before any customer-facing release |
+| 0.11 | **Quotation numbering:** AAQ-000001 was issued manually on 22 Oct 2026 (Solomon Mathobela, structural timber). When sales quotations go live, start `quote_number_seq` at 2 so no number is ever repeated. | With 0.8 |
+| 0.12 | **Network figures in public copy:** the Shipping & Delivery policy still says "roughly 50" partner suppliers. Update it, and any other public copy, to the verified figures (section 1), with a dated policy-versions entry. | With 0.10 |
 
 ---
 
@@ -172,78 +183,228 @@ These come first: nothing new reaches customers until they are done.
 
 ## Phase 2 — Range depth
 
-**Goal:** be the deepest range in the market. Each new department follows the same process:
-1. catalogue research;
-2. price benchmarks or supplier price lists;
-3. category pages, calculators and Complete the Job pairings;
-4. supplier leads;
-5. tests and docs.
+**Goal:** the deepest building-materials range in South Africa, built around what **construction companies actually buy**. That means residential builders, commercial and industrial contractors, civil and road contractors, mining and agricultural buyers, and the specialist trades (plumbing, electrical, finishing, landscaping). It is not just what a hardware store stocks.
 
-### 2.1 New department: Timber, Poles & Decking
+**Scale target:**
+- from 1,401 products today to **~4,000–5,000** across about **35 departments**;
+- in waves, so each wave ships complete: data, prices or quote-only, photos, calculators, Complete the Job pairings and supplier groups.
 
-Builds on the existing structural timber.
+**Owner priority (23 October 2026):** product and department expansion is the **top priority**. It is driven by the trade-partner pitching programme (target: 2,500 construction companies; 34 in KwaZulu-Natal pitched on the first day) and by what those companies' websites, project lists and tenders show they buy.
+
+**Each new department follows the same process:**
+1. Catalogue research: SANS standards, sizes, units and brands.
+2. Prices, in this order of preference:
+   - supplier price lists (Phase 1);
+   - retail benchmarks from at least two South African retailers;
+   - otherwise quote-only.
+3. Category pages, calculators and Complete the Job / Best With pairings.
+4. Supplier leads, then verified partners.
+5. Photos: suppliers' official images (with written permission, recorded in Admin → Image permissions) or openly licensed ones.
+6. Tests and docs.
+
+### 2.0 How we decide what to add next (procurement-driven catalogue)
+
+| # | Signal | How it feeds the catalogue |
+|---|---|---|
+| 2.0.1 | **Pitched companies' needs** | Record which products and services each pitched company uses (project types, typical bills of quantities). Roll these up into a "most requested, not stocked" list. |
+| 2.0.2 | **Uploaded BOQs and RFQs** | BOQ lines and quote requests that don't match a product are logged as **catalogue gaps** in an admin report (Admin → Catalogue gaps), with counts. |
+| 2.0.3 | **"Searched but not found"** | Storefront searches with no results are logged and counted, and feed the same report. |
+| 2.0.4 | **Supplier price lists** | New suppliers' lists (Phase 1) bring products we don't list yet. Staff add them to a category in one step. |
+| 2.0.5 | **Quotations** | Sales quotations for items quoted as "other" become candidates for the catalogue. |
+
+### 2.1 Supplier wins to build on
+
+| Supplier | What it unlocks | Notes |
+|---|---|---|
+| **York Timbers** (agreed October 2026) | **Official timber images and marketing content** for the timber range; product data for structural, industrial and mining timber, poles and plywood | Record their image permission in Admin → Image permissions (owner-confirmed, with the date and scope). Before naming York Timbers in public marketing or pitches, confirm in writing that they agree. Upgrade the existing structural timber pages to their official images and specifications, and use their range to build 2.2. |
+
+### 2.2 Wave A — Seasonal and supplier-ready (start now)
+
+#### 2.2.1 Timber, Poles & Decking (new department)
+
+Builds on the existing structural timber, with York Timbers as the anchor supplier.
 
 | Range | Products |
 |---|---|
-| **Treated gum poles** | CCA- and creosote-treated, diameter 50–250 mm+ × length 1.8–9 m |
-| **Laths, droppers, fencing and vineyard poles** | Various sizes |
-| **Engineered timber** | Laminated (glulam) beams, I-joists, LVL |
+| **Structural timber (deepen)** | All SA Pine S5/S7 sizes (38 × 38 to 50 × 228), H2/H3, sized and rough-sawn, 2.4–6.6 m; brandering; rafters and purlins; bundle quantities (e.g. 38 × 38 bundles of 12) as a sales unit |
+| **Treated gum and pine poles** | CCA- and creosote-treated, diameter 50–250 mm+ × length 1.8–9 m; laths, droppers, fencing and vineyard poles; transmission/utility poles (quote-only) |
+| **Engineered timber** | Laminated (glulam) beams, I-joists, LVL, finger-jointed timber |
+| **Plywood and sheet timber** | Structural plywood, shutterply (Boards), marine ply, OSB, hardboard |
 | **Hardwoods** | Meranti, saligna, balau: frames, decking, joinery |
-| **Decking** | Pine, hardwood and composite boards; joists, clips and decking screws |
-| **Cladding** | Shiplap, tongue-and-groove, battens |
-| **Kits** | Carport and pergola kits (poles + beams + roofing + fixings), tied into Complete the Job and Job Packs |
+| **Decking and cladding** | Pine, hardwood and composite decking; joists, clips and screws; shiplap, tongue-and-groove, battens |
+| **Industrial and mining timber** | Mining props, pack timber, crate and pallet timber, sleepers (quote-only, by tonnage or volume) |
+| **Kits** | Carport, pergola and lapa kits (poles + beams + roofing + fixings), tied into Complete the Job and Job Packs |
 
-**Needs:**
-- size variants (a diameter × length grid);
-- sale per metre for decking and cladding;
-- weights for the delivery premium.
+#### 2.2.2 Garden, Lawn & Landscaping (new department)
 
-### 2.2 New department: Garden, Lawn & Landscaping
-
-Start before the planting season ends: October to March.
+The planting season runs October to March.
 
 | Range | Products |
 |---|---|
-| **Instant lawn** | Kikuyu, LM, buffalo, Cynodon and others, per m² |
-| **Soils and growing media** | Topsoil, compost, potting soil, lawn dressing, bark mulch: bagged and bulk (bulk fits existing tipper delivery) |
-| **Fertilisers and lawn care** | Various |
-| **Irrigation** | Drip kits, sprinklers, hoses, controllers, fittings |
-| **Garden structures** | Planters, raised beds, edging, artificial grass, weed control, shade netting |
-| **Garden tools** | Various |
-| **Plants and trees** | Later, through nursery partners |
+| **Instant lawn** | Kikuyu, LM, buffalo, Cynodon, Shade Over and others, per m² |
+| **Soils and growing media** | Topsoil, compost, potting soil, lawn dressing, bark mulch: bagged and bulk (bulk uses existing tipper delivery) |
+| **Fertilisers and lawn care** | Lawn fertiliser, slow-release, organic, weed-and-feed, lime |
+| **Irrigation** | Drip kits, sprinklers, pop-ups, hoses, controllers, valves, fittings, filters |
+| **Garden structures** | Planters, raised beds, edging, artificial grass, weed membrane, shade netting, trellis |
+| **Garden tools** | Spades, rakes, wheelbarrows, pruners, lawnmowers, brushcutters |
+| **Landscaping hardscape (cross-sell)** | Decorative stone, pebbles, stepping stones, retaining blocks (existing ranges) |
+| **Plants and trees** | Later, through nursery partners (perishable and seasonal) |
 
-**Needs:**
-- sale per m²;
-- a **perishable delivery rule** (lawn is laid the same day, with short lead times and no Sunday delivery);
-- lawn-area and soil-volume calculators;
-- a garden "build stage" in Shop by Stage;
-- seasonal merchandising (Phase 3).
+#### 2.2.3 Outdoor Living (new department)
 
-### 2.3 Deepen existing departments
+| Range | Products |
+|---|---|
+| **Braais and fireplaces** | Built-in and freestanding braais, braai grids, fireplaces, flues, firebricks and fireclay |
+| **Shade and cover** | Shade-net carports, shade sails, pergola and patio roofing (polycarbonate, IBR) |
+| **Pools and water features** | Pool pumps, filters, marbelite and pool finishes, pool tiles, coping, chemicals, covers |
+| **Outdoor finishes** | Paving sealers, outdoor lighting, outdoor tiles, timber oils, wood decking care |
+
+### 2.3 Wave B — The contractor core
+
+These are the ranges construction companies need on every project.
+
+#### 2.3.1 Formwork, Scaffolding & Shoring (new department; Boards & Formwork narrows to boards)
+
+| Range | Products |
+|---|---|
+| **Formwork** | Formwork panels, shutterply, form ties, cones, wing nuts, she-bolts, form oil and release agents, chamfer strips, void formers |
+| **Props and shoring** | Adjustable steel props (sizes), forkheads, shoring frames, trench shoring |
+| **Scaffolding** | Frame scaffolding, tube and coupler, boards, base plates, castors, ladders, scaffold netting; sale or hire (Plant hire) |
+| **Temporary access** | Ladders, stepladders, mobile towers, trestles, hop-ups |
+
+#### 2.3.2 Structural Steel & Metal (deepen Steel)
+
+| Range | Products |
+|---|---|
+| **Sections** | IPE and H-sections, channels (PFC), angles (equal and unequal), T-sections |
+| **Hollow sections** | Square and rectangular tube, round tube (black and galvanised) |
+| **Flat products** | Flat bar, round bar, square bar; sheet and plate (mild steel, galvanised, chequer plate) |
+| **Light steel** | Lipped channel and purlins (exists), Z-purlins, light steel frame studs and tracks |
+| **Mesh and grating** | Expanded metal, welded mesh panels, floor grating, stair treads |
+| **Services** | Cut-to-length, drilling and galvanising (quote), alongside cut & bend |
+
+#### 2.3.3 Precast & Civil Concrete (deepen Drainage / Precast)
+
+| Range | Products |
+|---|---|
+| **Drainage precast** | Culverts (pipe and portal), manhole rings, covers and frames (exists), catchpits, kerb inlets, V-drains |
+| **Structural precast** | Hollow-core slabs, rib-and-block slabs, precast stairs, lintels (exists), palisade and precast wall bases |
+| **Road precast** | Kerbs (exists), road barriers (New Jersey), bollards, cable ducts and draw boxes |
+| **Water precast** | Septic tanks, conservancy tanks, soakaways |
+
+#### 2.3.4 Roads, Civil & Traffic (new department)
+
+| Range | Products |
+|---|---|
+| **Asphalt and bitumen** | Cold-mix asphalt, bitumen emulsions, tack coat, prime coat, crack sealants, pothole repair |
+| **Road marking** | Road-marking paint, thermoplastic, glass beads, cat-eyes and road studs |
+| **Traffic safety** | Cones, barriers, delineators, flashing lights, temporary signage, speed humps |
+| **Earthworks consumables** | Geotextiles and geogrids (exist), gabions and mattresses (exist), erosion-control mats, sandbags |
+| **Survey and setting out** | Pegs, profile boards, string lines, marking paint, levels |
+
+#### 2.3.5 Construction Chemicals & Waterproofing (deepen Waterproofing, Sealants & Paint)
+
+| Range | Products |
+|---|---|
+| **Waterproofing systems** | Torch-on membranes (3–4 mm, mineral finish), bitumen primers, liquid membranes, crystalline waterproofing, cementitious slurries, damp-proofing |
+| **Concrete care** | Curing compounds, bonding agents, repair mortars, self-levelling screeds, floor hardeners, epoxy coatings |
+| **Joints and sealing** | Joint fillers, polysulphide and PU sealants, backer rod, waterstops |
+| **Anchoring and grouting** | Chemical anchors, epoxy grouts, non-shrink grouts (exists) |
+
+#### 2.3.6 Insulation, Fire & Acoustic (deepen Ceilings, Drywall & Insulation)
+
+| Range | Products |
+|---|---|
+| **Thermal** | Ceiling insulation per m² (glasswool, polyester), isoboard, roof insulation blankets, geyser blankets, pipe lagging |
+| **Fire protection** | Fire-rated boards, intumescent sealants and collars, fire doors (quote), fire extinguishers, hose reels, fire signage, smoke detectors |
+| **Acoustic** | Acoustic ceiling tiles, acoustic insulation, resilient channels |
+
+#### 2.3.7 Plumbing, Drainage & Water (deepen Water Storage & Plumbing)
+
+| Range | Products |
+|---|---|
+| **Pipe systems** | HDPE pipe and compression fittings, uPVC pressure pipe (class 6–16), uPVC sewer and soil (exists), copper pipe and fittings, PEX and multilayer |
+| **Valves and meters** | Gate, ball and check valves, pressure-reducing valves, water meters, stopcocks |
+| **Hot water** | Geysers (exists), heat pumps, solar geysers, geyser valves and drip trays |
+| **Pumps and treatment** | Borehole pumps, pressure pumps, booster sets, filtration and softeners |
+| **Sanitation** | Septic and conservancy tanks, grease traps, chemical toilets (hire) |
+
+#### 2.3.8 Electrical, Lighting & Energy (deepen Electrical & Solar)
+
+| Range | Products |
+|---|---|
+| **Cable** | Surfix, flat twin and earth, house wire, armoured SWA cable (by metre and drum), cable glands and lugs |
+| **Distribution** | DB boards (exists), breakers, earth-leakage, prepaid meters, isolators, contactors |
+| **Lighting** | LED downlights, battens, high-bays, floodlights, street and security lighting, emergency lighting |
+| **Earthing and protection** | Earth spikes, lightning protection, surge protection |
+| **Energy** | Solar panels, inverters and battery bundles (deepen), generators, UPS |
+
+### 2.4 Wave C — Finishing, fit-out and site
+
+#### 2.4.1 Finishes and fit-out (deepen existing departments)
 
 | Area | Additions |
 |---|---|
-| **Outdoor living** | Braais and fireplaces; shade-net carports; paving sealers; outdoor lighting |
-| **Security & access** | Gate motors and access control; electric fencing kits; CCTV |
-| **Water & energy** | Borehole and pressure pumps; water treatment and filtration; rainwater harvesting kits; inverter and battery bundles |
-| **Insulation & energy efficiency** | Ceiling insulation per m²; roof insulation sheets; geyser blankets |
+| **Flooring** | Vinyl and LVT, laminate, carpet tiles, epoxy floor systems, skirting (exists), screeds and levellers |
+| **Glass, glazing and aluminium** | Glass panes (float, safety, laminated), shower doors, balustrades, aluminium shopfront and window sections (quote) |
+| **Doors and security** | Garage doors (sectional, roll-up), steel security doors, gates, burglar bars, gate motors and access control, electric fencing kits, CCTV |
+| **Kitchens and built-ins** | Kitchen cabinets and carcasses, worktops, built-in cupboards, sinks and taps (exists) |
+| **Paint and coatings** | Roof paint, industrial and floor coatings, primers, wood finishes, road-marking paint (2.3.4) |
+| **HVAC and ventilation** | Extractor fans, ducting, whirlybirds, split air-conditioners, ventilation grilles |
 
-### 2.4 New smaller ranges
+#### 2.4.2 Site Establishment & Temporary Works (new department)
 
 | Range | Products |
 |---|---|
-| **Prefab & structures** | Wendy houses; steel sheds and carports; containers (sale, or hire through partners); precast boundary walls |
-| **Civil & road** | Cold asphalt and bitumen; road-marking paint; traffic cones and barriers; culverts |
+| **Site accommodation** | Site offices and containers, storage containers, guard huts (sale or hire through partners) |
+| **Welfare** | Chemical toilets (hire), water tanks, handwash stations |
+| **Site security and boundaries** | Temporary fencing, hoarding, shade netting, site signage |
+| **Power and lighting** | Generators, lighting towers, distribution boxes, extension leads |
+| **Site consumables** | Plastic sheeting (DPM), rubble bags, refuse bags, brooms, danger tape |
 
-### 2.5 Platform needs for the new ranges
+#### 2.4.3 Tools & Equipment (deepen Site Tools & PPE)
 
-- **New units of sale:** per m² (lawn, insulation, cladding) and per linear metre (decking, cladding, poles where sold by length).
-- **Variant grids:** extend the timber variant switcher to diameter × length and similar product families.
-- **Perishable and seasonal products:** delivery rules, lead times, and "in season" flags.
+| Range | Products |
+|---|---|
+| **Power tools** | Drills, angle grinders, breakers, circular saws, tile cutters, concrete vibrators |
+| **Site equipment** | Concrete mixers, plate compactors, rammers, wheelbarrows, power floats (sale; hire under Plant hire) |
+| **Measuring and setting out** | Laser levels, dumpy levels, measuring wheels, spirit levels |
+| **PPE and workwear** | Branded workwear, safety boots, hard hats, high-vis, fall protection harnesses |
+
+#### 2.4.4 Hardware & Fasteners (deepen)
+
+Anchors and bolts by grade; chemical anchors; nails by the kg; screws by type and gauge; roofing screws; rivets; ironmongery for commercial doors.
+
+### 2.5 Wave D — Sector ranges
+
+| Range | Products | Buyers |
+|---|---|---|
+| **Prefab & structures** | Wendy houses, steel sheds and carports, containers, precast boundary walls, light-steel-frame building kits (quote) | Residential and commercial builders |
+| **Mining & industrial** | Mining timber (2.2.1), shotcrete materials, ballast (exists), industrial flooring and coatings, steel grating | Mining and industrial contractors |
+| **Agricultural & farm** | Farm fencing and gates (deepen), cattle grids, dam liners, drinking troughs, irrigation (2.2.2), shade netting, poles | Farms and agri-projects |
+| **Plant hire (deepen)** | More plant: excavators, rollers, skid-steers, tipper trucks, mobile cranes, telehandlers, scaffolding and site equipment hire | All contractors |
+
+### 2.6 Platform needs for the new ranges
+
+- **New units of sale:**
+  - per m² (lawn, insulation, cladding, flooring, glass);
+  - per linear metre (decking, cable, pipe, steel sections);
+  - per kg (nails, fasteners);
+  - per drum or roll (cable);
+  - **per bundle** (timber bundles, e.g. 12 × 38 × 38), alongside the per-unit price.
+- **Variant grids:**
+  - extend the timber variant switcher to diameter × length (poles), section × length (steel), class × diameter (pipe), core × size (cable);
+  - one product page per family, not one per size.
+- **Brand and specification attributes:** brand, SANS standard, grade, finish and dimensions as filterable fields, for search (Phase 4).
+- **Perishable, seasonal and hire items:**
+  - delivery rules and "in season" flags;
+  - sale-or-hire on the same product page where both exist.
 - **Supplier groups:** each new category gets a supplier group (`Category.catalogueGroup`) so the Distributed Delivery Premium counts supply points correctly.
 - **Unit weights for heavy goods:**
-  - research manufacturers' published weights (with sources) for the existing bricks, blocks, roof sheets and steel mesh, and for the new heavy ranges;
-  - the premium's per-ton charge then works for them with no code change (`docs/delivery-premium.md`).
+  - manufacturers' published weights (with sources) for bricks, blocks, roof sheets, steel mesh and sections, timber and poles, and the new heavy ranges;
+  - the premium's per-ton charge then works with no code change (`docs/delivery-premium.md`).
+- **Bulk catalogue tooling:** a staff CSV import for new products (name, category, units, specs, supplier code), so a whole supplier range goes in at once rather than by hand.
+- **Catalogue gaps report (2.0):** Admin → Catalogue gaps, fed by BOQs, RFQs, quotations and empty searches.
 
 ---
 
@@ -454,6 +615,21 @@ Deploy the Listmonk service already defined in `render.yaml` (`docs/listmonk`) a
 
 ---
 
+## Commercial — Trade-partner programme
+
+*Running alongside the build. The owner leads; the platform supports it.*
+
+| # | Item | Status |
+|---|---|---|
+| C.1 | **Trade-partner pitching:** proposals to construction companies to sign up as trade partners. Target 2,500 across South Africa; 34 pitched in KwaZulu-Natal on 23 Oct 2026. | Under way (owner) |
+| C.2 | **Pitch blueprint document**, the basis for the pitch deck. To be written once the catalogue has advanced (Phase 2). It covers: <br>• the full product range by department and category, with sample products, including the new departments; <br>• delivery: the network, 190+ towns and cities, 300+ suppliers, strategic delivery partners (Besfleet and external tipper partners), AA 60/120, phased deliveries, proof of delivery, site-specific orders; <br>• services and project partnering: plant hire and site services, architecture & engineering, cut & bend, Group companies (Affiliated Builders, Finishes Construction); <br>• trade terms: tier pricing, trade credit and payment terms, deposits, payment links, quotations; <br>• project financing: purchase-order financing and invoice factoring through financial partners; <br>• platform tools: quotations, BOQ upload, project lists, calculators, documents and compliance certificates. | Deferred until Phase 2 is well advanced |
+| C.3 | **Trade-partner contracts:** supply agreements, credit application and terms. | Owner (with attorney) |
+| C.4 | **Project financing partners:** purchase-order financing and invoice factoring (e.g. Sourcefin), so large orders can be financed. Only name a financier in pitches once an agreement is signed. When agreed, the platform adds: a "finance this order" option on quotations and large orders, the documents financiers need (POs, quotations, delivery notes, POD, invoices), and status tracking. | In discussion (owner) |
+| C.5 | **Supplier partnerships in marketing:** name suppliers such as York Timbers in pitches or public marketing only with their written agreement. Their images go through Admin → Image permissions. | Ongoing |
+| C.6 | **Trade-partner onboarding on the platform:** links Phase 6 (company accounts, contract pricing, site accounts) and trade credit. A pitched company that signs up gets a trade account, its agreed tier and terms, and a named sales contact. | With Phase 6 |
+
+---
+
 ## Rules every phase follows
 
 These are the platform's standing rules:
@@ -486,6 +662,10 @@ These are the platform's standing rules:
 | Attorney review of the legal pages | 0.7 |
 | Approve merging the LayUp logo and sales quotations | 0.8 |
 | Supplier price lists (CSV) as suppliers are onboarded | 1 |
+| Share Stitch's email about the Node.js version | 0.9 |
+| York Timbers: written image permission and consent to be named in marketing | 2.1, C.5 |
+| Record what pitched companies buy (feeds the catalogue gaps list) | 2.0, C.1 |
+| Trade-partner contracts; financing partner agreements | C.3, C.4 |
 | Garden and timber supplier contacts; confirm lawn varieties and pole sizes | 2 |
 | Brand-logo permissions for Shop by Brand | 3 |
 | Railway account and plan (Hobby for anything kept) | 2 (architecture), 4, 5 |
@@ -497,11 +677,17 @@ These are the platform's standing rules:
 
 ## Suggested order
 
-1. **Phase 0:** fix deploys and deploy from `main`; payments live; merge the pending work.
-2. **Phase 1:** supplier price-list import, to start converting the 1,151 quote-only products.
-3. **Phase 2.1–2.2:** Garden, Lawn & Landscaping and Timber, Poles & Decking, while the season is right.
-4. **Phase 3:** merchandising (homepage sections, department pages, Collections).
-5. **Phase 4:** search and product data depth.
-6. **Phase 5:** the Work module, Matomo and BigCapital.
-7. **Phase 6:** trade company accounts and contract pricing; **Phase 7.3:** local SEO pages.
-8. **Phases 7–10:** growth, customer extras, logistics and reliability, alongside the above as capacity allows.
+*Updated 23 October 2026: range expansion is the top priority after Phase 0.*
+
+1. **Phase 0:**
+   - fix deploys and deploy from `main`;
+   - Stitch live and the Node.js update;
+   - VAT-neutral labelling;
+   - merge the pending work.
+2. **Phase 2, Wave A:** Timber, Poles & Decking (with York Timbers' images and data); Garden, Lawn & Landscaping; Outdoor Living.
+3. **Phase 1:** supplier price-list import and the bulk catalogue import (2.6), so new and quote-only products can be priced from supplier lists at scale.
+4. **Phase 2, Wave B:** the contractor core (formwork and scaffolding, structural steel, precast and civil, roads and traffic, construction chemicals, insulation and fire, plumbing, electrical).
+5. **Phase 3:** merchandising, and **Phase 4:** search, filters and product data. These are needed once the range grows past ~2,000 products.
+6. **Phase 2, Waves C and D:** finishing and fit-out, site establishment, tools; sector ranges.
+7. **Commercial C.2:** the pitch blueprint, once Waves A–B are live; **Phase 6:** trade company accounts and contract pricing for signed trade partners.
+8. **Phase 5:** the Work module, Matomo and BigCapital; then **Phases 7–10** as capacity allows.
