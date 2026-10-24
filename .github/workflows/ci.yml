@@ -101,5 +101,7 @@ jobs:
       - name: Type check
         working-directory: apps/web
         run: npx tsc --noEmit -p tsconfig.json
+      - name: Unit tests (search engine)
+        run: pnpm --filter web test
       - name: Production build
         run: pnpm --filter web build

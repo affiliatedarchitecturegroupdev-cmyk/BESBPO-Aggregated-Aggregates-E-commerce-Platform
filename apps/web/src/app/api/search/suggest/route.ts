@@ -3,12 +3,13 @@ import { DEPARTMENTS } from "@/data/departments";
 import { SITE_PAGES } from "@/data/site-pages";
 import { getHiddenSkus } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
-import { PRODUCT_INDEX, searchProducts } from "@/lib/product-index";
+import { searchProducts } from "@/lib/product-index";
 
 export type Suggestion = { kind: "product" | "category" | "department" | "page"; href: string; label: string; detail?: string; sku?: string; categorySlug?: string };
 
 /**
- * Search-as-you-type for the header search bar: up to 8 products (priced ones
+ * Search-as-you-type for the header search bar: up to 8 products from the
+ * catalogue search (synonyms and typo tolerance, lib/search-engine.ts; priced ones
  * show their "from" price), plus matching departments, categories and pages.
  * Hidden products never appear. Cached briefly per query.
  */
@@ -19,7 +20,7 @@ export async function GET(request: Request) {
   const words = q.toLowerCase().split(/\s+/).filter(Boolean);
   const has = (text: string) => words.every((w) => text.toLowerCase().includes(w));
 
-  const products: Suggestion[] = searchProducts(q, PRODUCT_INDEX.filter((p) => !hidden.has(p.sku))).map((p) => ({
+  const products: Suggestion[] = searchProducts(q, hidden).map((p) => ({
     kind: "product",
     sku: p.sku,
     categorySlug: p.categorySlug,

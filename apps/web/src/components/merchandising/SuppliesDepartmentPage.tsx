@@ -62,7 +62,12 @@ export async function SuppliesDepartmentPage({ copy }: { copy: SuppliesDepartmen
       </section>
 
       <div className="mx-auto max-w-6xl px-4 py-12">
-        <h2 className="font-display text-2xl font-bold text-basalt">Shop the department</h2>
+        <div className="flex flex-wrap items-baseline justify-between gap-3">
+          <h2 className="font-display text-2xl font-bold text-basalt">Shop the department</h2>
+          <Link href={`/products?department=${department.slug}`} className="font-body text-sm font-semibold text-seam-blue hover:underline">
+            Browse all {inLine.length} products with filters →
+          </Link>
+        </div>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           {line.map((c) => (
             <Link key={c.slug} href={`/products?category=${c.slug}`} className="rounded-sm border border-basalt/10 bg-white p-5 transition-colors hover:border-seam-blue">
