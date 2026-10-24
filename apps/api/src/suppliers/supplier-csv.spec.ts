@@ -29,7 +29,7 @@ describe("parseSupplierCsv", () => {
       "supplier_id,supplier_name,tier,province,address_location,core_categories,category_codes,category_labels,latitude,longitude",
       'TST-001,Example Quarry North,Tier 1,Gauteng,"Plot 1, Centurion",x,CAT-01,x',
       "TST-002,Example Sand Works,Tier 2,KwaZulu-Natal,Umgeni Basin Depot,x,CAT-03,x,-29.8,31.0",
-      "TST-003,,Tier 3,Atlantis,,x,CAT-99,x",
+      "TST-003,,Tier 3,Atlantis,,x,CAT-999,x",
       'TST-001,Duplicate,Tier 1,Gauteng,"A, B",x,CAT-01,x',
       'TST-004,Swapped,Tier 1,Gauteng,"A, B",x,CAT-01,x,28.1,-25.8',
     ].join("\n");
@@ -37,7 +37,7 @@ describe("parseSupplierCsv", () => {
     expect(rows.map((r) => r.externalId)).toEqual(["TST-001", "TST-002"]);
     expect(rows[1]).toMatchObject({ latitude: -29.8, longitude: 31.0 });
     expect(errors.map((e) => e.line)).toEqual([4, 5, 6]);
-    expect(errors[0].message).toMatch(/supplier_name is empty.*Tier 3.*Atlantis.*address_location is empty.*CAT-99/);
+    expect(errors[0].message).toMatch(/supplier_name is empty.*Tier 3.*Atlantis.*address_location is empty.*CAT-999/);
     expect(errors[1].message).toMatch(/appears more than once/);
     expect(errors[2].message).toMatch(/latitude 28.1 is outside South Africa/);
   });

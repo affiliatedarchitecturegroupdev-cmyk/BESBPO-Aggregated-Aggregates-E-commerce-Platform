@@ -1,6 +1,7 @@
 import { NotificationEvent } from "@aggregates/database";
 import {
   customerCompanyEmail,
+  quotationEmail,
   customerBookingEmail,
   customerEnquiryEmail,
   customerOrderEmail,
@@ -261,11 +262,31 @@ describe("notification templates", () => {
     expect(staffCompanyEmail("CREDIT_APPLIED", company)!.text).toContain("R200,000.00 on 30-day terms");
   });
 
+  const quotation = {
+    quoteNumber: "AAQ-000042",
+    contactName: "Lerato Dube",
+    total: "2396.00",
+    validUntil: new Date("2026-11-04T10:00:00Z"),
+    lines: [{ name: "19mm Crushed Stone", quantity: 6, unitOfSale: "BULK_TON" as const }],
+    url: "https://aaggregates.store/quotation/abc",
+    preparedBy: "Sipho",
+    message: "Delivery Tuesday mornings.",
+  };
+
+  it("emails a sales quotation with the link to accept and pay", () => {
+    const email = quotationEmail(quotation);
+    expect(email.subject).toBe("Quotation AAQ-000042 from Aggregated Aggregates — R2,396.00");
+    expect(email.text).toContain("attached as a PDF");
+    expect(email.text).toContain("https://aaggregates.store/quotation/abc");
+    expect(email.text).toContain("Valid until: 4 November 2026");
+    expect(email.text).toContain("ask for Sipho");
+  });
+
   it("has a message for every channel an event is allowed to use", () => {
     for (const event of Object.values(NotificationEvent)) {
       const channels = EVENT_CHANNELS[event];
       const order = event.startsWith("EXPRESS_") ? expressOrder : event === "INVOICE_ISSUED" ? invoicedOrder : event.startsWith("PAYMENT_") ? paymentOrder : event === "DROP_DISPATCHED" || event === "DELIVERY_SIGNED" ? phasedOrder : baseOrder;
-      const customerEmail = customerOrderEmail(event, order) ?? customerQuoteEmail(event, quote) ?? customerCompanyEmail(event, company) ?? customerEnquiryEmail(event, enquiry) ?? customerBookingEmail(event, booking) ?? customerScheduleEmail(event, schedule);
+      const customerEmail = customerOrderEmail(event, order) ?? customerQuoteEmail(event, quote) ?? customerCompanyEmail(event, company) ?? customerEnquiryEmail(event, enquiry) ?? customerBookingEmail(event, booking) ?? customerScheduleEmail(event, schedule) ?? (event === "QUOTATION_SENT" ? quotationEmail(quotation) : null);
       const customerWhatsApp = customerOrderWhatsApp(event, order) ?? customerQuoteWhatsApp(event, quote);
       const staffEmail = staffOrderEmail(event, order) ?? staffQuoteEmail(event, quote) ?? staffCompanyEmail(event, company) ?? staffEnquiryEmail(event, enquiry) ?? staffBookingEmail(event, booking) ?? staffScheduleEmail(event, schedule);
       expect([event, customerEmail !== null]).toEqual([event, channels.customerEmail]);

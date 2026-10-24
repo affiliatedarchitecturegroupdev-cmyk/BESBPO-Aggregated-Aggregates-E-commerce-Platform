@@ -6,7 +6,7 @@ relative to `apps/web/public/payment-logos/`, and every logo is drawn by
 `components/payment/PaymentLogo.tsx` on a white badge — so dark or black
 official marks read the same on the dark footer as on white cards.
 
-**Status (Oct 2026):** 18 of the 19 methods use official logo files. EFT /
+**Status (Oct 2026):** 19 of the 20 methods use official logo files. EFT /
 Purchase Order uses a house icon, since it has no third-party brand.
 
 "Frame tightened" means only the SVG's viewBox/size was changed to remove
@@ -27,7 +27,9 @@ the table below.
    has no file.
 3. **Lula** (`lula/`) — Lula's brand pack, supplied by Fortune (Oct 2026).
 4. **Float** (`float/`) — Float's official logo, supplied by Fortune (Oct 2026).
-5. **Generic** (`generic/`) — a house-style icon for methods with no
+5. **LayUp** (`layup/`) — LayUp's official logo from its Brandfetch page,
+   supplied by Fortune (Oct 2026).
+6. **Generic** (`generic/`) — a house-style icon for methods with no
    third-party brand (EFT / Purchase Order).
 
 ## Per-method provenance
@@ -52,6 +54,7 @@ the table below.
 | Ozow | `brandfetch/ozow.svg` | Brandfetch | Not in the PayFast pack |
 | Stitch | `brandfetch/stitch.svg` | Brandfetch | The Brandfetch file had a broken root tag (viewBox lost) and an undefined CSS-variable fill; both repaired, artwork unchanged |
 | Lulapay | `lula/lula.png` | Lula pack | The pack has the symbol only (no wordmark). Cropped from the 1098px square to the mark, white made transparent, scaled to 160px tall. Artwork unchanged |
+| LayUp lay-by | `layup/layup.svg` | LayUp (Brandfetch) | Full logo (mark and wordmark). Frame (viewBox) tightened to the artwork — the file was 44% empty margin top and bottom. Replaces the generic lay-by badge. Added Oct 2026 |
 | EFT / Purchase Order | `generic/eft-po.svg` | House icon | **Placeholder** — no third-party brand |
 
 The PayFast pack also has logos for methods the platform doesn't offer

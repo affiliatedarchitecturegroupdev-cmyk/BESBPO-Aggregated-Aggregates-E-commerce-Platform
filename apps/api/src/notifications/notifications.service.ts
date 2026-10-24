@@ -9,6 +9,8 @@ import {
   customerOrderWhatsApp,
   customerQuoteEmail,
   customerQuoteWhatsApp,
+  quotationEmail,
+  type QuotationEmailData,
   customerScheduleEmail,
   EVENT_CHANNELS,
   EVENT_LABEL,
@@ -34,6 +36,7 @@ import {
 import type { SystemEmail } from "./account-emails";
 import { EmailSender, WhatsAppTemplateSender, type EmailAttachment, type SendResult } from "./providers";
 import { orderConfirmationPdf, ORDER_INCLUDE, taxInvoicePdf, type OrderPdf } from "../documents/order-doc-data";
+import { quotationPdf } from "../documents/quotation";
 import { DELIVERY_RANK, parseResendEvent, verifyResendSignature, type DeliveryStatus } from "./resend-webhook";
 
 /** Emails a person asks for themselves: always sent, and logged with their one-time link removed, so they can't be resent. */
@@ -237,6 +240,18 @@ export class NotificationsService implements OnModuleDestroy {
       const staff = setting.staffEmail ? staffQuoteEmail(event, data) : null;
       if (staff) out.push(...(await this.staffRecipients()).map((recipient) => ({ audience: "STAFF" as const, channel: "EMAIL" as const, recipient, email: staff })));
       await this.enqueue(event, out, { quoteId: quote.id, companyId: quote.companyId ?? undefined });
+    });
+  }
+
+  /**
+   * A sales quotation (docs/sales-quotes.md), emailed to the client with the
+   * quotation PDF attached (made at send time, like order documents).
+   */
+  async quotation(quoteId: string, to: string, data: QuotationEmailData) {
+    await this.safely("QUOTATION_SENT", async () => {
+      const setting = await this.setting("QUOTATION_SENT");
+      if (!setting.customerEmail) return;
+      await this.enqueue("QUOTATION_SENT", [{ audience: "CUSTOMER", channel: "EMAIL", recipient: to, email: quotationEmail(data) }], { quoteId });
     });
   }
 
@@ -705,7 +720,14 @@ export class NotificationsService implements OnModuleDestroy {
    * receipt, the tax invoice with INVOICE_ISSUED. If the PDF can't be made,
    * the email still goes — the documents are on the order page too.
    */
-  private async attachments(n: { event: NotificationEvent; audience: NotificationAudience; orderId: string | null }): Promise<EmailAttachment[]> {
+  private async attachments(n: { event: NotificationEvent; audience: NotificationAudience; orderId: string | null; quoteId: string | null }): Promise<EmailAttachment[]> {
+    if (n.event === "QUOTATION_SENT" && n.quoteId) {
+      const file = await quotationPdf(this.prisma, n.quoteId).catch((error: Error) => {
+        this.logger.warn(`Couldn't attach the quotation PDF: ${error.message}`);
+        return null;
+      });
+      return file ? [{ fileName: file.fileName, content: file.pdf, contentType: "application/pdf" }] : [];
+    }
     const kind = n.audience === "CUSTOMER" && n.orderId ? ATTACHED_DOCUMENT[n.event] : undefined;
     if (!kind) return [];
     try {

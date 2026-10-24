@@ -53,6 +53,7 @@ model User {
   company            Company?          @relation(fields: [companyId], references: [id])
   oauthAccounts      OAuthAccount[]
   quotes             Quote[]
+  quotationsCreated  Quote[]           @relation("QuoteCreatedBy")
   orders             Order[]
   deliveryAddresses  DeliveryAddress[]
   hirePartnerId      String?
@@ -481,12 +482,19 @@ enum QuoteStatus {
   EXPIRED
 }
 
+/// Where a quote came from: the storefront's RFQ, or a quotation our sales team made (docs/sales-quotes.md).
+enum QuoteChannel {
+  STOREFRONT
+  SALES
+}
+
 enum QuoteReasonCode {
   VOLUME_CIVIL_BULK
   DELIVERY_OVER_100KM
   BOTH
   DELIVERY_NOT_PRICED // small-load or bagged delivery beyond 30km
   CUSTOMER_REQUEST // priceable at checkout, but the customer asked for a quote
+  SALES_QUOTE // a quotation our sales team made in the admin panel (docs/sales-quotes.md)
   PRICE_ON_REQUEST // packaged goods without a confirmed price, or bulk-format packaged delivery
 }
 
@@ -527,6 +535,13 @@ enum UnitOfSale {
   TIMBER_4_8M
   TIMBER_6_0M
   TIMBER_6_6M
+  // Range expansion (docs/pricing/RANGE_EXPANSION.md): lawn, glass and insulation per m², decking, cable and
+  // sections per linear metre (not METRE, which is roofing's cut-to-length), soils per m³, nails per kg, timber bundles.
+  SQUARE_METRE
+  LINEAR_METRE
+  CUBIC_METRE
+  KG
+  BUNDLE
 }
 
 /// Captures quote-only orders before they become a priced Order — the RFQ
@@ -564,6 +579,19 @@ model Quote {
   order              Order? // the order staff turned this quote into (payable by link, deposit or EFT)
   boqFileName        String? // a bill of quantities the customer uploaded (docs/boq-upload.md)
   boqStorageKey      String?
+  // Sales quotations (docs/sales-quotes.md): made by staff for a client, priced line by line.
+  channel            QuoteChannel     @default(STOREFRONT)
+  quoteNumber        String?          @unique // AAQ-000001, from quote_number_seq when issued
+  createdById        String?
+  createdBy          User?            @relation("QuoteCreatedBy", fields: [createdById], references: [id])
+  pricingTier        CustomerTierName? // the tier list prices were taken at
+  clientVatNumber    String?
+  deliveryFee        Decimal?         @db.Decimal(10, 2)
+  validUntil         DateTime?
+  sentAt             DateTime?
+  acceptTokenHash    String?          @unique // the client's link to view, accept and pay (only the hash is kept)
+
+  @@index([channel, createdAt])
 }
 
 model QuoteLineItem {
@@ -575,6 +603,13 @@ model QuoteLineItem {
   unitOfSale         UnitOfSale
   quantity           Float
   estimatedUnitPrice Decimal?   @db.Decimal(10, 2)
+  // Sales quotations: the quoted price (VAT inclusive) and, for staff only, the supplier cost and markup behind it.
+  unitPrice          Decimal?   @db.Decimal(10, 2)
+  unitCost           Decimal?   @db.Decimal(10, 2)
+  markupPercent      Decimal?   @db.Decimal(6, 2)
+  priceSource        String? // LIST (the platform's price) | SUPPLIER_COST (cost + markup) | MANUAL
+  note               String? // shown on the quotation under the product
+  sortOrder          Int        @default(0)
 }
 
 // ---------------------------------------------------------------------------
@@ -1149,6 +1184,7 @@ enum NotificationEvent {
   QUOTE_PRICED
   QUOTE_ACCEPTED
   QUOTE_DECLINED
+  QUOTATION_SENT // a sales quotation emailed to the client, with its PDF (docs/sales-quotes.md)
   TRADE_APPLICATION_RECEIVED
   TRADE_APPLICATION_APPROVED
   TRADE_APPLICATION_DECLINED

@@ -1,0 +1,6 @@
+-- Range expansion units of sale (docs/pricing/RANGE_EXPANSION.md).
+ALTER TYPE "UnitOfSale" ADD VALUE 'SQUARE_METRE';
+ALTER TYPE "UnitOfSale" ADD VALUE 'LINEAR_METRE';
+ALTER TYPE "UnitOfSale" ADD VALUE 'CUBIC_METRE';
+ALTER TYPE "UnitOfSale" ADD VALUE 'KG';
+ALTER TYPE "UnitOfSale" ADD VALUE 'BUNDLE';

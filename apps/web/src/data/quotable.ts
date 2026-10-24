@@ -3,7 +3,8 @@
  * (ton / m³ / bag), the CAT-10/11 packaged goods (bag, drum, tanker…) and
  * CAT-12 ready-mix (per m³), CAT-15..18 steel (length, tonne, sheet…) and
  * CAT-19..25 and 29 masonry (per 1,000 bricks, per item, per roll), CAT-26..28
- * roofing (sheets in standard lengths, per item, per box, per roll),
+ * roofing (sheets in standard lengths, per item, per box, per roll), building
+ * supplies and the range expansion (per item, m², metre, m³, kg or bundle),
  * with the retail list price of each unit where one exists.
  */
 import { PRODUCTS } from "./catalogue";
@@ -11,7 +12,8 @@ import { PACKAGED_PRODUCTS } from "./packaged";
 import { READY_MIX_PRODUCTS } from "./ready-mix";
 import { MASONRY_PRODUCTS } from "./masonry";
 import { ROOFING_PRODUCTS } from "./roofing";
-import { SUPPLIES_PRODUCTS } from "./supplies";
+import { RANGE_QUOTABLE } from "./range-index";
+import { SUPPLIES_LINE_PRODUCTS } from "./supplies-line";
 import { STEEL_PRODUCTS } from "./steel";
 
 export type QuotableUnit = { code: string; label: string; retailPrice: number | null };
@@ -74,7 +76,7 @@ export const QUOTABLE: Quotable[] = [
     gradingStandard: p.gradingStandard,
     units: p.units.map((u) => ({ code: u.unit, label: u.label, retailPrice: u.prices?.RETAIL ?? null })),
   })),
-  ...[...ROOFING_PRODUCTS, ...SUPPLIES_PRODUCTS].map((p) => ({
+  ...[...ROOFING_PRODUCTS, ...SUPPLIES_LINE_PRODUCTS].map((p) => ({
     sku: p.sku,
     slug: p.slug,
     name: p.name,
@@ -82,6 +84,8 @@ export const QUOTABLE: Quotable[] = [
     gradingStandard: p.gradingStandard,
     units: p.units.map((u) => ({ code: u.unit, label: u.label, retailPrice: u.prices?.RETAIL ?? null })),
   })),
+  // The range expansion (CAT-57 onwards) from its slim index, so client components don't load its descriptions.
+  ...RANGE_QUOTABLE,
 ];
 
 const BY_SKU = new Map(QUOTABLE.map((q) => [q.sku, q]));

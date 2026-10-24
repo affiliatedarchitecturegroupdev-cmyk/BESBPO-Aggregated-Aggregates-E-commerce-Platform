@@ -35,8 +35,9 @@ STEEL_RAW, STEEL = packaged_goods.load_steel()
 MASONRY_RAW, MASONRY = packaged_goods.load_masonry()
 ROOFING_RAW, ROOFING = packaged_goods.load_roofing()
 SUPPLIES_RAW, SUPPLIES = packaged_goods.load_supplies()
+RANGE_RAW, RANGE = packaged_goods.load_range()
 # Steel, masonry, roofing and building supplies are priced like packaged goods (their own families), so one lookup serves them all.
-PACKAGED = {**CEMENT_PACKAGED, **STEEL, **MASONRY, **ROOFING, **SUPPLIES}
+PACKAGED = {**CEMENT_PACKAGED, **STEEL, **MASONRY, **ROOFING, **SUPPLIES, **RANGE}
 READY_MIX_RAW, READY_MIX, PUMPS = ready_mix.load()
 PLANT_SERVICES = rental.load()
 
@@ -47,6 +48,7 @@ PackagedUnitName = Literal[
     "LENGTH_6M", "LENGTH_12M", "TONNE", "SHEET", "ROLL", "COIL", "PACK", "EACH", "THOUSAND",
     "SHEET_3_0M", "SHEET_3_6M", "SHEET_4_2M", "SHEET_4_8M", "SHEET_6_0M", "SHEET_6_6M", "METRE",
     "TIMBER_3_0M", "TIMBER_3_6M", "TIMBER_4_2M", "TIMBER_4_8M", "TIMBER_6_0M", "TIMBER_6_6M",
+    "SQUARE_METRE", "LINEAR_METRE", "CUBIC_METRE", "KG", "BUNDLE",
 ]
 
 
@@ -88,6 +90,12 @@ def list_roofing_products():
 def list_supplies_products():
     """CAT-32..42 building supplies: doors & windows, fencing & security, water & plumbing, ceilings & drywall, tools & PPE, waterproofing & paint."""
     return SUPPLIES_RAW["products"]
+
+
+@app.get("/products/range")
+def list_range_products():
+    """CAT-57 onwards: the range expansion (RANGE_EXPANSION.md) — fifteen new departments and deeper existing ones, quote-only until benchmarked."""
+    return RANGE_RAW["products"]
 
 
 @app.get("/products/ready-mix")

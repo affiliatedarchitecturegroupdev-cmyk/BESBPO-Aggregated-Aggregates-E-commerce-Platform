@@ -112,6 +112,8 @@ class ReadyMixLineResult:
     # Cost per m³ (list / (1 + markup)) — snapshotted on orders for profit reporting; None when unpriced.
     unit_cost: Optional[Decimal] = None
     family: str = READY_MIX
+    # The product's standard markup (fraction) — sales quotes price supplier costs with it (docs/sales-quotes.md).
+    markup: Optional[Decimal] = None
 
     @property
     def is_priced(self) -> bool:
@@ -136,6 +138,7 @@ class ReadyMixLineResult:
             "total": money(self.total),
             "unit_cost": money(self.unit_cost),
             "family": self.family,
+            "markup_percent": None if self.markup is None else float(round(self.markup * 100, 2)),
         }
 
 
@@ -152,7 +155,7 @@ def calculate(product: ReadyMixProduct, quantity_m3: Decimal, tier: str = "RETAI
         )
     unpriced = lambda status: ReadyMixLineResult(  # noqa: E731
         sku=product.sku, name=product.name, quantity=quantity_m3, pricing_status=status, source_note=product.source_note,
-        list_unit_price=None, unit_price=None, discount=Decimal(0), subtotal_before_discount=None, total=None,
+        list_unit_price=None, unit_price=None, discount=Decimal(0), subtotal_before_discount=None, total=None, markup=product.markup,
     )
     if not product.is_priced:
         if not allow_unpriced:
@@ -172,6 +175,7 @@ def calculate(product: ReadyMixProduct, quantity_m3: Decimal, tier: str = "RETAI
         source_note=product.source_note, list_unit_price=list_price, unit_price=priced.unit_price, discount=priced.discount,
         subtotal_before_discount=to_cents(quantity_m3 * list_price), total=to_cents(quantity_m3 * priced.unit_price),
         unit_cost=to_cents(product.list_price_per_m3 / (1 + product.markup)),
+        markup=product.markup,
     )
 
 

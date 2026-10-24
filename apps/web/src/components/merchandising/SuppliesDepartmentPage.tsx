@@ -2,8 +2,12 @@ import Link from "next/link";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { CATEGORIES } from "@/data/categories";
 import { DEPARTMENTS } from "@/data/departments";
-import { SUPPLIES_CATEGORY_CODES, SUPPLIES_PRODUCTS } from "@/data/supplies";
-import { getSuppliesCatalogue } from "@/lib/cms";
+import { ROOFING_CATEGORY_CODES } from "@/data/roofing";
+import { SUPPLIES_CATEGORY_CODES } from "@/data/supplies";
+import { getRoofingCatalogue, getSuppliesCatalogue } from "@/lib/cms";
+
+/** Quote-only products shown per category before "see all" — the larger departments run to hundreds. */
+const QUOTED_PER_CATEGORY = 8;
 
 export type SuppliesDepartmentCopy = {
   departmentSlug: string;
@@ -16,19 +20,25 @@ export type SuppliesDepartmentCopy = {
 };
 
 /**
- * Landing page for a building-supplies department (CAT-32..42,
- * BUILDING_SUPPLIES_CATALOGUE.md): its categories, what's priced and ready
- * to order, and plain advice. Prices only where two retailers back them;
- * everything else is quoted with the supplier.
+ * Landing page for a building-supplies department (CAT-32..56,
+ * BUILDING_SUPPLIES_CATALOGUE.md, and the range expansion from CAT-57,
+ * RANGE_EXPANSION.md): its categories, what's priced and ready to order, a
+ * sample of what's quoted in each category, and plain advice. Prices only
+ * where two retailers back them; everything else is quoted with the supplier.
+ * Timber's roofing-line categories (structural timber, connectors) sit in the
+ * same page.
  */
 export async function SuppliesDepartmentPage({ copy }: { copy: SuppliesDepartmentCopy }) {
   const department = DEPARTMENTS.find((d) => d.slug === copy.departmentSlug)!;
-  const line = CATEGORIES.filter((c) => department.categorySlugs.includes(c.slug) && c.catalogueGroup === "supplies");
-  const visible = await getSuppliesCatalogue();
+  const line = department.categorySlugs.map((slug) => CATEGORIES.find((c) => c.slug === slug)!).filter((c) => c.catalogueGroup === "supplies" || c.catalogueGroup === "roofing");
+  const codes = { ...ROOFING_CATEGORY_CODES, ...SUPPLIES_CATEGORY_CODES };
+  const visible = [...(await getRoofingCatalogue()), ...(await getSuppliesCatalogue())];
   const inLine = visible.filter((p) => department.categorySlugs.includes(p.categorySlug));
   const live = inLine.filter((p) => p.units.some((u) => u.prices !== null));
-  const quoted = inLine.filter((p) => p.units.every((u) => u.prices === null));
-  const count = (slug: string) => SUPPLIES_PRODUCTS.filter((p) => p.categorySlug === slug).length;
+  const quoted = line
+    .map((c) => ({ category: c, products: inLine.filter((p) => p.categorySlug === c.slug && p.units.every((u) => u.prices === null)) }))
+    .filter((g) => g.products.length > 0);
+  const count = (slug: string) => inLine.filter((p) => p.categorySlug === slug).length;
 
   return (
     <div>
@@ -56,7 +66,7 @@ export async function SuppliesDepartmentPage({ copy }: { copy: SuppliesDepartmen
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           {line.map((c) => (
             <Link key={c.slug} href={`/products?category=${c.slug}`} className="rounded-sm border border-basalt/10 bg-white p-5 transition-colors hover:border-seam-blue">
-              <p className="font-mono text-[10px] text-slate">{SUPPLIES_CATEGORY_CODES[c.slug]}</p>
+              <p className="font-mono text-[10px] text-slate">{codes[c.slug]}</p>
               <h3 className="mt-1 font-display text-base font-semibold text-basalt">{c.name}</h3>
               <p className="mt-1 font-body text-sm text-slate">{c.description}</p>
               <p className="mt-3 font-mono text-[11px] text-seam-blue">{count(c.slug)} products →</p>
@@ -93,11 +103,23 @@ export async function SuppliesDepartmentPage({ copy }: { copy: SuppliesDepartmen
               Make, finish and stock vary from merchant to merchant, so these are priced on a quote — we confirm the exact product and price with
               you before you pay.
             </p>
-            <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {quoted.map((p) => (
-                <PackagedProductCard key={p.sku} product={p} />
-              ))}
-            </div>
+            {quoted.map(({ category, products }) => (
+              <div key={category.slug} className="mt-8">
+                <div className="flex items-baseline justify-between gap-4">
+                  <h3 className="font-display text-lg font-semibold text-basalt">{category.name}</h3>
+                  {products.length > QUOTED_PER_CATEGORY && (
+                    <Link href={`/products?category=${category.slug}`} className="shrink-0 font-body text-sm text-seam-blue hover:underline">
+                      See all {products.length} →
+                    </Link>
+                  )}
+                </div>
+                <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                  {products.slice(0, QUOTED_PER_CATEGORY).map((p) => (
+                    <PackagedProductCard key={p.sku} product={p} />
+                  ))}
+                </div>
+              </div>
+            ))}
           </section>
         )}
 

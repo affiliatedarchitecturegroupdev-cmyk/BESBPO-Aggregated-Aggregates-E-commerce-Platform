@@ -418,7 +418,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
       const served = await http().get(`/merchandising/images/${image.body.id}`).expect(200);
       expect(served.headers["content-type"]).toBe("image/png");
       const overlay = await http().get("/merchandising/products").expect(200);
-      expect(overlay.body).toHaveLength(1401); // 51 aggregates + 62 cement and other packaged goods + 7 ready-mix grades + 151 steel + 222 masonry & precast (incl. roof tiles) + 153 roofing (incl. roof timber & connectors) + 755 building supplies (incl. services & fit-out)
+      expect(overlay.body).toHaveLength(4247); // 51 aggregates + 62 cement and other packaged goods + 7 ready-mix grades + 151 steel + 222 masonry & precast (incl. roof tiles) + 153 roofing (incl. roof timber & connectors) + 755 building supplies (incl. services & fit-out) + 2,846 range expansion (RANGE_EXPANSION.md)
       expect(overlay.body.find((p: { sku: string }) => p.sku === sku)).toMatchObject({
         featuredRank: 2,
         images: expect.arrayContaining([expect.objectContaining({ id: image.body.id, altText: "Filter media stockpile" })]),
@@ -3869,6 +3869,97 @@ describe("Aggregated Aggregates API (e2e)", () => {
       await prisma.siteContent.deleteMany({ where: { key: "ddp-policy" } });
       await prisma.order.deleteMany({ where: { id: { in: [order.body.id, localOrder.body.id] } } });
       await prisma.supplierLocation.delete({ where: { id: supplier.id } });
+    });
+  });
+
+  describe("Sales quotations: made in the admin panel, issued, accepted and paid by link", () => {
+    const bearer = (t: string) => ({ Authorization: `Bearer ${t}` });
+    const tokenOf = (url: string) => url.split("/quotation/")[1];
+
+    it("prices any product (list, supplier cost + markup, or typed), issues a numbered PDF quotation, and turns acceptance into an order with a payment link", async () => {
+      const staff = await register("sqstaff");
+      const buyer = await register("sqbuyer");
+      await prisma.user.update({ where: { email: `sqstaff-${run}@example.com` }, data: { role: "STAFF", name: "Sipho Sales" } });
+      const sand = { sku: "AA-SND-01", unit: "m3", quantity: 6 };
+      const cement = { sku: "AA-CEM-525N-001", unit: "BAG_50KG", quantity: 10 }; // no list price
+      const client = { name: "Lerato Dube", companyName: "Dube Builders", email: `lerato-${run}@example.com`, phone: "082 555 0101", address: "12 Site Rd, Pinetown", province: "KwaZulu-Natal" };
+
+      await http().get("/quotations/products?q=sand").set(bearer(buyer)).expect(403);
+      const found = await http().get("/quotations/products?q=AA-CEM-525N").set(bearer(staff)).expect(200);
+      expect(found.body[0]).toMatchObject({ sku: "AA-CEM-525N-001", units: expect.arrayContaining([expect.objectContaining({ unit: "BAG_50KG" })]) });
+
+      // Live pricing: sand has a list price; the unpriced cement shows its standard markup and waits for a cost.
+      const preview = await http().post("/quotations/price").set(bearer(staff)).send({ deliveryDistanceKm: 20, lines: [sand, cement] }).expect(200);
+      expect(preview.body.lines[0]).toMatchObject({ priceSource: "LIST", standardMarkupPercent: 28 });
+      expect(preview.body.lines[1]).toMatchObject({ unitPrice: null, standardMarkupPercent: 8 });
+      expect(preview.body.missingPrices).toEqual([expect.stringMatching(/52,5|52.5|Cement/i)]);
+      expect(preview.body.suggestedDelivery).toMatchObject({ standard: expect.any(Number) });
+
+      await http().post("/quotations").set(bearer(staff)).send({ client, deliveryDistanceKm: 20, lines: [sand, cement] }).expect(400);
+      const created = await http()
+        .post("/quotations")
+        .set(bearer(staff))
+        .send({ client, deliveryDistanceKm: 20, deliveryFee: 450, validDays: 10, notes: "Delivery Tuesday mornings.", lines: [sand, { ...cement, unitCost: 120, note: "Ex Durban yard" }] })
+        .expect(201);
+      const q = created.body;
+      expect(q).toMatchObject({ status: "DRAFT", quoteNumber: null, deliveryFee: 450 });
+      expect(q.lines[1]).toMatchObject({ unitCost: 120, markupPercent: 8, unitPrice: 129.6, priceSource: "SUPPLIER_COST", note: "Ex Durban yard" });
+      expect(q.totals.total).toBeCloseTo(q.lines[0].lineTotal + 1296 + 450, 2);
+      expect(q.totals.margin).toEqual(expect.any(Number));
+
+      // Draft PDF for staff; issuing numbers it, emails it with the PDF and gives a WhatsApp-ready link.
+      const draftPdf = await http().get(`/quotations/${q.id}/pdf`).set(bearer(staff)).expect(200);
+      expect(draftPdf.headers["content-type"]).toBe("application/pdf");
+      const issued = await http().post(`/quotations/${q.id}/issue`).set(bearer(staff)).send({ email: true }).expect(200);
+      expect(issued.body).toMatchObject({ quoteNumber: expect.stringMatching(/^AAQ-\d{6}$/), emailedTo: client.email, whatsappUrl: expect.stringContaining("wa.me/27825550101") });
+      const sent = await prisma.notification.findFirstOrThrow({ where: { quoteId: q.id, event: "QUOTATION_SENT" } });
+      expect(sent).toMatchObject({ recipient: client.email, audience: "CUSTOMER" });
+      expect(sent.body).toContain(issued.body.url);
+
+      // The client's view: prices and totals, never costs or margins.
+      const token = tokenOf(issued.body.url);
+      const view = await http().get(`/quotations/view/${token}`).expect(200);
+      expect(view.body).toMatchObject({ quoteNumber: issued.body.quoteNumber, status: "QUOTED", total: q.totals.total, preparedBy: "Sipho Sales" });
+      expect(JSON.stringify(view.body)).not.toMatch(/unitCost|markup|margin|email|phone/i);
+      expect((await http().get(`/quotations/view/${token}/pdf`).expect(200)).headers["content-type"]).toBe("application/pdf");
+      await http().get("/quotations/view/not-a-real-token-at-all-xyz").expect(404);
+
+      // Accept: one order at the quoted prices, and a payment link; accepting again just gives a new link.
+      const accepted = await http().post(`/quotations/view/${token}/accept`).expect(200);
+      expect(accepted.body.payUrl).toMatch(/\/pay\//);
+      const order = await prisma.order.findFirstOrThrow({ where: { quoteId: q.id }, include: { lineItems: true } });
+      expect(Number(order.total)).toBeCloseTo(q.totals.total, 2);
+      expect(order.lineItems.find((l) => Number(l.unitPrice) === 129.6)).toMatchObject({ unitCost: expect.anything() });
+      const again = await http().post(`/quotations/view/${token}/accept`).expect(200);
+      expect(again.body.payUrl).not.toBe(accepted.body.payUrl);
+      expect(await prisma.order.count({ where: { quoteId: q.id } })).toBe(1);
+      expect((await http().get(`/quotations/view/${token}`).expect(200)).body).toMatchObject({ status: "ACCEPTED", order: { paid: false } });
+      await http().put(`/quotations/${q.id}`).set(bearer(staff)).send({ client, deliveryDistanceKm: 20, deliveryFee: 450, lines: [sand] }).expect(409);
+
+      // Duplicate to re-quote; editing an issued quotation sends it back to draft and kills its link.
+      const copy = await http().post(`/quotations/${q.id}/duplicate`).set(bearer(staff)).expect(201);
+      expect(copy.body).toMatchObject({ status: "DRAFT", quoteNumber: null });
+      const copyLink = await http().post(`/quotations/${copy.body.id}/issue`).set(bearer(staff)).send({}).expect(200);
+      await http().put(`/quotations/${copy.body.id}`).set(bearer(staff)).send({ client, deliveryFee: 0, lines: [{ ...sand, unitPrice: 380 }] }).expect(200);
+      await http().get(`/quotations/view/${tokenOf(copyLink.body.url)}`).expect(404);
+      const reissued = await http().post(`/quotations/${copy.body.id}/issue`).set(bearer(staff)).send({}).expect(200);
+      expect(reissued.body.quoteNumber).toBe(copyLink.body.quoteNumber); // keeps its number
+      await http().post(`/quotations/view/${tokenOf(reissued.body.url)}/decline`).expect(200);
+      await http().post(`/quotations/view/${tokenOf(reissued.body.url)}/accept`).expect(400);
+
+      // Expiry: an open quotation past its date can't be accepted.
+      const late = await http().post(`/quotations/${q.id}/duplicate`).set(bearer(staff)).expect(201);
+      const lateLink = await http().post(`/quotations/${late.body.id}/issue`).set(bearer(staff)).send({}).expect(200);
+      await prisma.quote.update({ where: { id: late.body.id }, data: { validUntil: new Date(Date.now() - 60_000) } });
+      expect((await http().get(`/quotations/view/${tokenOf(lateLink.body.url)}`).expect(200)).body.status).toBe("EXPIRED");
+      await http().post(`/quotations/view/${tokenOf(lateLink.body.url)}/accept`).expect(400);
+
+      const list = await http().get("/quotations").set(bearer(staff)).expect(200);
+      expect(list.body.map((r: { id: string }) => r.id)).toEqual(expect.arrayContaining([q.id, copy.body.id, late.body.id]));
+      await http().get("/quotations").set(bearer(buyer)).expect(403);
+
+      await prisma.order.deleteMany({ where: { quoteId: q.id } });
+      await prisma.quote.deleteMany({ where: { id: { in: [q.id, copy.body.id, late.body.id] } } });
     });
   });
 });
