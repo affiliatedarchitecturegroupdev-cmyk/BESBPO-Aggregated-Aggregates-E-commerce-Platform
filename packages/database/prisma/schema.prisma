@@ -2057,3 +2057,30 @@ model BestWithRule {
 
   @@id([productId, pairedProductId])
 }
+
+/// A curated product collection staff build in Admin → Collections (ROADMAP 3.4, docs/merchandising.md):
+/// hand-picked SKUs, a rule over the catalogue, or both, shown on the homepage, department pages or its own
+/// page (/collections/<slug>) between optional dates — a campaign without a code change.
+model Collection {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  title       String
+  /// One line under the title.
+  subtitle    String?
+  /// Longer copy on the collection's own page.
+  description String?
+  /// Hand-picked products, shown first and in this order.
+  skus        String[]
+  /// Optional rule over the catalogue: { query?, department?, category?, availability?: "online" | "quote", maxPrice? }.
+  rule        Json?
+  /// Where it shows: "HOMEPAGE" and/or "DEPARTMENT:<department slug>". Every active collection has its own page.
+  placements  String[]
+  startsAt    DateTime?
+  endsAt      DateTime?
+  isActive    Boolean   @default(true)
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([isActive])
+}

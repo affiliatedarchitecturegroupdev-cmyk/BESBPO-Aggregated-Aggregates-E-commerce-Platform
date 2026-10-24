@@ -137,7 +137,9 @@ const CATALOGUE_INDEX = createSearchIndex<CatalogueDoc>(
   PRODUCT_INDEX.map((p) => ({
     ...p,
     id: p.sku,
-    text: [p.sku, p.categoryName, p.departmentName, p.brand, p.keywords].filter(Boolean).join(" "),
+    // Department names are left out: "Timber, Poles & Decking" would make every timber product match "decking".
+    // Departments are a filter instead; category names stay, as they name what the product is.
+    text: [p.sku, p.categoryName, p.brand, p.keywords].filter(Boolean).join(" "),
     facets: {
       department: p.departmentName,
       category: p.categoryName,

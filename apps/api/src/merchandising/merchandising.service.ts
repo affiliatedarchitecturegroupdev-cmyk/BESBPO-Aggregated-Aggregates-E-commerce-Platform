@@ -38,6 +38,7 @@ export class MerchandisingService {
         isActive: true,
         description: true,
         featuredRank: true,
+        createdAt: true,
         images: { where: { licence: "CLEARED" }, orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }], select: PUBLIC_IMAGE_FIELDS },
       },
     });

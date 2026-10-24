@@ -418,6 +418,13 @@ Anchors and bolts by grade; chemical anchors; nails by the kg; screws by type an
 
 **Goal:** product-led pages that sell. The current homepage is mostly tools and services, a carry-over from the aggregates-only version.
 
+**Status (24 October 2026): built** (`docs/merchandising.md`):
+- **Homepage:** sections from real data, i.e. collections, best sellers, buy online today, in season, new in store, trending by province, shop by brand, delivered in 120 minutes, and under R500.
+- **Department pages:** collections, top sellers, Complete the Job, calculators and an FAQ.
+- **Admin → Collections:** built.
+- **Listing:** 3.3 was done in the Phase 4 release.
+- **Still open:** deals & price drops (they need real promotions, Phase 7) and hero images (they need permission-cleared photos).
+
 ### 3.1 New homepage sections
 
 All driven by real data:

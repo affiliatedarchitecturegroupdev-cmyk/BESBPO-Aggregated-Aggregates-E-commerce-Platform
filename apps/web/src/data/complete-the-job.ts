@@ -386,6 +386,11 @@ export function completeTheJob(sku: string, categorySlug: string, hiddenSkus: st
 
 export const JOB_KEYS = Object.keys(JOBS) as JobKey[];
 
+/** The job a category belongs to, for department pages' "Complete the job" ideas. */
+export function jobKeyForCategory(categorySlug: string): JobKey | null {
+  return BY_CATEGORY[categorySlug] ?? null;
+}
+
 /** One job's companions resolved against the catalogue, leaving out the given SKUs — for the shopping assistant's "what do I need for…". */
 export function resolveJob(key: JobKey, excludeSkus: string[] = []): CompleteTheJobView | null {
   const job: Job = JOBS[key];

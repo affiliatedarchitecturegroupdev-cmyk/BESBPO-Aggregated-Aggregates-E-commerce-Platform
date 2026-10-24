@@ -4,7 +4,9 @@ import { CATEGORIES } from "@/data/categories";
 import { DEPARTMENTS } from "@/data/departments";
 import { ROOFING_CATEGORY_CODES } from "@/data/roofing";
 import { SUPPLIES_CATEGORY_CODES } from "@/data/supplies";
-import { getRoofingCatalogue, getSuppliesCatalogue } from "@/lib/cms";
+import { DepartmentCollections, DepartmentGuide, DepartmentTopSellers } from "@/components/merchandising/DepartmentExtras";
+import { CompareTray } from "@/components/product/CompareTray";
+import { getHiddenSkus, getRoofingCatalogue, getSuppliesCatalogue } from "@/lib/cms";
 
 /** Quote-only products shown per category before "see all" — the larger departments run to hundreds. */
 const QUOTED_PER_CATEGORY = 8;
@@ -33,6 +35,7 @@ export async function SuppliesDepartmentPage({ copy }: { copy: SuppliesDepartmen
   const line = department.categorySlugs.map((slug) => CATEGORIES.find((c) => c.slug === slug)!).filter((c) => c.catalogueGroup === "supplies" || c.catalogueGroup === "roofing");
   const codes = { ...ROOFING_CATEGORY_CODES, ...SUPPLIES_CATEGORY_CODES };
   const visible = [...(await getRoofingCatalogue()), ...(await getSuppliesCatalogue())];
+  const hiddenSkus = await getHiddenSkus();
   const inLine = visible.filter((p) => department.categorySlugs.includes(p.categorySlug));
   const live = inLine.filter((p) => p.units.some((u) => u.prices !== null));
   const quoted = line
@@ -90,6 +93,9 @@ export async function SuppliesDepartmentPage({ copy }: { copy: SuppliesDepartmen
           </p>
         )}
 
+        <DepartmentCollections department={department} hiddenSkus={hiddenSkus} />
+        <DepartmentTopSellers department={department} hiddenSkus={hiddenSkus} />
+
         {live.length > 0 && (
           <section className="mt-14">
             <h2 className="font-display text-2xl font-bold text-basalt">Priced and ready to order</h2>
@@ -128,6 +134,8 @@ export async function SuppliesDepartmentPage({ copy }: { copy: SuppliesDepartmen
           </section>
         )}
 
+        <DepartmentGuide department={department} hiddenSkus={hiddenSkus} productCount={inLine.length} pricedCount={live.length} />
+
         <section className="mt-14 grid gap-6 md:grid-cols-3">
           {copy.tips.map((b) => (
             <div key={b.title} className="rounded-sm border border-basalt/10 bg-white p-5">
@@ -159,6 +167,7 @@ export async function SuppliesDepartmentPage({ copy }: { copy: SuppliesDepartmen
           </div>
         </section>
       </div>
+      <CompareTray />
     </div>
   );
 }
