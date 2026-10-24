@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { CompareToggle } from "@/components/product/CompareToggle";
+import { CompareTray } from "@/components/product/CompareTray";
 import { LeadTimeNote } from "@/components/delivery/LeadTimeNote";
 import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
 import { ProductReviews } from "@/components/reviews/ProductReviews";
@@ -194,6 +196,7 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
             {product.units.includes("bag") ? <WhatsAppOrderButton productName={`${product.name} (${product.sku})`} /> : <span />}
             <div className="flex flex-wrap items-center gap-3">
               <SaveToProject sku={product.sku} />
+              <CompareToggle sku={product.sku} />
               <SocialShareButtons productName={product.name} productUrl={`${SITE_URL}/products/${product.slug}`} />
             </div>
           </div>
@@ -223,6 +226,7 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
         </section>
       )}
       <RecentlyViewedRow current={product.sku} />
+      <CompareTray />
     </div>
   );
 }

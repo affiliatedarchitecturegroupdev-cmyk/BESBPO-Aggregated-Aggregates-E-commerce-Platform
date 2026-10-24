@@ -7,7 +7,7 @@ import { getPublishedPosts } from "@/lib/blog";
 import { DEPARTMENTS } from "@/data/departments";
 import { getHiddenSkus } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
-import { PRODUCT_INDEX, searchProducts } from "@/lib/product-index";
+import { searchCatalogue } from "@/lib/product-index";
 import { SITE_PAGES } from "@/data/site-pages";
 
 export const metadata: Metadata = { title: "Search", robots: { index: false } };
@@ -21,13 +21,15 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
   const words = raw.toLowerCase().split(/\s+/).filter(Boolean);
   const [hidden, posts] = words.length ? await Promise.all([getHiddenSkus(), getPublishedPosts()]) : [[], []];
   const hiddenSet = new Set(hidden);
-  const products = words.length ? searchProducts(raw, PRODUCT_INDEX.filter((p) => !hiddenSet.has(p.sku)), 60) : [];
+  // Products: the top 12 here, the rest (with filters) on the product listing.
+  const found = words.length ? searchCatalogue({ query: raw, exclude: hiddenSet, pageSize: 12 }) : null;
+  const products = found?.hits ?? [];
   const departments = words.length ? DEPARTMENTS.filter((d) => matches(`${d.name} ${d.blurb}`, words)) : [];
   const categories = words.length ? CATEGORIES.filter((c) => matches(`${c.name} ${c.description}`, words)) : [];
   const industries = words.length ? INDUSTRIES.filter((i) => matches(`${i.name} ${i.description}`, words)) : [];
   const articles = posts.filter((p) => matches(`${p.title} ${p.excerpt ?? ""} ${p.bodyMarkdown}`, words));
   const pages = words.length ? SITE_PAGES.filter((p) => matches(`${p.title} ${p.keywords}`, words)) : [];
-  const total = products.length + departments.length + categories.length + industries.length + articles.length + pages.length;
+  const total = (found?.total ?? 0) + departments.length + categories.length + industries.length + articles.length + pages.length;
 
   const section = (title: string, items: { href: string; label: string; detail?: string; thumb?: { sku: string; categorySlug: string } }[]) =>
     items.length > 0 && (
@@ -59,6 +61,11 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
         <button type="submit" className="rounded-sm bg-seam-blue px-5 py-2 font-body text-sm font-semibold text-limestone hover:bg-basalt">Search</button>
       </form>
       {raw && <p className="mt-6 font-body text-sm text-slate">{total} result{total === 1 ? "" : "s"}</p>}
+      {found && found.corrections.length > 0 && (
+        <p className="mt-1 font-body text-sm text-slate">
+          Showing results for <span className="font-semibold text-basalt">{found.corrections.map((c) => c.to).join(", ")}</span> (you typed {found.corrections.map((c) => c.from).join(", ")}).
+        </p>
+      )}
       {section("Departments", departments.map((d) => ({ href: d.href, label: d.name, detail: d.blurb })))}
       {section(
         "Products",
@@ -68,6 +75,11 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
           thumb: { sku: p.sku, categorySlug: p.categorySlug },
           detail: `${p.categoryName} · ${p.fromPrice !== null ? `from ${formatZAR(p.fromPrice)} / ${p.fromUnit} — buy online` : "price on quote"}`,
         })),
+      )}
+      {found && found.total > products.length && (
+        <Link href={`/products?q=${encodeURIComponent(raw)}`} className="mt-3 inline-block font-body text-sm font-semibold text-seam-blue hover:underline">
+          See all {found.total} products, with filters →
+        </Link>
       )}
       {section("Categories", categories.map((c) => ({ href: `/products?category=${c.slug}`, label: c.name, detail: c.description })))}
       {section("Industries", industries.map((i) => ({ href: `/products?industry=${i.slug}`, label: i.name, detail: i.description })))}

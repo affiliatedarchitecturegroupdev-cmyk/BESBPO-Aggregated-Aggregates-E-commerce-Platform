@@ -1,300 +1,198 @@
-import { RecentlyViewedRow } from "@/components/merchandising/RecentlyViewedRow";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ListingCard } from "@/components/product/ListingCard";
 import { PromoSlot } from "@/components/merchandising/PromoSlot";
-import { PackagedProductCard } from "@/components/product/PackagedProductCard";
-import { ProductCard } from "@/components/product/ProductCard";
-import { GRADING_STANDARDS, type Product } from "@/data/catalogue";
-import { getCatalogue, getPackagedCatalogue, getReadyMixCatalogue, getSteelCatalogue, getMasonryCatalogue, getRoofingCatalogue, getSuppliesCatalogue, type MerchandisedMasonryProduct, type MerchandisedRoofingProduct, type MerchandisedPackagedProduct, type MerchandisedProduct, type MerchandisedReadyMixProduct, type MerchandisedSteelProduct } from "@/lib/cms";
-import { B2B_CATEGORIES, CATEGORIES, CORE_CATEGORIES, MASONRY_CATEGORIES, READY_MIX_CATEGORIES, ROOFING_CATEGORIES, STEEL_CATEGORIES, SUPPLIES_CATEGORIES } from "@/data/categories";
-import { ROOF_TILE_CATEGORIES } from "@/data/masonry";
-import { PACKAGED_PRODUCTS } from "@/data/packaged";
+import { RecentlyViewedRow } from "@/components/merchandising/RecentlyViewedRow";
+import { CompareTray } from "@/components/product/CompareTray";
+import { B2B_CATEGORIES, CATEGORIES, CORE_CATEGORIES, MASONRY_CATEGORIES, ROOFING_CATEGORIES, STEEL_CATEGORIES, SUPPLIES_CATEGORIES } from "@/data/categories";
+import { DEPARTMENTS } from "@/data/departments";
 import { INDUSTRIES } from "@/data/industries";
+import { ROOF_TILE_CATEGORIES } from "@/data/masonry";
+import { getHiddenSkus } from "@/lib/cms";
+import { FACETS, PRODUCT_INDEX, searchCatalogue, type FacetKey } from "@/lib/product-index";
 import { getActivePromotions } from "@/lib/promotions";
+import { SORT_LABELS, type SortKey } from "@/lib/search-engine";
 
 export const metadata: Metadata = {
   title: "Products",
   description:
-    "Sub-base, crushed stone, sand, crusher run, ballast, drainage, decorative, lime and recycled aggregates — plus bulk cement, binders, grout, admixtures, ready-mix, rebar, mesh, structural steel, bricks, blocks, lintels and DPC.",
+    "Every product in one place — aggregates, cement, ready-mix, steel, bricks, roofing, timber, plumbing, electrical, garden, tools and more — with search, filters and buy-online prices.",
 };
 
 type SearchParams = {
   q?: string;
-  category?: string;
-  grading?: string;
-  sale?: string;
   sort?: string;
+  page?: string;
+  department?: string;
+  category?: string;
+  availability?: string;
+  sold?: string;
+  brand?: string;
+  standard?: string;
+  /** Scopes: an industry's categories, or a catalogue line (kept for older links). */
   industry?: string;
   group?: string;
-  /** Cement only: taxonomy family and brand (CEMENT_MASTER_CATALOGUE.md). */
-  family?: string;
-  brand?: string;
+  /** Older links: grading standard and bulk/bagged. */
+  grading?: string;
+  sale?: string;
 };
 
-const SORTS: Record<string, { label: string; compare?: (a: Product, b: Product) => number }> = {
-  relevance: { label: "Relevance" },
-  "price-asc": { label: "Price: low to high", compare: (a, b) => perTon(a) - perTon(b) },
-  "price-desc": { label: "Price: high to low", compare: (a, b) => perTon(b) - perTon(a) },
-  name: { label: "Name A–Z", compare: (a, b) => a.name.localeCompare(b.name) },
+const PAGE_SIZE = 48;
+
+const GROUPS: Record<string, { label: string; categories: string[] }> = {
+  core: { label: "Aggregates & Sand", categories: CORE_CATEGORIES.map((c) => c.slug) },
+  "b2b-bulk": { label: "Bulk & Infrastructure", categories: B2B_CATEGORIES.map((c) => c.slug) },
+  "ready-mix": { label: "Ready-Mix Concrete", categories: ["ready-mix-concrete"] },
+  steel: { label: "Reinforcing & Structural Steel", categories: STEEL_CATEGORIES.map((c) => c.slug) },
+  masonry: { label: "Masonry, Paving & Retaining", categories: MASONRY_CATEGORIES.map((c) => c.slug) },
+  roofing: { label: "Roofing", categories: [...ROOFING_CATEGORIES.map((c) => c.slug), ...ROOF_TILE_CATEGORIES] },
+  supplies: { label: "Building Supplies", categories: SUPPLIES_CATEGORIES.map((c) => c.slug) },
 };
 
-/** Comparable retail price per ton, including for bag-only products. */
-function perTon(product: Product): number {
-  const retail = product.prices.RETAIL;
-  if (retail.ton !== undefined) return retail.ton;
-  if (retail.m3 !== undefined) return (retail.m3 * 1000) / product.bulkDensityKgPerM3;
-  return ((retail.bag ?? 0) * 1000) / (product.bagWeightKg ?? 1);
+/** URL value → the facet value the engine filters on (names for department and category, labels for the rest). */
+function facetFilters(params: SearchParams): Record<FacetKey, string | undefined> {
+  const department = DEPARTMENTS.find((d) => d.slug === params.department);
+  const category = CATEGORIES.find((c) => c.slug === params.category);
+  const sold = params.sold ?? (params.sale === "bag" ? "Bags" : params.sale === "bulk" ? "Bulk (ton / m³)" : undefined);
+  return {
+    department: department?.name,
+    category: category?.name,
+    availability: params.availability === "online" ? "Buy online" : params.availability === "quote" ? "Price on quote" : undefined,
+    soldBy: sold,
+    brand: params.brand,
+    standard: params.standard ?? params.grading,
+  };
 }
 
-/** Every word of the query must appear in the name, SKU, category, standard or description. */
-function matchesSearch(product: { name: string; sku: string; categorySlug: string; gradingStandard: string | null; description: string | null }, query: string): boolean {
-  const category = CATEGORIES.find((c) => c.slug === product.categorySlug)?.name ?? "";
-  const haystack = [product.name, product.sku, category, product.gradingStandard, product.description].join(" ").toLowerCase();
-  return query
-    .toLowerCase()
-    .split(/\s+/)
-    .filter(Boolean)
-    .every((word) => haystack.includes(word));
+/** The URL parameter and value for a facet value (the reverse of facetFilters). */
+function facetParam(key: FacetKey, value: string): [keyof SearchParams, string] {
+  if (key === "department") return ["department", DEPARTMENTS.find((d) => d.name === value)?.slug ?? value];
+  if (key === "category") return ["category", CATEGORIES.find((c) => c.name === value)?.slug ?? value];
+  if (key === "availability") return ["availability", value === "Buy online" ? "online" : "quote"];
+  if (key === "soldBy") return ["sold", value];
+  return [key, value];
 }
 
-function inScope(categorySlug: string, { category, industry, group }: SearchParams): boolean {
-  if (category) return categorySlug === category;
-  const industryMatch = INDUSTRIES.find((i) => i.slug === industry);
-  if (industryMatch) return industryMatch.relevantCategorySlugs.includes(categorySlug);
-  if (group === "core") return CORE_CATEGORIES.some((c) => c.slug === categorySlug);
-  if (group === "b2b-bulk") return B2B_CATEGORIES.some((c) => c.slug === categorySlug);
-  if (group === "ready-mix") return categorySlug === "ready-mix-concrete";
-  if (group === "steel") return STEEL_CATEGORIES.some((c) => c.slug === categorySlug);
-  if (group === "masonry") return MASONRY_CATEGORIES.some((c) => c.slug === categorySlug);
-  if (group === "roofing") return ROOFING_CATEGORIES.some((c) => c.slug === categorySlug) || ROOF_TILE_CATEGORIES.includes(categorySlug);
-  if (group === "supplies") return SUPPLIES_CATEGORIES.some((c) => c.slug === categorySlug);
-  return true;
-}
+const FACET_PARAM: Record<FacetKey, keyof SearchParams> = { department: "department", category: "category", availability: "availability", soldBy: "sold", brand: "brand", standard: "standard" };
 
-function filterProducts(catalogue: MerchandisedProduct[], params: SearchParams): MerchandisedProduct[] {
-  const { q, grading, sale, sort } = params;
-  const filtered = catalogue.filter(
-    (p) =>
-      (!q || matchesSearch(p, q)) &&
-      inScope(p.categorySlug, params) &&
-      (!grading || p.gradingStandard === grading) &&
-      (!sale || (sale === "bag" ? p.units.includes("bag") : p.units.some((u) => u !== "bag"))),
-  );
-  const compare = SORTS[sort ?? "relevance"]?.compare;
-  return compare ? [...filtered].sort(compare) : filtered;
-}
-
-const CEMENT = PACKAGED_PRODUCTS.filter((p) => p.categorySlug === "cement-hydraulic-binders");
-const CEMENT_FAMILIES = [...new Set(CEMENT.flatMap((p) => (p.cementFamily ? [p.cementFamily] : [])))];
-// Named brands only: generic bulk supply is "brand confirmed at quote stage".
-const CEMENT_BRANDS = [...new Set(CEMENT.flatMap((p) => (p.brand && !p.brand.startsWith("Generic") ? [p.brand] : [])))].sort();
-
-const selectClass = "mt-1 w-full rounded-sm border border-basalt/20 bg-white px-2 py-1.5 font-body text-sm";
-
-function filterPackaged(catalogue: MerchandisedPackagedProduct[], params: SearchParams): MerchandisedPackagedProduct[] {
-  // Packaged goods have no grading standard filter value or ton/m³/bag units.
-  if (params.grading || params.sale === "bulk") return [];
-  const filtered = catalogue.filter(
-    (p) =>
-      (!params.q || matchesSearch(p, params.q)) &&
-      inScope(p.categorySlug, params) &&
-      (!params.family || p.cementFamily === params.family) &&
-      (!params.brand || p.brand === params.brand),
-  );
-  return params.sort === "name" ? [...filtered].sort((a, b) => a.name.localeCompare(b.name)) : filtered;
-}
-
-function filterReadyMix(catalogue: MerchandisedReadyMixProduct[], params: SearchParams): MerchandisedReadyMixProduct[] {
-  if (params.grading || params.sale || params.family || params.brand) return [];
-  const filtered = catalogue.filter((p) => (!params.q || matchesSearch(p, params.q)) && inScope(p.categorySlug, params));
-  return params.sort === "name" ? [...filtered].sort((a, b) => a.name.localeCompare(b.name)) : filtered;
-}
-
-function filterSteel(catalogue: MerchandisedSteelProduct[], params: SearchParams): MerchandisedSteelProduct[] {
-  if (params.grading || params.sale || params.family || params.brand) return [];
-  const filtered = catalogue.filter((p) => (!params.q || matchesSearch({ ...p, description: p.description ?? p.summary }, params.q)) && inScope(p.categorySlug, params));
-  return params.sort === "name" ? [...filtered].sort((a, b) => a.name.localeCompare(b.name)) : filtered;
-}
-
-function filterMasonry(catalogue: MerchandisedMasonryProduct[], params: SearchParams): MerchandisedMasonryProduct[] {
-  if (params.grading || params.sale || params.family || params.brand) return [];
-  const filtered = catalogue.filter((p) => (!params.q || matchesSearch({ ...p, description: p.description ?? p.summary }, params.q)) && inScope(p.categorySlug, params));
-  return params.sort === "name" ? [...filtered].sort((a, b) => a.name.localeCompare(b.name)) : filtered;
-}
-
-function filterRoofing(catalogue: MerchandisedRoofingProduct[], params: SearchParams): MerchandisedRoofingProduct[] {
-  if (params.grading || params.sale || params.family || params.brand) return [];
-  const filtered = catalogue.filter((p) => (!params.q || matchesSearch({ ...p, description: p.description ?? p.summary }, params.q)) && inScope(p.categorySlug, params));
-  return params.sort === "name" ? [...filtered].sort((a, b) => a.name.localeCompare(b.name)) : filtered;
-}
-
+/**
+ * The product listing (ROADMAP 3.3 and 4.1): the whole catalogue through the catalogue search (synonyms, typo
+ * tolerance), with filters that show their counts, sorting, 48 products a page, Buy online and Quote badges,
+ * quick add-to-cart and compare. Older links (group, grading, sale) still work.
+ */
 export default async function ProductListingPage({ searchParams }: { searchParams: SearchParams }) {
-  const [catalogue, packagedCatalogue, readyMixCatalogue, steelCatalogue, masonryCatalogue, roofingCatalogue, suppliesCatalogue, promotions] = await Promise.all([
-    getCatalogue(),
-    getPackagedCatalogue(),
-    getReadyMixCatalogue(),
-    getSteelCatalogue(),
-    getMasonryCatalogue(),
-    getRoofingCatalogue(),
-    getSuppliesCatalogue(),
-    getActivePromotions({ category: searchParams.category, industry: searchParams.industry }),
-  ]);
-  const products = filterProducts(catalogue, searchParams);
-  const packaged = filterPackaged(packagedCatalogue, searchParams);
-  const readyMix = filterReadyMix(readyMixCatalogue, searchParams);
-  const steel = filterSteel(steelCatalogue, searchParams);
-  const masonry = filterMasonry(masonryCatalogue, searchParams);
-  const roofing = filterRoofing(roofingCatalogue, searchParams);
-  // Building supplies share the roofing product shape (and so its filter and card).
-  const supplies = filterRoofing(suppliesCatalogue, searchParams);
-  const total = products.length + packaged.length + readyMix.length + steel.length + masonry.length + roofing.length + supplies.length;
+  const [hidden, promotions] = await Promise.all([getHiddenSkus(), getActivePromotions({ category: searchParams.category, industry: searchParams.industry })]);
+  const industry = INDUSTRIES.find((i) => i.slug === searchParams.industry);
+  const group = GROUPS[searchParams.group ?? ""];
+  const scope = industry ? industry.relevantCategorySlugs : group?.categories;
+  const exclude = new Set(hidden);
+  if (scope) for (const p of PRODUCT_INDEX) if (!scope.includes(p.categorySlug)) exclude.add(p.sku);
+
+  const query = searchParams.q?.trim().slice(0, 100) ?? "";
+  const sort: SortKey = searchParams.sort && searchParams.sort in SORT_LABELS ? (searchParams.sort as SortKey) : "relevance";
+  const filters = facetFilters(searchParams);
+  const result = searchCatalogue({ query, filters, sort, exclude, page: Number(searchParams.page) || 1, pageSize: PAGE_SIZE });
+
   const category = CATEGORIES.find((c) => c.slug === searchParams.category);
-  const industry = category ? undefined : INDUSTRIES.find((i) => i.slug === searchParams.industry);
-  const coreGroup = !category && !industry && searchParams.group === "core";
-  const b2bGroup = !category && !industry && searchParams.group === "b2b-bulk";
-  const steelGroup = !category && !industry && searchParams.group === "steel";
-  const masonryGroup = !category && !industry && searchParams.group === "masonry";
-  const roofingGroup = !category && !industry && searchParams.group === "roofing";
-  const query = searchParams.q?.trim();
-  const hasFilters = Boolean(query || searchParams.category || searchParams.grading || searchParams.sale || searchParams.family || searchParams.brand || industry || coreGroup || b2bGroup || steelGroup || masonryGroup || roofingGroup);
+  const department = DEPARTMENTS.find((d) => d.slug === searchParams.department);
+  const title = query ? `Results for “${query}”` : (category?.name ?? department?.name ?? industry?.name ?? group?.label ?? "All Products");
+  const active = (Object.keys(filters) as FacetKey[]).filter((k) => filters[k]);
+
+  /** A link to this listing with some parameters changed (and back to page 1 unless the page is what changed). */
+  const href = (changes: Partial<Record<keyof SearchParams, string | undefined>>) => {
+    const next = new URLSearchParams();
+    const merged: Record<string, string | undefined> = { ...searchParams, page: undefined, grading: undefined, sale: undefined, ...changes };
+    if (searchParams.grading && !("standard" in changes)) merged.standard ??= searchParams.grading;
+    if (searchParams.sale && !("sold" in changes)) merged.sold ??= filters.soldBy;
+    for (const [k, v] of Object.entries(merged)) if (v) next.set(k, v);
+    const qs = next.toString();
+    return qs ? `/products?${qs}` : "/products";
+  };
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
       <nav className="font-mono text-xs text-slate" aria-label="Breadcrumb">
-        <Link href="/" className="hover:text-seam-blue">Home</Link> /{" "}
-        <Link href="/products" className="hover:text-seam-blue">Products</Link>
+        <Link href="/" className="hover:text-seam-blue">Home</Link> / <Link href="/products" className="hover:text-seam-blue">Products</Link>
+        {department && <> / <Link href={department.href} className="hover:text-seam-blue">{department.name}</Link></>}
         {category && <> / {category.name}</>}
-        {industry && <> / {industry.name}</>}
-        {coreGroup && <> / Aggregates &amp; Sand</>}
-        {b2bGroup && <> / Bulk &amp; Infrastructure</>}
-        {steelGroup && <> / Reinforcing &amp; Structural Steel</>}
-        {masonryGroup && <> / Masonry, Paving &amp; Retaining</>}
-        {roofingGroup && <> / Roofing</>}
+        {!category && (industry ?? group) && <> / {industry?.name ?? group?.label}</>}
       </nav>
-      <h1 className="mt-3 font-display text-3xl font-bold text-basalt">
-        {query ? `Results for “${query}”` : (category?.name ?? industry?.name ?? (coreGroup ? "Aggregates & Sand" : b2bGroup ? "Bulk & Infrastructure" : steelGroup ? "Reinforcing & Structural Steel" : masonryGroup ? "Masonry, Paving & Retaining" : roofingGroup ? "Roofing" : "All Products"))}
-      </h1>
-      {category && <p className="mt-1 font-body text-sm text-slate">{category.description}</p>}
+      <h1 className="mt-3 font-display text-3xl font-bold text-basalt">{title}</h1>
+      {category && <p className="mt-1 max-w-3xl font-body text-sm text-slate">{category.description}</p>}
       {industry && (
         <p className="mt-1 max-w-3xl font-body text-sm text-slate">
           <span className="font-mono text-[10px] uppercase tracking-widest text-seam-blue">Shop by industry · </span>
           {industry.description}
         </p>
       )}
+      {result.corrections.length > 0 && (
+        <p className="mt-2 font-body text-sm text-slate">
+          Showing results for <span className="font-semibold text-basalt">{result.corrections.map((c) => c.to).join(", ")}</span> — you typed {result.corrections.map((c) => c.from).join(", ")}.
+        </p>
+      )}
       {(category || industry) && promotions.CATEGORY_TOP_BANNER && <PromoSlot promotion={promotions.CATEGORY_TOP_BANNER} className="mt-6" />}
 
-      <div className="mt-8 grid gap-8 md:grid-cols-[230px_1fr]">
+      <div className="mt-8 grid gap-8 md:grid-cols-[240px_1fr]">
         <aside>
-          <form method="get" action="/products" className="rounded-sm border border-basalt/10 bg-white p-4">
-            <p className="font-body text-sm font-semibold text-basalt">Filters</p>
-            {industry && <input type="hidden" name="industry" value={industry.slug} />}
-            {coreGroup && <input type="hidden" name="group" value="core" />}
-            {b2bGroup && <input type="hidden" name="group" value="b2b-bulk" />}
-            {steelGroup && <input type="hidden" name="group" value="steel" />}
-            {masonryGroup && <input type="hidden" name="group" value="masonry" />}
-            {roofingGroup && <input type="hidden" name="group" value="roofing" />}
-            <label className="mt-4 block">
-              <span className="font-mono text-[10px] uppercase text-slate">Search</span>
-              <input name="q" type="search" defaultValue={query ?? ""} placeholder="e.g. river sand" className={selectClass} />
-            </label>
-            <label className="mt-4 block">
-              <span className="font-mono text-[10px] uppercase text-slate">Category</span>
-              <select name="category" defaultValue={searchParams.category ?? ""} className={selectClass}>
-                <option value="">All categories</option>
-                <optgroup label="Aggregates">
-                  {CORE_CATEGORIES.map((c) => (
-                    <option key={c.slug} value={c.slug}>{c.name}</option>
-                  ))}
-                </optgroup>
-                <optgroup label="Bulk & Infrastructure">
-                  {B2B_CATEGORIES.map((c) => (
-                    <option key={c.slug} value={c.slug}>{c.name}</option>
-                  ))}
-                </optgroup>
-                <optgroup label="Concrete">
-                  {READY_MIX_CATEGORIES.map((c) => (
-                    <option key={c.slug} value={c.slug}>{c.name}</option>
-                  ))}
-                </optgroup>
-                <optgroup label="Steel">
-                  {STEEL_CATEGORIES.map((c) => (
-                    <option key={c.slug} value={c.slug}>{c.name}</option>
-                  ))}
-                </optgroup>
-                <optgroup label="Masonry, paving & retaining">
-                  {MASONRY_CATEGORIES.map((c) => (
-                    <option key={c.slug} value={c.slug}>{c.name}</option>
-                  ))}
-                </optgroup>
-                <optgroup label="Roofing">
-                  {ROOFING_CATEGORIES.map((c) => (
-                    <option key={c.slug} value={c.slug}>{c.name}</option>
-                  ))}
-                </optgroup>
-                <optgroup label="Building supplies">
-                  {SUPPLIES_CATEGORIES.map((c) => (
-                    <option key={c.slug} value={c.slug}>{c.name}</option>
-                  ))}
-                </optgroup>
-              </select>
-            </label>
-            {searchParams.category === "cement-hydraulic-binders" && (
-              <>
-                <label className="mt-3 block">
-                  <span className="font-mono text-[10px] uppercase text-slate">Cement type</span>
-                  <select name="family" defaultValue={searchParams.family ?? ""} className={selectClass}>
-                    <option value="">Any type</option>
-                    {CEMENT_FAMILIES.map((f) => (
-                      <option key={f} value={f}>{f}</option>
-                    ))}
-                  </select>
+          <details className="rounded-sm border border-basalt/10 bg-white" open>
+            <summary className="cursor-pointer px-4 py-3 font-body text-sm font-semibold text-basalt">
+              Filters{active.length > 0 && ` (${active.length})`}
+            </summary>
+            <div className="border-t border-basalt/10 px-4 pb-4">
+              <form method="get" action="/products" className="mt-3" role="search">
+                {(Object.entries(searchParams) as [string, string | undefined][])
+                  .filter(([k, v]) => v && !["q", "page", "grading", "sale"].includes(k))
+                  .map(([k, v]) => <input key={k} type="hidden" name={k} value={v} />)}
+                <label className="block">
+                  <span className="font-mono text-[10px] uppercase text-slate">Search</span>
+                  <input name="q" type="search" defaultValue={query} placeholder="e.g. river sand, IBR, 38×114" className="mt-1 w-full rounded-sm border border-basalt/20 bg-white px-2 py-1.5 font-body text-sm" />
                 </label>
-                <label className="mt-3 block">
-                  <span className="font-mono text-[10px] uppercase text-slate">Brand</span>
-                  <select name="brand" defaultValue={searchParams.brand ?? ""} className={selectClass}>
-                    <option value="">Any brand</option>
-                    {CEMENT_BRANDS.map((b) => (
-                      <option key={b} value={b}>{b}</option>
-                    ))}
-                  </select>
-                </label>
-              </>
-            )}
-            <label className="mt-3 block">
-              <span className="font-mono text-[10px] uppercase text-slate">Grading standard</span>
-              <select name="grading" defaultValue={searchParams.grading ?? ""} className={selectClass}>
-                <option value="">Any</option>
-                {GRADING_STANDARDS.map((s) => (
-                  <option key={s} value={s}>{s}</option>
-                ))}
-              </select>
-            </label>
-            <label className="mt-3 block">
-              <span className="font-mono text-[10px] uppercase text-slate">Unit of sale</span>
-              <select name="sale" defaultValue={searchParams.sale ?? ""} className={selectClass}>
-                <option value="">Bulk or bagged</option>
-                <option value="bulk">Bulk (ton / m³)</option>
-                <option value="bag">Bagged</option>
-              </select>
-            </label>
-            <label className="mt-3 block">
-              <span className="font-mono text-[10px] uppercase text-slate">Sort</span>
-              <select name="sort" defaultValue={searchParams.sort ?? "relevance"} className={selectClass}>
-                {Object.entries(SORTS).map(([value, { label }]) => (
-                  <option key={value} value={value}>{label}</option>
-                ))}
-              </select>
-            </label>
-            <button type="submit" className="mt-4 w-full rounded-sm bg-seam-blue py-2 font-body text-sm font-semibold text-limestone hover:bg-basalt">
-              Apply Filters
-            </button>
-            {hasFilters && (
-              <Link href="/products" className="mt-2 block text-center font-body text-xs text-slate hover:text-basalt">
-                Clear filters
-              </Link>
-            )}
-          </form>
-          <div className="mt-4 rounded-sm border border-basalt/10 bg-white p-4">
+              </form>
+              {active.length > 0 && (
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {active.map((k) => (
+                    <Link key={k} href={href({ [FACET_PARAM[k]]: undefined, ...(k === "standard" ? { grading: undefined } : {}), ...(k === "soldBy" ? { sale: undefined } : {}) })} className="rounded-full bg-seam-blue/10 px-2.5 py-1 font-body text-xs text-seam-blue hover:bg-seam-blue/20" aria-label={`Remove filter ${filters[k]}`}>
+                      {filters[k]} ×
+                    </Link>
+                  ))}
+                  <Link href={query ? `/products?q=${encodeURIComponent(query)}` : "/products"} className="px-1 py-1 font-body text-xs text-slate hover:text-basalt">
+                    Clear all
+                  </Link>
+                </div>
+              )}
+              {FACETS.map(({ key, label }) => {
+                const values = result.facets[key] ?? [];
+                if (values.length === 0 || (values.length === 1 && !filters[key] && key !== "availability")) return null;
+                const shown = values.slice(0, 8);
+                const more = values.slice(8, 40);
+                const item = (v: { value: string; count: number }) => {
+                  const [param, value] = facetParam(key, v.value);
+                  const selected = filters[key] === v.value;
+                  return (
+                    <li key={v.value}>
+                      <Link href={href({ [param]: selected ? undefined : value })} className={`flex justify-between gap-2 py-0.5 font-body text-xs ${selected ? "font-semibold text-seam-blue" : "text-basalt hover:text-seam-blue"}`}>
+                        <span className="min-w-0 truncate">{selected ? "✓ " : ""}{v.value}</span>
+                        <span className="shrink-0 font-mono text-[10px] text-slate">{v.count}</span>
+                      </Link>
+                    </li>
+                  );
+                };
+                return (
+                  <div key={key} className="mt-4">
+                    <p className="font-mono text-[10px] uppercase text-slate">{label}</p>
+                    <ul className="mt-1">{shown.map(item)}</ul>
+                    {more.length > 0 && (
+                      <details className="mt-1">
+                        <summary className="cursor-pointer font-body text-xs text-seam-blue">{more.length} more</summary>
+                        <ul className="mt-1">{more.map(item)}</ul>
+                      </details>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </details>
+          <div className="mt-4 hidden rounded-sm border border-basalt/10 bg-white p-4 md:block">
             <p className="font-mono text-[10px] uppercase text-slate">Shop by industry</p>
             <ul className="mt-2 space-y-1.5 font-body text-xs">
               {INDUSTRIES.map((i) => (
@@ -307,48 +205,65 @@ export default async function ProductListingPage({ searchParams }: { searchParam
             </ul>
           </div>
           <div className="mt-4 rounded-sm border border-ochre-gold/40 bg-ochre-gold/10 p-4 font-body text-xs text-basalt">
-            Civil order or delivery over 100km?{" "}
+            Civil order or delivery over 100 km?{" "}
             <Link href="/quote" className="font-semibold text-seam-blue hover:underline">Request a bulk quote →</Link>
           </div>
         </aside>
 
         <div>
-          <p className="font-body text-sm text-slate">
-            {total} {total === 1 ? "product" : "products"}
-          </p>
-          {total === 0 ? (
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <p className="font-body text-sm text-slate">
+              {result.total.toLocaleString("en-ZA")} {result.total === 1 ? "product" : "products"}
+              {result.pages > 1 && ` · page ${result.page} of ${result.pages}`}
+            </p>
+            <nav className="flex flex-wrap items-center gap-1 font-body text-xs" aria-label="Sort">
+              <span className="text-slate">Sort:</span>
+              {(Object.keys(SORT_LABELS) as SortKey[]).map((s) => (
+                <Link key={s} href={href({ sort: s === "relevance" ? undefined : s })} aria-current={sort === s ? "true" : undefined} className={`rounded-sm px-2 py-1 ${sort === s ? "bg-basalt text-limestone" : "text-basalt hover:bg-basalt/5"}`}>
+                  {SORT_LABELS[s]}
+                </Link>
+              ))}
+            </nav>
+          </div>
+          {result.total === 0 ? (
             <div className="mt-4 rounded-sm border border-basalt/10 bg-white p-8 text-center font-body text-sm text-slate">
-              No products match these filters.{" "}
-              <Link href="/products" className="text-seam-blue hover:underline">Clear filters</Link>
+              No products match{query ? ` “${query}”` : " these filters"}.{" "}
+              <Link href="/products" className="text-seam-blue hover:underline">Clear filters</Link>, or{" "}
+              <Link href="/quote" className="text-seam-blue hover:underline">ask us for it on a quote</Link> — we source what we don&apos;t list.
             </div>
           ) : (
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {products.map((product) => (
-                <ProductCard key={product.sku} product={product} preferBag={searchParams.sale === "bag"} />
-              ))}
-              {packaged.map((product) => (
-                <PackagedProductCard key={product.sku} product={product} />
-              ))}
-              {readyMix.map((product) => (
-                <PackagedProductCard key={product.sku} product={product} />
-              ))}
-              {steel.map((product) => (
-                <PackagedProductCard key={product.sku} product={product} />
-              ))}
-              {masonry.map((product) => (
-                <PackagedProductCard key={product.sku} product={product} />
-              ))}
-              {roofing.map((product) => (
-                <PackagedProductCard key={product.sku} product={product} />
-              ))}
-              {supplies.map((product) => (
-                <PackagedProductCard key={product.sku} product={product} />
+              {result.hits.map((p) => (
+                <ListingCard key={p.sku} product={p} />
               ))}
             </div>
+          )}
+          {result.pages > 1 && (
+            <nav className="mt-8 flex flex-wrap items-center justify-center gap-1 font-body text-sm" aria-label="Pages">
+              {result.page > 1 && <Link href={href({ page: String(result.page - 1) })} className="rounded-sm border border-basalt/20 px-3 py-1.5 hover:border-seam-blue">← Previous</Link>}
+              {pageNumbers(result.page, result.pages).map((n, i) =>
+                n === null ? (
+                  <span key={`gap-${i}`} className="px-2 text-slate">…</span>
+                ) : (
+                  <Link key={n} href={href({ page: n === 1 ? undefined : String(n) })} aria-current={n === result.page ? "page" : undefined} className={`rounded-sm px-3 py-1.5 ${n === result.page ? "bg-basalt text-limestone" : "border border-basalt/20 hover:border-seam-blue"}`}>
+                    {n}
+                  </Link>
+                ),
+              )}
+              {result.page < result.pages && <Link href={href({ page: String(result.page + 1) })} className="rounded-sm border border-basalt/20 px-3 py-1.5 hover:border-seam-blue">Next →</Link>}
+            </nav>
           )}
         </div>
       </div>
       <RecentlyViewedRow />
+      <CompareTray />
     </div>
   );
+}
+
+/** Page links: first, last, and two either side of the current page, with gaps. */
+function pageNumbers(current: number, pages: number): (number | null)[] {
+  const keep = new Set([1, pages, current - 2, current - 1, current, current + 1, current + 2].filter((n) => n >= 1 && n <= pages));
+  const sorted = [...keep].sort((a, b) => a - b);
+  return sorted.flatMap((n, i) => (i > 0 && n - sorted[i - 1] > 1 ? [null, n] : [n]));
 }

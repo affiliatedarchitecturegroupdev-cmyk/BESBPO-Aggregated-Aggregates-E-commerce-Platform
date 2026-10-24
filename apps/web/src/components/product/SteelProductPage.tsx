@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { CompareToggle } from "@/components/product/CompareToggle";
+import { CompareTray } from "@/components/product/CompareTray";
 import { LeadTimeNote } from "@/components/delivery/LeadTimeNote";
 import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
 import { ProductReviews } from "@/components/reviews/ProductReviews";
@@ -108,6 +110,7 @@ export async function SteelProductPage({ product }: { product: MerchandisedSteel
           <div className="mt-6 flex flex-wrap items-center justify-end gap-4 border-t border-basalt/10 pt-5">
             <div className="flex flex-wrap items-center gap-3">
               <SaveToProject sku={product.sku} />
+              <CompareToggle sku={product.sku} />
               <SocialShareButtons productName={product.name} productUrl={url} />
             </div>
           </div>
@@ -185,6 +188,7 @@ export async function SteelProductPage({ product }: { product: MerchandisedSteel
         </section>
       )}
       <RecentlyViewedRow current={product.sku} />
+      <CompareTray />
     </div>
   );
 }

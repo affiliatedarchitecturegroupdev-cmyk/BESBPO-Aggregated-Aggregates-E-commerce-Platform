@@ -465,6 +465,12 @@ Every department gets:
 
 ## Phase 4 — Find and choose
 
+**Status (24 October 2026): first release built** (`docs/search.md`):
+- **Search:** in-process engine with synonyms, typo tolerance and facets.
+- **Listing:** `/products` rebuilt with filters, sorts, pages, Buy online / Quote badges and quick add (3.3).
+- **Compare:** up to three products, at `/compare` (4.3).
+- **Still open:** 4.2 photos and datasheets, 4.4 availability, and a hosted engine if one is needed.
+
 | # | Item | Notes |
 |---|---|---|
 | 4.1 | **Search engine** | Meilisearch or Typesense on Railway. Typo tolerance, synonyms (e.g. "stone" ↔ "aggregate", "IBR" ↔ "roof sheet"), filters (brand, size, price, department, buy online), sorting, and fast suggestions in the header. The core keeps its own search as a fallback if the satellite is down. |
