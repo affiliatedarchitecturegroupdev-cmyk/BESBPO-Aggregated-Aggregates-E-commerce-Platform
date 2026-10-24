@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { FamilySizes } from "@/components/product/FamilySizes";
 import { CompareToggle } from "@/components/product/CompareToggle";
 import { CompareTray } from "@/components/product/CompareTray";
 import { LeadTimeNote } from "@/components/delivery/LeadTimeNote";
@@ -202,6 +203,8 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
           </div>
         </div>
       </div>
+      {/* Every other size of this product, all visible (docs/product-families.md). */}
+      <FamilySizes sku={product.sku} />
 
       <div className="mt-12">
         <ProductTabs product={product} categoryName={category.name} />

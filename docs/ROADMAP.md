@@ -398,7 +398,8 @@ Anchors and bolts by grade; chemical anchors; nails by the kg; screws by type an
   - per kg (nails, fasteners);
   - per drum or roll (cable);
   - **per bundle** (timber bundles, e.g. 12 × 38 × 38), alongside the per-unit price.
-- **Variant grids:**
+- **Product families: built 24 Oct 2026** (`docs/product-families.md`): sizes of one product grouped on listings and in search, every size visible on cards and product pages, and an ungrouped view one click away.
+- **Variant grids (superseded by product families above):**
   - extend the timber variant switcher to diameter × length (poles), section × length (steel), class × diameter (pipe), core × size (cable);
   - one product page per family, not one per size.
 - **Brand and specification attributes:** brand, SANS standard, grade, finish and dimensions as filterable fields, for search (Phase 4).

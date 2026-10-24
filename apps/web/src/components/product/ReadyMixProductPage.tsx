@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FamilySizes } from "@/components/product/FamilySizes";
 import { CompareToggle } from "@/components/product/CompareToggle";
 import { CompareTray } from "@/components/product/CompareTray";
 import { LeadTimeNote } from "@/components/delivery/LeadTimeNote";
@@ -107,6 +108,8 @@ export async function ReadyMixProductPage({ product }: { product: MerchandisedRe
           </div>
         </div>
       </div>
+      {/* Every other size of this product, all visible (docs/product-families.md). */}
+      <FamilySizes sku={product.sku} />
 
       <div className="mt-12 grid gap-6 md:grid-cols-3">
         <section className="rounded-sm border border-basalt/10 bg-white p-6 md:col-span-3">
