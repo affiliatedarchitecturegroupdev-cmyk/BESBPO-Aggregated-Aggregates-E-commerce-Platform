@@ -13,6 +13,7 @@ import { getHiddenSkus } from "@/lib/cms";
 import { groupForListing } from "@/lib/product-families";
 import { FACETS, familyView, PRODUCT_FAMILIES, PRODUCT_INDEX, searchCatalogue, type FacetKey } from "@/lib/product-index";
 import { getActivePromotions } from "@/lib/promotions";
+import { getStaffSynonyms, logSearch } from "@/lib/search-insights";
 import { SORT_LABELS, type SortKey } from "@/lib/search-engine";
 
 export const metadata: Metadata = {
@@ -85,7 +86,7 @@ const FACET_PARAM: Record<FacetKey, keyof SearchParams> = { department: "departm
  * quick add-to-cart and compare. Older links (group, grading, sale) still work.
  */
 export default async function ProductListingPage({ searchParams }: { searchParams: SearchParams }) {
-  const [hidden, promotions] = await Promise.all([getHiddenSkus(), getActivePromotions({ category: searchParams.category, industry: searchParams.industry })]);
+  const [hidden, promotions, synonyms] = await Promise.all([getHiddenSkus(), getActivePromotions({ category: searchParams.category, industry: searchParams.industry }), getStaffSynonyms()]);
   const industry = INDUSTRIES.find((i) => i.slug === searchParams.industry);
   const group = GROUPS[searchParams.group ?? ""];
   const scope = industry ? industry.relevantCategorySlugs : group?.categories;
@@ -99,7 +100,7 @@ export default async function ProductListingPage({ searchParams }: { searchParam
   // when the shopper wants that exact product in front of them.
   const searchesForSize = /\d/.test(query);
   const grouped = searchParams.view !== "all" && !searchesForSize;
-  const all = searchCatalogue({ query, filters, sort, exclude, pageSize: 10_000 });
+  const all = searchCatalogue({ query, filters, sort, exclude, pageSize: 10_000 }, synonyms);
   const cards = grouped ? groupForListing(all.hits, PRODUCT_FAMILIES.families, PRODUCT_FAMILIES.familyOf) : all.hits.map((product) => ({ kind: "product" as const, product }));
   const pages = Math.max(1, Math.ceil(cards.length / PAGE_SIZE));
   const page = Math.min(Math.max(1, Math.floor(Number(searchParams.page) || 1)), pages);
@@ -111,6 +112,8 @@ export default async function ProductListingPage({ searchParams }: { searchParam
   const department = DEPARTMENTS.find((d) => d.slug === searchParams.department);
   const title = query ? `Results for “${query}”` : (category?.name ?? department?.name ?? industry?.name ?? group?.label ?? "All Products");
   const active = (Object.keys(filters) as FacetKey[]).filter((k) => filters[k]);
+  // Search insights (docs/search-insights.md): count the search as typed — not each filter, page or sort after it.
+  if (query && page === 1 && active.length === 0 && !scope && !searchParams.sort && !searchParams.view) logSearch(query, all.total);
 
   /** A link to this listing with some parameters changed (and back to page 1 unless the page is what changed). */
   const href = (changes: Partial<Record<keyof SearchParams, string | undefined>>) => {

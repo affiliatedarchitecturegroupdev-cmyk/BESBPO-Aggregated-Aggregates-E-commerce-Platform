@@ -13,6 +13,25 @@ const SLOT: Record<string, string> = {
   FOOTER_STRIP: "Footer strip",
   GROUP_CROSS_SELL: "Group cross-sell",
 };
+/** "home:best-sellers" → "Homepage · Best sellers"; "collection:carport-build:home" → "Carport build · on the homepage". */
+const HOME_SECTION: Record<string, string> = {
+  "best-sellers": "Best sellers",
+  "buy-online-today": "Buy online today",
+  seasonal: "In season",
+  "new-in-store": "New in store",
+  trending: "Trending by province",
+  brands: "Shop by brand",
+  express: "Delivered in 120 minutes",
+  "under-r500": "Under R500",
+};
+const words = (slug: string) => slug.replace(/-/g, " ").replace(/^./, (c) => c.toUpperCase());
+function sectionName(s: Marketing["sections"][number]): { name: string; where: string } {
+  if (s.kind === "home") return { name: HOME_SECTION[s.name] ?? words(s.name), where: "Homepage" };
+  if (s.kind === "department") return { name: s.part === "top-sellers" ? "Top sellers" : words(s.part ?? ""), where: `${words(s.name)} department` };
+  const where = s.part === "home" ? "On the homepage" : s.part === "page" ? "Its own page" : s.part?.startsWith("department-") ? `${words(s.part.slice(11))} department` : "";
+  return { name: s.title ?? words(s.name), where: `Collection · ${where}` };
+}
+
 const AUDIENCE: Record<string, string> = { CUSTOMER: "Customers", CONTRACTOR: "Contractors", PARTNER: "Partners", OTHER: "Other" };
 
 export default async function MarketingInsights({ searchParams }: { searchParams: SearchParams }) {
@@ -61,6 +80,23 @@ export default async function MarketingInsights({ searchParams }: { searchParams
           empty="No promotions were shown in this period."
           columns={[
             { key: "t", label: "Promotion", render: (r) => <span>{r.title}<span className="block text-xs text-slate">{SLOT[r.slot] ?? r.slot}{r.isActive ? "" : " · inactive"}</span></span> },
+            { key: "i", label: "Views", numeric: true, render: (r) => count(r.impressions) },
+            { key: "c", label: "Clicks", numeric: true, render: (r) => count(r.clicks) },
+            { key: "r", label: "Click-through", numeric: true, render: (r) => pct(r.clickThroughRate) },
+          ]}
+        />
+      </ChartCard>
+      <ChartCard
+        title="Merchandising sections"
+        subtitle="Views (a third of the section on screen, once per visit) and clicks on a product or link in it — counts only"
+        action={<Link href="/admin/collections" className="text-seam-blue hover:underline">Manage collections</Link>}
+      >
+        <DataTable
+          caption="Merchandising section performance"
+          rows={m.sections}
+          empty="No sections were viewed in this period."
+          columns={[
+            { key: "s", label: "Section", render: (r) => { const n = sectionName(r); return <span>{n.name}<span className="block text-xs text-slate">{n.where}</span></span>; } },
             { key: "i", label: "Views", numeric: true, render: (r) => count(r.impressions) },
             { key: "c", label: "Clicks", numeric: true, render: (r) => count(r.clicks) },
             { key: "r", label: "Click-through", numeric: true, render: (r) => pct(r.clickThroughRate) },

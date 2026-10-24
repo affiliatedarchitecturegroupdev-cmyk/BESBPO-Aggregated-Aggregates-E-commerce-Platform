@@ -383,14 +383,17 @@ export class InsightsService {
     // PromotionStat.day is a South African calendar day stored as a date.
     const first = new Date(`${p.from}T00:00:00Z`);
     const last = new Date(`${p.to}T00:00:00Z`);
-    const [promotions, stats, signups, channels] = await Promise.all([
+    const [promotions, stats, signups, channels, sectionStats, collections] = await Promise.all([
       this.prisma.promotion.findMany({ select: { id: true, slot: true, title: true, isActive: true } }),
       this.prisma.promotionStat.findMany({ where: { day: { gte: first, lte: last } }, select: { promotionId: true, day: true, impressions: true, clicks: true } }),
       this.prisma.$queryRaw<{ audience: string; source: string | null; n: bigint }[]>`
         SELECT audience::text AS audience, source, COUNT(*) AS n FROM "NewsletterSubscriber"
         WHERE "consentAt" >= ${p.start} AND "consentAt" < ${p.end} GROUP BY 1, 2`,
       scope.materials ? this.groupRows({ ...q, by: "channel" }, p, "channel") : [],
+      this.prisma.merchandisingStat.groupBy({ by: ["slot"], where: { day: { gte: first, lte: last } }, _sum: { impressions: true, clicks: true } }),
+      this.prisma.collection.findMany({ select: { slug: true, title: true } }),
     ]);
+    const collectionTitle = new Map(collections.map((c) => [c.slug, c.title]));
     const byPromotion = new Map<string, { impressions: number; clicks: number }>();
     const byDay = new Map<string, { impressions: number; clicks: number }>();
     for (const s of stats) {
@@ -426,8 +429,58 @@ export class InsightsService {
           .filter((r) => r.impressions || r.clicks || r.isActive)
           .sort((a, b) => b.impressions - a.impressions),
       },
+      // Homepage, department and collection sections (docs/search-insights.md): views and clicks, counts only.
+      sections: sectionStats
+        .map((s) => {
+          const impressions = s._sum.impressions ?? 0;
+          const clicks = s._sum.clicks ?? 0;
+          const [kind, name, part] = s.slot.split(":");
+          return { slot: s.slot, kind, name, part: part ?? null, title: kind === "collection" ? (collectionTitle.get(name) ?? null) : null, impressions, clicks, clickThroughRate: ctr(clicks, impressions) };
+        })
+        .sort((a, b) => b.impressions - a.impressions),
       newsletter: { signups: Object.values(sources).reduce((n, v) => n + v, 0), bySource: sources, byAudience: audiences },
       channels: channels.map(({ key, label, revenue, orders }) => ({ key, label, revenue, orders })),
+    };
+  }
+
+  /**
+   * What shoppers search for (docs/search-insights.md): searches per day, the most searched terms and the ones
+   * that found nothing. Counts only — nothing about who searched.
+   */
+  async search(q: InsightsQuery) {
+    const { p, prev, scope } = this.context(q);
+    const first = new Date(`${p.from}T00:00:00Z`);
+    const last = new Date(`${p.to}T00:00:00Z`);
+    const where = { day: { gte: first, lte: last } };
+    const [byDay, byQuery, latest, gaps] = await Promise.all([
+      this.prisma.searchQueryStat.groupBy({ by: ["day"], where, _sum: { searches: true, zeroResults: true } }),
+      this.prisma.searchQueryStat.groupBy({ by: ["query"], where, _sum: { searches: true, zeroResults: true }, orderBy: { _sum: { searches: "desc" } }, take: 500 }),
+      // The result count from each query's most recent day, so staff can see whether a gap has been closed.
+      this.prisma.$queryRaw<{ query: string; lastResults: number }[]>`
+        SELECT DISTINCT ON (query) query, "lastResults" FROM "SearchQueryStat"
+        WHERE day >= ${first} AND day <= ${last} ORDER BY query, day DESC`,
+      this.prisma.catalogueGap.groupBy({ by: ["source"], where: { status: "OPEN" }, _count: { _all: true } }),
+    ]);
+    const lastResults = new Map(latest.map((r) => [r.query, Number(r.lastResults)]));
+    const daily = new Map(byDay.map((d) => [d.day.toISOString().slice(0, 10), d]));
+    const rows = byQuery.map((r) => ({ query: r.query, searches: r._sum.searches ?? 0, zeroResults: r._sum.zeroResults ?? 0, lastResults: lastResults.get(r.query) ?? 0 }));
+    const searches = rows.reduce((n, r) => n + r.searches, 0);
+    const zeroResults = rows.reduce((n, r) => n + r.zeroResults, 0);
+    return {
+      ...this.meta(q, p, prev, scope),
+      totals: {
+        searches,
+        zeroResults,
+        zeroResultRate: searches ? round2((zeroResults / searches) * 100) : null,
+        distinctTerms: rows.length,
+        openGaps: Object.fromEntries(gaps.map((g) => [g.source, g._count._all])) as Partial<Record<"SEARCH" | "BOQ", number>>,
+      },
+      daily: bucketKeys(p, "day").map((day) => ({ day, searches: daily.get(day)?._sum.searches ?? 0, zeroResults: daily.get(day)?._sum.zeroResults ?? 0 })),
+      top: rows.slice(0, 50),
+      zero: rows
+        .filter((r) => r.zeroResults > 0)
+        .sort((a, b) => b.zeroResults - a.zeroResults)
+        .slice(0, 50),
     };
   }
 

@@ -35,6 +35,7 @@ import { ProjectListsModule } from "./project-lists/project-lists.module";
 import { CreditModule } from "./credit/credit.module";
 import { DeliveriesModule } from "./deliveries/deliveries.module";
 import { BoqModule } from "./boq/boq.module";
+import { DiscoveryModule } from "./discovery/discovery.module";
 
 @Module({
   imports: [
@@ -73,6 +74,7 @@ import { BoqModule } from "./boq/boq.module";
     CreditModule,
     DeliveriesModule,
     BoqModule,
+    DiscoveryModule,
   ],
 })
 export class AppModule {}

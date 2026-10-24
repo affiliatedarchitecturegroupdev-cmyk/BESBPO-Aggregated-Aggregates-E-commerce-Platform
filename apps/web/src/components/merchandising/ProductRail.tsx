@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SectionTracker } from "@/components/merchandising/SectionTracker";
 import { ListingCard } from "@/components/product/ListingCard";
 import type { IndexedProduct } from "@/lib/product-index";
 
@@ -16,6 +17,7 @@ export function ProductRail({
   min = 1,
   tone = "light",
   bare = false,
+  track,
 }: {
   title: string;
   eyebrow?: string;
@@ -28,9 +30,11 @@ export function ProductRail({
   tone?: "light" | "tint";
   /** Inside a page that already has its own width and padding (department pages). */
   bare?: boolean;
+  /** The section name views and clicks are counted under ("home:best-sellers"; docs/search-insights.md). */
+  track?: string;
 }) {
   if (products.length < min) return null;
-  return (
+  const rail = (
     <section className={bare ? "mt-14" : tone === "tint" ? "bg-white/60" : ""}>
       <div className={bare ? "" : "mx-auto max-w-6xl px-4 py-10"}>
         <div className="flex flex-wrap items-end justify-between gap-3">
@@ -53,4 +57,5 @@ export function ProductRail({
       </div>
     </section>
   );
+  return track ? <SectionTracker slot={track}>{rail}</SectionTracker> : rail;
 }

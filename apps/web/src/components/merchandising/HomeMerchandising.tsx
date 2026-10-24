@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ListingCard } from "@/components/product/ListingCard";
 import { ProductRail } from "@/components/merchandising/ProductRail";
 import { ProvinceTabs } from "@/components/merchandising/ProvinceTabs";
+import { SectionTracker } from "@/components/merchandising/SectionTracker";
 import {
   getBrands,
   getBuyOnlineToday,
@@ -34,9 +35,9 @@ export async function HomeMerchandising({ hiddenSkus }: { hiddenSkus: string[] }
     <>
       {collections.map((c) => {
         const { products } = resolveCollection(c, hidden, 8);
-        return <ProductRail key={c.slug} eyebrow="Collection" title={c.title} blurb={c.subtitle ?? undefined} products={products} seeAll={`/collections/${c.slug}`} seeAllLabel="See the collection →" />;
+        return <ProductRail key={c.slug} eyebrow="Collection" title={c.title} blurb={c.subtitle ?? undefined} products={products} seeAll={`/collections/${c.slug}`} seeAllLabel="See the collection →" track={`collection:${c.slug}:home`} />;
       })}
-      <ProductRail eyebrow="Best sellers this month" title="What builders are buying" blurb="The products in the most paid orders over the last 30 days." products={bestSellers} min={MIN_ROW} />
+      <ProductRail eyebrow="Best sellers this month" title="What builders are buying" blurb="The products in the most paid orders over the last 30 days." products={bestSellers} min={MIN_ROW} track="home:best-sellers" />
       {today.department && (
         <ProductRail
           eyebrow="Buy online today"
@@ -47,6 +48,7 @@ export async function HomeMerchandising({ hiddenSkus }: { hiddenSkus: string[] }
           seeAllLabel={`All buy-online ${today.department.shortName.toLowerCase()} →`}
           min={MIN_ROW}
           tone="tint"
+          track="home:buy-online-today"
         />
       )}
       <ProductRail
@@ -56,9 +58,11 @@ export async function HomeMerchandising({ hiddenSkus }: { hiddenSkus: string[] }
         products={seasonal.products}
         seeAll={seasonal.season.departments[0] ? `/products?department=${seasonal.season.departments[0]}` : null}
         min={MIN_ROW}
+        track="home:seasonal"
       />
-      <ProductRail eyebrow="New in store" title="Just added to the range" blurb="Recently added products and departments." products={newInStore} seeAll="/departments" seeAllLabel="All departments →" min={MIN_ROW} tone="tint" />
+      <ProductRail eyebrow="New in store" title="Just added to the range" blurb="Recently added products and departments." products={newInStore} seeAll="/departments" seeAllLabel="All departments →" min={MIN_ROW} tone="tint" track="home:new-in-store" />
       {trendingShown.length > 0 && (
+        <SectionTracker slot="home:trending">
         <section>
           <div className="mx-auto max-w-6xl px-4 py-10">
             <p className="font-mono text-[10px] uppercase tracking-widest text-seam-blue">Trending in your province</p>
@@ -77,8 +81,10 @@ export async function HomeMerchandising({ hiddenSkus }: { hiddenSkus: string[] }
             </div>
           </div>
         </section>
+        </SectionTracker>
       )}
       {brands.length >= MIN_ROW && (
+        <SectionTracker slot="home:brands">
         <section className="mx-auto max-w-6xl px-4 py-10">
           <p className="font-mono text-[10px] uppercase tracking-widest text-seam-blue">Shop by brand</p>
           <h2 className="mt-1 font-display text-2xl font-bold text-basalt">The makers builders ask for</h2>
@@ -93,6 +99,7 @@ export async function HomeMerchandising({ hiddenSkus }: { hiddenSkus: string[] }
             ))}
           </ul>
         </section>
+        </SectionTracker>
       )}
     </>
   );
@@ -111,6 +118,7 @@ export function HomeExpressRows({ hiddenSkus }: { hiddenSkus: string[] }) {
         seeAll="/aa-60-120"
         seeAllLabel="How AA 60/120 works →"
         min={MIN_ROW}
+        track="home:express"
       />
       <ProductRail
         eyebrow="Site essentials under R500"
@@ -121,6 +129,7 @@ export function HomeExpressRows({ hiddenSkus }: { hiddenSkus: string[] }) {
         seeAllLabel="All buy-online products, cheapest first →"
         min={MIN_ROW}
         tone="tint"
+        track="home:under-r500"
       />
     </>
   );

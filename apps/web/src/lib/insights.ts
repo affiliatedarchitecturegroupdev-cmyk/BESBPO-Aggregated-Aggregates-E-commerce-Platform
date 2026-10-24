@@ -237,9 +237,31 @@ export type Marketing = Meta & {
     daily: { day: string; impressions: number; clicks: number }[];
     rows: { id: string; title: string; slot: string; isActive: boolean; impressions: number; clicks: number; clickThroughRate: number | null }[];
   };
+  /** Merchandising sections (docs/search-insights.md): "home:best-sellers", "collection:<slug>:home"… */
+  sections: { slot: string; kind: string; name: string; part: string | null; title: string | null; impressions: number; clicks: number; clickThroughRate: number | null }[];
   newsletter: { signups: number; bySource: Record<string, number>; byAudience: Record<string, number> };
   channels: { key: string; label: string; revenue: number; orders: number }[];
 };
+
+export type SearchTerm = { query: string; searches: number; zeroResults: number; lastResults: number };
+export type SearchInsights = Meta & {
+  totals: { searches: number; zeroResults: number; zeroResultRate: number | null; distinctTerms: number; openGaps: Partial<Record<"SEARCH" | "BOQ", number>> };
+  daily: { day: string; searches: number; zeroResults: number }[];
+  top: SearchTerm[];
+  zero: SearchTerm[];
+};
+export type CatalogueGap = {
+  id: string;
+  source: "SEARCH" | "BOQ";
+  text: string;
+  count: number;
+  firstSeen: string;
+  lastSeen: string;
+  lastQuoteId: string | null;
+  status: "OPEN" | "ADDED" | "IGNORED";
+  note: string | null;
+};
+export type SynonymGroup = { id: string; terms: string[]; updatedAt: string };
 
 export type PnlMonth = {
   month: string;

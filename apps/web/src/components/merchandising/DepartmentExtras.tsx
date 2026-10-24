@@ -30,7 +30,7 @@ export async function DepartmentCollections({ department, hiddenSkus }: { depart
   return (
     <>
       {collections.map((c) => (
-        <ProductRail key={c.slug} eyebrow="Collection" title={c.title} blurb={c.subtitle ?? undefined} products={resolveCollection(c, hidden, 8).products} seeAll={`/collections/${c.slug}`} seeAllLabel="See the collection →" bare />
+        <ProductRail key={c.slug} eyebrow="Collection" title={c.title} blurb={c.subtitle ?? undefined} products={resolveCollection(c, hidden, 8).products} seeAll={`/collections/${c.slug}`} seeAllLabel="See the collection →" bare track={`collection:${c.slug}:department-${department.slug}`} />
       ))}
     </>
   );
@@ -39,7 +39,7 @@ export async function DepartmentCollections({ department, hiddenSkus }: { depart
 /** Top sellers in this department over the last 30 days (paid orders; hidden until there are enough). */
 export async function DepartmentTopSellers({ department, hiddenSkus }: { department: Department; hiddenSkus: string[] }) {
   const products = await getTopSellers(new Set(hiddenSkus), { department: department.slug, limit: 8 });
-  return <ProductRail eyebrow="Top sellers" title={`Most ordered in ${department.name}`} blurb="From paid orders over the last 30 days." products={products} min={MIN_ROW} bare />;
+  return <ProductRail eyebrow="Top sellers" title={`Most ordered in ${department.name}`} blurb="From paid orders over the last 30 days." products={products} min={MIN_ROW} bare track={`department:${department.slug}:top-sellers`} />;
 }
 
 /**

@@ -2084,3 +2084,68 @@ model Collection {
 
   @@index([isActive])
 }
+
+// --- Search & merchandising insights (docs/search-insights.md) -------------------------------------------------
+
+/// Searches per South African day and normalised query — counts only, nothing about who searched.
+model SearchQueryStat {
+  day         DateTime @db.Date
+  query       String
+  searches    Int      @default(0)
+  /// How many of those searches found nothing.
+  zeroResults Int      @default(0)
+  /// The number of results the most recent search found.
+  lastResults Int      @default(0)
+
+  @@id([day, query])
+  @@index([day])
+}
+
+enum CatalogueGapSource {
+  SEARCH // a storefront search that found nothing
+  BOQ // a bill-of-quantities line that matched no product
+}
+
+enum CatalogueGapStatus {
+  OPEN
+  ADDED // staff added the product (reopens if it keeps coming back unmatched)
+  IGNORED
+}
+
+/// Something customers looked for that the catalogue doesn't have — staff work through these in Admin → Insights → Search.
+model CatalogueGap {
+  id          String             @id @default(cuid())
+  source      CatalogueGapSource
+  /// The normalised search or BOQ description (lower case, single spaces).
+  text        String
+  count       Int                @default(1)
+  firstSeen   DateTime           @default(now())
+  lastSeen    DateTime           @default(now())
+  /// BOQ gaps: the latest quote request it appeared on, so staff can see it in context.
+  lastQuoteId String?
+  status      CatalogueGapStatus @default(OPEN)
+  note        String?
+  updatedAt   DateTime           @updatedAt
+
+  @@unique([source, text])
+  @@index([status, lastSeen])
+}
+
+/// A synonym group staff added ("jojo", "water tank") — merged with the built-in groups in apps/web/src/lib/search-engine.ts.
+model SearchSynonym {
+  id        String   @id @default(cuid())
+  terms     String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/// Daily views and clicks per merchandising section ("home:best-sellers", "collection:<slug>") — counts only.
+model MerchandisingStat {
+  day         DateTime @db.Date
+  slot        String
+  impressions Int      @default(0)
+  clicks      Int      @default(0)
+
+  @@id([day, slot])
+  @@index([day])
+}
