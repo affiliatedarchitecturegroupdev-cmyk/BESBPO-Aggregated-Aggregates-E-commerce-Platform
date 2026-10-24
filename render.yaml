@@ -32,8 +32,10 @@ services:
         - package.json
         - pnpm-lock.yaml
     envVars:
+      # Node.js security release (Stitch notice, Oct 2026): 22.23.4 or later. Pinned, so a deploy
+      # never falls back to an unpatched 22.x — bump it with .node-version and package.json "engines".
       - key: NODE_VERSION
-        value: "22"
+        value: "22.23.4"
       # Account pages and server actions call the API over the private network;
       # the browser never talks to the API directly.
       - key: API_URL
@@ -66,8 +68,10 @@ services:
         - package.json
         - pnpm-lock.yaml
     envVars:
+      # Node.js security release (Stitch notice, Oct 2026): 22.23.4 or later. Pinned, so a deploy
+      # never falls back to an unpatched 22.x — bump it with .node-version and package.json "engines".
       - key: NODE_VERSION
-        value: "22"
+        value: "22.23.4"
       - key: DATABASE_URL
         sync: false
       - key: DIRECT_URL

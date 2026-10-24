@@ -65,6 +65,27 @@ payment. Mark any orders you pay in test mode as test orders.
 
 Never put these in the repository or in chat.
 
+## Replacing the credentials (Node.js security notice, October 2026)
+
+Stitch emailed on 23 October 2026 about a Node.js vulnerability that could expose API credentials stored in an app. Until we confirm both steps below, Stitch has paused withdrawals and refunds; payments still go through.
+
+**1. Node.js is updated (done in the code).**
+- The API and storefront now run Node.js **22.23.4**, the security release of 20 October 2026. It's pinned in four places:
+  - `render.yaml` (`NODE_VERSION`) on both services;
+  - `.node-version`, which CI uses;
+  - `package.json` `engines`;
+  - the Docker images.
+- A deploy must succeed for this to take effect. In the Render build log, look for *Using Node.js version 22.23.4*.
+
+**2. New credentials — only after that deploy is live.** If you rotate first, the new secret sits on the old, unpatched server.
+1. In Stitch → Settings → Developers, create new API credentials (*View Client Secret* replaces the old secret).
+2. In Render → aggregates-store-api → Environment, replace `STITCH_CLIENT_ID` (if it changed) and `STITCH_CLIENT_SECRET`, then save. The API restarts.
+3. Admin → Payments → Stitch Express should show *Connected*. Make a small test payment.
+4. The webhook signing secret (`STITCH_WEBHOOK_SECRET`) is separate from the API credentials. To replace it too, ask express-support@stitch.money to remove the webhook, then register it again (step 3 below).
+5. Reply to Stitch's email to confirm, so they restore withdrawals and refunds.
+
+Never paste the credentials in chat or commit them; they live only in Render's environment.
+
 ## Setup, step by step
 
 **Admin → Payments → Stitch Express** shows each step with a tick.
