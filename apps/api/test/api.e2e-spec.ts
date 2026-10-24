@@ -3753,6 +3753,71 @@ describe("Aggregated Aggregates API (e2e)", () => {
     });
   });
 
+  describe("Merchandising: collections and best sellers (docs/merchandising.md)", () => {
+    const bearer = (t: string) => ({ Authorization: `Bearer ${t}` });
+
+    it("lets staff build dated collections that the storefront sees only while live", async () => {
+      const buyer = await register("colbuyer");
+      const staff = await register("colstaff");
+      await prisma.user.update({ where: { email: `colstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      const body = { title: `Carport build ${run}`, subtitle: "Poles, beams and roofing", skus: ["aa-tmb-kit-pole-carport-kit-single-3x6-m", " AA-SND-02 "], rule: { query: "IBR", availability: "online" }, placements: ["HOMEPAGE", "DEPARTMENT:timber"] };
+
+      await http().post("/merchandising/staff/collections").set(bearer(buyer)).send(body).expect(403);
+      const created = await http().post("/merchandising/staff/collections").set(bearer(staff)).send(body).expect(201);
+      expect(created.body.slug).toBe(`carport-build-${run}`);
+      expect(created.body.skus).toEqual(["AA-TMB-KIT-POLE-CARPORT-KIT-SINGLE-3X6-M", "AA-SND-02"]);
+      expect(created.body.rule).toEqual({ query: "IBR", availability: "online" });
+
+      const live = async (placement: string) => ((await http().get(`/merchandising/collections?placement=${placement}`).expect(200)).body as { slug: string }[]).map((c) => c.slug);
+      expect(await live("HOMEPAGE")).toContain(`carport-build-${run}`);
+      expect(await live("DEPARTMENT:timber")).toContain(`carport-build-${run}`);
+      expect(await live("DEPARTMENT:garden-landscaping")).not.toContain(`carport-build-${run}`);
+      const page = await http().get(`/merchandising/collections/carport-build-${run}`).expect(200);
+      expect(page.body).toMatchObject({ title: body.title, placements: body.placements });
+      expect(page.body.id).toBeUndefined();
+
+      // Same link name twice; nothing to show; bad placement; dates the wrong way round.
+      await http().post("/merchandising/staff/collections").set(bearer(staff)).send(body).expect(409);
+      const bad = await http().post("/merchandising/staff/collections").set(bearer(staff)).send({ title: "Empty", placements: ["SIDEBAR"], startsAt: "2026-12-01", endsAt: "2026-11-01" }).expect(400);
+      expect(bad.body.message).toMatch(/Unknown placement.*Pick some products.*end date/);
+
+      // Scheduled for later: saved, but not live and no page yet.
+      const later = await http()
+        .post("/merchandising/staff/collections")
+        .set(bearer(staff))
+        .send({ title: `Back to site ${run}`, rule: { category: "ppe-site-safety" }, placements: ["HOMEPAGE"], startsAt: new Date(Date.now() + 86_400_000).toISOString() })
+        .expect(201);
+      expect(await live("HOMEPAGE")).not.toContain(later.body.slug);
+      await http().get(`/merchandising/collections/${later.body.slug}`).expect(404);
+
+      // Switched off, then deleted.
+      await http().put(`/merchandising/staff/collections/${created.body.id}`).set(bearer(staff)).send({ ...body, isActive: false }).expect(200);
+      expect(await live("HOMEPAGE")).not.toContain(`carport-build-${run}`);
+      const all = await http().get("/merchandising/staff/collections").set(bearer(staff)).expect(200);
+      expect(all.body.map((c: { slug: string }) => c.slug)).toEqual(expect.arrayContaining([`carport-build-${run}`, later.body.slug]));
+      await http().delete(`/merchandising/staff/collections/${created.body.id}`).set(bearer(staff)).expect(200);
+      await http().delete(`/merchandising/staff/collections/${later.body.id}`).set(bearer(staff)).expect(200);
+      await http().delete(`/merchandising/staff/collections/${later.body.id}`).set(bearer(staff)).expect(404);
+    });
+
+    it("ranks best sellers from paid, non-test orders and shows SKUs only — never counts", async () => {
+      const buyer = await register("tsbuyer");
+      const paid = async (sku: string, unit: string, isTest = false) => {
+        const res = await http().post("/orders").set(bearer(buyer)).send({ lines: [{ sku, unit, quantity: 6 }], deliveryDistanceKm: 20 }).expect(201);
+        await prisma.order.update({ where: { id: res.body.id }, data: { status: "CONFIRMED", paidAt: new Date(), isTest, deliveryProvince: "Free State" } });
+      };
+      for (let i = 0; i < 3; i++) await paid("AA-SND-06", "m3");
+      for (let i = 0; i < 5; i++) await paid("AA-SND-05", "m3", true);
+      const top = await http().get("/merchandising/top-sellers?days=30&province=Free%20State").expect(200);
+      expect(top.body.skus[0]).toBe("AA-SND-06");
+      expect(top.body.skus).not.toContain("AA-SND-05"); // test orders never count
+      expect(Object.keys(top.body).sort()).toEqual(["days", "province", "skus"]);
+      const provinces = await http().get("/merchandising/top-sellers/provinces").expect(200);
+      expect(provinces.body).toContain("Free State");
+      expect(JSON.stringify(provinces.body)).not.toMatch(/\d/);
+    });
+  });
+
   describe("Best With: pairings from paid orders, with staff pins and hides", () => {
     const bearer = (t: string) => ({ Authorization: `Bearer ${t}` });
 

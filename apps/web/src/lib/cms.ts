@@ -63,6 +63,8 @@ type Overlay = {
   isActive: boolean;
   description: string | null;
   featuredRank: number | null;
+  /** When the product was added to the store's database (for "New in store"). */
+  createdAt?: string;
   images: {
     id: string;
     altText: string | null;
@@ -113,6 +115,12 @@ const photos = (o: Overlay | undefined, name: string): ProductPhoto[] =>
       ? { credit: { text: img.credit, licence: img.licenceName, licenceUrl: img.licenceUrl ?? null, sourceUrl: img.sourceUrl ?? null } }
       : {}),
   }));
+
+/** When each product was added to the store, by SKU — empty when the API can't be reached. */
+export async function getAddedDates(): Promise<Map<string, Date>> {
+  const overlay = await getOverlay();
+  return new Map([...overlay.values()].filter((o) => o.createdAt).map((o) => [o.sku, new Date(o.createdAt!)]));
+}
 
 /** A product's lead photo, for thumbnails anywhere on the site (ProductThumb). */
 export type LeadPhoto = { src: string; alt: string };

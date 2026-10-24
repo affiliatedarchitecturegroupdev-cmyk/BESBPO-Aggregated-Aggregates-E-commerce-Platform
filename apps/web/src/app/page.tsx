@@ -17,6 +17,8 @@ import { RecentlyViewed } from "@/components/merchandising/RecentlyViewed";
 import { GroupCrossSell } from "@/components/merchandising/GroupCrossSell";
 import { HeroBanner } from "@/components/merchandising/HeroBanner";
 import { HeroSlideshow } from "@/components/merchandising/HeroSlideshow";
+import { HomeExpressRows, HomeMerchandising } from "@/components/merchandising/HomeMerchandising";
+import { CompareTray } from "@/components/product/CompareTray";
 import { IndustriesWeServe } from "@/components/merchandising/IndustriesWeServe";
 import { PlanYourBuild } from "@/components/merchandising/PlanYourBuild";
 import { ProjectTools } from "@/components/merchandising/ProjectTools";
@@ -35,7 +37,8 @@ import { getActivePromotions } from "@/lib/promotions";
 
 /**
  * Section order (Oct 2026): hero, the delivery checker and departments first —
- * find it, check delivery, shop — then AA 60/120 express, featured products and tools, building
+ * find it, check delivery, shop — then the product-led merchandising rows
+ * (docs/merchandising.md), AA 60/120 express with what qualifies, featured products and tools, building
  * supplies, the project tools (BOQ, credit, phased deliveries), the wider business (plant, services,
  * B2B bulk), and the why-us sections together.
  */
@@ -55,8 +58,11 @@ export default async function HomePage() {
       {/* The public location service: where's my nearest supplier, and what does delivery cost? */}
       <DeliveryBand />
       <DepartmentTiles />
-      {/* AA 60/120 express delivery — its own section, straight after the departments. */}
+      {/* Product-led sections from real data (collections, best sellers, buy online today, season, new, trending, brands). */}
+      <HomeMerchandising hiddenSkus={hiddenSkus} />
+      {/* AA 60/120 express delivery, with what qualifies and the under-R500 essentials. */}
       <ExpressBand />
+      <HomeExpressRows hiddenSkus={hiddenSkus} />
       <HeroSlideshow slides={slideshowSlides(content.slideshow)} intervalSeconds={content.slideshow.intervalSeconds} />
       <TrustBadges partnerSuppliers={partnerSuppliers} liveProvinces={liveProvinces} />
       {/* Returning visitors pick up where they left off; nothing shows on a first visit. */}
@@ -96,6 +102,7 @@ export default async function HomePage() {
       <CorporateSiteBand partnerSuppliers={partnerSuppliers} />
       <WhatsAppCta />
       <PromoStrip content={content.promo} />
+      <CompareTray />
     </>
   );
 }
