@@ -6,9 +6,16 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "outDir": ".test-out",
     "rootDir": "src"
   },
-  "files": ["src/lib/search-engine.ts", "src/lib/search-engine.test.ts"]
+  "files": [
+    "src/lib/search-engine.ts",
+    "src/lib/search-engine.test.ts",
+    "src/lib/product-families.ts",
+    "src/lib/product-families.test.ts"
+  ]
 }

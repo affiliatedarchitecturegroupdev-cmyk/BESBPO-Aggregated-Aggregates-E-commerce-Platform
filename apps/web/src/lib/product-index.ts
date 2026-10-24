@@ -8,6 +8,7 @@ import { ROOFING_PRODUCTS } from "@/data/roofing";
 import { SUPPLIES_PRODUCTS } from "@/data/supplies";
 import { STEEL_PRODUCTS } from "@/data/steel";
 import { UNIT_LABELS } from "@/lib/pricing";
+import { buildFamilies, familyParts } from "@/lib/product-families";
 import { createSearchIndex, type SearchOptions, type SearchResult } from "@/lib/search-engine";
 
 /**
@@ -158,4 +159,26 @@ const CATALOGUE_INDEX = createSearchIndex<CatalogueDoc>(
  */
 export function searchCatalogue(options: SearchOptions): SearchResult<CatalogueDoc> {
   return CATALOGUE_INDEX.search(options);
+}
+
+/** Product families over the whole catalogue (lib/product-families.ts): same thing, different sizes, 4 or more. */
+export const PRODUCT_FAMILIES = buildFamilies(PRODUCT_INDEX);
+
+export type FamilyMember = IndexedProduct & { variant: string };
+export type FamilyView = { key: string; title: string; members: FamilyMember[]; fromPrice: number | null; fromUnit: string | null; buyOnline: number };
+
+/** A family with each member's size label, cheapest buy-online price and how many can be bought online. */
+export function familyView(key: string, hidden: Set<string> = new Set()): FamilyView | null {
+  const family = PRODUCT_FAMILIES.families.get(key);
+  if (!family) return null;
+  const members = family.members.filter((m) => !hidden.has(m.sku)).map((m) => ({ ...m, variant: familyParts(m.name).variant }));
+  if (members.length === 0) return null;
+  const priced = members.filter((m) => m.fromPrice !== null).sort((a, b) => a.fromPrice! - b.fromPrice!);
+  return { key, title: family.title, members, fromPrice: priced[0]?.fromPrice ?? null, fromUnit: priced[0]?.fromUnit ?? null, buyOnline: priced.length };
+}
+
+/** The family a product belongs to, if any. */
+export function familyOfSku(sku: string, hidden?: Set<string>): FamilyView | null {
+  const key = PRODUCT_FAMILIES.familyOf.get(sku);
+  return key ? familyView(key, hidden) : null;
 }

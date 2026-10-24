@@ -3,7 +3,7 @@ import { DEPARTMENTS } from "@/data/departments";
 import { SITE_PAGES } from "@/data/site-pages";
 import { getHiddenSkus } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
-import { searchProducts } from "@/lib/product-index";
+import { familyOfSku, searchProducts } from "@/lib/product-index";
 
 export type Suggestion = { kind: "product" | "category" | "department" | "page"; href: string; label: string; detail?: string; sku?: string; categorySlug?: string };
 
@@ -20,14 +20,35 @@ export async function GET(request: Request) {
   const words = q.toLowerCase().split(/\s+/).filter(Boolean);
   const has = (text: string) => words.every((w) => text.toLowerCase().includes(w));
 
-  const products: Suggestion[] = searchProducts(q, hidden).map((p) => ({
-    kind: "product",
-    sku: p.sku,
-    categorySlug: p.categorySlug,
-    href: `/products/${p.slug}`,
-    label: p.name,
-    detail: p.fromPrice !== null ? `From ${formatZAR(p.fromPrice)} / ${p.fromUnit} · ${p.categoryName}` : `${p.categoryName} · price on quote`,
-  }));
+  // A product that comes in several sizes shows once, saying how many — unless the search names a size.
+  const bySize = /\d/.test(q);
+  const seen = new Set<string>();
+  const products: Suggestion[] = [];
+  for (const p of searchProducts(q, hidden, 300)) {
+    if (products.length >= 8) break;
+    const family = bySize ? null : familyOfSku(p.sku, hidden);
+    if (family) {
+      if (seen.has(family.key)) continue;
+      seen.add(family.key);
+      products.push({
+        kind: "product",
+        sku: p.sku,
+        categorySlug: p.categorySlug,
+        href: `/products/${p.slug}#sizes`,
+        label: family.title,
+        detail: `${family.members.length} sizes · ${family.fromPrice !== null ? `from ${formatZAR(family.fromPrice)} / ${family.fromUnit}` : "price on quote"} · ${p.categoryName}`,
+      });
+      continue;
+    }
+    products.push({
+      kind: "product",
+      sku: p.sku,
+      categorySlug: p.categorySlug,
+      href: `/products/${p.slug}`,
+      label: p.name,
+      detail: p.fromPrice !== null ? `From ${formatZAR(p.fromPrice)} / ${p.fromUnit} · ${p.categoryName}` : `${p.categoryName} · price on quote`,
+    });
+  }
   const departments: Suggestion[] = DEPARTMENTS.filter((d) => has(`${d.name} ${d.blurb}`))
     .slice(0, 2)
     .map((d) => ({ kind: "department", href: d.href, label: d.name, detail: "Department" }));

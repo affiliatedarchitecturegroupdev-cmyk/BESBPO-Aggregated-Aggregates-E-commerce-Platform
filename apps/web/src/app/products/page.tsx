@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { FamilyCard } from "@/components/product/FamilyCard";
 import { ListingCard } from "@/components/product/ListingCard";
 import { PromoSlot } from "@/components/merchandising/PromoSlot";
 import { RecentlyViewedRow } from "@/components/merchandising/RecentlyViewedRow";
@@ -9,7 +10,8 @@ import { DEPARTMENTS } from "@/data/departments";
 import { INDUSTRIES } from "@/data/industries";
 import { ROOF_TILE_CATEGORIES } from "@/data/masonry";
 import { getHiddenSkus } from "@/lib/cms";
-import { FACETS, PRODUCT_INDEX, searchCatalogue, type FacetKey } from "@/lib/product-index";
+import { groupForListing } from "@/lib/product-families";
+import { FACETS, familyView, PRODUCT_FAMILIES, PRODUCT_INDEX, searchCatalogue, type FacetKey } from "@/lib/product-index";
 import { getActivePromotions } from "@/lib/promotions";
 import { SORT_LABELS, type SortKey } from "@/lib/search-engine";
 
@@ -29,6 +31,8 @@ type SearchParams = {
   sold?: string;
   brand?: string;
   standard?: string;
+  /** "all" lists every size as its own card; otherwise sizes of one product are grouped (docs/product-families.md). */
+  view?: string;
   /** Scopes: an industry's categories, or a catalogue line (kept for older links). */
   industry?: string;
   group?: string;
@@ -91,7 +95,17 @@ export default async function ProductListingPage({ searchParams }: { searchParam
   const query = searchParams.q?.trim().slice(0, 100) ?? "";
   const sort: SortKey = searchParams.sort && searchParams.sort in SORT_LABELS ? (searchParams.sort as SortKey) : "relevance";
   const filters = facetFilters(searchParams);
-  const result = searchCatalogue({ query, filters, sort, exclude, page: Number(searchParams.page) || 1, pageSize: PAGE_SIZE });
+  // Sizes of one product show as one card — unless asked otherwise, or the search names a size ("38x114", "6 mm"),
+  // when the shopper wants that exact product in front of them.
+  const searchesForSize = /\d/.test(query);
+  const grouped = searchParams.view !== "all" && !searchesForSize;
+  const all = searchCatalogue({ query, filters, sort, exclude, pageSize: 10_000 });
+  const cards = grouped ? groupForListing(all.hits, PRODUCT_FAMILIES.families, PRODUCT_FAMILIES.familyOf) : all.hits.map((product) => ({ kind: "product" as const, product }));
+  const pages = Math.max(1, Math.ceil(cards.length / PAGE_SIZE));
+  const page = Math.min(Math.max(1, Math.floor(Number(searchParams.page) || 1)), pages);
+  const pageCards = cards.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const familyCards = cards.filter((c) => c.kind === "family").length;
+  const result = { ...all, page, pages };
 
   const category = CATEGORIES.find((c) => c.slug === searchParams.category);
   const department = DEPARTMENTS.find((d) => d.slug === searchParams.department);
@@ -214,6 +228,7 @@ export default async function ProductListingPage({ searchParams }: { searchParam
           <div className="flex flex-wrap items-center justify-between gap-3">
             <p className="font-body text-sm text-slate">
               {result.total.toLocaleString("en-ZA")} {result.total === 1 ? "product" : "products"}
+              {grouped && familyCards > 0 && ` (${cards.length.toLocaleString("en-ZA")} cards — sizes shown together)`}
               {result.pages > 1 && ` · page ${result.page} of ${result.pages}`}
             </p>
             <nav className="flex flex-wrap items-center gap-1 font-body text-xs" aria-label="Sort">
@@ -225,6 +240,22 @@ export default async function ProductListingPage({ searchParams }: { searchParam
               ))}
             </nav>
           </div>
+          {grouped && familyCards > 0 && (
+            <p className="mt-3 rounded-sm border border-ochre-gold/40 bg-ochre-gold/10 px-4 py-2.5 font-body text-sm text-basalt">
+              Products that come in several sizes are shown together — every size is listed on the card.{" "}
+              <Link href={href({ view: "all" })} className="font-semibold text-seam-blue hover:underline">
+                Show every size separately
+              </Link>
+            </p>
+          )}
+          {searchParams.view === "all" && !searchesForSize && (
+            <p className="mt-3 rounded-sm border border-basalt/10 bg-white px-4 py-2.5 font-body text-sm text-basalt">
+              Showing every size as its own product.{" "}
+              <Link href={href({ view: undefined })} className="font-semibold text-seam-blue hover:underline">
+                Group sizes together
+              </Link>
+            </p>
+          )}
           {result.total === 0 ? (
             <div className="mt-4 rounded-sm border border-basalt/10 bg-white p-8 text-center font-body text-sm text-slate">
               No products match{query ? ` “${query}”` : " these filters"}.{" "}
@@ -233,9 +264,11 @@ export default async function ProductListingPage({ searchParams }: { searchParam
             </div>
           ) : (
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {result.hits.map((p) => (
-                <ListingCard key={p.sku} product={p} />
-              ))}
+              {pageCards.map((c) => {
+                if (c.kind === "product") return <ListingCard key={c.product.sku} product={c.product} />;
+                const family = familyView(c.family.key, exclude);
+                return family ? <FamilyCard key={c.family.key} family={family} shown={c.shown} /> : null;
+              })}
             </div>
           )}
           {result.pages > 1 && (
