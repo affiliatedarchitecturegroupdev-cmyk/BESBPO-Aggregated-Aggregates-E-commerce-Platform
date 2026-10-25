@@ -15,7 +15,7 @@ import {
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Public, Roles } from "../common/auth/decorators";
-import { ListSuppliersQuery, NearestQuery, SupplierDto } from "./suppliers.dto";
+import { AvailabilityQuery, ListSuppliersQuery, NearestQuery, SupplierDto } from "./suppliers.dto";
 import { SuppliersService } from "./suppliers.service";
 
 @Controller("suppliers")
@@ -41,6 +41,14 @@ export class SuppliersController {
   @Get("nearest")
   nearest(@Query() query: NearestQuery) {
     return this.suppliers.nearest(query.lat, query.lng, query.category);
+  }
+
+  /** Public "Available near you" for one product: counts, provinces and the nearest town — never names or contacts. */
+  @Public()
+  @Get("availability")
+  availability(@Query() query: AvailabilityQuery) {
+    const at = query.lat !== undefined && query.lng !== undefined ? { latitude: query.lat, longitude: query.lng } : null;
+    return this.suppliers.availability(query.sku, at);
   }
 
   @Roles("STAFF", "ADMIN")

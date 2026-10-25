@@ -30,6 +30,7 @@
       { "date": "2026-09-26", "changes": "First published." }
     ],
     "cookie-policy.md": [
+      { "date": "2026-10-25", "changes": "Explains the town or location kept in your browser for \"Available near you\" on product pages, and how to remove it." },
       { "date": "2026-10-24", "changes": "Explains the session storage that counts each banner and product section once per visit." },
       { "date": "2026-10-12", "changes": "Our website and email addresses moved to the aaggregates.store domain." },
       { "date": "2026-10-11", "changes": "Explains the browser storage behind \"Recently viewed\" and the shopping assistant's chat, and how to clear them." },

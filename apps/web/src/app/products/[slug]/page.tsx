@@ -3,6 +3,7 @@ import { FamilySizes } from "@/components/product/FamilySizes";
 import { CompareToggle } from "@/components/product/CompareToggle";
 import { CompareTray } from "@/components/product/CompareTray";
 import { LeadTimeNote } from "@/components/delivery/LeadTimeNote";
+import { AvailableNearYou } from "@/components/product/AvailableNearYou";
 import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
 import { ProductReviews } from "@/components/reviews/ProductReviews";
 import { RatingSummaryLink } from "@/components/reviews/RatingSummaryLink";
@@ -189,6 +190,7 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
           )}
           <p className="mt-4 whitespace-pre-line font-body text-sm text-slate">{product.description ?? category.description}</p>
           <LeadTimeNote categorySlug={product.categorySlug} />
+          <AvailableNearYou sku={product.sku} />
           <div id="calculator" className="mt-6 scroll-mt-24">
             <BulkBagCalculator product={product} />
           </div>

@@ -81,5 +81,6 @@ The overview shows **"Priced online: X of Y"**: how much of the catalogue can be
 
 ## Still to come
 
-- **4.4 Availability.** "In stock near you", using the supplier-to-product mapping this builds.
+(4.4 Availability is built: `docs/availability.md`.)
+
 - **Supplier-specific delivery costs** on the order, using which supplier's price won.

@@ -26,6 +26,11 @@ information about your visit.
   session storage notes which banners and product sections you have
   already seen, so each is counted once per visit in our daily totals;
   nothing about you is sent with those counts.
+  If you choose a town, or share your location, to see which products a
+  partner supplier near you lists, that town (or your location rounded to
+  about a kilometre) is kept only in your browser's local storage. It is
+  sent with each such lookup but we don't store it; choose **Forget my
+  town**, or clear this site's data in your browser, to remove it.
 - **Analytics cookies**: help us understand how the Platform is used, so
   we can improve it. These are only set with your consent, where required
   by law.

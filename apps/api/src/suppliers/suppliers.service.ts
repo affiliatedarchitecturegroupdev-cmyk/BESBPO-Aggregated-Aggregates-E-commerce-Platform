@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { Prisma } from "@aggregates/database";
 import { PrismaService } from "../common/prisma.service";
+import { availability } from "./availability";
 import { coordinateError, haversineKm, parseSupplierCsv, SERVICE_PROVINCES, suppliersToCsv, type CsvError } from "./supplier-csv";
 import { SupplierDto } from "./suppliers.dto";
 
@@ -174,6 +175,29 @@ export class SuppliersService {
     }
     if (!best) return { found: false as const };
     return { found: true as const, town: best.city, province: best.province, distanceKm: Math.round(best.distanceKm * 10) / 10 };
+  }
+
+  /**
+   * "Available near you" (ROADMAP 4.4, docs/availability.md) for one product: the partner suppliers that list it
+   * (a current approved price, or a code learned from their price lists) and those that supply its category.
+   * Active, verified partners only. The shopper's location is used for the distance and never stored.
+   */
+  async availability(sku: string, at: { latitude: number; longitude: number } | null) {
+    const product = await this.prisma.product.findUnique({ where: { sku }, select: { isActive: true, category: { select: { slug: true } } } });
+    if (!product?.isActive) throw new NotFoundException("Product not found.");
+    const now = new Date();
+    const [prices, codes] = await Promise.all([
+      this.prisma.productPrice.findMany({ where: { sku, isActive: true, supplierLocationId: { not: null }, OR: [{ validUntil: null }, { validUntil: { gt: now } }] }, select: { supplierLocationId: true } }),
+      this.prisma.supplierProductCode.findMany({ where: { sku }, select: { supplierLocationId: true } }),
+    ]);
+    const listedIds = [...new Set([...prices.map((p) => p.supplierLocationId!), ...codes.map((c) => c.supplierLocationId)])];
+    const select = { id: true, city: true, province: true, latitude: true, longitude: true } as const;
+    const partner = { isActive: true, isVerifiedPartner: true };
+    const [listed, range] = await Promise.all([
+      listedIds.length ? this.prisma.supplierLocation.findMany({ where: { ...partner, id: { in: listedIds } }, select }) : [],
+      this.prisma.supplierLocation.findMany({ where: { ...partner, categorySlugs: { has: product.category.slug } }, select }),
+    ]);
+    return availability(listed, range, at);
   }
 
   private async save(id: string | null, dto: SupplierDto) {
