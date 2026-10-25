@@ -9,7 +9,7 @@ import { B2B_CATEGORIES, CATEGORIES, CORE_CATEGORIES, MASONRY_CATEGORIES, ROOFIN
 import { DEPARTMENTS } from "@/data/departments";
 import { INDUSTRIES } from "@/data/industries";
 import { ROOF_TILE_CATEGORIES } from "@/data/masonry";
-import { getHiddenSkus, getLivePrices } from "@/lib/cms";
+import { getAddedProducts, getHiddenSkus, getLivePrices } from "@/lib/cms";
 import { groupForListing } from "@/lib/product-families";
 import { FACETS, familyView, PRODUCT_FAMILIES, PRODUCT_INDEX, searchCatalogue, type FacetKey } from "@/lib/product-index";
 import { getActivePromotions } from "@/lib/promotions";
@@ -86,12 +86,12 @@ const FACET_PARAM: Record<FacetKey, keyof SearchParams> = { department: "departm
  * quick add-to-cart and compare. Older links (group, grading, sale) still work.
  */
 export default async function ProductListingPage({ searchParams }: { searchParams: SearchParams }) {
-  const [hidden, promotions, synonyms, live] = await Promise.all([getHiddenSkus(), getActivePromotions({ category: searchParams.category, industry: searchParams.industry }), getStaffSynonyms(), getLivePrices()]);
+  const [hidden, promotions, synonyms, live, added] = await Promise.all([getHiddenSkus(), getActivePromotions({ category: searchParams.category, industry: searchParams.industry }), getStaffSynonyms(), getLivePrices(), getAddedProducts()]);
   const industry = INDUSTRIES.find((i) => i.slug === searchParams.industry);
   const group = GROUPS[searchParams.group ?? ""];
   const scope = industry ? industry.relevantCategorySlugs : group?.categories;
   const exclude = new Set(hidden);
-  if (scope) for (const p of PRODUCT_INDEX) if (!scope.includes(p.categorySlug)) exclude.add(p.sku);
+  if (scope) for (const p of [...PRODUCT_INDEX, ...added]) if (!scope.includes(p.categorySlug)) exclude.add(p.sku);
 
   const query = searchParams.q?.trim().slice(0, 100) ?? "";
   const sort: SortKey = searchParams.sort && searchParams.sort in SORT_LABELS ? (searchParams.sort as SortKey) : "relevance";
@@ -100,7 +100,7 @@ export default async function ProductListingPage({ searchParams }: { searchParam
   // when the shopper wants that exact product in front of them.
   const searchesForSize = /\d/.test(query);
   const grouped = searchParams.view !== "all" && !searchesForSize;
-  const all = searchCatalogue({ query, filters, sort, exclude, pageSize: 10_000 }, synonyms, live);
+  const all = searchCatalogue({ query, filters, sort, exclude, pageSize: 10_000 }, synonyms, live, added);
   const cards = grouped ? groupForListing(all.hits, PRODUCT_FAMILIES.families, PRODUCT_FAMILIES.familyOf) : all.hits.map((product) => ({ kind: "product" as const, product }));
   const pages = Math.max(1, Math.ceil(cards.length / PAGE_SIZE));
   const page = Math.min(Math.max(1, Math.floor(Number(searchParams.page) || 1)), pages);

@@ -90,8 +90,22 @@ export const QUOTABLE: Quotable[] = [
 
 const BY_SKU = new Map(QUOTABLE.map((q) => [q.sku, q]));
 
+// Products staff added in Admin → Catalogue import (docs/catalogue-import.md) aren't in the files above: the root
+// layout hands them over at runtime (AddedProductsProvider), before any page renders.
+let added: { key: string; list: Quotable[]; bySku: Map<string, Quotable>; all: Quotable[] } = { key: "", list: [], bySku: new Map(), all: QUOTABLE };
+
+export function setAddedQuotable(list: Quotable[]) {
+  const key = list.map((q) => `${q.sku}:${q.units.map((u) => `${u.code}=${u.retailPrice}`).join("+")}`).join(",");
+  if (key !== added.key) added = { key, list, bySku: new Map(list.map((q) => [q.sku, q])), all: list.length ? [...QUOTABLE, ...list] : QUOTABLE };
+}
+
+/** Everything that can go in a cart or a quote, including products staff added. */
+export function allQuotable(): Quotable[] {
+  return added.all;
+}
+
 export function findQuotable(sku: string): Quotable | undefined {
-  return BY_SKU.get(sku);
+  return BY_SKU.get(sku) ?? added.bySku.get(sku);
 }
 
 /** Whole units only for bags, drums and other packaged units; bulk can be fractional. */

@@ -4258,4 +4258,103 @@ describe("Aggregated Aggregates API (e2e)", () => {
       await prisma.supplierPriceList.deleteMany({ where: { id: { in: [list.id, next.id, mine.id] } } });
     });
   });
+  describe("Catalogue import: staff add new products from a file (docs/catalogue-import.md)", () => {
+    const bearer = (t: string) => ({ Authorization: `Bearer ${t}` });
+    const POLE = "AA-TMB-POLE-CCA-5075-1-8";
+    const priceOf = async (sku: string, unit: string) => (await http().post("/orders/price").send({ lines: [{ sku, unit, quantity: 2 }], deliveryDistanceKm: 10 }).expect(200)).body;
+    const added: string[] = [];
+
+    afterAll(async () => {
+      await prisma.productPrice.deleteMany({ where: { sku: { in: added } } });
+      await prisma.supplierProductCode.deleteMany({ where: { supplierCode: { startsWith: `CI-${run}` } } });
+      await prisma.product.deleteMany({ where: { sku: { in: added } } });
+    });
+
+    it("previews every row, adds the new products quote-only, learns the supplier's codes and sends costs for approval", async () => {
+      const buyer = await register("cibuyer");
+      const staff = await register("cistaff");
+      await prisma.user.update({ where: { email: `cistaff-${run}@example.com` }, data: { role: "STAFF" } });
+      const supplier = await prisma.supplierLocation.findFirstOrThrow({ where: { isActive: true } });
+      const validUntil = new Date(Date.now() + 30 * 86_400_000).toISOString().slice(0, 10);
+      const csv = [
+        "Shade Co — new lines",
+        "name,category,unit,brand,size,supplier_code,cost,description",
+        `Shade net 80% 3 x 50 m ${run},Acoustic Ceilings & Sound Insulation,roll,Alnet,3 × 50 m,CI-${run}-1,"1 000,00",Knitted HDPE shade net`,
+        `IPE 200 beam ${run},structural-steel,6m; 12m,,,CI-${run}-2,,`,
+        `CCA Treated Pole 50–75 mm × 1.8 m,treated-poles-droppers,each,,,CI-${run}-3,40,`,
+        `Stone ${run},crushed-stone,ton,,,,,`,
+        `Mystery ${run},nowhere,each,,,,,`,
+      ].join("\n");
+      const upload = (as: string, fields: Record<string, string> = {}) => http().post("/catalogue-import/staff").set(bearer(as)).field(fields).attach("file", Buffer.from(csv), "shade-co.csv");
+
+      await upload(buyer).expect(403);
+      await upload(staff, { validUntil: "2020-01-01" }).expect(400);
+      const preview = (await upload(staff, { supplierLocationId: supplier.id, validUntil }).expect(201)).body;
+      expect(preview).toMatchObject({ status: "PREVIEW", fileName: "shade-co.csv", supplierName: supplier.name, counts: { NEW: 2, EXISTS: 1, PROBLEM: 2, withCost: 2 } });
+      const [net, beam, pole, stone, mystery] = preview.rows;
+      expect(net).toMatchObject({ status: "NEW", categorySlug: "acoustic-insulation", units: ["ROLL"], unitLabels: ["× roll"], brand: "Alnet", size: "3 × 50 m", cost: 1000 });
+      expect(net.sku).toMatch(/^AA-AI-SHADE-NET-80PCT-3-X-50-M-/);
+      expect(beam).toMatchObject({ status: "NEW", units: ["LENGTH_6M", "LENGTH_12M"] });
+      expect(pole).toMatchObject({ status: "EXISTS", existingSku: POLE, cost: 40 });
+      expect(stone.problem).toMatch(/own price bands/);
+      expect(mystery.problem).toMatch(/no category/);
+      added.push(net.sku, beam.sku);
+
+      // Nothing is on the store until staff add it.
+      expect(await prisma.product.count({ where: { sku: { in: added } } })).toBe(0);
+      expect(((await http().get("/catalogue-import/products").expect(200)).body as { sku: string }[]).some((p) => p.sku === net.sku)).toBe(false);
+      await http().post(`/catalogue-import/staff/${preview.id}/apply`).set(bearer(buyer)).expect(403);
+      const applied = (await http().post(`/catalogue-import/staff/${preview.id}/apply`).set(bearer(staff)).expect(200)).body;
+      expect(applied).toMatchObject({ status: "APPLIED", priceListId: expect.any(String) });
+      await http().post(`/catalogue-import/staff/${preview.id}/apply`).set(bearer(staff)).expect(400);
+      await http().post(`/catalogue-import/staff/${preview.id}/discard`).set(bearer(staff)).expect(400);
+
+      // The storefront sees the new products — never costs, suppliers or codes.
+      const publicList = (await http().get("/catalogue-import/products").expect(200)).body as { sku: string }[];
+      const shown = publicList.find((p) => p.sku === net.sku);
+      expect(shown).toEqual({
+        sku: net.sku,
+        slug: net.slug,
+        name: `Shade net 80% 3 x 50 m ${run}`,
+        categorySlug: "acoustic-insulation",
+        brand: "Alnet",
+        gradingStandard: null,
+        unitSize: "3 × 50 m",
+        description: "Knitted HDPE shade net",
+        units: [{ unit: "ROLL", label: "× roll" }],
+        addedAt: expect.any(String),
+      });
+      expect(JSON.stringify(publicList)).not.toMatch(new RegExp(`CI-${run}|${supplier.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`));
+
+      // Quote-only until a supplier price is approved; the steel beam prices in the steel family.
+      expect(await priceOf(net.sku, "ROLL")).toMatchObject({ is_quote_only: true });
+      expect(await priceOf(beam.sku, "LENGTH_12M")).toMatchObject({ is_quote_only: true });
+      await http().post("/orders/price").send({ lines: [{ sku: net.sku, unit: "EACH", quantity: 1 }], deliveryDistanceKm: 10 }).expect(422);
+
+      // The supplier's codes are learned, for the new products and the existing pole alike.
+      const codes = await prisma.supplierProductCode.findMany({ where: { supplierLocationId: supplier.id, supplierCode: { startsWith: `CI-${run}` } }, orderBy: { supplierCode: "asc" } });
+      expect(codes.map((c) => c.sku)).toEqual([net.sku, beam.sku, POLE]);
+
+      // The costs wait in the supplier's price list; approving them makes the new product buyable.
+      const list = (await http().get(`/prices/staff/lists/${applied.priceListId}`).set(bearer(staff)).expect(200)).body;
+      expect(list).toMatchObject({ supplierName: supplier.name, fileName: "shade-co.csv" });
+      const netLine = list.lines.find((l: { sku: string }) => l.sku === net.sku);
+      expect(netLine).toMatchObject({ unit: "ROLL", status: "PENDING" });
+      expect(Number(netLine.suggestedPrice)).toBe(1080); // cost 1,000 + the standard 8%
+      await http().post(`/prices/staff/lines/${netLine.id}/approve`).set(bearer(staff)).send({}).expect(200);
+      const priced = await priceOf(net.sku, "ROLL");
+      expect(priced.is_quote_only).toBe(false);
+      expect(priced.lines[0]).toMatchObject({ unit_price: 1080, total: 2160 });
+      await prisma.supplierPriceList.delete({ where: { id: applied.priceListId } });
+
+      // A preview can be discarded; the list shows every import.
+      const second = (await upload(staff).expect(201)).body;
+      expect(second.counts).toMatchObject({ NEW: 0, EXISTS: 3 });
+      await http().post(`/catalogue-import/staff/${second.id}/apply`).set(bearer(staff)).expect(400); // nothing new, no supplier
+      expect((await http().post(`/catalogue-import/staff/${second.id}/discard`).set(bearer(staff)).expect(200)).body.status).toBe("DISCARDED");
+      const imports = (await http().get("/catalogue-import/staff").set(bearer(staff)).expect(200)).body;
+      expect(imports.slice(0, 2).map((i: { id: string }) => i.id)).toEqual([second.id, preview.id]);
+      await http().post("/catalogue-import/staff").set(bearer(staff)).attach("file", Buffer.from("a,b\n1,2"), "x.csv").expect(400);
+    });
+  });
 });

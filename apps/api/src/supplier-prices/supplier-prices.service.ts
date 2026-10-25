@@ -97,6 +97,26 @@ export class SupplierPricesService {
     if (rows.length) await this.addLines(list.id, rows, null, quote.id);
   }
 
+  /**
+   * Costs given with a catalogue import (docs/catalogue-import.md) become one of the supplier's price lists, matched
+   * and suggested exactly like an upload — nothing is priced until staff approve it. Returns the list's id.
+   */
+  async fromCatalogueImport(input: { supplierLocationId: string; supplierName: string; fileName: string; validUntil: Date | null; rows: PriceRow[]; userId: string }) {
+    const list = await this.prisma.supplierPriceList.create({
+      data: {
+        source: PriceListSource.SUPPLIER_LIST,
+        supplierLocationId: input.supplierLocationId,
+        supplierName: input.supplierName.slice(0, 120),
+        fileName: input.fileName,
+        validUntil: input.validUntil,
+        notes: "Costs given with a catalogue import — the products were added from the same file.",
+        uploadedById: input.userId,
+      },
+    });
+    await this.addLines(list.id, input.rows, input.supplierLocationId);
+    return list.id;
+  }
+
   private async addLines(priceListId: string, rows: PriceRow[], supplierLocationId: string | null, quoteId: string | null = null) {
     const catalogue = await this.catalogue();
     const codes = supplierLocationId
@@ -431,7 +451,8 @@ export class SupplierPricesService {
 
   // --- Helpers ---------------------------------------------------------------------------------------------------
 
-  private validUntil(value?: string | null): Date | null {
+  /** A valid-until date as typed ("2026-11-30" means the end of that day in South Africa); never in the past. */
+  validUntil(value?: string | null): Date | null {
     if (!value) return null;
     const date = new Date(/^\d{4}-\d{2}-\d{2}$/.test(value) ? `${value}T23:59:59+02:00` : value);
     if (Number.isNaN(date.getTime())) throw new BadRequestException("The valid-until date isn't a date.");
@@ -439,9 +460,10 @@ export class SupplierPricesService {
     return date;
   }
 
-  private read(file: Upload) {
-    if (!file?.buffer?.length) throw new BadRequestException("Choose the price list (Excel .xlsx or .csv).");
-    if (file.size > MAX_PRICE_LIST_BYTES) throw new BadRequestException("That file is over 5 MB — save just the price list and try again.");
+  /** The rows of an uploaded Excel (.xlsx) or CSV file — price lists, and catalogue imports (docs/catalogue-import.md). */
+  read(file: Upload, what = "price list") {
+    if (!file?.buffer?.length) throw new BadRequestException(`Choose the ${what} (Excel .xlsx or .csv).`);
+    if (file.size > MAX_PRICE_LIST_BYTES) throw new BadRequestException(`That file is over 5 MB — save just the ${what} and try again.`);
     const type = detectScheduleFileType(file.buffer, file.originalname);
     if (!type || (type.extension !== "xlsx" && type.extension !== "csv")) {
       throw new BadRequestException(/\.xls$/i.test(file.originalname ?? "") ? "Save it as an Excel workbook (.xlsx) or CSV — the older .xls format can't be read." : "Upload an Excel workbook (.xlsx) or a CSV file.");
@@ -452,7 +474,7 @@ export class SupplierPricesService {
     } catch (error) {
       throw new BadRequestException((error as Error).message || "We couldn't read that file.");
     }
-    const fileName = (file.originalname ?? `price-list.${type.extension}`).replace(/[^\w.\- ()]/g, "_").slice(0, 120);
+    const fileName = (file.originalname ?? `${what.replace(/ /g, "-")}.${type.extension}`).replace(/[^\w.\- ()]/g, "_").slice(0, 120);
     return { rows, fileName };
   }
 

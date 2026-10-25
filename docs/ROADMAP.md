@@ -418,7 +418,7 @@ Anchors and bolts by grade; chemical anchors; nails by the kg; screws by type an
 - **Unit weights for heavy goods:**
   - manufacturers' published weights (with sources) for bricks, blocks, roof sheets, steel mesh and sections, timber and poles, and the new heavy ranges;
   - the premium's per-ton charge then works with no code change (`docs/delivery-premium.md`).
-- **Bulk catalogue tooling:** a staff CSV import for new products (name, category, units, specs, supplier code), so a whole supplier range goes in at once rather than by hand.
+- **Bulk catalogue tooling: built 25 Oct 2026** (`docs/catalogue-import.md`): Admin → Catalogue import adds new products from a CSV or Excel file, checked and previewed first, quote-only until a supplier price is approved. With a supplier chosen, its codes are learned and its costs go to its price list for approval.
 - **Catalogue gaps report (2.0): built 24 Oct 2026** (`docs/search-insights.md`): Admin → Insights → Search & gaps, fed by empty searches and unmatched BOQ lines, with counts and an open / added / ignored status. RFQs and quotations are still to feed it.
 
 ---

@@ -28,7 +28,8 @@ Costs: the business is not VAT-registered (`docs/vat.md`), so a supplier's cost 
    - Staff are emailed (`PRICE_LIST_UPLOADED`, switchable on Admin → Notifications) with the row counts and a link. The email carries no costs.
    - **Staff still approve every price.**
    - The supplier sees each of its lines with the product we matched and its status: with our team, accepted, couldn't match, or not used. It **never** sees our sell price, our markup or other suppliers' prices.
-4. **Retail benchmarks** remain the fallback for products no supplier has priced: at least two SA retailers, lowest × 1.08, promotions excluded (`PRICING_POLICY.md`).
+4. **A catalogue import with a supplier chosen** (`docs/catalogue-import.md`). Products that aren't in the catalogue yet are added from the file, and the costs on the same rows become one of the supplier's price lists, approved as usual.
+5. **Retail benchmarks** remain the fallback for products no supplier has priced: at least two SA retailers, lowest × 1.08, promotions excluded (`PRICING_POLICY.md`).
 
 ## Matching
 

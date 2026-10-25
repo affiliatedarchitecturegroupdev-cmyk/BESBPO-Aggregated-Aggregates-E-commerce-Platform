@@ -50,6 +50,8 @@ export async function adminCatalogue(): Promise<AdminProduct[] | null> {
     { token: sessionToken() },
   );
   if (!result.ok) return null;
+  // Products staff added in Admin → Catalogue import, hidden ones too (docs/catalogue-import.md).
+  const added = await api<{ sku: string; slug: string; name: string; categorySlug: string; gradingStandard: string | null; units: { label: string }[] }[]>("/catalogue-import/staff/products", { token: sessionToken() });
   const bySku = new Map(result.data.map((o) => [o.sku, o]));
   const overlay = (sku: string) => {
     const o = bySku.get(sku);
@@ -113,6 +115,16 @@ export async function adminCatalogue(): Promise<AdminProduct[] | null> {
       categorySlug: p.categorySlug,
       gradingStandard: p.gradingStandard,
       priceSummary: p.units.map((u) => (u.prices ? `${formatZAR(u.prices.RETAIL)}/${u.label}` : `${u.label}: on request`)).join(" · "),
+      packaged: true,
+      ...overlay(p.sku),
+    })),
+    ...(added.ok ? added.data : []).map((p) => ({
+      sku: p.sku,
+      slug: p.slug,
+      name: p.name,
+      categorySlug: p.categorySlug,
+      gradingStandard: p.gradingStandard,
+      priceSummary: `${p.units.map((u) => u.label.replace(/^× /, "")).join(", ")}: on request unless a supplier price is live`,
       packaged: true,
       ...overlay(p.sku),
     })),

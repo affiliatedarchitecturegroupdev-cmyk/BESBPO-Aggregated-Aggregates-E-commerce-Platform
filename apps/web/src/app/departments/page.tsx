@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CATEGORIES } from "@/data/categories";
 import { DEPARTMENTS, SERVICE_LINKS } from "@/data/departments";
-import { getHiddenSkus } from "@/lib/cms";
+import { getAddedProducts, getHiddenSkus, getLivePrices } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
-import { PRODUCT_INDEX } from "@/lib/product-index";
+import { liveProductIndex } from "@/lib/product-index";
 
 export const metadata: Metadata = {
   title: "All Departments",
@@ -17,8 +17,9 @@ const CATEGORY = new Map(CATEGORIES.map((c) => [c.slug, c]));
 
 /** The full range, department by department, with every category, its product count and lowest online price. */
 export default async function DepartmentsPage() {
-  const hidden = new Set(await getHiddenSkus());
-  const products = PRODUCT_INDEX.filter((p) => !hidden.has(p.sku));
+  const [hiddenSkus, live, added] = await Promise.all([getHiddenSkus(), getLivePrices(), getAddedProducts()]);
+  const hidden = new Set(hiddenSkus);
+  const products = liveProductIndex(live, added).filter((p) => !hidden.has(p.sku));
   const pricedTotal = products.filter((p) => p.fromPrice !== null).length;
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">

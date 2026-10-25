@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ProductThumb } from "@/components/product/ProductThumb";
 import { DEPARTMENTS } from "@/data/departments";
-import { getHiddenSkus, getLivePrices } from "@/lib/cms";
+import { getAddedProducts, getHiddenSkus, getLivePrices } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
 import { liveProductIndex } from "@/lib/product-index";
 import { getVatRegistered } from "@/lib/tax";
@@ -19,9 +19,9 @@ export const metadata: Metadata = {
  * prices, or the pricing workbook). Everything else is quoted.
  */
 export default async function BuyOnlinePage() {
-  const [hiddenSkus, vatRegistered, live] = await Promise.all([getHiddenSkus(), getVatRegistered(), getLivePrices()]);
+  const [hiddenSkus, vatRegistered, live, added] = await Promise.all([getHiddenSkus(), getVatRegistered(), getLivePrices(), getAddedProducts()]);
   const hidden = new Set(hiddenSkus);
-  const priced = liveProductIndex(live).filter((p) => p.fromPrice !== null && !hidden.has(p.sku));
+  const priced = liveProductIndex(live, added).filter((p) => p.fromPrice !== null && !hidden.has(p.sku));
   const departments = DEPARTMENTS.map((d) => ({ d, items: priced.filter((p) => p.departmentSlug === d.slug).sort((a, b) => a.name.localeCompare(b.name)) })).filter((x) => x.items.length > 0);
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">

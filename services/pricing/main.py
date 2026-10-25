@@ -293,11 +293,27 @@ class PriceOverrideRequest(BaseModel):
     markup_percent: Decimal = Field(ge=0, le=1000)
 
 
+class AddedUnitRequest(BaseModel):
+    unit: PackagedUnitName
+    label: str = Field(min_length=1, max_length=60)
+
+
+class AddedProductRequest(BaseModel):
+    """A product staff added in Admin → Catalogue import (docs/catalogue-import.md), sent by the API with the order."""
+
+    sku: str = Field(pattern=r"^[A-Z0-9-]{3,60}$")
+    name: str = Field(min_length=1, max_length=300)
+    category_slug: str = Field(min_length=1, max_length=120)
+    line: Literal["cement", "steel", "masonry", "roofing", "supplies"]
+    units: list[AddedUnitRequest] = Field(min_length=1, max_length=20)
+
+
 class OrderRequest(BaseModel):
     lines: list[OrderLineRequest] = Field(min_length=1)
     distance_km: Decimal = Field(ge=0)
     customer_tier: TierName = "RETAIL"
     price_overrides: list[PriceOverrideRequest] = Field(default_factory=list)
+    added_products: list[AddedProductRequest] = Field(default_factory=list)
 
 
 @app.post("/calculate/order")
@@ -309,7 +325,10 @@ def calculate_order(req: OrderRequest):
             distance_km=req.distance_km,
             customer_tier=req.customer_tier,
             packaged=packaged_goods.with_overrides(
-                PACKAGED,
+                packaged_goods.with_added(
+                    PACKAGED,
+                    [packaged_goods.AddedProduct(a.sku, a.name, a.category_slug, a.line, tuple((u.unit, u.label) for u in a.units)) for a in req.added_products],
+                ),
                 [packaged_goods.PriceOverride(o.sku, o.unit, o.list_price, o.markup_percent / 100) for o in req.price_overrides],
             ),
             ready_mixes=READY_MIX,
