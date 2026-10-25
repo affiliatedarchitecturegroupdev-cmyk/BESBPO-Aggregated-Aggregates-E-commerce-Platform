@@ -428,10 +428,14 @@ Anchors and bolts by grade; chemical anchors; nails by the kg; screws by type an
 
 **Status (24 October 2026): built** (`docs/merchandising.md`):
 - **Homepage:** sections from real data, i.e. collections, best sellers, buy online today, in season, new in store, trending by province, shop by brand, delivered in 120 minutes, and under R500.
-- **Department pages:** collections, top sellers, Complete the Job, calculators and an FAQ.
+- **Department pages:** collections, top sellers, Complete the Job, calculators and an FAQ. Since 25 Oct 2026 this covers all department pages. The hand-built ones (cement, steel, bricks & blocks, paving, drainage, roofing) now have the shared blocks too, alongside their own calculators.
+- **Live supplier prices in every row (25 Oct 2026):** homepage rows, collections, department top sellers and Recently viewed use approved supplier prices (`docs/supplier-prices.md`).
 - **Admin → Collections:** built.
 - **Listing:** 3.3 was done in the Phase 4 release.
-- **Still open:** deals & price drops (they need real promotions, Phase 7) and hero images (they need permission-cleared photos).
+- **Still open:**
+  - deals & price drops (they need real promotions, Phase 7);
+  - bundles & kits (Job Packs buyable at one price);
+  - department hero images and brand logos (they need permissions).
 
 ### 3.1 New homepage sections
 

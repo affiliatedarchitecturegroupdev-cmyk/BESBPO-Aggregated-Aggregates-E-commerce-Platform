@@ -1,22 +1,42 @@
 import "server-only";
 import { CATEGORIES } from "@/data/categories";
 import { DEPARTMENTS } from "@/data/departments";
+import { cache } from "react";
 import { apiCached } from "@/lib/api";
-import { getAddedDates } from "@/lib/cms";
-import { PRODUCT_INDEX, searchCatalogue, type IndexedProduct } from "@/lib/product-index";
+import { getAddedDates, getLivePrices } from "@/lib/cms";
+import type { LivePrice } from "@/lib/live-prices";
+import { liveProductIndex, PRODUCT_INDEX, searchCatalogue, type IndexedProduct } from "@/lib/product-index";
 
 /**
  * Data for the merchandising sections (ROADMAP 3.1–3.4, docs/merchandising.md): best sellers and trending by
  * province (from paid orders, through the API — SKUs only, never counts), staff collections, and rows worked out
  * from the catalogue itself (new in store, buy online today, seasonal, under R500, AA 60/120, brands). Every
  * section returns an empty list rather than padding itself out, so a section with nothing real to show hides.
+ *
+ * Rows read the catalogue with live supplier prices applied (docs/supplier-prices.md), so a product staff priced
+ * from a supplier's list shows its price — and counts as "buy online" — here as on its product page.
  */
 
-const BY_SKU = new Map(PRODUCT_INDEX.map((p) => [p.sku, p]));
+/** The catalogue the rows are built from: products, by SKU, and the live prices behind them. */
+export type MerchCatalogue = { products: IndexedProduct[]; bySku: Map<string, IndexedProduct>; live: LivePrice[] };
+
+const STATIC: MerchCatalogue = { products: PRODUCT_INDEX, bySku: new Map(PRODUCT_INDEX.map((p) => [p.sku, p])), live: [] };
+const bySkuCache = new WeakMap<IndexedProduct[], Map<string, IndexedProduct>>();
+
+/** The catalogue with live supplier prices applied, once per request. */
+export const getMerchCatalogue = cache(async (): Promise<MerchCatalogue> => {
+  const live = await getLivePrices();
+  const products = liveProductIndex(live);
+  if (products === PRODUCT_INDEX) return STATIC;
+  let bySku = bySkuCache.get(products);
+  if (!bySku) bySkuCache.set(products, (bySku = new Map(products.map((p) => [p.sku, p]))));
+  return { products, bySku, live };
+});
+
 /** The products for these SKUs, in order, leaving out hidden and unknown ones. */
-function visible(skus: string[], hidden: Set<string>): IndexedProduct[] {
+function visible(skus: string[], hidden: Set<string>, cat: MerchCatalogue): IndexedProduct[] {
   return skus.flatMap((sku) => {
-    const product = hidden.has(sku) ? undefined : BY_SKU.get(sku);
+    const product = hidden.has(sku) ? undefined : cat.bySku.get(sku);
     return product ? [product] : [];
   });
 }
@@ -26,8 +46,8 @@ export const MIN_ROW = 4;
 
 export async function getTopSellers(hidden: Set<string>, { province, department, limit = 12 }: { province?: string; department?: string; limit?: number } = {}): Promise<IndexedProduct[]> {
   const qs = new URLSearchParams({ days: "30", limit: "100", ...(province ? { province } : {}) });
-  const data = await apiCached<{ skus: string[] }>(`/merchandising/top-sellers?${qs}`, 600, ["merchandising"]);
-  const products = visible(data?.skus ?? [], hidden).filter((p) => !department || p.departmentSlug === department);
+  const [data, cat] = await Promise.all([apiCached<{ skus: string[] }>(`/merchandising/top-sellers?${qs}`, 600, ["merchandising"]), getMerchCatalogue()]);
+  const products = visible(data?.skus ?? [], hidden, cat).filter((p) => !department || p.departmentSlug === department);
   return products.slice(0, limit);
 }
 
@@ -47,8 +67,8 @@ export async function getCollection(slug: string): Promise<Collection | null> {
 }
 
 /** A collection's products: the hand-picked ones first, in order, then the rule's matches (up to `limit`). */
-export function resolveCollection(c: Collection, hidden: Set<string>, limit = 200): { products: IndexedProduct[]; seeAll: string | null } {
-  const picked = visible(c.skus, hidden);
+export function resolveCollection(c: Collection, hidden: Set<string>, limit = 200, cat: MerchCatalogue = STATIC): { products: IndexedProduct[]; seeAll: string | null } {
+  const picked = visible(c.skus, hidden, cat);
   const rule = c.rule;
   let matches: IndexedProduct[] = [];
   let seeAll: string | null = null;
@@ -65,7 +85,7 @@ export function resolveCollection(c: Collection, hidden: Set<string>, limit = 20
       exclude: new Set([...hidden, ...c.skus]),
       sort: rule.maxPrice ? "price-desc" : "relevance",
       pageSize: rule.maxPrice ? 5000 : limit,
-    });
+    }, [], cat.live);
     matches = rule.maxPrice ? result.hits.filter((p) => p.fromPrice !== null && p.fromPrice <= rule.maxPrice!) : result.hits;
     const qs = new URLSearchParams({
       ...(rule.query ? { q: rule.query } : {}),
@@ -80,11 +100,11 @@ export function resolveCollection(c: Collection, hidden: Set<string>, limit = 20
 
 /** Products added at least a week after the store's first products, newest first (none until the range grows). */
 export async function getNewInStore(hidden: Set<string>, limit = 12): Promise<IndexedProduct[]> {
-  const added = await getAddedDates();
+  const [added, cat] = await Promise.all([getAddedDates(), getMerchCatalogue()]);
   if (added.size === 0) return [];
   const first = Math.min(...[...added.values()].map((d) => d.getTime()));
   const cutoff = Math.max(first + 7 * 86_400_000, Date.now() - 60 * 86_400_000);
-  const fresh = PRODUCT_INDEX.filter((p) => !hidden.has(p.sku) && (added.get(p.sku)?.getTime() ?? 0) >= cutoff);
+  const fresh = cat.products.filter((p) => !hidden.has(p.sku) && (added.get(p.sku)?.getTime() ?? 0) >= cutoff);
   // Newest first; within a day's additions, buy-online first, then spread across departments.
   return spread(
     fresh.sort((a, b) => dayOf(added.get(b.sku)!) - dayOf(added.get(a.sku)!) || Number(b.fromPrice !== null) - Number(a.fromPrice !== null)),
@@ -112,8 +132,8 @@ export function spread(products: IndexedProduct[], limit: number): IndexedProduc
 }
 
 /** "Buy online today": a different department each day (one with enough priced products), cheapest first. */
-export function getBuyOnlineToday(hidden: Set<string>, today = new Date(), limit = 8): { department: (typeof DEPARTMENTS)[number] | null; products: IndexedProduct[] } {
-  const priced = PRODUCT_INDEX.filter((p) => p.fromPrice !== null && !hidden.has(p.sku));
+export function getBuyOnlineToday(hidden: Set<string>, today = new Date(), limit = 8, cat: MerchCatalogue = STATIC): { department: (typeof DEPARTMENTS)[number] | null; products: IndexedProduct[] } {
+  const priced = cat.products.filter((p) => p.fromPrice !== null && !hidden.has(p.sku));
   const eligible = DEPARTMENTS.filter((d) => priced.filter((p) => p.departmentSlug === d.slug).length >= MIN_ROW);
   if (eligible.length === 0) return { department: null, products: [] };
   const department = eligible[Math.floor(today.getTime() / 86_400_000) % eligible.length];
@@ -146,9 +166,9 @@ export function seasonFor(date = new Date()): Season {
   return { key: "winter", title: "Winter: warm and dry", blurb: "Insulation, closed-combustion fireplaces and flues, geyser blankets and lagging — and a good time for indoor fit-out.", departments: ["insulation-fire-acoustic"], categories: ["thermal-insulation", "braais-fireplaces", "heat-pumps-hot-water", "roof-insulation-rainwater"] };
 }
 
-export function getSeasonal(hidden: Set<string>, date = new Date(), limit = 8): { season: Season; products: IndexedProduct[] } {
+export function getSeasonal(hidden: Set<string>, date = new Date(), limit = 8, cat: MerchCatalogue = STATIC): { season: Season; products: IndexedProduct[] } {
   const season = seasonFor(date);
-  const inSeason = PRODUCT_INDEX.filter((p) => !hidden.has(p.sku) && season.categories.includes(p.categorySlug));
+  const inSeason = cat.products.filter((p) => !hidden.has(p.sku) && season.categories.includes(p.categorySlug));
   // Buy-online first, then one per category in turn.
   const ordered = [...inSeason].sort((a, b) => Number(b.fromPrice !== null) - Number(a.fromPrice !== null));
   return { season, products: spreadByCategory(ordered, limit) };
@@ -157,8 +177,8 @@ export function getSeasonal(hidden: Set<string>, date = new Date(), limit = 8): 
 /** Categories of the small things every site runs out of. */
 const ESSENTIALS = ["steel-fixing-accessories", "ppe-site-safety", "site-tools", "fasteners-fixings", "waterproofing-sealants", "site-consumables", "mortars-grouts-admixtures", "power-tool-accessories", "tiling-accessories"];
 
-export function getUnderR500(hidden: Set<string>, limit = 8): IndexedProduct[] {
-  const cheap = PRODUCT_INDEX.filter((p) => !hidden.has(p.sku) && p.fromPrice !== null && p.fromPrice <= 500 && ESSENTIALS.includes(p.categorySlug)).sort((a, b) => a.fromPrice! - b.fromPrice!);
+export function getUnderR500(hidden: Set<string>, limit = 8, cat: MerchCatalogue = STATIC): IndexedProduct[] {
+  const cheap = cat.products.filter((p) => !hidden.has(p.sku) && p.fromPrice !== null && p.fromPrice <= 500 && ESSENTIALS.includes(p.categorySlug)).sort((a, b) => a.fromPrice! - b.fromPrice!);
   return spreadByCategory(cheap, limit);
 }
 
@@ -185,8 +205,8 @@ export function expressEligible(categorySlug: string, unit: string): boolean {
   return rules[categorySlug]?.(unit) ?? false;
 }
 
-export function getExpressProducts(hidden: Set<string>, limit = 8): IndexedProduct[] {
-  const eligible = PRODUCT_INDEX.filter((p) => !hidden.has(p.sku) && p.units.some((u) => u.retail !== null && expressEligible(p.categorySlug, u.code)));
+export function getExpressProducts(hidden: Set<string>, limit = 8, cat: MerchCatalogue = STATIC): IndexedProduct[] {
+  const eligible = cat.products.filter((p) => !hidden.has(p.sku) && p.units.some((u) => u.retail !== null && expressEligible(p.categorySlug, u.code)));
   return spreadByCategory(eligible, limit);
 }
 

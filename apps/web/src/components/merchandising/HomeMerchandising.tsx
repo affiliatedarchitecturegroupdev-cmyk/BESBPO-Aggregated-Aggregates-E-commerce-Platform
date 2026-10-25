@@ -8,6 +8,7 @@ import {
   getBuyOnlineToday,
   getCollections,
   getExpressProducts,
+  getMerchCatalogue,
   getNewInStore,
   getSeasonal,
   getTopSellers,
@@ -24,9 +25,9 @@ import {
  */
 export async function HomeMerchandising({ hiddenSkus }: { hiddenSkus: string[] }) {
   const hidden = new Set(hiddenSkus);
-  const [collections, bestSellers, newInStore, provinces] = await Promise.all([getCollections("HOMEPAGE"), getTopSellers(hidden, { limit: 8 }), getNewInStore(hidden, 8), getTrendingProvinces()]);
-  const today = getBuyOnlineToday(hidden);
-  const seasonal = getSeasonal(hidden);
+  const [collections, bestSellers, newInStore, provinces, cat] = await Promise.all([getCollections("HOMEPAGE"), getTopSellers(hidden, { limit: 8 }), getNewInStore(hidden, 8), getTrendingProvinces(), getMerchCatalogue()]);
+  const today = getBuyOnlineToday(hidden, new Date(), 8, cat);
+  const seasonal = getSeasonal(hidden, new Date(), 8, cat);
   const trending = await Promise.all(provinces.slice(0, 4).map(async (p) => ({ province: p, products: await getTopSellers(hidden, { province: p, limit: 8 }) })));
   const trendingShown = trending.filter((t) => t.products.length >= MIN_ROW);
   const brands = getBrands(hidden);
@@ -34,7 +35,7 @@ export async function HomeMerchandising({ hiddenSkus }: { hiddenSkus: string[] }
   return (
     <>
       {collections.map((c) => {
-        const { products } = resolveCollection(c, hidden, 8);
+        const { products } = resolveCollection(c, hidden, 8, cat);
         return <ProductRail key={c.slug} eyebrow="Collection" title={c.title} blurb={c.subtitle ?? undefined} products={products} seeAll={`/collections/${c.slug}`} seeAllLabel="See the collection →" track={`collection:${c.slug}:home`} />;
       })}
       <ProductRail eyebrow="Best sellers this month" title="What builders are buying" blurb="The products in the most paid orders over the last 30 days." products={bestSellers} min={MIN_ROW} track="home:best-sellers" />
@@ -106,15 +107,16 @@ export async function HomeMerchandising({ hiddenSkus }: { hiddenSkus: string[] }
 }
 
 /** Next to the AA 60/120 band: what can come in two hours, and the site essentials under R500. */
-export function HomeExpressRows({ hiddenSkus }: { hiddenSkus: string[] }) {
+export async function HomeExpressRows({ hiddenSkus }: { hiddenSkus: string[] }) {
   const hidden = new Set(hiddenSkus);
+  const cat = await getMerchCatalogue();
   return (
     <>
       <ProductRail
         eyebrow="Delivered in 120 minutes"
         title="Order by 15:00, on site in two hours"
         blurb="These qualify for AA 60/120 express delivery within 30 km of a partner supplier — the checkout confirms your address."
-        products={getExpressProducts(hidden)}
+        products={getExpressProducts(hidden, 8, cat)}
         seeAll="/aa-60-120"
         seeAllLabel="How AA 60/120 works →"
         min={MIN_ROW}
@@ -124,7 +126,7 @@ export function HomeExpressRows({ hiddenSkus }: { hiddenSkus: string[] }) {
         eyebrow="Site essentials under R500"
         title="The small things every site runs out of"
         blurb="Tie wire, fixings, sealants, PPE and tools — add them to the load you're already ordering."
-        products={getUnderR500(hidden)}
+        products={getUnderR500(hidden, 8, cat)}
         seeAll="/products?availability=online&sort=price-asc"
         seeAllLabel="All buy-online products, cheapest first →"
         min={MIN_ROW}

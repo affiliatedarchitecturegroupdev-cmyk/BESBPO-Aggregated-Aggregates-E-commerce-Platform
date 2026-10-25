@@ -38,6 +38,16 @@ The 26 building-supplies and range-expansion department pages gain the following
 7. Buying tips, as before.
 8. **An FAQ** with `FAQPage` structured data. Its answers use the department's own numbers, e.g. "N of M products can be bought online".
 
+The hand-built department pages (`/cement`, `/reinforcing-steel`, `/bricks-blocks`, `/paving`, `/drainage`, `/roofing`) keep their own content and calculators. At the end of each, `DepartmentMerchandising` adds:
+- collections placed on the department;
+- top sellers;
+- Complete the job;
+- the FAQ.
+
+So a collection placed on any department now shows there.
+
+**Live supplier prices.** Every row reads the catalogue through `getMerchCatalogue()` (`lib/merchandising.ts`), which applies the approved supplier prices (`docs/supplier-prices.md`). A product priced from a supplier's list therefore shows its price, and counts as "buy online", in Buy online today, Under R500, Delivered in 120 minutes, New in store, collections and top sellers. Recently viewed, which is built in the browser, fetches the live prices for the products it shows from `/api/live-prices`.
+
 ## Collections (ROADMAP 3.4)
 
 Staff build collections in **Admin → Collections**:

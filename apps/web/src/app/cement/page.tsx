@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
+import { DepartmentMerchandising } from "@/components/merchandising/DepartmentExtras";
 import { PACKAGED_PRODUCTS } from "@/data/packaged";
 
 export const metadata: Metadata = {
@@ -131,6 +132,7 @@ export default function CementPage() {
             <Link href="/quote" className="rounded-sm border border-basalt/20 px-5 py-2.5 font-body text-sm font-semibold text-basalt hover:border-seam-blue">Request a quote</Link>
           </div>
         </section>
+        <DepartmentMerchandising slug="cement-concrete" />
       </div>
     </div>
   );
