@@ -95,6 +95,14 @@ questions, and the conversation is kept only in your browser tab (see the
 details in the chat — use the quote, contact or account pages for anything
 that needs them.
 
+To improve our range and search, we count the searches made on the Platform
+and the views and clicks on our product sections and banners. These are
+daily totals only: we do not record who searched or viewed, and we discard
+any search that looks like an email address, phone or ID number, or web
+address. Lines on a bill of quantities that don't match one of our products
+are listed for our team, with the quote request they came from, so we can
+consider adding them to the range.
+
 ## 3B. Product ratings and reviews
 
 If you rate or review a product, we keep your star rating, any title and

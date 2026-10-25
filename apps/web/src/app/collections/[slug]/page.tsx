@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { SectionTracker } from "@/components/merchandising/SectionTracker";
 import { ListingCard } from "@/components/product/ListingCard";
 import { CompareTray } from "@/components/product/CompareTray";
 import { getHiddenSkus } from "@/lib/cms";
@@ -29,11 +30,11 @@ export default async function CollectionPage({ params }: { params: { slug: strin
       {products.length === 0 ? (
         <p className="mt-8 font-body text-sm text-slate">Nothing in this collection right now — <Link href="/products" className="text-seam-blue hover:underline">browse all products</Link>.</p>
       ) : (
-        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <SectionTracker slot={`collection:${collection.slug}:page`} className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {products.map((p) => (
             <ListingCard key={p.sku} product={p} />
           ))}
-        </div>
+        </SectionTracker>
       )}
       {seeAll && products.length >= 96 && (
         <Link href={seeAll} className="mt-6 inline-block font-body text-sm font-semibold text-seam-blue hover:underline">See every match, with filters →</Link>

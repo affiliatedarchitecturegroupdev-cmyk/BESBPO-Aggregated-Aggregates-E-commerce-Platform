@@ -72,3 +72,7 @@ Department landing pages link to their filtered listing ("Browse all N products 
 - **"Available near you" and lead times (4.4).** These need supplier price lists and product-to-supplier mapping (Phase 1).
 - **Photos and datasheets for every product (4.2).** These need supplier permission. Products without photos keep their material swatch.
 - **One product page per family**, e.g. poles by diameter × length (2.6). This is the next step for the listing: fewer, richer cards.
+
+## Search insights and staff synonyms
+
+Searches are counted (daily totals, nothing about who searched), searches that find nothing become catalogue gaps, and staff can add synonym groups in Admin → Insights → Search & gaps without a code change. See `docs/search-insights.md`.

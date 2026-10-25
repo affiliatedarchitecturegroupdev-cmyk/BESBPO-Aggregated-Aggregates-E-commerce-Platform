@@ -4,6 +4,7 @@ import { SITE_PAGES } from "@/data/site-pages";
 import { getHiddenSkus } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
 import { familyOfSku, searchProducts } from "@/lib/product-index";
+import { getStaffSynonyms } from "@/lib/search-insights";
 
 export type Suggestion = { kind: "product" | "category" | "department" | "page"; href: string; label: string; detail?: string; sku?: string; categorySlug?: string };
 
@@ -11,12 +12,14 @@ export type Suggestion = { kind: "product" | "category" | "department" | "page";
  * Search-as-you-type for the header search bar: up to 8 products from the
  * catalogue search (synonyms and typo tolerance, lib/search-engine.ts; priced ones
  * show their "from" price), plus matching departments, categories and pages.
- * Hidden products never appear. Cached briefly per query.
+ * Hidden products never appear. Cached briefly per query. Keystrokes aren't counted in search insights —
+ * only the search a shopper submits (docs/search-insights.md).
  */
 export async function GET(request: Request) {
   const q = (new URL(request.url).searchParams.get("q") ?? "").trim().slice(0, 80);
   if (q.length < 2) return Response.json({ suggestions: [] });
-  const hidden = new Set(await getHiddenSkus());
+  const [hiddenSkus, synonyms] = await Promise.all([getHiddenSkus(), getStaffSynonyms()]);
+  const hidden = new Set(hiddenSkus);
   const words = q.toLowerCase().split(/\s+/).filter(Boolean);
   const has = (text: string) => words.every((w) => text.toLowerCase().includes(w));
 
@@ -24,7 +27,7 @@ export async function GET(request: Request) {
   const bySize = /\d/.test(q);
   const seen = new Set<string>();
   const products: Suggestion[] = [];
-  for (const p of searchProducts(q, hidden, 300)) {
+  for (const p of searchProducts(q, hidden, 300, synonyms)) {
     if (products.length >= 8) break;
     const family = bySize ? null : familyOfSku(p.sku, hidden);
     if (family) {

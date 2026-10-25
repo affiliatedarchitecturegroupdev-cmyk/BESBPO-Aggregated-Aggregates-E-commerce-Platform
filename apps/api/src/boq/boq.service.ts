@@ -6,6 +6,7 @@ import { STAFF_ROLES, type AuthUser } from "../common/auth/auth-user";
 import { PrismaService } from "../common/prisma.service";
 import { detectScheduleFileType } from "../cut-and-bend/bar-schedule";
 import { pricingUnit } from "../pricing/units";
+import { DiscoveryService } from "../discovery/discovery.service";
 import { CreateQuoteDto } from "../quotes/dto/create-quote.dto";
 import { QuotesService } from "../quotes/quotes.service";
 import { StorageService } from "../storage/storage.service";
@@ -26,6 +27,7 @@ export class BoqService {
     private readonly prisma: PrismaService,
     private readonly quotes: QuotesService,
     private readonly storage: StorageService,
+    private readonly discovery: DiscoveryService,
   ) {}
 
   async parse(file: Upload) {
@@ -69,12 +71,10 @@ export class BoqService {
       });
       throw new BadRequestException(messages);
     }
-    const leftover = Array.isArray(unmatched)
-      ? unmatched
-          .filter((u): u is { description: string; quantity: number; unit?: string | null } => typeof u?.description === "string" && typeof u?.quantity === "number")
-          .slice(0, 200)
-          .map((u) => `• ${u.description.slice(0, 200)} — ${u.quantity}${u.unit ? ` ${String(u.unit).slice(0, 20)}` : ""}`)
+    const lines = Array.isArray(unmatched)
+      ? unmatched.filter((u): u is { description: string; quantity: number; unit?: string | null } => typeof u?.description === "string" && typeof u?.quantity === "number").slice(0, 200)
       : [];
+    const leftover = lines.map((u) => `• ${u.description.slice(0, 200)} — ${u.quantity}${u.unit ? ` ${String(u.unit).slice(0, 20)}` : ""}`);
     if (leftover.length) {
       const note = `Also on the bill of quantities (not matched to the catalogue — please quote as written):\n${leftover.join("\n")}`;
       dto.notes = [dto.notes?.trim(), note].filter(Boolean).join("\n\n").slice(0, 8000);
@@ -82,7 +82,10 @@ export class BoqService {
     const storageKey = `boq/${new Date().toISOString().slice(0, 7)}/${randomBytes(12).toString("hex")}.${type.extension}`;
     await this.storage.put(storageKey, file!.buffer, type.contentType);
     try {
-      return await this.quotes.create(dto, user, { fileName, storageKey });
+      const quote = await this.quotes.create(dto, user, { fileName, storageKey });
+      // What we don't stock becomes a catalogue gap for staff (docs/search-insights.md). Never blocks the request.
+      if (lines.length) await this.discovery.recordBoqGaps(lines.map((u) => u.description), quote.id).catch(() => undefined);
+      return quote;
     } catch (error) {
       await this.storage.remove(storageKey).catch(() => undefined);
       throw error;

@@ -411,7 +411,7 @@ Anchors and bolts by grade; chemical anchors; nails by the kg; screws by type an
   - manufacturers' published weights (with sources) for bricks, blocks, roof sheets, steel mesh and sections, timber and poles, and the new heavy ranges;
   - the premium's per-ton charge then works with no code change (`docs/delivery-premium.md`).
 - **Bulk catalogue tooling:** a staff CSV import for new products (name, category, units, specs, supplier code), so a whole supplier range goes in at once rather than by hand.
-- **Catalogue gaps report (2.0):** Admin → Catalogue gaps, fed by BOQs, RFQs, quotations and empty searches.
+- **Catalogue gaps report (2.0): built 24 Oct 2026** (`docs/search-insights.md`): Admin → Insights → Search & gaps, fed by empty searches and unmatched BOQ lines, with counts and an open / added / ignored status. RFQs and quotations are still to feed it.
 
 ---
 
@@ -477,6 +477,7 @@ Every department gets:
 - **Search:** in-process engine with synonyms, typo tolerance and facets.
 - **Listing:** `/products` rebuilt with filters, sorts, pages, Buy online / Quote badges and quick add (3.3).
 - **Compare:** up to three products, at `/compare` (4.3).
+- **Search insights:** top searches, searches that find nothing, staff-editable synonyms and merchandising section performance (`docs/search-insights.md`).
 - **Still open:** 4.2 photos and datasheets, 4.4 availability, and a hosted engine if one is needed.
 
 | # | Item | Notes |

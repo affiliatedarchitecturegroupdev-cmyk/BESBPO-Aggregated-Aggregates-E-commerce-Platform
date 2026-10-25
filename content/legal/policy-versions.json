@@ -11,6 +11,7 @@
       { "date": "2026-09-26", "changes": "First published." }
     ],
     "privacy-policy.md": [
+      { "date": "2026-10-24", "changes": "Section 3A explains that we count searches and views and clicks on product sections as daily totals, with nothing about who searched or viewed, and list bill of quantities lines that don't match a product for our team." },
       { "date": "2026-10-18", "changes": "Covers trade credit applications, proof-of-delivery records (signature, name, notes, photo and location), bill of quantities uploads and supplier portal users; section 5 sets out what the supplier loading an order and the driver see; section 7 covers how long these records are kept." },
       { "date": "2026-10-17", "changes": "Section 6 explains paying by bank, what we share with LayUp when you choose lay-by, the payment records we keep, and what a payment link shows." },
       { "date": "2026-10-16", "changes": "Newsletter sign-ups are now confirmed by email before we send anything, and unconfirmed sign-ups are deleted after 30 days. We keep whether our emails were delivered, bounced or reported as spam, so we stop emailing addresses that can't or don't want to receive them. Names Resend, our email delivery provider outside South Africa, and Listmonk, our self-hosted newsletter system." },
@@ -26,6 +27,7 @@
       { "date": "2026-09-26", "changes": "First published." }
     ],
     "cookie-policy.md": [
+      { "date": "2026-10-24", "changes": "Explains the session storage that counts each banner and product section once per visit." },
       { "date": "2026-10-12", "changes": "Our website and email addresses moved to the aaggregates.store domain." },
       { "date": "2026-10-11", "changes": "Explains the browser storage behind \"Recently viewed\" and the shopping assistant's chat, and how to clear them." },
       { "date": "2026-09-26", "changes": "First published." }

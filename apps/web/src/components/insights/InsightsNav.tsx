@@ -12,6 +12,7 @@ const TABS = [
   { href: "/admin/insights/pipeline", label: "Pipeline" },
   { href: "/admin/insights/geography", label: "Geography & delivery" },
   { href: "/admin/insights/marketing", label: "Marketing" },
+  { href: "/admin/insights/search", label: "Search & gaps" },
   { href: "/admin/insights/finance", label: "Profit & loss", adminOnly: true },
   { href: "/admin/insights/email", label: "Weekly email", adminOnly: true },
 ];

@@ -22,7 +22,10 @@ information about your visit.
   not sent to us; use **Clear** on the list, or clear this site's data in
   your browser, to remove it. The shopping assistant keeps your chat in
   this browser tab's session storage so it survives moving between pages;
-  it is deleted when you close the tab or choose **Clear chat**.
+  it is deleted when you close the tab or choose **Clear chat**. The same
+  session storage notes which banners and product sections you have
+  already seen, so each is counted once per visit in our daily totals;
+  nothing about you is sent with those counts.
 - **Analytics cookies**: help us understand how the Platform is used, so
   we can improve it. These are only set with your consent, where required
   by law.

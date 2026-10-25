@@ -9,7 +9,7 @@ import { SUPPLIES_PRODUCTS } from "@/data/supplies";
 import { STEEL_PRODUCTS } from "@/data/steel";
 import { UNIT_LABELS } from "@/lib/pricing";
 import { buildFamilies, familyParts } from "@/lib/product-families";
-import { createSearchIndex, type SearchOptions, type SearchResult } from "@/lib/search-engine";
+import { createSearchIndex, SYNONYMS, type SearchOptions, type SearchResult } from "@/lib/search-engine";
 
 /**
  * Every product on the storefront in one flat list — aggregates, cement,
@@ -105,9 +105,9 @@ export const PRODUCT_INDEX: IndexedProduct[] = [
 ];
 
 /** Ranks products for a query (header suggestions, site search): the catalogue search, best matches first. */
-export function searchProducts(query: string, hidden: Set<string> = new Set(), limit = 8): IndexedProduct[] {
+export function searchProducts(query: string, hidden: Set<string> = new Set(), limit = 8, staffSynonyms: string[][] = []): IndexedProduct[] {
   if (!query.trim()) return [];
-  return searchCatalogue({ query, exclude: hidden, pageSize: limit }).hits;
+  return searchCatalogue({ query, exclude: hidden, pageSize: limit }, staffSynonyms).hits;
 }
 
 /** The facets the product listing filters on, in the order the filter panel shows them. */
@@ -134,8 +134,7 @@ export function standardCode(standard: string | null): string | null {
 
 type CatalogueDoc = IndexedProduct & { id: string; text: string; facets: Record<FacetKey, string | null>; price: number | null };
 
-const CATALOGUE_INDEX = createSearchIndex<CatalogueDoc>(
-  PRODUCT_INDEX.map((p) => ({
+const CATALOGUE_DOCS: CatalogueDoc[] = PRODUCT_INDEX.map((p) => ({
     ...p,
     id: p.sku,
     // Department names are left out: "Timber, Poles & Decking" would make every timber product match "decking".
@@ -150,15 +149,25 @@ const CATALOGUE_INDEX = createSearchIndex<CatalogueDoc>(
       standard: standardCode(p.standard),
     },
     price: p.fromPrice,
-  })),
-);
+  }));
+
+const BUILT_IN_INDEX = createSearchIndex(CATALOGUE_DOCS);
+/** The index with staff synonyms added (Admin → Insights → Search) — rebuilt only when they change. */
+let withStaff: { key: string; index: typeof BUILT_IN_INDEX } | null = null;
+
+function catalogueIndex(staffSynonyms: string[][]) {
+  if (staffSynonyms.length === 0) return BUILT_IN_INDEX;
+  const key = JSON.stringify(staffSynonyms);
+  if (withStaff?.key !== key) withStaff = { key, index: createSearchIndex(CATALOGUE_DOCS, [...SYNONYMS, ...staffSynonyms]) };
+  return withStaff.index;
+}
 
 /**
  * Searches, filters, sorts and pages the whole catalogue (lib/search-engine.ts): synonyms, typo tolerance and
- * facet counts. Pass the SKUs staff have hidden as `exclude`.
+ * facet counts. Pass the SKUs staff have hidden as `exclude`, and the synonyms staff added (getStaffSynonyms).
  */
-export function searchCatalogue(options: SearchOptions): SearchResult<CatalogueDoc> {
-  return CATALOGUE_INDEX.search(options);
+export function searchCatalogue(options: SearchOptions, staffSynonyms: string[][] = []): SearchResult<CatalogueDoc> {
+  return catalogueIndex(staffSynonyms).search(options);
 }
 
 /** Product families over the whole catalogue (lib/product-families.ts): same thing, different sizes, 4 or more. */

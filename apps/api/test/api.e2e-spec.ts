@@ -3738,6 +3738,9 @@ describe("Aggregated Aggregates API (e2e)", () => {
       const other = await register("p4boqother");
       await http().get(`/boq/quotes/${quote.body.id}/file`).set(bearer(other)).expect(404);
       await http().get(`/boq/quotes/${quote.body.id}/file`).set(bearer(staff)).expect(200);
+      // The unmatched line is a catalogue gap for staff, linked to the latest quote it appeared on.
+      const gap = await prisma.catalogueGap.findUniqueOrThrow({ where: { source_text: { source: "BOQ", text: "engineered roof trusses" } } });
+      expect(gap).toMatchObject({ lastQuoteId: quote.body.id });
     });
 
     it("lead times: set per category by staff, never guessed, and checked", async () => {
@@ -4025,6 +4028,82 @@ describe("Aggregated Aggregates API (e2e)", () => {
 
       await prisma.order.deleteMany({ where: { quoteId: q.id } });
       await prisma.quote.deleteMany({ where: { id: { in: [q.id, copy.body.id, late.body.id] } } });
+    });
+  });
+
+  describe("Search and merchandising insights (docs/search-insights.md)", () => {
+    const bearer = (t: string) => ({ Authorization: `Bearer ${t}` });
+    const today = new Date(Date.UTC(new Date(Date.now() + 2 * 3600_000).getUTCFullYear(), new Date(Date.now() + 2 * 3600_000).getUTCMonth(), new Date(Date.now() + 2 * 3600_000).getUTCDate()));
+
+    it("counts searches, turns searches that find nothing into gaps, and never keeps personal details", async () => {
+      const staff = await register("srchstaff");
+      await prisma.user.update({ where: { email: `srchstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      const term = `Hoverboard Ramp ${run}`;
+      await http().post("/discovery/searches").send({ query: term, results: 0 }).expect(204);
+      await http().post("/discovery/searches").send({ query: `  ${term.toUpperCase()} `, results: 0 }).expect(204);
+      await http().post("/discovery/searches").send({ query: "call 082 555 1234", results: 0 }).expect(204);
+      await http().post("/discovery/searches").send({ query: "x", results: -1 }).expect(400);
+      const key = term.toLowerCase();
+      const stat = await prisma.searchQueryStat.findUniqueOrThrow({ where: { day_query: { day: today, query: key } } });
+      expect(stat).toMatchObject({ searches: 2, zeroResults: 2, lastResults: 0 });
+      expect(await prisma.searchQueryStat.count({ where: { query: { contains: "082" } } })).toBe(0);
+
+      const gap = await prisma.catalogueGap.findUniqueOrThrow({ where: { source_text: { source: "SEARCH", text: key } } });
+      expect(gap).toMatchObject({ count: 2, status: "OPEN" });
+      await http().get("/discovery/gaps").expect(401);
+      const open = await http().get("/discovery/gaps?source=SEARCH&limit=500").set(bearer(staff)).expect(200);
+      expect(open.body.map((g: { text: string }) => g.text)).toContain(key);
+
+      // Marked added, but still found nothing: it opens again. Ignored stays ignored.
+      await http().put(`/discovery/gaps/${gap.id}`).set(bearer(staff)).send({ status: "ADDED", note: "Not something we stock" }).expect(200);
+      await http().post("/discovery/searches").send({ query: term, results: 0 }).expect(204);
+      expect((await prisma.catalogueGap.findUniqueOrThrow({ where: { id: gap.id } })).status).toBe("OPEN");
+      await http().put(`/discovery/gaps/${gap.id}`).set(bearer(staff)).send({ status: "IGNORED" }).expect(200);
+      await http().post("/discovery/searches").send({ query: term, results: 0 }).expect(204);
+      expect(await prisma.catalogueGap.findUniqueOrThrow({ where: { id: gap.id } })).toMatchObject({ status: "IGNORED", count: 4, note: "Not something we stock" });
+
+      // A search that finds something is counted but isn't a gap.
+      await http().post("/discovery/searches").send({ query: `IBR sheet ${run}`, results: 37 }).expect(204);
+      expect(await prisma.catalogueGap.count({ where: { text: `ibr sheet ${run}` } })).toBe(0);
+
+      const report = await http().get("/insights/search").set(bearer(staff)).expect(200);
+      expect(report.body.totals.searches).toBeGreaterThanOrEqual(5);
+      expect(report.body.zero.find((t: { query: string }) => t.query === key)).toMatchObject({ searches: 4, zeroResults: 4, lastResults: 0 });
+      expect(report.body.top.find((t: { query: string }) => t.query === `ibr sheet ${run}`)).toMatchObject({ searches: 1, zeroResults: 0, lastResults: 37 });
+
+      await prisma.catalogueGap.deleteMany({ where: { text: { in: [key] } } });
+      await prisma.searchQueryStat.deleteMany({ where: { query: { in: [key, `ibr sheet ${run}`] } } });
+    });
+
+    it("lets staff add synonym groups the storefront reads", async () => {
+      const staff = await register("synstaff");
+      await prisma.user.update({ where: { email: `synstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      const body = { terms: [`Jojo${run}`, "Water Tank", `jojo${run}`] };
+      await http().post("/discovery/staff/synonyms").send(body).expect(401);
+      await http().post("/discovery/staff/synonyms").set(bearer(staff)).send({ terms: ["tank"] }).expect(400);
+      const created = await http().post("/discovery/staff/synonyms").set(bearer(staff)).send(body).expect(201);
+      expect(created.body.terms).toEqual([`jojo${run}`, "water tank"]);
+      expect((await http().get("/discovery/synonyms").expect(200)).body).toContainEqual([`jojo${run}`, "water tank"]);
+      const updated = await http().put(`/discovery/staff/synonyms/${created.body.id}`).set(bearer(staff)).send({ terms: [`jojo${run}`, "water tank", "rainwater tank"] }).expect(200);
+      expect(updated.body.terms).toHaveLength(3);
+      await http().delete(`/discovery/staff/synonyms/${created.body.id}`).set(bearer(staff)).expect(204);
+      await http().delete(`/discovery/staff/synonyms/${created.body.id}`).set(bearer(staff)).expect(404);
+    });
+
+    it("counts views and clicks on merchandising sections, by known section names only", async () => {
+      const staff = await register("secstaff");
+      await prisma.user.update({ where: { email: `secstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      const slot = `collection:qa-${run}:home`;
+      await http().post("/discovery/sections").send({ slot, type: "impression" }).expect(204);
+      await http().post("/discovery/sections").send({ slot, type: "impression" }).expect(204);
+      await http().post("/discovery/sections").send({ slot, type: "click" }).expect(204);
+      await http().post("/discovery/sections").send({ slot: "promo:<x>", type: "click" }).expect(204);
+      await http().post("/discovery/sections").send({ slot, type: "hover" }).expect(400);
+      expect(await prisma.merchandisingStat.findUniqueOrThrow({ where: { day_slot: { day: today, slot } } })).toMatchObject({ impressions: 2, clicks: 1 });
+      expect(await prisma.merchandisingStat.count({ where: { slot: "promo:<x>" } })).toBe(0);
+      const marketing = await http().get("/insights/marketing").set(bearer(staff)).expect(200);
+      expect(marketing.body.sections.find((s: { slot: string }) => s.slot === slot)).toMatchObject({ kind: "collection", name: `qa-${run}`, part: "home", impressions: 2, clicks: 1, clickThroughRate: 50 });
+      await prisma.merchandisingStat.deleteMany({ where: { slot } });
     });
   });
 });

@@ -8,6 +8,7 @@ import { DEPARTMENTS } from "@/data/departments";
 import { getHiddenSkus } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
 import { searchCatalogue } from "@/lib/product-index";
+import { getStaffSynonyms, logSearch } from "@/lib/search-insights";
 import { SITE_PAGES } from "@/data/site-pages";
 
 export const metadata: Metadata = { title: "Search", robots: { index: false } };
@@ -19,10 +20,10 @@ const matches = (haystack: string, words: string[]) => words.every((w) => haysta
 export default async function SearchPage({ searchParams }: { searchParams: { q?: string } }) {
   const raw = (searchParams.q ?? "").trim().slice(0, 100);
   const words = raw.toLowerCase().split(/\s+/).filter(Boolean);
-  const [hidden, posts] = words.length ? await Promise.all([getHiddenSkus(), getPublishedPosts()]) : [[], []];
+  const [hidden, posts, synonyms] = words.length ? await Promise.all([getHiddenSkus(), getPublishedPosts(), getStaffSynonyms()]) : [[], [], []];
   const hiddenSet = new Set(hidden);
   // Products: the top 12 here, the rest (with filters) on the product listing.
-  const found = words.length ? searchCatalogue({ query: raw, exclude: hiddenSet, pageSize: 12 }) : null;
+  const found = words.length ? searchCatalogue({ query: raw, exclude: hiddenSet, pageSize: 12 }, synonyms) : null;
   const products = found?.hits ?? [];
   const departments = words.length ? DEPARTMENTS.filter((d) => matches(`${d.name} ${d.blurb}`, words)) : [];
   const categories = words.length ? CATEGORIES.filter((c) => matches(`${c.name} ${c.description}`, words)) : [];
@@ -30,6 +31,8 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
   const articles = posts.filter((p) => matches(`${p.title} ${p.excerpt ?? ""} ${p.bodyMarkdown}`, words));
   const pages = words.length ? SITE_PAGES.filter((p) => matches(`${p.title} ${p.keywords}`, words)) : [];
   const total = (found?.total ?? 0) + departments.length + categories.length + industries.length + articles.length + pages.length;
+  // Search insights count products found: a search that finds only an article still means we don't stock it.
+  if (found) logSearch(raw, found.total);
 
   const section = (title: string, items: { href: string; label: string; detail?: string; thumb?: { sku: string; categorySlug: string } }[]) =>
     items.length > 0 && (
