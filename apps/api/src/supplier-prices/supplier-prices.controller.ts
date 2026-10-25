@@ -3,7 +3,7 @@ import { FileInterceptor } from "@nestjs/platform-express";
 import type { AuthUser } from "../common/auth/auth-user";
 import { Public, Roles } from "../common/auth/decorators";
 import { CurrentUser } from "../common/decorators/current-user.decorator";
-import { ApproveLineDto, MapLineDto, PriceListUploadDto } from "./supplier-prices.dto";
+import { ApproveLineDto, MapLineDto, PriceListUploadDto, SupplierPriceListDto } from "./supplier-prices.dto";
 import { MAX_PRICE_LIST_BYTES, SupplierPricesService } from "./supplier-prices.service";
 
 /** Supplier price lists and the sell prices approved from them (docs/supplier-prices.md). */
@@ -17,6 +17,29 @@ export class SupplierPricesController {
   live() {
     return this.prices.publicPrices();
   }
+
+  // --- Supplier portal (ROADMAP 1.5): the supplier's own lists ------------------------------------------------
+
+  @Roles("SUPPLIER")
+  @Post("supplier/lists")
+  @UseInterceptors(FileInterceptor("file", { limits: { fileSize: MAX_PRICE_LIST_BYTES, files: 1, fields: 3 } }))
+  supplierUpload(@UploadedFile() file: Express.Multer.File | undefined, @Body() dto: SupplierPriceListDto, @CurrentUser() user: AuthUser) {
+    return this.prices.supplierUpload(file, dto, user);
+  }
+
+  @Roles("SUPPLIER")
+  @Get("supplier/lists")
+  supplierLists(@CurrentUser() user: AuthUser) {
+    return this.prices.supplierLists(user);
+  }
+
+  @Roles("SUPPLIER")
+  @Get("supplier/lists/:id")
+  supplierList(@Param("id") id: string, @CurrentUser() user: AuthUser) {
+    return this.prices.supplierList(id, user);
+  }
+
+  // --- Staff ---------------------------------------------------------------------------------------------------
 
   @Roles("STAFF", "ADMIN")
   @Post("staff/lists")

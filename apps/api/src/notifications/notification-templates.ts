@@ -692,6 +692,18 @@ export function serviceDownEmail(s: { down: string[]; recovered: string[]; detai
   ]);
 }
 
+/** Staff: a supplier uploaded its price list in the supplier portal (docs/supplier-prices.md). Costs aren't in the email. */
+export function priceListUploadedEmail(l: { supplierName: string; rows: number; waiting: number; unmatched: number; validUntil: Date | null; listId: string }): EmailMessage {
+  return email(`Price list from ${l.supplierName} — ${l.waiting} price${l.waiting === 1 ? "" : "s"} to approve`, [
+    {
+      kind: "p",
+      text: `${l.supplierName} uploaded a price list in the supplier portal: ${l.rows} row${l.rows === 1 ? "" : "s"}, ${l.waiting} matched and waiting for approval, ${l.unmatched} that need a product. Nothing changes on the store until you approve it.`,
+    },
+    { kind: "rows", rows: [["Supplier", l.supplierName], ["Prices valid until", l.validUntil ? formatDateZA(l.validUntil) : "Not given"]] },
+    { kind: "cta", label: "Review the price list", href: `${siteUrl()}/admin/supplier-prices/${l.listId}` },
+  ]);
+}
+
 export function staffCompanyEmail(event: NotificationEvent, c: CompanyData): EmailMessage | null {
   if (event === "CREDIT_APPLIED") {
     const r = c.credit?.requested;
@@ -1037,6 +1049,7 @@ export const EVENT_CHANNELS: Record<NotificationEvent, { customerEmail: boolean;
   CREDIT_DECIDED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
   SUPPLIER_ORDER: { customerEmail: false, customerWhatsApp: false, staffEmail: true }, // the supplier's email is always sent; staff hear its answer
   SERVICE_DOWN: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
+  PRICE_LIST_UPLOADED: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
 };
 
 /** Events that also email the partner (always on — offers can't wait for a setting). */
@@ -1086,6 +1099,7 @@ export const EVENT_LABEL: Record<NotificationEvent, string> = {
   CREDIT_DECIDED: "Trade credit approved, declined or suspended",
   SUPPLIER_ORDER: "Order sent to a supplier (supplier email); staff hear its answer",
   SERVICE_DOWN: "Site check failing or recovered (uptime monitor)",
+  PRICE_LIST_UPLOADED: "A supplier uploaded a price list in the supplier portal",
 };
 
 /** A South African or international number in the digits-only form WhatsApp expects, or null. */

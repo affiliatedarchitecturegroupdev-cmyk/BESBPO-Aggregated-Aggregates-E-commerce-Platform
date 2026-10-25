@@ -38,7 +38,7 @@ export default async function PriceListPage({ params, searchParams }: { params: 
       <div>
         <h2 className="font-display text-xl font-bold text-basalt">{list.supplierName}</h2>
         <p className="mt-1 font-body text-xs text-slate">
-          {list.source === "QUOTATION" ? "Supplier costs typed into sales quotations" : `${list.fileName ?? "Price list"}${list.supplierLocation ? ` · ${list.supplierLocation.province}` : ""}`} · uploaded{" "}
+          {list.source === "QUOTATION" ? "Supplier costs typed into sales quotations" : `${list.source === "SUPPLIER_PORTAL" ? "Sent by the supplier in the supplier portal · " : ""}${list.fileName ?? "Price list"}${list.supplierLocation ? ` · ${list.supplierLocation.province}` : ""}`} · uploaded{" "}
           {saDate(list.createdAt)} · {list.validUntil ? `prices valid until ${saDate(list.validUntil)}` : "prices hold until replaced"}
           {expired && <strong className="text-red-700"> · expired — upload the supplier&apos;s current list</strong>}
         </p>

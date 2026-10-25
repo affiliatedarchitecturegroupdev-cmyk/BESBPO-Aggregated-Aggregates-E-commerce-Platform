@@ -96,7 +96,7 @@ export default async function SupplierPricesPage() {
                       <Link href={`/admin/supplier-prices/${l.id}`} className="font-semibold text-seam-blue hover:underline">
                         {l.supplierName}
                       </Link>
-                      <span className="block text-xs text-slate">{l.source === "QUOTATION" ? "From sales quotations" : (l.fileName ?? "")}</span>
+                      <span className="block text-xs text-slate">{l.source === "QUOTATION" ? "From sales quotations" : l.source === "SUPPLIER_PORTAL" ? `Sent by the supplier · ${l.fileName ?? ""}` : (l.fileName ?? "")}</span>
                     </td>
                     <td className="px-3 py-2 text-slate">{saDate(l.createdAt)}</td>
                     <td className="px-3 py-2 text-slate">{l.validUntil ? saDate(l.validUntil) : "Until replaced"}</td>
