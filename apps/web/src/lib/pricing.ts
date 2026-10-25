@@ -10,6 +10,7 @@ import {
   CUSTOMER_TIERS,
   DELIVERY_RULES,
   type CustomerTierName,
+  type DeliveryRules,
   type LoadSize,
   type Product,
   type Unit,
@@ -87,10 +88,9 @@ export function estimateDelivery(params: {
   bulkTons?: number;
   baggedKg?: number;
   totalM3?: number;
-}): DeliveryEstimate {
+}, rules: DeliveryRules = DELIVERY_RULES): DeliveryEstimate {
   const { distanceKm, tierName, bulkM3 = 0, bulkTons = 0, baggedKg = 0 } = params;
   const totalM3 = params.totalM3 ?? bulkM3;
-  const rules = DELIVERY_RULES;
   const reasons: string[] = [];
   let fee = 0;
 

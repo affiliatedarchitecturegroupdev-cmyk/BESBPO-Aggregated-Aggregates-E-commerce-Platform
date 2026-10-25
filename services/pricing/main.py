@@ -14,11 +14,12 @@ from decimal import Decimal
 from typing import Literal
 
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 import pricing_framework
 from calculators import packaged_goods, ready_mix, rental
-from calculators.delivery_bands import calculate_delivery_fee
+from calculators.delivery_bands import calculate_delivery_fee, with_rates
+from calculators.flatbed import FLATBED_LINES, FlatbedRate
 from calculators.discount_floor import TierQuoteOnly
 from calculators.order import OrderLine, UnknownSku, price_order
 from calculators.tonnage_volume import UnitNotOffered, calculate
@@ -160,12 +161,57 @@ def calculate_tonnage_volume(req: TonnageVolumeRequest):
     return body
 
 
+LoadSizeName = Literal["M3_6", "M3_10", "M3_14_PLUS"]
+BANDED = tuple(b.label for b in FRAMEWORK.delivery.bands if b.fees)  # the bands with fees (beyond the included one)
+
+
+class FlatbedRateRequest(BaseModel):
+    """One product line's flatbed fees: one per delivery band, in order (0–30, 30–60, 60–100 km)."""
+
+    fees: list[Decimal] = Field(min_length=len(FRAMEWORK.delivery.bands), max_length=len(FRAMEWORK.delivery.bands))
+    free_from: Decimal | None = Field(default=None, gt=0)
+
+    @model_validator(mode="after")
+    def _non_negative(self):
+        if any(f < 0 for f in self.fees):
+            raise ValueError("Flatbed fees can't be negative.")
+        return self
+
+
+class DeliveryRatesRequest(BaseModel):
+    """The rates staff set in Admin → Delivery rates (docs/delivery-rates.md), sent by the API with every price."""
+
+    band_fees: dict[str, dict[LoadSizeName, Decimal]]
+    small_load_fee: Decimal = Field(ge=0)
+    bagged_fee: Decimal = Field(ge=0)
+    bagged_free_from_kg: Decimal = Field(ge=0)
+    min_bulk_m3: Decimal = Field(gt=0)
+    min_bulk_tons: Decimal = Field(gt=0)
+    flatbed: dict[Literal["steel", "masonry", "roofing", "supplies"], FlatbedRateRequest] = Field(default_factory=dict)
+
+    @model_validator(mode="after")
+    def _known_bands(self):
+        unknown = set(self.band_fees) - set(BANDED)
+        if unknown:
+            raise ValueError(f"Unknown delivery bands: {sorted(unknown)}")
+        if any(fee < 0 for fees in self.band_fees.values() for fee in fees.values()):
+            raise ValueError("Delivery fees can't be negative.")
+        return self
+
+    def rules(self):
+        return with_rates(FRAMEWORK.delivery, self.band_fees, self.small_load_fee, self.bagged_fee, self.bagged_free_from_kg, self.min_bulk_m3, self.min_bulk_tons)
+
+    def flatbed_rates(self) -> dict[str, FlatbedRate]:
+        return {line: FlatbedRate(tuple(r.fees), r.free_from) for line, r in self.flatbed.items() if line in FLATBED_LINES}
+
+
 class DeliveryFeeRequest(BaseModel):
     distance_km: Decimal = Field(ge=0)
     bulk_m3: Decimal = Field(default=Decimal(0), ge=0)
     bulk_tons: Decimal = Field(default=Decimal(0), ge=0)
     bagged_kg: Decimal = Field(default=Decimal(0), ge=0)
     customer_tier: TierName = "RETAIL"
+    delivery_rates: DeliveryRatesRequest | None = None
 
 
 @app.post("/calculate/delivery-fee")
@@ -173,7 +219,7 @@ def calculate_delivery(req: DeliveryFeeRequest):
     tier = FRAMEWORK.tiers[req.customer_tier]
     try:
         result = calculate_delivery_fee(
-            FRAMEWORK.delivery,
+            req.delivery_rates.rules() if req.delivery_rates else FRAMEWORK.delivery,
             distance_km=req.distance_km,
             bulk_m3=req.bulk_m3,
             bulk_tons=req.bulk_tons,
@@ -314,6 +360,7 @@ class OrderRequest(BaseModel):
     customer_tier: TierName = "RETAIL"
     price_overrides: list[PriceOverrideRequest] = Field(default_factory=list)
     added_products: list[AddedProductRequest] = Field(default_factory=list)
+    delivery_rates: DeliveryRatesRequest | None = None
 
 
 @app.post("/calculate/order")
@@ -332,6 +379,8 @@ def calculate_order(req: OrderRequest):
                 [packaged_goods.PriceOverride(o.sku, o.unit, o.list_price, o.markup_percent / 100) for o in req.price_overrides],
             ),
             ready_mixes=READY_MIX,
+            delivery_rules=req.delivery_rates.rules() if req.delivery_rates else None,
+            flatbed=req.delivery_rates.flatbed_rates() if req.delivery_rates else None,
         )
     except UnknownSku as exc:
         raise HTTPException(status_code=404, detail=f"Unknown SKU: {exc.args[0]}")

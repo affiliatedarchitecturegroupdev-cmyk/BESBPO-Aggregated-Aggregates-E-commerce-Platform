@@ -21,7 +21,7 @@ This is enforced here, server-side, not just in the storefront
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from decimal import Decimal
 from typing import Literal, Optional
 
@@ -177,4 +177,29 @@ def calculate_delivery_fee(
         load_size=load_size,
         fee=sum((c["fee"] for c in components), Decimal(0)),
         components=components,
+    )
+
+
+def with_rates(
+    rules: DeliveryRules,
+    band_fees: dict[str, dict[str, Decimal]],
+    small_load_fee: Decimal,
+    bagged_fee: Decimal,
+    bagged_free_from_kg: Decimal,
+    min_bulk_m3: Decimal,
+    min_bulk_tons: Decimal,
+) -> DeliveryRules:
+    """
+    The workbook's rules with the rates staff set in Admin → Delivery rates (docs/delivery-rates.md). The bands'
+    distances stay as they are; only fees and thresholds change. A band staff didn't send keeps its fees.
+    """
+    bands = tuple(replace(b, fees={**b.fees, **band_fees[b.label]}) if b.fees and b.label in band_fees else b for b in rules.bands)
+    return replace(
+        rules,
+        bands=bands,
+        small_load_fee=small_load_fee,
+        bagged_fee=bagged_fee,
+        bagged_free_from_kg=bagged_free_from_kg,
+        min_bulk_m3=min_bulk_m3,
+        min_bulk_tons=min_bulk_tons,
     )

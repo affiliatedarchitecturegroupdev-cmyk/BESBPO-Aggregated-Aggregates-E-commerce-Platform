@@ -1,7 +1,12 @@
-import { BadGatewayException, HttpException, Injectable } from "@nestjs/common";
+import { BadGatewayException, BadRequestException, HttpException, Injectable } from "@nestjs/common";
+import { Prisma } from "@aggregates/database";
 import { PrismaService } from "../common/prisma.service";
 import { UNIT_LABEL } from "../common/format";
 import { LINE_OF_GROUP, type AddedProductPayload } from "./added-products";
+import { normaliseDeliveryRates, pricingPayload, WORKBOOK_RATES, type DeliveryRates } from "./delivery-rates";
+
+export const DELIVERY_RATES_KEY = "delivery-rates";
+const RATES_CACHE_MS = 60_000;
 import { pricingUnit } from "./units";
 
 export type CustomerTierName = "RETAIL" | "CONTRACTOR_TRADE" | "VOLUME_CIVIL_BULK";
@@ -139,6 +144,7 @@ export class PricingService {
 
   private readonly baseUrl = normaliseBaseUrl(process.env.PRICING_SERVICE_URL ?? "http://localhost:8000");
   private hireCache: { at: number; value: HireCatalogue } | null = null;
+  private ratesCache: { at: number; value: DeliveryRates } | null = null;
 
   /** CAT-13/14 SKUs and the Agent commission, cached for five minutes (bookings validate against it). */
   async hireCatalogue(): Promise<HireCatalogue> {
@@ -176,14 +182,43 @@ export class PricingService {
     });
   }
 
-  calculateDeliveryFee(req: DeliveryFeeRequest): Promise<DeliveryQuote> {
+  async calculateDeliveryFee(req: DeliveryFeeRequest): Promise<DeliveryQuote> {
     return this.post("/calculate/delivery-fee", {
       distance_km: req.distanceKm,
       bulk_m3: req.bulkM3 ?? 0,
       bulk_tons: req.bulkTons ?? 0,
       bagged_kg: req.baggedKg ?? 0,
       customer_tier: req.customerTier,
+      delivery_rates: pricingPayload(await this.deliveryRates()),
     });
+  }
+
+  /** The delivery rates staff set in Admin → Delivery rates (docs/delivery-rates.md), or the workbook's. Cached for a minute. */
+  async deliveryRates(): Promise<DeliveryRates> {
+    if (this.ratesCache && Date.now() - this.ratesCache.at < RATES_CACHE_MS) return this.ratesCache.value;
+    const row = await this.prisma.siteContent.findUnique({ where: { key: DELIVERY_RATES_KEY } });
+    let value = WORKBOOK_RATES;
+    try {
+      if (row) value = normaliseDeliveryRates(row.data);
+    } catch {
+      // A saved value that no longer passes the checks falls back to the workbook rather than breaking checkout.
+    }
+    this.ratesCache = { at: Date.now(), value };
+    return value;
+  }
+
+  /** Admin: save the delivery rates. New prices use them straight away; orders already placed keep theirs. */
+  async setDeliveryRates(input: unknown, userId: string): Promise<DeliveryRates> {
+    let rates: DeliveryRates;
+    try {
+      rates = normaliseDeliveryRates(input);
+    } catch (error) {
+      throw new BadRequestException((error as Error).message);
+    }
+    const data = rates as unknown as Prisma.InputJsonValue;
+    await this.prisma.siteContent.upsert({ where: { key: DELIVERY_RATES_KEY }, create: { key: DELIVERY_RATES_KEY, data, updatedById: userId }, update: { data, updatedById: userId } });
+    this.ratesCache = null;
+    return rates;
   }
 
   /**
@@ -193,11 +228,12 @@ export class PricingService {
    */
   async calculateOrder(req: OrderRequest, opts: { live?: boolean } = {}): Promise<PricedOrder> {
     const skus = [...new Set(req.lines.map((l) => l.sku))];
-    const [overrides, added] = await Promise.all([opts.live === false ? [] : this.livePrices(skus), this.addedProducts(skus)]);
+    const [overrides, added, rates] = await Promise.all([opts.live === false ? [] : this.livePrices(skus), this.addedProducts(skus), this.deliveryRates()]);
     return this.post("/calculate/order", {
       lines: req.lines,
       distance_km: req.distanceKm,
       customer_tier: req.customerTier,
+      delivery_rates: pricingPayload(rates),
       ...(overrides.length ? { price_overrides: overrides } : {}),
       ...(added.length ? { added_products: added } : {}),
     });

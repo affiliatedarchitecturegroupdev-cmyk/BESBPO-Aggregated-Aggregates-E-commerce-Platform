@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { CUSTOMER_TIERS, type CustomerTierName, type Product, type Unit } from "@/data/catalogue";
+import { CUSTOMER_TIERS, type CustomerTierName, type DeliveryRules, type Product, type Unit } from "@/data/catalogue";
 import { AddToCartButton } from "@/components/cart/AddToCartButton";
 import { useNearestDeliveryPoint } from "@/components/suppliers/useNearestDeliveryPoint";
 import { estimateDelivery, estimateLine, formatZAR, UNIT_LABELS } from "@/lib/pricing";
@@ -22,7 +22,7 @@ function unitButtonLabel(unit: Unit, product: Product) {
  * the pricing framework, so the displayed price is never a second,
  * hand-maintained number.
  */
-export function BulkBagCalculator({ product }: { product: Product }) {
+export function BulkBagCalculator({ product, rules }: { product: Product; rules?: DeliveryRules }) {
   const [unit, setUnit] = useState<Unit>(product.units[0]);
   const [quantity, setQuantity] = useState(unit === "bag" ? 10 : 6);
   const [tierName, setTierName] = useState<CustomerTierName>("RETAIL");
@@ -49,7 +49,7 @@ export function BulkBagCalculator({ product }: { product: Product }) {
             bulkTons: unit === "bag" ? 0 : line.tons,
             baggedKg: line.baggedKg,
             totalM3: line.m3,
-          })
+          }, rules)
         : null,
     [distanceKm, tierName, unit, line, quantity],
   );

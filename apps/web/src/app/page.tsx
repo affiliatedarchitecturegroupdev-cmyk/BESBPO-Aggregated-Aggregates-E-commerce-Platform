@@ -31,7 +31,7 @@ import { SteelSpotlight } from "@/components/merchandising/SteelSpotlight";
 import { TierComparison } from "@/components/merchandising/TierComparison";
 import { TrustBadges } from "@/components/merchandising/TrustBadges";
 import { WhatsAppCta } from "@/components/social/WhatsAppCta";
-import { getHiddenSkus, getSiteContent, slideshowSlides } from "@/lib/cms";
+import { getDeliveryRates, getHiddenSkus, getSiteContent, slideshowSlides } from "@/lib/cms";
 import { getCoverage, getNetwork } from "@/lib/network";
 import { getActivePromotions } from "@/lib/promotions";
 
@@ -43,12 +43,13 @@ import { getActivePromotions } from "@/lib/promotions";
  * B2B bulk), and the why-us sections together.
  */
 export default async function HomePage() {
-  const [content, hiddenSkus, promotions, coverage, network] = await Promise.all([
+  const [content, hiddenSkus, promotions, coverage, network, delivery] = await Promise.all([
     getSiteContent(),
     getHiddenSkus(),
     getActivePromotions(),
     getCoverage(),
     getNetwork(),
+    getDeliveryRates(),
   ]);
   const liveProvinces = coverage && coverage.deliveryPoints > 0 ? coverage.provinces.map((p) => p.province) : [];
   const partnerSuppliers = network && network.partners.length > 0 ? network.partners.length : null;
@@ -70,7 +71,7 @@ export default async function HomePage() {
         <RecentlyViewed hiddenSkus={hiddenSkus} className="my-10" />
       </div>
       <FeaturedProducts />
-      <QuickTonnageCalculator hiddenSkus={hiddenSkus} />
+      <QuickTonnageCalculator hiddenSkus={hiddenSkus} rules={delivery.rules} />
       <CategoryGrid />
       <ShopByStage hiddenSkus={hiddenSkus} />
       <SteelSpotlight hiddenSkus={hiddenSkus} />
@@ -80,7 +81,7 @@ export default async function HomePage() {
       <PlanYourBuild />
       {/* BOQ upload, trade credit, phased deliveries, proof of delivery, ways to pay, lead times. */}
       <ProjectTools />
-      <BulkVsBagged />
+      <BulkVsBagged rules={delivery.rules} />
       <BusinessLinesCarousel />
       <PlantAndServicesSection />
       <JobPacksSection />

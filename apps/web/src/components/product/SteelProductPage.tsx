@@ -3,6 +3,7 @@ import { FamilySizes } from "@/components/product/FamilySizes";
 import { CompareToggle } from "@/components/product/CompareToggle";
 import { CompareTray } from "@/components/product/CompareTray";
 import { LeadTimeNote } from "@/components/delivery/LeadTimeNote";
+import { FlatbedFeeNote } from "@/components/delivery/FlatbedFeeNote";
 import { AvailableNearYou } from "@/components/product/AvailableNearYou";
 import { CompleteTheJob } from "@/components/merchandising/CompleteTheJob";
 import { ProductReviews } from "@/components/reviews/ProductReviews";
@@ -175,6 +176,7 @@ export async function SteelProductPage({ product }: { product: MerchandisedSteel
             <Link href="/legal/returns-refunds" className="text-seam-blue underline">Returns &amp; Refunds</Link> policies. Returning materials that were supplied
             correctly carries an 18% <Link href="/legal/handling-fee" className="text-seam-blue underline">handling fee</Link>.
           </p>
+          <FlatbedFeeNote line="steel" />
         </section>
       </div>
 
