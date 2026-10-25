@@ -744,13 +744,13 @@ export async function removeSavedAddress(form: FormData) {
   revalidatePath("/account", "layout");
 }
 
-// --- tax invoices (staff) ---------------------------------------------------------
+// --- invoices (staff) -------------------------------------------------------------
 
 export async function issueInvoice(_prev: FormState, form: FormData): Promise<FormState> {
   const result = await api<{ invoiceNumber: string }>(`/orders/${encodeURIComponent(text(form, "id"))}/invoice`, { method: "POST", token: sessionToken() });
   if (!result.ok) return { error: result.message };
   revalidatePath("/admin/orders");
-  return { success: `Tax invoice ${result.data.invoiceNumber} issued — the buyer can download it from their order.` };
+  return { success: `Invoice ${result.data.invoiceNumber} issued — the buyer can download it from their order.` };
 }
 
 // --- product image permissions (admins) --------------------------------------------

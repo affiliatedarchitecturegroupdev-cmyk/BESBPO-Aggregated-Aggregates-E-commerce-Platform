@@ -3,6 +3,7 @@ import Link from "next/link";
 import { DesignBriefForm } from "@/components/design/DesignBriefForm";
 import { DesignFeeEstimator } from "@/components/design/DesignFeeEstimator";
 import { DISCIPLINE_ICON } from "@/components/design/DisciplineIcon";
+import { getVatRegistered } from "@/lib/tax";
 import { DESIGN_SERVICES, DISCIPLINES, feeLabel, type Discipline } from "@/data/design-services";
 
 export const metadata: Metadata = {
@@ -22,7 +23,8 @@ const STEPS = [
 ] as const;
 
 /** BAE's design services (DESIGN_SERVICES.md): disciplines, fixed packages, indicative rates, a fee estimator and a brief form. */
-export default function DesignPage() {
+export default async function DesignPage() {
+  const vatRegistered = await getVatRegistered();
   const disciplines = Object.keys(DISCIPLINES) as Discipline[];
   const fixed = DESIGN_SERVICES.filter((s) => s.fee.kind === "fixed");
   return (
@@ -59,7 +61,7 @@ export default function DesignPage() {
                 <p className="font-mono text-[10px] uppercase text-slate">{DISCIPLINES[s.discipline].name}</p>
                 <h3 className="mt-1 font-display text-base font-semibold text-basalt">{s.name}</h3>
                 <p className="mt-2 flex-1 font-body text-xs text-slate">{s.fee.kind === "fixed" ? s.fee.scope : s.summary}</p>
-                <p className="mt-3 font-display text-lg font-bold text-seam-blue">{feeLabel(s.fee)}</p>
+                <p className="mt-3 font-display text-lg font-bold text-seam-blue">{feeLabel(s.fee, vatRegistered)}</p>
               </Link>
             ))}
           </div>
@@ -84,7 +86,7 @@ export default function DesignPage() {
                   <Link key={s.slug} href={`/design/${s.slug}`} className="flex flex-col rounded-sm border border-basalt/10 bg-white p-5 transition-colors hover:border-seam-blue">
                     <h3 className="font-display text-base font-semibold text-basalt">{s.name}</h3>
                     <p className="mt-2 flex-1 font-body text-sm text-slate">{s.summary}</p>
-                    <p className="mt-3 font-mono text-[11px] text-seam-blue">{feeLabel(s.fee)} →</p>
+                    <p className="mt-3 font-mono text-[11px] text-seam-blue">{feeLabel(s.fee, vatRegistered)} →</p>
                   </Link>
                 ))}
               </div>
@@ -105,7 +107,7 @@ export default function DesignPage() {
           </ol>
           <p className="mt-4 font-body text-xs text-slate">
             Each project is allocated a registered professional architect or engineer, named with their SACAP or ECSA registration on your proposal, who signs the
-            drawings, designs and certificates the law requires. All fees exclude VAT. Municipal plan fees, NHBRC enrolment and
+            drawings, designs and certificates the law requires.{vatRegistered ? " All fees exclude VAT." : ""} Municipal plan fees, NHBRC enrolment and
             specialist reports (surveys, geotechnical) are paid at cost and shown separately on the proposal.
           </p>
         </section>
@@ -121,7 +123,7 @@ export default function DesignPage() {
               Fixed fees are firm for the scope described; everything else is confirmed on BAE&apos;s written proposal once we&apos;ve seen the brief.
             </p>
           </div>
-          <DesignFeeEstimator />
+          <DesignFeeEstimator vatRegistered={vatRegistered} />
         </section>
 
         <section id="brief" className="mt-14 grid scroll-mt-24 gap-8 lg:grid-cols-[1fr_1.2fr]">

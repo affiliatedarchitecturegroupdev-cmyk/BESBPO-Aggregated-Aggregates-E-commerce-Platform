@@ -411,7 +411,7 @@ function deliveryAnswer(text: string): AssistantReply {
   };
 }
 
-function designAnswer(text: string, words: string[]): AssistantReply {
+function designAnswer(text: string, words: string[], vatRegistered: boolean): AssistantReply {
   const ms = measures(text);
   const amount = ms.find((m) => m.value >= 10000)?.value ?? null;
   if (has(text, "nhbrc") && amount) {
@@ -426,10 +426,10 @@ function designAnswer(text: string, words: string[]): AssistantReply {
   if (services.length) {
     const top = services[0];
     const fee = area ? feeFor(top.fee, area, 0) : null;
-    const estimate = fee && top.fee.kind === "perM2" ? ` For ${num(area!, 0)} m² that's about ${formatZAR(fee.low)}, excl. VAT.` : "";
+    const estimate = fee && top.fee.kind === "perM2" ? ` For ${num(area!, 0)} m² that's about ${formatZAR(fee.low)}${vatRegistered ? ", excl. VAT" : ""}.` : "";
     return {
       intent: "design",
-      text: `Bellwether Architecture & Engineering (BAE), our group's design practice: ${top.name} — ${feeLabel(top.fee)}.${estimate} ${top.summary}\n\nBAE confirms every fee on a written proposal; send a brief to get one.`,
+      text: `Bellwether Architecture & Engineering (BAE), our group's design practice: ${top.name} — ${feeLabel(top.fee, vatRegistered)}.${estimate} ${top.summary}\n\nBAE confirms every fee on a written proposal; send a brief to get one.`,
       links: [
         { label: top.name, href: `/design/${top.slug}#brief` },
         ...services.slice(1).map((sv) => ({ label: sv.name, href: `/design/${sv.slug}` })),
@@ -528,7 +528,7 @@ export async function respondWithRules(message: string, context: AssistantContex
     return { intent: "trade", text: faq("What are the Retail")!.answer, links: [{ label: "Trade accounts", href: "/trade-accounts" }, QUOTE] };
   }
   if (has(text, "architect*", "plans", "house plan*", "building plan*", "draughts*", "drafts*", "council", "engineer*", "structural", "regularis*", "as built", "nhbrc", "bill of quantities", "boq", "quantity surveyor", "design*", "bae", "bellwether", "xa", "energy rating")) {
-    return designAnswer(text, words);
+    return designAnswer(text, words, context.vatRegistered === true);
   }
   if (has(text, "hire", "rent*", "tlb", "excavator*", "digger", "bobcat", "skid steer", "roller", "tipper*", "skip*", "rubble", "demolition", "demolish", "clearing", "site clearing", "haulage", "water truck", "steel fixer*", "operator")) {
     return hireAnswer(words);

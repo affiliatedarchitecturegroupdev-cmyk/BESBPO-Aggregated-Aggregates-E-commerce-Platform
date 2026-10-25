@@ -549,19 +549,19 @@ enum UnitOfSale {
 /// 100km, which the pricing framework already treats as quote-only rather
 /// than checkout-priced.
 model Quote {
-  id                 String          @id @default(cuid())
-  reference          String          @unique @default(cuid())
+  id                 String            @id @default(cuid())
+  reference          String            @unique @default(cuid())
   userId             String?
-  user               User?           @relation(fields: [userId], references: [id])
+  user               User?             @relation(fields: [userId], references: [id])
   companyId          String?
-  company            Company?        @relation(fields: [companyId], references: [id])
-  status             QuoteStatus     @default(DRAFT)
+  company            Company?          @relation(fields: [companyId], references: [id])
+  status             QuoteStatus       @default(DRAFT)
   reasonCode         QuoteReasonCode
   reasons            String[] // the pricing service's quote-only reasons, verbatim
   contactName        String?
   contactEmail       String?
   contactPhone       String?
-  whatsappUpdates    Boolean         @default(false) // requester opted in to quote updates on WhatsApp
+  whatsappUpdates    Boolean           @default(false) // requester opted in to quote updates on WhatsApp
   companyName        String?
   projectName        String?
   deliveryAddress    String?
@@ -569,27 +569,27 @@ model Quote {
   deliveryDistanceKm Float?
   lineItems          QuoteLineItem[]
   notes              String?
-  estimatedSubtotal  Decimal?        @db.Decimal(12, 2) // materials at the requester's tier, excl. delivery
-  quotedTotal        Decimal?        @db.Decimal(12, 2)
+  estimatedSubtotal  Decimal?          @db.Decimal(12, 2) // materials at the requester's tier, excl. delivery
+  quotedTotal        Decimal?          @db.Decimal(12, 2)
   staffNotes         String?
   quotedAt           DateTime?
-  createdAt          DateTime        @default(now())
-  updatedAt          DateTime        @updatedAt
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
   respondedAt        DateTime? // when the customer accepted or declined
   order              Order? // the order staff turned this quote into (payable by link, deposit or EFT)
   boqFileName        String? // a bill of quantities the customer uploaded (docs/boq-upload.md)
   boqStorageKey      String?
   // Sales quotations (docs/sales-quotes.md): made by staff for a client, priced line by line.
-  channel            QuoteChannel     @default(STOREFRONT)
-  quoteNumber        String?          @unique // AAQ-000001, from quote_number_seq when issued
+  channel            QuoteChannel      @default(STOREFRONT)
+  quoteNumber        String?           @unique // AAQ-000001, from quote_number_seq when issued
   createdById        String?
-  createdBy          User?            @relation("QuoteCreatedBy", fields: [createdById], references: [id])
+  createdBy          User?             @relation("QuoteCreatedBy", fields: [createdById], references: [id])
   pricingTier        CustomerTierName? // the tier list prices were taken at
   clientVatNumber    String?
-  deliveryFee        Decimal?         @db.Decimal(10, 2)
+  deliveryFee        Decimal?          @db.Decimal(10, 2)
   validUntil         DateTime?
   sentAt             DateTime?
-  acceptTokenHash    String?          @unique // the client's link to view, accept and pay (only the hash is kept)
+  acceptTokenHash    String?           @unique // the client's link to view, accept and pay (only the hash is kept)
 
   @@index([channel, createdAt])
 }
@@ -860,8 +860,8 @@ model Invoice {
   statementId       String?
   statement         Statement?    @relation(fields: [statementId], references: [id])
   invoiceNumber     String        @unique
-  vatNumberBilled   String // Besbpo Group VAT number — this division bills under group VAT, not its own registration
-  amountDue         Decimal       @db.Decimal(12, 2) // the invoice total, VAT included
+  vatNumberBilled   String? // Besbpo Group VAT number on a tax invoice — this division bills under group VAT; null on a plain invoice issued before VAT registration (docs/vat.md)
+  amountDue         Decimal       @db.Decimal(12, 2) // the invoice total (VAT included on a tax invoice)
   // Snapshot at issue, so an issued tax invoice never changes afterwards.
   billedToName      String?
   billedToAddress   String?

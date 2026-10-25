@@ -19,7 +19,7 @@ type QuotationView = {
   subtotal: number;
   deliveryFee: number;
   total: number;
-  vat: number;
+  vat: number | null; // null until the business is VAT-registered (docs/vat.md)
   notes: string | null;
   order: { orderNumber: string; paid: boolean } | null;
 };
@@ -98,10 +98,10 @@ export default async function QuotationPage({ params }: { params: { token: strin
             <dd className="tabular-nums">{q.deliveryFee === 0 ? "Included" : formatZAR(q.deliveryFee)}</dd>
           </div>
           <div className="flex justify-between border-t border-basalt/10 pt-2 text-base font-semibold">
-            <dt>Total</dt>
+            <dt>{q.vat !== null ? "Total" : "Total amount payable"}</dt>
             <dd className="tabular-nums">{formatZAR(q.total)}</dd>
           </div>
-          <p className="text-right text-xs text-slate">Includes VAT of {formatZAR(q.vat)}</p>
+          {q.vat !== null && <p className="text-right text-xs text-slate">Includes VAT of {formatZAR(q.vat)}</p>}
         </dl>
       </div>
       {q.notes && <p className="mt-4 rounded-sm bg-limestone/70 p-3 font-body text-sm text-basalt">{q.notes}</p>}
@@ -123,7 +123,7 @@ export default async function QuotationPage({ params }: { params: { token: strin
           <QuotationAnswer token={params.token} total={formatZAR(q.total)} canDecline={q.status === "QUOTED"} />
         )}
         <p className="font-body text-xs text-slate">
-          Questions? <Link href="/contact" className="text-seam-blue hover:underline">Contact our team</Link>. Prices include VAT; stock is confirmed with our partner
+          Questions? <Link href="/contact" className="text-seam-blue hover:underline">Contact our team</Link>. {q.vat !== null ? "Prices include VAT; stock" : "Stock"} is confirmed with our partner
           supplier when you accept. See our <Link href="/legal/shipping-delivery" className="text-seam-blue hover:underline">Shipping &amp; Delivery policy</Link>.
         </p>
       </div>

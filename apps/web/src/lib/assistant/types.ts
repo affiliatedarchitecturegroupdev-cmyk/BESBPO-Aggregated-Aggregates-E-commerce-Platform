@@ -15,6 +15,8 @@ export type AssistantContext = {
   cart: AssistantCartLine[];
   /** Products staff have hidden — never shown or suggested. */
   hiddenSkus: string[];
+  /** Whether VAT is shown (docs/vat.md); fees say "excl. VAT" only when it is. */
+  vatRegistered?: boolean;
 };
 
 /** Carried between turns by the widget so a follow-up ("6 by 4") answers the last question. */

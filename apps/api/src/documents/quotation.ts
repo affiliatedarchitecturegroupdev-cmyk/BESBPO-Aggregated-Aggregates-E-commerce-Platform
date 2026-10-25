@@ -1,6 +1,7 @@
 import type { Prisma, PrismaClient, UnitOfSale } from "@aggregates/database";
 import { formatDateZA, formatZAR, SELLER } from "../common/format";
-import { quoteTotals, VAT_PERCENT } from "../quotes/sales-quote";
+import { quoteTotals } from "../quotes/sales-quote";
+import { taxWording, VAT_RATE_PERCENT, vatRegistered } from "../tax/tax";
 import { quantity, sellerLines } from "./order-documents";
 import { renderPdf, type DocSpec } from "./pdf-renderer";
 
@@ -44,7 +45,7 @@ export function toQuotationData(q: QuotationRecord): QuotationDocData {
 }
 
 /** The quotation as a document: what's quoted, for whom, until when, and how to accept it. */
-export function quotationSpec(q: QuotationDocData): DocSpec {
+export function quotationSpec(q: QuotationDocData, registered = vatRegistered()): DocSpec {
   const totals = quoteTotals(q.lines.map((l) => ({ quantity: l.quantity, unitPrice: l.unitPrice, unitCost: null })), q.deliveryFee);
   const draft = q.status === "DRAFT";
   const site = q.delivery.address ? `${q.delivery.address}${q.delivery.province ? `, ${q.delivery.province}` : ""}` : (q.delivery.province ?? "To be confirmed");
@@ -77,12 +78,13 @@ export function quotationSpec(q: QuotationDocData): DocSpec {
     totals: [
       { label: "Materials", value: formatZAR(totals.subtotal) },
       { label: q.delivery.distanceKm !== null ? `Delivery (${q.delivery.distanceKm} km)` : "Delivery", value: totals.deliveryFee === 0 ? "Included" : formatZAR(totals.deliveryFee) },
-      { label: "Total (VAT inclusive)", value: formatZAR(totals.total), strong: true },
-      { label: `Includes VAT at ${VAT_PERCENT}%`, value: formatZAR(totals.vat) },
+      { label: taxWording(registered).total, value: formatZAR(totals.total), strong: true },
+      // VAT is shown only once the business is VAT-registered (docs/vat.md).
+      ...(registered ? [{ label: `Includes VAT at ${VAT_RATE_PERCENT}%`, value: formatZAR(totals.vat) }] : []),
     ],
     notes: [
       ...(q.notes ? [q.notes] : []),
-      `Prices include VAT at ${VAT_PERCENT}% and delivery as shown${q.validUntil ? `, and hold until ${formatDateZA(q.validUntil)}` : ""}. Stock is confirmed with our partner supplier when you accept.`,
+      `Prices include ${registered ? `VAT at ${VAT_RATE_PERCENT}% and ` : ""}delivery as shown${q.validUntil ? `, and hold until ${formatDateZA(q.validUntil)}` : ""}. Stock is confirmed with our partner supplier when you accept.`,
       "To accept, use the secure link we sent with this quotation — you can pay online there — or reply to us quoting the quotation number.",
       `Questions? Call ${SELLER.phone} or email ${SELLER.email}. Our terms and the Shipping & Delivery policy are at ${SELLER.website}/legal.`,
     ],

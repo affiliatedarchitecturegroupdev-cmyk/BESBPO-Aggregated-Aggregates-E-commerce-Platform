@@ -376,7 +376,11 @@ describe("notification templates", () => {
     expect(receipt.subject).toBe("Payment receipt — order AA-100 confirmed");
     expect(receipt.text).toMatch(/Amount paid: R9,133\.12\nPaid on: 15 October 2026\nPayment method: Card \(Visa \/ Mastercard \/ Amex\)\nPayment reference: pf_12345/);
     const invoice = customerOrderEmail("INVOICE_ISSUED", invoicedOrder)!;
-    expect(invoice.subject).toBe("Tax invoice AAI-000042 — order AA-100");
+    // A plain invoice before VAT registration; a tax invoice once the Group's VAT number is on it (docs/vat.md).
+    expect(invoice.subject).toBe("Invoice AAI-000042 — order AA-100");
+    expect(invoice.text).not.toMatch(/VAT|tax invoice/i);
+    const taxInvoice = customerOrderEmail("INVOICE_ISSUED", { ...invoicedOrder, invoice: { ...invoicedOrder.invoice!, vatNumberBilled: "4000000000" } })!;
+    expect(taxInvoice.subject).toBe("Tax invoice AAI-000042 — order AA-100");
     expect(invoice.text).toContain("https://aaggregates.store/orders/ord_1/confirmation");
   });
 

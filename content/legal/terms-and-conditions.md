@@ -85,9 +85,8 @@ technical error.
 - If an order paid by deposit or lay-by is cancelled, our
   [Returns & Refunds Policy](/legal/returns-refunds) applies, including that
   materials cut or made to your specification can't be refunded once cut.
-- Invoices are issued under Besbpo Group's company VAT registration, as
-  Aggregated Aggregates operates as a division of the Group rather than a
-  separately VAT-registered entity.
+- Invoices are issued by Besbpo Group (Pty) Ltd, as Aggregated Aggregates
+  operates as a division of the Group rather than a separate company.
 
 ## 4A. Trade credit
 

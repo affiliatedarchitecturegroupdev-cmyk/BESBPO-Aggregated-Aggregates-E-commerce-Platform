@@ -6,6 +6,7 @@ import { api } from "@/lib/api";
 import { formatZAR } from "@/lib/pricing";
 import { QUOTE_STATUS_LABEL, type SalesQuotation } from "@/lib/quotations";
 import { sessionToken } from "@/lib/session";
+import { getVatRegistered } from "@/lib/tax";
 import { duplicateQuotation } from "../actions";
 
 export const metadata = { title: "Quotation" };
@@ -13,7 +14,7 @@ export const metadata = { title: "Quotation" };
 const when = (iso: string) => new Date(iso).toLocaleString("en-ZA", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", timeZone: "Africa/Johannesburg" });
 
 export default async function AdminQuotationPage({ params }: { params: { id: string } }) {
-  const result = await api<SalesQuotation>(`/quotations/${encodeURIComponent(params.id)}`, { token: sessionToken() });
+  const [result, vatRegistered] = await Promise.all([api<SalesQuotation>(`/quotations/${encodeURIComponent(params.id)}`, { token: sessionToken() }), getVatRegistered()]);
   if (!result.ok) {
     if (result.status === 404) notFound();
     return <p className="font-body text-sm text-slate">{result.message}</p>;
@@ -66,7 +67,7 @@ export default async function AdminQuotationPage({ params }: { params: { id: str
         <QuotationSendPanel id={q.id} status={q.status} email={q.client.email} phone={q.client.phone} linkActive={q.linkActive} />
       )}
 
-      <QuotationEditor quote={q} readOnly={answered} />
+      <QuotationEditor quote={q} readOnly={answered} vatRegistered={vatRegistered} />
     </div>
   );
 }

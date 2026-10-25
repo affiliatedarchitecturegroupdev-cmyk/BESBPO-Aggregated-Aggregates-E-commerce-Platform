@@ -2013,7 +2013,7 @@ describe("Aggregated Aggregates API (e2e)", () => {
       await http().post("/account/password").send({ newPassword: "whatever-long-enough" }).expect(401);
     });
 
-    it("serves order documents to the buyer, and staff issue a tax invoice once invoicing is configured", async () => {
+    it("serves order documents to the buyer; staff issue a plain invoice before VAT registration and a tax invoice after", async () => {
       const saved = { vat: process.env.GROUP_VAT_NUMBER, inclusive: process.env.PRICES_INCLUDE_VAT };
       delete process.env.GROUP_VAT_NUMBER;
       delete process.env.PRICES_INCLUDE_VAT;
@@ -2039,27 +2039,26 @@ describe("Aggregated Aggregates API (e2e)", () => {
         await http().get(`/orders/${id}/documents/delivery-note`).set(as(buyer)).expect(404);
         await http().get(`/orders/${id}/documents/invoice`).set(as(buyer)).expect(404);
 
-        // No invoice until the Group VAT number and VAT-inclusive pricing are confirmed.
-        const notReady = await http().get("/orders/invoicing-status").set(as(staff)).expect(200);
-        expect(notReady.body.ready).toBe(false);
-        expect(notReady.body.problems).toHaveLength(2);
-        await http().post(`/orders/${id}/invoice`).set(as(staff)).expect(400);
-        process.env.GROUP_VAT_NUMBER = "REPLACE_WITH_BESBPO_GROUP_VAT_NUMBER";
-        process.env.PRICES_INCLUDE_VAT = "false";
-        expect((await http().get("/orders/invoicing-status").set(as(staff))).body.problems).toHaveLength(2);
-        process.env.GROUP_VAT_NUMBER = "4000000000";
-        process.env.PRICES_INCLUDE_VAT = "true";
-        expect((await http().get("/orders/invoicing-status").set(as(staff))).body).toEqual({ ready: true, problems: [] });
+        // Not VAT-registered (no GROUP_VAT_NUMBER): VAT is neither charged nor shown, and staff issue a plain invoice (docs/vat.md).
+        expect((await http().get("/tax").expect(200)).body).toEqual({ vatRegistered: false, ratePercent: null });
+        expect((await http().get("/orders/invoicing-status").set(as(staff)).expect(200)).body).toEqual({ ready: true, problems: [] });
         await http().post(`/orders/${id}/invoice`).set(as(buyer)).expect(403);
-
         const invoice = await http().post(`/orders/${id}/invoice`).set(as(staff)).expect(201);
         expect(invoice.body.invoiceNumber).toMatch(/^AAI-\d{6}$/);
-        expect(invoice.body).toMatchObject({ status: "UNPAID", vatNumberBilled: "4000000000", billedToName: "pdfbuyer", pricesIncludedVat: true });
+        expect(invoice.body).toMatchObject({ status: "UNPAID", vatNumberBilled: null, vatAmount: null, amountExVat: null, vatRatePercent: null, pricesIncludedVat: null, billedToName: "pdfbuyer" });
         const total = Number(order.body.total);
         expect(Number(invoice.body.amountDue)).toBe(total);
-        expect(Number(invoice.body.vatAmount)).toBe(Math.round((total * 15) / 115 * 100) / 100);
-        expect(Number(invoice.body.amountExVat) + Number(invoice.body.vatAmount)).toBeCloseTo(total, 2);
         await http().post(`/orders/${id}/invoice`).set(as(staff)).expect(409);
+
+        // Registration: a wrong number or unconfirmed VAT-inclusive prices stop invoicing rather than guess.
+        process.env.GROUP_VAT_NUMBER = "REPLACE_WITH_BESBPO_GROUP_VAT_NUMBER";
+        expect((await http().get("/orders/invoicing-status").set(as(staff))).body.problems).toHaveLength(1);
+        process.env.GROUP_VAT_NUMBER = "4000000000";
+        process.env.PRICES_INCLUDE_VAT = "false";
+        expect((await http().get("/orders/invoicing-status").set(as(staff))).body.problems).toHaveLength(1);
+        process.env.PRICES_INCLUDE_VAT = "true";
+        expect((await http().get("/orders/invoicing-status").set(as(staff))).body).toEqual({ ready: true, problems: [] });
+        expect((await http().get("/tax").expect(200)).body).toEqual({ vatRegistered: true, ratePercent: 15 });
 
         // The invoice follows the order: paid on confirmation; the delivery note appears on dispatch.
         await http().patch(`/orders/${id}/status`).set(as(staff)).send({ status: "CONFIRMED" }).expect(200);
@@ -2076,8 +2075,13 @@ describe("Aggregated Aggregates API (e2e)", () => {
           .set(as(buyer))
           .send({ lines: [{ sku: "AA-SND-01", unit: "m3", quantity: 6 }], deliveryDistanceKm: 20, deliveryAddress: "8 Harbour Rd, Ballito" })
           .expect(201);
+        // Once registered, a tax invoice with the Group's VAT number and the VAT inside the total.
         const second = await http().post(`/orders/${other.body.id}/invoice`).set(as(staff)).expect(201);
         expect(Number(second.body.invoiceNumber.slice(4))).toBe(Number(invoice.body.invoiceNumber.slice(4)) + 1);
+        expect(second.body).toMatchObject({ vatNumberBilled: "4000000000", pricesIncludedVat: true });
+        const secondTotal = Number(other.body.total);
+        expect(Number(second.body.vatAmount)).toBe(Math.round((secondTotal * 15) / 115 * 100) / 100);
+        expect(Number(second.body.amountExVat) + Number(second.body.vatAmount)).toBeCloseTo(secondTotal, 2);
         await http().patch(`/orders/${other.body.id}/status`).set(as(staff)).send({ status: "CANCELLED" }).expect(200);
         expect((await prisma.invoice.findUnique({ where: { id: second.body.id } }))!.status).toBe("VOID");
         await prisma.order.deleteMany({ where: { id: { in: [id, other.body.id] } } });

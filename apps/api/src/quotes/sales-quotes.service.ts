@@ -11,6 +11,7 @@ import { DdpService } from "../orders/ddp.service";
 import { PaymentsService } from "../payment-gateway/payments.service";
 import { PricingService, type CustomerTierName, type PricingUnit } from "../pricing/pricing.service";
 import { pricingUnit, unitOfSale } from "../pricing/units";
+import { vatRegistered } from "../tax/tax";
 import type { SalesQuotePriceDto, SaveSalesQuoteDto } from "./dto/sales-quote.dto";
 import { DEFAULT_VALID_DAYS, priceQuoteLine, quotationNumber, quoteTotals, round2, type PriceSource } from "./sales-quote";
 
@@ -371,7 +372,8 @@ export class SalesQuotesService {
       subtotal,
       deliveryFee,
       total,
-      vat,
+      // VAT is shown only once the business is VAT-registered (docs/vat.md).
+      vat: vatRegistered() ? vat : null,
       notes: q.notes,
       order: q.order ? { orderNumber: q.order.orderNumber, paid } : null,
     };

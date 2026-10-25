@@ -4,7 +4,7 @@ import { sessionToken } from "@/lib/session";
 const KINDS = new Set(["confirmation", "proforma", "delivery-note", "invoice"]);
 
 /**
- * Streams an order's PDF (order confirmation, delivery note or tax invoice)
+ * Streams an order's PDF (order confirmation, delivery note or invoice)
  * to the browser. The API checks the buyer's — or staff's — session, which
  * is forwarded from our cookie.
  */

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { DeliveryBand } from "@/components/merchandising/DeliveryBand";
 import { EXPRESS, EXPRESS_EXCLUDED, EXPRESS_MATERIALS } from "@/data/express";
 import { formatZAR } from "@/lib/pricing";
+import { getVatRegistered } from "@/lib/tax";
 
 export const metadata: Metadata = {
   title: "AA 60/120 — Building Materials Delivered Within 2 Hours",
@@ -19,7 +20,8 @@ const STEPS = [
 ];
 
 /** AA 60/120 — express delivery of everyday building materials (docs/express-delivery.md). */
-export default function ExpressDeliveryPage() {
+export default async function ExpressDeliveryPage() {
+  const vatRegistered = await getVatRegistered();
   return (
     <div>
       <section className="bg-basalt text-limestone">
@@ -108,7 +110,7 @@ export default function ExpressDeliveryPage() {
               </li>
             </ul>
             <p className="mt-4 text-xs text-slate">
-              The {formatZAR(EXPRESS.fee)} fee is VAT-inclusive and comes on top of the normal delivery charge. Full terms:{" "}
+              The {formatZAR(EXPRESS.fee)} fee {vatRegistered ? "is VAT-inclusive and comes" : "comes"} on top of the normal delivery charge. Full terms:{" "}
               <Link href="/legal/shipping-delivery#aa-60-120-express-delivery" className="text-seam-blue underline">Shipping &amp; Delivery policy</Link>.
             </p>
           </aside>

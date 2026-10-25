@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ActionForm, inputClass, SubmitButton } from "@/components/account/Forms";
 import { api } from "@/lib/api";
+import { getVatRegistered } from "@/lib/tax";
 import {
   DOCUMENT_TYPE_LABEL,
   formatBytes,
@@ -86,6 +87,7 @@ export async function Applications({ status = "PENDING" }: { status?: string }) 
 }
 
 export async function Quotes({ status = "SUBMITTED" }: { status?: string }) {
+  const vatRegistered = await getVatRegistered();
   const result = await api<QuoteRecord[]>(`/quotes?status=${encodeURIComponent(status)}`, { token: sessionToken() });
   return (
     <section className="mt-6">
@@ -171,7 +173,7 @@ export async function Quotes({ status = "SUBMITTED" }: { status?: string }) {
                     <ActionForm action={orderFromQuote} className="mt-3 space-y-3">
                       <input type="hidden" name="quoteId" value={quote.id} />
                       <p className="font-body text-xs text-slate">
-                        Unit prices incl. VAT, as agreed. Lines plus delivery must add up to the quoted {formatZAR(Number(quote.quotedTotal))}.
+                        Unit prices{vatRegistered ? " incl. VAT" : ""}, as agreed. Lines plus delivery must add up to the quoted {formatZAR(Number(quote.quotedTotal))}.
                       </p>
                       {quote.lineItems.map((line) => (
                         <label key={line.id} className="grid items-center gap-2 sm:grid-cols-[2fr_1fr]">

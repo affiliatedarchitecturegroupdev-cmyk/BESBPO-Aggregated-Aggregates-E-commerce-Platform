@@ -5,6 +5,7 @@ import { DEPARTMENTS } from "@/data/departments";
 import { getHiddenSkus } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
 import { PRODUCT_INDEX } from "@/lib/product-index";
+import { getVatRegistered } from "@/lib/tax";
 
 export const metadata: Metadata = {
   title: "Buy Online — Priced Products",
@@ -18,7 +19,8 @@ export const metadata: Metadata = {
  * prices, or the pricing workbook). Everything else is quoted.
  */
 export default async function BuyOnlinePage() {
-  const hidden = new Set(await getHiddenSkus());
+  const [hiddenSkus, vatRegistered] = await Promise.all([getHiddenSkus(), getVatRegistered()]);
+  const hidden = new Set(hiddenSkus);
   const priced = PRODUCT_INDEX.filter((p) => p.fromPrice !== null && !hidden.has(p.sku));
   const departments = DEPARTMENTS.map((d) => ({ d, items: priced.filter((p) => p.departmentSlug === d.slug).sort((a, b) => a.name.localeCompare(b.name)) })).filter((x) => x.items.length > 0);
   return (
@@ -63,7 +65,7 @@ export default async function BuyOnlinePage() {
           </ul>
         </section>
       ))}
-      <p className="mt-10 font-body text-xs text-slate">Retail prices, including VAT.</p>
+      <p className="mt-10 font-body text-xs text-slate">{vatRegistered ? "Retail prices, including VAT." : "Retail prices, before delivery and any trade discount."}</p>
     </div>
   );
 }

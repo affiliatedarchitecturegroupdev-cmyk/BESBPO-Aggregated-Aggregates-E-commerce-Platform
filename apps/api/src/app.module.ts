@@ -36,6 +36,7 @@ import { CreditModule } from "./credit/credit.module";
 import { DeliveriesModule } from "./deliveries/deliveries.module";
 import { BoqModule } from "./boq/boq.module";
 import { DiscoveryModule } from "./discovery/discovery.module";
+import { TaxModule } from "./tax/tax.module";
 
 @Module({
   imports: [
@@ -75,6 +76,7 @@ import { DiscoveryModule } from "./discovery/discovery.module";
     DeliveriesModule,
     BoqModule,
     DiscoveryModule,
+    TaxModule,
   ],
 })
 export class AppModule {}

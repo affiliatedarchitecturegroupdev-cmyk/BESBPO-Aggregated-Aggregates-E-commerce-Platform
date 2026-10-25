@@ -8,7 +8,7 @@
  *    standard markup unless staff change it;
  * 3. the platform's list price at the client's tier (LIST).
  */
-export const VAT_PERCENT = 15;
+import { VAT_RATE_PERCENT as VAT_PERCENT } from "../tax/tax";
 export const DEFAULT_VALID_DAYS = 14;
 /** When the pricing service doesn't say (it always should): the storefront markup (PRICING_POLICY.md). */
 export const FALLBACK_MARKUP_PERCENT = 8;

@@ -200,17 +200,20 @@ methods tell the buyer to choose another method (Manual EFT / purchase order
 works today for trade accounts), and emails and WhatsApp messages are logged
 in **Admin → Notifications** rather than sent.
 
-- **Tax invoices.** On **aggregates-store-api** set `GROUP_VAT_NUMBER` to
-  Besbpo Group's VAT registration number and `PRICES_INCLUDE_VAT=true` to
-  confirm storefront prices already include VAT. Until both are set, staff
-  can't issue invoices (Admin → Orders says what's missing) — the platform
-  won't print a tax invoice with a placeholder VAT number or a VAT split it
-  isn't sure of.
+- **VAT and invoices** (`docs/vat.md`). Leave `GROUP_VAT_NUMBER` **empty
+  until SARS has registered the business for VAT**. While it is empty the
+  store neither charges nor shows VAT anywhere, and staff issue plain
+  invoices. Once registered, set `GROUP_VAT_NUMBER` on
+  **aggregates-store-api** to the VAT number and `PRICES_INCLUDE_VAT=true` to
+  confirm storefront prices include VAT. The VAT labels, breakdowns and tax
+  invoices then switch on together. Admin → Orders says if either value is
+  wrong, and the platform won't print a tax invoice with a placeholder VAT
+  number or a VAT split it isn't sure of.
 - **EFT banking details.** Set `EFT_BANKING_DETAILS` on
   **aggregates-store-api** to the account EFT payers use, one detail per line
   (or separated by `\n` when pasted as one line), e.g.
   `Bank: …\nAccount holder: …\nAccount number: …\nAccount type: …\nBranch code: …`.
-  It's printed on order confirmations and unpaid tax invoices, and shown when
+  It's printed on order confirmations and unpaid invoices, and shown when
   a buyer chooses EFT / purchase order. It's kept in Render rather than the
   code so finance can change it without a deploy, and so a code change can't
   quietly redirect payments. Until it's set, buyers are told to ask for it.

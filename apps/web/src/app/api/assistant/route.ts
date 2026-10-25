@@ -1,5 +1,6 @@
 import { assistantEngine, type AssistantCartLine, type AssistantState } from "@/lib/assistant";
 import { productBySlug } from "@/lib/assistant/knowledge";
+import { getVatRegistered } from "@/lib/tax";
 import { getHiddenSkus } from "@/lib/cms";
 
 export const dynamic = "force-dynamic";
@@ -67,7 +68,7 @@ export async function POST(request: Request) {
   const message = typeof body.message === "string" ? body.message.slice(0, MAX_MESSAGE) : "";
   const path = typeof body.path === "string" && body.path.startsWith("/") ? body.path.slice(0, 200) : "/";
 
-  const hiddenSkus = await getHiddenSkus().catch(() => [] as string[]);
+  const [hiddenSkus, vatRegistered] = await Promise.all([getHiddenSkus().catch(() => [] as string[]), getVatRegistered()]);
   const slug = path.match(/^\/products\/([a-z0-9-]+)/)?.[1];
   const onPage = slug ? productBySlug(slug) : undefined;
   const state = stateFrom(body.state);
@@ -75,7 +76,7 @@ export async function POST(request: Request) {
 
   const reply = await assistantEngine().respond(
     message,
-    { path, sku: onPage && !hiddenSkus.includes(onPage.sku) ? onPage.sku : null, cart: cartFrom(body.cart), hiddenSkus },
+    { path, sku: onPage && !hiddenSkus.includes(onPage.sku) ? onPage.sku : null, cart: cartFrom(body.cart), hiddenSkus, vatRegistered },
     state,
   );
   return Response.json(reply, { headers: { "Cache-Control": "no-store" } });

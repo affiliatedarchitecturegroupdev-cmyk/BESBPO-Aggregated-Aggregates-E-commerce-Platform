@@ -1,5 +1,6 @@
 import type { NotificationEvent, UnitOfSale } from "@aggregates/database";
 import { formatDateZA, formatTimeZA, formatZAR, SELLER, UNIT_LABEL, type Money } from "../common/format";
+import { vatRegistered } from "../tax/tax";
 
 export { formatZAR };
 
@@ -44,7 +45,8 @@ export type OrderData = {
   /** A payment link staff sent (PAYMENT_LINK_SENT). */
   payLink?: { url: string; amount: Money; kind: string; expiresAt: Date; note: string | null } | null;
   /** The tax invoice, once issued (INVOICE_ISSUED). */
-  invoice?: { invoiceNumber: string; amountDue: Money } | null;
+  /** vatNumberBilled is set on a tax invoice, null on a plain invoice (docs/vat.md). */
+  invoice?: { invoiceNumber: string; amountDue: Money; vatNumberBilled?: string | null } | null;
   /** Trade credit (docs/trade-credit.md): the order is on the company's account, due by this date. */
   account?: { dueAt: Date; termsDays: number | null } | null;
   /** Phased deliveries (DROP_DISPATCHED, DELIVERY_SIGNED): the drop this message is about. */
@@ -308,7 +310,7 @@ export function customerOrderEmail(event: NotificationEvent, o: OrderData): Emai
           { kind: "rows", rows: [["Order", o.orderNumber], ["Amount on account", formatZAR(o.total)], ["Payment due by", formatDateZA(o.account.dueAt)], ...(o.account.termsDays ? ([["Terms", `${o.account.termsDays} days`]] as [string, string][]) : [])] },
           { kind: "h", text: "Your order" },
           ...orderSummary(o),
-          { kind: "p", text: "Pay by EFT using the order number as the reference, or from your order page. Your tax invoice follows by email once our team issues it." },
+          { kind: "p", text: "Pay by EFT using the order number as the reference, or from your order page. Your invoice follows by email once our team issues it." },
           { kind: "cta", label: "View the order", href: `${site}/orders/${o.id}/confirmation` },
         ]);
       }
@@ -334,7 +336,7 @@ export function customerOrderEmail(event: NotificationEvent, o: OrderData): Emai
         { kind: "rows", rows: receipt },
         { kind: "h", text: "Your order" },
         ...orderSummary(o),
-        { kind: "p", text: "This is your payment receipt; your order confirmation is attached as a PDF. Your tax invoice follows by email once our team issues it, and both are always on your order page." },
+        { kind: "p", text: "This is your payment receipt; your order confirmation is attached as a PDF. Your invoice follows by email once our team issues it, and both are always on your order page." },
         balance > 0.01 ? { kind: "cta", label: "Pay the balance", href: `${site}/orders/${o.id}/confirmation` } : track,
       ]);
     }
@@ -383,9 +385,9 @@ export function customerOrderEmail(event: NotificationEvent, o: OrderData): Emai
     }
     case "INVOICE_ISSUED":
       if (!o.invoice) return null;
-      return email(`Tax invoice ${o.invoice.invoiceNumber} — order ${o.orderNumber}`, [
+      return email(`${o.invoice.vatNumberBilled ? "Tax invoice" : "Invoice"} ${o.invoice.invoiceNumber} — order ${o.orderNumber}`, [
         hi,
-        { kind: "p", text: `Your tax invoice ${o.invoice.invoiceNumber} for order ${o.orderNumber} is attached as a PDF.` },
+        { kind: "p", text: `Your ${o.invoice.vatNumberBilled ? "tax invoice" : "invoice"} ${o.invoice.invoiceNumber} for order ${o.orderNumber} is attached as a PDF.` },
         { kind: "rows", rows: [["Invoice", o.invoice.invoiceNumber], ["Order", o.orderNumber], ["Total", formatZAR(o.invoice.amountDue)]] },
         { kind: "cta", label: "View the order", href: `${site}/orders/${o.id}/confirmation` },
         { kind: "p", text: "Keep it for your records — it's also on your order page whenever you need it." },
@@ -517,7 +519,7 @@ export function quotationEmail(q: QuotationEmailData): EmailMessage {
     { kind: "p", text: `Thank you for your enquiry. Your quotation ${q.quoteNumber} is attached as a PDF.` },
     ...(q.message ? [{ kind: "p" as const, text: q.message }] : []),
     { kind: "list", items: q.lines.map(lineText) },
-    { kind: "rows", rows: [["Quotation", q.quoteNumber], ["Total (VAT inclusive, delivered)", formatZAR(q.total)], ...(q.validUntil ? ([["Valid until", formatDateZA(q.validUntil)]] as [string, string][]) : [])] },
+    { kind: "rows", rows: [["Quotation", q.quoteNumber], [vatRegistered() ? "Total (VAT inclusive, delivered)" : "Total amount payable (delivered)", formatZAR(q.total)], ...(q.validUntil ? ([["Valid until", formatDateZA(q.validUntil)]] as [string, string][]) : [])] },
     { kind: "cta", label: "View, accept and pay", href: q.url },
     { kind: "p", text: `You can accept it and pay online with the button above — no account needed. Prefer to talk first? Reply to this email or call ${SELLER.phone}${q.preparedBy ? ` and ask for ${q.preparedBy}` : ""}.` },
     { kind: "p", text: `Browse everything else we deliver at ${site}.` },
@@ -1068,7 +1070,7 @@ export const EVENT_LABEL: Record<NotificationEvent, string> = {
   BENDING_SCHEDULE_QUOTED: "Cut & bend schedule quoted",
   BENDING_SCHEDULE_ACCEPTED: "Cut & bend quote accepted",
   BENDING_SCHEDULE_DECLINED: "Cut & bend quote declined",
-  INVOICE_ISSUED: "Tax invoice issued",
+  INVOICE_ISSUED: "Invoice issued",
   PASSWORD_RESET: "Password reset link (always sent)",
   EMAIL_VERIFICATION: "Email address verification (always sent)",
   NEWSLETTER_CONFIRMATION: "Newsletter sign-up confirmation (always sent)",

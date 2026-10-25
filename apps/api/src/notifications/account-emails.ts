@@ -40,7 +40,7 @@ export function emailVerificationEmail(name: string | null, link: string, validH
         "Confirm your email address",
         [
           { kind: "p", text: greeting(name) },
-          { kind: "p", text: "Please confirm this is your email address, so your order confirmations, receipts and tax invoices reach you — and so you can reset your password if you ever need to." },
+          { kind: "p", text: "Please confirm this is your email address, so your order confirmations, receipts and invoices reach you — and so you can reset your password if you ever need to." },
           { kind: "cta", label: "Confirm my email address", href },
           { kind: "p", text: `The link works for ${validHours} hours. If you didn't create an account on aaggregates.store, you can ignore this email.` },
         ],

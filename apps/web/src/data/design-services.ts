@@ -9,7 +9,7 @@
  *
  * Rates were derived from published South African benchmarks (see
  * DESIGN_SERVICES.md, "Where the rates come from"); approved by the owner on
- * 11 October 2026. All fees exclude VAT.
+ * 11 October 2026. Fees exclude VAT; "excl. VAT" is shown only once the business is VAT-registered (docs/vat.md).
  */
 export type Discipline = "architectural" | "structural" | "civil" | "compliance" | "quantities";
 
@@ -219,15 +219,19 @@ export function findDesignService(slug: string) {
 
 const zar = (n: number) => `R${Math.round(n).toLocaleString("en-US")}`;
 
-/** One line describing a fee: "R6,500 fixed, excl. VAT", "R120/m², minimum R18,000, excl. VAT", "1.5–2% of building cost, excl. VAT", "Quoted per project". */
-export function feeLabel(fee: DesignFee): string {
+/**
+ * One line describing a fee: "R6,500 fixed", "R120/m², minimum R18,000", "1.5–2% of building cost", "Quoted per
+ * project" — with ", excl. VAT" once the business is VAT-registered (docs/vat.md).
+ */
+export function feeLabel(fee: DesignFee, vatRegistered = false): string {
+  const vat = vatRegistered ? ", excl. VAT" : "";
   switch (fee.kind) {
     case "fixed":
-      return `${zar(fee.amount)} fixed, excl. VAT`;
+      return `${zar(fee.amount)} fixed${vat}`;
     case "perM2":
-      return `${zar(fee.rate)}/m², minimum ${zar(fee.minimum)}, excl. VAT`;
+      return `${zar(fee.rate)}/m², minimum ${zar(fee.minimum)}${vat}`;
     case "percent":
-      return `${fee.low}–${fee.high}% of building cost${fee.minimum ? `, minimum ${zar(fee.minimum)}` : ""}, excl. VAT`;
+      return `${fee.low}–${fee.high}% of building cost${fee.minimum ? `, minimum ${zar(fee.minimum)}` : ""}${vat}`;
     default:
       return "Quoted per project";
   }

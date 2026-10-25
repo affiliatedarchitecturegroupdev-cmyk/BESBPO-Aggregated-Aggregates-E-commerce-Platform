@@ -17,7 +17,7 @@ export default function VerifyEmailPage({ searchParams }: { searchParams: { toke
       <h1 className="font-display text-2xl font-bold text-basalt">Confirm your email address</h1>
       {token ? (
         <div className="mt-6 rounded-sm border border-basalt/10 bg-white p-6">
-          <p className="mb-4 font-body text-sm text-slate">So your order confirmations, receipts and tax invoices reach you — and so you can reset your password if you need to.</p>
+          <p className="mb-4 font-body text-sm text-slate">So your order confirmations, receipts and invoices reach you — and so you can reset your password if you need to.</p>
           <ActionForm action={verifyEmail}>
             <input type="hidden" name="token" value={token} />
             <SubmitButton>Confirm my email address</SubmitButton>
