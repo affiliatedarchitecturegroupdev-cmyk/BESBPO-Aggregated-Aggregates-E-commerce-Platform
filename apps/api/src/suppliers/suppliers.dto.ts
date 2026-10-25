@@ -48,6 +48,13 @@ export class NearestQuery {
   @IsOptional() @IsIn(SLUGS) category?: string;
 }
 
+/** "Available near you" (docs/availability.md): a product, and optionally where the shopper is (never stored). */
+export class AvailabilityQuery {
+  @Matches(/^[A-Z0-9-]{3,60}$/) sku!: string;
+  @IsOptional() @Type(() => Number) @IsNumber() @IsLatitude() lat?: number;
+  @IsOptional() @Type(() => Number) @IsNumber() @IsLongitude() lng?: number;
+}
+
 export class ListSuppliersQuery {
   @IsOptional() @IsIn(PROVINCES) province?: string;
   @IsOptional() @IsIn(["missing-coordinates", "inactive", "active", "leads"]) filter?: string;

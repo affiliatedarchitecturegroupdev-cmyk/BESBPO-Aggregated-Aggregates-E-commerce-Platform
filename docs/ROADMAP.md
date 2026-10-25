@@ -490,7 +490,8 @@ Every department gets:
 - **Listing:** `/products` rebuilt with filters, sorts, pages, Buy online / Quote badges and quick add (3.3).
 - **Compare:** up to three products, at `/compare` (4.3).
 - **Search insights:** top searches, searches that find nothing, staff-editable synonyms and merchandising section performance (`docs/search-insights.md`).
-- **Still open:** 4.2 photos and datasheets, 4.4 availability, and a hosted engine if one is needed.
+- **4.4 Available near you: built 25 Oct 2026** (`docs/availability.md`). Product pages say whether a verified partner supplier near the shopper lists the product, or supplies its range, with the town and distance — never the supplier's name or "in stock".
+- **Still open:** 4.2 photos and datasheets, and a hosted engine if one is needed.
 
 | # | Item | Notes |
 |---|---|---|

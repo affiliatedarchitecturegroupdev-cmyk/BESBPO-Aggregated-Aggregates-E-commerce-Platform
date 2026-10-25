@@ -4229,6 +4229,20 @@ describe("Aggregated Aggregates API (e2e)", () => {
       expect(staffView).toMatchObject({ source: "SUPPLIER_PORTAL", supplierName: supplier.name, notes: "Ex works Pinetown" });
       await http().post(`/prices/staff/lists/${mine.id}/approve-all`).set(bearer(staff)).expect(200);
       expect((await priceOf(POLE, "EACH")).lines[0].unit_price).toBe(50.76); // 47 + 8%
+
+      // Available near you (ROADMAP 4.4): the public sees that a partner nearby lists it — town and distance, never who.
+      await http().get("/suppliers/availability?sku=AA-NOPE-404").expect(404);
+      await http().get(`/suppliers/availability?sku=${POLE}&lat=abc&lng=31`).expect(400);
+      await prisma.supplierLocation.update({ where: { id: supplier.id }, data: { isVerifiedPartner: true, latitude: -29.82, longitude: 30.87, city: "Pinetown", province: "KwaZulu-Natal" } });
+      const near = (await http().get(`/suppliers/availability?sku=${POLE}&lat=-29.8587&lng=31.0218`).expect(200)).body;
+      expect(near.listed).toBeGreaterThanOrEqual(1);
+      expect(near.listedProvinces).toContain("KwaZulu-Natal");
+      expect(near.nearestListed).toEqual({ town: "Pinetown", province: "KwaZulu-Natal", distanceKm: 15 });
+      expect(JSON.stringify(near)).not.toContain(supplier.name);
+      expect(JSON.stringify(near)).not.toContain(supplier.id);
+      const anywhere = (await http().get(`/suppliers/availability?sku=${POLE}`).expect(200)).body;
+      expect(anywhere).toMatchObject({ nearestListed: null, nearestRange: null });
+      await prisma.supplierLocation.update({ where: { id: supplier.id }, data: { isVerifiedPartner: supplier.isVerifiedPartner, latitude: supplier.latitude, longitude: supplier.longitude, city: supplier.city, province: supplier.province } });
       const lists = (await http().get("/prices/supplier/lists").set(bearer(supplierLogin)).expect(200)).body;
       expect(lists[0]).toMatchObject({ id: mine.id, counts: { APPROVED: 1, UNMATCHED: 1 } });
       // Another supplier's login can't see this list.
