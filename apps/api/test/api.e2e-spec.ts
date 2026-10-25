@@ -17,6 +17,7 @@ import { AppModule } from "../src/app.module";
 import { PrismaService } from "../src/common/prisma.service";
 import { DigestService } from "../src/insights/digest.service";
 import { EmailSender } from "../src/notifications/providers";
+import { NotificationsService } from "../src/notifications/notifications.service";
 import { OrdersService } from "../src/orders/orders.service";
 import { PaymentGatewayService } from "../src/payment-gateway/payment-gateway.service";
 import { PaymentsService } from "../src/payment-gateway/payments.service";
@@ -4204,10 +4205,43 @@ describe("Aggregated Aggregates API (e2e)", () => {
       expect(await priceOf(POLE, "EACH")).toMatchObject({ is_quote_only: true });
       expect(((await http().get("/prices/live").expect(200)).body as { sku: string }[]).some((p) => p.sku === POLE)).toBe(false);
 
+      // Supplier self-service (ROADMAP 1.5): the supplier uploads its own list in the portal; staff approve.
+      const supplierLogin = await register("spportal");
+      await http().post(`/supplier-portal/suppliers/${supplier.id}/logins`).set(bearer(staff)).send({ email: `spportal-${run}@example.com` }).expect(201);
+      const portalCsv = ["Item code,Description,UOM,Nett price", `${code},CCA pole 1.8 m,each,47`, "ZZ-1,Unknown thing,each,5"].join("\n");
+      const portalUpload = (as: string, fields: Record<string, string>) => http().post("/prices/supplier/lists").set(bearer(as)).field(fields).attach("file", Buffer.from(portalCsv), "our-prices.csv");
+      await portalUpload(buyer, { validUntil }).expect(403);
+      await portalUpload(supplierLogin, {}).expect(400); // a valid-until date is required
+      const alertSpy = jest.spyOn(app.get(NotificationsService), "staffAlert");
+      const mine = (await portalUpload(supplierLogin, { validUntil, notes: "Ex works Pinetown" }).expect(201)).body;
+      expect(mine.lines[0]).toMatchObject({ supplierCode: code, sku: POLE, productName: "CCA Treated Pole 50–75 mm × 1.8 m", status: "PENDING" });
+      expect(mine.lines[1]).toMatchObject({ status: "UNMATCHED" });
+      // The supplier never sees our sell price or markup.
+      expect(JSON.stringify(mine)).not.toMatch(/suggestedPrice|markupPercent|approvedPrice|currentPrice/);
+      // Staff are alerted (to whoever is on Admin → Notifications), with a link to the list and no costs.
+      const [event, message] = alertSpy.mock.calls.at(-1)!;
+      alertSpy.mockRestore();
+      expect(event).toBe("PRICE_LIST_UPLOADED");
+      expect(message.subject).toBe(`Price list from ${supplier.name} — 1 price to approve`);
+      expect(message.text).toContain(`/admin/supplier-prices/${mine.id}`);
+      expect(message.text).not.toContain("47");
+      const staffView = (await http().get(`/prices/staff/lists/${mine.id}`).set(bearer(staff)).expect(200)).body;
+      expect(staffView).toMatchObject({ source: "SUPPLIER_PORTAL", supplierName: supplier.name, notes: "Ex works Pinetown" });
+      await http().post(`/prices/staff/lists/${mine.id}/approve-all`).set(bearer(staff)).expect(200);
+      expect((await priceOf(POLE, "EACH")).lines[0].unit_price).toBe(50.76); // 47 + 8%
+      const lists = (await http().get("/prices/supplier/lists").set(bearer(supplierLogin)).expect(200)).body;
+      expect(lists[0]).toMatchObject({ id: mine.id, counts: { APPROVED: 1, UNMATCHED: 1 } });
+      // Another supplier's login can't see this list.
+      const other = await prisma.supplierLocation.findFirstOrThrow({ where: { isActive: true, id: { not: supplier.id } } });
+      const otherLogin = await register("spother");
+      await http().post(`/supplier-portal/suppliers/${other.id}/logins`).set(bearer(staff)).send({ email: `spother-${run}@example.com` }).expect(201);
+      await http().get(`/prices/supplier/lists/${mine.id}`).set(bearer(otherLogin)).expect(404);
+      await prisma.productPrice.updateMany({ where: { sku: POLE, isActive: true }, data: { isActive: false } });
+
       // Bad files are refused with a reason.
       await upload(staff, "just,some,words\n1,2,3").expect(400);
       await http().post("/prices/staff/lists").set(bearer(staff)).field("supplierName", "No file").expect(400);
-      await prisma.supplierPriceList.deleteMany({ where: { id: { in: [list.id, next.id] } } });
+      await prisma.supplierPriceList.deleteMany({ where: { id: { in: [list.id, next.id, mine.id] } } });
     });
   });
 });

@@ -21,7 +21,14 @@ Costs: the business is not VAT-registered (`docs/vat.md`), so a supplier's cost 
 2. **Sales quotations.** When staff send a quotation with a line priced from a supplier's cost, that cost is added as a suggestion to the day's "Costs from sales quotations" list.
    - Its validity is the quotation's valid-until date.
    - The same product, unit and cost is suggested only once a day.
-3. **Retail benchmarks** remain the fallback for products no supplier has priced: at least two SA retailers, lowest × 1.08, promotions excluded (`PRICING_POLICY.md`).
+3. **The supplier itself, in the supplier portal (ROADMAP 1.5).** A supplier's portal login can send its current price list from *Supplier portal → Your price list*.
+   - The file it already uses is fine.
+   - A **valid-until date is required**, at most a year ahead, so a supplier's prices always lapse rather than go stale.
+   - The list is matched exactly like one staff upload, using the supplier's learned codes, and shows in Admin → Supplier prices as "Sent by the supplier".
+   - Staff are emailed (`PRICE_LIST_UPLOADED`, switchable on Admin → Notifications) with the row counts and a link. The email carries no costs.
+   - **Staff still approve every price.**
+   - The supplier sees each of its lines with the product we matched and its status: with our team, accepted, couldn't match, or not used. It **never** sees our sell price, our markup or other suppliers' prices.
+4. **Retail benchmarks** remain the fallback for products no supplier has priced: at least two SA retailers, lowest × 1.08, promotions excluded (`PRICING_POLICY.md`).
 
 ## Matching
 
@@ -69,9 +76,10 @@ The overview shows **"Priced online: X of Y"**: how much of the catalogue can be
 | POST | `/prices/staff/lines/:id/approve` `{ price? }`, `/prices/staff/lines/:id/reject` | staff |
 | GET | `/prices/staff/live?sku=`, `/prices/staff/history/:sku`, `/prices/staff/coverage` | staff |
 | DELETE | `/prices/staff/live/:id` | staff: withdraw |
+| POST | `/prices/supplier/lists` (multipart: `file`, `validUntil` required, `notes`) | supplier portal login |
+| GET | `/prices/supplier/lists`, `/prices/supplier/lists/:id` | supplier portal login: its own lists only |
 
 ## Still to come
 
-- **1.5 Supplier self-service.** Suppliers upload their own lists in the supplier portal; staff still approve.
 - **4.4 Availability.** "In stock near you", using the supplier-to-product mapping this builds.
 - **Supplier-specific delivery costs** on the order, using which supplier's price won.

@@ -47,6 +47,7 @@ export default async function SupplierPortalPage({ searchParams }: { searchParam
       <nav className="mt-6 flex gap-2 font-body text-sm">
         <Link href="/suppliers/portal" aria-current={!done ? "page" : undefined} className={`rounded-sm px-3 py-1.5 ${!done ? "bg-basalt text-limestone" : "border border-basalt/20 bg-white"}`}>Open</Link>
         <Link href="/suppliers/portal?scope=done" aria-current={done ? "page" : undefined} className={`rounded-sm px-3 py-1.5 ${done ? "bg-basalt text-limestone" : "border border-basalt/20 bg-white"}`}>Delivered and closed</Link>
+        <Link href="/suppliers/portal/prices" className="rounded-sm border border-basalt/20 bg-white px-3 py-1.5">Your price list</Link>
       </nav>
       {orders.data.length === 0 ? (
         <p className="mt-6 font-body text-sm text-slate">No {done ? "closed" : "open"} orders.</p>

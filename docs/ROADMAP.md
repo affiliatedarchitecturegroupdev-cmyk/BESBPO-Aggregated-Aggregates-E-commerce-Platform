@@ -176,7 +176,8 @@ These come first: nothing new reaches customers until they are done.
 - **Approved prices go live everywhere**: product pages, listings, search, the cart, checkout and sales quotations. Tier discounts and the margin floor apply as usual. Costs never reach the storefront.
 - **Supplier costs typed into sales quotations** become suggestions too.
 - **Expiry and history.** Prices lapse with the list's valid-until date and every price is kept as history. "Priced online: X of Y" is shown on the overview.
-- **Still open:** 1.5 supplier self-service in the portal; aggregates and ready-mix stay on their price bands.
+- **1.5 supplier self-service: built 25 Oct 2026.** Suppliers send their own price lists in the supplier portal, with a required valid-until date. Staff are emailed and approve every price, and suppliers never see our sell prices.
+- **Still open:** aggregates and ready-mix stay on their price bands.
 
 | # | Item | Notes |
 |---|---|---|

@@ -1,8 +1,9 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import type { FormState } from "@/app/account/actions";
-import { api } from "@/lib/api";
+import { api, apiUpload } from "@/lib/api";
 import { sessionToken } from "@/lib/session";
 
 const text = (form: FormData, name: string) => {
@@ -39,4 +40,20 @@ export async function createPodLink(_prev: FormState, form: FormData): Promise<F
   const result = await api<{ url: string }>(path, { method: "POST", token: sessionToken() });
   revalidatePath(`/admin/orders/${orderId}/deliveries`);
   return result.ok ? { success: `Send this link to the driver (it works once, for this delivery): ${result.data.url}` } : { error: result.message };
+}
+
+/** The supplier uploads its own price list (docs/supplier-prices.md); our team approves each price. */
+export async function uploadOwnPriceList(_prev: FormState, form: FormData): Promise<FormState> {
+  const file = form.get("file");
+  if (!(file instanceof File) || file.size === 0) return { error: "Choose your price list (Excel .xlsx or .csv)." };
+  if (file.size > 5 * 1024 * 1024) return { error: "The file is over 5 MB — save just the price list and try again." };
+  if (!text(form, "validUntil")) return { error: "Say until when these prices hold." };
+  const upload = new FormData();
+  upload.append("file", file, file.name);
+  upload.append("validUntil", text(form, "validUntil"));
+  if (text(form, "notes")) upload.append("notes", text(form, "notes"));
+  const result = await apiUpload<{ id: string }>("/prices/supplier/lists", upload, sessionToken());
+  if (!result.ok) return { error: result.message };
+  revalidatePath("/suppliers/portal/prices");
+  redirect(`/suppliers/portal/prices/${result.data.id}`);
 }

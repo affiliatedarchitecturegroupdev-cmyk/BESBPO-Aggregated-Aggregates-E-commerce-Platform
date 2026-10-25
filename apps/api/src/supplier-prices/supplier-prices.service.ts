@@ -3,6 +3,9 @@ import { PriceLineStatus, PriceListSource, type UnitOfSale } from "@aggregates/d
 import type { AuthUser } from "../common/auth/auth-user";
 import { UNIT_LABEL } from "../common/format";
 import { PrismaService } from "../common/prisma.service";
+import { linkedSupplierId } from "../deliveries/access";
+import { priceListUploadedEmail } from "../notifications/notification-templates";
+import { NotificationsService } from "../notifications/notifications.service";
 import { csvRows } from "../boq/boq";
 import { readFirstSheet } from "../boq/xlsx";
 import { detectScheduleFileType } from "../cut-and-bend/bar-schedule";
@@ -41,6 +44,7 @@ export class SupplierPricesService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly pricing: PricingService,
+    private readonly notifications: NotificationsService,
   ) {}
 
   // --- Upload and matching ---------------------------------------------------------------------------------
@@ -178,6 +182,76 @@ export class SupplierPricesService {
     } catch {
       return Promise.all(pairs.map((p) => request([p]).then((r) => r.lines[0] ?? null, () => null)));
     }
+  }
+
+  // --- Supplier self-service (ROADMAP 1.5) ----------------------------------------------------------------------
+
+  /**
+   * A supplier uploads its own price list in the supplier portal. It's matched exactly like a list staff upload,
+   * and staff are emailed; nothing changes on the store until staff approve each price. A valid-until date is
+   * required, so a supplier's prices always lapse rather than go stale.
+   */
+  async supplierUpload(file: Upload, meta: { validUntil?: string | null; notes?: string | null }, user: AuthUser) {
+    const supplierId = await this.requireSupplier(user);
+    if (!meta.validUntil) throw new BadRequestException("Say until when these prices hold — they stop applying after that date.");
+    const validUntil = this.validUntil(meta.validUntil)!;
+    if (validUntil.getTime() > Date.now() + 366 * 86_400_000) throw new BadRequestException("Prices can be valid for up to a year — upload a new list after that.");
+    const { rows, fileName } = this.read(file);
+    const parsed = priceRows(rows);
+    if (parsed.problem) throw new BadRequestException(parsed.problem);
+    const supplier = await this.prisma.supplierLocation.findUniqueOrThrow({ where: { id: supplierId }, select: { id: true, name: true } });
+    const list = await this.prisma.supplierPriceList.create({
+      data: { source: PriceListSource.SUPPLIER_PORTAL, supplierLocationId: supplier.id, supplierName: supplier.name, fileName, validUntil, notes: meta.notes?.trim().slice(0, 1000) || null, uploadedById: user.id },
+    });
+    await this.addLines(list.id, parsed.rows, supplier.id);
+    const counts = await this.prisma.supplierPriceLine.groupBy({ by: ["status"], where: { priceListId: list.id }, _count: { _all: true } });
+    const n = (s: PriceLineStatus) => counts.find((c) => c.status === s)?._count._all ?? 0;
+    await this.notifications.staffAlert(
+      "PRICE_LIST_UPLOADED",
+      priceListUploadedEmail({ supplierName: supplier.name, rows: parsed.rows.length, waiting: n(PriceLineStatus.PENDING), unmatched: n(PriceLineStatus.UNMATCHED), validUntil, listId: list.id }),
+    );
+    return this.supplierList(list.id, user);
+  }
+
+  /** The supplier's own price lists, newest first, with how far our team has got with each. */
+  async supplierLists(user: AuthUser) {
+    const supplierId = await this.requireSupplier(user);
+    const lists = await this.prisma.supplierPriceList.findMany({
+      where: { supplierLocationId: supplierId, source: PriceListSource.SUPPLIER_PORTAL },
+      orderBy: { createdAt: "desc" },
+      take: 50,
+      select: { id: true, fileName: true, validUntil: true, notes: true, createdAt: true },
+    });
+    const counts = await this.prisma.supplierPriceLine.groupBy({ by: ["priceListId", "status"], where: { priceListId: { in: lists.map((l) => l.id) } }, _count: { _all: true } });
+    return lists.map((l) => ({ ...l, counts: Object.fromEntries(Object.values(PriceLineStatus).map((s) => [s, counts.find((c) => c.priceListId === l.id && c.status === s)?._count._all ?? 0])) as Record<PriceLineStatus, number> }));
+  }
+
+  /**
+   * One of the supplier's lists, row by row: its own code, description, unit and cost, the product we matched
+   * and where it stands. Never our sell price, markup or other suppliers' prices.
+   */
+  async supplierList(id: string, user: AuthUser) {
+    const supplierId = await this.requireSupplier(user);
+    const list = await this.prisma.supplierPriceList.findFirst({
+      where: { id, supplierLocationId: supplierId, source: PriceListSource.SUPPLIER_PORTAL },
+      select: {
+        id: true,
+        fileName: true,
+        validUntil: true,
+        notes: true,
+        createdAt: true,
+        lines: { orderBy: { rowNumber: "asc" }, select: { id: true, rowNumber: true, supplierCode: true, description: true, sku: true, unit: true, unitCost: true, status: true, problem: true } },
+      },
+    });
+    if (!list) throw new NotFoundException("Price list not found.");
+    const names = new Map((await this.prisma.product.findMany({ where: { sku: { in: list.lines.flatMap((l) => (l.sku ? [l.sku] : [])) } }, select: { sku: true, name: true } })).map((p) => [p.sku, p.name]));
+    return { ...list, lines: list.lines.map((l) => ({ ...l, productName: l.sku ? (names.get(l.sku) ?? null) : null })) };
+  }
+
+  private async requireSupplier(user: AuthUser) {
+    const supplierId = await linkedSupplierId(this.prisma, user);
+    if (!supplierId) throw new NotFoundException("This login isn't linked to an active supplier.");
+    return supplierId;
   }
 
   // --- Review ------------------------------------------------------------------------------------------------

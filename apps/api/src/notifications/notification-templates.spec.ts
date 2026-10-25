@@ -294,7 +294,8 @@ describe("notification templates", () => {
       // The weekly insights email is built from report data (insights/digest.ts), not from one record.
       // These are built from report or health data (insights/digest.ts, gateway-health.service.ts), not from one record.
       // The supplier's answer (SUPPLIER_ORDER) and the uptime monitor (SERVICE_DOWN) are staff alerts too.
-      if (!["WEEKLY_INSIGHTS", "GATEWAY_DEGRADED", "SUPPLIER_ORDER", "SERVICE_DOWN"].includes(event)) expect([event, staffEmail !== null]).toEqual([event, channels.staffEmail]);
+      // So is a supplier's price list (PRICE_LIST_UPLOADED, supplier-prices.service.ts).
+      if (!["WEEKLY_INSIGHTS", "GATEWAY_DEGRADED", "SUPPLIER_ORDER", "SERVICE_DOWN", "PRICE_LIST_UPLOADED"].includes(event)) expect([event, staffEmail !== null]).toEqual([event, channels.staffEmail]);
     }
   });
 

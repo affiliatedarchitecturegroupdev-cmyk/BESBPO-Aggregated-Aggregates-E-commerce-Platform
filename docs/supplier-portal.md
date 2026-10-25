@@ -26,6 +26,7 @@ Code: `apps/api/src/deliveries/supplier-portal.*`, storefront
   (a reason is required). Staff are emailed either way.
 - Sets a **ready-to-load date** per drop.
 - Makes the **driver's proof-of-delivery link** (docs/deliveries.md).
+- Sends its **current price list** (*Your price list*, docs/supplier-prices.md). It gives the date the prices hold until and sees which lines we matched and accepted. It never sees our sell prices. Staff approve every price.
 - Orders are marked *Ready to load* only once confirmed (paid, deposit in,
   or on account).
 

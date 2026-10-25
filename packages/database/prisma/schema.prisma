@@ -1220,6 +1220,7 @@ enum NotificationEvent {
   CREDIT_DECIDED // the company: trade credit approved, declined or suspended
   SUPPLIER_ORDER // the supplier: an order to load (supplier portal)
   SERVICE_DOWN // staff: a dependency (database, pricing service) is failing — uptime monitor
+  PRICE_LIST_UPLOADED // staff: a supplier uploaded a price list in the supplier portal
 }
 
 enum NotificationChannel {
@@ -2157,6 +2158,7 @@ model MerchandisingStat {
 enum PriceListSource {
   SUPPLIER_LIST // a supplier's price list, uploaded as CSV
   QUOTATION // supplier costs staff typed into sales quotations
+  SUPPLIER_PORTAL // uploaded by the supplier itself in the supplier portal (ROADMAP 1.5)
 }
 
 enum PriceLineStatus {

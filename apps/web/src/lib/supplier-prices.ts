@@ -4,7 +4,7 @@ export type PriceLineStatus = "PENDING" | "APPROVED" | "REJECTED" | "UNMATCHED";
 
 export type PriceListSummary = {
   id: string;
-  source: "SUPPLIER_LIST" | "QUOTATION";
+  source: "SUPPLIER_LIST" | "QUOTATION" | "SUPPLIER_PORTAL";
   supplierName: string;
   fileName: string | null;
   validUntil: string | null;
@@ -40,7 +40,7 @@ export type LiveSupplierPrice = {
   listPrice: string;
   unitCost: string;
   markupPercent: string;
-  source: "SUPPLIER_LIST" | "QUOTATION";
+  source: "SUPPLIER_LIST" | "QUOTATION" | "SUPPLIER_PORTAL";
   supplierName: string | null;
   validUntil: string | null;
   approvedAt: string;
