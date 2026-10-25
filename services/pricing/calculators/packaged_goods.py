@@ -183,6 +183,53 @@ def with_overrides(products: dict[str, PackagedProduct], overrides: list[PriceOv
     return patched
 
 
+# Products staff add in Admin → Catalogue import (docs/catalogue-import.md) live in the API's database, not in these
+# files. The API sends them with each order it prices; they are quote-only until a supplier price is approved.
+ADDED_PRODUCT_NOTE = "Added by our team — priced on quote until a supplier price is approved"
+LINE_UNITS = {
+    "cement": CEMENT_LINE_UNITS,
+    "steel": STEEL_UNITS,
+    "masonry": MASONRY_UNITS,
+    "roofing": ROOFING_UNITS,
+    "supplies": SUPPLIES_UNITS,
+}
+
+
+@dataclass(frozen=True)
+class AddedProduct:
+    """A product staff added (docs/catalogue-import.md): its line decides the pricing family and the units allowed."""
+
+    sku: str
+    name: str
+    category_slug: str
+    line: str
+    units: tuple[tuple[str, str], ...]  # (unit, label)
+
+
+def with_added(products: dict[str, PackagedProduct], added: list[AddedProduct]) -> dict[str, PackagedProduct]:
+    """
+    The catalogue plus products staff added, each unit quote-only. A SKU the catalogue already has is left as it
+    is — the files win. A unit outside the product line's units is refused (ValueError), as for the files.
+    Returns a new dict; the loaded catalogue is never changed.
+    """
+    if not added:
+        return products
+    patched = dict(products)
+    for a in added:
+        if a.sku in patched:
+            continue
+        allowed = LINE_UNITS.get(a.line)
+        if allowed is None:
+            raise ValueError(f"{a.sku}: products can't be added to the {a.line} line")
+        units = {}
+        for unit, label in a.units:
+            if unit not in allowed:
+                raise ValueError(f"{a.sku}: unit {unit} is not one of {allowed}")
+            units[unit] = PackagedUnit(unit=unit, label=label, list_price=None, pricing_status="Quote only", source_note=ADDED_PRODUCT_NOTE, weight_kg=None)
+        patched[a.sku] = PackagedProduct(sku=a.sku, name=a.name, category_slug=a.category_slug, units=units, line=a.line)
+    return patched
+
+
 def load(path: Path = DATA_PATH) -> tuple[dict, dict[str, PackagedProduct]]:
     """The CAT-10/11 packaged-goods catalogue."""
     raw = json.loads(path.read_text(encoding="utf-8"))

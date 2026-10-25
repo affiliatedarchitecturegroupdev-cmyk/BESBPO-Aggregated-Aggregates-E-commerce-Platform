@@ -7,8 +7,10 @@ import { PACKAGED_PRODUCTS, type PackagedProduct } from "@/data/packaged";
 import { MASONRY_PRODUCTS, type MasonryProduct } from "@/data/masonry";
 import { ROOFING_PRODUCTS, type RoofingProduct } from "@/data/roofing";
 import { SUPPLIES_PRODUCTS } from "@/data/supplies";
+import type { Quotable } from "@/data/quotable";
 import { STEEL_PRODUCTS, type SteelProduct } from "@/data/steel";
 import { READY_MIX_PRODUCTS, type ReadyMixProduct } from "@/data/ready-mix";
+import { addedProducts, type AddedProductSource } from "./added-products";
 import { api, apiCached } from "./api";
 import { applyLivePrices, livePriceMap, type LivePrice } from "./live-prices";
 import type { LeadTime } from "./phase4";
@@ -233,10 +235,25 @@ export const getRoofingCatalogue = cache(async (): Promise<MerchandisedRoofingPr
   });
 });
 
-/** Building supplies (CAT-32..42), visible ones only, with descriptions and photography — the roofing product shape. */
+/**
+ * Products staff added in Admin → Catalogue import (docs/catalogue-import.md) — read from the API, as they aren't in
+ * the catalogue files. Only active ones are returned. Cached for a minute.
+ */
+export const getAddedProducts = cache(async (): Promise<RoofingProduct[]> => addedProducts(await apiCached<AddedProductSource[]>("/catalogue-import/products", 60, ["catalogue"])));
+
+/** The products staff added, as the cart and quote form look them up (findQuotable), with live supplier prices. */
+export const getAddedQuotable = cache(async (): Promise<Quotable[]> => {
+  const [added, live] = await Promise.all([getAddedProducts(), getLivePriceMap()]);
+  return added.map((p) => {
+    const priced = applyLivePrices(p, live);
+    return { sku: p.sku, slug: p.slug, name: p.name, categorySlug: p.categorySlug, gradingStandard: p.gradingStandard, units: priced.units.map((u) => ({ code: u.unit, label: u.label, retailPrice: u.prices?.RETAIL ?? null })) };
+  });
+});
+
+/** Building supplies (CAT-32..42 and the range), plus products staff added, visible ones only, with descriptions and photography — the roofing product shape. */
 export const getSuppliesCatalogue = cache(async (): Promise<MerchandisedRoofingProduct[]> => {
-  const [bySku, live] = await Promise.all([getOverlay(), getLivePriceMap()]);
-  return SUPPLIES_PRODUCTS.filter((p) => bySku.get(p.sku)?.isActive ?? true).map((p) => {
+  const [bySku, live, added] = await Promise.all([getOverlay(), getLivePriceMap(), getAddedProducts()]);
+  return [...SUPPLIES_PRODUCTS, ...added].filter((p) => bySku.get(p.sku)?.isActive ?? true).map((p) => {
     const o = bySku.get(p.sku);
     return applyLivePrices({ ...p, description: o?.description ?? null, featuredRank: o?.featuredRank ?? null, images: photos(o, p.name) }, live);
   });

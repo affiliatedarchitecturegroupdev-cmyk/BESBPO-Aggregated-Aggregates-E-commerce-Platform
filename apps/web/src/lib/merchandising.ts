@@ -3,8 +3,9 @@ import { CATEGORIES } from "@/data/categories";
 import { DEPARTMENTS } from "@/data/departments";
 import { cache } from "react";
 import { apiCached } from "@/lib/api";
-import { getAddedDates, getLivePrices } from "@/lib/cms";
+import { getAddedDates, getAddedProducts, getLivePrices } from "@/lib/cms";
 import type { LivePrice } from "@/lib/live-prices";
+import type { RoofingProduct } from "@/data/roofing";
 import { liveProductIndex, PRODUCT_INDEX, searchCatalogue, type IndexedProduct } from "@/lib/product-index";
 
 /**
@@ -17,20 +18,20 @@ import { liveProductIndex, PRODUCT_INDEX, searchCatalogue, type IndexedProduct }
  * from a supplier's list shows its price — and counts as "buy online" — here as on its product page.
  */
 
-/** The catalogue the rows are built from: products, by SKU, and the live prices behind them. */
-export type MerchCatalogue = { products: IndexedProduct[]; bySku: Map<string, IndexedProduct>; live: LivePrice[] };
+/** The catalogue the rows are built from: products, by SKU, the live prices behind them and the products staff added. */
+export type MerchCatalogue = { products: IndexedProduct[]; bySku: Map<string, IndexedProduct>; live: LivePrice[]; added: RoofingProduct[] };
 
-const STATIC: MerchCatalogue = { products: PRODUCT_INDEX, bySku: new Map(PRODUCT_INDEX.map((p) => [p.sku, p])), live: [] };
+const STATIC: MerchCatalogue = { products: PRODUCT_INDEX, bySku: new Map(PRODUCT_INDEX.map((p) => [p.sku, p])), live: [], added: [] };
 const bySkuCache = new WeakMap<IndexedProduct[], Map<string, IndexedProduct>>();
 
-/** The catalogue with live supplier prices applied, once per request. */
+/** The catalogue with live supplier prices and the products staff added, once per request. */
 export const getMerchCatalogue = cache(async (): Promise<MerchCatalogue> => {
-  const live = await getLivePrices();
-  const products = liveProductIndex(live);
+  const [live, added] = await Promise.all([getLivePrices(), getAddedProducts()]);
+  const products = liveProductIndex(live, added);
   if (products === PRODUCT_INDEX) return STATIC;
   let bySku = bySkuCache.get(products);
   if (!bySku) bySkuCache.set(products, (bySku = new Map(products.map((p) => [p.sku, p]))));
-  return { products, bySku, live };
+  return { products, bySku, live, added };
 });
 
 /** The products for these SKUs, in order, leaving out hidden and unknown ones. */
@@ -85,7 +86,7 @@ export function resolveCollection(c: Collection, hidden: Set<string>, limit = 20
       exclude: new Set([...hidden, ...c.skus]),
       sort: rule.maxPrice ? "price-desc" : "relevance",
       pageSize: rule.maxPrice ? 5000 : limit,
-    }, [], cat.live);
+    }, [], cat.live, cat.added);
     matches = rule.maxPrice ? result.hits.filter((p) => p.fromPrice !== null && p.fromPrice <= rule.maxPrice!) : result.hits;
     const qs = new URLSearchParams({
       ...(rule.query ? { q: rule.query } : {}),

@@ -265,6 +265,10 @@ model Product {
   bestWithRulesTo           BestWithRule[]       @relation("BestWithTo")
   isActive                  Boolean              @default(true) // staff can hide a product from the storefront
   featuredRank              Int? // set = shown in the homepage's featured row, lowest first
+  /// Added by staff in Admin → Catalogue import (docs/catalogue-import.md), not from the catalogue files: the
+  /// storefront and pricing service read it from the database. Quote-only until a supplier price is approved.
+  catalogueImportId         String?
+  catalogueImport           CatalogueImport?     @relation(fields: [catalogueImportId], references: [id], onDelete: SetNull)
   createdAt                 DateTime             @default(now())
   updatedAt                 DateTime             @updatedAt
 }
@@ -463,10 +467,11 @@ model SupplierLocation {
   createdAt         DateTime     @default(now())
   updatedAt         DateTime     @default(now()) @updatedAt
 
-  fulfilledOrders Order[]
-  users           User[] // supplier portal logins
-  priceLists      SupplierPriceList[] // ROADMAP Phase 1 (docs/supplier-prices.md)
-  productCodes    SupplierProductCode[]
+  fulfilledOrders  Order[]
+  users            User[] // supplier portal logins
+  priceLists       SupplierPriceList[] // ROADMAP Phase 1 (docs/supplier-prices.md)
+  productCodes     SupplierProductCode[]
+  catalogueImports CatalogueImport[]
 
   @@index([province])
 }
@@ -2256,4 +2261,35 @@ model SupplierProductCode {
 
   @@id([supplierLocationId, supplierCode])
   @@index([sku])
+}
+
+enum CatalogueImportStatus {
+  PREVIEW // read and checked; nothing added yet
+  APPLIED // the new products were added
+  DISCARDED
+}
+
+/// A staff CSV / Excel import of new products (ROADMAP 2.6, docs/catalogue-import.md). Each row is checked first and
+/// shown as a preview; staff then add the new products in one go. Rows that already exist only teach the supplier's
+/// code. When a supplier and costs are given, the costs go to a supplier price list for approval as usual.
+model CatalogueImport {
+  id                 String                @id @default(cuid())
+  status             CatalogueImportStatus @default(PREVIEW)
+  fileName           String
+  supplierLocationId String?
+  supplierLocation   SupplierLocation?     @relation(fields: [supplierLocationId], references: [id], onDelete: SetNull)
+  supplierName       String?
+  /// For the costs' price list.
+  validUntil         DateTime?
+  /// One entry per row: what was read, what it will become (or why not). See catalogue-import.ts ImportRow.
+  rows               Json
+  createdById        String?
+  createdAt          DateTime              @default(now())
+  appliedAt          DateTime?
+  appliedById        String?
+  /// The supplier price list the costs went to, when there were any.
+  priceListId        String?
+  products           Product[]
+
+  @@index([createdAt])
 }

@@ -29,6 +29,12 @@ type RangeSourceProduct = {
 const CATEGORIES: RangeSourceCategory[] = catalogue.categories;
 const BY_SLUG = new Map(CATEGORIES.map((c) => [c.slug, c]));
 
+/** A range category's typical uses and handling notes — for products staff add to it (lib/added-products.ts). */
+export function rangeCategoryNotes(slug: string): { typicalUses: string[]; handlingNotes: string } | null {
+  const category = BY_SLUG.get(slug);
+  return category ? { typicalUses: category.typical_uses, handlingNotes: category.handling_notes } : null;
+}
+
 export const RANGE_CATEGORY_CODES: Record<string, string> = Object.fromEntries(CATEGORIES.map((c) => [c.slug, c.code]));
 
 export const RANGE_PRODUCTS: RoofingProduct[] = flatbedProducts(

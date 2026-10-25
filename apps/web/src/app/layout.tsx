@@ -10,7 +10,8 @@ import { PhotoPreviewBanner } from "@/components/layout/PhotoPreviewBanner";
 import { CORPORATE_EMAILS, PHONE_LINES, REGISTERED_ADDRESS } from "@/data/corporate-contact";
 import { SOCIAL_LINKS } from "@/data/social";
 import { ProductPhotosProvider } from "@/components/product/ProductPhotos";
-import { getLeadPhotos } from "@/lib/cms";
+import { AddedProductsProvider } from "@/components/product/AddedProducts";
+import { getAddedQuotable, getLeadPhotos } from "@/lib/cms";
 import { SITE_URL } from "@/lib/site";
 import "@/styles/globals.css";
 
@@ -56,7 +57,8 @@ const ORGANIZATION = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   // Every product's lead photo, so thumbnails anywhere on the site show it (ProductThumb).
-  const photos = await getLeadPhotos();
+  // Products staff added (docs/catalogue-import.md), so the cart and quote form know them.
+  const [photos, added] = await Promise.all([getLeadPhotos(), getAddedQuotable()]);
   return (
     <html lang="en-ZA">
       <body className={`${spaceGrotesk.variable} ${inter.variable} ${ibmPlexMono.variable} font-body`}>
@@ -64,12 +66,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <PhotoPreviewBanner />
         <CorporateBar />
         <AnnouncementBar />
-        <ProductPhotosProvider photos={photos}>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-          <ShoppingAssistant />
-        </ProductPhotosProvider>
+        <AddedProductsProvider products={added}>
+          <ProductPhotosProvider photos={photos}>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+            <ShoppingAssistant />
+          </ProductPhotosProvider>
+        </AddedProductsProvider>
         <CookieConsentBanner />
       </body>
     </html>

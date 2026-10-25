@@ -1,5 +1,8 @@
 import { BadGatewayException, HttpException, Injectable } from "@nestjs/common";
 import { PrismaService } from "../common/prisma.service";
+import { UNIT_LABEL } from "../common/format";
+import { LINE_OF_GROUP, type AddedProductPayload } from "./added-products";
+import { pricingUnit } from "./units";
 
 export type CustomerTierName = "RETAIL" | "CONTRACTOR_TRADE" | "VOLUME_CIVIL_BULK";
 export const PACKAGED_UNITS = [
@@ -189,12 +192,27 @@ export class PricingService {
    * the catalogue's own; `live: false` prices from the catalogue alone (the standard markup for suggestions).
    */
   async calculateOrder(req: OrderRequest, opts: { live?: boolean } = {}): Promise<PricedOrder> {
-    const overrides = opts.live === false ? [] : await this.livePrices([...new Set(req.lines.map((l) => l.sku))]);
+    const skus = [...new Set(req.lines.map((l) => l.sku))];
+    const [overrides, added] = await Promise.all([opts.live === false ? [] : this.livePrices(skus), this.addedProducts(skus)]);
     return this.post("/calculate/order", {
       lines: req.lines,
       distance_km: req.distanceKm,
       customer_tier: req.customerTier,
       ...(overrides.length ? { price_overrides: overrides } : {}),
+      ...(added.length ? { added_products: added } : {}),
+    });
+  }
+
+  /** Products staff added in Admin → Catalogue import (docs/catalogue-import.md) — the pricing service's files don't have them. */
+  async addedProducts(skus: string[]): Promise<AddedProductPayload[]> {
+    if (skus.length === 0) return [];
+    const rows = await this.prisma.product.findMany({
+      where: { sku: { in: skus }, catalogueImportId: { not: null } },
+      select: { sku: true, name: true, unitsOfSale: true, category: { select: { slug: true, catalogueGroup: true } } },
+    });
+    return rows.flatMap((p) => {
+      const line = LINE_OF_GROUP[p.category.catalogueGroup];
+      return line ? [{ sku: p.sku, name: p.name, category_slug: p.category.slug, line, units: p.unitsOfSale.map((u) => ({ unit: pricingUnit(u), label: UNIT_LABEL[u] })) }] : [];
     });
   }
 

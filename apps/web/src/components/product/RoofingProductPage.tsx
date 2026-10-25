@@ -190,11 +190,13 @@ export async function RoofingProductPage({ product }: { product: MerchandisedRoo
         </section>
         <section className="rounded-sm border border-basalt/10 bg-white p-6">
           <h2 className="font-mono text-[10px] uppercase tracking-widest text-seam-blue">Typical Uses</h2>
-          <ul className="mt-3 list-disc space-y-1 pl-5 font-body text-sm text-basalt">
-            {product.typicalUses.map((use) => (
-              <li key={use}>{use}</li>
-            ))}
-          </ul>
+          {product.typicalUses.length > 0 && (
+            <ul className="mt-3 list-disc space-y-1 pl-5 font-body text-sm text-basalt">
+              {product.typicalUses.map((use) => (
+                <li key={use}>{use}</li>
+              ))}
+            </ul>
+          )}
           <p className="mt-3 font-body text-xs text-slate">
             {supplies
               ? "Sizes, ratings and the build-up come from your drawings and the maker's installation guide; plumbing, geysers and electrical work need a registered installer."

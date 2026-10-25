@@ -37,6 +37,7 @@ import { DeliveriesModule } from "./deliveries/deliveries.module";
 import { BoqModule } from "./boq/boq.module";
 import { DiscoveryModule } from "./discovery/discovery.module";
 import { SupplierPricesModule } from "./supplier-prices/supplier-prices.module";
+import { CatalogueImportModule } from "./catalogue-import/catalogue-import.module";
 import { TaxModule } from "./tax/tax.module";
 
 @Module({
@@ -79,6 +80,7 @@ import { TaxModule } from "./tax/tax.module";
     DiscoveryModule,
     TaxModule,
     SupplierPricesModule,
+    CatalogueImportModule,
   ],
 })
 export class AppModule {}

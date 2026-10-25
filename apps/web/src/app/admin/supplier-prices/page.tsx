@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { PriceListUpload } from "@/components/admin/PriceListUpload";
 import { api } from "@/lib/api";
-import { getLivePrices } from "@/lib/cms";
+import { getAddedProducts, getLivePrices } from "@/lib/cms";
 import { liveProductIndex, PRODUCT_INDEX } from "@/lib/product-index";
 import { sessionToken } from "@/lib/session";
 import type { Supplier } from "@/lib/suppliers";
@@ -16,15 +16,17 @@ export const metadata = { title: "Supplier prices" };
  */
 export default async function SupplierPricesPage() {
   const token = sessionToken();
-  const [lists, live, coverage, suppliers, publicLive] = await Promise.all([
+  const [lists, live, coverage, suppliers, publicLive, added] = await Promise.all([
     api<PriceListSummary[]>("/prices/staff/lists", { token }),
     api<LiveSupplierPrice[]>("/prices/staff/live", { token }),
     api<PriceCoverage>("/prices/staff/coverage", { token }),
     api<Supplier[]>("/suppliers", { token }),
     getLivePrices(),
+    getAddedProducts(),
   ]);
-  const total = PRODUCT_INDEX.length;
-  const buyable = liveProductIndex(publicLive).filter((p) => p.fromPrice !== null).length;
+  const all = liveProductIndex(publicLive, added);
+  const total = all.length;
+  const buyable = all.filter((p) => p.fromPrice !== null).length;
   const c = coverage.ok ? coverage.data : null;
 
   return (

@@ -3,13 +3,12 @@ import Link from "next/link";
 import { CompareActions } from "@/components/product/CompareActions";
 import { ProductThumb } from "@/components/product/ProductThumb";
 import { productDoc } from "@/lib/assistant/knowledge";
-import { getHiddenSkus } from "@/lib/cms";
+import { getAddedProducts, getHiddenSkus, getLivePrices } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
-import { PRODUCT_INDEX } from "@/lib/product-index";
+import { liveProductIndex } from "@/lib/product-index";
 
 export const metadata: Metadata = { title: "Compare products", robots: { index: false } };
 
-const BY_SKU = new Map(PRODUCT_INDEX.map((p) => [p.sku, p]));
 
 /**
  * Compare up to three products side by side (ROADMAP 4.3): price per unit, how each is sold, the standard,
@@ -17,9 +16,11 @@ const BY_SKU = new Map(PRODUCT_INDEX.map((p) => [p.sku, p]));
  * in the URL (/compare?skus=A,B,C), so a comparison can be shared.
  */
 export default async function ComparePage({ searchParams }: { searchParams: { skus?: string } }) {
-  const hidden = new Set(await getHiddenSkus());
+  const [hiddenSkus, live, added] = await Promise.all([getHiddenSkus(), getLivePrices(), getAddedProducts()]);
+  const hidden = new Set(hiddenSkus);
+  const bySku = new Map(liveProductIndex(live, added).map((p) => [p.sku, p]));
   const skus = [...new Set((searchParams.skus ?? "").split(",").map((s) => s.trim()).filter(Boolean))].slice(0, 3);
-  const products = skus.map((sku) => BY_SKU.get(sku)).filter((p): p is NonNullable<typeof p> => !!p && !hidden.has(p.sku));
+  const products = skus.map((sku) => bySku.get(sku)).filter((p): p is NonNullable<typeof p> => !!p && !hidden.has(p.sku));
   const docs = products.map((p) => productDoc(p.sku));
 
   const rows: { label: string; cells: React.ReactNode[] }[] = [

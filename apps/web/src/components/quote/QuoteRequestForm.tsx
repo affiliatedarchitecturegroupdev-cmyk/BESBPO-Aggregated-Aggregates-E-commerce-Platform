@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState, useTransition } from "react";
 import { submitQuoteRequest } from "@/app/account/actions";
 import { CATEGORIES } from "@/data/categories";
-import { QUOTABLE, type Quotable } from "@/data/quotable";
+import { allQuotable, findQuotable, type Quotable } from "@/data/quotable";
 import { formatZAR } from "@/lib/pricing";
 import { NumberInput } from "@/components/ui/NumberInput";
 
@@ -18,7 +18,7 @@ const PROVINCES = ["KwaZulu-Natal", "Gauteng", "Western Cape", "Eastern Cape", "
 const inputClass = "w-full rounded-sm border border-basalt/20 bg-white px-3 py-2 font-body text-sm";
 
 function productFor(sku: string) {
-  return QUOTABLE.find((p) => p.sku === sku) ?? QUOTABLE[0];
+  return findQuotable(sku) ?? allQuotable()[0];
 }
 
 function unitFor(product: Quotable, code: string) {
@@ -45,7 +45,7 @@ function initialLines(prefill: QuotePrefill): LineItem[] {
   const fromCart = (prefill.lines ?? "")
     .split(",")
     .map((part) => part.split("~"))
-    .filter(([sku]) => QUOTABLE.some((q) => q.sku === sku))
+    .filter(([sku]) => findQuotable(sku) !== undefined)
     .slice(0, 30)
     .map(([sku, unit, qty]) => prefillLine(sku, unit, qty));
   return fromCart.length > 0 ? fromCart : [prefillLine(prefill.sku, prefill.unit, prefill.qty)];
@@ -70,7 +70,7 @@ export function QuoteRequestForm({
   upsell?: React.ReactNode;
   prefill?: QuotePrefill;
 }) {
-  const available = QUOTABLE.filter((p) => !hiddenSkus.includes(p.sku));
+  const available = allQuotable().filter((p) => !hiddenSkus.includes(p.sku));
   const [step, setStep] = useState(0);
   const [project, setProject] = useState<Project>({ projectName: "", company: "", contactName: "", email: "", phone: "" });
   const [lines, setLines] = useState<LineItem[]>(() => initialLines(prefill));
