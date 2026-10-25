@@ -5,6 +5,7 @@ import { RoofCalculator } from "@/components/product/RoofCalculator";
 import { CATEGORIES } from "@/data/categories";
 import { MASONRY_CATEGORY_CODES, MASONRY_PRODUCTS, ROOF_TILE_CATEGORIES } from "@/data/masonry";
 import { CUT_TO_LENGTH, ROOFING_CATEGORY_CODES, ROOFING_PRODUCTS, TIMBER_SECTIONS } from "@/data/roofing";
+import { DepartmentMerchandising } from "@/components/merchandising/DepartmentExtras";
 import { getMasonryCatalogue, getRoofingCatalogue } from "@/lib/cms";
 
 export const metadata: Metadata = {
@@ -264,6 +265,7 @@ export default async function RoofingPage() {
             </Link>
           </div>
         </section>
+        <DepartmentMerchandising slug="roofing" />
       </div>
     </div>
   );

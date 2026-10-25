@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BarMassCalculator } from "@/components/product/BarMassCalculator";
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { STEEL_CATEGORIES } from "@/data/categories";
+import { DepartmentMerchandising } from "@/components/merchandising/DepartmentExtras";
 import { BAR_MASS_KG_PER_M, STEEL_CATEGORY_CODES, STEEL_PRODUCTS } from "@/data/steel";
 
 export const metadata: Metadata = {
@@ -160,6 +161,7 @@ export default function ReinforcingSteelPage() {
             <Link href="/quote" className="rounded-sm border border-basalt/20 px-5 py-2.5 font-body text-sm font-semibold text-basalt hover:border-seam-blue">Request a quote</Link>
           </div>
         </section>
+        <DepartmentMerchandising slug="steel" />
       </div>
     </div>
   );

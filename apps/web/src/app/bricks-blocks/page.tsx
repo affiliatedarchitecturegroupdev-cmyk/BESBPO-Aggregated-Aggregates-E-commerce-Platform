@@ -4,6 +4,7 @@ import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { WallCalculator } from "@/components/product/WallCalculator";
 import { MASONRY_CATEGORIES } from "@/data/categories";
 import { lineOf, MASONRY_CATEGORY_CODES, MASONRY_PRODUCTS, WALLING } from "@/data/masonry";
+import { DepartmentMerchandising } from "@/components/merchandising/DepartmentExtras";
 import { getMasonryCatalogue } from "@/lib/cms";
 
 export const metadata: Metadata = {
@@ -183,6 +184,7 @@ export default async function BricksBlocksPage() {
             <Link href="/quote" className="rounded-sm border border-basalt/20 px-5 py-2.5 font-body text-sm font-semibold text-basalt hover:border-seam-blue">Request a quote</Link>
           </div>
         </section>
+        <DepartmentMerchandising slug="walling" />
       </div>
     </div>
   );

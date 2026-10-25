@@ -2,9 +2,10 @@ import Link from "next/link";
 import { ProductRail } from "@/components/merchandising/ProductRail";
 import { availableCalculators } from "@/data/calculators";
 import { jobKeyForCategory, resolveJob } from "@/data/complete-the-job";
-import type { Department } from "@/data/departments";
+import { DEPARTMENTS, type Department } from "@/data/departments";
+import { getHiddenSkus } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
-import { getCollections, getTopSellers, MIN_ROW, resolveCollection } from "@/lib/merchandising";
+import { getCollections, getMerchCatalogue, getTopSellers, MIN_ROW, resolveCollection } from "@/lib/merchandising";
 
 /** The calculators that help with each department's work; the project estimator for the rest. */
 const CALCULATORS_BY_DEPARTMENT: Record<string, string[]> = {
@@ -26,11 +27,11 @@ const CALCULATORS_BY_DEPARTMENT: Record<string, string[]> = {
 /** Collections staff placed on this department (Admin → Collections). */
 export async function DepartmentCollections({ department, hiddenSkus }: { department: Department; hiddenSkus: string[] }) {
   const hidden = new Set(hiddenSkus);
-  const collections = await getCollections(`DEPARTMENT:${department.slug}`);
+  const [collections, cat] = await Promise.all([getCollections(`DEPARTMENT:${department.slug}`), getMerchCatalogue()]);
   return (
     <>
       {collections.map((c) => (
-        <ProductRail key={c.slug} eyebrow="Collection" title={c.title} blurb={c.subtitle ?? undefined} products={resolveCollection(c, hidden, 8).products} seeAll={`/collections/${c.slug}`} seeAllLabel="See the collection →" bare track={`collection:${c.slug}:department-${department.slug}`} />
+        <ProductRail key={c.slug} eyebrow="Collection" title={c.title} blurb={c.subtitle ?? undefined} products={resolveCollection(c, hidden, 8, cat).products} seeAll={`/collections/${c.slug}`} seeAllLabel="See the collection →" bare track={`collection:${c.slug}:department-${department.slug}`} />
       ))}
     </>
   );
@@ -46,11 +47,24 @@ export async function DepartmentTopSellers({ department, hiddenSkus }: { departm
  * The rest of a department page (ROADMAP 3.2): "complete the job" ideas, the calculators for the work, and an FAQ
  * with FAQPage structured data. Answers come from the department's own numbers, never invented ones.
  */
-export function DepartmentGuide({ department, hiddenSkus, productCount, pricedCount }: { department: Department; hiddenSkus: string[]; productCount: number; pricedCount: number }) {
+export function DepartmentGuide({
+  department,
+  hiddenSkus,
+  productCount,
+  pricedCount,
+  showCalculators = true,
+}: {
+  department: Department;
+  hiddenSkus: string[];
+  productCount: number;
+  pricedCount: number;
+  /** Off on pages that already have their own calculators section. */
+  showCalculators?: boolean;
+}) {
   const jobKey = department.categorySlugs.map(jobKeyForCategory).find(Boolean) ?? null;
   const job = jobKey ? resolveJob(jobKey, hiddenSkus) : null;
   const wanted = CALCULATORS_BY_DEPARTMENT[department.slug] ?? ["estimator"];
-  const calculators = availableCalculators(hiddenSkus).filter((c) => wanted.includes(c.key));
+  const calculators = showCalculators ? availableCalculators(hiddenSkus).filter((c) => wanted.includes(c.key)) : [];
   const faqs = [
     {
       q: `Can I buy ${department.name.toLowerCase()} online?`,
@@ -114,6 +128,26 @@ export function DepartmentGuide({ department, hiddenSkus, productCount, pricedCo
         </div>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       </section>
+    </>
+  );
+}
+
+/**
+ * The shared department blocks (ROADMAP 3.2) for the hand-built department pages — cement, steel, bricks &
+ * blocks, paving, drainage and roofing: staff collections placed on the department, its top sellers, Complete the
+ * Job and the FAQ. Their own calculators stay as they are. Counts include live supplier prices.
+ */
+export async function DepartmentMerchandising({ slug }: { slug: string }) {
+  const department = DEPARTMENTS.find((d) => d.slug === slug);
+  if (!department) return null;
+  const [hiddenSkus, cat] = await Promise.all([getHiddenSkus(), getMerchCatalogue()]);
+  const hidden = new Set(hiddenSkus);
+  const inDepartment = cat.products.filter((p) => p.departmentSlug === slug && !hidden.has(p.sku));
+  return (
+    <>
+      <DepartmentCollections department={department} hiddenSkus={hiddenSkus} />
+      <DepartmentTopSellers department={department} hiddenSkus={hiddenSkus} />
+      <DepartmentGuide department={department} hiddenSkus={hiddenSkus} productCount={inDepartment.length} pricedCount={inDepartment.filter((p) => p.fromPrice !== null).length} showCalculators={false} />
     </>
   );
 }

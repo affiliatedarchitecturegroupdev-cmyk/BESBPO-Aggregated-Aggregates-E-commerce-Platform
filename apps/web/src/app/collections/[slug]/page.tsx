@@ -5,7 +5,7 @@ import { SectionTracker } from "@/components/merchandising/SectionTracker";
 import { ListingCard } from "@/components/product/ListingCard";
 import { CompareTray } from "@/components/product/CompareTray";
 import { getHiddenSkus } from "@/lib/cms";
-import { getCollection, resolveCollection } from "@/lib/merchandising";
+import { getCollection, getMerchCatalogue, resolveCollection } from "@/lib/merchandising";
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const c = await getCollection(params.slug);
@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 export default async function CollectionPage({ params }: { params: { slug: string } }) {
   const collection = await getCollection(params.slug);
   if (!collection) notFound();
-  const { products, seeAll } = resolveCollection(collection, new Set(await getHiddenSkus()), 96);
+  const { products, seeAll } = resolveCollection(collection, new Set(await getHiddenSkus()), 96, await getMerchCatalogue());
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">

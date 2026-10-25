@@ -4,6 +4,7 @@ import { FrenchDrainCalculator } from "@/components/product/FrenchDrainCalculato
 import { PackagedProductCard } from "@/components/product/PackagedProductCard";
 import { CATEGORIES } from "@/data/categories";
 import { DRAINAGE_CATEGORIES, MASONRY_CATEGORY_CODES, MASONRY_PRODUCTS } from "@/data/masonry";
+import { DepartmentMerchandising } from "@/components/merchandising/DepartmentExtras";
 import { getCatalogue, getMasonryCatalogue } from "@/lib/cms";
 
 export const metadata: Metadata = {
@@ -156,6 +157,7 @@ export default async function DrainagePage() {
             </Link>
           </div>
         </section>
+        <DepartmentMerchandising slug="drainage" />
       </div>
     </div>
   );

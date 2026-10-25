@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ProductThumb } from "@/components/product/ProductThumb";
 import { findQuotable } from "@/data/quotable";
 import { formatZAR } from "@/lib/pricing";
@@ -14,15 +14,34 @@ import { recentlyViewed, useRecentlyViewed } from "@/lib/recently-viewed";
  */
 export function RecentlyViewed({ current, hiddenSkus = [], className = "mt-16" }: { current?: string; hiddenSkus?: string[]; className?: string }) {
   const skus = useRecentlyViewed();
+  // Prices staff approved from supplier lists since the catalogue was built (docs/supplier-prices.md).
+  const [live, setLive] = useState<Record<string, Record<string, number>>>({});
 
   useEffect(() => {
     if (current) recentlyViewed.record(current);
   }, [current]);
 
+  const shown = skus.filter((sku) => sku !== current && !hiddenSkus.includes(sku)).join(",");
+  useEffect(() => {
+    if (!shown) return;
+    let cancelled = false;
+    fetch(`/api/live-prices?skus=${encodeURIComponent(shown)}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((body: { prices?: Record<string, Record<string, number>> } | null) => {
+        if (!cancelled && body?.prices) setLive(body.prices);
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, [shown]);
+
   const items = skus.flatMap((sku) => {
-    const product = sku === current || hiddenSkus.includes(sku) ? undefined : findQuotable(sku);
-    if (!product) return [];
-    const unit = product.units.find((u) => u.retailPrice !== null) ?? product.units[0];
+    const found = sku === current || hiddenSkus.includes(sku) ? undefined : findQuotable(sku);
+    if (!found) return [];
+    const product = live[sku] ? { ...found, units: found.units.map((u) => ({ ...u, retailPrice: live[sku][u.code] ?? u.retailPrice })) } : found;
+    const priced = product.units.filter((u) => u.retailPrice !== null).sort((a, b) => a.retailPrice! - b.retailPrice!);
+    const unit = priced[0] ?? product.units[0];
     return [{ ...product, unit }];
   });
   if (items.length === 0) return null;
