@@ -169,7 +169,14 @@ These come first: nothing new reaches customers until they are done.
 
 ## Phase 1 — Sell more of what we list
 
-**Goal:** turn the 1,151 quote-only products into products customers can buy, using real supplier prices.
+**Goal:** turn the quote-only products (about 4,000 since the range expansion) into products customers can buy, using real supplier prices.
+
+**Status (25 October 2026): 1.1–1.4 and 1.6 built** (`docs/supplier-prices.md`):
+- **Admin → Supplier prices.** Upload a supplier's list (.xlsx or .csv). Rows are matched by SKU, supplier code or name. The suggested price is cost plus the standard markup, never below cost plus 3%. Staff approve each price, or approve all at once.
+- **Approved prices go live everywhere**: product pages, listings, search, the cart, checkout and sales quotations. Tier discounts and the margin floor apply as usual. Costs never reach the storefront.
+- **Supplier costs typed into sales quotations** become suggestions too.
+- **Expiry and history.** Prices lapse with the list's valid-until date and every price is kept as history. "Priced online: X of Y" is shown on the overview.
+- **Still open:** 1.5 supplier self-service in the portal; aggregates and ready-mix stay on their price bands.
 
 | # | Item | Notes |
 |---|---|---|

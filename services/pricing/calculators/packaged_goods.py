@@ -29,7 +29,7 @@ the family follows the product's line, since the lines share units (item, roll).
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from decimal import Decimal
 from pathlib import Path
 from typing import Optional
@@ -145,6 +145,42 @@ def _products(raw: dict, allowed_units: tuple[str, ...], line: str) -> dict[str,
             )
         products[p["sku"]] = PackagedProduct(sku=p["sku"], name=p["name"], category_slug=p["category_slug"], units=units, line=line)
     return products
+
+
+# A price staff approved from a supplier's cost (docs/supplier-prices.md): it stands in for the unit's list price.
+SUPPLIER_PRICE_NOTE = "Supplier price list, approved by our team"
+
+
+@dataclass(frozen=True)
+class PriceOverride:
+    """An approved sell price for one unit, with the markup over the supplier's cost (a fraction) that sets its floor."""
+
+    sku: str
+    unit: str
+    list_price: Decimal
+    markup: Decimal
+
+
+def with_overrides(products: dict[str, PackagedProduct], overrides: list[PriceOverride]) -> dict[str, PackagedProduct]:
+    """
+    The catalogue with approved supplier prices in place of the units' own list prices. Each override makes its
+    unit priced (READY_STATUS) at the approved price, with the margin floor worked out from the supplier's cost, so
+    tier discounts behave exactly as for any other priced unit. Overrides for SKUs or units this catalogue doesn't
+    sell are ignored — the API only sends approved prices for products it knows. Returns a new dict; the loaded
+    catalogue is never changed.
+    """
+    if not overrides:
+        return products
+    patched = dict(products)
+    for o in overrides:
+        product = patched.get(o.sku)
+        unit = product.units.get(o.unit) if product else None
+        if product is None or unit is None or o.list_price <= 0:
+            continue
+        units = dict(product.units)
+        units[o.unit] = replace(unit, list_price=o.list_price, pricing_status=READY_STATUS, source_note=SUPPLIER_PRICE_NOTE, markup=o.markup)
+        patched[o.sku] = replace(product, units=units)
+    return patched
 
 
 def load(path: Path = DATA_PATH) -> tuple[dict, dict[str, PackagedProduct]]:

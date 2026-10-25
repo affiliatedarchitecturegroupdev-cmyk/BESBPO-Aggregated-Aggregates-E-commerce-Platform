@@ -26,6 +26,7 @@ const NAV = [
   { href: "/admin/reviews", label: "Reviews" },
   { href: "/admin/image-permissions", label: "Image permissions" },
   { href: "/admin/suppliers", label: "Suppliers" },
+  { href: "/admin/supplier-prices", label: "Supplier prices" },
   { href: "/admin/content", label: "Site content" },
   { href: "/admin/lead-times", label: "Lead times" },
   { href: "/admin/promotions", label: "Promotions" },

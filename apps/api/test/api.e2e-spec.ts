@@ -3984,6 +3984,13 @@ describe("Aggregated Aggregates API (e2e)", () => {
       expect(draftPdf.headers["content-type"]).toBe("application/pdf");
       const issued = await http().post(`/quotations/${q.id}/issue`).set(bearer(staff)).send({ email: true }).expect(200);
       expect(issued.body).toMatchObject({ quoteNumber: expect.stringMatching(/^AAQ-\d{6}$/), emailedTo: client.email, whatsappUrl: expect.stringContaining("wa.me/27825550101") });
+      // The supplier cost typed into the quotation waits in Admin → Supplier prices as a suggestion (docs/supplier-prices.md).
+      // (One suggestion per product, unit and cost a day, however many quotations repeat it.)
+      const suggestion = await prisma.supplierPriceLine.findFirstOrThrow({ where: { sku: "AA-CEM-525N-001", unit: "BAG_50KG", unitCost: 120, priceList: { source: "QUOTATION" } }, include: { priceList: true }, orderBy: { id: "desc" } });
+      expect(suggestion).toMatchObject({ sku: "AA-CEM-525N-001", unit: "BAG_50KG", status: "PENDING" });
+      expect(Number(suggestion.unitCost)).toBe(120);
+      expect(Number(suggestion.suggestedPrice)).toBe(129.6);
+      expect(suggestion.priceList.source).toBe("QUOTATION");
       const sent = await prisma.notification.findFirstOrThrow({ where: { quoteId: q.id, event: "QUOTATION_SENT" } });
       expect(sent).toMatchObject({ recipient: client.email, audience: "CUSTOMER" });
       expect(sent.body).toContain(issued.body.url);
@@ -4108,6 +4115,99 @@ describe("Aggregated Aggregates API (e2e)", () => {
       const marketing = await http().get("/insights/marketing").set(bearer(staff)).expect(200);
       expect(marketing.body.sections.find((s: { slot: string }) => s.slot === slot)).toMatchObject({ kind: "collection", name: `qa-${run}`, part: "home", impressions: 2, clicks: 1, clickThroughRate: 50 });
       await prisma.merchandisingStat.deleteMany({ where: { slot } });
+    });
+  });
+
+  describe("Supplier price lists: uploaded, matched, approved, live at checkout, and expiring (docs/supplier-prices.md)", () => {
+    const bearer = (t: string) => ({ Authorization: `Bearer ${t}` });
+    const POLE = "AA-TMB-POLE-CCA-5075-1-8";
+    const priceOf = async (sku: string, unit: string) => (await http().post("/orders/price").send({ lines: [{ sku, unit, quantity: 10 }], deliveryDistanceKm: 10 }).expect(200)).body;
+
+    afterAll(async () => {
+      await prisma.productPrice.deleteMany({ where: { sku: { in: [POLE, "AA-ELE-LED-A60-5"] } } });
+    });
+
+    it("turns a supplier's costs into approved sell prices that price the cart, then lapse with the list", async () => {
+      const buyer = await register("spbuyer");
+      const staff = await register("spstaff");
+      await prisma.user.update({ where: { email: `spstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      const supplier = await prisma.supplierLocation.findFirstOrThrow({ where: { isActive: true } });
+      const code = `CT-POLE-${run}`;
+      const csv = [
+        "Coastal Timber — November price list",
+        "sku,supplier_code,description,unit,cost",
+        `,${code},CCA Treated Pole 50–75 mm × 1.8 m,each,45`,
+        "AA-ELE-LED-A60-5,,,,30",
+        "AA-SND-01,,,m3,200",
+        ",,Unobtainium widget,each,10",
+        ",X-1,Thing,each,POA",
+      ].join("\n");
+      const validUntil = new Date(Date.now() + 30 * 86_400_000).toISOString().slice(0, 10);
+      const upload = (as: string, body = csv, extra: Record<string, string> = {}) =>
+        http().post("/prices/staff/lists").set(bearer(as)).field("supplierLocationId", supplier.id).field("validUntil", validUntil).field(extra).attach("file", Buffer.from(body), "november.csv");
+
+      await upload(buyer).expect(403);
+      expect(await priceOf(POLE, "EACH")).toMatchObject({ is_quote_only: true });
+      const list = (await upload(staff).expect(201)).body;
+      expect(list).toMatchObject({ supplierName: supplier.name, fileName: "november.csv" });
+      const [pole, led, sand, unknown, poa] = list.lines;
+      expect(pole).toMatchObject({ sku: POLE, unit: "EACH", status: "PENDING", currentPrice: null, product: { sku: POLE } });
+      expect(Number(pole.suggestedPrice)).toBe(48.6); // cost 45 + the range's standard 8% markup
+      expect(led).toMatchObject({ sku: "AA-ELE-LED-A60-5", unit: null, status: "UNMATCHED", problem: expect.stringMatching(/Which unit/) });
+      expect(sand).toMatchObject({ status: "UNMATCHED", problem: expect.stringMatching(/price bands/) });
+      expect(unknown).toMatchObject({ sku: null, status: "UNMATCHED" });
+      expect(poa).toMatchObject({ status: "UNMATCHED", problem: expect.stringMatching(/No cost/) });
+
+      // Staff fix the unit, and can't approve a price below cost + 3%.
+      const mapped = await http().put(`/prices/staff/lines/${led.id}`).set(bearer(staff)).send({ sku: "AA-ELE-LED-A60-5", unit: "EACH" }).expect(200);
+      expect(mapped.body).toMatchObject({ unit: "EACH", status: "PENDING" });
+      await http().post(`/prices/staff/lines/${unknown.id}/approve`).set(bearer(staff)).send({}).expect(400);
+      await http().post(`/prices/staff/lines/${pole.id}/approve`).set(bearer(staff)).send({ price: 40 }).expect(400);
+      await http().post(`/prices/staff/lines/${pole.id}/approve`).set(bearer(staff)).send({}).expect(200);
+      await http().post(`/prices/staff/lines/${pole.id}/approve`).set(bearer(staff)).send({}).expect(400);
+      await http().post(`/prices/staff/lines/${led.id}/reject`).set(bearer(staff)).expect(200);
+
+      // Live: the cart prices it, at each tier (trade 4% off, floor-protected); the storefront sees sell prices only.
+      const priced = await priceOf(POLE, "EACH");
+      expect(priced.is_quote_only).toBe(false);
+      expect(priced.lines[0]).toMatchObject({ unit_price: 48.6, total: 486 });
+      const live = (await http().get("/prices/live").expect(200)).body as { sku: string; unit: string; prices: Record<string, number | null> }[];
+      expect(live.find((p) => p.sku === POLE)).toEqual({ sku: POLE, unit: "EACH", prices: { RETAIL: 48.6, CONTRACTOR_TRADE: 46.66, VOLUME_CIVIL_BULK: null } });
+      expect(JSON.stringify(live)).not.toMatch(/45|cost|supplier/i);
+      await http().get("/prices/staff/live").set(bearer(buyer)).expect(403);
+      const staffLive = (await http().get(`/prices/staff/live?sku=${POLE}`).set(bearer(staff)).expect(200)).body;
+      expect(staffLive[0]).toMatchObject({ sku: POLE, supplierName: supplier.name, product: { sku: POLE } });
+      expect(Number(staffLive[0].unitCost)).toBe(45);
+
+      // The supplier's code is learned: next month's list matches on it alone, and replaces the live price.
+      expect(await prisma.supplierProductCode.findUnique({ where: { supplierLocationId_supplierCode: { supplierLocationId: supplier.id, supplierCode: code } } })).toMatchObject({ sku: POLE });
+      const next = (await upload(staff, ["supplier_code,cost", `${code},50`].join("\n")).expect(201)).body;
+      expect(next.lines[0]).toMatchObject({ sku: POLE, unit: "EACH", status: "PENDING" });
+      expect(Number(next.lines[0].currentPrice)).toBe(48.6);
+      expect((await http().post(`/prices/staff/lists/${next.id}/approve-all`).set(bearer(staff)).expect(200)).body).toEqual({ approved: 1, problems: [] });
+      expect((await priceOf(POLE, "EACH")).lines[0].unit_price).toBe(54);
+      const history = (await http().get(`/prices/staff/history/${POLE}`).set(bearer(staff)).expect(200)).body;
+      expect(history.map((h: { isActive: boolean }) => h.isActive)).toEqual([true, false]);
+      const coverage = (await http().get("/prices/staff/coverage").set(bearer(staff)).expect(200)).body;
+      expect(coverage.liveSkus).toBeGreaterThanOrEqual(1);
+
+      // Price freshness: once the list's date passes, the product is quote-only again.
+      await prisma.productPrice.updateMany({ where: { sku: POLE, isActive: true }, data: { validUntil: new Date(Date.now() - 1000) } });
+      expect(await priceOf(POLE, "EACH")).toMatchObject({ is_quote_only: true });
+      await prisma.productPrice.updateMany({ where: { sku: POLE, isActive: true }, data: { validUntil: null } });
+      expect((await priceOf(POLE, "EACH")).is_quote_only).toBe(false);
+
+      // Withdrawn by staff: quote-only again straight away.
+      const active = await prisma.productPrice.findFirstOrThrow({ where: { sku: POLE, isActive: true } });
+      await http().delete(`/prices/staff/live/${active.id}`).set(bearer(staff)).expect(204);
+      await http().delete(`/prices/staff/live/${active.id}`).set(bearer(staff)).expect(404);
+      expect(await priceOf(POLE, "EACH")).toMatchObject({ is_quote_only: true });
+      expect(((await http().get("/prices/live").expect(200)).body as { sku: string }[]).some((p) => p.sku === POLE)).toBe(false);
+
+      // Bad files are refused with a reason.
+      await upload(staff, "just,some,words\n1,2,3").expect(400);
+      await http().post("/prices/staff/lists").set(bearer(staff)).field("supplierName", "No file").expect(400);
+      await prisma.supplierPriceList.deleteMany({ where: { id: { in: [list.id, next.id] } } });
     });
   });
 });

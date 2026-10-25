@@ -284,10 +284,20 @@ class OrderLineRequest(BaseModel):
     unit: UnitName | PackagedUnitName
 
 
+class PriceOverrideRequest(BaseModel):
+    """An approved supplier price (docs/supplier-prices.md), sent by the API with every order it prices."""
+
+    sku: str
+    unit: PackagedUnitName
+    list_price: Decimal = Field(gt=0)
+    markup_percent: Decimal = Field(ge=0, le=1000)
+
+
 class OrderRequest(BaseModel):
     lines: list[OrderLineRequest] = Field(min_length=1)
     distance_km: Decimal = Field(ge=0)
     customer_tier: TierName = "RETAIL"
+    price_overrides: list[PriceOverrideRequest] = Field(default_factory=list)
 
 
 @app.post("/calculate/order")
@@ -298,7 +308,10 @@ def calculate_order(req: OrderRequest):
             [OrderLine(sku=line.sku, quantity=line.quantity, unit=line.unit) for line in req.lines],
             distance_km=req.distance_km,
             customer_tier=req.customer_tier,
-            packaged=PACKAGED,
+            packaged=packaged_goods.with_overrides(
+                PACKAGED,
+                [packaged_goods.PriceOverride(o.sku, o.unit, o.list_price, o.markup_percent / 100) for o in req.price_overrides],
+            ),
             ready_mixes=READY_MIX,
         )
     except UnknownSku as exc:

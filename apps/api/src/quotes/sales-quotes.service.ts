@@ -11,6 +11,7 @@ import { DdpService } from "../orders/ddp.service";
 import { PaymentsService } from "../payment-gateway/payments.service";
 import { PricingService, type CustomerTierName, type PricingUnit } from "../pricing/pricing.service";
 import { pricingUnit, unitOfSale } from "../pricing/units";
+import { SupplierPricesService } from "../supplier-prices/supplier-prices.service";
 import { vatRegistered } from "../tax/tax";
 import type { SalesQuotePriceDto, SaveSalesQuoteDto } from "./dto/sales-quote.dto";
 import { DEFAULT_VALID_DAYS, priceQuoteLine, quotationNumber, quoteTotals, round2, type PriceSource } from "./sales-quote";
@@ -42,6 +43,7 @@ export class SalesQuotesService {
     private readonly ddp: DdpService,
     private readonly payments: PaymentsService,
     private readonly notifications: NotificationsService,
+    private readonly supplierPrices: SupplierPricesService,
   ) {}
 
   /** Staff: products to quote, by name or SKU — every product, including ones without a list price. */
@@ -225,6 +227,8 @@ export class SalesQuotesService {
       where: { id },
       data: { quoteNumber: number, status: QuoteStatus.QUOTED, quotedAt: q.quotedAt ?? now, acceptTokenHash: hashToken(token), ...(opts.email ? { sentAt: now } : {}) },
     });
+    // Supplier costs on the quotation become price suggestions for staff to approve (docs/supplier-prices.md).
+    await this.supplierPrices.fromQuotationSafely(id);
     const url = `${siteUrl()}/quotation/${token}`;
     const total = Number(q.quotedTotal ?? 0);
     if (opts.email) {

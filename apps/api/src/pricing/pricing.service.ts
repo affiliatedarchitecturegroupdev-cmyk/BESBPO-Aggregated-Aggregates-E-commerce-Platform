@@ -1,4 +1,5 @@
 import { BadGatewayException, HttpException, Injectable } from "@nestjs/common";
+import { PrismaService } from "../common/prisma.service";
 
 export type CustomerTierName = "RETAIL" | "CONTRACTOR_TRADE" | "VOLUME_CIVIL_BULK";
 export const PACKAGED_UNITS = [
@@ -126,8 +127,13 @@ function normaliseBaseUrl(url: string): string {
 export type HireItem = { sku: string; name: string; kind: "PLANT" | "SERVICE"; unit: string | null };
 export type HireCatalogue = { commissionPercent: number; items: Map<string, HireItem> };
 
+/** An approved supplier price the pricing service uses in place of the unit's list price (docs/supplier-prices.md). */
+export type PriceOverride = { sku: string; unit: string; list_price: number; markup_percent: number };
+
 @Injectable()
 export class PricingService {
+  constructor(private readonly prisma: PrismaService) {}
+
   private readonly baseUrl = normaliseBaseUrl(process.env.PRICING_SERVICE_URL ?? "http://localhost:8000");
   private hireCache: { at: number; value: HireCatalogue } | null = null;
 
@@ -177,13 +183,29 @@ export class PricingService {
     });
   }
 
-  /** Prices every line plus delivery for the whole load — what checkout uses. */
-  calculateOrder(req: OrderRequest): Promise<PricedOrder> {
+  /**
+   * Prices every line plus delivery for the whole load — what checkout, the cart, quote requests and sales
+   * quotations use. Approved supplier prices (docs/supplier-prices.md) go with it, so they price exactly like
+   * the catalogue's own; `live: false` prices from the catalogue alone (the standard markup for suggestions).
+   */
+  async calculateOrder(req: OrderRequest, opts: { live?: boolean } = {}): Promise<PricedOrder> {
+    const overrides = opts.live === false ? [] : await this.livePrices([...new Set(req.lines.map((l) => l.sku))]);
     return this.post("/calculate/order", {
       lines: req.lines,
       distance_km: req.distanceKm,
       customer_tier: req.customerTier,
+      ...(overrides.length ? { price_overrides: overrides } : {}),
     });
+  }
+
+  /** The approved, unexpired supplier prices for these SKUs (all of them when skus is omitted). */
+  async livePrices(skus?: string[], now = new Date()): Promise<PriceOverride[]> {
+    if (skus && skus.length === 0) return [];
+    const rows = await this.prisma.productPrice.findMany({
+      where: { isActive: true, OR: [{ validUntil: null }, { validUntil: { gt: now } }], ...(skus ? { sku: { in: skus } } : {}) },
+      select: { sku: true, unit: true, listPrice: true, markupPercent: true },
+    });
+    return rows.map((r) => ({ sku: r.sku, unit: r.unit, list_price: Number(r.listPrice), markup_percent: Number(r.markupPercent) }));
   }
 
   private async post(path: string, body: unknown) {

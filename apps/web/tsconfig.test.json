@@ -16,6 +16,8 @@
     "src/lib/search-engine.ts",
     "src/lib/search-engine.test.ts",
     "src/lib/product-families.ts",
-    "src/lib/product-families.test.ts"
+    "src/lib/product-families.test.ts",
+    "src/lib/live-prices.ts",
+    "src/lib/live-prices.test.ts"
   ]
 }
