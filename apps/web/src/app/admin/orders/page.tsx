@@ -102,7 +102,7 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
       )}
       {invoicing.ok && !invoicing.data.ready && status !== "CANCELLED" && (
         <p className="mt-4 rounded-sm border border-ochre-gold/40 bg-ochre-gold/10 p-3 font-body text-xs text-basalt">
-          Tax invoices can&apos;t be issued yet. {invoicing.data.problems.join(" ")} (Set these on the API service — see docs/deployment/render.md.)
+          Invoices can&apos;t be issued yet. {invoicing.data.problems.join(" ")} (Set these on the API service — see docs/deployment/render.md.)
         </p>
       )}
       {!result.ok ? (
@@ -160,14 +160,14 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
                 )}
                 {order.invoice ? (
                   <a href={`/api/orders/${order.id}/documents/invoice`} target="_blank" rel="noopener" className="text-seam-blue hover:underline">
-                    Tax invoice {order.invoice.invoiceNumber} ({order.invoice.status.toLowerCase()})
+                    Invoice {order.invoice.invoiceNumber} ({order.invoice.status.toLowerCase()})
                   </a>
                 ) : (
                   order.status !== "CANCELLED" &&
                   invoicingReady && (
                     <ActionForm action={issueInvoice} className="flex flex-wrap items-center gap-2">
                       <input type="hidden" name="id" value={order.id} />
-                      <SubmitButton variant="subtle">Issue tax invoice</SubmitButton>
+                      <SubmitButton variant="subtle">Issue invoice</SubmitButton>
                     </ActionForm>
                   )
                 )}

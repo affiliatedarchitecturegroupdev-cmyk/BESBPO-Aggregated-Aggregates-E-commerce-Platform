@@ -4,6 +4,7 @@ import { CUSTOMER_TIERS, findProduct } from "@/data/catalogue";
 import { PROJECT_TOOLS } from "@/components/merchandising/ProjectTools";
 import { formatZAR } from "@/lib/pricing";
 import { SALES_EMAIL } from "@/lib/site";
+import { getVatRegistered } from "@/lib/tax";
 import { tierBreakdown, tierHeadline } from "@/lib/tier-pricing";
 
 export const metadata: Metadata = {
@@ -18,11 +19,14 @@ const PAYMENT_OPTIONS: Record<string, string> = {
   VOLUME_CIVIL_BULK: "EFT against purchase order, or trade credit on account once approved",
 };
 
-const BENEFITS = [
+const benefits = (vatRegistered: boolean) => [
   { title: "Standing delivery addresses", body: "Save every site once; reorder without re-entering delivery and billing details." },
   { title: "Standing supply agreements", body: "Volume accounts can lock in supply for a project or season." },
   { title: "PO-based billing", body: "Volume/Civil Bulk accounts settle by purchase order and statement, not card." },
-  { title: "One VAT-registered supplier", body: "Invoices are issued under Besbpo Group's company VAT registration." },
+  // VAT wording only once the business is VAT-registered (docs/vat.md).
+  vatRegistered
+    ? { title: "One VAT-registered supplier", body: "Invoices are issued under Besbpo Group's company VAT registration." }
+    : { title: "One supplier, one invoice", body: "Every order is invoiced by Besbpo Group (Pty) Ltd, whichever partner supplier delivers it." },
 ];
 
 // docs/trade-credit.md
@@ -33,7 +37,8 @@ const CREDIT_STEPS = [
   { title: "Pay by the due date", body: "By EFT quoting the order number, or from the order page. Part payments count, and what you owe shows on your account page." },
 ];
 
-export default function TradeAccountsPage() {
+export default async function TradeAccountsPage() {
+  const vatRegistered = await getVatRegistered();
   const example = findProduct("19mm-crushed-stone-dolomite")!;
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
@@ -73,7 +78,7 @@ export default function TradeAccountsPage() {
       </div>
 
       <div className="mt-12 grid gap-6 md:grid-cols-4">
-        {BENEFITS.map((b) => (
+        {benefits(vatRegistered).map((b) => (
           <div key={b.title}>
             <p className="font-body text-sm font-semibold text-basalt">{b.title}</p>
             <p className="mt-1 font-body text-sm text-slate">{b.body}</p>

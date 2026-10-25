@@ -124,7 +124,7 @@ export class NotificationsService implements OnModuleDestroy {
         include: {
           lineItems: { include: { product: { select: { name: true } } } },
           shipment: true,
-          invoice: { select: { invoiceNumber: true, amountDue: true } },
+          invoice: { select: { invoiceNumber: true, amountDue: true, vatNumberBilled: true } },
           user: { select: { email: true, name: true } },
           company: { select: { name: true, paymentTermsDays: true } },
           drops: { where: { status: { not: "CANCELLED" } }, orderBy: { sequence: "asc" }, select: { id: true, sequence: true, scheduledFor: true, carrier: true, trackingRef: true, lines: true } },

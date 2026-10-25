@@ -4,7 +4,8 @@ import { STAFF_ROLES, type AuthUser } from "../common/auth/auth-user";
 import { PrismaService } from "../common/prisma.service";
 import { NotificationsService } from "../notifications/notifications.service";
 import { orderConfirmationPdf, ORDER_INCLUDE, taxInvoicePdf, toDocData, type LoadedOrder } from "./order-doc-data";
-import { deliveryNoteSpec, proformaSpec, vatBreakdown, VAT_RATE_PERCENT } from "./order-documents";
+import { groupVatNumber, VAT_RATE_PERCENT } from "../tax/tax";
+import { deliveryNoteSpec, proformaSpec, vatBreakdown } from "./order-documents";
 import { renderPdf } from "./pdf-renderer";
 
 export const DOCUMENT_KINDS = ["confirmation", "proforma", "delivery-note", "invoice"] as const;
@@ -12,14 +13,14 @@ export type DocumentKind = (typeof DOCUMENT_KINDS)[number];
 
 
 /**
- * Downloadable order documents, and tax invoices.
+ * Downloadable order documents, and invoices (docs/vat.md).
  *
- * Invoices are issued by staff, and only once invoicing is configured:
- * GROUP_VAT_NUMBER must be the Besbpo Group's real VAT number, and
- * PRICES_INCLUDE_VAT=true must confirm that storefront prices already
- * include VAT (so the invoice total is exactly what the buyer was charged).
- * Until both are set the platform refuses to issue one rather than print a
- * tax invoice with guessed details.
+ * Staff issue each order's invoice. Before VAT registration (GROUP_VAT_NUMBER
+ * unset) it is a plain invoice with no VAT anywhere. Once GROUP_VAT_NUMBER is
+ * set it is a tax invoice, and PRICES_INCLUDE_VAT=true must also confirm that
+ * storefront prices already include VAT (so the invoice total is exactly what
+ * the buyer was charged); until it does, the platform refuses to issue one
+ * rather than print a tax invoice with guessed details.
  */
 @Injectable()
 export class OrderDocumentsService {
@@ -28,12 +29,15 @@ export class OrderDocumentsService {
     private readonly notifications: NotificationsService,
   ) {}
 
-  /** What stops invoices being issued right now (empty when ready). */
+  /** What stops invoices being issued right now (empty when ready). Unregistered: none — plain invoices. */
   invoicingProblems(): string[] {
     const problems: string[] = [];
     const vat = (process.env.GROUP_VAT_NUMBER ?? "").trim();
-    if (!vat || /replace|x{3,}/i.test(vat)) problems.push("Set GROUP_VAT_NUMBER to Besbpo Group's VAT registration number.");
-    else if (!/^4\d{9}$/.test(vat.replace(/\s/g, ""))) problems.push("GROUP_VAT_NUMBER should be a 10-digit South African VAT number starting with 4.");
+    if (!vat) return problems;
+    if (!groupVatNumber(vat)) {
+      problems.push("GROUP_VAT_NUMBER should be a 10-digit South African VAT number starting with 4 — or leave it empty until the business is VAT-registered.");
+      return problems;
+    }
     const inclusive = (process.env.PRICES_INCLUDE_VAT ?? "").trim().toLowerCase();
     if (inclusive === "false") {
       problems.push("PRICES_INCLUDE_VAT is false, but checkout doesn't add VAT yet — invoices would charge more than the buyer paid.");
@@ -57,7 +61,7 @@ export class OrderDocumentsService {
       return { fileName: `${order.orderNumber}-delivery-note.pdf`, pdf: await renderPdf(deliveryNoteSpec(data)) };
     }
     const invoice = await taxInvoicePdf(order);
-    if (!invoice) throw new NotFoundException("No tax invoice has been issued for this order yet.");
+    if (!invoice) throw new NotFoundException("No invoice has been issued for this order yet.");
     return invoice;
   }
 
@@ -70,12 +74,12 @@ export class OrderDocumentsService {
     if (!order) throw new NotFoundException("Order not found.");
     if (order.status === "CANCELLED") throw new BadRequestException("This order was cancelled.");
     const balance = Math.round((Number(order.total) - Number(order.amountPaid)) * 100) / 100;
-    if (!due && balance <= 0.01) throw new BadRequestException("This order is paid in full — download the tax invoice instead.");
+    if (!due && balance <= 0.01) throw new BadRequestException("This order is paid in full — download the invoice instead.");
     const owed = due ?? { amount: balance, kind: Number(order.amountPaid) > 0 ? "BALANCE" : "FULL" };
     return { fileName: `${order.orderNumber}-proforma.pdf`, pdf: await renderPdf(proformaSpec(toDocData(order), { ...owed, amount: new Prisma.Decimal(owed.amount) }, process.env.EFT_BANKING_DETAILS)) };
   }
 
-  /** Staff: issue the tax invoice for an order — once, with its details frozen. */
+  /** Staff: issue the invoice for an order — once, with its details frozen (a tax invoice once VAT-registered). */
   async issueInvoice(id: string) {
     const problems = this.invoicingProblems();
     if (problems.length) throw new BadRequestException(`Invoicing isn't set up yet: ${problems.join(" ")}`);
@@ -84,6 +88,7 @@ export class OrderDocumentsService {
     if (order.status === "CANCELLED") throw new BadRequestException("A cancelled order can't be invoiced.");
     if (order.invoice) throw new ConflictException(`Invoice ${order.invoice.invoiceNumber} has already been issued for this order.`);
 
+    const vatNumber = groupVatNumber();
     const { total, vat, exVat } = vatBreakdown(order.total);
     // Paid only once the ledger covers the total (a deposit leaves it unpaid until the balance is in).
     const paid = order.status !== "PENDING" && Number(order.amountPaid) >= Number(order.total) - 0.01;
@@ -94,15 +99,16 @@ export class OrderDocumentsService {
           orderId: order.id,
           companyId: order.companyId,
           invoiceNumber: `AAI-${nextval.toString().padStart(6, "0")}`,
-          vatNumberBilled: process.env.GROUP_VAT_NUMBER!.replace(/\s/g, ""),
+          vatNumberBilled: vatNumber,
           billedToName: order.company?.name ?? order.user?.name ?? order.user?.email ?? "Customer",
           billedToAddress: order.deliveryAddress ? `${order.deliveryAddress}${order.deliveryProvince ? `, ${order.deliveryProvince}` : ""}` : null,
           billedToVatNumber: order.company?.vatNumber ?? null,
           amountDue: total,
-          amountExVat: exVat,
-          vatAmount: vat,
-          vatRatePercent: VAT_RATE_PERCENT,
-          pricesIncludedVat: true,
+          // Before VAT registration there is no VAT to show or account for.
+          amountExVat: vatNumber ? exVat : null,
+          vatAmount: vatNumber ? vat : null,
+          vatRatePercent: vatNumber ? VAT_RATE_PERCENT : null,
+          pricesIncludedVat: vatNumber ? true : null,
           status: paid ? "PAID" : "UNPAID",
           paidAt: paid ? new Date() : null,
         },

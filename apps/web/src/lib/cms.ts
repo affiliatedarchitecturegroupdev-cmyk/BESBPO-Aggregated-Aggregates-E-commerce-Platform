@@ -10,6 +10,7 @@ import { SUPPLIES_PRODUCTS } from "@/data/supplies";
 import { STEEL_PRODUCTS, type SteelProduct } from "@/data/steel";
 import { READY_MIX_PRODUCTS, type ReadyMixProduct } from "@/data/ready-mix";
 import { api, apiCached } from "./api";
+import { applyLivePrices, livePriceMap, type LivePrice } from "./live-prices";
 import type { LeadTime } from "./phase4";
 import { sessionToken } from "./session";
 
@@ -141,6 +142,17 @@ export const getLeadPhotos = cache(async (): Promise<Record<string, LeadPhoto>> 
   return map;
 });
 
+/**
+ * Sell prices staff approved from supplier price lists (docs/supplier-prices.md) — the price at each tier, never
+ * costs or suppliers. Cached for a minute; approving or withdrawing one refreshes it straight away.
+ */
+export const getLivePrices = cache(async (): Promise<LivePrice[]> => {
+  const list = await apiCached<LivePrice[]>("/prices/live", 60, ["prices"]);
+  return Array.isArray(list) ? list : [];
+});
+
+const getLivePriceMap = cache(async () => livePriceMap(await getLivePrices()));
+
 export type MerchandisedPackagedProduct = PackagedProduct & {
   description: string | null;
   featuredRank: number | null;
@@ -149,15 +161,15 @@ export type MerchandisedPackagedProduct = PackagedProduct & {
 
 /** The visible CAT-10/11 packaged goods, with staff descriptions and photography. */
 export const getPackagedCatalogue = cache(async (): Promise<MerchandisedPackagedProduct[]> => {
-  const bySku = await getOverlay();
+  const [bySku, live] = await Promise.all([getOverlay(), getLivePriceMap()]);
   return PACKAGED_PRODUCTS.filter((p) => bySku.get(p.sku)?.isActive ?? true).map((p) => {
     const o = bySku.get(p.sku);
-    return {
+    return applyLivePrices({
       ...p,
       description: o?.description ?? null,
       featuredRank: o?.featuredRank ?? null,
       images: photos(o, p.name),
-    };
+    }, live);
   });
 });
 
@@ -184,10 +196,10 @@ export type MerchandisedSteelProduct = SteelProduct & {
 
 /** The visible CAT-15..18 steel products, with staff descriptions and photography. */
 export const getSteelCatalogue = cache(async (): Promise<MerchandisedSteelProduct[]> => {
-  const bySku = await getOverlay();
+  const [bySku, live] = await Promise.all([getOverlay(), getLivePriceMap()]);
   return STEEL_PRODUCTS.filter((p) => bySku.get(p.sku)?.isActive ?? true).map((p) => {
     const o = bySku.get(p.sku);
-    return { ...p, description: o?.description ?? null, featuredRank: o?.featuredRank ?? null, images: photos(o, p.name) };
+    return applyLivePrices({ ...p, description: o?.description ?? null, featuredRank: o?.featuredRank ?? null, images: photos(o, p.name) }, live);
   });
 });
 
@@ -199,10 +211,10 @@ export type MerchandisedMasonryProduct = MasonryProduct & {
 
 /** The visible CAT-19/20 masonry products, with staff descriptions and photography. */
 export const getMasonryCatalogue = cache(async (): Promise<MerchandisedMasonryProduct[]> => {
-  const bySku = await getOverlay();
+  const [bySku, live] = await Promise.all([getOverlay(), getLivePriceMap()]);
   return MASONRY_PRODUCTS.filter((p) => bySku.get(p.sku)?.isActive ?? true).map((p) => {
     const o = bySku.get(p.sku);
-    return { ...p, description: o?.description ?? null, featuredRank: o?.featuredRank ?? null, images: photos(o, p.name) };
+    return applyLivePrices({ ...p, description: o?.description ?? null, featuredRank: o?.featuredRank ?? null, images: photos(o, p.name) }, live);
   });
 });
 
@@ -214,19 +226,19 @@ export type MerchandisedRoofingProduct = RoofingProduct & {
 
 /** The visible CAT-26..28 roofing products, with staff descriptions and photography. */
 export const getRoofingCatalogue = cache(async (): Promise<MerchandisedRoofingProduct[]> => {
-  const bySku = await getOverlay();
+  const [bySku, live] = await Promise.all([getOverlay(), getLivePriceMap()]);
   return ROOFING_PRODUCTS.filter((p) => bySku.get(p.sku)?.isActive ?? true).map((p) => {
     const o = bySku.get(p.sku);
-    return { ...p, description: o?.description ?? null, featuredRank: o?.featuredRank ?? null, images: photos(o, p.name) };
+    return applyLivePrices({ ...p, description: o?.description ?? null, featuredRank: o?.featuredRank ?? null, images: photos(o, p.name) }, live);
   });
 });
 
 /** Building supplies (CAT-32..42), visible ones only, with descriptions and photography — the roofing product shape. */
 export const getSuppliesCatalogue = cache(async (): Promise<MerchandisedRoofingProduct[]> => {
-  const bySku = await getOverlay();
+  const [bySku, live] = await Promise.all([getOverlay(), getLivePriceMap()]);
   return SUPPLIES_PRODUCTS.filter((p) => bySku.get(p.sku)?.isActive ?? true).map((p) => {
     const o = bySku.get(p.sku);
-    return { ...p, description: o?.description ?? null, featuredRank: o?.featuredRank ?? null, images: photos(o, p.name) };
+    return applyLivePrices({ ...p, description: o?.description ?? null, featuredRank: o?.featuredRank ?? null, images: photos(o, p.name) }, live);
   });
 });
 

@@ -1,4 +1,5 @@
-import { deliveryNoteSpec, orderConfirmationSpec, taxInvoiceSpec, vatBreakdown, type InvoiceDocData, type OrderDocData } from "./order-documents";
+import { deliveryNoteSpec, orderConfirmationSpec, proformaSpec, taxInvoiceSpec, vatBreakdown, type InvoiceDocData, type OrderDocData } from "./order-documents";
+import { quotationSpec } from "./quotation";
 import { renderPdf } from "./pdf-renderer";
 
 const order: OrderDocData = {
@@ -47,9 +48,11 @@ describe("order documents", () => {
     expect(vatBreakdown("0.01").vat.toFixed(2)).toBe("0.00");
   });
 
-  it("marks the order confirmation as not a tax invoice and explains how to pay", () => {
+  it("marks the order confirmation as not an invoice and explains how to pay", () => {
     const spec = orderConfirmationSpec(order);
-    expect(spec.subtitle).toBe("This is not a tax invoice");
+    // VAT-neutral until the business is VAT-registered (docs/vat.md).
+    expect(spec.subtitle).toBe("This is not an invoice");
+    expect(orderConfirmationSpec(order, undefined, true).subtitle).toBe("This is not a tax invoice");
     expect(spec.table.rows[0]).toEqual(["19mm Crushed Stone", "12 ton", "R450.00", "R5,400.00"]);
     expect(spec.table.rows[1][1]).toBe("20 × 50kg bag");
     expect(spec.totals!.at(-1)).toEqual({ label: "Total", value: "R9,133.12", strong: true });
@@ -90,6 +93,41 @@ describe("order documents", () => {
     const unpaid = taxInvoiceSpec({ ...invoice, status: "UNPAID", paidAt: null }, order, "Bank: Example Bank\nAccount number: 000").notes!;
     expect(unpaid).toEqual(expect.arrayContaining(["Paying by EFT: use AA-100 as the payment reference.", "Account number: 000"]));
     expect(taxInvoiceSpec(invoice, order, "Bank: Example Bank").notes!.join(" ")).not.toContain("Example Bank");
+  });
+
+  it("prints a plain invoice, with no VAT anywhere, before VAT registration", () => {
+    const plain = { ...invoice, vatNumberBilled: null, amountExVat: null, vatAmount: null, vatRatePercent: null };
+    const spec = taxInvoiceSpec(plain, order);
+    expect(spec.title).toBe("Invoice");
+    expect(spec.totals).toEqual([{ label: "Total amount payable", value: "R9,133.12", strong: true }]);
+    // The buyer's own VAT number may show; nothing claims VAT for us.
+    const ours = JSON.stringify({ ...spec, parties: [] });
+    expect(ours).not.toMatch(/VAT|tax invoice/i);
+  });
+
+  it("keeps proformas and quotations VAT-neutral until registration", () => {
+    const due = { amount: "9133.12", kind: "FULL" };
+    const neutral = JSON.stringify({ ...proformaSpec(order, due, undefined, false), parties: [] });
+    expect(neutral).not.toMatch(/VAT|tax invoice/i);
+    expect(JSON.stringify(proformaSpec(order, due, undefined, true))).toContain("Prices include VAT at 15%. A tax invoice is issued once the order is paid.");
+    const q = {
+      quoteNumber: "AAQ-000002",
+      reference: "ref_1",
+      status: "SENT",
+      issuedAt: new Date("2026-10-25T08:00:00Z"),
+      validUntil: new Date("2026-11-08T08:00:00Z"),
+      preparedBy: null,
+      client: { name: "Jo", companyName: null, email: null, phone: null, vatNumber: null },
+      delivery: { address: "Ballito", province: "KwaZulu-Natal", distanceKm: null },
+      lines: [{ name: "Cement 42.5N", sku: "AA-CEM-01", quantity: 10, unitOfSale: "BAG_50KG" as const, unitPrice: 115, note: null }],
+      deliveryFee: 0,
+      notes: null,
+    };
+    const plainQuote = quotationSpec(q, false);
+    expect(plainQuote.totals!.find((t) => t.strong)).toEqual({ label: "Total amount payable", value: "R1,150.00", strong: true });
+    expect(JSON.stringify(plainQuote)).not.toMatch(/VAT/);
+    const vatQuote = quotationSpec(q, true);
+    expect(vatQuote.totals).toEqual(expect.arrayContaining([{ label: "Includes VAT at 15%", value: "R150.00" }]));
   });
 
   it("renders each document to a PDF", async () => {

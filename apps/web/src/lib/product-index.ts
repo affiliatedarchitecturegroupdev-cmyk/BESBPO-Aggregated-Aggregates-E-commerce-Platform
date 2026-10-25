@@ -9,6 +9,7 @@ import { SUPPLIES_PRODUCTS } from "@/data/supplies";
 import { STEEL_PRODUCTS } from "@/data/steel";
 import { UNIT_LABELS } from "@/lib/pricing";
 import { buildFamilies, familyParts } from "@/lib/product-families";
+import { liveKey, livePriceMap, type LivePrice, type LivePriceMap } from "@/lib/live-prices";
 import { createSearchIndex, SYNONYMS, type SearchOptions, type SearchResult } from "@/lib/search-engine";
 
 /**
@@ -105,9 +106,9 @@ export const PRODUCT_INDEX: IndexedProduct[] = [
 ];
 
 /** Ranks products for a query (header suggestions, site search): the catalogue search, best matches first. */
-export function searchProducts(query: string, hidden: Set<string> = new Set(), limit = 8, staffSynonyms: string[][] = []): IndexedProduct[] {
+export function searchProducts(query: string, hidden: Set<string> = new Set(), limit = 8, staffSynonyms: string[][] = [], live: LivePrice[] = []): IndexedProduct[] {
   if (!query.trim()) return [];
-  return searchCatalogue({ query, exclude: hidden, pageSize: limit }, staffSynonyms).hits;
+  return searchCatalogue({ query, exclude: hidden, pageSize: limit }, staffSynonyms, live).hits;
 }
 
 /** The facets the product listing filters on, in the order the filter panel shows them. */
@@ -134,7 +135,8 @@ export function standardCode(standard: string | null): string | null {
 
 type CatalogueDoc = IndexedProduct & { id: string; text: string; facets: Record<FacetKey, string | null>; price: number | null };
 
-const CATALOGUE_DOCS: CatalogueDoc[] = PRODUCT_INDEX.map((p) => ({
+const catalogueDocs = (products: IndexedProduct[]): CatalogueDoc[] =>
+  products.map((p) => ({
     ...p,
     id: p.sku,
     // Department names are left out: "Timber, Poles & Decking" would make every timber product match "decking".
@@ -151,23 +153,47 @@ const CATALOGUE_DOCS: CatalogueDoc[] = PRODUCT_INDEX.map((p) => ({
     price: p.fromPrice,
   }));
 
-const BUILT_IN_INDEX = createSearchIndex(CATALOGUE_DOCS);
-/** The index with staff synonyms added (Admin → Insights → Search) — rebuilt only when they change. */
-let withStaff: { key: string; index: typeof BUILT_IN_INDEX } | null = null;
+const BUILT_IN_INDEX = createSearchIndex(catalogueDocs(PRODUCT_INDEX));
 
-function catalogueIndex(staffSynonyms: string[][]) {
-  if (staffSynonyms.length === 0) return BUILT_IN_INDEX;
-  const key = JSON.stringify(staffSynonyms);
-  if (withStaff?.key !== key) withStaff = { key, index: createSearchIndex(CATALOGUE_DOCS, [...SYNONYMS, ...staffSynonyms]) };
-  return withStaff.index;
+/** A product with approved supplier prices (docs/supplier-prices.md) in place of its catalogue retail prices. */
+function withLive(p: IndexedProduct, live: LivePriceMap): IndexedProduct {
+  const prices = live.get(p.sku);
+  if (!prices) return p;
+  const units = p.units.map((u) => ({ ...u, retail: prices.get(u.code)?.RETAIL ?? u.retail }));
+  const cheapest = units.filter((u): u is typeof u & { retail: number } => u.retail !== null).sort((a, b) => a.retail - b.retail)[0];
+  return { ...p, units, fromPrice: cheapest?.retail ?? null, fromUnit: cheapest?.label ?? null, fromUnitCode: cheapest?.code ?? null };
+}
+
+let livePriced: { key: string; products: IndexedProduct[] } | null = null;
+
+/** The whole catalogue with live supplier prices applied — rebuilt only when they change. */
+export function liveProductIndex(live: LivePrice[] = []): IndexedProduct[] {
+  const key = liveKey(live);
+  if (!key) return PRODUCT_INDEX;
+  if (livePriced?.key !== key) {
+    const map = livePriceMap(live);
+    livePriced = { key, products: PRODUCT_INDEX.map((p) => withLive(p, map)) };
+  }
+  return livePriced.products;
+}
+
+/** The index with staff synonyms (Admin → Insights → Search) and live prices — rebuilt only when either changes. */
+let customIndex: { key: string; index: typeof BUILT_IN_INDEX } | null = null;
+
+function catalogueIndex(staffSynonyms: string[][], live: LivePrice[]) {
+  if (staffSynonyms.length === 0 && live.length === 0) return BUILT_IN_INDEX;
+  const key = `${JSON.stringify(staffSynonyms)}#${liveKey(live)}`;
+  if (customIndex?.key !== key) customIndex = { key, index: createSearchIndex(catalogueDocs(liveProductIndex(live)), [...SYNONYMS, ...staffSynonyms]) };
+  return customIndex.index;
 }
 
 /**
  * Searches, filters, sorts and pages the whole catalogue (lib/search-engine.ts): synonyms, typo tolerance and
- * facet counts. Pass the SKUs staff have hidden as `exclude`, and the synonyms staff added (getStaffSynonyms).
+ * facet counts. Pass the SKUs staff have hidden as `exclude`, the synonyms staff added (getStaffSynonyms) and
+ * the live supplier prices (getLivePrices), so a newly priced product shows its price and "Buy online".
  */
-export function searchCatalogue(options: SearchOptions, staffSynonyms: string[][] = []): SearchResult<CatalogueDoc> {
-  return catalogueIndex(staffSynonyms).search(options);
+export function searchCatalogue(options: SearchOptions, staffSynonyms: string[][] = [], live: LivePrice[] = []): SearchResult<CatalogueDoc> {
+  return catalogueIndex(staffSynonyms, live).search(options);
 }
 
 /** Product families over the whole catalogue (lib/product-families.ts): same thing, different sizes, 4 or more. */

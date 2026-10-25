@@ -157,19 +157,26 @@ These come first: nothing new reaches customers until they are done.
 | 0.3 | **Staging environment.** A second, smaller Render environment that deploys the working branch, so changes can be tested live before merging. | After 0.2 |
 | 0.4 | **Payments live:** **Stitch approved the account (23 Oct 2026)**: switch to live keys, register the return page and webhook again, and make a small real payment (`docs/payments-stitch.md`). Then confirm which methods its live page offers before routing card, Capitec Pay or bank tiles to it. PayFast KYC; Peach KYC and Hosted Checkout V2. | Owner + gateways |
 | 0.5 | **Mark test order AA-1792488427457 as a test** so it never counts in reports or Best With. | Owner (Admin → Orders) |
-| 0.6 | **Tax invoices:** set `GROUP_VAT_NUMBER` and `PRICES_INCLUDE_VAT=true` on the API so staff can issue tax invoices. | Owner (Render env) |
+| 0.6 | **Tax invoices:** only once SARS registers the business for VAT. Then set `GROUP_VAT_NUMBER` and `PRICES_INCLUDE_VAT=true` on the API. Until then staff issue plain invoices (`docs/vat.md`). | Owner (Render env), after VAT registration |
 | 0.7 | **Legal review:** the Terms, Privacy Policy and POPIA Notice are still marked "awaiting attorney review" in `content/legal/README.md`. | Owner + attorney |
 | 0.8 | **Merge the pending work:** the LayUp logo, sales quotations and this roadmap. | Owner approval |
 | 0.9 | **Node.js version (Stitch security notice, 23 Oct 2026):** done in code. Node.js is pinned to the 22.23.4 security release (`render.yaml`, `.node-version`, `engines`, Docker, CI). **Owner:** get one Render deploy through, then create new Stitch API credentials, replace them in Render and reply to Stitch (`docs/payments-stitch.md`). Withdrawals and refunds stay paused until then. | Next successful deploy |
-| 0.10 | **VAT-neutral labelling until VAT registration:** we may not charge or show VAT before SARS registers the business. One switch, driven by whether `GROUP_VAT_NUMBER` is set: <br>• **Not registered:** neutral labels everywhere ("Total amount payable", "Delivery to site"), and no VAT lines or wording on PDFs (order confirmation, proforma, quotation), emails, the quotation editor and client page, the buy-online page, or the Shipping & Delivery and Handling Fee policies. Today 22 mentions in 13 files. <br>• **Registered:** the VAT-inclusive labels and breakdowns come back automatically. | Before any customer-facing release |
+| 0.10 | **VAT-neutral labelling until VAT registration: done in code (25 Oct 2026, `docs/vat.md`).** One switch, `GROUP_VAT_NUMBER`. While it is empty, there are neutral labels everywhere ("Total amount payable") and no VAT lines or wording on PDFs, emails, the quotation editor and client page, the storefront pages or the legal pages, and staff issue plain invoices. When it is set to a valid VAT number, the VAT-inclusive labels, breakdowns and tax invoices come back automatically. | Done |
 | 0.11 | **Quotation numbering:** AAQ-000001 was issued manually on 22 Oct 2026 (Solomon Mathobela, structural timber). When sales quotations go live, start `quote_number_seq` at 2 so no number is ever repeated. | With 0.8 |
-| 0.12 | **Network figures in public copy:** the Shipping & Delivery policy still says "roughly 50" partner suppliers. Update it, and any other public copy, to the verified figures (section 1), with a dated policy-versions entry. | With 0.10 |
+| 0.12 | **Network figures in public copy: done (25 Oct 2026).** The Shipping & Delivery policy now says "more than 300 verified suppliers across all nine provinces" (300 verified and active of 314, checked against the database), with a dated policy-versions entry. | Done |
 
 ---
 
 ## Phase 1 — Sell more of what we list
 
-**Goal:** turn the 1,151 quote-only products into products customers can buy, using real supplier prices.
+**Goal:** turn the quote-only products (about 4,000 since the range expansion) into products customers can buy, using real supplier prices.
+
+**Status (25 October 2026): 1.1–1.4 and 1.6 built** (`docs/supplier-prices.md`):
+- **Admin → Supplier prices.** Upload a supplier's list (.xlsx or .csv). Rows are matched by SKU, supplier code or name. The suggested price is cost plus the standard markup, never below cost plus 3%. Staff approve each price, or approve all at once.
+- **Approved prices go live everywhere**: product pages, listings, search, the cart, checkout and sales quotations. Tier discounts and the margin floor apply as usual. Costs never reach the storefront.
+- **Supplier costs typed into sales quotations** become suggestions too.
+- **Expiry and history.** Prices lapse with the list's valid-until date and every price is kept as history. "Priced online: X of Y" is shown on the overview.
+- **Still open:** 1.5 supplier self-service in the portal; aggregates and ready-mix stay on their price bands.
 
 | # | Item | Notes |
 |---|---|---|
@@ -679,7 +686,7 @@ These are the platform's standing rules:
 | Decide: Render deploys from `main` | 0.2 |
 | Stitch review → live keys; PayFast KYC; follow up Peach | 0.4 |
 | Mark AA-1792488427457 as a test order | 0.5 |
-| Set `GROUP_VAT_NUMBER` and `PRICES_INCLUDE_VAT` | 0.6 |
+| After VAT registration only: set `GROUP_VAT_NUMBER` and `PRICES_INCLUDE_VAT` | 0.6 |
 | Attorney review of the legal pages | 0.7 |
 | Approve merging the LayUp logo and sales quotations | 0.8 |
 | Supplier price lists (CSV) as suppliers are onboarded | 1 |

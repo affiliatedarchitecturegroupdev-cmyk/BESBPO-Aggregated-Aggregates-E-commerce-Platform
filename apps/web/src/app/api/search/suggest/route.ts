@@ -1,7 +1,7 @@
 import { CATEGORIES } from "@/data/categories";
 import { DEPARTMENTS } from "@/data/departments";
 import { SITE_PAGES } from "@/data/site-pages";
-import { getHiddenSkus } from "@/lib/cms";
+import { getHiddenSkus, getLivePrices } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
 import { familyOfSku, searchProducts } from "@/lib/product-index";
 import { getStaffSynonyms } from "@/lib/search-insights";
@@ -18,7 +18,7 @@ export type Suggestion = { kind: "product" | "category" | "department" | "page";
 export async function GET(request: Request) {
   const q = (new URL(request.url).searchParams.get("q") ?? "").trim().slice(0, 80);
   if (q.length < 2) return Response.json({ suggestions: [] });
-  const [hiddenSkus, synonyms] = await Promise.all([getHiddenSkus(), getStaffSynonyms()]);
+  const [hiddenSkus, synonyms, live] = await Promise.all([getHiddenSkus(), getStaffSynonyms(), getLivePrices()]);
   const hidden = new Set(hiddenSkus);
   const words = q.toLowerCase().split(/\s+/).filter(Boolean);
   const has = (text: string) => words.every((w) => text.toLowerCase().includes(w));
@@ -27,7 +27,7 @@ export async function GET(request: Request) {
   const bySize = /\d/.test(q);
   const seen = new Set<string>();
   const products: Suggestion[] = [];
-  for (const p of searchProducts(q, hidden, 300, synonyms)) {
+  for (const p of searchProducts(q, hidden, 300, synonyms, live)) {
     if (products.length >= 8) break;
     const family = bySize ? null : familyOfSku(p.sku, hidden);
     if (family) {

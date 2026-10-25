@@ -25,7 +25,7 @@ const card = "rounded-sm border border-basalt/10 bg-white";
 
 /**
  * Module 4 dashboard (wireframe 05): tier status, quotes, recent orders and
- * tax invoices. Full order history is /account/orders; delivery sites, name
+ * invoices. Full order history is /account/orders; delivery sites, name
  * and password are /account/settings.
  */
 export default async function DashboardPage({ searchParams }: { searchParams: { applied?: string; reset?: string } }) {
@@ -179,9 +179,9 @@ export default async function DashboardPage({ searchParams }: { searchParams: { 
       </section>
 
       <section id="invoices" className={`mt-8 ${card}`}>
-        <h2 className="border-b border-basalt/10 px-4 py-3 font-body text-sm font-semibold text-basalt">Tax invoices</h2>
+        <h2 className="border-b border-basalt/10 px-4 py-3 font-body text-sm font-semibold text-basalt">Invoices</h2>
         {invoices.length === 0 ? (
-          <p className="p-4 font-body text-sm text-slate">No tax invoices yet — they appear here once our team issues them for an order.</p>
+          <p className="p-4 font-body text-sm text-slate">No invoices yet — they appear here once our team issues them for an order.</p>
         ) : (
           <ul className="divide-y divide-basalt/5 font-body text-sm">
             {invoices.map(({ order, invoice }) => (

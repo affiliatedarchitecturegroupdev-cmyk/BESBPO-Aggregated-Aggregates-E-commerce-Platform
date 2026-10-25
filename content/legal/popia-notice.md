@@ -45,7 +45,7 @@ Personal information may be shared with our approved partner-supplier
 network, delivery partners (Besfleet and external tipper-truck partners),
 plant hire and site service partners (the job details and your first name
 only — never your contact details), payment processors, our email and
-WhatsApp messaging providers, and Besbpo Group entities for VAT invoicing
+WhatsApp messaging providers, and Besbpo Group entities for invoicing
 purposes —
 see Section 5 of our Privacy Policy for the full list.
 

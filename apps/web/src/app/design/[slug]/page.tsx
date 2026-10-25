@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DesignBriefForm } from "@/components/design/DesignBriefForm";
 import { DISCIPLINE_ICON } from "@/components/design/DisciplineIcon";
+import { getVatRegistered } from "@/lib/tax";
 import { DESIGN_SERVICES, DISCIPLINES, feeLabel, findDesignService } from "@/data/design-services";
 
 export function generateStaticParams() {
@@ -22,7 +23,8 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
 const numeric = (v: string | undefined) => (v && /^\d{1,9}(\.\d+)?$/.test(v) ? v : undefined);
 
 /** One BAE service (DESIGN_SERVICES.md): scope, fee basis and a brief form. */
-export default function DesignServicePage({ params, searchParams }: { params: { slug: string }; searchParams: { area?: string; cost?: string } }) {
+export default async function DesignServicePage({ params, searchParams }: { params: { slug: string }; searchParams: { area?: string; cost?: string } }) {
+  const vatRegistered = await getVatRegistered();
   const s = findDesignService(params.slug);
   if (!s) notFound();
   const Icon = DISCIPLINE_ICON[s.discipline];
@@ -51,7 +53,7 @@ export default function DesignServicePage({ params, searchParams }: { params: { 
           <p className="mt-3 font-body text-sm text-slate">{s.summary}</p>
           <dl className="mt-6 divide-y divide-basalt/10 rounded-sm border border-basalt/10 bg-white font-body text-sm">
             {[
-              ["Fee", feeLabel(s.fee)],
+              ["Fee", feeLabel(s.fee, vatRegistered)],
               ["Basis", basis],
               ...(s.excludes ? [["Not included", s.excludes]] : []),
               ["Confirmed", "On BAE's written proposal and terms of engagement — nothing is charged until you accept."],
@@ -109,7 +111,7 @@ export default function DesignServicePage({ params, searchParams }: { params: { 
               <Link key={o.slug} href={`/design/${o.slug}`} className="flex flex-col rounded-sm border border-basalt/10 bg-white p-5 transition-colors hover:border-seam-blue">
                 <h3 className="font-display text-base font-semibold text-basalt">{o.name}</h3>
                 <p className="mt-2 flex-1 font-body text-sm text-slate">{o.summary}</p>
-                <p className="mt-3 font-mono text-[11px] text-seam-blue">{feeLabel(o.fee)} →</p>
+                <p className="mt-3 font-mono text-[11px] text-seam-blue">{feeLabel(o.fee, vatRegistered)} →</p>
               </Link>
             ))}
           </div>

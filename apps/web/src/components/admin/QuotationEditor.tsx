@@ -24,7 +24,8 @@ let keySeq = 0;
  * any product, at its list price, a supplier's cost plus markup, or a typed
  * price — delivery, validity and notes, priced live with the margin (staff only).
  */
-export function QuotationEditor({ quote, readOnly = false }: { quote?: SalesQuotation; readOnly?: boolean }) {
+export function QuotationEditor({ quote, readOnly = false, vatRegistered = false }: { quote?: SalesQuotation; readOnly?: boolean; /** docs/vat.md */ vatRegistered?: boolean }) {
+  const incl = vatRegistered ? " (incl. VAT)" : "";
   const router = useRouter();
   const [client, setClient] = useState({
     name: quote?.client.name ?? "",
@@ -223,7 +224,7 @@ export function QuotationEditor({ quote, readOnly = false }: { quote?: SalesQuot
                       <td className="p-2">
                         {l.mode === "COST" && (
                           <div className="flex gap-1">
-                            <input aria-label="Supplier cost per unit (incl. VAT)" type="number" min={0} step="0.01" placeholder="Cost R" value={l.unitCost} disabled={readOnly} onChange={(e) => update(l.key, { unitCost: e.target.value })} className={`${inputClass} !mt-0 w-24`} />
+                            <input aria-label={`Supplier cost per unit${incl}`} type="number" min={0} step="0.01" placeholder="Cost R" value={l.unitCost} disabled={readOnly} onChange={(e) => update(l.key, { unitCost: e.target.value })} className={`${inputClass} !mt-0 w-24`} />
                             <input
                               aria-label="Markup %"
                               type="number"
@@ -238,7 +239,7 @@ export function QuotationEditor({ quote, readOnly = false }: { quote?: SalesQuot
                           </div>
                         )}
                         {l.mode === "PRICE" && (
-                          <input aria-label="Price per unit (incl. VAT)" type="number" min={0} step="0.01" placeholder="Price R" value={l.unitPrice} disabled={readOnly} onChange={(e) => update(l.key, { unitPrice: e.target.value })} className={`${inputClass} !mt-0 w-28`} />
+                          <input aria-label={`Price per unit${incl}`} type="number" min={0} step="0.01" placeholder="Price R" value={l.unitPrice} disabled={readOnly} onChange={(e) => update(l.key, { unitPrice: e.target.value })} className={`${inputClass} !mt-0 w-28`} />
                         )}
                         {l.mode === "COST" && p?.standardMarkupPercent != null && <p className="mt-1 text-[11px] text-slate">Standard markup {p.standardMarkupPercent}%</p>}
                       </td>
@@ -272,7 +273,7 @@ export function QuotationEditor({ quote, readOnly = false }: { quote?: SalesQuot
               <input type="number" min={0} value={distance} disabled={readOnly} onChange={(e) => setDistance(e.target.value)} className={inputClass} />
             </label>
             <label className={label}>
-              Delivery fee (R, incl. VAT)
+              Delivery fee (R{vatRegistered ? ", incl. VAT" : ""})
               <input
                 type="number"
                 min={0}
@@ -310,10 +311,10 @@ export function QuotationEditor({ quote, readOnly = false }: { quote?: SalesQuot
               <dd className="tabular-nums">{fee !== null ? (fee === 0 ? "Included" : formatZAR(fee)) : "—"}</dd>
             </div>
             <div className="flex justify-between border-t border-basalt/10 pt-2 font-semibold">
-              <dt>Total (incl. VAT)</dt>
+              <dt>{vatRegistered ? "Total (incl. VAT)" : "Total amount payable"}</dt>
               <dd className="tabular-nums">{total !== null ? formatZAR(total) : "—"}</dd>
             </div>
-            {total !== null && <p className="text-right text-xs text-slate">Includes VAT {formatZAR((total * 15) / 115)}</p>}
+            {vatRegistered && total !== null && <p className="text-right text-xs text-slate">Includes VAT {formatZAR((total * 15) / 115)}</p>}
           </dl>
           <div className="mt-3 rounded-sm bg-limestone/70 p-2 text-xs text-slate">
             <p className="font-semibold text-basalt">Margin (staff only)</p>

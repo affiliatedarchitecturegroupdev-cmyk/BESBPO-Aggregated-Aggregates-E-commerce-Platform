@@ -24,9 +24,8 @@ and we agree to the return, a **handling fee of 18%** is charged.
 
 The handling fee is **18% of the final amount charged for the materials
 being returned**, as shown on your invoice — the price you actually paid
-for those items after any trade discount, including VAT where VAT is
-charged. Delivery fees are not refunded and are not part of this
-calculation.
+for those items after any trade discount. Delivery fees are not refunded
+and are not part of this calculation.
 
 The fee is deducted from the refund (or credit) for the returned materials.
 For example, if the materials you return were charged at R10,000.00, the

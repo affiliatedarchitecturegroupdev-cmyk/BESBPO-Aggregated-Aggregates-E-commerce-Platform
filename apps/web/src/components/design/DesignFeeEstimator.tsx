@@ -18,7 +18,7 @@ const range = (r: { low: number; high: number }) => (Math.round(r.low) === Math.
  * cost per m² gives the cost of the work, which the percentage fees run on.
  * Indicative only — BAE's proposal sets the fee (DESIGN_SERVICES.md).
  */
-export function DesignFeeEstimator() {
+export function DesignFeeEstimator({ vatRegistered = false }: { vatRegistered?: boolean }) {
   const [project, setProject] = useState<Project>("newHouse");
   const [area, setArea] = useState("180");
   const [spec, setSpec] = useState<Spec>("standard");
@@ -129,7 +129,7 @@ export function DesignFeeEstimator() {
                 </tr>
               ))}
               <tr>
-                <th className="py-2 pr-3 text-left font-semibold text-basalt">Indicative design fees, excl. VAT</th>
+                <th className="py-2 pr-3 text-left font-semibold text-basalt">Indicative design fees{vatRegistered ? ", excl. VAT" : ""}</th>
                 <td className="whitespace-nowrap py-2 text-right font-display text-lg font-bold text-seam-blue">{range(total)}</td>
               </tr>
             </tbody>

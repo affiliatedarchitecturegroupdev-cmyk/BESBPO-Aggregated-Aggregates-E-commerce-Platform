@@ -5,7 +5,7 @@ import { CATEGORIES } from "@/data/categories";
 import { INDUSTRIES } from "@/data/industries";
 import { getPublishedPosts } from "@/lib/blog";
 import { DEPARTMENTS } from "@/data/departments";
-import { getHiddenSkus } from "@/lib/cms";
+import { getHiddenSkus, getLivePrices } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
 import { searchCatalogue } from "@/lib/product-index";
 import { getStaffSynonyms, logSearch } from "@/lib/search-insights";
@@ -20,10 +20,10 @@ const matches = (haystack: string, words: string[]) => words.every((w) => haysta
 export default async function SearchPage({ searchParams }: { searchParams: { q?: string } }) {
   const raw = (searchParams.q ?? "").trim().slice(0, 100);
   const words = raw.toLowerCase().split(/\s+/).filter(Boolean);
-  const [hidden, posts, synonyms] = words.length ? await Promise.all([getHiddenSkus(), getPublishedPosts(), getStaffSynonyms()]) : [[], [], []];
+  const [hidden, posts, synonyms, live] = words.length ? await Promise.all([getHiddenSkus(), getPublishedPosts(), getStaffSynonyms(), getLivePrices()]) : [[], [], [], []];
   const hiddenSet = new Set(hidden);
   // Products: the top 12 here, the rest (with filters) on the product listing.
-  const found = words.length ? searchCatalogue({ query: raw, exclude: hiddenSet, pageSize: 12 }, synonyms) : null;
+  const found = words.length ? searchCatalogue({ query: raw, exclude: hiddenSet, pageSize: 12 }, synonyms, live) : null;
   const products = found?.hits ?? [];
   const departments = words.length ? DEPARTMENTS.filter((d) => matches(`${d.name} ${d.blurb}`, words)) : [];
   const categories = words.length ? CATEGORIES.filter((c) => matches(`${c.name} ${c.description}`, words)) : [];

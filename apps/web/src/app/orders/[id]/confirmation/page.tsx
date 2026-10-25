@@ -173,7 +173,7 @@ export default async function OrderConfirmationPage({ params, searchParams }: { 
           ))}
         </ul>
         <p className="mt-2 text-xs text-slate">
-          {order.invoice ? "" : "Your tax invoice appears here once our team issues it. "}
+          {order.invoice ? "" : "Your invoice appears here once our team issues it. "}
           {order.shipment ? "" : "The delivery note appears once your order is dispatched."}
         </p>
       </section>

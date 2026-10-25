@@ -5,8 +5,8 @@ Aggregates.
 
 ## 1. Delivery network
 
-We deliver from our approved partner-supplier network of roughly 50
-suppliers across South Africa — we do not hold our own inventory at owned
+We deliver from our approved partner-supplier network of more than 300
+verified suppliers across all nine provinces — we do not hold our own inventory at owned
 yards. Your order is fulfilled from whichever approved partner-supplier
 location is closest to your delivery address, or best positioned to meet
 your requested delivery date.
@@ -115,7 +115,7 @@ supplier, we quote the delivery separately before you pay.
 ## 7. AA 60/120 express delivery
 
 AA 60/120 delivers qualifying materials within 120 minutes, for an express
-fee of R1,000 (VAT inclusive) charged on top of the delivery fee.
+fee of R1,000 charged on top of the delivery fee.
 
 - **What qualifies:** cement in 25 kg and 50 kg bags; bagged sand and
   stone; bricks; concrete blocks; lintels, damp-proof course and air bricks;

@@ -80,7 +80,7 @@ We process personal information to:
 5. Consider job applications, and send our newsletter to subscribers who
    asked for it and confirmed their email address.
 6. Comply with tax, invoicing, and other legal obligations (invoices are
-   issued under Besbpo Group's company VAT registration).
+   issued by Besbpo Group (Pty) Ltd).
 7. Improve the Platform and prevent fraud or abuse, including keeping
    bookings on the Platform (see Section 5A).
 
@@ -152,7 +152,7 @@ We share personal information with:
 - **Payment processors**, such as payment gateways and buy-now-pay-later
   or trade-credit providers, when you choose to pay with them — see
   Section 6.
-- **Besbpo Group** entities, for group VAT invoicing and administrative
+- **Besbpo Group** entities, for group invoicing and administrative
   purposes.
 - Service providers who host, maintain, or support the Platform (e.g. our
   hosting and database providers, and our email and WhatsApp messaging
