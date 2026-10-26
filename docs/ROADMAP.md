@@ -23,9 +23,10 @@ The aim is a store that is the benchmark for South African building-materials e-
 11. [Phase 8 — Customer experience extras](#phase-8--customer-experience-extras)
 12. [Phase 9 — Delivery and logistics](#phase-9--delivery-and-logistics)
 13. [Phase 10 — Reliability and security](#phase-10--reliability-and-security)
-14. [Commercial — Trade-partner programme](#commercial--trade-partner-programme)
-15. [Rules every phase follows](#rules-every-phase-follows)
-16. [Owner actions and decisions](#owner-actions-and-decisions)
+14. [Phase 11 — Specialised services: design-and-build, energy, equipment](#phase-11--specialised-services)
+15. [Commercial — Trade-partner programme](#commercial--trade-partner-programme)
+16. [Rules every phase follows](#rules-every-phase-follows)
+17. [Owner actions and decisions](#owner-actions-and-decisions)
 
 ---
 
@@ -646,6 +647,77 @@ Deploy the Listmonk service already defined in `render.yaml` (`docs/listmonk`) a
 | 10.4 | **Admin audit log** | Who changed which price, order, setting or role, and when. |
 | 10.5 | **Browser tests in CI** | Playwright end-to-end tests for checkout, quotations, payments and the admin editor, alongside the API tests. |
 | 10.6 | **Uptime and alerting** | Extend the existing uptime checks to the Railway satellites. |
+
+---
+
+## Phase 11 — Specialised services
+
+*Agreed with the owner on 26 October 2026.* We already sell the materials (timber, roof sheets, steel, solar, generators) and have the design practice (BAE). The next revenue lines sell the **finished result**:
+- we design;
+- partners fabricate and install;
+- we manage the job and invoice it.
+
+Every line follows the rules below: no invented prices, partners named only with written agreement, compliance documents attached to the job.
+
+**Status (26 October 2026):** 11.1 (project engine) and 11.2 (complete roofs) first release built (`docs/projects.md`).
+
+### 11.1 The project engine
+
+One flow for every design-and-build package:
+1. **Brief:** a form per package that gives an instant, honest **take-off**. That means quantities, plus prices only where the catalogue or a live supplier price has one. Never an invented total.
+2. **Design:** BAE designs and the registered professional signs off. The fee is quoted, or fixed where the owner has approved one.
+3. **Partner quotes:** fabricators, truss plants and installers quote. Staff enter them (v1). The partner portal takes them later (11.1b).
+4. **Proposal:** one package price made of design, materials, fabrication and installation, with a **milestone payment schedule**. It is sent as a link the client accepts online.
+5. **Delivery and installation:** materials by phased delivery; the partner's progress; the client signs off.
+6. **Compliance pack:** the engineer's sign-off, the truss plant's certificate, CoCs and warranties attached to the project.
+
+| # | Item | Status |
+|---|---|---|
+| 11.1a | Briefs, take-off, staff pipeline (Admin → Projects), proposals with milestones, online acceptance, milestone payments recorded by staff | **Built 26 Oct 2026** |
+| 11.1b | Partner portal: fabricators and installers see the job, quote and post progress photos | Next |
+| 11.1c | Milestone payments online (card, instant EFT) and on trade credit | Next |
+| 11.1d | Compliance pack uploads and the client's sign-off at completion | Next |
+
+### 11.2 Design-and-build packages
+
+| # | Line | What we sell | Partners and compliance |
+|---|---|---|---|
+| 11.2a | **Complete roofs** | Roof design and truss layout, trusses, covering (concrete tiles, IBR, corrugated, concealed-fix), battens/purlins, insulation, fixings and erection, as one package | Truss plants that hold the industry's truss certification; roofing and erection crews; engineer's sign-off (SANS 10400-L, SANS 10243 for trusses). **First release built** (`/services/complete-roofs`) |
+| 11.2b | **Steel structures** | Warehouses, workshops, carports, canopies, mezzanines, stairs and walkways: design, shop drawings, fabrication, erection | Steel fabricators and erectors; engineer's design (SANS 10162). Uses steel and roofing from the catalogue |
+| 11.2c | **Light steel frame and modular buildings** | Site offices, classrooms, clinics, add-on rooms | LSF builders; NHBRC where it applies |
+| 11.2d | **Boundary and retaining walls** | Design (existing BAE service), precast or block supply, building | Wall builders; engineer's inspection |
+| 11.2e | **Water** | Boreholes, tanks, pumps and filtration, designed and installed | Drillers and plumbers (registered plumbers' CoC) |
+| 11.2f | **Supply and fit** | Ceilings and drywall, waterproofing, flooring, kitchens and built-ins | Installers and applicators; manufacturers' warranties |
+
+### 11.3 Energy
+
+| # | Line | What we sell | Partners and compliance |
+|---|---|---|---|
+| 11.3a | **Solar PV, designed and installed** | Sizing, supply (existing Solar & Backup Power range), installation, municipal registration | Registered electricians and PV installers; electrical Certificate of Compliance; municipal small-scale embedded generation approval |
+| 11.3b | **Generators** | Sale (existing range), hire (plant-hire flow), service and maintenance contracts (recurring) | Service agents |
+| 11.3c | **Diesel to site** | Bulk delivery for generators, plant and farms | Start as agent for a **licensed** distributor (they deliver, we earn a margin). Our own wholesale licence from the Department of Mineral and Petroleum Resources only after the attorney confirms requirements |
+
+### 11.4 Equipment and site resources
+
+| # | Line | What we sell |
+|---|---|---|
+| 11.4a | Power tools and equipment | Deeper ranges, tool hire and repairs |
+| 11.4b | Site establishment hire | Containers, offices, ablutions, fencing and lighting towers |
+| 11.4c | PPE and consumables contracts | Monthly supply to contractors on trade credit |
+
+### Order
+
+1. 11.1 + 11.2a complete roofs (built).
+2. 11.2b steel structures, on the same engine.
+3. 11.3a solar installed and 11.3b generators.
+4. 11.3c diesel via a licensed partner, 11.4, then the remaining 11.2 lines.
+
+### Owner actions
+
+- **Partners:** truss plants, steel fabricators, roofing and erection crews, solar installers, a licensed diesel distributor. We research leads per province; the owner signs agreements; partners are named publicly only with written agreement.
+- **Design sign-off:** which registered professionals take responsibility for roof, steel and solar designs. Registration numbers stay off the site.
+- **Pricing model:** design fee plus margin on fabrication and installation, or one all-in package price. Approve a fixed roof-design fee if wanted (today it's quoted).
+- **Insurance and contracts:** professional indemnity and contract works cover; a design-and-build agreement for the attorney, alongside the Terms' new projects section.
 
 ---
 

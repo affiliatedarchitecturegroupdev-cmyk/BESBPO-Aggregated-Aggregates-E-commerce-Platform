@@ -26,6 +26,12 @@ export default function ServicesPage() {
         quoted until our partners&apos; written rates are in place.
       </p>
 
+      <Link href="/services/complete-roofs" className="mt-6 block rounded-sm border border-ochre-gold/60 bg-white p-5 transition-colors hover:border-seam-blue">
+        <p className="font-mono text-[10px] uppercase tracking-widest text-ochre-gold">New · design and build</p>
+        <p className="mt-1 font-display text-lg font-bold text-basalt">Complete roofs — designed, manufactured and installed</p>
+        <p className="mt-1 font-body text-sm text-slate">The roof design and truss layout, trusses, covering and installation in one proposal, paid in stages. Work out your roof in a minute.</p>
+      </Link>
+
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {SERVICES.map((s) => (
           <ServiceCard key={s.sku} item={s} />

@@ -153,7 +153,10 @@ export const DESIGN_SERVICES: DesignService[] = [
     deliverables: ["Calculations and general arrangement drawings", "Fabrication details and connection design"],
     whenNeeded: ["Warehouses, workshops, carports and canopies", "Steel roofs over long spans"],
     fee: { kind: "quote" },
-    related: [{ label: "Roofing", href: "/roofing" }],
+    related: [
+      { label: "Complete roofs — designed, made and installed", href: "/services/complete-roofs" },
+      { label: "Roofing", href: "/roofing" },
+    ],
   },
   {
     slug: "stormwater-drainage-design",

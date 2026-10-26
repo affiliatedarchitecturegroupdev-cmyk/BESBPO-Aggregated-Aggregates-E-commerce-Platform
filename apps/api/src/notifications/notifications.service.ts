@@ -32,7 +32,11 @@ import {
   type QuoteData,
   type ScheduleData,
   type WhatsAppMessage,
+  customerProjectEmail,
+  staffProjectEmail,
+  type ProjectData,
 } from "./notification-templates";
+import { PACKAGE_LABEL, projectSummary } from "../projects/packages";
 import type { SystemEmail } from "./account-emails";
 import { EmailSender, WhatsAppTemplateSender, type EmailAttachment, type SendResult } from "./providers";
 import { orderConfirmationPdf, ORDER_INCLUDE, taxInvoicePdf, type OrderPdf } from "../documents/order-doc-data";
@@ -302,6 +306,37 @@ export class NotificationsService implements OnModuleDestroy {
       const staff = setting.staffEmail ? staffCompanyEmail(event, data) : null;
       if (staff) out.push(...(await this.staffRecipients()).map((recipient) => ({ audience: "STAFF" as const, channel: "EMAIL" as const, recipient, email: staff })));
       await this.enqueue(event, out, { companyId: company.id });
+    });
+  }
+
+  /** Design-and-build projects (docs/projects.md). The proposal link is passed in, never stored. */
+  async project(event: NotificationEvent, projectId: string, extra: { proposalUrl?: string; milestoneId?: string } = {}) {
+    await this.safely(event, async () => {
+      const p = await this.prisma.project.findUnique({ where: { id: projectId }, include: { milestones: { orderBy: { sequence: "asc" } } } });
+      if (!p) return;
+      const paid = extra.milestoneId ? p.milestones.find((m) => m.id === extra.milestoneId) : undefined;
+      const data: ProjectData = {
+        id: p.id,
+        reference: p.reference,
+        packageLabel: PACKAGE_LABEL[p.package],
+        contactName: p.contactName,
+        contactEmail: p.contactEmail,
+        province: p.province,
+        siteAddress: p.siteAddress,
+        summary: projectSummary(p.package, p.brief),
+        total: p.total,
+        proposalUrl: extra.proposalUrl ?? null,
+        validUntil: p.proposalValidUntil,
+        milestones: p.milestones.map((m) => ({ label: m.label, amount: m.amount, status: m.status })),
+        paid: paid ? { label: paid.label, amount: paid.amount, reference: paid.paymentReference } : null,
+      };
+      const setting = await this.setting(event);
+      const out: Outgoing[] = [];
+      const customer = setting.customerEmail ? customerProjectEmail(event, data) : null;
+      if (customer) out.push({ audience: "CUSTOMER", channel: "EMAIL", recipient: p.contactEmail, email: customer });
+      const staff = setting.staffEmail ? staffProjectEmail(event, data) : null;
+      if (staff) out.push(...(await this.staffRecipients()).map((recipient) => ({ audience: "STAFF" as const, channel: "EMAIL" as const, recipient, email: staff })));
+      await this.enqueue(event, out, { companyId: p.companyId ?? undefined });
     });
   }
 

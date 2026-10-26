@@ -4495,4 +4495,78 @@ describe("Aggregated Aggregates API (e2e)", () => {
       await http().get("/company/team").set(bearer(buyer)).expect(403);
     });
   });
+  describe("Design-and-build projects: complete roofs (docs/projects.md)", () => {
+    const bearer = (t: string) => ({ Authorization: `Bearer ${t}` });
+    const brief = { shape: "GABLE", lengthM: 12, widthM: 8, pitchDeg: 26, covering: "CONCRETE_TILE", overhangM: 0.6, insulation: true };
+
+    it("takes a brief with an instant take-off, then a proposal the client accepts, paid in stages", async () => {
+      // The take-off: quantities only, never a price.
+      const estimate = (await http().post("/projects/estimate").send({ package: "ROOF", brief }).expect(200)).body;
+      expect(estimate).toMatchObject({ label: "Complete roof", summary: "Gable roof, 12 × 8 m, concrete roof tiles", takeoff: { roofAreaM2: 135.1, trusses: 17 } });
+      expect(JSON.stringify(estimate)).not.toMatch(/price|R\d/i);
+      await http().post("/projects/estimate").send({ package: "ROOF", brief: { ...brief, lengthM: 0 } }).expect(400);
+
+      // Signed out: name, email and the Privacy Policy are needed.
+      const send = (body: object, as?: string) => (as ? http().post("/projects").set(bearer(as)) : http().post("/projects")).send({ package: "ROOF", brief, province: "KwaZulu-Natal", privacyAccepted: true, ...body });
+      await send({}).expect(400);
+      await send({ contactName: "Thandi", contactEmail: `pj-${run}@example.com`, privacyAccepted: false }).expect(400);
+      const spy = jest.spyOn(app.get(NotificationsService), "project");
+      const client = await register("pjclient");
+      const created = (await send({ siteAddress: "12 Ridge Road, Hillcrest", notes: "Existing walls, plans available" }, client).expect(201)).body;
+      expect(created.reference).toMatch(/^AAP-\d{6}$/);
+      expect(spy.mock.calls.at(-1)!.slice(0, 2)).toEqual(["PROJECT_RECEIVED", created.id]);
+
+      const staff = await register("pjstaff");
+      await prisma.user.update({ where: { email: `pjstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      await http().get("/projects/staff").set(bearer(client)).expect(403);
+      expect((await http().get("/projects/staff").set(bearer(staff)).expect(200)).body.find((p: { id: string }) => p.id === created.id)).toMatchObject({ status: "BRIEF", summary: "Gable roof, 12 × 8 m, concrete roof tiles" });
+      await http().patch(`/projects/staff/${created.id}`).set(bearer(staff)).send({ status: "QUOTING", staffNotes: "Truss plant quoted" }).expect(200);
+
+      // The proposal: design, materials, fabrication and installation; partners and costs are staff-only.
+      const lines = [
+        { kind: "DESIGN", description: "Roof design and truss layout", quantity: 1, unitPrice: 4500 },
+        { kind: "FABRICATION", description: "Engineered timber trusses, delivered", quantity: 17, unit: "trusses", unitPrice: 1450, unitCost: 1200, partnerName: `Secret Truss Plant ${run}` },
+        { kind: "INSTALLATION", description: "Erect trusses, battens and tiles", quantity: 1, unitPrice: 28000, unitCost: 23000 },
+      ];
+      const milestones = [{ label: "Deposit", percent: 40 }, { label: "Materials on site", percent: 40 }, { label: "Complete", percent: 20 }];
+      await http().post(`/projects/staff/${created.id}/send`).set(bearer(staff)).expect(400); // nothing to send yet
+      await http().put(`/projects/staff/${created.id}/proposal`).set(bearer(staff)).send({ lines, milestones: milestones.slice(0, 2) }).expect(400); // 80%
+      const saved = (await http().put(`/projects/staff/${created.id}/proposal`).set(bearer(staff)).send({ lines, milestones, message: "Includes ceiling insulation", validDays: 30 }).expect(200)).body;
+      expect(Number(saved.total)).toBe(57150); // 4,500 + 24,650 + 28,000
+      expect(saved.totals).toMatchObject({ cost: 43400, margin: 9250 });
+      expect(saved.milestones.map((m: { amount: string }) => Number(m.amount))).toEqual([22860, 22860, 11430]);
+
+      const sent = (await http().post(`/projects/staff/${created.id}/send`).set(bearer(staff)).expect(200)).body;
+      const token = sent.url.split("/projects/proposal/")[1];
+      expect(spy.mock.calls.at(-1)).toEqual(["PROJECT_PROPOSAL_SENT", created.id, { proposalUrl: sent.url }]);
+      const view = (await http().get(`/projects/proposal/${token}`).expect(200)).body;
+      expect(view).toMatchObject({ reference: created.reference, status: "PROPOSED", proposal: { total: "57150", message: "Includes ceiling insulation" } });
+      expect(JSON.stringify(view)).not.toMatch(/Secret Truss|unitCost|23000|staffNotes|Truss plant quoted/);
+
+      // Changing a sent proposal withdraws its link; the new link is the only one that works.
+      await http().put(`/projects/staff/${created.id}/proposal`).set(bearer(staff)).send({ lines, milestones }).expect(200);
+      await http().get(`/projects/proposal/${token}`).expect(404);
+      const token2 = (await http().post(`/projects/staff/${created.id}/send`).set(bearer(staff)).expect(200)).body.url.split("/projects/proposal/")[1];
+      await http().post(`/projects/proposal/${token2}/accept`).send({ name: "Thandi Mokoena", acceptTerms: false }).expect(400);
+      const accepted = (await http().post(`/projects/proposal/${token2}/accept`).send({ name: "Thandi Mokoena", acceptTerms: true }).expect(200)).body;
+      expect(accepted).toMatchObject({ status: "ACCEPTED", proposal: { acceptedName: "Thandi Mokoena" } });
+      await http().post(`/projects/proposal/${token2}/accept`).send({ name: "Thandi Mokoena", acceptTerms: true }).expect(400);
+      await http().put(`/projects/staff/${created.id}/proposal`).set(bearer(staff)).send({ lines, milestones }).expect(400);
+
+      // Stage payments: recorded by staff; the first starts the job. The client sees them in My account.
+      const project = (await http().get(`/projects/staff/${created.id}`).set(bearer(staff)).expect(200)).body;
+      await http().post(`/projects/staff/milestones/${project.milestones[0].id}/paid`).set(bearer(client)).expect(403);
+      const paid = (await http().post(`/projects/staff/milestones/${project.milestones[0].id}/paid`).set(bearer(staff)).send({ reference: "EFT 4471" }).expect(200)).body;
+      expect(paid).toMatchObject({ status: "IN_PROGRESS", milestones: [{ status: "PAID", paymentReference: "EFT 4471" }, { status: "DUE" }, { status: "DUE" }] });
+      await http().post(`/projects/staff/milestones/${project.milestones[0].id}/paid`).set(bearer(staff)).expect(400);
+      expect(spy.mock.calls.at(-1)).toEqual(["PROJECT_MILESTONE_PAID", created.id, { milestoneId: project.milestones[0].id }]);
+      spy.mockRestore();
+      const mine = (await http().get("/projects/mine").set(bearer(client)).expect(200)).body;
+      expect(mine[0]).toMatchObject({ reference: created.reference, status: "IN_PROGRESS", proposal: { milestones: [{ status: "PAID" }, { status: "DUE" }, { status: "DUE" }] } });
+      expect(JSON.stringify(mine)).not.toMatch(/Secret Truss|unitCost/);
+      const other = await register("pjother");
+      expect((await http().get("/projects/mine").set(bearer(other)).expect(200)).body).toEqual([]);
+      await prisma.project.delete({ where: { id: created.id } });
+    });
+  });
 });

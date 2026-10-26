@@ -39,6 +39,7 @@ import { DiscoveryModule } from "./discovery/discovery.module";
 import { SupplierPricesModule } from "./supplier-prices/supplier-prices.module";
 import { CatalogueImportModule } from "./catalogue-import/catalogue-import.module";
 import { CompanyAccountsModule } from "./company-accounts/company-accounts.module";
+import { ProjectsModule } from "./projects/projects.module";
 import { TaxModule } from "./tax/tax.module";
 
 @Module({
@@ -83,6 +84,7 @@ import { TaxModule } from "./tax/tax.module";
     SupplierPricesModule,
     CatalogueImportModule,
     CompanyAccountsModule,
+    ProjectsModule,
   ],
 })
 export class AppModule {}

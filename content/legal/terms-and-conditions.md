@@ -173,6 +173,34 @@ apart from removing contact details — whether they are positive or
 negative, and we may hide reviews that break these rules. We do not pay or
 reward anyone for reviews.
 
+## 6B. Design-and-build projects
+
+Some services — starting with complete roofs — are offered as one package:
+design, materials, manufacture and installation.
+
+- **Briefs and take-offs.** The quantities shown when you describe your
+  project are indicative and are not an offer or a price. The engineer's
+  design and our partners' quotes decide what is needed.
+- **Proposals.** We send a written proposal with the package price, what it
+  includes and a schedule of stage payments. It is valid until the date it
+  shows. You accept it online; once accepted, it forms the agreement for the
+  project together with these terms. If we change a proposal before you
+  accept it, only the latest version can be accepted.
+- **Design.** Designs are prepared and signed off by registered
+  professionals in our group, to the applicable SANS standards and the
+  information you give us (dimensions, existing structure, site access).
+  Tell us of anything that could affect the design; changes after design
+  may change the price and the programme.
+- **Manufacture and installation.** We use vetted partner manufacturers and
+  installers as our subcontractors and manage the work. Timeframes are
+  estimates and depend on site readiness, access and weather.
+- **Stage payments.** Each stage payment is due as the proposal sets out,
+  and work moves to the next stage once the payment is received. Materials
+  and manufactured items remain ours until paid for.
+- **Cancellation.** If you cancel after accepting, you pay for design work
+  done, items already manufactured or ordered for your project, and work
+  done on site, as allowed by the Consumer Protection Act where it applies.
+
 ## 7. Compliance documentation
 
 Where applicable, we attach the relevant SANS reference standard (e.g.

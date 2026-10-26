@@ -44,6 +44,7 @@ const STATIC_PATHS = [
   "/reinforcing-steel/cut-and-bend",
   "/plant-hire",
   "/services",
+  "/services/complete-roofs",
   "/job-packs",
   "/design",
   "/calculators",

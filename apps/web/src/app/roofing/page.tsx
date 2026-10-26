@@ -79,6 +79,9 @@ export default async function RoofingPage() {
             <a href="#roof-calculator" className="rounded-sm border border-limestone/30 px-5 py-2.5 font-body text-sm font-semibold hover:border-ochre-gold">
               Size a roof
             </a>
+            <Link href="/services/complete-roofs" className="rounded-sm border border-ochre-gold px-5 py-2.5 font-body text-sm font-semibold text-ochre-gold hover:bg-ochre-gold hover:text-basalt">
+              Complete roof — designed, made and installed
+            </Link>
           </div>
         </div>
       </section>
