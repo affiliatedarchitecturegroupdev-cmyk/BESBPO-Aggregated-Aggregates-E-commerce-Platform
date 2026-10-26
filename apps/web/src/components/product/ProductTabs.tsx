@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { DOCUMENT_TYPE_LABEL, formatBytes, type DocumentSummary } from "@/lib/account-types";
-import { CUSTOMER_TIERS, DELIVERY_RULES, pricePoints, type Product } from "@/data/catalogue";
+import { CUSTOMER_TIERS, DELIVERY_RULES, pricePoints, type DeliveryRules, type Product } from "@/data/catalogue";
 import { formatZAR } from "@/lib/pricing";
 import { technicalSpec } from "@/data/technical-specs";
 
@@ -14,7 +14,7 @@ type Tab = (typeof TABS)[number];
 
 const LOAD_LABELS = { M3_6: "6m³ load", M3_10: "10m³ load", M3_14_PLUS: "14m³+ / Interlink" } as const;
 
-export function ProductTabs({ product, categoryName }: { product: Product; categoryName: string }) {
+export function ProductTabs({ product, categoryName, rules = DELIVERY_RULES }: { product: Product; categoryName: string; rules?: DeliveryRules }) {
   const [tab, setTab] = useState<Tab>("Specification");
   const spec = technicalSpec(product.sku, product.categorySlug);
 
@@ -61,7 +61,7 @@ export function ProductTabs({ product, categoryName }: { product: Product; categ
           </p>
         )}
         {tab === "Compliance Docs (SANS/COA)" && <ComplianceDocuments product={product} />}
-        {tab === "Delivery & Returns" && <DeliveryTable />}
+        {tab === "Delivery & Returns" && <DeliveryTable rules={rules} />}
       </div>
     </div>
   );
@@ -99,8 +99,8 @@ function Specification({ product, categoryName, particleSize }: { product: Produ
   );
 }
 
-function DeliveryTable() {
-  const [included, ...banded] = DELIVERY_RULES.bands;
+function DeliveryTable({ rules }: { rules: DeliveryRules }) {
+  const [included, ...banded] = rules.bands;
   return (
     <div className="space-y-4">
       <table className="w-full text-left">
@@ -126,16 +126,16 @@ function DeliveryTable() {
             </tr>
           ))}
           <tr>
-            <td className="py-2">Over {DELIVERY_RULES.quoteOverKm}km</td>
+            <td className="py-2">Over {rules.quoteOverKm}km</td>
             <td colSpan={3} className="py-2">Quoted individually</td>
           </tr>
         </tbody>
       </table>
       <p className="text-slate">
-        Full tipper loads start at {DELIVERY_RULES.minBulkM3}m³ or {DELIVERY_RULES.minBulkTons} tons. Smaller bulk orders
-        go as a small load for {formatZAR(DELIVERY_RULES.smallLoadFee)} within {DELIVERY_RULES.smallLoadMaxKm}km; bagged
-        orders deliver free from {DELIVERY_RULES.baggedFreeFromKg / 1000} ton, otherwise {formatZAR(DELIVERY_RULES.baggedFee)},
-        within {DELIVERY_RULES.baggedMaxKm}km.
+        Full tipper loads start at {rules.minBulkM3}m³ or {rules.minBulkTons} tons. Smaller bulk orders
+        go as a small load for {formatZAR(rules.smallLoadFee)} within {rules.smallLoadMaxKm}km; bagged
+        orders deliver free from {rules.baggedFreeFromKg / 1000} ton, otherwise {formatZAR(rules.baggedFee)},
+        within {rules.baggedMaxKm}km.
       </p>
       <p className="text-slate">
         See our <Link href="/legal/shipping-delivery" className="text-seam-blue underline">Shipping & Delivery</Link> and{" "}

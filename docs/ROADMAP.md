@@ -628,8 +628,8 @@ Deploy the Listmonk service already defined in `render.yaml` (`docs/listmonk`) a
 
 | # | Item | Notes |
 |---|---|---|
-| 9.1 | **Admin → Delivery rates** | The standard delivery rates (bands, small-load and bagged fees) are only editable in code today. Move them to an admin page like the delivery premium's. |
-| 9.2 | **Flatbed delivery fees** | Steel, masonry, roofing and building supplies charge R0 delivery at checkout today and confirm the supplier's truck charge later. Add owner-set flatbed fees (from supplier rates) so these orders show a delivered price at checkout. |
+| 9.1 | **Admin → Delivery rates: built 25 Oct 2026** (`docs/delivery-rates.md`) | The standard delivery rates (bands, small-load and bagged fees) are only editable in code today. Move them to an admin page like the delivery premium's. |
+| 9.2 | **Flatbed delivery fees: built 25 Oct 2026, waiting on the owner's rates** (`docs/delivery-rates.md`) | Steel, masonry, roofing and building supplies charge R0 delivery at checkout today and confirm the supplier's truck charge later. Add owner-set flatbed fees (from supplier rates) so these orders show a delivered price at checkout. |
 | 9.3 | **Benchmark delivery costs** | Compare delivery income with the costs recorded at dispatch (Insights → Finance) and tune the standard rates and the delivery premium. |
 | 9.4 | **Dispatch and driver tools** | Route planning for Besfleet; "driver on the way" tracking for customers; delivery photos (proof of delivery exists). |
 | 9.5 | **Supplier performance scores** | On-time rate, damage rate and price competitiveness, from orders and proof of delivery. |

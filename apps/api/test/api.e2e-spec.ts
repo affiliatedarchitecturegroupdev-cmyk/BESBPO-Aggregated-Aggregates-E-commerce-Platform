@@ -4357,4 +4357,48 @@ describe("Aggregated Aggregates API (e2e)", () => {
       await http().post("/catalogue-import/staff").set(bearer(staff)).attach("file", Buffer.from("a,b\n1,2"), "x.csv").expect(400);
     });
   });
+  describe("Delivery rates: staff-set tipper rates and flatbed fees (docs/delivery-rates.md)", () => {
+    const bearer = (t: string) => ({ Authorization: `Bearer ${t}` });
+    const price = async (lines: { sku: string; unit: string; quantity: number }[], km: number) => (await http().post("/orders/price").send({ lines, deliveryDistanceKm: km }).expect(200)).body;
+    const STEEL = { sku: "AA-STL-Y08", unit: "LENGTH_6M", quantity: 10 };
+    const SAND = { sku: "AA-SBC-01", unit: "m3", quantity: 6 };
+
+    afterAll(async () => {
+      await prisma.siteContent.deleteMany({ where: { key: "delivery-rates" } });
+    });
+
+    it("uses the workbook's rates until an admin saves new ones, then prices tipper and flatbed deliveries with them", async () => {
+      const staff = await register("drstaff");
+      const admin = await register("dradmin");
+      await prisma.user.update({ where: { email: `drstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      await prisma.user.update({ where: { email: `dradmin-${run}@example.com` }, data: { role: "ADMIN" } });
+      await prisma.siteContent.deleteMany({ where: { key: "delivery-rates" } });
+
+      const workbook = (await http().get("/pricing/delivery-rates").expect(200)).body;
+      expect(workbook).toMatchObject({ bandFees: { BAND_30_60: { M3_6: 450 } }, smallLoadFee: 350, flatbed: {} });
+      expect((await price([SAND], 45)).delivery.fee).toBe(450);
+      expect((await price([STEEL], 45)).delivery.fee).toBe(0); // the flatbed charge is confirmed before dispatch
+
+      const rates = { ...workbook, bandFees: { ...workbook.bandFees, BAND_30_60: { M3_6: 480, M3_10: 690, M3_14_PLUS: 990 } }, flatbed: { steel: { fees: [300, 550, 900], freeFrom: 5000 } } };
+      await http().put("/pricing/delivery-rates").set(bearer(staff)).send(rates).expect(403);
+      await http().put("/pricing/delivery-rates").set(bearer(admin)).send({ ...rates, smallLoadFee: -5 }).expect(400);
+      const saved = (await http().put("/pricing/delivery-rates").set(bearer(admin)).send(rates).expect(200)).body;
+      expect(saved.flatbed).toEqual({ steel: { fees: [300, 550, 900], freeFrom: 5000 } });
+      expect((await http().get("/pricing/delivery-rates").expect(200)).body).toEqual(saved);
+
+      expect((await price([SAND], 45)).delivery.fee).toBe(480);
+      const steel = await price([STEEL], 45);
+      expect(steel.delivery.fee).toBe(550);
+      expect(steel.total).toBe(567 + 550);
+      expect((await price([{ ...STEEL, quantity: 100 }], 45)).delivery.fee).toBe(0); // R5,670 of steel: free
+      expect((await price([STEEL], 150)).is_quote_only).toBe(true);
+
+      // An order is charged what was priced when it was placed.
+      const buyer = await register("drbuyer");
+      const product = await prisma.product.findUniqueOrThrow({ where: { sku: STEEL.sku } });
+      const order = await http().post("/orders").set(bearer(buyer)).send({ deliveryDistanceKm: 20, lineItems: [{ productId: product.id, unitOfSale: "LENGTH_6M", quantity: 10 }] }).expect(201);
+      expect(Number(order.body.deliveryFee)).toBe(300);
+      await prisma.order.delete({ where: { id: order.body.id } });
+    });
+  });
 });

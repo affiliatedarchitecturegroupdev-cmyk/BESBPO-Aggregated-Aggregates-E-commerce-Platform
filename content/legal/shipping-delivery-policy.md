@@ -28,6 +28,20 @@ Orders that qualify as Volume/Civil Bulk tier (≥10m³ total) are always
 quoted individually, regardless of distance, given the scale and
 variability of civil-scale delivery logistics.
 
+Smaller bulk loads and bagged goods have their own flat fees within 30km.
+The current fees are shown on each product page and charged at checkout.
+
+**Supplier flatbed delivery.** Steel, bricks and precast, roofing and
+timber, and building supplies come on the supplier's own flatbed or crane
+truck, not a tipper. Where we have set a flatbed fee for a product line,
+it is shown on the product page and charged at checkout. It depends on the
+same distance bands, and can be free above an order value for that line.
+Flatbed delivery beyond 100km is quoted individually. Where we haven't
+set a fee yet, the truck's charge is confirmed with you before dispatch.
+One delivery fee covers your order's main supply point. Collections from
+other suppliers are covered by the distributed delivery premium (section
+2A).
+
 ## 2A. Distributed delivery premium
 
 We don't hold stock: each material comes from the partner supplier that
@@ -58,8 +72,9 @@ costs more to arrange and carry.
   separately, or ask us to plan a phased delivery (section 4A).
 - **Supplier delivery charges:** the premium covers the extra collections
   we arrange. Where a supplier delivers on its own flatbed or crane truck
-  (steel, bricks, roofing and building supplies), any charge for that truck
-  is still confirmed with you before dispatch, as set out in section 3.
+  (steel, bricks, roofing and building supplies), the flatbed fee in
+  section 2 applies to the main supply point. Where no fee is set yet, the
+  truck's charge is confirmed with you before dispatch.
 
 ## 3. Delivery carriers
 

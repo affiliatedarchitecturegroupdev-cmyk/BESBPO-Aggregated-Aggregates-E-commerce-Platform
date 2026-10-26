@@ -1,9 +1,9 @@
-import { DELIVERY_RULES } from "@/data/catalogue";
+import { DELIVERY_RULES, type DeliveryRules } from "@/data/catalogue";
 
 // Explains the core pricing mechanic up front: bulk density converts
 // tons <-> m³, and bagged lines carry a bagging premium. Buyers coming from
 // big-box retail may not know why one material has more than one price.
-export function BulkVsBagged() {
+export function BulkVsBagged({ rules = DELIVERY_RULES }: { rules?: DeliveryRules }) {
   return (
     <section className="bg-limestone px-4 py-14">
       <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-3">
@@ -18,7 +18,7 @@ export function BulkVsBagged() {
         <div className="rounded-sm border border-basalt/10 bg-white p-5">
           <h3 className="font-display text-sm font-semibold text-basalt">Per Ton / Per m³</h3>
           <p className="mt-2 font-body text-sm text-slate">
-            Bulk tipper loads from {DELIVERY_RULES.minBulkM3}m³ or {DELIVERY_RULES.minBulkTons} tons. We convert between
+            Bulk tipper loads from {rules.minBulkM3}m³ or {rules.minBulkTons} tons. We convert between
             tons and m³ using each material&apos;s own bulk density, so the numbers match the load on the truck.
           </p>
         </div>

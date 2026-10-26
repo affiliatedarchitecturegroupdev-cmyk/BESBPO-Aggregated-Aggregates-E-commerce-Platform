@@ -10,7 +10,8 @@ from dataclasses import dataclass, field
 from decimal import Decimal
 
 from calculators import packaged_goods, ready_mix
-from calculators.delivery_bands import DeliveryQuoteResult, calculate_delivery_fee
+from calculators.delivery_bands import DeliveryQuoteResult, DeliveryRules, calculate_delivery_fee
+from calculators.flatbed import FLATBED_OUT_OF_RANGE, FlatbedRate, flatbed_fee
 from calculators.packaged_goods import PackagedLineResult, PackagedProduct
 from calculators.ready_mix import ReadyMixLineResult, ReadyMixProduct
 from calculators.tonnage_volume import LineResult, calculate
@@ -50,6 +51,14 @@ SUPPLIES_DELIVERY_NOTE = (
     "Building supplies (doors, windows, fencing, tanks, boards, tools and paint) are delivered by the merchant's own vehicle: "
     "we confirm stock, the delivery slot and any delivery charge with you before dispatch."
 )
+
+# Once the owner sets a line's flatbed rates (Admin → Delivery rates), the fee is shown at checkout instead.
+PRICED_FLATBED_NOTES = {
+    "steel": "Steel is delivered by the merchant's flatbed or crane truck — the delivery fee covers it. We confirm the slot and send the mill certificates with the load.",
+    "masonry": "Bricks, blocks, pavers, precast and pipes are delivered by the supplier's flatbed or crane truck — the delivery fee covers it. We confirm the slot with you before dispatch.",
+    "roofing": "Roof sheets and roofing accessories are delivered by the merchant's flatbed — the delivery fee covers it. Long sheets need clear access for the truck.",
+    "supplies": "Building supplies are delivered by the merchant's own vehicle — the delivery fee covers it. We confirm stock and the slot with you before dispatch.",
+}
 
 
 @dataclass(frozen=True)
@@ -100,13 +109,22 @@ def price_order(
     customer_tier: str,
     packaged: dict[str, PackagedProduct] | None = None,
     ready_mixes: dict[str, ReadyMixProduct] | None = None,
+    delivery_rules: DeliveryRules | None = None,
+    flatbed: dict[str, FlatbedRate] | None = None,
 ) -> OrderResult:
+    """
+    `delivery_rules` are the tipper rates staff set (Admin → Delivery rates; the workbook's when None) and
+    `flatbed` the flatbed rates per product line, for the lines that have them (docs/delivery-rates.md).
+    """
     if not lines:
         raise ValueError("An order needs at least one line.")
     tier = framework.tiers[customer_tier]
     packaged = packaged or {}
     ready_mixes = ready_mixes or {}
+    rules = delivery_rules or framework.delivery
+    flatbed = flatbed or {}
     notes: list[str] = []
+    own_line_totals: dict[str, Decimal] = {}  # flatbed lines in the order, with their goods' subtotal
 
     priced: list[LineResult | PackagedLineResult] = []
     extra_reasons: list[str] = []
@@ -151,7 +169,11 @@ def price_order(
                 extra_codes.append(PRICE_ON_REQUEST)
                 extra_reasons.append("Some items have no confirmed price yet — our team confirms them with the supplier.")
             if packaged_product.own_transport:
-                note = {"steel": STEEL_DELIVERY_NOTE, "roofing": ROOFING_DELIVERY_NOTE, "supplies": SUPPLIES_DELIVERY_NOTE}.get(packaged_product.line, MASONRY_DELIVERY_NOTE)
+                own_line_totals[packaged_product.line] = own_line_totals.get(packaged_product.line, Decimal(0)) + (result.total or Decimal(0))
+                if packaged_product.line in flatbed:
+                    note = PRICED_FLATBED_NOTES[packaged_product.line]
+                else:
+                    note = {"steel": STEEL_DELIVERY_NOTE, "roofing": ROOFING_DELIVERY_NOTE, "supplies": SUPPLIES_DELIVERY_NOTE}.get(packaged_product.line, MASONRY_DELIVERY_NOTE)
                 if note not in notes:
                     notes.append(note)
             elif line.unit in BAG_UNITS:
@@ -178,7 +200,7 @@ def price_order(
         own_transport = all(isinstance(l, ReadyMixLineResult) or l.sku in own_skus for l in priced)
         if own_transport:
             # Nothing travels by tipper: the plant's mixer truck or the steel / masonry / roofing supplier's truck delivers.
-            delivery = DeliveryQuoteResult(is_quote_only=False, reasons=[], reason_codes=[], distance_km=distance_km, load_size=None, fee=Decimal(0))
+            delivery = _flatbed_delivery(rules, flatbed, own_line_totals, distance_km)
         else:
             # Bulk-format packaged goods (drums, totes, tankers, bulk bags):
             # nothing the delivery bands price — arranged with the supplier.
@@ -186,7 +208,7 @@ def price_order(
         return OrderResult(customer_tier, priced, delivery, subtotal, extra_reasons, extra_codes, notes)
 
     delivery = calculate_delivery_fee(
-        framework.delivery,
+        rules,
         distance_km=distance_km,
         bulk_m3=bulk_m3,
         bulk_tons=bulk_tons,
@@ -203,4 +225,38 @@ def price_order(
         extra_reasons=extra_reasons,
         extra_reason_codes=extra_codes,
         notes=notes,
+    )
+
+
+def _flatbed_delivery(rules: DeliveryRules, flatbed: dict[str, FlatbedRate], line_totals: dict[str, Decimal], distance_km: Decimal) -> DeliveryQuoteResult:
+    """
+    An order that travels only on suppliers' own trucks (and the plant's mixer truck). Lines with flatbed rates
+    charge them; the fee is the highest — one supply point, the premium covers the rest (docs/delivery-premium.md).
+    Lines without rates stay at R0, their charge confirmed before dispatch.
+    """
+    components: list[dict] = []
+    for line, subtotal in line_totals.items():
+        rate = flatbed.get(line)
+        if rate is None:
+            continue
+        fee = flatbed_fee(rate, rules, distance_km, subtotal)
+        if fee is None:
+            return DeliveryQuoteResult(
+                is_quote_only=True,
+                reasons=[f"Flatbed delivery beyond {rules.quote_over_km}km is quoted individually — routed to RFQ."],
+                reason_codes=[FLATBED_OUT_OF_RANGE],
+                distance_km=distance_km,
+                load_size=None,
+                fee=None,
+            )
+        components.append({"kind": "FLATBED", "load_size": None, "line": line, "fee": fee})
+    main = max(components, key=lambda c: c["fee"], default=None)
+    return DeliveryQuoteResult(
+        is_quote_only=False,
+        reasons=[],
+        reason_codes=[],
+        distance_km=distance_km,
+        load_size=None,
+        fee=main["fee"] if main else Decimal(0),
+        components=[main] if main else [],
     )

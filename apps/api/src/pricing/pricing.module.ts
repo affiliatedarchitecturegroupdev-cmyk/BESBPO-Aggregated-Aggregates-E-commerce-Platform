@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { DeliveryRatesController } from "./delivery-rates.controller";
 import { PricingController } from "./pricing.controller";
 import { PricingService } from "./pricing.service";
 
@@ -9,7 +10,7 @@ import { PricingService } from "./pricing.service";
  * never computed two different ways.
  */
 @Module({
-  controllers: [PricingController],
+  controllers: [PricingController, DeliveryRatesController],
   providers: [PricingService],
   exports: [PricingService],
 })

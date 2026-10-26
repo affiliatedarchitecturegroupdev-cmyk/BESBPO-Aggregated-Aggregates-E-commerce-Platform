@@ -52,8 +52,8 @@ export default async function AdminDeliveryPremiumPage() {
 
       <p className="max-w-3xl font-body text-xs text-slate">
         Test orders never count. Compare the premium collected with the delivery costs recorded at dispatch (Insights → Finance) to check the
-        rates cover the extra collections. A supplier&apos;s own flatbed or crane-truck charge for steel, bricks, roofing or building supplies is
-        still confirmed with the customer before dispatch, as before.
+        rates cover the extra collections. A supplier&apos;s own flatbed or crane-truck charge for steel, bricks, roofing or building supplies is set
+        in Delivery rates; until it is, it&apos;s confirmed with the customer before dispatch.
       </p>
     </div>
   );

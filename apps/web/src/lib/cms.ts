@@ -1,7 +1,7 @@
 import "server-only";
 import { draftMode } from "next/headers";
 import { cache } from "react";
-import { PRODUCTS, type Product } from "@/data/catalogue";
+import { PRODUCTS, type DeliveryRules, type Product } from "@/data/catalogue";
 import { DEFAULT_SLIDES, MEDIA_BY_ID } from "@/data/media";
 import { PACKAGED_PRODUCTS, type PackagedProduct } from "@/data/packaged";
 import { MASONRY_PRODUCTS, type MasonryProduct } from "@/data/masonry";
@@ -11,6 +11,7 @@ import type { Quotable } from "@/data/quotable";
 import { STEEL_PRODUCTS, type SteelProduct } from "@/data/steel";
 import { READY_MIX_PRODUCTS, type ReadyMixProduct } from "@/data/ready-mix";
 import { addedProducts, type AddedProductSource } from "./added-products";
+import { deliveryRulesFrom, type StaffDeliveryRates } from "./delivery-rates";
 import { api, apiCached } from "./api";
 import { applyLivePrices, livePriceMap, type LivePrice } from "./live-prices";
 import type { LeadTime } from "./phase4";
@@ -240,6 +241,12 @@ export const getRoofingCatalogue = cache(async (): Promise<MerchandisedRoofingPr
  * the catalogue files. Only active ones are returned. Cached for a minute.
  */
 export const getAddedProducts = cache(async (): Promise<RoofingProduct[]> => addedProducts(await apiCached<AddedProductSource[]>("/catalogue-import/products", 60, ["catalogue"])));
+
+/** The delivery rates staff set in Admin → Delivery rates (docs/delivery-rates.md): tipper rules and flatbed fees. */
+export const getDeliveryRates = cache(async (): Promise<{ rules: DeliveryRules; flatbed: StaffDeliveryRates["flatbed"] }> => {
+  const rates = await apiCached<StaffDeliveryRates>("/pricing/delivery-rates", 60, ["delivery-rates"]);
+  return { rules: deliveryRulesFrom(rates), flatbed: rates?.flatbed ?? {} };
+});
 
 /** The products staff added, as the cart and quote form look them up (findQuotable), with live supplier prices. */
 export const getAddedQuotable = cache(async (): Promise<Quotable[]> => {

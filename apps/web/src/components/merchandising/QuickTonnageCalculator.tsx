@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { PRODUCTS, type Unit } from "@/data/catalogue";
+import { PRODUCTS, type DeliveryRules, type Unit } from "@/data/catalogue";
 import { CORE_CATEGORIES } from "@/data/categories";
 import { estimateDelivery, estimateLine, formatZAR, UNIT_LABELS } from "@/lib/pricing";
 import { NumberInput } from "@/components/ui/NumberInput";
@@ -12,7 +12,7 @@ import { NumberInput } from "@/components/ui/NumberInput";
  * and delivery distance to a retail estimate in one row, handing off to the
  * product page's full calculator.
  */
-export function QuickTonnageCalculator({ hiddenSkus = [] }: { hiddenSkus?: string[] }) {
+export function QuickTonnageCalculator({ hiddenSkus = [], rules }: { hiddenSkus?: string[]; rules?: DeliveryRules }) {
   const available = PRODUCTS.filter((p) => !hiddenSkus.includes(p.sku));
   const [sku, setSku] = useState(available.find((p) => p.slug === "river-sand-washed")?.sku ?? available[0].sku);
   const product = available.find((p) => p.sku === sku) ?? available[0];
@@ -31,7 +31,7 @@ export function QuickTonnageCalculator({ hiddenSkus = [] }: { hiddenSkus?: strin
       bulkTons: activeUnit === "bag" ? 0 : line.tons,
       baggedKg: line.baggedKg,
       totalM3: line.m3,
-    });
+    }, rules);
     return { line, delivery };
   }, [product, quantity, activeUnit, distanceKm]);
 

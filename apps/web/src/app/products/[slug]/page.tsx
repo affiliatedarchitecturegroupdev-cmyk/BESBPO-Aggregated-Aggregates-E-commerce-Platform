@@ -26,7 +26,7 @@ import { RoofingProductPage } from "@/components/product/RoofingProductPage";
 import { SteelProductPage } from "@/components/product/SteelProductPage";
 import { pricePoints, PRODUCTS } from "@/data/catalogue";
 import { CATEGORIES } from "@/data/categories";
-import { getCatalogue, getPackagedCatalogue, getProduct, getReadyMixCatalogue, getSteelCatalogue, getMasonryCatalogue, getRoofingCatalogue, getSuppliesCatalogue } from "@/lib/cms";
+import { getCatalogue, getDeliveryRates, getPackagedCatalogue, getProduct, getReadyMixCatalogue, getSteelCatalogue, getMasonryCatalogue, getRoofingCatalogue, getSuppliesCatalogue } from "@/lib/cms";
 import { formatZAR } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/site";
 
@@ -132,6 +132,7 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
   }
 
   const category = CATEGORIES.find((c) => c.slug === product.categorySlug)!;
+  const { rules } = await getDeliveryRates();
   const [headline, ...others] = pricePoints(product);
   const related = (await getCatalogue()).filter((p) => p.categorySlug === product.categorySlug && p.sku !== product.sku).slice(0, 4);
 
@@ -192,7 +193,7 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
           <LeadTimeNote categorySlug={product.categorySlug} />
           <AvailableNearYou sku={product.sku} />
           <div id="calculator" className="mt-6 scroll-mt-24">
-            <BulkBagCalculator product={product} />
+            <BulkBagCalculator product={product} rules={rules} />
           </div>
           <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-basalt/10 pt-5">
             {/* WhatsApp ordering is for bagged, Retail-scale orders; bulk goes through the quote flow. */}
@@ -209,7 +210,7 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
       <FamilySizes sku={product.sku} />
 
       <div className="mt-12">
-        <ProductTabs product={product} categoryName={category.name} />
+        <ProductTabs product={product} categoryName={category.name} rules={rules} />
       </div>
 
       <div className="mt-10">
