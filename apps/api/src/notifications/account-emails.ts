@@ -67,3 +67,22 @@ export function newsletterConfirmationEmail(name: string | null, link: string): 
     link,
   );
 }
+
+/** An invitation to join a company account (docs/company-accounts.md). The link works once, until it expires. */
+export function companyInviteEmail(input: { companyName: string; inviterName: string | null; roleLabel: string; validDays: number }, link: string): SystemEmail {
+  const who = input.inviterName?.trim() || "Your colleague";
+  return withLink(
+    (href) =>
+      email(
+        `Join ${input.companyName} on Aggregated Aggregates`,
+        [
+          { kind: "p", text: "Hi," },
+          { kind: "p", text: `${who} has invited you to ${input.companyName}'s trade account on Aggregated Aggregates, as ${input.roleLabel.toLowerCase()}. You'll order at the company's trade prices and see its orders, quotes and invoices.` },
+          { kind: "cta", label: "Accept the invitation", href },
+          { kind: "p", text: `Sign in, or create your account, with this email address to accept. The link works once, for ${input.validDays} days. If you weren't expecting this, you can ignore it.` },
+        ],
+        "You're receiving this because a company account holder on aaggregates.store invited this email address.",
+      ),
+    link,
+  );
+}

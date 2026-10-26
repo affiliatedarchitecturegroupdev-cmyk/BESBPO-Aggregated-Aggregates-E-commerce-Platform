@@ -12,6 +12,7 @@ import { cart, useCart } from "@/lib/cart";
 import { PROVINCES } from "@/lib/suppliers";
 import { formatZAR } from "@/lib/pricing";
 import type { SavedAddress } from "@/lib/account-types";
+import type { CompanyRole } from "@/lib/company-accounts";
 
 export type { SavedAddress };
 
@@ -27,7 +28,10 @@ function formatAddress(a: SavedAddress) {
  * place the order, then choose how to pay on the order page. The API
  * re-prices everything and refuses anything quote-only.
  */
-export function CheckoutForm({ addresses, email }: { addresses: SavedAddress[]; email: string }) {
+/** The buyer's company account, when they have one (docs/company-accounts.md). */
+export type CheckoutCompany = { name: string; requirePurchaseOrder: boolean; role: CompanyRole; spendLimit: string | null; approvalThreshold: string | null } | null;
+
+export function CheckoutForm({ addresses, email, company = null }: { addresses: SavedAddress[]; email: string; company?: CheckoutCompany }) {
   const router = useRouter();
   const { lines, delivery } = useCart();
   const initial = addresses.find((a) => a.isDefault) ?? addresses[0];
@@ -36,6 +40,7 @@ export function CheckoutForm({ addresses, email }: { addresses: SavedAddress[]; 
   const [province, setProvince] = useState(initial?.province ?? "KwaZulu-Natal");
   const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
+  const [poNumber, setPoNumber] = useState("");
   const [whatsappUpdates, setWhatsappUpdates] = useState(false);
   const [express, setExpress] = useState(false);
   const [pricing, setPricing] = useState<CartPricing | null>(null);
@@ -73,7 +78,7 @@ export function CheckoutForm({ addresses, email }: { addresses: SavedAddress[]; 
     e.preventDefault();
     setError(null);
     startPlacing(async () => {
-      const result = await placeOrder({ lines, delivery: input, deliveryAddress: address, deliveryProvince: province, contactPhone: phone, whatsappUpdates: whatsappUpdates && phone.trim() !== "", notes, express: expressOn });
+      const result = await placeOrder({ lines, delivery: input, deliveryAddress: address, deliveryProvince: province, contactPhone: phone, whatsappUpdates: whatsappUpdates && phone.trim() !== "", notes, express: expressOn, purchaseOrderNumber: poNumber });
       if (!result.ok) {
         setError(result.error);
         return;
@@ -144,6 +149,26 @@ export function CheckoutForm({ addresses, email }: { addresses: SavedAddress[]; 
           <span className={labelClass}>Site access and delivery notes</span>
           <textarea rows={3} maxLength={2000} value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Gate code, tipping spot, access for a 10m³ tipper…" className={inputClass} />
         </label>
+        {company && (
+          <label className="block">
+            <span className={labelClass}>Your purchase-order number{company.requirePurchaseOrder ? "" : " (optional)"}</span>
+            <input value={poNumber} onChange={(e) => setPoNumber(e.target.value)} maxLength={60} required={company.requirePurchaseOrder} placeholder="PO-4471" className={inputClass} />
+            <span className="mt-1 block text-xs text-slate">
+              Shown on the order, the invoice and every document for {company.name}.
+              {company.role === "BUYER" && (company.spendLimit || company.approvalThreshold) && (
+                <>
+                  {" "}
+                  Orders above {formatZAR(Math.min(...[company.spendLimit, company.approvalThreshold].filter((v): v is string => v !== null).map(Number)))} wait for your company&apos;s approver before they can be paid.
+                </>
+              )}
+            </span>
+          </label>
+        )}
+        {company?.role === "ACCOUNTS" && (
+          <p role="alert" className="rounded-sm border border-amber-600/30 bg-amber-50 p-3 font-body text-sm text-basalt">
+            Your role in {company.name}&apos;s account is accounts: you can pay orders but not place them. Ask a buyer or your account admin to order.
+          </p>
+        )}
         <p className="font-body text-xs text-slate">Order confirmations and delivery updates are emailed to {email}.</p>
       </div>
 

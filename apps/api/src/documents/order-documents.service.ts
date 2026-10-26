@@ -73,6 +73,7 @@ export class OrderDocumentsService {
     const order = typeof orderOrId === "string" ? await this.prisma.order.findUnique({ where: { id: orderOrId }, include: ORDER_INCLUDE }) : orderOrId;
     if (!order) throw new NotFoundException("Order not found.");
     if (order.status === "CANCELLED") throw new BadRequestException("This order was cancelled.");
+    if (order.approvalStatus === "AWAITING") throw new BadRequestException("This order is waiting for your company's approval — the proforma is ready once it's approved.");
     const balance = Math.round((Number(order.total) - Number(order.amountPaid)) * 100) / 100;
     if (!due && balance <= 0.01) throw new BadRequestException("This order is paid in full — download the invoice instead.");
     const owed = due ?? { amount: balance, kind: Number(order.amountPaid) > 0 ? "BALANCE" : "FULL" };

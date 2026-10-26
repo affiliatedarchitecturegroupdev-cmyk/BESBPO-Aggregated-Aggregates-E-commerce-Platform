@@ -48,7 +48,7 @@ export class TradeAccountsService {
       });
       // The applicant administers their company; staff keep their staff role.
       const role = user.role === UserRole.CUSTOMER ? UserRole.COMPANY_ADMIN : user.role;
-      await tx.user.update({ where: { id: user.id }, data: { companyId: company.id, role } });
+      await tx.user.update({ where: { id: user.id }, data: { companyId: company.id, role, companyRole: "ADMIN" } });
       return company;
     });
     await this.notifications.company("TRADE_APPLICATION_RECEIVED", company.id);

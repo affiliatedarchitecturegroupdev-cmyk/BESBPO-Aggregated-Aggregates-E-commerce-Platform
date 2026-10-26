@@ -1,5 +1,6 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { Carrier, NotificationEvent, OrderStatus, Prisma } from "@aggregates/database";
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import { Carrier, NotificationEvent, OrderApprovalStatus, OrderStatus, Prisma } from "@aggregates/database";
+import { approvalReason, canOrder, companyRoleOf, purchaseOrderNumber } from "../company-accounts/company-accounts";
 import { STAFF_ROLES, type AuthUser } from "../common/auth/auth-user";
 import { ComplianceDocumentsService } from "../compliance-documents/compliance-documents.service";
 import { NotificationsService } from "../notifications/notifications.service";
@@ -112,6 +113,14 @@ export class OrdersService {
   }
 
   async createOrder(dto: CreateOrderDto, user: AuthUser) {
+    // Company accounts (docs/company-accounts.md): who may order, the PO number, and whether it waits for approval.
+    const member = user.companyId
+      ? await this.prisma.user.findUniqueOrThrow({ where: { id: user.id }, select: { name: true, role: true, companyId: true, companyRole: true, spendLimit: true, company: { select: { approvalThreshold: true, requirePurchaseOrder: true } } } })
+      : null;
+    const companyRole = member ? companyRoleOf(member) : null;
+    if (!canOrder(companyRole)) throw new ForbiddenException("Your role in your company's account is accounts — ask a buyer or your account admin to place the order.");
+    const poNumber = purchaseOrderNumber(dto.purchaseOrderNumber);
+    if (member?.company?.requirePurchaseOrder && !poNumber) throw new BadRequestException("Your company needs a purchase-order number on every order — enter your PO number.");
     const lines = await this.resolveLines(dto);
     const delivery = await this.deliveryDistance(dto, lines);
     // One call prices every line and the delivery for the combined load, so
@@ -134,6 +143,9 @@ export class OrdersService {
     }
     const expressFee = dto.express ? EXPRESS.feeRand : null;
     const ddp = await this.assessDdp(lines, priced, dto, dto.deliveryProvince);
+    const total = Math.round((priced.total + (expressFee ?? 0) + ddp.fee) * 100) / 100;
+    const needsApproval = member ? approvalReason({ name: member.name, companyRole, spendLimit: member.spendLimit }, { approvalThreshold: member.company?.approvalThreshold ?? null }, total) : null;
+    if (needsApproval && dto.express) throw new BadRequestException(`AA 60/120 orders are paid there and then, and this one needs your company's approval first (${needsApproval}) — choose standard delivery.`);
 
     const order = await this.prisma.order.create({
       data: {
@@ -143,8 +155,10 @@ export class OrdersService {
         status: OrderStatus.PENDING,
         subtotal: priced.subtotal,
         deliveryFee: priced.delivery.fee,
-        total: Math.round((priced.total + (expressFee ?? 0) + ddp.fee) * 100) / 100,
+        total,
         expressFee,
+        purchaseOrderNumber: poNumber,
+        ...(needsApproval ? { approvalStatus: OrderApprovalStatus.AWAITING, approvalReason: needsApproval } : {}),
         ddpFee: ddp.applies ? ddp.fee : null,
         ddpDetail: ddp as unknown as Prisma.InputJsonValue,
         deliveryAddress: dto.deliveryAddress?.trim() || null,
@@ -181,6 +195,7 @@ export class OrdersService {
       include: { lineItems: { include: { product: true } } },
     });
     await this.notifications.order("ORDER_PLACED", order.id);
+    if (needsApproval) await this.notifications.order("ORDER_APPROVAL_REQUESTED", order.id);
     return withExpress(order, this.clock());
   }
 

@@ -590,7 +590,7 @@ Deploy the Listmonk service already defined in `render.yaml` (`docs/listmonk`) a
 
 | # | Item | Notes |
 |---|---|---|
-| 6.1 | **Company accounts with several users** | Roles (buyer, approver, accounts); spending limits with approval above a set amount; purchase-order numbers on every order. |
+| 6.1 | **Company accounts with several users: built 26 Oct 2026** (`docs/company-accounts.md`) | Roles (buyer, approver, accounts); spending limits with approval above a set amount; purchase-order numbers on every order. |
 | 6.2 | **Monthly statements** | Per company, emailed, with ageing. Ties to trade credit. |
 | 6.3 | **Contract pricing** | Agreed price lists per account or project, on top of tier discounts, with validity dates. |
 | 6.4 | **Project / site accounts** | Orders grouped by site, a site address book, spend per project, and documents per site (POD, compliance, invoices). |

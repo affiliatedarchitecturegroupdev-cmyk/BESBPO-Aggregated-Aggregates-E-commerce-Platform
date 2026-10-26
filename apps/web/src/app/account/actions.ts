@@ -583,7 +583,7 @@ export async function priceCart(input: CartInput & { deliveryProvince?: string }
 
 /** Places the order; the API re-prices everything and refuses quote-only carts. */
 export async function placeOrder(
-  input: CartInput & { deliveryAddress: string; deliveryProvince: string; contactPhone?: string; whatsappUpdates?: boolean; notes?: string; express?: boolean },
+  input: CartInput & { deliveryAddress: string; deliveryProvince: string; contactPhone?: string; whatsappUpdates?: boolean; notes?: string; express?: boolean; purchaseOrderNumber?: string },
 ): Promise<{ ok: true; orderId: string } | { ok: false; error: string }> {
   const result = await api<{ id: string }>("/orders", {
     method: "POST",
@@ -597,6 +597,7 @@ export async function placeOrder(
       whatsappUpdates: input.whatsappUpdates || undefined,
       notes: input.notes || undefined,
       express: input.express || undefined,
+      purchaseOrderNumber: input.purchaseOrderNumber?.trim() || undefined,
     },
   });
   if (!result.ok) return { ok: false, error: result.status === 401 ? "Please sign in again to place your order." : result.message };

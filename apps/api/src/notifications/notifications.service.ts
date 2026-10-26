@@ -129,6 +129,7 @@ export class NotificationsService implements OnModuleDestroy {
           company: { select: { name: true, paymentTermsDays: true } },
           drops: { where: { status: { not: "CANCELLED" } }, orderBy: { sequence: "asc" }, select: { id: true, sequence: true, scheduledFor: true, carrier: true, trackingRef: true, lines: true } },
           fulfilledBySupplier: { select: { id: true, name: true, users: { select: { email: true } } } },
+          approvedBy: { select: { name: true } },
         },
       });
       if (!order) return;
@@ -166,6 +167,8 @@ export class NotificationsService implements OnModuleDestroy {
         account: order.paymentPlan === "ACCOUNT" && order.accountDueAt ? { dueAt: order.accountDueAt, termsDays: order.company?.paymentTermsDays ?? null } : null,
         drop: await this.dropData(order, extra.dropId),
         proof: extra.proofId ? await this.prisma.proofOfDelivery.findUnique({ where: { id: extra.proofId }, select: { receivedBy: true, capturedAt: true, exceptions: true, dropId: true } }) : null,
+        purchaseOrderNumber: order.purchaseOrderNumber,
+        approval: order.approvalStatus ? { status: order.approvalStatus, reason: order.approvalReason, decidedBy: order.approvedBy?.name ?? null, note: order.approvalNote } : null,
         express:
           order.expressFee !== null
             ? { fee: order.expressFee, acceptedAt: order.expressAcceptedAt, dueAt: order.expressDueAt, declinedAt: order.expressDeclinedAt, note: order.expressNote }
@@ -173,8 +176,17 @@ export class NotificationsService implements OnModuleDestroy {
       };
       const setting = await this.setting(event);
       const out: Outgoing[] = [];
-      const customerEmail = setting.customerEmail && recipientEmail ? customerOrderEmail(event, data) : null;
-      if (customerEmail) out.push({ audience: "CUSTOMER", channel: "EMAIL", recipient: recipientEmail!, email: customerEmail });
+      if (event === "ORDER_APPROVAL_REQUESTED") {
+        // To the company's approvers and account admins — never the buyer who placed it (docs/company-accounts.md).
+        const approvers = order.companyId
+          ? await this.prisma.user.findMany({ where: { companyId: order.companyId, id: { not: order.userId ?? "" }, OR: [{ role: "COMPANY_ADMIN" }, { companyRole: "APPROVER" }] }, select: { email: true } })
+          : [];
+        const message = setting.customerEmail ? customerOrderEmail(event, data) : null;
+        if (message) out.push(...approvers.map((a) => ({ audience: "CUSTOMER" as const, channel: "EMAIL" as const, recipient: a.email, email: message })));
+      } else {
+        const customerEmail = setting.customerEmail && recipientEmail ? customerOrderEmail(event, data) : null;
+        if (customerEmail) out.push({ audience: "CUSTOMER", channel: "EMAIL", recipient: recipientEmail!, email: customerEmail });
+      }
       const phone = order.whatsappUpdates ? whatsappNumber(order.contactPhone) : null;
       const message = setting.customerWhatsApp && phone ? customerOrderWhatsApp(event, data) : null;
       if (message) out.push({ audience: "CUSTOMER", channel: "WHATSAPP", recipient: phone!, whatsapp: message });

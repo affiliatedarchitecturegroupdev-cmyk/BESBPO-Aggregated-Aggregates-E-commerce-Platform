@@ -23,6 +23,11 @@ POPIA.
 - **Trade account information**: company name, registration number, VAT
   number, and standing delivery addresses, where you register a Contractor/
   Trade or Volume/Civil Bulk tier account.
+- **Company account users**: where a trade account's admin invites
+  colleagues — the email address invited, the role and any limit per order
+  they set, who invited them and when, and, for orders that need the
+  company's approval, who approved or declined them and any note they left.
+  The invitation link is emailed once and never stored.
 - **Order and delivery information**: products ordered, delivery address,
   delivery distance, and payment confirmation (we do not store full card
   numbers — see Section 6).

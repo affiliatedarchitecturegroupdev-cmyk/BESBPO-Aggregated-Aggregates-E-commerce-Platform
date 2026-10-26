@@ -52,6 +52,18 @@ decline or cancel any order, including where a product is unavailable from
 our partner-supplier network, or where pricing displayed was affected by a
 technical error.
 
+**Company accounts with several users.** A trade account's admin can invite
+colleagues to order on the company's account, as buyers, approvers or
+accounts users, and can set limits per order and an approval threshold.
+Orders placed by the company's users are the company's orders. A buyer's
+order above their limit or the threshold is only accepted once one of the
+company's approvers or admins approves it; until then it can't be paid, and
+if it is declined it is cancelled. The company is responsible for who it
+invites, the roles and limits it sets, and for removing people who should no
+longer order on its behalf. Purchase-order numbers the company gives are
+shown on the order and its documents for its own records; they don't change
+these terms.
+
 ## 4. Payment
 
 - The payment methods available for your order are those offered at

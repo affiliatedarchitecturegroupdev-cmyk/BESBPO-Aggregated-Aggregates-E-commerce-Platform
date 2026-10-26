@@ -85,6 +85,8 @@ export class CreateOrderDto extends DeliveryDto {
   @IsOptional() @IsString() @MaxLength(2000) notes?: string;
   /** AA 60/120 express delivery (R1,000 on top of delivery) — the API decides whether the cart qualifies. */
   @IsOptional() @IsBoolean() express?: boolean;
+  /** The buyer's purchase-order number (docs/company-accounts.md); required when their company says so. */
+  @IsOptional() @IsString() @MaxLength(60) purchaseOrderNumber?: string;
 }
 
 /** Staff: AA 60/120 — accept once a supplier confirms it can load, or decline (standard delivery, fee refunded). */

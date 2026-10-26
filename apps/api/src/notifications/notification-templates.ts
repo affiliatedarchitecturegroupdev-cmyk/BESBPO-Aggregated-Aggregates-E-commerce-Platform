@@ -55,6 +55,10 @@ export type OrderData = {
   proof?: { receivedBy: string; capturedAt: Date; exceptions: string | null; dropId: string | null } | null;
   /** AA 60/120: the fee (0 once declined before payment), when sales accepted it and when it's due. */
   express?: { fee: Money; acceptedAt: Date | null; dueAt: Date | null; declinedAt: Date | null; note: string | null } | null;
+  /** Company accounts (docs/company-accounts.md): the buyer's purchase-order number. */
+  purchaseOrderNumber?: string | null;
+  /** A buyer's order above their limit: waiting for, or decided by, the company's approver. */
+  approval?: { status: "AWAITING" | "APPROVED" | "DECLINED"; reason: string | null; decidedBy: string | null; note: string | null } | null;
 };
 
 export type QuoteData = {
@@ -262,6 +266,7 @@ function orderSummary(o: OrderData): Block[] {
     ...(o.ddpFee != null && Number(o.ddpFee.toString()) > 0 ? ([["Distributed delivery premium", formatZAR(o.ddpFee)]] as [string, string][]) : []),
     ...(o.express && Number(o.express.fee.toString()) > 0 ? ([["AA 60/120 express", formatZAR(o.express.fee)]] as [string, string][]) : []),
     ["Total", formatZAR(o.total)],
+    ...(o.purchaseOrderNumber ? ([["Your PO number", o.purchaseOrderNumber]] as [string, string][]) : []),
   ];
   const where = o.deliveryAddress ? [{ kind: "p" as const, text: `Delivering to ${o.deliveryAddress}${o.deliveryProvince ? `, ${o.deliveryProvince}` : ""}.` }] : [];
   return [{ kind: "list", items: o.lines.map(lineText) }, { kind: "rows", rows }, ...where];
@@ -290,6 +295,14 @@ export function customerOrderEmail(event: NotificationEvent, o: OrderData): Emai
   const hi = { kind: "p" as const, text: greeting(o.customerName) };
   switch (event) {
     case "ORDER_PLACED":
+      if (o.approval?.status === "AWAITING") {
+        return email(`Order ${o.orderNumber} received — waiting for your company's approval`, [
+          hi,
+          { kind: "p", text: `Thanks for your order. ${o.approval.reason ?? "It needs approval."} We've asked ${o.companyName ?? "your company"}'s approvers to approve it; once they do, we'll email you and it can be paid and confirmed with our partner supplier.` },
+          ...orderSummary(o),
+          track,
+        ]);
+      }
       return email(`Order ${o.orderNumber} received — choose how to pay`, [
         hi,
         {
@@ -301,6 +314,26 @@ export function customerOrderEmail(event: NotificationEvent, o: OrderData): Emai
         ...orderSummary(o),
         { kind: "cta", label: "Pay for your order", href: `${site}/orders/${o.id}/confirmation` },
       ]);
+    case "ORDER_APPROVAL_REQUESTED":
+      return email(`Approve order ${o.orderNumber} — ${formatZAR(o.total)}`, [
+        { kind: "p", text: "Hi," },
+        { kind: "p", text: `${o.customerName ?? "A buyer"} placed order ${o.orderNumber} on ${o.companyName ?? "your company"}'s trade account. ${o.approval?.reason ?? "It needs approval."} It can't be paid or confirmed until it's approved.` },
+        ...orderSummary(o),
+        { kind: "cta", label: "Approve or decline", href: `${site}/account/team#approvals` },
+      ]);
+    case "ORDER_APPROVAL_DECIDED":
+      return o.approval?.status === "APPROVED"
+        ? email(`Order ${o.orderNumber} approved — choose how to pay`, [
+            hi,
+            { kind: "p", text: `${o.approval.decidedBy ?? "Your company's approver"} approved order ${o.orderNumber}.${o.approval.note ? ` Their note: "${o.approval.note}"` : ""} It's confirmed with our partner supplier once payment is received, or charged to your company's trade account.` },
+            ...orderSummary(o),
+            { kind: "cta", label: "Pay for your order", href: `${site}/orders/${o.id}/confirmation` },
+          ])
+        : email(`Order ${o.orderNumber} wasn't approved`, [
+            hi,
+            { kind: "p", text: `${o.approval?.decidedBy ?? "Your company's approver"} declined order ${o.orderNumber}, so it has been cancelled.${o.approval?.note ? ` Their note: "${o.approval.note}"` : ""} Nothing has been charged.` },
+            ...orderSummary(o),
+          ]);
     case "ORDER_CONFIRMED": {
       if (o.account) {
         // On account: nothing paid yet — a confirmation with the due date, not a receipt.
@@ -1050,6 +1083,9 @@ export const EVENT_CHANNELS: Record<NotificationEvent, { customerEmail: boolean;
   SUPPLIER_ORDER: { customerEmail: false, customerWhatsApp: false, staffEmail: true }, // the supplier's email is always sent; staff hear its answer
   SERVICE_DOWN: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
   PRICE_LIST_UPLOADED: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
+  COMPANY_INVITE: { customerEmail: false, customerWhatsApp: false, staffEmail: false },
+  ORDER_APPROVAL_REQUESTED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
+  ORDER_APPROVAL_DECIDED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
 };
 
 /** Events that also email the partner (always on — offers can't wait for a setting). */
@@ -1100,6 +1136,9 @@ export const EVENT_LABEL: Record<NotificationEvent, string> = {
   SUPPLIER_ORDER: "Order sent to a supplier (supplier email); staff hear its answer",
   SERVICE_DOWN: "Site check failing or recovered (uptime monitor)",
   PRICE_LIST_UPLOADED: "A supplier uploaded a price list in the supplier portal",
+  COMPANY_INVITE: "Invitation to join a company account (always sent)",
+  ORDER_APPROVAL_REQUESTED: "A buyer's order needs the company's approval (to its approvers)",
+  ORDER_APPROVAL_DECIDED: "A company approver approved or declined an order (to the buyer)",
 };
 
 /** A South African or international number in the digits-only form WhatsApp expects, or null. */

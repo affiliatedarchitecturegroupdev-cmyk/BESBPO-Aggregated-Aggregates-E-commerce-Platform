@@ -51,6 +51,12 @@ model User {
   role               UserRole          @default(CUSTOMER)
   companyId          String?
   company            Company?          @relation(fields: [companyId], references: [id])
+  /// What this person does in their company's account (docs/company-accounts.md). Company admins are also COMPANY_ADMIN.
+  companyRole        CompanyRole?
+  /// A buyer's limit per order (rands, as priced); orders above it wait for an approver. Null = no limit of their own.
+  spendLimit         Decimal?          @db.Decimal(12, 2)
+  ordersApproved     Order[]           @relation("OrderApprovedBy")
+  companyInvites     CompanyInvite[]   @relation("CompanyInviteBy")
   oauthAccounts      OAuthAccount[]
   quotes             Quote[]
   quotationsCreated  Quote[]           @relation("QuoteCreatedBy")
@@ -151,6 +157,12 @@ model Company {
   reviewNotes          String?
   reviewedAt           DateTime?
   standingAgreementRef String? // e.g. "KZN Civil — active"
+  // Company accounts with several users (ROADMAP 6.1, docs/company-accounts.md).
+  /// Any buyer's order above this waits for an approver. Null = only buyers' own limits apply.
+  approvalThreshold    Decimal?          @db.Decimal(12, 2)
+  /// Every order needs the company's purchase-order number.
+  requirePurchaseOrder Boolean           @default(false)
+  invites              CompanyInvite[]
   // Trade credit (docs/trade-credit.md): buy on account up to a limit, pay within the terms.
   creditStatus         CreditStatus      @default(NONE)
   creditLimit          Decimal?          @db.Decimal(12, 2)
@@ -623,6 +635,39 @@ model QuoteLineItem {
 // Orders, shipment & compliance
 // ---------------------------------------------------------------------------
 
+/// What a person does in a company account (docs/company-accounts.md).
+enum CompanyRole {
+  ADMIN // manages the team and settings; orders; approves
+  BUYER // orders, up to their limit and the company's threshold
+  APPROVER // orders, and approves buyers' orders above their limits
+  ACCOUNTS // sees orders, invoices and statements, and pays — doesn't order
+}
+
+enum OrderApprovalStatus {
+  AWAITING
+  APPROVED
+  DECLINED
+}
+
+/// An invitation to join a company account. The link's token is stored hashed and works once.
+model CompanyInvite {
+  id          String      @id @default(cuid())
+  companyId   String
+  company     Company     @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  email       String
+  role        CompanyRole
+  spendLimit  Decimal?    @db.Decimal(12, 2)
+  tokenHash   String      @unique
+  invitedById String?
+  invitedBy   User?       @relation("CompanyInviteBy", fields: [invitedById], references: [id], onDelete: SetNull)
+  createdAt   DateTime    @default(now())
+  expiresAt   DateTime
+  acceptedAt  DateTime?
+  revokedAt   DateTime?
+
+  @@index([companyId])
+}
+
 enum OrderStatus {
   PENDING
   CONFIRMED
@@ -710,6 +755,14 @@ model Order {
   supplierReadyAt       DateTime?
   supplierDeclinedAt    DateTime?
   supplierNote          String?
+  // Company accounts (docs/company-accounts.md): the buyer's PO number, and approval of orders above a buyer's limit.
+  purchaseOrderNumber   String?
+  approvalStatus        OrderApprovalStatus? // null = no approval needed
+  approvalReason        String? // why it needed approval, e.g. "Above Thandi's R20,000.00 limit"
+  approvedById          String?
+  approvedBy            User?                 @relation("OrderApprovedBy", fields: [approvedById], references: [id], onDelete: SetNull)
+  approvalDecidedAt     DateTime?
+  approvalNote          String?
   // AA 60/120 express delivery (docs/express-delivery.md). Null fee = standard delivery.
   expressFee            Decimal?              @db.Decimal(10, 2) // VAT-inclusive, on top of the delivery fee
   expressAcceptedAt     DateTime? // sales confirmed a supplier can load it; prep starts
@@ -1226,6 +1279,9 @@ enum NotificationEvent {
   SUPPLIER_ORDER // the supplier: an order to load (supplier portal)
   SERVICE_DOWN // staff: a dependency (database, pricing service) is failing — uptime monitor
   PRICE_LIST_UPLOADED // staff: a supplier uploaded a price list in the supplier portal
+  COMPANY_INVITE // system email: someone was invited to a company account; the link is never stored
+  ORDER_APPROVAL_REQUESTED // the company's approvers: a buyer's order is above their limit
+  ORDER_APPROVAL_DECIDED // the buyer: their order was approved or declined
 }
 
 enum NotificationChannel {
