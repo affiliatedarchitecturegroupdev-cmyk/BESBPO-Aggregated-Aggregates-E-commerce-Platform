@@ -32,7 +32,11 @@ import {
   type QuoteData,
   type ScheduleData,
   type WhatsAppMessage,
+  customerProjectEmail,
+  staffProjectEmail,
+  type ProjectData,
 } from "./notification-templates";
+import { PACKAGE_LABEL, projectSummary } from "../projects/packages";
 import type { SystemEmail } from "./account-emails";
 import { EmailSender, WhatsAppTemplateSender, type EmailAttachment, type SendResult } from "./providers";
 import { orderConfirmationPdf, ORDER_INCLUDE, taxInvoicePdf, type OrderPdf } from "../documents/order-doc-data";
@@ -129,6 +133,7 @@ export class NotificationsService implements OnModuleDestroy {
           company: { select: { name: true, paymentTermsDays: true } },
           drops: { where: { status: { not: "CANCELLED" } }, orderBy: { sequence: "asc" }, select: { id: true, sequence: true, scheduledFor: true, carrier: true, trackingRef: true, lines: true } },
           fulfilledBySupplier: { select: { id: true, name: true, users: { select: { email: true } } } },
+          approvedBy: { select: { name: true } },
         },
       });
       if (!order) return;
@@ -166,6 +171,8 @@ export class NotificationsService implements OnModuleDestroy {
         account: order.paymentPlan === "ACCOUNT" && order.accountDueAt ? { dueAt: order.accountDueAt, termsDays: order.company?.paymentTermsDays ?? null } : null,
         drop: await this.dropData(order, extra.dropId),
         proof: extra.proofId ? await this.prisma.proofOfDelivery.findUnique({ where: { id: extra.proofId }, select: { receivedBy: true, capturedAt: true, exceptions: true, dropId: true } }) : null,
+        purchaseOrderNumber: order.purchaseOrderNumber,
+        approval: order.approvalStatus ? { status: order.approvalStatus, reason: order.approvalReason, decidedBy: order.approvedBy?.name ?? null, note: order.approvalNote } : null,
         express:
           order.expressFee !== null
             ? { fee: order.expressFee, acceptedAt: order.expressAcceptedAt, dueAt: order.expressDueAt, declinedAt: order.expressDeclinedAt, note: order.expressNote }
@@ -173,8 +180,17 @@ export class NotificationsService implements OnModuleDestroy {
       };
       const setting = await this.setting(event);
       const out: Outgoing[] = [];
-      const customerEmail = setting.customerEmail && recipientEmail ? customerOrderEmail(event, data) : null;
-      if (customerEmail) out.push({ audience: "CUSTOMER", channel: "EMAIL", recipient: recipientEmail!, email: customerEmail });
+      if (event === "ORDER_APPROVAL_REQUESTED") {
+        // To the company's approvers and account admins — never the buyer who placed it (docs/company-accounts.md).
+        const approvers = order.companyId
+          ? await this.prisma.user.findMany({ where: { companyId: order.companyId, id: { not: order.userId ?? "" }, OR: [{ role: "COMPANY_ADMIN" }, { companyRole: "APPROVER" }] }, select: { email: true } })
+          : [];
+        const message = setting.customerEmail ? customerOrderEmail(event, data) : null;
+        if (message) out.push(...approvers.map((a) => ({ audience: "CUSTOMER" as const, channel: "EMAIL" as const, recipient: a.email, email: message })));
+      } else {
+        const customerEmail = setting.customerEmail && recipientEmail ? customerOrderEmail(event, data) : null;
+        if (customerEmail) out.push({ audience: "CUSTOMER", channel: "EMAIL", recipient: recipientEmail!, email: customerEmail });
+      }
       const phone = order.whatsappUpdates ? whatsappNumber(order.contactPhone) : null;
       const message = setting.customerWhatsApp && phone ? customerOrderWhatsApp(event, data) : null;
       if (message) out.push({ audience: "CUSTOMER", channel: "WHATSAPP", recipient: phone!, whatsapp: message });
@@ -290,6 +306,37 @@ export class NotificationsService implements OnModuleDestroy {
       const staff = setting.staffEmail ? staffCompanyEmail(event, data) : null;
       if (staff) out.push(...(await this.staffRecipients()).map((recipient) => ({ audience: "STAFF" as const, channel: "EMAIL" as const, recipient, email: staff })));
       await this.enqueue(event, out, { companyId: company.id });
+    });
+  }
+
+  /** Design-and-build projects (docs/projects.md). The proposal link is passed in, never stored. */
+  async project(event: NotificationEvent, projectId: string, extra: { proposalUrl?: string; milestoneId?: string } = {}) {
+    await this.safely(event, async () => {
+      const p = await this.prisma.project.findUnique({ where: { id: projectId }, include: { milestones: { orderBy: { sequence: "asc" } } } });
+      if (!p) return;
+      const paid = extra.milestoneId ? p.milestones.find((m) => m.id === extra.milestoneId) : undefined;
+      const data: ProjectData = {
+        id: p.id,
+        reference: p.reference,
+        packageLabel: PACKAGE_LABEL[p.package],
+        contactName: p.contactName,
+        contactEmail: p.contactEmail,
+        province: p.province,
+        siteAddress: p.siteAddress,
+        summary: projectSummary(p.package, p.brief),
+        total: p.total,
+        proposalUrl: extra.proposalUrl ?? null,
+        validUntil: p.proposalValidUntil,
+        milestones: p.milestones.map((m) => ({ label: m.label, amount: m.amount, status: m.status })),
+        paid: paid ? { label: paid.label, amount: paid.amount, reference: paid.paymentReference } : null,
+      };
+      const setting = await this.setting(event);
+      const out: Outgoing[] = [];
+      const customer = setting.customerEmail ? customerProjectEmail(event, data) : null;
+      if (customer) out.push({ audience: "CUSTOMER", channel: "EMAIL", recipient: p.contactEmail, email: customer });
+      const staff = setting.staffEmail ? staffProjectEmail(event, data) : null;
+      if (staff) out.push(...(await this.staffRecipients()).map((recipient) => ({ audience: "STAFF" as const, channel: "EMAIL" as const, recipient, email: staff })));
+      await this.enqueue(event, out, { companyId: p.companyId ?? undefined });
     });
   }
 

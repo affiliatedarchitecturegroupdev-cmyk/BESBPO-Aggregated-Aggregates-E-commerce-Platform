@@ -15,6 +15,7 @@ const NAV = [
   { href: "/admin/delivery-premium", label: "Delivery premium" },
   { href: "/admin/credit", label: "Trade credit" },
   { href: "/admin/quotations", label: "Quotations" },
+  { href: "/admin/projects", label: "Projects" },
   { href: "/admin/quotes", label: "Quote requests" },
   { href: "/admin/enquiries", label: "Enquiries" },
   { href: "/admin/cut-and-bend", label: "Cut & bend" },

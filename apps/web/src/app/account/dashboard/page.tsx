@@ -55,6 +55,14 @@ export default async function DashboardPage({ searchParams }: { searchParams: { 
               Supplier portal
             </Link>
           )}
+          <Link href="/account/projects" className="rounded-sm border border-basalt/20 bg-white px-4 py-2 font-body text-sm text-basalt hover:border-seam-blue">
+            Projects
+          </Link>
+          {user.company && (
+            <Link href="/account/team" className="rounded-sm border border-basalt/20 bg-white px-4 py-2 font-body text-sm text-basalt hover:border-seam-blue">
+              Team
+            </Link>
+          )}
           {user.company?.status === "APPROVED" && (
             <Link href="/account/credit" className="rounded-sm border border-basalt/20 bg-white px-4 py-2 font-body text-sm text-basalt hover:border-seam-blue">
               Trade credit

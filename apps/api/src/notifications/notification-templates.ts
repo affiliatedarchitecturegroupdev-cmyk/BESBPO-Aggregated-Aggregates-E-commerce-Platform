@@ -55,6 +55,10 @@ export type OrderData = {
   proof?: { receivedBy: string; capturedAt: Date; exceptions: string | null; dropId: string | null } | null;
   /** AA 60/120: the fee (0 once declined before payment), when sales accepted it and when it's due. */
   express?: { fee: Money; acceptedAt: Date | null; dueAt: Date | null; declinedAt: Date | null; note: string | null } | null;
+  /** Company accounts (docs/company-accounts.md): the buyer's purchase-order number. */
+  purchaseOrderNumber?: string | null;
+  /** A buyer's order above their limit: waiting for, or decided by, the company's approver. */
+  approval?: { status: "AWAITING" | "APPROVED" | "DECLINED"; reason: string | null; decidedBy: string | null; note: string | null } | null;
 };
 
 export type QuoteData = {
@@ -262,6 +266,7 @@ function orderSummary(o: OrderData): Block[] {
     ...(o.ddpFee != null && Number(o.ddpFee.toString()) > 0 ? ([["Distributed delivery premium", formatZAR(o.ddpFee)]] as [string, string][]) : []),
     ...(o.express && Number(o.express.fee.toString()) > 0 ? ([["AA 60/120 express", formatZAR(o.express.fee)]] as [string, string][]) : []),
     ["Total", formatZAR(o.total)],
+    ...(o.purchaseOrderNumber ? ([["Your PO number", o.purchaseOrderNumber]] as [string, string][]) : []),
   ];
   const where = o.deliveryAddress ? [{ kind: "p" as const, text: `Delivering to ${o.deliveryAddress}${o.deliveryProvince ? `, ${o.deliveryProvince}` : ""}.` }] : [];
   return [{ kind: "list", items: o.lines.map(lineText) }, { kind: "rows", rows }, ...where];
@@ -290,6 +295,14 @@ export function customerOrderEmail(event: NotificationEvent, o: OrderData): Emai
   const hi = { kind: "p" as const, text: greeting(o.customerName) };
   switch (event) {
     case "ORDER_PLACED":
+      if (o.approval?.status === "AWAITING") {
+        return email(`Order ${o.orderNumber} received — waiting for your company's approval`, [
+          hi,
+          { kind: "p", text: `Thanks for your order. ${o.approval.reason ?? "It needs approval."} We've asked ${o.companyName ?? "your company"}'s approvers to approve it; once they do, we'll email you and it can be paid and confirmed with our partner supplier.` },
+          ...orderSummary(o),
+          track,
+        ]);
+      }
       return email(`Order ${o.orderNumber} received — choose how to pay`, [
         hi,
         {
@@ -301,6 +314,26 @@ export function customerOrderEmail(event: NotificationEvent, o: OrderData): Emai
         ...orderSummary(o),
         { kind: "cta", label: "Pay for your order", href: `${site}/orders/${o.id}/confirmation` },
       ]);
+    case "ORDER_APPROVAL_REQUESTED":
+      return email(`Approve order ${o.orderNumber} — ${formatZAR(o.total)}`, [
+        { kind: "p", text: "Hi," },
+        { kind: "p", text: `${o.customerName ?? "A buyer"} placed order ${o.orderNumber} on ${o.companyName ?? "your company"}'s trade account. ${o.approval?.reason ?? "It needs approval."} It can't be paid or confirmed until it's approved.` },
+        ...orderSummary(o),
+        { kind: "cta", label: "Approve or decline", href: `${site}/account/team#approvals` },
+      ]);
+    case "ORDER_APPROVAL_DECIDED":
+      return o.approval?.status === "APPROVED"
+        ? email(`Order ${o.orderNumber} approved — choose how to pay`, [
+            hi,
+            { kind: "p", text: `${o.approval.decidedBy ?? "Your company's approver"} approved order ${o.orderNumber}.${o.approval.note ? ` Their note: "${o.approval.note}"` : ""} It's confirmed with our partner supplier once payment is received, or charged to your company's trade account.` },
+            ...orderSummary(o),
+            { kind: "cta", label: "Pay for your order", href: `${site}/orders/${o.id}/confirmation` },
+          ])
+        : email(`Order ${o.orderNumber} wasn't approved`, [
+            hi,
+            { kind: "p", text: `${o.approval?.decidedBy ?? "Your company's approver"} declined order ${o.orderNumber}, so it has been cancelled.${o.approval?.note ? ` Their note: "${o.approval.note}"` : ""} Nothing has been charged.` },
+            ...orderSummary(o),
+          ]);
     case "ORDER_CONFIRMED": {
       if (o.account) {
         // On account: nothing paid yet — a confirmation with the due date, not a receipt.
@@ -1050,6 +1083,13 @@ export const EVENT_CHANNELS: Record<NotificationEvent, { customerEmail: boolean;
   SUPPLIER_ORDER: { customerEmail: false, customerWhatsApp: false, staffEmail: true }, // the supplier's email is always sent; staff hear its answer
   SERVICE_DOWN: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
   PRICE_LIST_UPLOADED: { customerEmail: false, customerWhatsApp: false, staffEmail: true },
+  COMPANY_INVITE: { customerEmail: false, customerWhatsApp: false, staffEmail: false },
+  ORDER_APPROVAL_REQUESTED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
+  ORDER_APPROVAL_DECIDED: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
+  PROJECT_RECEIVED: { customerEmail: true, customerWhatsApp: false, staffEmail: true },
+  PROJECT_PROPOSAL_SENT: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
+  PROJECT_ACCEPTED: { customerEmail: true, customerWhatsApp: false, staffEmail: true },
+  PROJECT_MILESTONE_PAID: { customerEmail: true, customerWhatsApp: false, staffEmail: false },
 };
 
 /** Events that also email the partner (always on — offers can't wait for a setting). */
@@ -1100,6 +1140,13 @@ export const EVENT_LABEL: Record<NotificationEvent, string> = {
   SUPPLIER_ORDER: "Order sent to a supplier (supplier email); staff hear its answer",
   SERVICE_DOWN: "Site check failing or recovered (uptime monitor)",
   PRICE_LIST_UPLOADED: "A supplier uploaded a price list in the supplier portal",
+  COMPANY_INVITE: "Invitation to join a company account (always sent)",
+  ORDER_APPROVAL_REQUESTED: "A buyer's order needs the company's approval (to its approvers)",
+  ORDER_APPROVAL_DECIDED: "A company approver approved or declined an order (to the buyer)",
+  PROJECT_RECEIVED: "A design-and-build brief was received (complete roofs)",
+  PROJECT_PROPOSAL_SENT: "A design-and-build proposal was sent to the client",
+  PROJECT_ACCEPTED: "The client accepted a design-and-build proposal",
+  PROJECT_MILESTONE_PAID: "A project stage payment was recorded (receipt to the client)",
 };
 
 /** A South African or international number in the digits-only form WhatsApp expects, or null. */
@@ -1109,4 +1156,86 @@ export function whatsappNumber(phone: string | null | undefined): string | null 
   let n = digits.startsWith("+") ? digits.slice(1) : digits.startsWith("00") ? digits.slice(2) : digits;
   if (/^0\d{9}$/.test(n)) n = `27${n.slice(1)}`; // 082 123 4567 -> 27821234567
   return /^[1-9]\d{9,14}$/.test(n) ? n : null;
+}
+
+// ---------------------------------------------------------------------------
+// Design-and-build projects (docs/projects.md)
+// ---------------------------------------------------------------------------
+
+export type ProjectData = {
+  id: string;
+  reference: string;
+  packageLabel: string;
+  contactName: string | null;
+  contactEmail: string;
+  province: string;
+  siteAddress: string | null;
+  /** One line about the brief, e.g. "Gable roof, 12 × 8 m, concrete tiles". */
+  summary: string;
+  total: Money | null;
+  /** PROJECT_PROPOSAL_SENT: the client's link (never stored). */
+  proposalUrl?: string | null;
+  validUntil?: Date | null;
+  milestones?: { label: string; amount: Money; status: string }[];
+  /** PROJECT_MILESTONE_PAID: the payment just recorded. */
+  paid?: { label: string; amount: Money; reference: string | null } | null;
+};
+
+export function customerProjectEmail(event: NotificationEvent, p: ProjectData): EmailMessage | null {
+  const site = siteUrl();
+  const hi = { kind: "p" as const, text: greeting(p.contactName) };
+  const schedule = (p.milestones ?? []).map((m) => `${m.label}: ${formatZAR(m.amount)}${m.status === "PAID" ? " (paid)" : ""}`);
+  switch (event) {
+    case "PROJECT_RECEIVED":
+      return email(`${p.packageLabel} ${p.reference} — we've received your brief`, [
+        hi,
+        { kind: "p", text: `Thanks — we've received your brief for ${p.summary.charAt(0).toLowerCase()}${p.summary.slice(1)} in ${p.province}. Our design team looks at it and comes back to you, usually within two working days, with any questions and the next steps.` },
+        { kind: "p", text: "The quantities you saw are indicative. Your proposal is priced from the engineer's design and our partners' quotes for fabrication and installation, with a schedule of stage payments." },
+        { kind: "rows", rows: [["Reference", p.reference]] },
+      ]);
+    case "PROJECT_PROPOSAL_SENT":
+      if (!p.proposalUrl || p.total === null) return null;
+      return email(`Your ${p.packageLabel.toLowerCase()} proposal ${p.reference} — ${formatZAR(p.total)}`, [
+        hi,
+        { kind: "p", text: `Here's our proposal for ${p.summary.charAt(0).toLowerCase()}${p.summary.slice(1)}: design, materials, fabrication and installation as one package.` },
+        { kind: "rows", rows: [["Reference", p.reference], ["Total", formatZAR(p.total)], ...(p.validUntil ? ([["Valid until", formatDateZA(p.validUntil)]] as [string, string][]) : [])] },
+        ...(schedule.length ? [{ kind: "p" as const, text: "Payments by stage:" }, { kind: "list" as const, items: schedule }] : []),
+        { kind: "cta", label: "View and accept the proposal", href: p.proposalUrl },
+      ]);
+    case "PROJECT_ACCEPTED":
+      return email(`${p.packageLabel} ${p.reference} — thank you for accepting`, [
+        hi,
+        { kind: "p", text: `Thank you for accepting proposal ${p.reference}. The first stage payment is now due; we start the design and order the trusses and materials once it's in. Pay by EFT using ${p.reference} as the reference — we'll confirm each payment by email.` },
+        ...(schedule.length ? [{ kind: "list" as const, items: schedule }] : []),
+        { kind: "cta", label: "View your project", href: `${site}/account/projects` },
+      ]);
+    case "PROJECT_MILESTONE_PAID":
+      if (!p.paid) return null;
+      return email(`Payment received — ${p.reference}`, [
+        hi,
+        { kind: "p", text: `We've received ${formatZAR(p.paid.amount)} for "${p.paid.label}" on project ${p.reference}. Thank you.` },
+        ...(p.paid.reference ? [{ kind: "rows" as const, rows: [["Payment reference", p.paid.reference]] as [string, string][] }] : []),
+        ...(schedule.length ? [{ kind: "list" as const, items: schedule }] : []),
+      ]);
+    default:
+      return null;
+  }
+}
+
+export function staffProjectEmail(event: NotificationEvent, p: ProjectData): EmailMessage | null {
+  const admin = `${siteUrl()}/admin/projects/${p.id}`;
+  switch (event) {
+    case "PROJECT_RECEIVED":
+      return email(`New ${p.packageLabel.toLowerCase()} brief ${p.reference} — ${p.province}`, [
+        { kind: "p", text: `${p.contactName ?? p.contactEmail} sent a brief: ${p.summary}.${p.siteAddress ? ` Site: ${p.siteAddress}, ${p.province}.` : ` Province: ${p.province}.`}` },
+        { kind: "cta", label: "Open the project", href: admin },
+      ]);
+    case "PROJECT_ACCEPTED":
+      return email(`ACCEPTED — ${p.reference}${p.total !== null ? ` (${formatZAR(p.total)})` : ""}`, [
+        { kind: "p", text: `${p.contactName ?? p.contactEmail} accepted the proposal for ${p.summary.charAt(0).toLowerCase()}${p.summary.slice(1)}. The first stage payment is due — record it when it comes in, then start the design and order from the partners.` },
+        { kind: "cta", label: "Open the project", href: admin },
+      ]);
+    default:
+      return null;
+  }
 }

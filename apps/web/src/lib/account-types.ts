@@ -61,6 +61,9 @@ export type CompanyDashboard = {
 export type OrderRecord = {
   id: string;
   orderNumber: string;
+  /** Company accounts (docs/company-accounts.md). */
+  purchaseOrderNumber?: string | null;
+  approvalStatus?: "AWAITING" | "APPROVED" | "DECLINED" | null;
   status: "PENDING" | "CONFIRMED" | "IN_TRANSIT" | "DELIVERED" | "CANCELLED";
   channel?: string;
   deliveryAddress?: string | null;
@@ -272,6 +275,9 @@ export type LedgerPayment = {
 export type OrderPayments = {
   orderId: string;
   orderNumber: string;
+  /** Company accounts (docs/company-accounts.md): a buyer's order above their limit, and its approval. */
+  approval?: { status: "AWAITING" | "APPROVED" | "DECLINED"; reason: string | null; note: string | null } | null;
+  purchaseOrderNumber?: string | null;
   status: OrderRecord["status"];
   total: number;
   amountPaid: number;

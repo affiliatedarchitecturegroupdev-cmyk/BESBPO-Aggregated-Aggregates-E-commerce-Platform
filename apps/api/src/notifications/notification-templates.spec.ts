@@ -1,6 +1,9 @@
 import { NotificationEvent } from "@aggregates/database";
 import {
   customerCompanyEmail,
+  customerProjectEmail,
+  staffProjectEmail,
+  type ProjectData,
   quotationEmail,
   customerBookingEmail,
   customerEnquiryEmail,
@@ -78,6 +81,22 @@ const quote: QuoteData = {
   reasons: ["Volume/Civil Bulk order of 10m³ or more"],
   hasAccount: true,
   lines: [{ name: "G5 Subbase", quantity: 400, unitOfSale: "BULK_M3" }],
+};
+
+const project: ProjectData = {
+  id: "p1",
+  reference: "AAP-000007",
+  packageLabel: "Complete roof",
+  contactName: "Thandi Mokoena",
+  contactEmail: "thandi@example.com",
+  province: "KwaZulu-Natal",
+  siteAddress: "12 Ridge Road, Hillcrest",
+  summary: "Gable roof, 12 × 8 m, concrete roof tiles",
+  total: 70197.37,
+  proposalUrl: "https://aaggregates.store/projects/proposal/abc",
+  validUntil: new Date("2026-11-30T10:00:00Z"),
+  milestones: [{ label: "Deposit", amount: 28078.95, status: "PAID" }],
+  paid: { label: "Deposit", amount: 28078.95, reference: "EFT 4471" },
 };
 
 const company: CompanyData = {
@@ -286,9 +305,9 @@ describe("notification templates", () => {
     for (const event of Object.values(NotificationEvent)) {
       const channels = EVENT_CHANNELS[event];
       const order = event.startsWith("EXPRESS_") ? expressOrder : event === "INVOICE_ISSUED" ? invoicedOrder : event.startsWith("PAYMENT_") ? paymentOrder : event === "DROP_DISPATCHED" || event === "DELIVERY_SIGNED" ? phasedOrder : baseOrder;
-      const customerEmail = customerOrderEmail(event, order) ?? customerQuoteEmail(event, quote) ?? customerCompanyEmail(event, company) ?? customerEnquiryEmail(event, enquiry) ?? customerBookingEmail(event, booking) ?? customerScheduleEmail(event, schedule) ?? (event === "QUOTATION_SENT" ? quotationEmail(quotation) : null);
+      const customerEmail = customerOrderEmail(event, order) ?? customerQuoteEmail(event, quote) ?? customerCompanyEmail(event, company) ?? customerEnquiryEmail(event, enquiry) ?? customerBookingEmail(event, booking) ?? customerScheduleEmail(event, schedule) ?? customerProjectEmail(event, project) ?? (event === "QUOTATION_SENT" ? quotationEmail(quotation) : null);
       const customerWhatsApp = customerOrderWhatsApp(event, order) ?? customerQuoteWhatsApp(event, quote);
-      const staffEmail = staffOrderEmail(event, order) ?? staffQuoteEmail(event, quote) ?? staffCompanyEmail(event, company) ?? staffEnquiryEmail(event, enquiry) ?? staffBookingEmail(event, booking) ?? staffScheduleEmail(event, schedule);
+      const staffEmail = staffOrderEmail(event, order) ?? staffQuoteEmail(event, quote) ?? staffCompanyEmail(event, company) ?? staffEnquiryEmail(event, enquiry) ?? staffBookingEmail(event, booking) ?? staffScheduleEmail(event, schedule) ?? staffProjectEmail(event, project);
       expect([event, customerEmail !== null]).toEqual([event, channels.customerEmail]);
       expect([event, customerWhatsApp !== null]).toEqual([event, channels.customerWhatsApp]);
       // The weekly insights email is built from report data (insights/digest.ts), not from one record.

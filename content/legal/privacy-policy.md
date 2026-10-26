@@ -23,6 +23,17 @@ POPIA.
 - **Trade account information**: company name, registration number, VAT
   number, and standing delivery addresses, where you register a Contractor/
   Trade or Volume/Civil Bulk tier account.
+- **Company account users**: where a trade account's admin invites
+  colleagues — the email address invited, the role and any limit per order
+  they set, who invited them and when, and, for orders that need the
+  company's approval, who approved or declined them and any note they left.
+  The invitation link is emailed once and never stored.
+- **Design-and-build projects**: the brief you send for a project such as
+  a complete roof (its dimensions, shape and covering, the site's province
+  and address if you give it, and your notes), your contact details, our
+  proposal, your acceptance (your name and when) and the stage payments
+  recorded. We share the details needed to quote and do the work with the
+  partner manufacturers and installers on your project.
 - **Order and delivery information**: products ordered, delivery address,
   delivery distance, and payment confirmation (we do not store full card
   numbers — see Section 6).

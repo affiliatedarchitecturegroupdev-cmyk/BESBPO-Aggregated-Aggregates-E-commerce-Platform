@@ -9,7 +9,7 @@ export function orderDocuments(order: OrderRecord) {
   return [
     { href: `${base}/confirmation`, label: "Order confirmation (PDF)" },
     // A proforma for what's still to pay, for an accounts team that needs one.
-    ...(order.status !== "CANCELLED" && Number(order.total) - Number(order.amountPaid ?? 0) > 0.01 ? [{ href: `${base}/proforma`, label: "Proforma invoice (PDF)" }] : []),
+    ...(order.status !== "CANCELLED" && (order.approvalStatus ?? "APPROVED") === "APPROVED" && Number(order.total) - Number(order.amountPaid ?? 0) > 0.01 ? [{ href: `${base}/proforma`, label: "Proforma invoice (PDF)" }] : []),
     ...(order.shipment && (order.status === "IN_TRANSIT" || order.status === "DELIVERED") ? [{ href: `${base}/delivery-note`, label: "Delivery note (PDF)" }] : []),
     ...(order.invoice ? [{ href: `${base}/invoice`, label: `Invoice ${order.invoice.invoiceNumber}${order.invoice.status === "VOID" ? " (void)" : ""} (PDF)` }] : []),
   ];

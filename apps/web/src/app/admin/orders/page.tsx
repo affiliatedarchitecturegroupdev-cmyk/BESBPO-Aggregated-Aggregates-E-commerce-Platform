@@ -117,6 +117,9 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
                 <p>
                   <Link href={`/orders/${order.id}/confirmation`} className="font-mono text-xs text-seam-blue hover:underline">{order.orderNumber}</Link>{" "}
                   <span className="font-semibold text-basalt">{order.company?.name ?? order.user?.name ?? order.user?.email}</span>
+                  {order.purchaseOrderNumber && <span className="font-mono text-[11px] text-slate"> · PO {order.purchaseOrderNumber}</span>}
+                  {order.approvalStatus === "AWAITING" && <span className="ml-2 rounded-sm bg-ochre-gold/20 px-1.5 py-0.5 font-mono text-[10px] uppercase text-basalt">Waiting for the company&apos;s approval</span>}
+                  {order.approvalStatus === "DECLINED" && <span className="ml-2 rounded-sm bg-red-50 px-1.5 py-0.5 font-mono text-[10px] uppercase text-red-800">Declined by the company</span>}
                 </p>
                 <p className="font-mono text-[11px] text-slate">
                   {order.isTest && <span className="mr-2 rounded-sm bg-ochre-gold/20 px-1.5 py-0.5 uppercase text-basalt">Test — not reported</span>}

@@ -27,6 +27,7 @@ export async function taxInvoicePdf(order: LoadedOrder): Promise<OrderPdf | null
 export function toDocData(order: LoadedOrder): OrderDocData {
   return {
     orderNumber: order.orderNumber,
+    purchaseOrderNumber: order.purchaseOrderNumber,
     status: order.status,
     createdAt: order.createdAt,
     subtotal: order.subtotal,

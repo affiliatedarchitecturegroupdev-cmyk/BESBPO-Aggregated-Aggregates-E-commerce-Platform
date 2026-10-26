@@ -150,16 +150,20 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
           .map((c) => ({ methodKey: c.methodKey, displayName: c.displayName, tradeOnly: c.tradeOnly, minOrderValue: c.minOrderValue, maxOrderValue: c.maxOrderValue, isEnabled: c.isEnabled, sortOrder: c.sortOrder }));
       return { recommended: strip(recommended), available: strip(available) };
     };
-    const firstPayment = order.status === "PENDING" && summary.amountPaid === 0 && order.paymentPlan !== "LAYBY";
+    // A buyer's order above their limit can't be paid until the company approves it (docs/company-accounts.md).
+    const approved = order.approvalStatus === null || order.approvalStatus === "APPROVED";
+    const firstPayment = approved && order.status === "PENDING" && summary.amountPaid === 0 && order.paymentPlan !== "LAYBY";
     return {
       orderId: order.id,
       orderNumber: order.orderNumber,
       status: order.status,
+      approval: order.approvalStatus ? { status: order.approvalStatus, reason: order.approvalReason, note: order.approvalNote } : null,
+      purchaseOrderNumber: order.purchaseOrderNumber,
       ...summary,
       choices: {
         full: firstPayment ? tiles(summary.total, true) : null,
         deposit: firstPayment && summary.deposit.available ? tiles(summary.deposit.amount, false) : null,
-        balance: (summary.amountPaid > 0 || order.paymentPlan === "ACCOUNT") && summary.balance > 0.01 && !["CANCELLED", "DELIVERED"].includes(order.status) ? tiles(summary.balance, false) : null,
+        balance: approved && (summary.amountPaid > 0 || order.paymentPlan === "ACCOUNT") && summary.balance > 0.01 && !["CANCELLED", "DELIVERED"].includes(order.status) ? tiles(summary.balance, false) : null,
       },
     };
   }
@@ -176,6 +180,7 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
 
   private async start(order: LoadedOrder, methodKey: PaymentMethodKey, choice: PaymentChoice, payer: Payer) {
     if (["CANCELLED", "DELIVERED"].includes(order.status)) throw new BadRequestException("This order isn't awaiting payment.");
+    assertApproved(order);
     const total = Number(order.total);
     const paid = Number(order.amountPaid);
     const balance = round(total - paid);
@@ -605,6 +610,7 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
     const order = await this.prisma.order.findUnique({ where: { id: orderId }, include: ORDER_INCLUDE });
     if (!order) throw new NotFoundException("Order not found.");
     if (["CANCELLED", "DELIVERED"].includes(order.status)) throw new BadRequestException("This order isn't awaiting payment.");
+    assertApproved(order);
     const summary = await this.summary(order);
     if (summary.balance <= 0.01) throw new BadRequestException("This order is already paid in full.");
     let amount: number;
@@ -785,6 +791,12 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
   }
 }
 
+
+/** A buyer's order above their limit can't be paid (or put on account) until the company approves it (docs/company-accounts.md). */
+function assertApproved(order: { approvalStatus: string | null }) {
+  if (order.approvalStatus === "AWAITING") throw new BadRequestException("This order is waiting for your company's approval — it can be paid once an approver approves it.");
+  if (order.approvalStatus === "DECLINED") throw new BadRequestException("Your company declined this order.");
+}
 
 /** Gateways call the API on its own Render address, so Cloudflare (in front of the storefront) can't block them. */
 export function apiPublicUrl(): string {

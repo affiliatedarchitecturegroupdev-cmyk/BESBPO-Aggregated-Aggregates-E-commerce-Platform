@@ -18,11 +18,16 @@ export { VAT_RATE_PERCENT };
 
 const hasExpress = (o: { expressFee?: Money | null }) => o.expressFee != null && Number(o.expressFee.toString()) > 0;
 const hasDdp = (o: { ddpFee?: Money | null }) => o.ddpFee != null && Number(o.ddpFee.toString()) > 0;
+/** The buyer's PO number, on every document when there is one. */
+const poRow = (o: { purchaseOrderNumber?: string | null }): [string, string][] => (o.purchaseOrderNumber ? [["Your PO number", o.purchaseOrderNumber]] : []);
+
 /** The Distributed Delivery Premium's line (docs/delivery-premium.md). */
 export const DDP_LABEL = "Distributed delivery premium";
 
 export type OrderDocData = {
   orderNumber: string;
+  /** The buyer's purchase-order number (docs/company-accounts.md). */
+  purchaseOrderNumber?: string | null;
   status: string;
   createdAt: Date;
   subtotal: Money;
@@ -109,6 +114,7 @@ export function orderConfirmationSpec(o: OrderDocData, bankingDetails?: string, 
     sellerLines: sellerLines(),
     meta: [
       ["Order number", o.orderNumber],
+      ...poRow(o),
       ["Order date", formatDateZA(o.createdAt)],
       ["Status", STATUS_LABEL[o.status] ?? o.status],
     ],
@@ -156,6 +162,7 @@ export function proformaSpec(o: OrderDocData, due: { amount: Money; kind: string
     subtitle: registered ? "This is not a tax invoice" : "A request for payment — your invoice follows once the order is paid",
     meta: [
       ["Proforma for order", o.orderNumber],
+      ...poRow(o),
       ["Date", formatDateZA(new Date())],
       ...(due.validUntil ? ([["Valid until", formatDateZA(due.validUntil)]] as [string, string][]) : []),
       ["Payment reference", o.orderNumber],
@@ -181,6 +188,7 @@ export function deliveryNoteSpec(o: OrderDocData): DocSpec {
     sellerLines: sellerLines(),
     meta: [
       ["Order number", o.orderNumber],
+      ...poRow(o),
       ["Dispatched", s?.dispatchedAt ? formatDateZA(s.dispatchedAt) : "—"],
       ["Carrier", s ? carrier(s) : "—"],
       ...(s?.trackingRef ? ([["Tracking reference", s.trackingRef]] as [string, string][]) : []),
@@ -223,6 +231,7 @@ export function taxInvoiceSpec(inv: InvoiceDocData, o: OrderDocData, bankingDeta
       ["Invoice number", inv.invoiceNumber],
       ["Invoice date", formatDateZA(inv.createdAt)],
       ["Order number", o.orderNumber],
+      ...poRow(o),
       ["Status", status],
     ],
     parties: [

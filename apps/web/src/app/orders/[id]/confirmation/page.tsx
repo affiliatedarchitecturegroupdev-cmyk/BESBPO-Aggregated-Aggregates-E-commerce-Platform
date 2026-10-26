@@ -39,6 +39,9 @@ export default async function OrderConfirmationPage({ params, searchParams }: { 
   const balanceDue = summary ? summary.balance > 0.01 && summary.amountPaid > 0 : false;
   const onLayby = summary?.layby.active?.status === "INITIATED";
   const onAccount = order.paymentPlan === "ACCOUNT";
+  // Company accounts (docs/company-accounts.md): waiting for an approver, or declined.
+  const approval = summary?.approval ?? null;
+  const awaitingApproval = approval?.status === "AWAITING" && order.status !== "CANCELLED";
   // The usual lead time: the longest of the order's categories, shown only when staff have set one for each.
   const leadTimes = await getLeadTimes();
   const slugs = [...new Set(order.lineItems.flatMap((l) => (l.product.sku ? (findQuotable(l.product.sku)?.categorySlug ?? []) : [])))];
@@ -52,12 +55,33 @@ export default async function OrderConfirmationPage({ params, searchParams }: { 
           ✓
         </div>
         <h1 className="mt-4 font-display text-2xl font-bold text-basalt">
-          {onAccount ? "Order confirmed on your trade account" : onLayby ? "On lay-by — we deliver once it's paid off" : awaitingPayment ? "Order placed — choose how to pay" : balanceDue ? "Order confirmed — balance due before delivery" : "Order confirmed"}
+          {awaitingApproval ? "Order placed — waiting for your company's approval" : approval?.status === "DECLINED" ? "Your company declined this order" : onAccount ? "Order confirmed on your trade account" : onLayby ? "On lay-by — we deliver once it's paid off" : awaitingPayment ? "Order placed — choose how to pay" : balanceDue ? "Order confirmed — balance due before delivery" : "Order confirmed"}
         </h1>
         <p className="mt-2 font-body text-sm text-slate">
           Order reference <span className="font-mono text-basalt">{order.orderNumber}</span>
+          {summary?.purchaseOrderNumber && (
+            <>
+              {" "}· your PO <span className="font-mono text-basalt">{summary.purchaseOrderNumber}</span>
+            </>
+          )}
         </p>
       </div>
+
+      {awaitingApproval && (
+        <p role="status" className="mt-6 rounded-sm border border-ochre-gold/50 bg-ochre-gold/10 p-4 text-center font-body text-sm text-basalt">
+          {approval?.reason ?? "This order needs approval."} We&apos;ve asked your company&apos;s approvers to approve it — you&apos;ll get an email once they do, and then
+          it can be paid. Approvers see it on{" "}
+          <Link href="/account/team#approvals" className="text-seam-blue hover:underline">
+            My account → Team
+          </Link>
+          .
+        </p>
+      )}
+      {approval?.status === "DECLINED" && (
+        <p role="status" className="mt-6 rounded-sm border border-red-700/30 bg-red-50 p-4 text-center font-body text-sm text-red-800">
+          Your company&apos;s approver declined this order, so it has been cancelled. Nothing was charged.{approval.note ? ` Their note: “${approval.note}”` : ""}
+        </p>
+      )}
 
       {returned && awaitingPayment && !onLayby && (
         <p role="status" className="mt-6 rounded-sm border border-seam-blue/30 bg-seam-blue/5 p-4 text-center font-body text-sm text-seam-blue">
