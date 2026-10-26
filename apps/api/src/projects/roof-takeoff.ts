@@ -47,8 +47,12 @@ const WASTE = 1.05;
 /** One downpipe per this much gutter, and at least two. */
 const GUTTER_PER_DOWNPIPE_M = 12;
 
-export type TakeoffLine = { key: string; label: string; quantity: number; unit: string; note?: string; shopHref?: string };
+/** One take-off item. `kind` says how it is usually priced on the proposal: made by a partner, or supplied. */
+export type TakeoffLine = { key: string; kind?: "FABRICATION" | "MATERIALS"; label: string; quantity: number; unit: string; note?: string; shopHref?: string };
+/** A headline number for the brief's summary panel. */
+export type TakeoffFigure = { label: string; value: number; unit: string };
 export type RoofTakeoff = {
+  figures: TakeoffFigure[];
   planAreaM2: number;
   roofAreaM2: number;
   rafterLengthM: number;
@@ -93,6 +97,7 @@ export function roofTakeoff(b: RoofBrief): RoofTakeoff {
   const lines: TakeoffLine[] = [
     {
       key: "trusses",
+      kind: "FABRICATION",
       label: `Roof trusses (${b.shape === "MONO" ? "mono-pitch" : "pitched"}, ${round(b.widthM, 2)} m span)`,
       quantity: trusses,
       unit: "trusses",
@@ -129,5 +134,19 @@ export function roofTakeoff(b: RoofBrief): RoofTakeoff {
   if (b.widthM > 12 && b.covering === "CONCRETE_TILE") warnings.push("Spans over 12 m usually need an engineered truss design with extra bracing — included in the roof design.");
   if (b.widthM > 25) warnings.push("Spans this wide are usually a steel structure — we can design and quote that too.");
 
-  return { planAreaM2: round(planArea), roofAreaM2: round(roofArea), rafterLengthM: round(rafter, 2), trusses, trussCentresM: centres, lines, warnings };
+  return {
+    planAreaM2: round(planArea),
+    roofAreaM2: round(roofArea),
+    rafterLengthM: round(rafter, 2),
+    trusses,
+    trussCentresM: centres,
+    figures: [
+      { label: "Roof area", value: round(roofArea), unit: "m²" },
+      { label: "Footprint", value: round(planArea), unit: "m²" },
+      { label: "Rafter run", value: round(rafter, 2), unit: "m" },
+      { label: "Trusses", value: trusses, unit: `at ${centres * 1000} mm` },
+    ],
+    lines,
+    warnings,
+  };
 }

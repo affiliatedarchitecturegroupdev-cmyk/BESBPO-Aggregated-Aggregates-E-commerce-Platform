@@ -4568,5 +4568,22 @@ describe("Aggregated Aggregates API (e2e)", () => {
       expect((await http().get("/projects/mine").set(bearer(other)).expect(200)).body).toEqual([]);
       await prisma.project.delete({ where: { id: created.id } });
     });
+
+    it("takes steel structures the same way: a clad warehouse's take-off and a proposal starting point", async () => {
+      const warehouse = { use: "WAREHOUSE", roof: "DUO", lengthM: 30, spanM: 15, eavesHeightM: 6, pitchDeg: 6, sheeting: "IBR", enclosed: true, rollerDoors: 2, floorSlab: true };
+      const estimate = (await http().post("/projects/estimate").send({ package: "STEEL_STRUCTURE", brief: warehouse }).expect(200)).body;
+      expect(estimate).toMatchObject({ label: "Steel structure", summary: "Warehouse, 30 × 15 m, 6 m eaves, clad in IBR sheeting" });
+      expect(estimate.takeoff.figures[2]).toEqual({ label: "Frames", value: 6, unit: "at 6 m" });
+      await http().post("/projects/estimate").send({ package: "STEEL_STRUCTURE", brief: { ...warehouse, enclosed: false } }).expect(400);
+      const created = (await http().post("/projects").send({ package: "STEEL_STRUCTURE", brief: warehouse, province: "Gauteng", contactName: "Sipho", contactEmail: `pjsteel-${run}@example.com`, privacyAccepted: true }).expect(201)).body;
+      const staff = await register("pjsteelstaff");
+      await prisma.user.update({ where: { email: `pjsteelstaff-${run}@example.com` }, data: { role: "STAFF" } });
+      const project = (await http().get(`/projects/staff/${created.id}`).set(bearer(staff)).expect(200)).body;
+      expect(project.defaultMilestones.map((m: { percent: number }) => m.percent)).toEqual([40, 40, 20]);
+      expect(project.suggestedLines[0]).toMatchObject({ kind: "DESIGN", description: expect.stringMatching(/Structural steel design/) });
+      expect(project.suggestedLines.find((l: { description: string }) => l.description.startsWith("Portal frames"))).toMatchObject({ kind: "FABRICATION", quantity: 6 });
+      expect(project.suggestedLines.at(-1)).toMatchObject({ kind: "INSTALLATION" });
+      await prisma.project.delete({ where: { id: created.id } });
+    });
   });
 });

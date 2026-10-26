@@ -2363,6 +2363,7 @@ model CatalogueImport {
 /// The design-and-build packages the project engine sells. Complete roofs first; steel structures next.
 enum ProjectPackage {
   ROOF
+  STEEL_STRUCTURE // warehouses, workshops, carports and canopies (ROADMAP 11.2b)
 }
 
 enum ProjectStatus {

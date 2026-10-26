@@ -45,6 +45,7 @@ const STATIC_PATHS = [
   "/plant-hire",
   "/services",
   "/services/complete-roofs",
+  "/services/steel-structures",
   "/job-packs",
   "/design",
   "/calculators",

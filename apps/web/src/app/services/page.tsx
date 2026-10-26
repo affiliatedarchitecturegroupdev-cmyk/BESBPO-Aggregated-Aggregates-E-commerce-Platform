@@ -31,6 +31,11 @@ export default function ServicesPage() {
         <p className="mt-1 font-display text-lg font-bold text-basalt">Complete roofs — designed, manufactured and installed</p>
         <p className="mt-1 font-body text-sm text-slate">The roof design and truss layout, trusses, covering and installation in one proposal, paid in stages. Work out your roof in a minute.</p>
       </Link>
+      <Link href="/services/steel-structures" className="mt-3 block rounded-sm border border-ochre-gold/60 bg-white p-5 transition-colors hover:border-seam-blue">
+        <p className="font-mono text-[10px] uppercase tracking-widest text-ochre-gold">New · design and build</p>
+        <p className="mt-1 font-display text-lg font-bold text-basalt">Steel structures — warehouses, workshops, carports and canopies</p>
+        <p className="mt-1 font-body text-sm text-slate">Designed by our engineers, fabricated by partner steelworks and erected for you, paid in stages. Work out your structure in a minute.</p>
+      </Link>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {SERVICES.map((s) => (

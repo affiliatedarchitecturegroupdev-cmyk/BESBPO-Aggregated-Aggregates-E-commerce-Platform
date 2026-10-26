@@ -175,8 +175,8 @@ reward anyone for reviews.
 
 ## 6B. Design-and-build projects
 
-Some services — starting with complete roofs — are offered as one package:
-design, materials, manufacture and installation.
+Some services — complete roofs and steel structures — are offered as one
+package: design, materials, manufacture and installation.
 
 - **Briefs and take-offs.** The quantities shown when you describe your
   project are indicative and are not an offer or a price. The engineer's

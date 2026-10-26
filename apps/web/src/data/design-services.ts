@@ -154,6 +154,7 @@ export const DESIGN_SERVICES: DesignService[] = [
     whenNeeded: ["Warehouses, workshops, carports and canopies", "Steel roofs over long spans"],
     fee: { kind: "quote" },
     related: [
+      { label: "Steel structures — designed, fabricated and erected", href: "/services/steel-structures" },
       { label: "Complete roofs — designed, made and installed", href: "/services/complete-roofs" },
       { label: "Roofing", href: "/roofing" },
     ],

@@ -38,6 +38,9 @@ export default function ReinforcingSteelPage() {
             <Link href="/reinforcing-steel/cut-and-bend" className="rounded-sm border border-limestone/30 px-5 py-2.5 font-body text-sm font-semibold hover:border-ochre-gold">
               Send a bar bending schedule
             </Link>
+            <Link href="/services/steel-structures" className="rounded-sm border border-ochre-gold px-5 py-2.5 font-body text-sm font-semibold text-ochre-gold hover:bg-ochre-gold hover:text-basalt">
+              Steel buildings — designed and erected
+            </Link>
           </div>
         </div>
       </section>

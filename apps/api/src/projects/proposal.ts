@@ -17,6 +17,13 @@ export const LINE_KIND_LABEL: Record<ProjectLineKind, string> = {
   OTHER: "Other",
 };
 
+/** A steel structure's usual schedule — staff can change it per proposal. */
+export const DEFAULT_STEEL_MILESTONES: MilestoneInput[] = [
+  { label: "Deposit on acceptance — design, steel and sheeting ordered", percent: 40 },
+  { label: "Steel fabricated and delivered to site", percent: 40 },
+  { label: "Structure erected, clad and signed off", percent: 20 },
+];
+
 /** A complete roof's usual schedule — staff can change it per proposal. */
 export const DEFAULT_ROOF_MILESTONES: MilestoneInput[] = [
   { label: "Deposit on acceptance — design, truss manufacture and materials ordered", percent: 40 },

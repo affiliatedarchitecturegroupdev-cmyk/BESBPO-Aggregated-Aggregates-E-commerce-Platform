@@ -49,7 +49,8 @@ export default async function AdminProjectPage({ params, searchParams }: { param
         <div className="rounded-sm border border-basalt/10 bg-white p-4 font-body text-sm">
           <h3 className="font-display text-base font-bold text-basalt">Brief and take-off</h3>
           <p className="mt-1 text-xs text-slate">
-            Pitch {p.brief.pitchDeg}° · overhang {p.brief.overhangM} m · roof area {p.takeoff.roofAreaM2} m² · about {p.takeoff.trusses} trusses at {p.takeoff.trussCentresM * 1000} mm
+            {(p.takeoff.figures ?? []).map((f) => `${f.label} ${f.value.toLocaleString("en-US")} ${f.unit}`).join(" · ")}
+            {typeof p.brief.pitchDeg === "number" ? ` · pitch ${p.brief.pitchDeg}°` : ""}
           </p>
           <ul className="mt-2 space-y-0.5 text-xs">
             {p.takeoff.lines.map((l) => (

@@ -42,8 +42,8 @@ export default async function ProposalPage({ params, searchParams }: { params: {
       )}
       {p.acceptedAt && (
         <p role="status" className="rounded-sm border border-seam-blue/30 bg-seam-blue/5 p-4 font-body text-sm text-basalt">
-          {searchParams.accepted ? "Thank you — " : ""}accepted by {p.acceptedName} on {date(p.acceptedAt)}. The first stage payment is now due; we start the design and order the
-          trusses and materials once it&apos;s in.
+          {searchParams.accepted ? "Thank you — " : ""}accepted by {p.acceptedName} on {date(p.acceptedAt)}. The first stage payment is now due; we start the design and order what your
+          project needs once it&apos;s in.
         </p>
       )}
       <ProposalView project={project} />
