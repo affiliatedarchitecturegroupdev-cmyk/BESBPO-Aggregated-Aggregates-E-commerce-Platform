@@ -1,6 +1,10 @@
 # Design-and-build projects
 
-ROADMAP Phase 11 (11.1 and 11.2a). The project engine sells a finished result as one package. We design it, partners make and install it, and we manage the job. **Complete roofs** is the first package, at `/services/complete-roofs`. Steel structures come next and use the same engine.
+ROADMAP Phase 11 (11.1, 11.2a and 11.2b). The project engine sells a finished result as one package. We design it, partners make and install it, and we manage the job. Two packages so far:
+- **Complete roofs** at `/services/complete-roofs`;
+- **Steel structures** at `/services/steel-structures`: warehouses, workshops, carports and canopies.
+
+Both use the same engine; only the brief and take-off differ.
 
 ## The flow
 
@@ -36,6 +40,27 @@ Signed-in clients see their projects (and their company's) at **My account → P
 | Rainwater | gutters along the eaves; one downpipe per 12 m, at least two |
 | Usual minimum pitch | tiles 17.5°, corrugated 10°, IBR 5°, concealed-fix 3° (a warning, not a block) |
 
+## The take-off (steel structures)
+
+`apps/api/src/projects/steel-takeoff.ts`, unit-tested. It covers portal-frame buildings (warehouse or workshop, clad) and open carports, shade structures and canopies, with duo- or mono-pitch roofs.
+
+**What the client enters:** length, span, eaves height and pitch; sheeting (IBR, corrugated, concealed-fix); clad walls; roller doors (about 4 × 4 m); insulation; floor slab.
+
+**Rules of thumb**, all labelled indicative:
+
+| | |
+|---|---|
+| Frames | bays of about 6 m: length ÷ 6, rounded up, + 1 frames; two columns each |
+| Members | column and rafter metres. **Section sizes, steel mass, bracing, connections and footings come from the engineer's design** and are not estimated |
+| Purlins and girts | lipped channel at about 1.5 m centres |
+| Sheeting | roof area ÷ cover width + 5%. Wall cladding covers the perimeter to the eaves plus the gables, less the doors |
+| Other items | 4 holding-down bolts per column, one footing per column, 4 screws per m², gutters along the eaves, a 150 mm slab if asked for |
+| Warnings | always: wind bracing is designed for the site. Also: a pitch below the sheet's usual minimum, spans over 30 m, and eaves over 8 m |
+
+**Suggestions and schedule:** take-off items made by a partner (frames, columns, rafters, bracing) are suggested on the proposal as *fabrication*, the rest as *materials*. The default stage payments are 40% on acceptance, 40% when the steel is fabricated and on site, and 20% when it is erected, clad and signed off.
+
+**Next for this package:** mezzanines, stairs and walkways.
+
 ## Not yet built (ROADMAP 11.1b–d)
 
 - **Partners in the portal:** today staff enter partners' quotes. Next, fabricators and installers see the job, quote and post progress in the partner portal.
@@ -47,7 +72,7 @@ Signed-in clients see their projects (and their company's) at **My account → P
 
 | Method | Path | Who |
 |---|---|---|
-| POST | `/projects/estimate` `{ package: "ROOF", brief }` | public: the take-off |
+| POST | `/projects/estimate` `{ package: "ROOF" or "STEEL_STRUCTURE", brief }` | public: the take-off |
 | POST | `/projects` `{ package, brief, province, privacyAccepted, contactName?, contactEmail?, contactPhone?, siteAddress?, notes? }` | public (signed-in clients' details come from their account) |
 | GET | `/projects/mine` | signed in: their projects and their company's |
 | GET | `/projects/proposal/:token` | the client's link |

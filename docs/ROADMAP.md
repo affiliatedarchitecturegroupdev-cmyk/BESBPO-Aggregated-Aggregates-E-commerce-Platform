@@ -659,7 +659,7 @@ Deploy the Listmonk service already defined in `render.yaml` (`docs/listmonk`) a
 
 Every line follows the rules below: no invented prices, partners named only with written agreement, compliance documents attached to the job.
 
-**Status (26 October 2026):** 11.1 (project engine) and 11.2 (complete roofs) first release built (`docs/projects.md`).
+**Status (26 October 2026):** 11.1 (project engine), 11.2a (complete roofs) and 11.2b (steel structures) first releases built (`docs/projects.md`).
 
 ### 11.1 The project engine
 
@@ -683,7 +683,7 @@ One flow for every design-and-build package:
 | # | Line | What we sell | Partners and compliance |
 |---|---|---|---|
 | 11.2a | **Complete roofs** | Roof design and truss layout, trusses, covering (concrete tiles, IBR, corrugated, concealed-fix), battens/purlins, insulation, fixings and erection, as one package | Truss plants that hold the industry's truss certification; roofing and erection crews; engineer's sign-off (SANS 10400-L, SANS 10243 for trusses). **First release built** (`/services/complete-roofs`) |
-| 11.2b | **Steel structures** | Warehouses, workshops, carports, canopies, mezzanines, stairs and walkways: design, shop drawings, fabrication, erection | Steel fabricators and erectors; engineer's design (SANS 10162). Uses steel and roofing from the catalogue |
+| 11.2b | **Steel structures** | Warehouses, workshops, carports, canopies, mezzanines, stairs and walkways: design, shop drawings, fabrication, erection | Steel fabricators and erectors; engineer's design (SANS 10162). Uses steel and roofing from the catalogue. **First release built** (`/services/steel-structures`): portal-frame buildings, carports and canopies; mezzanines, stairs and walkways next |
 | 11.2c | **Light steel frame and modular buildings** | Site offices, classrooms, clinics, add-on rooms | LSF builders; NHBRC where it applies |
 | 11.2d | **Boundary and retaining walls** | Design (existing BAE service), precast or block supply, building | Wall builders; engineer's inspection |
 | 11.2e | **Water** | Boreholes, tanks, pumps and filtration, designed and installed | Drillers and plumbers (registered plumbers' CoC) |
@@ -708,7 +708,7 @@ One flow for every design-and-build package:
 ### Order
 
 1. 11.1 + 11.2a complete roofs (built).
-2. 11.2b steel structures, on the same engine.
+2. 11.2b steel structures, on the same engine (built).
 3. 11.3a solar installed and 11.3b generators.
 4. 11.3c diesel via a licensed partner, 11.4, then the remaining 11.2 lines.
 

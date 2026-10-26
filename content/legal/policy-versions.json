@@ -2,7 +2,7 @@
   "about": "Version history of every public legal page, newest first. The legal pages show the latest date as 'Last updated' and the one before it as 'Previously updated', with this list as the change history. Add an entry at the top whenever a page's wording changes; the page's Markdown carries no date of its own. See content/legal/README.md.",
   "policies": {
     "terms-and-conditions.md": [
-      { "date": "2026-10-26", "changes": "Section 3 now covers company accounts with several users: invitations, roles and limits, approval of orders above a limit, and purchase-order numbers. New section 6B on design-and-build projects such as complete roofs: indicative take-offs, proposals accepted online, design, partner manufacture and installation, stage payments and cancellation." },
+      { "date": "2026-10-26", "changes": "Section 3 now covers company accounts with several users: invitations, roles and limits, approval of orders above a limit, and purchase-order numbers. New section 6B on design-and-build projects (complete roofs and steel structures): indicative take-offs, proposals accepted online, design, partner manufacture and installation, stage payments and cancellation." },
       { "date": "2026-10-25", "changes": "Section 4 now says invoices are issued by Besbpo Group (Pty) Ltd." },
       { "date": "2026-10-18", "changes": "New section 4A on trade credit: applying, the credit limit and payment terms, ordering on account, and suspension. Section 5 now covers phased deliveries and proof of delivery." },
       { "date": "2026-10-17", "changes": "Section 4 now covers deposits (the balance is paid before dispatch), lay-by with LayUp, and payment links and proforma invoices." },

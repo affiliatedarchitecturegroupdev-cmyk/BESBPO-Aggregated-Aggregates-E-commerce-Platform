@@ -11,17 +11,9 @@ const cell = "w-full rounded-sm border border-basalt/20 px-2 py-1 font-body text
 const KINDS = Object.keys(LINE_KIND_LABEL) as LineKind[];
 const cents = (n: number) => Math.round(n * 100) / 100;
 
-/** A starting point from the take-off: one line per item, prices for staff to fill in from the catalogue and partners' quotes. */
+/** The API's starting point from the take-off (design, each item, installation), for staff to price from the catalogue and partners' quotes. */
 function suggested(p: StaffProject): Line[] {
-  let key = 0;
-  return [
-    { key: key++, kind: "DESIGN", description: "Roof design, truss layout and engineer's sign-off", quantity: 1, unit: "", unitPrice: 0, unitCost: null, partnerName: "" },
-    { key: key++, kind: "FABRICATION", description: "Engineered timber roof trusses, delivered", quantity: p.takeoff.trusses, unit: "trusses", unitPrice: 0, unitCost: null, partnerName: "" },
-    ...p.takeoff.lines
-      .filter((l) => l.key !== "trusses")
-      .map((l): Line => ({ key: key++, kind: "MATERIALS", description: l.label, quantity: l.quantity, unit: l.unit, unitPrice: 0, unitCost: null, partnerName: "" })),
-    { key: key++, kind: "INSTALLATION", description: "Erect trusses and cover the roof", quantity: 1, unit: "", unitPrice: 0, unitCost: null, partnerName: "" },
-  ];
+  return p.suggestedLines.map((l, key) => ({ key, kind: l.kind, description: l.description, quantity: l.quantity, unit: l.unit ?? "", unitPrice: 0, unitCost: null, partnerName: "" }));
 }
 
 /** Staff: the proposal's lines (partner and cost staff-only), stage payments, message and validity. */

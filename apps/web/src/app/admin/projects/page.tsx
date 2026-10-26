@@ -18,7 +18,8 @@ export default async function AdminProjectsPage({ searchParams }: { searchParams
       <div>
         <h2 className="font-display text-xl font-bold text-basalt">Design-and-build projects</h2>
         <p className="mt-1 max-w-3xl font-body text-sm text-slate">
-          Briefs from <Link href="/services/complete-roofs" className="text-seam-blue hover:underline">Complete roofs</Link>: design them, get the partners&apos; quotes, send the
+          Briefs from <Link href="/services/complete-roofs" className="text-seam-blue hover:underline">Complete roofs</Link> and{" "}
+          <Link href="/services/steel-structures" className="text-seam-blue hover:underline">Steel structures</Link>: design them, get the partners&apos; quotes, send the
           proposal with its stage payments, and record each payment as it comes in.
         </p>
       </div>

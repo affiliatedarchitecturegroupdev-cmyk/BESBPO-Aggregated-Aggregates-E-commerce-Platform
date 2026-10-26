@@ -1205,7 +1205,7 @@ export function customerProjectEmail(event: NotificationEvent, p: ProjectData): 
     case "PROJECT_ACCEPTED":
       return email(`${p.packageLabel} ${p.reference} — thank you for accepting`, [
         hi,
-        { kind: "p", text: `Thank you for accepting proposal ${p.reference}. The first stage payment is now due; we start the design and order the trusses and materials once it's in. Pay by EFT using ${p.reference} as the reference — we'll confirm each payment by email.` },
+        { kind: "p", text: `Thank you for accepting proposal ${p.reference}. The first stage payment is now due; we start the design and order what your project needs once it's in. Pay by EFT using ${p.reference} as the reference — we'll confirm each payment by email.` },
         ...(schedule.length ? [{ kind: "list" as const, items: schedule }] : []),
         { kind: "cta", label: "View your project", href: `${site}/account/projects` },
       ]);

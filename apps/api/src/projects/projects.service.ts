@@ -5,7 +5,7 @@ import type { AuthUser } from "../common/auth/auth-user";
 import { PrismaService } from "../common/prisma.service";
 import { siteUrl } from "../notifications/notification-templates";
 import { NotificationsService } from "../notifications/notifications.service";
-import { PACKAGE_LABEL, PACKAGE_MILESTONES, projectSummary, takeoffFor } from "./packages";
+import { PACKAGE_LABEL, PACKAGE_MILESTONES, projectSummary, suggestedLines, takeoffFor, type Takeoff } from "./packages";
 import { lineTotal, milestoneAmounts, proposalProblems, proposalTotals } from "./proposal";
 import type { AcceptProposalDto, CreateProjectDto, ProposalDto, UpdateProjectDto } from "./projects.dto";
 
@@ -89,7 +89,7 @@ export class ProjectsService {
     const p = await this.load(id);
     const lines = p.lines.map((l) => ({ ...l, total: lineTotal({ quantity: Number(l.quantity), unitPrice: Number(l.unitPrice) }) }));
     const totals = proposalTotals(p.lines.map((l) => ({ kind: l.kind, description: l.description, quantity: Number(l.quantity), unitPrice: Number(l.unitPrice), unitCost: l.unitCost === null ? null : Number(l.unitCost) })));
-    return { ...p, lines, totals, packageLabel: PACKAGE_LABEL[p.package], summary: projectSummary(p.package, p.brief), defaultMilestones: PACKAGE_MILESTONES[p.package] };
+    return { ...p, lines, totals, packageLabel: PACKAGE_LABEL[p.package], summary: projectSummary(p.package, p.brief), defaultMilestones: PACKAGE_MILESTONES[p.package], suggestedLines: suggestedLines(p.package, p.takeoff as unknown as Takeoff) };
   }
 
   async update(id: string, dto: UpdateProjectDto) {
